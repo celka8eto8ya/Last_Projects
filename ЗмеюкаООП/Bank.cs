@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ЗмеюкаООП
 {
-    public static  class Bank2
+    public static  class Bank
     {
-        public static string Where = "";
+        public static string Where ="";
         public static int Dlina = 3;
         public static int HH = 0;
         public static string Slog = "";
