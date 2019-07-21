@@ -14,63 +14,77 @@ namespace ЗмеюкаООП
 {
     public class Button1 : Button
     {
-        
-        private int speed;
+        private string slog;
     
-      
         public Button1()
         {
-           
             this.FlatStyle = FlatStyle.Flat;
             this.BackColor = SystemColors.ControlDark;
             this.Size = new System.Drawing.Size(10, 10);
         }
-       
-       
-        public int Speed
+        public string Slog
         {
             set
             {
-                if (speed > 0)
-                { speed = value; }
+                if (slog.Length > 0)
+                { slog = value; }
                 else
-                { MessageBox.Show("Ошибка!", "Неподходящее значение поля speed!"); }
+                { MessageBox.Show("Ошибка!", "Неподходящее значение поля slog!"); }
             }
         }
        
-        public void Chek()
+        public void Chek(KeyEventArgs e)
         {
-            //if (e.KeyData == Keys.W)
-            //{
-            //    if (Bank.Where != "Down" && xx > -11 && yy > -11 && xx < 429 && yy < 319)
-            //        Bank.Where = "Up";
-            //}
-            //if (e.KeyData == Keys.S)
-            //{
-            //    if (Bank.Where != "Up" && xx > -11 && yy > -11 && xx < 429 && yy < 319)
-            //        Bank.Where = "Down";
-            //}
-            //if (e.KeyData == Keys.A)
-            //{
-            //    if (Bank.Where != "Right" && xx > -11 && yy > -11 && xx < 429 && yy < 319)
-            //        Bank.Where = "Left";
-            //}
-            //if (e.KeyData == Keys.D)
-            //{
-            //    if (Bank.Where != "Left" && xx > -11 && yy > -11 && xx < 429 && yy < 319)
-            //        Bank.Where = "Right";
-            //}
-            //if (e.KeyData == Keys.F)
-            //{
-            //    if (xx > -11 && yy > -11 && xx < 429 && yy < 319 && progressBar1.Value == 100)
-            //    { Bank.Shift = 1; Bank.ShiftTime = DateTime.Now.Second; progressBar1.Value = 0; }
-            //}
-
+            if (e.KeyData == Keys.W)
+            {
+                if (Bank.Where != "Down" && Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319)
+                    Bank.Where = "Up";
+            }
+            if (e.KeyData == Keys.S)
+            {
+                if (Bank.Where != "Up" && Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319)
+                    Bank.Where = "Down";
+            }
+            if (e.KeyData == Keys.A)
+            {
+                if (Bank.Where != "Right" && Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319)
+                    Bank.Where = "Left";
+            }
+            if (e.KeyData == Keys.D)
+            {
+                if (Bank.Where != "Left" && Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319)
+                    Bank.Where = "Right";
+            }
         }
+
         public void Motion()
         {
-
+            if (Bank.Where == "Up")
+            {
+                Bank.Y -= 10;
+                if (Bank.Y == -11)
+                    Bank.Y = 319;
+            }
+            if (Bank.Where == "Down")
+            {
+                Bank.Y += 10;
+                if (Bank.Y == 319)
+                    Bank.Y = -11;
+            }
+            if (Bank.Where == "Left")
+            {
+                Bank.X -= 10;
+                if (Bank.X == -11)
+                    Bank.X = 429;
+            }
+            if (Bank.Where == "Right")
+            {
+                Bank.X += 10;
+                if (Bank.X == 429)
+                    Bank.X = -11;
+            }
         }
+
         public void Random()
         {
             Random rand = new Random();
@@ -87,6 +101,41 @@ namespace ЗмеюкаООП
                 }
             }
         }
+
+        public void Eat(out int z, Button btn1,Button btn)
+        {
+            z = 0;
+            if (Bank.Where == "Right" && btn1.Location.Y == btn.Location.Y && btn1.Location.X + 10 == btn.Location.X)
+            { z = 1; }
+            if (Bank.Where == "Left" && btn1.Location.Y == btn.Location.Y && btn1.Location.X - 10 == btn.Location.X)
+            { z = 1; }
+            if (Bank.Where == "Up" && btn1.Location.Y - 10 == btn.Location.Y && btn1.Location.X == btn.Location.X)
+            { z = 1; }
+            if (Bank.Where == "Down" && btn1.Location.Y + 10 == btn.Location.Y && btn1.Location.X == btn.Location.X)
+            { z = 1; }
+
+            if (z == 1)
+            {
+                if (Bank.Slog == "Змея" && Bank.Shift == 1) { Bank.Sch += 50; }
+                if (Bank.Slog == "Змея" && Bank.Shift != 1) { Bank.Sch += 5; }
+                if (Bank.Slog == "Гадюка" && Bank.Shift == 1) { Bank.Sch += 100; }
+                if (Bank.Slog == "Гадюка" && Bank.Shift != 1) { Bank.Sch += 10; }
+                if (Bank.Slog == "Змеюка" && Bank.Shift == 1) { Bank.Sch += 120; }
+                if (Bank.Slog == "Змеюка" && Bank.Shift != 1) { Bank.Sch += 12; }
+
+                
+
+               
+
+               
+                Bank.Dlina += 1;
+             
+
+            }
+        }
+
+
+
     }
 }
 

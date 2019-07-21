@@ -8,10 +8,15 @@ namespace ЗмеюкаООП
 {
     public static  class Bank
     {
-        public static string Where ="";
+        public static string Where = "Right";
+        public static string Slog = "Змея";
+
         public static int Dlina = 3;
+        public static int X = 49;
+        public static int Y = 49;
+
+       
         public static int HH = 0;
-        public static string Slog = "";
         public static string Sound = "";
         public static string Wals = "";
         public static string Put = "";
