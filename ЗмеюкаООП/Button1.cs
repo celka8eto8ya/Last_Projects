@@ -33,7 +33,7 @@ namespace ЗмеюкаООП
             }
         }
        
-        public void Chek(KeyEventArgs e)
+        public static void Chek(KeyEventArgs e)
         {
             if (e.KeyData == Keys.W)
             {
@@ -57,7 +57,7 @@ namespace ЗмеюкаООП
             }
         }
 
-        public void Motion()
+        public static void Motion()
         {
             if (Bank.Where == "Up")
             {
@@ -85,7 +85,7 @@ namespace ЗмеюкаООП
             }
         }
 
-        public void Random()
+        public static void Random(Button eat)
         {
             Random rand = new Random();
             Random rand1 = new Random();
@@ -96,13 +96,13 @@ namespace ЗмеюкаООП
                 y = rand.Next(50, 300);
                 if ((x + 1) % 10 == 0 && (y + 1) % 10 == 0)
                 {
-                    this.Location = new Point(x, y);
+                    eat.Location = new Point(x, y);
                     break;
                 }
             }
         }
 
-        public void Eat(out int z, Button btn1,Button btn)
+        public static void Eat(out int z, Button btn1,Button btn)
         {
             z = 0;
             if (Bank.Where == "Right" && btn1.Location.Y == btn.Location.Y && btn1.Location.X + 10 == btn.Location.X)
@@ -122,14 +122,8 @@ namespace ЗмеюкаООП
                 if (Bank.Slog == "Гадюка" && Bank.Shift != 1) { Bank.Sch += 10; }
                 if (Bank.Slog == "Змеюка" && Bank.Shift == 1) { Bank.Sch += 120; }
                 if (Bank.Slog == "Змеюка" && Bank.Shift != 1) { Bank.Sch += 12; }
+              
 
-                
-
-               
-
-               
-                Bank.Dlina += 1;
-             
 
             }
         }

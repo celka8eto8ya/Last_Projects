@@ -17,9 +17,7 @@ namespace ЗмеюкаООП
 
         List<int> lstX = new List<int>();
         List<int> lstY = new List<int>();
-        string[] Mass = new string[18];
-
-        int sch = 0;
+        
 
         public Form1()
         {
@@ -36,8 +34,9 @@ namespace ЗмеюкаООП
             }
             Button1 btn = new Button1();
             btn.BackColor = SystemColors.ActiveCaption;
-            btn.Random();
-           eat = btn;
+            eat = btn;
+            Button1.Random(eat);
+            
            
             panel1.Controls.Add(eat);
 
@@ -47,23 +46,20 @@ namespace ЗмеюкаООП
         {
             
             timer1.Start();
+            timer2.Start();
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            (new Button1()).Chek(e);
+            Button1.Chek(e);
            
-            if (e.KeyData == Keys.F)
-            {
-                if (Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319 && progressBar1.Value == 100)
-                { Bank.Shift = 1; Bank.ShiftTime = DateTime.Now.Second; progressBar1.Value = 0; }
-            }
+           
 
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            (new Button1()).Motion();
-
+            Button1.Motion();
+          
             lstX.Add(Bank.X);
             lstY.Add(Bank.Y);
             for (int i = 0; i < Bank.Dlina; i++)
@@ -84,9 +80,7 @@ namespace ЗмеюкаООП
 
                     timer1.Stop();
                     timer2.Stop();
-                    //label2.Visible = true;
-                    //button1.Visible = true;
-                    //button2.Visible = true;
+                   
                     break;
                 }
             }
@@ -101,39 +95,38 @@ namespace ЗмеюкаООП
         {
             int z = 0;
             
-            (new Button1()).Eat(out z, MassSQ[0],eat);
-           
+            Button1.Eat(out z, MassSQ[0],eat);
 
-            if (progressBar1.Value < 100) progressBar1.Value += 10;
-            label3.Text = "Счёт: " + Convert.ToString(Bank.Sch);
-
-            MassSQ[Bank.Dlina].Location = new Point(lstX[lstX.Count - Bank.Dlina - 1], lstY[lstY.Count - Bank.Dlina - 1]);
-            panel1.Controls.Add(MassSQ[Bank.Dlina]);
-            Random rand = new Random();
-            Random rand1 = new Random();
-            int x = 0; int y = 0; int zz = 0;
-            for (; ; )
+            if (z == 1)
             {
-                x = rand.Next(10, 410);
-                y = rand.Next(10, 300);
-                for (int i = 0; i < lstX.Count; i++)
+                label3.Text = "Счёт: " + Convert.ToString(Bank.Sch);
+
+                MassSQ[Bank.Dlina].Location = new Point(lstX[lstX.Count - Bank.Dlina - 1], lstY[lstY.Count - Bank.Dlina - 1]);
+                panel1.Controls.Add(MassSQ[Bank.Dlina]);
+                Bank.Dlina += 1;
+                Random rand = new Random();
+                Random rand1 = new Random();
+                int x = 0; int y = 0; int zz = 0;
+                for (; ; )
                 {
-                    if (lstX[i] == x && lstY[i] == y)
-                    { z = 1; break; }
-                }
-                if (zz != 1)
-                {
-                    if ((x + 1) % 10 == 0 && (y + 1) % 10 == 0)
+                    x = rand.Next(10, 410);
+                    y = rand.Next(10, 300);
+                    for (int i = 0; i < lstX.Count; i++)
                     {
-                        this.Location = new Point(x, y);
-                        this.Visible = true;
-                        break;
+                        if (lstX[i] == x && lstY[i] == y)
+                        { z = 1; break; }
+                    }
+                    if (zz != 1)
+                    {
+                        if ((x + 1) % 10 == 0 && (y + 1) % 10 == 0)
+                        {
+                            eat.Location = new Point(x, y);
+                            eat.Visible = true;
+                            break;
+                        }
                     }
                 }
             }
-            //if (Bank.Slog == "Змея" && sch == 5000) { label7.Visible = true; timer1.Stop(); timer2.Stop(); }
-            //if (Bank.Slog == "Гадюка" && sch == 10000) { label7.Visible = true; timer1.Stop(); timer2.Stop(); }
-            //if (Bank.Slog == "Змеюка" && sch == 12000) { label7.Visible = true; timer1.Stop(); timer2.Stop(); }
 
         }
     } 
