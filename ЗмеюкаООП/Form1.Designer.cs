@@ -34,6 +34,8 @@
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // timer1
@@ -48,6 +50,7 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(34, 57);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(432, 322);
@@ -63,6 +66,17 @@
             this.label3.Text = "Счёт: 0";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Consolas", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(-1, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(432, 321);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "GAME OVER";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -75,6 +89,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -85,6 +100,7 @@
         private System.Windows.Forms.Timer timer3;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label1;
     }
 }
 

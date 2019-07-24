@@ -12,52 +12,53 @@ using System.IO;
 
 namespace ЗмеюкаООП
 {
-    public class Button1 : Button
+    public class SquareSnake : Button
     {
-        private string slog;
-    
-        public Button1()
+        //private string slog;
+
+        //public string Slog
+        //{
+        //    set
+        //    {
+        //        if (slog.Length > 0)
+        //        { slog = value; }
+        //        else
+        //        { MessageBox.Show("Ошибка!", "Неподходящее значение поля slog!"); }
+        //    }
+        //}
+
+        public SquareSnake()
         {
             this.FlatStyle = FlatStyle.Flat;
             this.BackColor = SystemColors.ControlDark;
             this.Size = new System.Drawing.Size(10, 10);
         }
-        public string Slog
+
+        public static void ChekKey(KeyEventArgs e) // was refactored
         {
-            set
-            {
-                if (slog.Length > 0)
-                { slog = value; }
-                else
-                { MessageBox.Show("Ошибка!", "Неподходящее значение поля slog!"); }
-            }
-        }
-       
-        public static void Chek(KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.W)
+            if (Convert.ToString(e.KeyData) == "W")
             {
                 if (Bank.Where != "Down" && Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319)
                     Bank.Where = "Up";
             }
-            if (e.KeyData == Keys.S)
+            if (Convert.ToString(e.KeyData) == "S")
             {
                 if (Bank.Where != "Up" && Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319)
                     Bank.Where = "Down";
             }
-            if (e.KeyData == Keys.A)
+            if (Convert.ToString(e.KeyData) == "A")
             {
                 if (Bank.Where != "Right" && Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319)
                     Bank.Where = "Left";
             }
-            if (e.KeyData == Keys.D)
+            if (Convert.ToString(e.KeyData) == "D")
             {
                 if (Bank.Where != "Left" && Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319)
                     Bank.Where = "Right";
             }
         }
 
-        public static void Motion()
+        public static void Motion() // was refactored
         {
             if (Bank.Where == "Up")
             {
@@ -84,25 +85,52 @@ namespace ЗмеюкаООП
                     Bank.X = -11;
             }
         }
+        public static void Motion1(Button [] btn) // was refactored
+        {
+            Bank.lstX.Add(Bank.X);
+            Bank.lstY.Add(Bank.Y);
+            for (int i = 0; i < Bank.Dlina; i++)
+            {
+                if (i > 0 && Bank.lstX.Count > 2)
+                {
+                    btn[i].Location = new Point(Bank.lstX[Bank.lstX.Count - i - 1], Bank.lstY[Bank.lstY.Count - i - 1]);
+                }
+                else
+                {
+                    btn[i].Location = new Point(Bank.X - (10 * i), Bank.Y);
+                }
+            }
+          
+        }
 
-        public static void Random(Button eat)
+        public static void RandomPosition1(Button eat) // was refactored
         {
             Random rand = new Random();
             Random rand1 = new Random();
-            int x = 0; int y = 0;
+            int x = 0; int y = 0; int zz = 0;
+            eat.Visible = false;
             for (; ; )
             {
-                x = rand.Next(50, 410);
-                y = rand.Next(50, 300);
-                if ((x + 1) % 10 == 0 && (y + 1) % 10 == 0)
+                x = rand.Next(10, 410);
+                y = rand.Next(10, 300);
+                for (int i = 0; i < Bank.lstX.Count; i++)
                 {
-                    eat.Location = new Point(x, y);
-                    break;
+                    if (Bank.lstX[i] == x && Bank.lstY[i] == y)
+                    { zz = 1; break; }
+                }
+                if (zz != 1)
+                {
+                    if ((x + 1) % 10 == 0 && (y + 1) % 10 == 0)
+                    {
+                        eat.Location = new Point(x, y);
+                        eat.Visible = true;
+                        break;
+                    }
                 }
             }
         }
 
-        public static void Eat(out int z, Button btn1,Button btn)
+        public static void Eat(out int z, Button btn1,Button btn,Button [] Btn)
         {
             z = 0;
             if (Bank.Where == "Right" && btn1.Location.Y == btn.Location.Y && btn1.Location.X + 10 == btn.Location.X)
@@ -122,8 +150,10 @@ namespace ЗмеюкаООП
                 if (Bank.Slog == "Гадюка" && Bank.Shift != 1) { Bank.Sch += 10; }
                 if (Bank.Slog == "Змеюка" && Bank.Shift == 1) { Bank.Sch += 120; }
                 if (Bank.Slog == "Змеюка" && Bank.Shift != 1) { Bank.Sch += 12; }
-              
 
+                Btn[Bank.Dlina].Location = new Point(Bank.lstX[Bank.lstX.Count - Bank.Dlina - 1], Bank.lstY[Bank.lstY.Count - Bank.Dlina - 1]);
+
+              
 
             }
         }

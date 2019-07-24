@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ЗмеюкаООП
 {
-    public static  class Bank
+    public static class Bank
     {
         public static string Where = "Right";
         public static string Slog = "Змея";
@@ -15,7 +15,10 @@ namespace ЗмеюкаООП
         public static int X = 49;
         public static int Y = 49;
 
-       
+        public static List<int> lstX = new List<int>();
+        public static List<int> lstY = new List<int>();
+
+
         public static int HH = 0;
         public static string Sound = "";
         public static string Wals = "";
