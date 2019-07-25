@@ -76,9 +76,6 @@ namespace ЗмеюкаООП
                 label3.Text = "Счёт: " + Convert.ToString(Bank.Sch);
                 panel1.Controls.Add(MassSQ[Bank.Dlina]);
                 Bank.Dlina += 1;
-
-                SquareSnake.RandomPosition1(eat);
-               
             }
 
         }

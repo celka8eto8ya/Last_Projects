@@ -111,6 +111,7 @@ namespace ЗмеюкаООП
             eat.Visible = false;
             for (; ; )
             {
+                zz = 0;
                 x = rand.Next(10, 410);
                 y = rand.Next(10, 300);
                 for (int i = 0; i < Bank.lstX.Count; i++)
@@ -127,6 +128,7 @@ namespace ЗмеюкаООП
                         break;
                     }
                 }
+
             }
         }
 
@@ -151,10 +153,8 @@ namespace ЗмеюкаООП
                 if (Bank.Slog == "Змеюка" && Bank.Shift == 1) { Bank.Sch += 120; }
                 if (Bank.Slog == "Змеюка" && Bank.Shift != 1) { Bank.Sch += 12; }
 
+                SquareSnake.RandomPosition1(btn);
                 Btn[Bank.Dlina].Location = new Point(Bank.lstX[Bank.lstX.Count - Bank.Dlina - 1], Bank.lstY[Bank.lstY.Count - Bank.Dlina - 1]);
-
-              
-
             }
         }
 
