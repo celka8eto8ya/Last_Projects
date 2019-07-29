@@ -30,7 +30,7 @@ namespace ЗмеюкаООП
                     panel1.Controls.Add(MassSQ[i]);
                 }
             }
-
+            // method n+4 Rows arrow
             SquareSnake btn = new SquareSnake();
             btn.BackColor = SystemColors.ActiveCaption;
             eat = btn;
@@ -42,6 +42,8 @@ namespace ЗмеюкаООП
         {
             timer1.Start();
             timer2.Start();
+            Statistic.CreateFile();
+            label4.BackColor = System.Drawing.Color.Transparent;
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -73,6 +75,9 @@ namespace ЗмеюкаООП
 
             if (z == 1)
             {
+                string S;
+                Statistic.UpdateSch(out S);
+                label4.Text = S;
                 label3.Text = "Счёт: " + Convert.ToString(Bank.Sch);
                 panel1.Controls.Add(MassSQ[Bank.Dlina]);
                 Bank.Dlina += 1;

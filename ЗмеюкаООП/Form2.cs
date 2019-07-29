@@ -14,7 +14,23 @@ namespace ЗмеюкаООП
     {
         public Form2()
         {
+            TopMost = true;
             InitializeComponent();
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Bank.Slog = comboBox1.Text;
+            Bank.HH = 1;
+
+            Bank.Sound = comboBox2.Text;
+            Bank.Wals = comboBox3.Text;
+            this.Close();
         }
     }
 }

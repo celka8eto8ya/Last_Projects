@@ -132,7 +132,7 @@ namespace ЗмеюкаООП
             }
         }
 
-        public static void Eat(out int z, Button btn1,Button btn,Button [] Btn)
+        public static void Eat(out int z, Button btn1,Button btn,Button [] Btn)  // was refactored
         {
             z = 0;
             if (Bank.Where == "Right" && btn1.Location.Y == btn.Location.Y && btn1.Location.X + 10 == btn.Location.X)
