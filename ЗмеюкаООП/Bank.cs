@@ -18,7 +18,6 @@ namespace ЗмеюкаООП
         public static List<int> lstX = new List<int>();
         public static List<int> lstY = new List<int>();
 
-
         public static int HH = 0;
         public static string Sound = "";
         public static string Wals = "";

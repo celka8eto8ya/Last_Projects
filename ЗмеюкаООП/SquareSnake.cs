@@ -14,19 +14,6 @@ namespace ЗмеюкаООП
 {
     public class SquareSnake : Button
     {
-        //private string slog;
-
-        //public string Slog
-        //{
-        //    set
-        //    {
-        //        if (slog.Length > 0)
-        //        { slog = value; }
-        //        else
-        //        { MessageBox.Show("Ошибка!", "Неподходящее значение поля slog!"); }
-        //    }
-        //}
-
         public SquareSnake()
         {
             this.FlatStyle = FlatStyle.Flat;
@@ -34,7 +21,7 @@ namespace ЗмеюкаООП
             this.Size = new System.Drawing.Size(10, 10);
         }
 
-        public static void ChekKey(KeyEventArgs e) // was refactored
+        public static void ChekKey(KeyEventArgs e,ProgressBar pb1) // was refactored
         {
             if (Convert.ToString(e.KeyData) == "W")
             {
@@ -55,6 +42,11 @@ namespace ЗмеюкаООП
             {
                 if (Bank.Where != "Left" && Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319)
                     Bank.Where = "Right";
+            }
+            if (Convert.ToString(e.KeyData) == "F")
+            {
+                if (Bank.X > -11 && Bank.Y > -11 && Bank.X < 429 && Bank.Y < 319 && pb1.Value == 100)
+                { Bank.Shift = 1; Bank.ShiftTime = DateTime.Now.Second; pb1.Value = 0; }
             }
         }
 
@@ -157,8 +149,18 @@ namespace ЗмеюкаООП
                 Btn[Bank.Dlina].Location = new Point(Bank.lstX[Bank.lstX.Count - Bank.Dlina - 1], Bank.lstY[Bank.lstY.Count - Bank.Dlina - 1]);
             }
         }
+        public static void Speed(Timer tm)  // was refactored
+        {
+            if (DateTime.Now.Second - 10 == Bank.ShiftTime && Bank.ShiftTime < 50) Bank.Shift = 0;
+            if (Bank.ShiftTime >= 50) { if (DateTime.Now.Second == Bank.ShiftTime - 50) Bank.Shift = 0; }
 
-
+            if (Bank.Slog == "Змея" && Bank.Shift == 1) { tm.Interval = 50; }
+            if (Bank.Slog == "Змея" && Bank.Shift != 1) { tm.Interval = 100; }
+            if (Bank.Slog == "Гадюка" && Bank.Shift == 1) { tm.Interval = 25; }
+            if (Bank.Slog == "Гадюка" && Bank.Shift != 1) { tm.Interval = 50; }
+            if (Bank.Slog == "Змеюка" && Bank.Shift == 1) { tm.Interval = 20; }
+            if (Bank.Slog == "Змеюка" && Bank.Shift != 1) { tm.Interval = 40; }
+        }
 
     }
 }

@@ -30,9 +30,11 @@ namespace ЗмеюкаООП
                     panel1.Controls.Add(MassSQ[i]);
                 }
             }
-            // method n+4 Rows arrow
-            SquareSnake btn = new SquareSnake();
-            btn.BackColor = SystemColors.ActiveCaption;
+
+            SquareSnake btn = new SquareSnake
+            {
+                BackColor = SystemColors.ActiveCaption
+            };
             eat = btn;
             SquareSnake.RandomPosition1(eat);
             panel1.Controls.Add(eat);
@@ -40,14 +42,14 @@ namespace ЗмеюкаООП
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            timer1.Start();
-            timer2.Start();
+            timer2.Start(); 
             Statistic.CreateFile();
             label4.BackColor = System.Drawing.Color.Transparent;
+            new Form2().Show();
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            SquareSnake.ChekKey(e);
+            SquareSnake.ChekKey(e,progressBar1);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -68,16 +70,26 @@ namespace ЗмеюкаООП
         }
 
         private void timer2_Tick(object sender, EventArgs e)
-        {
-            int z = 0;
-            
-            SquareSnake.Eat(out z, MassSQ[0],eat, MassSQ);
+        { 
+            if (Bank.HH == 1)
+            {
+                label6.Text = "Сложность: \"" + Bank.Slog + "\"";
+                timer1.Start();
+                timer2.Start();
+                Bank.HH = 0;
+            }
+
+            SquareSnake.Speed(timer1);
+            SquareSnake.Eat(out int z, MassSQ[0],eat, MassSQ);
 
             if (z == 1)
             {
-                string S;
-                Statistic.UpdateSch(out S);
+                if (Bank.Sound == "Да") Console.Beep(275, 75);
+
+                Statistic.UpdateSch(out string S);
                 label4.Text = S;
+
+                if (progressBar1.Value < 100) progressBar1.Value += 10;
                 label3.Text = "Счёт: " + Convert.ToString(Bank.Sch);
                 panel1.Controls.Add(MassSQ[Bank.Dlina]);
                 Bank.Dlina += 1;

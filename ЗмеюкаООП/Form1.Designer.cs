@@ -52,7 +52,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panel1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(34, 57);
@@ -76,9 +76,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(481, 163);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 13);
+            this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 15;
-            this.label5.Text = "Откат Shift ";
+            this.label5.Text = "Откат <F> ";
             // 
             // progressBar1
             // 
