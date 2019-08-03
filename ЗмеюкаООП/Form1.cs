@@ -8,8 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
-
 namespace ЗмеюкаООП
 {
     public partial class Form1 : Form
@@ -84,8 +82,6 @@ namespace ЗмеюкаООП
 
             if (z == 1)
             {
-                if (Bank.Sound == "Да") Console.Beep(275, 75);
-
                 Statistic.UpdateSch(out string S);
                 label4.Text = S;
 

@@ -100,6 +100,7 @@ namespace ЗмеюкаООП
             Random rand = new Random();
             Random rand1 = new Random();
             int x = 0; int y = 0; int zz = 0;
+            if (Bank.Sound == "Да") Console.Beep(275, 75);
             eat.Visible = false;
             for (; ; )
             {
