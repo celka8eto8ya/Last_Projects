@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1127171",
+    "ThreadId": "470617",
+    "Html": "I am trying to get one input to forward out of 2 outputs as real time as i can get it.<br />\n<br />\nI have it working fine with one in and one out but then i create a 2nd wavein and waveout and i get a buffer full error.<br />\n<pre><code>    private void StartBtnOutput2_Click(object sender, EventArgs e)\n        {\n            if (waveIn2 != null)\n                return;\n\n\n\n            // create wave input from mic\n            waveIn2 = new WaveIn(this.Handle);\n            waveIn2.DeviceNumber = comboBoxInput.SelectedIndex;\n            waveIn2.BufferMilliseconds = 25;\n            waveIn2.RecordingStopped += waveIn_RecordingStopped2;\n            waveIn2.DataAvailable += waveIn_DataAvailable2;\n\n            waveIn2.WaveFormat = new NAudio.Wave.WaveFormat(44100, 16, 2);\n\n\n            // create wave provider\n            waveProvider2 = new BufferedWaveProvider(waveIn2.WaveFormat);\n\n            // create wave output to speakers\n            waveOut2 = new WaveOut();\n            waveOut2.DeviceNumber = comboBoxOutput2.SelectedIndex;\n            waveOut2.DesiredLatency = 60;\n            waveOut2.Init(waveProvider2);\n            waveOut2.PlaybackStopped += wavePlayer_PlaybackStopped2;\n\n            // start recording and playback\n            waveIn2.StartRecording();\n\n            waveOut2.Play();\n        }\n\n        void waveIn_DataAvailable2(object sender, WaveInEventArgs e)\n        {\n            // add received data to waveProvider buffer\n            if (waveProvider2 != null)\n                waveProvider2.AddSamples(e.Buffer, 0, e.BytesRecorded);\n        }\n\n\n\n        void waveIn_RecordingStopped2(object sender, StoppedEventArgs e)\n        {\n            // stop playback\n            if (waveOut2 != null)\n                waveOut2.Stop();\n\n            // dispose of wave input\n            if (waveIn2 != null)\n            {\n                waveIn2.Dispose();\n                waveIn2 = null;\n            }\n\n            // drop wave provider\n            waveProvider2 = null;\n        }\n\n        void wavePlayer_PlaybackStopped2(object sender, StoppedEventArgs e)\n        {\n            // stop recording\n            if (waveIn2 != null)\n                waveIn2.StopRecording();\n\n            // dispose of wave output\n            if (waveOut2 != null)\n            {\n                waveOut2.Dispose();\n                waveOut2 = null;\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2013-11-20T10:21:08.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127590",
+    "ThreadId": "470617",
+    "Html": "You need to have one instance of WaveIn, and two BufferedWaveProviders. Start two instances of WaveOut playing from each of the BufferedWaveProviders respectively. When you get a data available event, copy the audio received into both BufferedWaveProviders.<br />\n",
+    "PostedDate": "2013-11-21T08:36:01.857-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1141236",
+    "ThreadId": "470617",
+    "Html": "please can any one tell me how can i take sample of the wave file if that is mono will take mono or stereo will take it as it without any convert plaseeeeeeeeee<br />\n",
+    "PostedDate": "2013-12-24T08:59:57.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

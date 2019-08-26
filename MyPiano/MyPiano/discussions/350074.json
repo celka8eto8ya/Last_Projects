@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "815604",
+    "ThreadId": "350074",
+    "Html": "<p>Why&nbsp;are the source code demo's so complicated? The idea of a demo is to show people how to use the library. Using a myriad of user-controls is very cryptic for a developer trying to learn the basics with your library.</p>\n<p>BTW the 1.5 source code does not compile -</p>\n<p><span style=\"color: #260894; font-size: 10pt;\">&ldquo;</span><span style=\"font-size: 9pt;\">C:\\Development\\C Sharp\\NAudio\\NAudio-Source\\MidiFileConverter\\MidiFileConverter.csproj : error&nbsp; : Unable to read the project file 'MidiFileConverter.csproj'. </span></p>\n<p><span style=\"font-size: 9pt;\">C:\\Development\\C Sharp\\NAudio\\NAudio-Source\\MidiFileConverter\\MidiFileConverter.csproj: The project file could not be loaded. Could not find a part of the path 'C:\\Development\\C Sharp\\NAudio\\NAudio-Source\\MidiFileConverter\\MidiFileConverter.csproj'.</span><span style=\"color: #260894; font-size: 10pt;\">&rdquo;</span></p>\n<p><span style=\"color: #260894; font-size: 10pt;\">&nbsp;</span><span style=\"color: #260894; font-size: 10pt;\">It seems the MidiFileConverter directory is completely missing.</span></p>\n<p>&nbsp;</p>\n<p>Also&nbsp; - your email address <span style=\"font-size: 11pt;\"><a href=\"mailto:software@wordandspirit.co.uk\">software@wordandspirit.co.uk</a>&nbsp;also fails.</span></p>\n<p><span style=\"font-size: 11pt;\">&nbsp;</span></p>\n<p><span style=\"font-size: 11pt;\">Great work BTW - just hard to get a grasp on it with the addition of user controls.</span></p>",
+    "PostedDate": "2012-03-26T07:23:37.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816072",
+    "ThreadId": "350074",
+    "Html": "<p>hi Rimsey,</p>\r\n<p>I'm sorry you find the code complicated. NAudio is a library for going beyond simple tasks like audio playback, which you can use SoundPlayer or MediaElement for. It is for when you want access to the raw samples, so by its nature it will be more complicated. The NAudioDemo project contains lots of small demos showing different uses. There is the simple audio playback form which shows very basic playback.</p>\r\n<p>The source code zip file for 1.5 is indeed missing a project, but i always recommend using Mercurial to get the latest source code anyway. The source zip will be fixed for the next release.</p>\r\n<p>That email address is an old one. Best way to get in touch is through codeplex.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-03-27T06:33:11.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816474",
+    "ThreadId": "350074",
+    "Html": "<blockquote style=\"padding-bottom: 0px; font-style: italic; margin: 0.25em 1em 0px; padding-left: 0.25em; padding-right: 0.25em; padding-top: 0px; border: #ccc 0.1em solid;\"><strong>markheath wrote:</strong><br />\r\n<p>&nbsp;NAudio is a library for going beyond simple tasks like audio playback, which you can use SoundPlayer or MediaElement for. It is for when you want access to the raw samples, so by its nature it will be more complicated.</p>\r\n<p>Mark</p>\r\n</blockquote>\r\n<p><br />Exactly! so why complicate it even more with the use of plugin usercontrols?</p>\r\n<p>Really... great work though. I really am a fan I am just gettting a bit frustrated trying to follow all the code around to do relatively simple tasks.</p>\r\n<p>&nbsp;</p>\r\n<p>thanks again</p>\r\n<p>Rimmel</p>",
+    "PostedDate": "2012-03-28T03:55:15.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "901332",
+    "ThreadId": "350074",
+    "Html": "\r\n<p>Hi, any chance of putting the missing library up ? - can't use library in strongly signed solution as binaries are not strongly signed and can't build signed binaries as library missing - kind of a show stopper right now. Can be added as a separate link\r\n if its easier (until next build/drop)</p>\r\n<p>&nbsp;</p>\r\n<p>Cheers,</p>\r\n<p>Wolf</p>\r\n<p>PS: Love it, just love it ;)</p>\r\n<p>&nbsp;</p>\r\n<p>//--Work Around (for signed assembly) - Here's what I did for now (and worked fine).</p>\r\n<p>- Delete reference in project to NAudio.dll</p>\r\n<p>- Start VS2010 Command Prompt</p>\r\n<p>- CD'd to NAudio.DLL directory</p>\r\n<p>- Createrd a random SNK&nbsp;keypair file using [SN.EXE -k NAudio.snk]</p>\r\n<p>- Disasembled NAudio.dll to IL using [ildasm /all /out=NAudio.il NAudio.dll]</p>\r\n<p>- Rebuilt IL with strong key pair using ILASM [ilasm /dll /key=NAudio.snk NAudio.il]</p>\r\n<p>- Re-added recference to NAudio.dll in my project</p>\r\n<p>- F6 rebuilt in VS2010, and all was good with the world :)</p>\r\n<p>&nbsp;</p>\r\n<p>Note: You may want to back up NAudio.dll (as an un-signed version first).</p>\r\n",
+    "PostedDate": "2012-08-19T12:19:42.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "903434",
+    "ThreadId": "350074",
+    "Html": "<p>The source code zip for NAudio 1.5 is missing files, but you can get the full source code for any version from the Source Code tab above.</p>",
+    "PostedDate": "2012-08-24T01:14:33.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

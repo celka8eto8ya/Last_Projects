@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "629616",
+    "ThreadId": "261885",
+    "Html": "\r\n<p>does anyone know how to create a sinus wave out of the fft data?</p>\r\n<p>I cant find anything &gt;.&lt;</p>\r\n",
+    "PostedDate": "2011-06-18T15:26:21.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629688",
+    "ThreadId": "261885",
+    "Html": "<p>I'm not sure what you mean. Do you want to do an inverse FFT?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-19T01:35:23.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630237",
+    "ThreadId": "261885",
+    "Html": "<p>something like that http://s7.directupload.net/images/110620/9hg33go9.png</p>\r\n<p>How to calculate that what name does it has? Do you now any websites or something else that describs how to calc something like that.</p>\r\n<p>And how to draw that very efficient</p>",
+    "PostedDate": "2011-06-20T14:23:42.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630969",
+    "ThreadId": "261885",
+    "Html": "<p>that's not drawn from the FFT, it's just the waveform. NAudio does have some waveform drawing code, but it is not super efficient.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-22T01:10:39.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "631205",
+    "ThreadId": "261885",
+    "Html": "<p>oh really wheres the difference?</p>\r\n<p>And another question what would be an efficient code. It should not look like it is lagging. So i may would have to return an image like bass.dll does?</p>",
+    "PostedDate": "2011-06-22T08:53:43.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

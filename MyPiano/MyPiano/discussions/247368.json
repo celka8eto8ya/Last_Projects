@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "571304",
+    "ThreadId": "247368",
+    "Html": "\r\n<p>I want to record sound from speakers, and then merge this audio file with my video file. But recording with using stereo mix&nbsp; doesn't help because I have videoconference with another user and when i have stereo mix enabled and when he say something\r\n this goes out from my speakers, goes to microphone by stereo mix and go back to him, and he heard himself. Is this possible to record sounds from speakers without using stereo mix, for example get event as in WaveIn DataAvailable where i can get byte array\r\n with sounds from microphone? Thanks for any hel.</p>\r\n<p>Regards</p>\r\n",
+    "PostedDate": "2011-02-23T23:28:29.23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574342",
+    "ThreadId": "247368",
+    "Html": "<p>you can only record the inputs that WaveIn makes available to you, and these depend on the mixer options your sound-card manufacturer's driver provides. Load up the recording mixer and see what you can select as the recording source</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-02T03:42:00.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,71 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "NAudio is freezing on one specific mp3 file.  All other files play ok.  This same mp3 file plays fine in Windows Media Player.  However, in NAudio, this one specific file freezes towards the end of the file.   I have tried two versions of NAudio : 1.7.3 and 1.8.0 (latest) and both have the same freezing issue.  I can provide the MP3 file for developer testing.  Thank you.",
+    "LastUpdatedDate": "2017-03-03T09:24:28.58-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-02-24T07:03:17.57-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudio freezes on one specific mp3 file",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16513
+  },
+  "FileAttachments": [
+    {
+      "FileId": 1641137,
+      "FileName": "048-048.mp3",
+      "DownloadUrl": ".\\1641137"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Hi, thanks for reporting this issue.\n\nYou're welcome to provide an MP3 for testing, but I can't make any promises about when I'll have time to investigate this specific issue.\n\nAs a workaround you could try using MediaFoundationReader instead which might be more reliable.\n",
+      "PostedDate": "2017-02-25T01:39:59.317-08:00",
+      "Id": 207543
+    },
+    {
+      "Message": "Hi thank you for your message.  Unfortunately we cannot afford to switch to MediaFoundationReader at this point in development and usage of NAudio.  If you can please when you have an opportunity, I am attaching the actual sample mp3 file.  This file plays all the way to the end with no problems using Windows Media Player.  However, with NAudio, it NAudio freezes almost at the end of the file.  I would really appreciate your concern to this.  Thank You.",
+      "PostedDate": "2017-02-28T10:42:11.143-08:00",
+      "Id": 207590
+    },
+    {
+      "Message": "If you play this in the NAudio Demo app it seems you'll find that there is no problem playing it to the same point that Windows Media Player does. The only issue I noticed is that NAudio does not accurately work out how far through we are, probably due to changes to bitrate maybe. So long as you wait until WaveOut PlaybackStopped event is fired, you should hear everything.",
+      "PostedDate": "2017-03-02T11:19:16.777-08:00",
+      "Id": 207618
+    },
+    {
+      "Message": "Thanks.   It looks like it is something that should be corrected.  I was able to do a workaround with your suggestion by also checking if playbackstate is stopped as you mentioned:\n\nprivate bool endOfStream()\n        {\n\n            try\n            {\n                // To check for end of file, check stream position\n                // In addition, also check PlaybackState \n                // Since NAudio does not accurately work out how far through we are, probably due to changes to bitrate\n                if (fileWaveStream.Position >= fileWaveStream.Length || waveOut.PlaybackState == PlaybackState.Stopped)\n                {\n                    return true;\n                }\n                else\n                {\n                    return false;\n                }\n\n            }\n            catch (Exception ex)\n            {\n                return true; // if we have an error mark as end of stream true\n            }\n\n        }",
+      "PostedDate": "2017-03-03T08:42:41.303-08:00",
+      "Id": 207623
+    },
+    {
+      "Message": "NAudio works out the length of an MP3 file by examining each frame and calculating how many samples it ought to decompress into. But sometimes (maybe due to corruption) that is wrong. Can be very hard to track down, so the solution you show is the right way to work around this.",
+      "PostedDate": "2017-03-03T09:24:28.58-08:00",
+      "Id": 207624
+    }
+  ]
+}

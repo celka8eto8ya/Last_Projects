@@ -1,0 +1,91 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 7,
+    "Custom": null,
+    "Description": "I've got this code \r\n\r\n    static void Main(string[] args)\r\n    {\r\n        try\r\n        {\r\n            Mp3FileReader reader = new Mp3FileReader(@\"C:\\testAudio.mp3\");\r\n            long count = reader.Length;\r\n            if (count <= int.MaxValue)\r\n            {\r\n                 byte[] info = new byte[count];\r\n                 reader.Read(info, 0, (int)count);\r\n                 Console.WriteLine(\"Succesfull read\");\r\n            }\r\n            else\r\n                 Console.WriteLine(\"Could not read\");\r\n         }\r\n         catch(Exception ex)\r\n         {\r\n             Console.WriteLine(ex);\r\n         }\r\n    }\r\n\r\nthat prints out the following exception message\r\n\r\n    System.ArgumentException: Destination array was not long enough. Check destIndex and length, and the array's lower bounds. \r\n    at System.Array.Copy(Array sourceArray, Int32 sourceIndex, Array destinationArray, Int32 destinationIndex, Int32 length, Boolean reliable) \r\n    at System.Array.Copy(Array sourceArray, Int32 sourceIndex, Array destinationArray, Int32 destinationIndex, Int32 length) \r\n    at NAudio.Wave.AcmMp3FrameDecompressor.DecompressFrame(Mp3Frame frame, Byte[] dest, Int32 destOffset) in C:\\NAudio-Source\\NAudio\\FileFormats\\Mp3\\Mp3FrameDecompressor.cs:line 50 \r\n    at NAudio.Wave.Mp3FileReader.Read(Byte[] sampleBuffer, Int32 offset, Int32 numBytes) in C:\\NAudio-Source\\NAudio\\Wave\\WaveStreams\\Mp3FileReader.cs:line 338 \r\n    at Tester.Program.Main(String[] args) in C:\\Tester\\Program.cs:line 30\r\n\r\nI've dowloaded NAudio code and I've been debugging it but I can't find the cause of the error, although, as you can see on the stack trace is in *NAudio-Source\\NAudio\\FileFormats\\Mp3\\Mp3FrameDecompressor.cs:line 50*\r\n\r\n¿Am I doing something wrong? By the way, it only happens with a few mp3 files, others are read just fine. I'm attaching one of the files that can't be read\r\n\r\nThanx",
+    "LastUpdatedDate": "2012-07-20T03:53:47.417-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-04-04T07:55:58.19-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Destination array was not long anough when reading mp3 file whit NAudio",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 16345
+  },
+  "FileAttachments": [
+    {
+      "FileId": 364476,
+      "FileName": "14-Hammer to fall.MP3",
+      "DownloadUrl": ".\\364476"
+    },
+    {
+      "FileId": 461417,
+      "FileName": "b976c23b-cfb2-49ee-bf7c-13ce69a347fc.mp3",
+      "DownloadUrl": ".\\461417"
+    },
+    {
+      "FileId": 461418,
+      "FileName": "b976c23b-cfb2-49ee-bf7c-13ce69a347fc.mp3",
+      "DownloadUrl": ".\\461418"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Normally you read from a stream in smaller chunks (e.g. 1kB at a time), so I am not surprised this doesn't work. But thanks for submitting an example file - I'll see if I can test this scenario and find out what the issue is when I get a chance.",
+      "PostedDate": "2012-04-26T09:08:50.103-07:00",
+      "Id": 63834
+    },
+    {
+      "Message": "Hello Mark, I've continue to debug the code, NAdio include, and the problem has nothing to do with trying to read the whole file at once. Te problem occurs when decompressing one specific frame. The frame read is of size 3072 (bytes), when decompressing with AcmInterop.acmStreamConvert, the resulting decompressed length is of 27648 bytes. But then the decomprresBuffer on Mp3FileReader, where the decompressed bytes are copied, is of length 9216 (in my case), thus the error when trying to copy 27648 bytes into an 9216 lengthed byte array on Mp3FrameDecompressor.DecompressFrame (line 50).\nFirst, initialization of decompressBuffer on Mp3FileReader is as follows\nthis.decompressBuffer = new byte[1152 * bytesPerSample * 2]; (which in may case yields an array of lenght 9216)\nThis initialization is acompanied by the following comment:\n// no MP3 frames have more than 1152 samples in them\n// some MP3s I seem to get double\nand this has gotten me thinking \"¿Is it alright if I increase the size of decompressBuffer by some value or would that have some freak effect somewhere else on the code? ¿Could it be possible that this particular frame contains more bytes than usual when decompressed or is the some error of AcmInterop.acmStreamConvert, that is, the codecs?\"\nSome comments on this would be great.\nThanks a lot again, an love using NAudio.\n(By the way, all this was tested with the file i previously attached. The conflicted frame is the second frame read if readding after calling Seek(19888128, SeekOrigin.Begin)). I'm pasting some code:\n\n public static void NAudioTest()\n        {\n            try\n            {\n                using (Mp3FileReader reader = new Mp3FileReader(@\"F:\\Music\\__PRUEBA\\14-Hammer to fall.mp3\"))\n                {\n                    byte[] info = new byte[2048];\n                    reader.Seek(19888128, SeekOrigin.Begin);\n                    reader.Read(info, 0, 2048);\n                    Console.WriteLine(\"Succesfull read\");                    \n                }\n            }\n            catch (Exception ex)\n            {\n                Console.WriteLine(ex);\n            }\n\n            Console.ReadLine();\n        }        \n",
+      "PostedDate": "2012-04-27T02:34:10.883-07:00",
+      "Id": 63880
+    },
+    {
+      "Message": "that's interetsing, but I was able to successfully play your example file using NAudio demo, so I can't understand why it doesn't work for you. Can you play it with NAudioDemo?",
+      "PostedDate": "2012-04-27T03:11:47.56-07:00",
+      "Id": 63882
+    },
+    {
+      "Message": "Hi Mark, I tried NAudioDemo, and playing the file also fails, at around 1:52 minutes from the start. From then on the file keeps playing, but \"jumpy\". I try it also on Windows Media Player, and, althought it keeps playing normally, around 1:52 theres like a glitch sound. I'm thinking maybe the file is corrupted? Or maybe my set of codecs is not the ideal one?? Well, if you find out anything else, please let me know.",
+      "PostedDate": "2012-04-27T06:24:14.187-07:00",
+      "Id": 63890
+    },
+    {
+      "Message": "I have exactly the same problem with a different mp3 file. In my case the decompressed length is 32256, which does not fit in the decompressBuffer (of length 9216).\nMaybe the cause does not lie within NAudio, but it would be nice if NAudio handles this exceptional case gracefully.",
+      "PostedDate": "2012-05-11T09:32:00.503-07:00",
+      "Id": 65496
+    },
+    {
+      "Message": "Hi!\r\n\r\nIs there any development regarding this issue?\r\n\r\nI'm having the same issues that are represented here, I think all of them:\r\n\r\n1 - Listening to the file in Windows Media Player either works flawlessly (in some files) or sounds, in fact, like a glitch (in the same frames where NAudio crashes);\r\n2 - Of course I try-catched the Read method in NAudio, but that creates a silence inside the audio, as you would expect;\r\n3 - If I play the file in NAudio once from beginning to end, the glitches sound much more audible and clear; however, if I repeat the problem region over and over again those glitches start to fade away, so I think that this issue might have something to do with the read buffer after all.\r\n\r\nThanks in advance!\r\n\r\nBruno Coelho",
+      "PostedDate": "2012-07-19T09:11:24.26-07:00",
+      "Id": 70472
+    },
+    {
+      "Message": "hi, no active development, but the MP3 file you uploaded contains a frame at a different sample rate, which is something NAudio currently cannot handle",
+      "PostedDate": "2012-07-20T03:53:47.417-07:00",
+      "Id": 70538
+    }
+  ]
+}

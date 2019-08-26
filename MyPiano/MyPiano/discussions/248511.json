@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "575873",
+    "ThreadId": "248511",
+    "Html": "\r\n<p>Hello everyone!<br>\r\n<br>\r\nI have a rather interesting problem to solve.<br>\r\n<br>\r\nI want to take a very simple sound (one note played on the piano) and try to process it in such a way that I can print out which note is most likely being played.<br>\r\n<br>\r\nFrom some googling and searching I have come across the fast fourier transform but am not entirely sure how I would use this to analyze data from a wav file.</p>\r\n<p>&nbsp;</p>\r\n<p>This is my idea of what to do so far:</p>\r\n<p>Take a 1/10 second chunk of the file and count how many wave cycles are in that chuck. &nbsp;To do this I could count the number of crests and troughs??</p>\r\n<p>Then divide by the time. (tenth of a second) to get the frequency.</p>\r\n<p>&nbsp;</p>\r\n<p>Any thoughts and ideas would be much appreciated.</p>\r\n",
+    "PostedDate": "2011-03-04T17:34:16.467-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "576486",
+    "ThreadId": "248511",
+    "Html": "<p>Hi!</p>\r\n<p>For starters, Ill give you a few helpful links. This is what I read and used to help me do 'pitch detection'. Basically, FFT is the way to go for what you want as it is simple and usually the basic approach to this:</p>\r\n<p>Introduction to the Frequency Domain and the Fast Fourier Transform:</p>\r\n<p><a href=\"http://eamusic.dartmouth.edu/~book/MATCpages/chap.3/3.1.freq_dom.html\">http://eamusic.dartmouth.edu/~book/MATCpages/chap.3/3.1.freq_dom.html</a></p>\r\n<p>&nbsp;</p>\r\n<p>Mark Heath's article on using FFT for pitch detection (this is only one part of the article):</p>\r\n<p><a href=\"http://blogs.msdn.com/b/coding4fun/archive/2011/01/05/10112293.aspx\"><a href=\"http://channel9.msdn.com/coding4fun/articles/AutotuneNET\">http://channel9.msdn.com/coding4fun/articles/AutotuneNET</a></a></p>\r\n<p>&nbsp;</p>\r\n<p>And then I just made my own code for translating frequency-pitch.</p>\r\n<p>Feel free to ask some questions if you have problems.</p>",
+    "PostedDate": "2011-03-06T23:34:33.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "511094",
+    "ThreadId": "231962",
+    "Html": "\r\n<p>Hi, I was wondering if it is possible to change a property in the WaveFormat of a custom WaveStream, while the contents of the stream are being played. The sound format that the stream will convert from can change both the sample rate and the number of channels\r\n in the middle of the stream, so I was wondering if the IWavePlayer will detect the change.</p>\r\n",
+    "PostedDate": "2010-10-22T06:54:08.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "511095",
+    "ThreadId": "231962",
+    "Html": "\r\n<p>no this is not supported. you would need to reopen the output device with the updated format</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-10-22T06:55:45.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

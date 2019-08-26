@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "515522",
+    "ThreadId": "233075",
+    "Html": "\r\n<p>tryed to record all current sounds on vista but got only mic record. is it stupid vista twisted all or sample included in rar-file isn't full? anyway thanx for cool project and sorry for my english.</p>\r\n",
+    "PostedDate": "2010-11-01T11:14:00.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "515581",
+    "ThreadId": "233075",
+    "Html": "\r\n<p>you probably need to open the soundcard control panel to set up recording all current sounds and configure the recording source. WaveOut doesn't offer that choice directly.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-01T13:37:15.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "515729",
+    "ThreadId": "233075",
+    "Html": "\r\n<p>i can't do this - in recording settings of sound card i see only mic and line-in.</p>\r\n",
+    "PostedDate": "2010-11-01T21:47:32.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

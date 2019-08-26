@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "646964",
+    "ThreadId": "266419",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I have a problem with opening some waveout instances together.</p>\r\n<p>I defined a class named audioLib and it has an instance of waveout class and Init the waveout &nbsp;instance in constructor of the audioLib class.</p>\r\n<p>The problem is that when I define an array with 50 indices of audioLib class ( audioLib[] al = new audioLib[50] ) The program faces an exception and it close the program, but if I define about 30 instances of audioLib there's no any problem.</p>\r\n<p>Exception handling says this:&nbsp;AlreadyAllocated calling waveOutOpen</p>\r\n<p>Please help. I really don't know what's the problem.</p>\r\n<p>Thanks in advance</p>\r\n",
+    "PostedDate": "2011-07-25T00:38:23.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647628",
+    "ThreadId": "266419",
+    "Html": "<p>It may be simply a driver issue not letting you have that many concurrent instances of WaveOut. Have you considered having just one WaveOut and using a mixer to mix in the sounds you want to play?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-26T02:46:05.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647688",
+    "ThreadId": "266419",
+    "Html": "<p>Hi Mark</p>\r\n<p>Before anything I want to say thanks for your great project. It's really the best audio library I've ever seen :)</p>\r\n<p>As you said it's a driver issue. It seems that I can have 32 channel at most with my driver.</p>\r\n<p>I tried to use mixer but I'm new with this library. I tried to use mixer. &nbsp;I have a 16 bit waveFormat and there's a&nbsp;WaveMixerStream32 class that needs 32 bit waveformat.&nbsp;</p>\r\n<p>It would be nice if you can help me to setup a mixer for my scenario.</p>\r\n<p>I have something like this:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;WaveFormat wf = new WaveFormat(8000, 16, 1); &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp;waveProvider = new BufferedWaveProvider(wf);</p>\r\n<p>&nbsp;waveOut = new WaveOut();&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>How can I add my waveProvider to mixer? I found&nbsp;WaveProviderToWaveStream in a&nbsp;<a href=\"http://stackoverflow.com/\">stackoverflow.com</a>&nbsp;post of you for adding provider to mixer. But there's some problems with converting my waveformat.</p>\r\n<p>Thanks again</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-07-26T05:34:07.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647689",
+    "ThreadId": "266419",
+    "Html": "<p>you can use WaveChannel32 for now to make a mixer input. I'm hoping to make this kind of task easier in NAudio 1.5 with a new ISampleProvider interface</p>",
+    "PostedDate": "2011-07-26T05:36:11.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647718",
+    "ThreadId": "266419",
+    "Html": "<p>I get the error \"The method or operation is not implemented.\" with this code:</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>            WaveFormat wf = <span style=\"color: blue;\">new</span> WaveFormat(8000, 16, 1);\r\n            \r\n            waveProvider = <span style=\"color: blue;\">new</span> BufferedWaveProvider(wf);\r\n            waveProvider.DiscardOnBufferOverflow = <span style=\"color: blue;\">true</span>;\r\n            \r\n            WaveProviderToWaveStream wpws = <span style=\"color: blue;\">new</span> WaveProviderToWaveStream(waveProvider);\r\n\r\n            WaveChannel32 waveChan32 = <span style=\"color: blue;\">new</span> WaveChannel32(wpws);\r\n\r\n            WaveMixerStream32 mixer = <span style=\"color: blue;\">new</span> WaveMixerStream32();\r\n\r\n            mixer.AddInputStream(waveChan32);\r\n\r\n            waveOut = <span style=\"color: blue;\">new</span> WaveOut();\r\n\r\n            waveOut.Init(mixer);\r\n\r\n            waveOut.Play();\r\n\r\n</pre>\r\n</div>\r\nWhat's the problem?</p>",
+    "PostedDate": "2011-07-26T06:29:10.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648192",
+    "ThreadId": "266419",
+    "Html": "<p>The problem solved. it was from&nbsp;WaveProviderToWaveStream class. I just commented \"throw new NotImplementedException();\" line in Position set.</p>\r\n<p>Thanks for the solution. it seems that mixer will solve my problem.</p>",
+    "PostedDate": "2011-07-27T03:30:38.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

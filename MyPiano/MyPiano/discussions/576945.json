@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1339300",
+    "ThreadId": "576945",
+    "Html": "Hi,\r<br />\n<br />\n<br />\nWhen i use the player as WaveOut, i can set the volume for that player. Instead of that, i changed the player as WaveOutEvent, so that when i set the volume and compiling it, shows the error like as &quot;NotImplementedException was Caught&quot; i.e) The method or operation is not implemented. Please help me to resolve this error. Thank you in advance.<br />\n",
+    "PostedDate": "2015-01-05T23:34:43.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340207",
+    "ThreadId": "576945",
+    "Html": "Use it like this:\r<br />\n<br />\nwaveOutDevice = new WaveOutEvent();\r<br />\n<br />\nwaveToSample = new WaveToSampleProvider(waveChannel);\r<br />\nvolumeSampleProvider = new VolumeSampleProvider(waveToSample );\r<br />\nsampleToWave = new SampleToWaveProvider(volumeSampleProvider);\r<br />\n<br />\nwaveOutDevice.Init(sampleToWave);\r<br />\n<br />\n<br />\nThen use volumeSampleProvider.<br />\n",
+    "PostedDate": "2015-01-08T15:15:05.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-01-08T20:58:24.24-08:00"
+  }
+]

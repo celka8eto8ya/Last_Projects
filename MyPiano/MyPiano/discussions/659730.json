@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1488824",
+    "ThreadId": "659730",
+    "Html": "Hi, \r<br />\nIm using the NAudio SoundFont class to access the parts of an sf2 file.\r<br />\nI see how to access the SampleHeaders and get the raw audio sample data bytes from the Start and End times, and their Loop starts/ends.\r<br />\nBut I don't get how to connect the Presets to their associated SampleHeader data.\r<br />\nThat is, if I want to get the Sample data for, say, the preset named &quot;Organ 2&quot;, I need some sort of index which points to the SampleHeader for that preset. (The Preset.Name and SampleHeader.SampleName strings don't necessarily match.)\r<br />\n<br />\nThanks,<br />\n",
+    "PostedDate": "2016-11-26T22:46:42.41-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489212",
+    "ThreadId": "659730",
+    "Html": "Incidentally for those interested, I figured out how to do this.\r<br />\nFirst, you don't go through the Presets but rather the Instruments.\r<br />\nYou have to go through the Zones and get their Generators, and access the Generators that are of GeneratorType.SampleID.\r<br />\nThose Generators will have an associated SampleHeader, from which you get the offsets for that Generator in the SampleData.\r<br />\n<br />\nAt least that's how I managed to do it...<br />\n",
+    "PostedDate": "2016-12-04T00:23:50.537-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

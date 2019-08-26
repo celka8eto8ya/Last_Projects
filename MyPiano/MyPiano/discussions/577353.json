@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1340611",
+    "ThreadId": "577353",
+    "Html": "I code a website/ web form using C# ASP.net.  When I run it in debug it works fine but when I host it on a server is does not play the sound.\r<br />\n<br />\nI am told that Servers do not have audio cards but that they use the Client computer to play the sounds... \r<br />\n<br />\nSo why is my website not doing that ? when I go to my site the sound does not play...\r<br />\n<br />\nagain it works on my labtop when I use debug but not on the server.\r<br />\n<br />\nWhy is the server not using the client computers audio driver?\r<br />\n<br />\nhow do I troubleshoot this?<br />\n",
+    "PostedDate": "2015-01-09T23:03:52.03-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340768",
+    "ThreadId": "577353",
+    "Html": "NAudio is not what you should be using to play sounds on a webpage. It does not run in the client, but on the server. Instead, you need to use HTML 5 Audio, or Web Audio API, or even Flash or Silverlight.<br />\n",
+    "PostedDate": "2015-01-11T00:55:44.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "857966",
+    "ThreadId": "362140",
+    "Html": "\r\n<p>Hi all,<br>\r\nI'm not an audio programming expert, but I'm trying to write a C# project using NAudio since some days.</p>\r\n<p>My needs are just to play a sound and to record another sound. Simultaneously. But I met some problems.</p>\r\n<p>Pressing a button application plays my simple mono-frequency sound by a WaveOut using a WaveProvider.</p>\r\n<p>Then I press another button to start recording (using a WaveIn instance)... but here my problems start, because trying to record,\r\n<strong>audio playback stops</strong>.</p>\r\n<p>These are some other tries I made:</p>\r\n<p>1. If I put play/record code inside two classes (separated from main gui class) and try to work using a new thread for each button click (one for play and one for record), then recording doesn't start (breakpoint inside WaveIn.DataAvailable is never reached).</p>\r\n<p>2. If I put play code inside a new thread, but I left recording code inside main gui class, then gui freezes (the only way to stop that is to define an upper limit to the number of buffer readings... but I wouldn't to my gui freezes for a while).</p>\r\n<p>Do you have any idea to help me?<br>\r\nThere is something I'm ignoring?<br>\r\nWhat's the best way to proceed to achieve my goal?</p>\r\n<p>Any suggestion'll be really appreciated.</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2012-07-05T10:11:50.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "869281",
+    "ThreadId": "362140",
+    "Html": "<p>You ought to be able to play and record at the same time unless you are using a soundcard that doesn't support it (which is very rare but I have heard of hem). What driver callback mode are you using?</p>",
+    "PostedDate": "2012-07-16T02:46:50.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "873759",
+    "ThreadId": "362140",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>You ought to be able to play and record at the same time unless you are using a soundcard that doesn't support it (which is very rare but I have heard of hem). What driver callback mode are you using?</p>\r\n</blockquote>\r\n<p>Thank you for answering.</p>\r\n<p>Meanwhile I solved the problem (but I have to study if I'm using best solution).</p>\r\n<p>It seems there were some threading relative problems:<br />1- gui freezed just trying to acquire signal inside the main (gui) thread;<br />2- it isn't possible to acquire a signal in a separate thread just using default \"new WaveIn()\"</p>\r\n<p>To solve 1. Now I'm using a thread for output and a thread for input (both started by gui thread).</p>\r\n<p>To solve 2. To be able to acquire signal I used workaround described here: http://naudio.codeplex.com/workitem/16131</p>\r\n<p>while (isRecording) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread.Sleep(100);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.Windows.Forms.Application.DoEvents();<br />}</p>\r\n<p>When naudio next version is released, I'll try to use directly WaveInEvent.</p>\r\n<p>&nbsp;</p>\r\n<p>PS: I'm using a PCM2902 based chip (I assembled) to work.</p>",
+    "PostedDate": "2012-07-18T08:11:38.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

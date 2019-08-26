@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "577424",
+    "ThreadId": "248928",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm a total newbie so apologies for what is probably a easy task, I'm trying to learn!!</p>\r\n<p>Can anyone provide an example or pointer for using NAudio with the StereoToMonoProvider. I've&nbsp;successfully managed to record a wasapi Line in and now trying to perform&nbsp;separation&nbsp;&nbsp;of the left &amp; right channels into two files.&nbsp;</p>\r\n<p>Thanks in advance&nbsp;</p>\r\n",
+    "PostedDate": "2011-03-08T14:22:48.18-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "578322",
+    "ThreadId": "248928",
+    "Html": "<p>the StereoToMonoProvider is a very new part of NAudio, but should be straightforward to use</p>\r\n<p>Pass in your WaveFileReader to the constructor. To get just the left channel out, set LeftVolume = 1.0f; and RightVolume = 0.0f;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-10T03:00:27.197-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

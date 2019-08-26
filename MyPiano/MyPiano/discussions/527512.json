@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1199248",
+    "ThreadId": "527512",
+    "Html": "here is my code:<br />\n<pre><code> PointPairList list = new PointPairList();\n            PointPairList list2 = new PointPairList();\n            byte[] buffer = e.Buffer;\n            int bytesRecorded = e.BytesRecorded;\n            points = new RollingPointPairList(32768 / 2);\n            buffer1 = new double[(32768 / 2)];\n            int tempint = 0;\n            for (int index = 0; index &lt; 32768; index += 2)\n            {\n\n                buffer1[tempint] = ((buffer[index + 1] &lt;&lt; 8) |\n                                        buffer[index + 0]);\n                tempint++;\n\n            }\n\n            DSP = new DSPclass(buffer1, 44100);\n            DSP.FFT1();</code></pre>\n\ne.buffer is one sample 16 bit samples and not 8 bit samples right?\r<br />\nis there a way to check that ?<br />\n",
+    "PostedDate": "2014-01-27T16:45:28.853-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199540",
+    "ThreadId": "527512",
+    "Html": "check it by looking at the bits per sample of the WaveFormat you are recording with. Usually it is 16 bit, but it is possible to record at other bit depths.<br />\n",
+    "PostedDate": "2014-01-27T23:56:44.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

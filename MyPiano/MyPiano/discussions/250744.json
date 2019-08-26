@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "584609",
+    "ThreadId": "250744",
+    "Html": "\r\n<p>First off, let me say NAudio is an excellent library which helped me a lot on a commercial project a few months ago.</p>\r\n<p>During said project, I installed a small program which used the library on a web server.<br>\r\nThe server itself did not have a sound card nor sound drivers, codecs and the likes.</p>\r\n<p>What I noticed was that NAudio was dependent on the existence of those drivers or codecs in the system, otherwise it would throw some exception.</p>\r\n<p>I noticed the code was dependent on the Windows API and outside DLL files, even for operations which, I believe, should not require a sound card. For example, compositing a Wave file from audio samples.</p>\r\n<p>I think the main point of interest here is <a href=\"http://naudio.codeplex.com/SourceControl/changeset/view/70300#7814\">\r\nWaveInterop.cs</a>.</p>\r\n<p>My question, could NAudio in the future, support such operations without being dependent on third party DLLs - that is, using only binary streams?</p>\r\n<p>Are all these interops required, and if so, why? Couldn't they be replaced with managed code?</p>\r\n<p>Cheers,<br>\r\nAmir Grozki</p>\r\n",
+    "PostedDate": "2011-03-22T13:47:35.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588693",
+    "ThreadId": "250744",
+    "Html": "<p>You need some way of talking to the audio hardware to play or record audio, so you have to call into unmanaged APIs at some point. There are parts of NAudio that are fully manged though, such as the ability to read and write WAV files.</p>",
+    "PostedDate": "2011-03-30T02:49:24.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588906",
+    "ThreadId": "250744",
+    "Html": "<p>I ran into exceptions related to hardware when trying to read and write WAV files, no playing or recording involved.</p>\r\n<p>It is possible I ran into a bug, but unfortunately I cannot recreate it today.</p>\r\n<p>Thank you for your the answer!</p>",
+    "PostedDate": "2011-03-30T09:13:01.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043452",
+    "ThreadId": "250744",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nYou need some way of talking to the audio hardware to play or record audio, so you have to call into unmanaged APIs at some point. There are parts of NAudio that are fully manged though, such as the ability to read and write WAV files.<br />\n</blockquote>\nDoes that mean that you can't run NAudio on a headless server with no sound card in it?  I'm looking to do some bulk processing from a server, not a desktop PC and want to be able to use NAudio to do conversions.\r<br />\n<br />\nIs there a list of external dependencies that may not be present?<br />\n",
+    "PostedDate": "2013-05-14T09:23:23.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043454",
+    "ThreadId": "250744",
+    "Html": "sure, you can use the parts of NAudio that don't need a soundcard. You just can't play audio or record it. If you are converting audio from one format to another for example, you have no need of a soundcard, just whatever codecs you plan to use,.<br />\n",
+    "PostedDate": "2013-05-14T09:24:58.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

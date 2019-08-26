@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "734424",
+    "ThreadId": "288751",
+    "Html": "\r\n<p>Hi. I want to be able to cut some part of wave file and save the rest of it. I'm using WaveViewer control to show waveform of loaded wav file. I have even found a code showing how to trim the wave file(but not cut it in the middle). But I don't have an idea\r\n how to obtain position of wavefile. I mean, when I click on the waveform(in WaveViewer control), how can I get the time of the file?</p>\r\n<p>Or maybe there is some other method?<br>\r\n(I'm using windows forms, not WPF)</p>\r\n",
+    "PostedDate": "2012-02-01T03:49:01.557-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "735047",
+    "ThreadId": "288751",
+    "Html": "<p>You would have to do the calculation yourself, based on the number of pixels along the mouse-click was, and how many milliseconds of audio are represented by one pixel. Also, the WaveForm viewer I made for NAudioDemo scrolls off to the left, so you would also need to know what position in the file the left-most sample represented.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-02-01T10:34:04.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "736457",
+    "ThreadId": "288751",
+    "Html": "<p>Can you give me some more pieces of advice? How to obtain how many miliseconds are represented by pixel? And what is the issue with left-most sample?</p>",
+    "PostedDate": "2012-02-02T03:05:51.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "737449",
+    "ThreadId": "288751",
+    "Html": "<p>you dont have to calc ms. you have to calculate the bytes because you just have to copy a part of the stream.</p>",
+    "PostedDate": "2012-02-02T14:44:49.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "737638",
+    "ThreadId": "288751",
+    "Html": "<p>The code that I found shows trimming using timespan. What's more, I can zoom in and zoom out the waveform. So now, I don't know how to do the cut.</p>",
+    "PostedDate": "2012-02-03T02:27:53.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

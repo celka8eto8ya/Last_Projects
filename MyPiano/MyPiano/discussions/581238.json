@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1353586",
+    "ThreadId": "581238",
+    "Html": "Hello,<br />\n<pre><code>If you wanted to get an estimated count of the number of times a coin dropping sound was made from a slot machine how would you do that?  Noise from other sources at the time could be just as loud.\n</code></pre>\n\n(My actual application is to count the kibble dropping in a cat's auto feeder to confirm that the cat got feed.)\r<br />\n<br />\nFrom the OnDataAvailable method I have saved sample32.ToString() to a text file, but I couldn't make sense of the numbers.\r<br />\n<br />\nJim<br />\n",
+    "PostedDate": "2015-02-17T19:25:58.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354434",
+    "ThreadId": "581238",
+    "Html": "this is not a trivial problem to solve. First you simply should learn to count sounds, by examining the volume of the samples. You'd need to check for one or more samples going above a certain threshold in a set time period, to avoid double-counting the same sound. Once you've done that, then it would be a matter of using filters or FFTs to attempt to differentiate between the sounds you are looking for and other sounds.<br />\n",
+    "PostedDate": "2015-02-20T11:27:26.74-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

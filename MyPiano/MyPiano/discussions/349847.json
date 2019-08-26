@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "814899",
+    "ThreadId": "349847",
+    "Html": "\r\n<p>Hi All,</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks for making this powerfull library avaiable.</p>\r\n<p>I am a newbee in C#, but I gave myself the challange to learn wpf more by trying to convert Audio Playback demo. I succeed by being able to select the output driver model and select the output and then play-pause-stop a file, volume is ok as well. I used\r\n the Dispatcher Timer for the elapsed seconds label control and the slider. They work very well but I am hearing a kind of &quot;tick&quot; at my time intervals when I play a MP3. I thought this was heavy work for the dispatcher timer and try to use System.Timers. However\r\n since this is a different thread then the gui, I am stuck here reading through google for hours but still could not find a way to change my tick event below for the Gui to be invoked; Can you please help?</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> TickTimer()\r\n\t\t\t{\r\n\t\t\t<span style=\"color:blue\">if</span> (waveOut != <span style=\"color:blue\">null</span> &amp;&amp; fileWaveStream != <span style=\"color:blue\">null</span>)\r\n\t\t\t\t{\r\n\t\t\t\tTimeSpan currentTime = ( waveOut.PlaybackState == PlaybackState.Stopped ) ? TimeSpan.Zero : fileWaveStream.CurrentTime;\r\n\t\t\t\t<span style=\"color:blue\">if</span> (fileWaveStream.Position &gt;= fileWaveStream.Length)\r\n\t\t\t\t\t{\r\n\t\t\t\t\tsliderSeconds.Value = 0;\r\n\t\t\t\t\tlabelSeconds.Content = <span style=\"color:#a31515\">&quot;&quot;</span>;\r\n\t\t\t\t\t<span style=\"color:green\">//buttonStop.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));</span>\r\n\t\t\t\t\tbuttonNext.RaiseEvent(<span style=\"color:blue\">new</span> RoutedEventArgs(Button.ClickEvent));\r\n\t\t\t\t\t}\r\n\t\t\t\t<span style=\"color:blue\">else</span>\r\n\t\t\t\t\t{\r\n\t\t\t\t\tsliderSeconds.Value = (<span style=\"color:blue\">int</span>)currentTime.TotalSeconds;\r\n\t\t\t\t\tlabelSeconds.Content = String.Format(<span style=\"color:#a31515\">&quot;{0:00}:{1:00}/{2:00}:{3:00}&quot;</span>, (<span style=\"color:blue\">int</span>)currentTime.TotalMinutes,\r\n\t\t\t\t\t\tcurrentTime.Seconds, (<span style=\"color:blue\">int</span>)fileWaveStream.TotalTime.TotalMinutes, fileWaveStream.TotalTime.Seconds);\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t<span style=\"color:blue\">else</span>\r\n\t\t\t\t{\r\n\t\t\t\tsliderSeconds.Value = 0;\r\n\t\t\t\t}\r\n\t\t\t}\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-03-23T15:50:52.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "815464",
+    "ThreadId": "349847",
+    "Html": "<p>In WPF, to run something on the GUI thread, you need to use BeginInvoke on the Dispatcher. You can get the Dispatcher off any control on your form.</p>",
+    "PostedDate": "2012-03-26T02:55:15.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

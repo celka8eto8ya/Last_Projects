@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1004127",
+    "ThreadId": "433839",
+    "Html": "How would I use NAudio to get a BPM count from a live stream of a drum track? This should be fairly easy, as each drum strike counts as a beat, so the processing required isn't complex (I guess), but I am unsure how to go about detecting the peaks in the signal.  <br />\n",
+    "PostedDate": "2013-02-20T09:49:11.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1004275",
+    "ThreadId": "433839",
+    "Html": "I think you have to capture the signal and then process an Fast-Fourier-Transform to detect low-frequencie-peaks only (its not enough to search for peaks), for example below 120 Hz. It`s some sort of complex - but if you find a FFT-Method it would not that hard when you only look for low-frequency peaks.\r<br />\n<br />\nPlease excuse my bad english.<br />\n",
+    "PostedDate": "2013-02-20T14:57:42.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1004679",
+    "ThreadId": "433839",
+    "Html": "Thanks for that advice Z74.<br />\n",
+    "PostedDate": "2013-02-21T07:10:44.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

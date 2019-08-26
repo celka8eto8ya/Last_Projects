@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1224938",
+    "ThreadId": "539648",
+    "Html": "I made an audio player using NAudio. It works fine but the volume fluctuate low and high depending upon the mp3 file. How to achieve replaygain using NAudio? <br />\nSuppose if i have calculated the replaygain and added to the metadata by any other means, how to dynamically adjust volume at run time? Is there any built in function for this? If not how to do it?<br />\n<br />\n<strong>Edit</strong><br />\n<br />\nI'm using volume slider to adjust volume of each song according to the dB value of track gain like below<br />\n<pre><code>//-10.56 is track gain info in dB of a song. Track peak is 1.274087\nvar result = Math.Exp((-10.56) * (2.302585092994046 / 20.0));\ndecibel = (float)result;\nvolumeSlider1.Volume = decibel;\nsetVolumeDelegate(volumeSlider1.Volume);</code></pre>\n\nis this the correct method? why is Track peak used for?<br />\n",
+    "PostedDate": "2014-03-20T11:17:13.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1226404",
+    "ThreadId": "539648",
+    "Html": "There are several IWaveProvider/ISampleProvider implementations in NAudio that will let you modify the volume. For example the VolumeSampleProvider could be inserted into your signal chain. <br />\n",
+    "PostedDate": "2014-03-25T05:05:17.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

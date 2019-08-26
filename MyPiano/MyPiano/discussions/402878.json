@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "940356",
+    "ThreadId": "402878",
+    "Html": "\r\n<p>Hej all!</p>\r\n<p>I build a 3d-sound programm (win Form)&nbsp;with NAudio, that is triggered&nbsp;via an input on the serial port. Great software!</p>\r\n<p>&nbsp;I got All the mixing: 2 to 6 channel done and played by the ASIO driver. But when I have an active serial connection I get the COM&#65279;exception as soon as the playback is requested:&#65279;</p>\r\n<p>&#65279;&#65279;&#65279;&#65279;&#65279;&#65279;&#65279;Unable to instantiate ASIO. Check if STAThread is set.</p>\r\n<p>I searched the net about threading and found some pieces, but am not able to put it all together. Does anybody know how to put the audio output in a proper thread or how to solve this otherwise?</p>\r\n",
+    "PostedDate": "2012-11-12T08:15:55.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940740",
+    "ThreadId": "402878",
+    "Html": "\r\n<p>I haven't seen this one before, but maybe you are creating the ASIO object from a callback from the serial port that is on a non STA thread. Why not get back onto the GUI thread before creating ASIO? You can do this with something like mainForm.BeginInvoke(...)</p>\r\n",
+    "PostedDate": "2012-11-12T23:40:02.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "943789",
+    "ThreadId": "402878",
+    "Html": "\r\n<p>Thank you for that great hint, that solved my problem! And thank you for your fast response!</p>\r\n",
+    "PostedDate": "2012-11-19T00:34:31.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

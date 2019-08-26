@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "643564",
+    "ThreadId": "265498",
+    "Html": "\r\n<p>Dear Mark,</p>\r\n<p>Impressive piece of work you've done with NAudio!</p>\r\n<p>I have tested some of the features and created code.</p>\r\n<p>I was however wondering if there's anyway one can playback sound seamlessly, no matter what lossy or lossless sound source is used?</p>\r\n<p>If so, what are the conditions? And could you post a code sample that will put me in the right direction?</p>\r\n<p>Thanks in advance....</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-07-17T23:17:25.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "644046",
+    "ThreadId": "265498",
+    "Html": "<p>You will effectively need to read ahead in the stream and work out where a &lsquo;gap&rsquo; is &ndash; you need to define a gap for yourself, how long it will be, what tolerance of the volume you want etc. then you will need to read the stream that you&rsquo;re going to mix it with and work out when is the right time to fade in again (similar things to be worked through, tolerance of volume etc).</p>\r\n<p>Then it&rsquo;s just a matter of mixing the two streams together at the right point in time; fade in the second stream as you fade out the first.</p>\r\n<p>Regards,<br />Sebastian</p>",
+    "PostedDate": "2011-07-18T17:50:11.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

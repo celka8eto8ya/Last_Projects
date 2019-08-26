@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1481864",
+    "ThreadId": "657364",
+    "Html": "I have an MP4 audio file to which I have a public URL (audio file contains voice message that was recorded by Facebook Messenger mobile application). I am trying to convert this mp4 file (Codec: MPEG AAC Audio, Channels: Stereo, Sample rate: 16000) to WAV stream (running on Windows 10 Home) using this code:<br />\n<pre><code>using (MediaFoundationReader reader = new MediaFoundationReader(url))\n{\n    ResamplerDmoStream resampledReader;\n    using (resampledReader = new ResamplerDmoStream(reader,\n                        new WaveFormat(16000, 16, 1)))\n    {\n        //save to file just to verify that conversion was done OK\n        voiceToFile(resampledReader);\n     }\n}</code></pre>\n\nThe following is the implementation of voiceToFile method<br />\n<pre><code>private static void voiceToFile(Stream audio)\n{\n    byte[] b;\n\n    using (BinaryReader br = new BinaryReader(audio))\n    {\n        b = br.ReadBytes((int)audio.Length);\n     }\n     \n     File.WriteAllBytes(&quot;c:\\\\fbaudio_&quot; + Guid.NewGuid().ToString() + &quot;.wav&quot;, b);\n}</code></pre>\n\nThe WAV file created cannot be played by any player. Please advise what could be the reason for this.<br />\n",
+    "PostedDate": "2016-08-23T02:21:18.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481938",
+    "ThreadId": "657364",
+    "Html": "I´d try a different Resampler, perhaps your DMO can´t resample that Waveformat.\r<br />\n<br />\nOr you don´t have MediaFoundation installed.\r<br />\n<br />\nAnd you should use the Read method to fill into a buffer instead of reading all at once. I don´t know, if then the Audio is Resampled correctly or at all.<br />\n",
+    "PostedDate": "2016-08-23T16:07:05.22-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

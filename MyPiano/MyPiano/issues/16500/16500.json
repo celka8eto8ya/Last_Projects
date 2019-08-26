@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-10-12T08:04:31.683-07:00",
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "Hello,\r\nI'm reading some wave files using AsioOut and a WaveMixerStream32. Everything works great but I noticed that sometimes (1 time on 5) when I close and start again my program, I have a loud signal playing in the output of my audiocard and I have to restart the app to delete the signal and come back to normal.\r\n\r\nI'm thinking it's the asioOut which stays open or something like that.\r\nWhen i close the app, I'm doing the following :\r\n1.  I remove all the input stream in my audio mixer and I stop the asioOut\r\n_asioOut.Stop();\r\n\r\n2. After 0.5s, I dispose all the mixer, the channels and asioOut and set them to null.\r\n\r\nAm I doing something wrong here?\r\nHow can I get rid of the loud signal ? \r\n\r\n(My audio card is a Komplete Audio 6 and it's compatible asio driver)\r\n\r\nThanks for your help !",
+    "LastUpdatedDate": "2016-10-12T08:04:31.683-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-09-07T03:25:43.977-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "AsioOut dispose() - keep signal",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16500
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Sometimes some audio card drivers seem to get stuck playing the same buffer over and over. That might be what's happening here. But it's very hard to suggest what could be done to work around this. Does it happen at higher latency settings?",
+      "PostedDate": "2016-09-08T14:22:54.623-07:00",
+      "Id": 203979
+    },
+    {
+      "Message": "It happens at higher and lower latencies. ",
+      "PostedDate": "2016-09-19T01:32:39.003-07:00",
+      "Id": 204145
+    },
+    {
+      "Message": "I resolved the problem using a MultiplexingWaveProvider with silent sound on the output I don't want sound on.",
+      "PostedDate": "2016-10-12T07:40:21.3-07:00",
+      "Id": 204646
+    },
+    {
+      "Message": "great, glad you found a solution",
+      "PostedDate": "2016-10-12T08:04:10.73-07:00",
+      "Id": 204647
+    }
+  ]
+}

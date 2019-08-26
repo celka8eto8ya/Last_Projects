@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "967394",
+    "ThreadId": "415206",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I use NAudio to capture the loopback sound from my computer and I receive 32 bit sound according to the WaveFormat. Is there a way I can convert the received bytes from 32 bit to 16 bit? Or maybe to make WasapiLoopbackCapture generate 16 bit sound?</p>\r\n<p>Here is what I tried:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> btnStart_Click(<span style=\"color:blue\">object</span> sender, EventArgs e)\n{\n    _waveIn = <span style=\"color:blue\">new</span> WasapiLoopbackCapture();\n\n    _waveIn.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(_waveIn_DataAvailable);\n\n    _waveIn.StartRecording();\n}\n\n<span style=\"color:blue\">void</span> _waveIn_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\n{\n\n    <span style=\"color:blue\">byte</span>[] newArray16Bit = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[e.BytesRecorded / 2];\n    <span style=\"color:blue\">short</span> two;\n    <span style=\"color:blue\">int</span> value;\n    <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> i = 0, j = 0; i &lt; e.BytesRecorded; i = i &#43; 4, j = j &#43; 2)\n    {\n        value = (BitConverter.ToInt32(e.Buffer, i));\n        two = (<span style=\"color:blue\">short</span>)(value % <span style=\"color:blue\">short</span>.MaxValue);\n\n        newArray16Bit[j] = (<span style=\"color:blue\">byte</span>)(two &amp; 0xFF);\n        newArray16Bit[j &#43; 1] = (<span style=\"color:blue\">byte</span>)((two &gt;&gt; 8) &amp; 0xFF);\n    }\n\n    <span style=\"color:green\">//do something with the newArray16Bit </span>\n}\n</pre>\r\n</div>\r\n<p></p>\r\n<p>I receive a sound which is similar with what my computer is actually playing but it sounds like a am listening to a radio station with a very poor signal (the sound is not clean - you can nearly understand what the sound is about).</p>\r\n<p>Does anybody know how can I clean up the sound?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-12-22T04:43:29.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967410",
+    "ThreadId": "415206",
+    "Html": "\r\n<p>I just changed the type of the 'two' variable from int to float and calculated it by multiplying the 'value' with short.MaxValue.</p>\r\n<p>So I replace:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>two = (<span style=\"color:blue\">short</span>)(value % <span style=\"color:blue\">short</span>.MaxValue);\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>with:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>two = (<span style=\"color:blue\">short</span>)(value * <span style=\"color:blue\">short</span>.MaxValue);\r\n</pre>\r\n</div>\r\nNow the noise is gone but the entire sound is lower than it should be. Any ideas?\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-12-22T06:41:07.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967412",
+    "ThreadId": "415206",
+    "Html": "\r\n<p>yes, it is likely that your 32 bit incoming data is float not int. Multiplying by short.MaxValue is correct. It may just be that your recorded signal level is low.</p>\r\n",
+    "PostedDate": "2012-12-22T06:48:45.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981504",
+    "ThreadId": "415206",
+    "Html": "\r\n<p>It was because I was playing it as a mono sound even if the signal was stereo. After I set my player to play it as a stereo sound everything was perfect! Thanks!</p>\r\n",
+    "PostedDate": "2012-12-28T16:24:40.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

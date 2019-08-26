@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "578890",
+    "ThreadId": "249286",
+    "Html": "<p>Together with a wrapper for SoundTouch, I'm looking to create something that will create a rewind action where the user can hold down the button/hotkey and hear the sound wizzing past. Not entirely unlike ye olde days of analogue. It would be a nice smooth rewind feature, as opposed to seeking a certain position. I found this post from  Mark;</p>\n<p>http://stackoverflow.com/questions/1221140/read-a-sound-backward-with-directsound</p>\n<p>But this talks about using the WaveFileReader and WaveFileWriter classes.&nbsp; I am having difficulty working out how it might be possible when using classes such as the WMAFileReader.</p>\n<p>Any help would be appreciated.</p>",
+    "PostedDate": "2011-03-10T23:27:34.253-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "579096",
+    "ThreadId": "249286",
+    "Html": "<p>NAudio has no capability to convert back to WMA, so you'd have to use the WMAFileReader to convert to WAV, and then reverse that using the technique shown on stack overflow</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-11T08:29:47.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "144869",
+    "ThreadId": "43577",
+    "Html": "I've was having some trouble using WaveInStream to record wav files.&nbsp; If I ran everything in a single WinForms thread (as the Demo project does), it worked fine.&nbsp; Anything else, and it barfed on me.<br>\r\n<br>\r\nBased on some of Mark's blog posts and the behavior I saw, I'm guessing that the native WaveIn was calling the callback function a few more times after I had stopped recording.&nbsp; Since I had disposed of the target window, I got a null reference exception.<br>\r\n<br>\r\nAnyway, I think I may have fixed it by adding a simple check to WaveInStream.Callback():<br>\r\n<code>\r\n// Make sure that our target window isn't disposed.<br>\r\nif (hBuffer.Target != null)<br>\r\n{<br>\r\n&nbsp;&nbsp;&nbsp; ...<br>\r\n}<br>\r\n</code>\r\n<br>\r\nAny thoughts?&nbsp; This doesn't seem like the most elegant fix to me, but I'm not sure how else to fix it (short of keeping a form open so that the target always exists).<br>\r\n<br>\r\n(I also tidied up WaveInStream a bit so that it works more like WaveOut...&nbsp; I'd be happy to share if anyone is interested.)<br>\r\n",
+    "PostedDate": "2009-01-06T14:23:15.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "145061",
+    "ThreadId": "43577",
+    "Html": "hi, WaveInStream is still a bit raw. I really want to rethink the way it works, but it does a job for now. Do feel free to send me your updated version, and I'll have a look at getting it included in the main source.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-01-07T08:03:32.197-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

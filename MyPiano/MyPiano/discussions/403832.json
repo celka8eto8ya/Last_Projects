@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "944120",
+    "ThreadId": "403832",
+    "Html": "\r\n<p>Hi people,</p>\r\n<p>I'm new to NAudio, well... more especifically,&nbsp;to Audio programming in general.<br>\r\nI already did somethings with NAudio like load a .wav file, read the content of it, plot it like a waveform, etc, but now, i want to do a thing I dont know how...<br>\r\nI'm studying about it on Google, etc... anyway, if the question and answer was here on the Comunnity, I think it would be a good contribution to many users.<br>\r\n<br>\r\nI want to interpret some patterns in Musics. For example:<br>\r\n<br>\r\nI have a eletronic music (that's just a example) where I have a pattern that gives me beats like &quot;tucs tucs tucs tucs&quot;.<br>\r\nHow can I reach this parts on the Music and point the time it occurs?<br>\r\nI want to use the same thought to anothers patterns, the basic concept I think would be the same...</p>\r\n<p>Anyone can give me a help around this?</p>\r\n<p>Best regards, thanks.</p>\r\n",
+    "PostedDate": "2012-11-19T10:08:16.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944572",
+    "ThreadId": "403832",
+    "Html": "\r\n<p>It sounds like you want a beat detection algorithm. NAudio does not come with one, but there are some\r\n<a href=\"http://stackoverflow.com/questions/4422343/c-music-beat-detection-algorithm\">\r\nother libraries</a> that can do this. Unfortunately, you're unlikely to find something for .NET, so you'll need to port it or write an interop wrapper for it if you want to use it with NAudio</p>\r\n",
+    "PostedDate": "2012-11-20T07:03:16.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

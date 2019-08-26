@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "573740",
+    "ThreadId": "247971",
+    "Html": "\r\n<p>In website JamLegend <a title=\"http://www.jamlegend.com/jam\" href=\"http://www.jamlegend.com/jam\" target=\"_self\">\r\nhttp://www.jamlegend.com/jam</a>. (This game is a music game(like tap tap,Guitar Hero).)</p>\r\n<p>It is a game that you can upload a song to its server. And it will find out does your song match any songs in its database. But It doesn't check bit by bit. Because I've upload the same song but have different bit rate, sample rate and it doesn't have the\r\n same start time. But it's stilled find the correct song. And the note comes in the correct time.</p>\r\n<p>Can NAudio Check does two music files in this condition (that have different bit rate, sample rate and doesn't have the same start time) are the same?</p>\r\n<p>Sorry for my English. I'm thai. And I don't good much in English.</p>\r\n",
+    "PostedDate": "2011-03-01T02:40:25.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573741",
+    "ThreadId": "247971",
+    "Html": "<p>No, I'm afraid this capabilitiy is not built in to NAudio, and is a very difficult problem to solve.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-01T02:43:14.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

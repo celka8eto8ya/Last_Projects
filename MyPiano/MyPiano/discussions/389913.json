@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "894367",
+    "ThreadId": "389913",
+    "Html": "\r\n<p>Hi, I want to know if we can directly use the PCM data that we get using the microphone class inside XNA. Without making the recording with the function wavein</p>\r\n<p>thanks in advancec</p>\r\n",
+    "PostedDate": "2012-08-01T14:47:00.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896005",
+    "ThreadId": "389913",
+    "Html": "<p>what do you want to do with the PCM data?</p>",
+    "PostedDate": "2012-08-06T06:15:29.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

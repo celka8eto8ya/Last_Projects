@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1200492",
+    "ThreadId": "528306",
+    "Html": "i'm looking into writing a audio chat program that uses PTT (push-to-talk) headsets. i started playing with the Network Chat Demo. perhaps if i've missed the point of the demo. it works fine on the loopback ip or the machine's unique ip (e.g. 10.162.15.15).  but when i have it running on two different machines with the IPs pointing at each other (10.162.16.15 points to 10.162.16.10 and vice versa), i get the error in the subject line when i click start streaming.  in the code, i see a comment about code to allow us to talk to ourselves for test purposes...<br />\n<pre><code>            udpSender = new UdpClient();\n            udpListener = new UdpClient();\n            //endPoint = new IPEndPoint(IPAddress.Parse(&quot;127.0.0.1&quot;), 7080);\n            // To allow us to talk to ourselves for test purposes:\n            // http://stackoverflow.com/questions/687868/sending-and-receiving-udp-packets-between-two-programs-on-the-same-computer\n            //udpSender.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);\n            udpListener.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);\n            //udpSender.Client.Bind(endPoint);\n            udpListener.Client.Bind(endPoint);\n</code></pre>\n\nevidently we're not to change the IP in the demo? i'm not sure what changes in the code i'd need to make here to have it work between two machines.  any pointers appreciated.<br />\n",
+    "PostedDate": "2014-01-29T07:22:03.537-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200625",
+    "ThreadId": "528306",
+    "Html": "well, i figure it out what changes i needed to make...at least i got something working.<br />\n",
+    "PostedDate": "2014-01-29T11:55:06.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

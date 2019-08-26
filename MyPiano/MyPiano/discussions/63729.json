@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "216708",
+    "ThreadId": "63729",
+    "Html": "<p>Hi,</p>\r\n<p>I'm currently using Wavein and Wavefilewriter to record from a microphone to a wav file and then encode it with lame.</p>\r\n<p>I want to be able to display my waveform in the painter while I'm recording and be able to adjust the recording volume as well.</p>\r\n<p>Any help or samples would be greatly appreciated.</p>",
+    "PostedDate": "2009-07-28T03:24:14.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1083612",
+    "ThreadId": "454205",
+    "Html": "First of all, thanks for the great audio library! You have done a fantastic job at both development and support.<br />\n<br />\nQuestions 1) If I want to stream an MP3 (not playback a stream) do I simply put the MP3 in a byte array and write out X number of bytes to a specified IP and port? Or is there more to it?<br />\n<br />\nQuestion 2) How could I playback a G722 stream with Naudio? I think I understand how to do a wholesale conversion but the idea of decoding and playing back a stream in real time is a little confusing.<br />\n",
+    "PostedDate": "2013-08-22T06:19:44.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085900",
+    "ThreadId": "454205",
+    "Html": "1) yes although it depends what the receiving end is expecting. You'd need to try to send it out at real-time speed, which could be tricky to get right\r<br />\n2) NAudio includes a managed G722 codec. The network chat demo in NAudioDemo shows how this is used.<br />\n",
+    "PostedDate": "2013-08-28T12:09:34.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

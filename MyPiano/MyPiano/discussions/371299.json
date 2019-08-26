@@ -1,0 +1,130 @@
+[
+  {
+    "Id": "870720",
+    "ThreadId": "371299",
+    "Html": "\r\n<p>hi,</p>\r\n<p>I am grabbing voice from microphone using&nbsp;<span>wave<span>InEvent&nbsp;</span>_DataAvailable. As the microphone is not high&nbsp;sensitivity (can't record voice from long distance), I'd like to&nbsp;amplify each grabbed byte in&nbsp;waveInEvent&nbsp;_DataAvailable,\r\n so the sound is going to be increased double to&nbsp;triple&nbsp;times,&nbsp;</span></p>\r\n<p>&nbsp;</p>\r\n<p><span>so how can I do that using NAudio?</span></p>\r\n<p>&nbsp;</p>\r\n<p><span>thanks</span></p>\r\n",
+    "PostedDate": "2012-07-17T04:43:55.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "870728",
+    "ThreadId": "371299",
+    "Html": "<p>check out the calculator on this page</p>\r\n<p><a href=\"http://www.sengpielaudio.com/calculator-amplification.htm\">http://www.sengpielaudio.com/calculator-amplification.htm</a></p>",
+    "PostedDate": "2012-07-17T05:03:39.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893086",
+    "ThreadId": "371299",
+    "Html": "<p>you need to convert the incoming data into samples (use BitConverter.ToInt16 if it is 16 bit). Then you can multiply the sample value. But you need to beware of clipping when doing integer arithmetic, which is why most audio applications convert to floating point, before doing any DSP, and then hard limit the audio before going back down to 16 bit.</p>",
+    "PostedDate": "2012-07-30T08:08:03.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893115",
+    "ThreadId": "371299",
+    "Html": "<p>Just wanted to add that perception of loudness of sound is a logarithmic function, and not proportional to the voltage (floats in this case).</p>\r\n<p>I remember seeing some DSP code in the latest branch. Is there a class to convert the bytes into floats taking the bitrate into account?</p>",
+    "PostedDate": "2012-07-30T08:41:31.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "895499",
+    "ThreadId": "371299",
+    "Html": "<p>Hi, thanks for replying, I have this code sample:</p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>            Int16 int16 = BitConverter.ToInt16(buffer, 0);\r\n            int16 *= 2;\r\n            buffer = BitConverter.GetBytes(int16);\r\nbut not worked !</pre>\r\n<pre><span style=\"font-family: Consolas; font-size: x-small;\"></span>any help please?</pre>\r\n</div>\r\n</span></span></p>",
+    "PostedDate": "2012-08-04T04:00:25.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "895660",
+    "ThreadId": "371299",
+    "Html": "<p>I had this code:</p>\r\n<p>﻿&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Int16 int16 = BitConverter.ToInt16(buffer, 0);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int16 *= 2;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; buffer = BitConverter.GetBytes(int16);<br /><br /></p>\r\n<p>of course it doesnt work, but I check the buffer array of bytes, I found the lenght of array is 8820 bytes and after multiplying by two, I found the array of byte (buffer) is going to two bytes only !!!!</p>\r\n<p>so ﻿﻿﻿﻿BitConverter.ToInt16 does not work with me ! do I need to do foreach loop and multiply each byte?</p>\r\n<p>please help !</p>",
+    "PostedDate": "2012-08-04T22:31:39.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896001",
+    "ThreadId": "371299",
+    "Html": "<p>that is because the buffer contains more than one sample.</p>\r\n<p>So to get the second sample, you would use BitConverter.ToInt16(buffer, 2), and the third is BitConverter.ToInt16(buffer, 4) etc.</p>\r\n<p>I would then copy the two bytes you get back from GetBytes back into the buffer they came from.</p>\r\n<p>Also, you need to be careful when multiplying the int16 value that you don't overflow or you will get distortion.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-08-06T06:02:16.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896345",
+    "ThreadId": "371299",
+    "Html": "<p>I did it, and it seems its working, this is my code:</p>\r\n<p>﻿&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color: blue;\">byte</span>[] bufferTemp = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[2];             <span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; buffer.Length; i += 2)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color: blue;\">if</span> ((i + 1) &lt; buffer.Length)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bufferTemp[0] = buffer[i];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bufferTemp[1] = buffer[i + 1];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Int16 int16 = BitConverter.ToInt16(bufferTemp, 0);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int16 *= 2;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bufferTemp = BitConverter.GetBytes(int16);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; buffer[i] = bufferTemp[0];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; buffer[i + 1] = bufferTemp[1];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>but the problem now how to check if there would be overflow or not??</p>",
+    "PostedDate": "2012-08-06T23:57:21.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896389",
+    "ThreadId": "371299",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>markheath wrote:</strong><br>\r\n<p>you need to convert the incoming data into samples (use BitConverter.ToInt16 if it is 16 bit). Then you can multiply the sample value. But you need to beware of clipping when doing integer arithmetic, which is why most audio applications\r\n<strong>convert to floating point, before doing any DSP</strong>, and then hard limit the audio before going back down to 16 bit.</p>\r\n</blockquote>\r\n<p>*facekeyboards*</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">// This is the 16 bit signed audio data</span>\n<span style=\"color:blue\">byte</span>[] buffer = ...;\n<span style=\"color:blue\">var</span> length = buffer.Length;\n<span style=\"color:blue\">int</span> shortRange = <span style=\"color:blue\">short</span>.MaxValue - <span style=\"color:blue\">short</span>.MinValue;\n<span style=\"color:blue\">int</span> i = 0;\n<span style=\"color:blue\">do</span>\n{\n    <span style=\"color:green\">// Read a short from the buffer</span>\n    <span style=\"color:blue\">short</span> int16 = (<span style=\"color:blue\">short</span>)(buffer[i] | buffer[i &#43; 1] &lt;&lt; 8);\n\n    <span style=\"color:green\">// Convert to [-1.0f, &#43;1.0f] range</span>\n    <span style=\"color:blue\">float</span> single = (((int16 - <span style=\"color:blue\">short</span>.MinValue) * 2f) / shortRange) - 1f;\n\n    single = single * 2;\n\n    <span style=\"color:green\">// Hard limit to [-1.0f, &#43;1.0f] range</span>\n    <span style=\"color:blue\">if</span> (single &gt; 1)\n    {\n        single = 1;\n    }\n    <span style=\"color:blue\">else</span> <span style=\"color:blue\">if</span> (single &lt; -1)\n    {\n        single = -1;\n    }\n\n    <span style=\"color:green\">// Convert back to short</span>\n    int16 = (<span style=\"color:blue\">short</span>)((((single &#43; 1f) * shortRange) / 2f) &#43; <span style=\"color:blue\">short</span>.MinValue);\n\n    <span style=\"color:green\">// Put the short back into the buffer</span>\n    buffer[i] = (<span style=\"color:blue\">byte</span>)int16;\n    buffer[i &#43; 1] = (<span style=\"color:blue\">byte</span>)(int16 &gt;&gt; 8);\n    i &#43;= 2;\n}\n<span style=\"color:blue\">while</span> (i &lt; length);\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-08-07T01:35:21.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896392",
+    "ThreadId": "371299",
+    "Html": "<p>yes, this is right, altuough your conversion to and from float is a little convoluted. You could just cast to float and check if (single &gt; short.MaxValue) before casting back.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-08-07T01:41:43.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896403",
+    "ThreadId": "371299",
+    "Html": "\r\n<p>You are absolutely right. However, I anticipated his next question would be how to prevent clipping even if multiplying by 2 was not enough, and I'd answer to that with saying the perceived loudness is subjective and not directly proportional to the dB scale,\r\n and take &#43;1.0f as &#43;0dB,&nbsp;calculate the RMS of the signal, find the average loudness in dB, and apply dB gain using the formula in the link I posted earlier.</p>\r\n<p>Scaling to &#43;1.0f =&gt; &#43;0dB also makes it format proof as the source can be signed/unsigned, 8/16/24 bits.</p>\r\n<p>In that case I think I should have scaled it to [0.0f, 1.0f] range I guess. This is my first DSP so I don't know what I'm doing lol</p>\r\n",
+    "PostedDate": "2012-08-07T02:05:22.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896405",
+    "ThreadId": "371299",
+    "Html": "<p>you would normally scale it to [-1.0f. 1.0f]. You can do this by just dividing by 32768f, then constrain to the range, then multiply back up before casting to a short.</p>",
+    "PostedDate": "2012-08-07T02:09:01.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896413",
+    "ThreadId": "371299",
+    "Html": "<p>I'd probably use this&nbsp;<a href=\"http://wiki.hydrogenaudio.org/index.php?title=ReplayGain_1.0_specification\">ReplayGain 1.0 specification</a></p>",
+    "PostedDate": "2012-08-07T02:23:59.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896414",
+    "ThreadId": "371299",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>you would normally scale it to [-1.0f. 1.0f]. You can do this by just dividing by 32768f, then constrain to the range, then multiply back up before casting to a short.</p>\r\n</blockquote>\r\n<p>ah, right ^^</p>",
+    "PostedDate": "2012-08-07T02:24:30.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896428",
+    "ThreadId": "371299",
+    "Html": "<p>hmmm, wait a min, isn't it slightly inaccurate to simply divide it by 32768f?</p>\r\n<p>if it is signed 16 bits, the negative [-32768, 0) range scales into [-1.0f, 0) range, and the positive (0, +32767] range scales into (0, +1.0f] range.</p>\r\n<p>the error margin would be greater if it was signed 8 bits since the ranges map to [-128, 0)-&gt;[-1.0f, 0) and (0, +127]-&gt;(0, +1.0f]</p>",
+    "PostedDate": "2012-08-07T03:11:34.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896431",
+    "ThreadId": "371299",
+    "Html": "<p>yes, it is a bit ugly. But I always think of 0 in signed audio as being silence, so there is fractionally more negative range than positive. I multiply up by 32767 when I am done. This is to avoid inadvertently adding some DC offset, but I'm not sure its the best way</p>",
+    "PostedDate": "2012-08-07T03:15:30.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

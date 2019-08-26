@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1140767",
+    "ThreadId": "476888",
+    "Html": "What I'm trying to do is to create a virtual piano that can generate piano sound when each button is pressed. What i actually have in my mind is to use a sample .wav piano sound and ascend/descend the tone by altering its frequency. However, I have no idea how to do so. \r<br />\n<br />\nI'm new to audio programming and I really wish you guys can guide me on this so I really wish you guys could give me some guide on this. Thanks in Advance.<br />\n",
+    "PostedDate": "2013-12-22T20:56:11.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140975",
+    "ThreadId": "476888",
+    "Html": "If you have access to Pluralsight, this is the exact example I show in my <a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">NAudio course</a>. It's not the simplest task to attempt for your first attempt at audio programming. The way I built it was with RawSourceWaveStream playing the samples from memory, and using a custom pitch shifting sample provider, and an ADSR envelope generator. The notes were mixed together with a MixingSampleProvider.<br />\n",
+    "PostedDate": "2013-12-23T12:18:23.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

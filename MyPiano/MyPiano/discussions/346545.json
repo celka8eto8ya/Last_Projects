@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "802510",
+    "ThreadId": "346545",
+    "Html": "\r\n<p>i want to connect one input channels in <a href=\"http://www.focusrite.com/products/audio_interfaces/saffire_pro_40\">\r\npro-40</a> to some output channels</p>\r\n<p>can i do it with naudio?</p>\r\n<p>if answer is yes , which class i must use?</p>\r\n<p>if no , can you guide me to use which driver or dll ?? (C# or C&#43;&#43;)</p>\r\n",
+    "PostedDate": "2012-02-28T02:39:57.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "803098",
+    "ThreadId": "346545",
+    "Html": "<p>Pro audio interfaces tend to have good ASIO drivers but not so good if you want to use any other driver model. Unfortunately, NAudio hasn't got ASIO in support yet (something I want to add really soon).</p>\r\n<p>All you could do at the moment is use WasapiCapture or WaveIn to capture audio, then play it back out. You can use the MultiplexingSampleProvider I recently added (in the very latest source code) to feed multiple outs. But latency would likely not be brilliant. It is usually better to use the software your soundcard provides to do real-time zero latency monitoring.</p>",
+    "PostedDate": "2012-02-29T04:01:32.243-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1493041",
+    "ThreadId": "661491",
+    "Html": "has someone manage to implement and how??? 3 days trying to make it work please share you solution. Thanks guys...\r<br />\nalready tried:\r<br />\nprivate readonly SynchronizationContext _syncContext = SynchronizationContext.Current;\r<br />\n{\r<br />\n_syncContext.Post(o =&gt; waveCanvas.Children.Clear(), null);\r<br />\n...\r<br />\n}<br />\n<pre><code>Polyline pl;\ndouble plH = 0;\ndouble plW = 0;\n\nList&lt;byte&gt; totalbytes;\nQueue&lt;Point&gt; displaypts;\nQueue&lt;Int32&gt; displaysht;\nlong count = 0;\nint numtodisplay = 2205;\n\npublic IWaveIn wi;\n\nprivate void start()\n{\n    wi = new WasapiLoopbackCapture();\n    wi.DataAvailable += new EventHandler&lt;WaveInEventArgs&gt;(wi_DataAvailable);\n\n    //\n    pl = new Polyline();\n    pl.Stroke = Brushes.Blue;\n    pl.Name = &quot;waveform&quot;;\n    pl.StrokeThickness = 2;\n    pl.MaxHeight = SystemParameters.FullPrimaryScreenHeight;\n    pl.MaxWidth = SystemParameters.FullPrimaryScreenWidth;\n\n    plH = pl.MaxHeight;\n    plW = pl.MaxWidth;\n\n    displaypts = new Queue&lt;Point&gt;();\n    totalbytes = new List&lt;byte&gt;();\n    displaysht = new Queue&lt;Int32&gt;();\n    //\n\n    wi.StartRecording();\n}\n\npublic void wi_DataAvailable(object sender, WaveInEventArgs e)\n{\n    if (e != null)\n    {\n        totalbytes.AddRange(e.Buffer);\n        byte[] shts = new byte[4];\n\n        for (int i = 0; i &lt; e.BytesRecorded - 1; i += 100)\n        {\n            shts[0] = e.Buffer[i];\n            shts[1] = e.Buffer[i + 1];\n            shts[2] = e.Buffer[i + 2];\n            shts[3] = e.Buffer[i + 3];\n            if (count &lt; numtodisplay)\n            {\n                displaysht.Enqueue(BitConverter.ToInt32(shts, 0));\n                ++count;\n            }\n            else\n            {\n                displaysht.Dequeue();\n                displaysht.Enqueue(BitConverter.ToInt32(shts, 0));\n            }\n        }\n\n        waveCanvas.Children.Clear(); // Here updating ui from another thread\n        pl.Points.Clear(); // Here updating ui from another thread\n\n        Int32[] shts2 = displaysht.ToArray();\n        for (Int32 x = 0; x &lt; shts2.Length; ++x)\n        {\n            pl.Points.Add(Normalize(x, shts2[x]));  // Here updating ui from another thread\n        }\n        this.waveCanvas.Children.Add(pl);  // Here updating ui from another thread\n    }\n}\n\nPoint Normalize(Int32 x, Int32 y)\n{\n    Point p = new Point();\n    p.X = 1.0 * x / numtodisplay * plW;\n    p.Y = plH / 2.0 - y / (Int32.MaxValue * 1.0) * (plH / 2.0);\n    return p;\n}</code></pre>\n\n",
+    "PostedDate": "2017-02-21T10:06:44.223-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493128",
+    "ThreadId": "661491",
+    "Html": "Nobody?????<br />\n",
+    "PostedDate": "2017-02-22T18:20:34.94-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493587",
+    "ThreadId": "661491",
+    "Html": "Was there a question?<br />\n",
+    "PostedDate": "2017-03-04T08:44:32.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494180",
+    "ThreadId": "661491",
+    "Html": "Yes, the title: &quot;Waveform using WasapiLoopbackCapture WPF thread updating ui &quot;\r<br />\nWasapiLoopbackCapture dosent draw the waveform on the UI form. \r<br />\nIf you are sombody else have a simple sample code that can capture and draw wave form on the UI tthread using WasapiLoopbackCapture it would be very appreciated . But i believe it is not possible.\r<br />\nThank you<br />\n",
+    "PostedDate": "2017-03-16T14:55:27.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494507",
+    "ThreadId": "661491",
+    "Html": "<em>Bump</em><br />\n",
+    "PostedDate": "2017-03-23T01:03:38.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

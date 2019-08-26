@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1198991",
+    "ThreadId": "527389",
+    "Html": "Hi ..<br />\nin the naudio demo I tried to play back the following file (same file on both links ):<br />\n<a href=\"http://www.filedropper.com/mix4stereochannels16bitpcm10sec\" rel=\"nofollow\">http://www.filedropper.com/mix4stereochannels16bitpcm10sec</a><br />\n<br />\n<a href=\"http://www.4shared.com/music/zSpIZ2JRba/Mix_4StereoChannels_16BitPcm_1.html\" rel=\"nofollow\">http://www.4shared.com/music/zSpIZ2JRba/Mix_4StereoChannels_16BitPcm_1.html</a><br />\n<br />\n<br />\nI need to select the direct sound as output driver ...<br />\nand play to primary sound driver..<br />\n(check the image below)<br />\n<br />\nit says:<br />\nvalue does not fall within the expected range.<br />\n<br />\niam using the naudio 1.7<br />\n<br />\nany help is really appreciated ..<br />\n<br />\n<img src=\"http://www.pixentral.com/pics/13slyuWHaGY7D3OflPAVY9xdApMfX.png\" alt=\"Image\" /><br />\n<br />\nin my c# application iam trying to play the audio file (but when I click to play the audio file, it just calls the WaveOutPlaybackStopped event, I think it is the same error as in naudio):<br />\n<pre><code>private DirectSoundOut waveOut;\nprivate MeteringSampleProvider postVolumeMeter;\n...\n\nthis.AudioFile = new AudioFileReader(this.audioFilePath);\n AudioFileTotalTime = this.AudioFile.TotalTime.TotalMilliseconds;\nthis.waveOut = new DirectSoundOut(this.deviceGuid);\nthis.postVolumeMeter = new MeteringSampleProvider(this.AudioFile);\nthis.postVolumeMeter.StreamVolume += OnPostVolumeMeter;\nwaveOut.PlaybackStopped += WaveOutPlaybackStopped;\nthis.waveOut.Init(new SampleToWaveProvider(this.postVolumeMeter));\nreturn true;\n...\n        private void WaveOutPlaybackStopped(object sender, StoppedEventArgs e)\n        {\n            PlayBackStopped = true;\n        }\n\npublic bool Deinitialize()\n        {\n            if (this.waveOut != null)\n            {\n                Stop();\n\n                DispatcherControlledCall(() =&gt; this.waveOut.Dispose());\n                this.waveOut.PlaybackStopped -= WaveOutPlaybackStopped;\n                this.waveOut = null;\n            }\n            \n            if (this.AudioFile != null)\n            {\n                this.AudioFile.Dispose();\n                this.AudioFile = null;\n            }\n\n            if (this.postVolumeMeter != null)\n            {\n                this.postVolumeMeter.StreamVolume -= OnPostVolumeMeter;\n                this.postVolumeMeter = null;\n            }\n            return true;\n        }\n\n        private void OnPostVolumeMeter(object sender, StreamVolumeEventArgs e)\n        {\n            if (e.MaxSampleValues != null)\n            {\n                LeftChannelStreamVolume = e.MaxSampleValues[0];\n                if (e.MaxSampleValues.Length &gt; 1)\n                {\n                    RightChannelStreamVolume = e.MaxSampleValues[1];\n                }\n            }\n        }\n\n</code></pre>\n\n",
+    "PostedDate": "2014-01-27T08:20:40.517-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199231",
+    "ThreadId": "527389",
+    "Html": "The file seems corrupted, not even Winamp can play it. DirectSound buffer errors.<br />\n",
+    "PostedDate": "2014-01-27T16:20:17.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199612",
+    "ThreadId": "527389",
+    "Html": "Thanks for your answer ...<br />\nthe file is playable on vlc !?<br />\n<br />\nalso,<br />\nis there anything I need to set in my c# code ? (buffer size?, etc ...)<br />\n<br />\nand,<br />\n<br />\ndoes the directsound driver works with different bit rates and support multichannel files (like 8 channels or 6channels)?? <br />\n<br />\nthanks in advance for any help ..<br />\n",
+    "PostedDate": "2014-01-28T01:16:29.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199689",
+    "ThreadId": "527389",
+    "Html": "Wow, didn't realise it had 8 channels. But you are right, it works in VLC which obviously supports 8 channel audio.<br />\n<br />\nThe WaveFileReader appears to support many channels but I dont see a static Property for the buffer size in DirectSoundOut.<br />\n<br />\nInstead of using AudioFileReader(), try MediaFoundationReader() and WaveFileReader()<br />\n<br />\n<br />\n<br />\nAdditionally, if you download the NAudio source and run that demo app through the debugger, you'll be able to spot exactly where it is failing.<br />\n",
+    "PostedDate": "2014-01-28T02:59:41.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199803",
+    "ThreadId": "527389",
+    "Html": "it's the number of channels that's the problem here rather than the reader. Not all audio output device types will support &gt;2 output channels.<br />\n",
+    "PostedDate": "2014-01-28T05:19:55.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199880",
+    "ThreadId": "527389",
+    "Html": "Hi ..<br />\nthanks for replying ...<br />\n<br />\n(Does the windows media player 11 on windows xp use the direct sound driver)? the file can be played on windows 7 &amp; xp with wmp 11&amp;12.... so it is not audio output device related, right? or how does the wmp play the file?<br />\n<br />\nI did run the demo through the debugger, here is where the exception appears :<br />\n<pre><code>                    // Create SecondaryBuffer\n                    directSound.CreateSoundBuffer(bufferDesc2, out soundBufferObj, IntPtr.Zero);\n                    secondaryBuffer = (IDirectSoundBuffer)soundBufferObj;\n                    handleOnWaveFormat.Free();</code></pre>\n\n//   at NAudio.Wave.DirectSoundOut.IDirectSound.CreateSoundBuffer(BufferDescription desc, Object&amp; dsDSoundBuffer, IntPtr pUnkOuter)<br />\n//  {Void CreateSoundBuffer(BufferDescription, System.Object ByRef, IntPtr)}<br />\n<blockquote>\nmark: is there any work around ?<br />\nI need to support windows xp &amp; windows 7 so I need to use the directsound driver ...or do I have any other options ?<br />\n</blockquote>\n",
+    "PostedDate": "2014-01-28T06:44:35.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200235",
+    "ThreadId": "527389",
+    "Html": "Yes WMP uses DirectShow codecs in XP as well as previous interfaces. <br />\n<br />\nDirectSoundOut is most likely the best option for XP, MediaFoundationReader may be a better option in Win7 but DirectSoundOut should work fine.<br />\n",
+    "PostedDate": "2014-01-28T16:56:48.63-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200301",
+    "ThreadId": "527389",
+    "Html": "I had a quick look and tried increasing the CreateSoundBuffer buffer size 8 fold but it didn't work. I also tried using WaveOut and MediaFoundationReader, nothing seems to accept or convert 4 stereo channels to the speaker setup of the PC. 4 stereo channels is an odd format after all.<br />\n<br />\nYou could downsize the output to 2 channels or perhaps 4 channels. I believe NAudio has the functionality to mix audio data in this fashion.<br />\n",
+    "PostedDate": "2014-01-28T23:17:33.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200319",
+    "ThreadId": "527389",
+    "Html": "Thank you K24A3 for your help ..\r<br />\niam still not able to understand why this won`t work..\r<br />\nthe directsoundout is initializing with the right values (channel number, file size, bit rate and so on)...\r<br />\n<br />\n<br />\nanyway thanks again for the great support ..<br />\n",
+    "PostedDate": "2014-01-29T00:38:44.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200326",
+    "ThreadId": "527389",
+    "Html": "I'm pretty sure VLC and WMP are ignoring some channels or converting them down to stereo or 5.1. NAudio doesn't do this automatically. You need to put a processor/converter in between the input and output.\r<br />\n<br />\nWinamp gives the same error so it seems the sound card driver simply wont accept 4 stereo channels. I've never seen an 8 channel sound card. 7.1 yes (7 normal channels + 1 low frequency subwoofer channel) but you wont be able to play four full stereo channels through a 7.1 system, it's too much data.<br />\n",
+    "PostedDate": "2014-01-29T00:58:16.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200384",
+    "ThreadId": "527389",
+    "Html": "Hi ..<br />\n<blockquote>\nk24A3 I tried changing the buffer size, still no success ...<br />\nalso I tried to create the soundbuffer based on the information of a 2 channel file ..didn't work ..<br />\n:(<br />\n</blockquote>\nas said the wav file can be played in vlc, but looking into the codec information tab I found out that vlc has problems reading the number of channels in the audio file ..\r<br />\n<br />\n<img src=\"http://www.pixentral.com/pics/17uC4uMxaFFlNjIy4HGIjnfQJrgf80.png\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2014-01-29T02:59:29.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200391",
+    "ThreadId": "527389",
+    "Html": "Ok so it seems that VLC is running into the same error but handling it.\r<br />\n<br />\nI can hear different audio from all 5 of my speakers so it seems VLC is playing 5 of the 8 channels, dropping the other 3.\r<br />\n<br />\nIf you need NAudio to handle it you need to convert the 8 channels into what ever the speaker setup is. \r<br />\n<br />\nFor example 7.1 speakers:\r<br />\n<br />\nFirst 2 channels &gt; Combine into 1 channel &gt; Front Center speaker\r<br />\nNext 2 channels &gt; Front L and R\r<br />\nNext 2 channels &gt; Middle L and R\r<br />\nNext 2 channels &gt; Rear L and R\r<br />\n<br />\n<br />\nStereo Speakers\r<br />\n<br />\nCombine all 4 left channels to 1 Left speaker channel\r<br />\nCombine all 4 right channels to 1 Right speaker channel\r<br />\n<br />\n<br />\nNAudio is an audio library for programmers, so we can't really assume NAudio will handle this automatically. The conversion will need to be done by the application using NAudio.\r<br />\n<br />\nHave a look at the NAudio WPF Demo App, the MediaFoundation Resampler can convert the 8 channels to Stereo. I tried it and it works. The 2 channel wav output file plays fine in Winamp. You should be able to set it up so it outputs to surround sound format (5.1 or 7.1).\r<br />\n<br />\nWaveStream file input -&gt; resampler -&gt; DirectSoundOut<br />\n",
+    "PostedDate": "2014-01-29T03:28:51.563-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

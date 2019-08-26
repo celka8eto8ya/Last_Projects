@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1031835",
+    "ThreadId": "440619",
+    "Html": "hi<br />\ni'm doing a project which concerns an audio chat, but not understand how to do some things:<br />\nI capture the audio through microphone with &quot;wavein&quot; into the buffer type &quot;BufferedWaveProvider&quot;, but I need that the file is lightweight, because I should send it.<br />\nhow i do it ??, how compress it ??<br />\nsorry for my english.<br />\n<pre><code>Dim inp As WaveIn\nDim sampleRate As integer = 8000\nDim channels As Integer = 1\nDim bitrate As Integer = 16\nDim wav As New WaveFormat(sampleRate,bitrate,channels)\nDim buffer As New BufferedWaveProvider(wav)\n\n//here start recording\ninp=New WaveIn()\ninp.DeviceNumber=0\ninp.WaveFormat = New WaveFormat(sampleRate,bitrate,channels)\nAddHandler inp.DataAvailable, AddressOf upd\ninp.StartRecording()</code></pre>\n\n",
+    "PostedDate": "2013-04-17T07:32:04.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1032518",
+    "ThreadId": "440619",
+    "Html": "I've written an article explaining how you can compress audio in .NET. There are lots of options depending on how compressed you want the audio to be.\r<br />\n<br />\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET</a><br />\n",
+    "PostedDate": "2013-04-18T08:14:56.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1032883",
+    "ThreadId": "440619",
+    "Html": "thanks for the reply.\r<br />\nI want a format suitable for speech coding, I thought a gsm or advise me.\r<br />\n<br />\nI had already seen that article, but I do not understand how to compress the same, can you do me a simple example please?\r<br />\n<br />\nit is possible to capture the audio already compressed, or do I have to catch it in pcm and then compress it?<br />\n",
+    "PostedDate": "2013-04-19T02:16:41.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1033302",
+    "ThreadId": "440619",
+    "Html": "You will have to capture the audio in uncompressed form. Afterwards you can use the WaveFormatConversionStream to apply compression on the captured steam.\r<br />\n<br />\nI can recommend the use of Speex for compressing audio. On the website (<a href=\"http://speex.org/\" rel=\"nofollow\">http://speex.org/</a>) you will find a download for the acm driver that is needed for the WaveFormatConversionStream.<br />\n",
+    "PostedDate": "2013-04-20T01:06:38.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1033365",
+    "ThreadId": "440619",
+    "Html": "ok, but I do not understand how to convert from &quot;BufferedWaveProvider&quot; to &quot;WaveStream,&quot; how I do it?<br />\n",
+    "PostedDate": "2013-04-20T06:36:39.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1033599",
+    "ThreadId": "440619",
+    "Html": "A WaveProvider is a WaveStream that cannot be repositioned and whose length is unknown. So you would not normally convert, although if you wanted you could make an adapter class in which repositioning does nothing. I usually convert to PCM before putting audio into the BufferedWaveProvider. If you look at the source code in the NAudio network chat demo you'll see the Acm classes being called at a lower level to decompress the audio, eliminating the need to use WaveFormatConversionStream.<br />\n",
+    "PostedDate": "2013-04-21T10:10:38.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1035336",
+    "ThreadId": "440619",
+    "Html": "I saw the example of &quot;network chat&quot;, but I have a problem ..<br />\nI capture the audio to pcm, and during the event &quot;data_available&quot; convert the bytes in GSM610 (for now), but:<br />\n<pre><code>Dim input As WaveFormat = WaveFormat.CreateCustomFormat (WaveFormatEncoding.Pcm, 8000,1,8000,1,8)\nDim output As WaveFormat = WaveFormat.CreateCustomFormat (WaveFormatEncoding.Gsm610, 8000,1,1625,65,0)\nDim encodeStream As AcmStream\n\n//next in data_available\nencodestream = New AcmStream (input, output)</code></pre>\n\nI get the error &quot;NAudio.MmException: AcmNotPossible calling acmStreamOpen&quot;<br />\nBut through the demo NAudio I saw that I installed the GSM610<br />\n<br />\nWhere I'm wrong?<br />\n",
+    "PostedDate": "2013-04-24T14:29:03.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1035670",
+    "ThreadId": "440619",
+    "Html": "Your custom formats are probably not what the ACM codec is expecting. Use <code>new Gms610WaveFormat</code> for the outputFormat. For the inputFormat, it should be 16 bit PCM. so <code>new WaveFormat(8000,16,1)</code><br />\n",
+    "PostedDate": "2013-04-25T07:42:33.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036491",
+    "ThreadId": "440619",
+    "Html": "really thanks, now it works.\r<br />\nI preferred the GSM6.10 because it is lighter in terms of cpu.\r<br />\nI have another problem, how can I increase the volume of input devices?\r<br />\nfor those in the output:<br />\n<pre><code>waveout.volume = 100</code></pre>\n\n",
+    "PostedDate": "2013-04-27T06:54:10.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036548",
+    "ThreadId": "440619",
+    "Html": "there is no uniform way to do this with the waveIn APIs, which is unfortunate.  The mixer APIs in theory can let you get at the microphone gain, but in practice this can be really hard to do. This is because soundcards have lots of inputs of various kinds each with different capabilities. <br />\n",
+    "PostedDate": "2013-04-27T09:53:33.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

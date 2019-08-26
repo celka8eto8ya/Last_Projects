@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1457286",
+    "ThreadId": "649351",
+    "Html": "My app is playing really short audio samples and I can't really use a &quot;stop&quot; button to dispose of the reader.   My thought was to run a timer and then parse a property to dispose once a file is finished playing but there doesn't seem to be any event or property that triggers in that case with ASIO out.<br />\n<br />\nEven after the file is done playing the &quot;Playing&quot; property is still true.   I expected it to be false, that it would automatically &quot;stop&quot; at the end of the file, so that my timer could parse that property and automatically dispose of it.<br />\n<br />\nAny idea?   Thanks.<br />\n",
+    "PostedDate": "2015-12-27T16:43:17.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457692",
+    "ThreadId": "649351",
+    "Html": "I´d suggest you subscribe to the PlaybackStopped Event and dispose there.<br />\n",
+    "PostedDate": "2016-01-01T06:09:36.96-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457748",
+    "ThreadId": "649351",
+    "Html": "Thanks.   I think I have it sorted.   If you don't mind, look over this code and tell me if you think there are any memory leaks or potential issues there.<br />\n<br />\nI playback the audio with this class code below.   Because my app is triggering really short files it uses shared public vars for the object references to track and dispose of them on every trigger cycle and to also allow the main form to dispose of any leftover objects on quit, like if  a user quit the application while audio was playing.  Not sure if the PlaybackStopped event would trigger in that case.<br />\n<br />\nAlso, looking at volume, it appears to be obsolete, I need another way.<br />\n<pre><code>    ' Keep class level references to the current objects for disposal\n    ' Public so that the main form can dispose of any objects on shut down\n    Public Shared CurrentWave As NAudio.Wave.WaveOutEvent\n    Public Shared CurrentStream As WaveFileReader\n\n    Public Sub Play_Sound(Filename As String, ByVal Audio_Device_Output As Integer,\n                          Optional ByVal Volume As Single = Nothing)\n\n        ' Always stop and dispose on new playback trigger\n        ' only ever allow playing one sound at a time\n        If CurrentWave IsNot Nothing Then\n            If CurrentWave.PlaybackState = PlaybackState.Playing Then\n                ' this triggers disposal of current objects\n                CurrentWave.Stop()\n            End If\n        End If\n\n        ' create a new stream object\n        Dim Stream = New WaveFileReader(Filename)\n\n        ' reference the stream object so we can easily dispose of it later\n        CurrentStream = Stream\n\n        ' load the audio file \n        Dim Reader = New WaveFileReader(Filename)\n        Dim Wave = New NAudio.Wave.WaveOutEvent\n        CurrentWave = Wave\n        AddHandler Wave.PlaybackStopped, AddressOf PlaybackStopping\n        ' set the correct output device index\n        CurrentWave.DeviceNumber = Audio_Device_Output\n        ' **** this is obsolete, find another way\n        If Not Volume = Nothing Then CurrentWave.Volume = Volume\n        Try\n            CurrentWave.Init(Reader)\n            CurrentWave.Play()\n        Catch ex As Exception\n            MsgBox(&quot;The selected audio device may already be in use by another application.&quot; &amp; vbNewLine &amp; vbNewLine &amp; &quot;Error: &quot; &amp; ex.Message, vbOKOnly + vbInformation, &quot;Play File&quot;)\n        End Try\n        '================================================================\n\n    End Sub</code></pre>\n\nOn stop, the following code triggers which disposes of the objects via their references.  The sender object is the correct reference there for the WaveOut object.   If I use the var reference CurWave there it disposes the wrong object... so this seems to work.<br />\n<pre><code>Private Sub PlaybackStopping(sender As Object, e As NAudio.Wave.StoppedEventArgs)\n        ' if current WaveEvent object is instanced\n        If sender IsNot Nothing Then\n            ' if currrent WaveEvent is playing\n            If sender.playbackstate = sender.PlaybackState.Playing Then\n                ' stop the wave out device\n                sender.stop()\n                ' stop / null the UI meters when stopping playback\n                ' volume meters are run from a timer in the main form\n                Main.VolumeMeter1.Amplitude = 0\n                Main.VolumeMeter2.Amplitude = 0\n            End If\n\n            ' dispose objects on every stop or re-trigger cycle\n            CurrentStream.Dispose()\n            ' sender should always be CurrentWave so\n            ' this reference should always dispose of it\n            sender.Dispose()\n        End If</code></pre>\n\n",
+    "PostedDate": "2016-01-02T09:01:55.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

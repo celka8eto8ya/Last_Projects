@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "655858",
+    "ThreadId": "268541",
+    "Html": "\r\n<p>Hello everyone,</p>\r\n<p>With MCI it is possible to change time position while recording and overwrite or insert new recorded audio from mic.</p>\r\n<p>Is it possible to do this with NAudio ? if yes, how can I do it ?</p>\r\n<p>I need to write and read same audio, WaveIn and WaveOut to record some audio, rewind, listen, record again, ...</p>\r\n",
+    "PostedDate": "2011-08-10T06:24:16.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "656515",
+    "ThreadId": "268541",
+    "Html": "<p>WaveIn just returns what the microphone hears. It is completely up to you what you want to do with it. You can save it to a WAV file and play it back, and insert new recorded audio in different positions within your WAV file.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-08-11T06:30:44.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

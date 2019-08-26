@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1318373",
+    "ThreadId": "571097",
+    "Html": "Hello,\r<br />\n<br />\nI am doing a kind of recording software.\r<br />\nI have managed to create a new wav file. \r<br />\nHow can i achieve the following ?\r<br />\n<br />\nReopen the existing wav file and the work on it, ie continue recording on it ?\r<br />\n<br />\nThanks for your suggestions\r<br />\n<br />\nJagboys.<br />\n",
+    "PostedDate": "2014-11-02T05:17:51.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1320963",
+    "ThreadId": "571097",
+    "Html": "That's not something that WaveFileWriter supports as it expects to create a new file. If you need to do this, I'd recommend looking at the WaveFileWriter code, and creating your own custom class based on it. <br />\n",
+    "PostedDate": "2014-11-11T08:56:45.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

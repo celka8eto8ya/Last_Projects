@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1363297",
+    "ThreadId": "586305",
+    "Html": "Hi,\r<br />\n<br />\nI need to make an operation on a file and its copy which requires the same lengths of these files.\r<br />\n<br />\nI spotted, that when i save a file (using WaveFileWriter) to .wav format and then i create a copy of it in .mp3 format (i tried two third party converters) - .wav and .mp3 files have different lengths. I load and compare them using Length field of AudioFileReader.\r<br />\n<br />\nWhy is it different? How can i assure the length is the same (i.e. they are &quot;the same&quot; minus, of course, compression)?\r<br />\n<br />\nThanks in advance :)<br />\n",
+    "PostedDate": "2015-03-13T15:34:15.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366205",
+    "ThreadId": "586305",
+    "Html": "how different are they? \r<br />\nThey won't be identical, since MP3s can't have an exact length in terms of samples like a WAV file can<br />\n",
+    "PostedDate": "2015-03-17T10:04:23.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366733",
+    "ThreadId": "586305",
+    "Html": "mp3 will be longer in most cases, right? Maybe it'll be easier if i write what kind of operation i have in mind:<br />\n<br />\nI wanted to create phase/polarity inversion - simply by multiplying every sample by '-1' (the same way as mixing is adding the samples). To check it, i tried to load the same file twice, then invert the phase of one reader and mix it together - the result should be silence. It didn't work that way.<br />\nI tried also with loading the files in different format, in mp3 and wav (they should, at least partially, cancel each other out). That's where my initial question came from, but now i see it doesn't work even on the same .wav file.<br />\n<br />\nThe sample of the code is below. I used AudioFileReader for both files and WaveFileWriter.<br />\n<pre><code>firstBuffer = new float[firstInputReader.WaveFormat.SampleRate * 2];\nsecondBuffer = new float[secondInputReader.WaveFormat.SampleRate * 2];\n\nint firstBytesRead = 0;\nint secondBytesRead = 0;\n\ndo\n{\n    //reading:\n    firstBytesRead = firstInputReader.Read(firstBuffer, 0, firstBuffer.Length);\n    secondBytesRead = secondInputReader.Read(secondBuffer, 0, secondBuffer.Length);\n\n    //processing:\n    for (int i = 0; i &lt; firstBuffer.Length; i++)\n    {\n          firstBuffer[i] /= 2;  //volume rescaling\n\n          // mixing together with 1st input (which is multiplied by -1, i.e. phase inverted)\n          firstBuffer[i] += secondBuffer[i]*-1;\n    }\n\n    //writting:\n    writer.WriteSamples(firstBuffer, 0, firstBytesRead);\n} while (firstBytesRead &gt; 0);\n\nwriter.Dispose();</code></pre>\n\nCould you help me with these basic operations? Or maybe there's build in functionality which helps with phase invertion (similar to mixing and MixingSampleProvider)?<br />\n<br />\nThanks in advance<br />\n",
+    "PostedDate": "2015-03-18T13:53:45.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1415777",
+    "ThreadId": "586305",
+    "Html": "ttt, anyone?<br />\n",
+    "PostedDate": "2015-04-19T13:12:17.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

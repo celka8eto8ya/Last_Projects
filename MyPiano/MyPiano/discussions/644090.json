@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1441542",
+    "ThreadId": "644090",
+    "Html": "Hi.\r<br />\n<br />\nLayer 2 is not implement in Naudio, isn't? (I get the comException error when trying to decode it) So i wonder if there is a simple way to decode the Layer 2 stream and passing it to Naudio in PCM... or do you have a better idea? Layer 2 is still a very popular format in broadcasting, and thus, there's a lot of files compressed in that layer.\r<br />\n<br />\nThank you!<br />\n",
+    "PostedDate": "2015-08-23T17:18:06.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441934",
+    "ThreadId": "644090",
+    "Html": "Hi Knob\r<br />\ncan u help me out\r<br />\n<br />\ni am implementing some part of Naudio project\r<br />\nbut i am unable to approach  to the code\r<br />\n<br />\nI need only graph in my project\r<br />\ni am getting every thing but graph is not running\r<br />\nwhat method to implement and how can u guide me\r<br />\n<br />\n<br />\n \r<br />\nRegard\r<br />\nzafar<br />\n",
+    "PostedDate": "2015-08-25T23:08:16.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442024",
+    "ThreadId": "644090",
+    "Html": "Hi.\r<br />\n<br />\nThat is a very general question. What you do you want to do? what's the final idea? winforms or WPF? what code are you using?\r<br />\n<br />\nSee you.<br />\n",
+    "PostedDate": "2015-08-26T09:12:27.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442085",
+    "ThreadId": "644090",
+    "Html": "Hi\r<br />\n<br />\nI want wave graph for .wav file when it play .\r<br />\nin winform\r<br />\n<br />\ni have done every thing but i am not getting final out put\r<br />\nAudio wave graph.<br />\n",
+    "PostedDate": "2015-08-26T19:39:27.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442094",
+    "ThreadId": "644090",
+    "Html": "Hi.\r<br />\n<br />\nHave you tried the demo? It's in the zip. You have to run Naudiodemo, and select AudioPlaybackDemo. Inside that form you will find the control that displays the waveform.\r<br />\nThe code for represent the wave graph there is:\r<br />\n<br />\n<br />\nprivate ISampleProvider CreateInputStream(string fileName)<br />\n<pre><code>    {\n        this.audioFileReader = new AudioFileReader(fileName);\n\n        var sampleChannel = new SampleChannel(audioFileReader, true); --&gt; true to force it stereo.\n        sampleChannel.PreVolumeMeter+= OnPreVolumeMeter; //--&gt; This creates the event for draw the graph before any change made later to the amplitude of the original sound (volume i.e.). Follow the method below...\n        this.setVolumeDelegate = (vol) =&gt; sampleChannel.Volume = vol;\n        var postVolumeMeter = new MeteringSampleProvider(sampleChannel);\n        postVolumeMeter.StreamVolume += OnPostVolumeMeter;\n\n        return postVolumeMeter;\n    }\n\n    void OnPreVolumeMeter(object sender, StreamVolumeEventArgs e)\n    {\n        // we know it is stereo\n        waveformPainter1.AddMax(e.MaxSampleValues[0]); //--&gt; Waveform graph for L channel\n        waveformPainter2.AddMax(e.MaxSampleValues[1]);  //--&gt; Waveform graph for R channel\n    }\n</code></pre>\n\nAs soon as you initialize WaveOut.Init(sampleChannel); and fire WaveOut.Play; it will begin to draw.<br />\n",
+    "PostedDate": "2015-08-27T02:14:43.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442668",
+    "ThreadId": "644090",
+    "Html": "i had create a form.<br />\n<pre><code>\n        public Form1([ImportMany]IEnumerable&lt;IOutputDevicePlugin&gt; outputDevicePlugins)\n        {\n              InitializeComponent();\n            LoadOutputDevicePlugins(outputDevicePlugins);\n        \n        }</code></pre>\n\nHow to call this constructor on page loading.<br />\n",
+    "PostedDate": "2015-09-01T06:06:55.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443173",
+    "ThreadId": "644090",
+    "Html": "Mpeg Audio Layer 2 is actually not supported<br />\n",
+    "PostedDate": "2015-09-04T04:36:42.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443490",
+    "ThreadId": "644090",
+    "Html": "NAudio does not include any MP3 decoding, it simply provides access to the codecs available on your machine (e.g. ACM or Media Foundation Transforms). <br />\n",
+    "PostedDate": "2015-09-07T13:33:10.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

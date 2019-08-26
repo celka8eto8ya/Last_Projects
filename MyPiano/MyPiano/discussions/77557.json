@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "265178",
+    "ThreadId": "77557",
+    "Html": "<p>I keep getting a &quot;Could not load file or assembly 'Naudio...&quot; every time I try to run a sample project. What am I doing wrong? I checked the reference in Visual Studio and verified the dll is in the output directory.</p>",
+    "PostedDate": "2009-12-08T22:21:26.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "266310",
+    "ThreadId": "77557",
+    "Html": "<p>that's strange. what's the stack trace of the exception?</p>\r\n<p>any details on your environment - version of VS, Windows etc?</p>",
+    "PostedDate": "2009-12-11T08:44:08.797-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "267421",
+    "ThreadId": "77557",
+    "Html": "<p>Basically, it's the first time it uses a class from the dll:</p>\r\n<p>{&quot;Could not load file or assembly 'NAudio, Version=1.3.8.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. An attempt was made to load a program with an incorrect format.&quot;}</p>\r\n<p>at NAudioWpfDemo.AudioGraph..ctor()<br>&nbsp;&nbsp; at NAudioWpfDemo.ControlPanelViewModel..ctor(IWaveFormRenderer waveFormRenderer, SpectrumAnalyser analyzer) in C:\\Users\\Kevin\\Desktop\\NAudio-1-3\\Source Code\\NAudioWpfDemo\\ControlPanelViewModel.cs:line 23</p>\r\n<p>VS2008 Win7</p>",
+    "PostedDate": "2009-12-14T21:34:29.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "267501",
+    "ThreadId": "77557",
+    "Html": "<p>You normally see that kind of thing when using 64bit windows.</p>\r\n<p>SNIP: http://filips.net/archives/2008/01/17/getting-badimageformatexception-in-64-bit-windows/</p>\r\n<p>Have you been running/developing .NET programs in 64-bit Windows and met the BadImageFormatException? Well, Microsoft might say: &ldquo;The exception that is thrown when the file image of a DLL or an executable program is invalid.&rdquo; Which says absolutely nothing&hellip; <img src=\"http://filips.net/wp/wp-includes/images/smilies/icon_smile.gif\" alt=\":)\"></p>\r\n<p>However, if it happens when using Platform Invove (P/Invoke or DllImport) or a third .NET party library (DLL) then you might have to set the project&rsquo;s properties (or compilation flags) from &ldquo;any&rdquo; platform target to &ldquo;x86&Prime;. Also, remember to set change to x86 in both the debug and release build configurations while you are at it, otherwise it might seem to only work when you are debugging and not in release compilation.</p>\r\n<p>(This happened to me when I used a .NET code library for a LabJack device in a program and ran the program under 64-bit Vista. Couldn&rsquo;t find what the nature of the problem &ldquo;really&rdquo; was&hellip; )</p>",
+    "PostedDate": "2009-12-15T01:58:02.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "268207",
+    "ThreadId": "77557",
+    "Html": "<p>64 bit. Yes, forgot about that! Do I need to recompile the dll?</p>",
+    "PostedDate": "2009-12-16T14:40:13.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "269015",
+    "ThreadId": "77557",
+    "Html": "<p>yes, this is probably the issue. NAudio is marked as x86 only at the moment, as a number of the interop signatures are not x64 ready yet. hopefully this can be fixed for a future version</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-12-18T10:29:43.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "269345",
+    "ThreadId": "77557",
+    "Html": "<p>Thanks for the info. I'll use a x86 virtual machine for now.</p>",
+    "PostedDate": "2009-12-19T20:10:25.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "275206",
+    "ThreadId": "77557",
+    "Html": "<p>I'm using NAudio on an ASP.NET application. I use Win7 x64 w/ VS 2010beta.&nbsp; I found that tweaking the IIS application pool to allow 32-bit apps worked, such as described <a>here</a> .</p>\r\n<p>&nbsp;</p>\r\n<p>Bryan</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-09T11:53:25.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424856",
+    "ThreadId": "77557",
+    "Html": "<p>We're in the same situation. I'm using vista 64bit. I need to adjust project built from anycpu to x86. It works 4 me.</p>",
+    "PostedDate": "2010-03-29T03:08:09.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424859",
+    "ThreadId": "77557",
+    "Html": "<p>Hi spaceman27,</p>\r\n<p>I've recently checked in some changes to NAudio that will hopefully fully support x64 without the need to adjust the target CPU. I will post an announcement on my blog once it is all working</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-29T03:24:19.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425004",
+    "ThreadId": "77557",
+    "Html": "thanks!<br><br>\r\n<div>On Mon, Mar 29, 2010 at 3:24 AM, markheath <span dir=ltr>&lt;<a href=\"mailto:notifications@codeplex.com\">notifications@codeplex.com</a>&gt;</span> wrote:<br>\r\n<blockquote style=\"border-left:#ccc 1px solid;margin:0px 0px 0px 0.8ex;padding-left:1ex\">\r\n<div>\r\n<p>From: markheath</p>\r\n<div>\r\n<p>Hi spaceman27,</p>\r\n<p>I've recently checked in some changes to NAudio that will hopefully fully support x64 without the need to adjust the target CPU. I will post an announcement on my blog once it is all working</p>\r\n<p>Mark</p></div>\r\n<div>\r\n<div>\r\n<p>Read the <a href=\"http://naudio.codeplex.com/Thread/View.aspx?ThreadId=77557&ANCHOR#Post424859\">full discussion online</a>.</p>\r\n<p>To add a post to this discussion, reply to this email (<a href=\"mailto:naudio@discussions.codeplex.com?subject=[naudio:77557]\">naudio@discussions.codeplex.com</a>)</p>\r\n<p>To start a new discussion for this project, email <a href=\"mailto:naudio@discussions.codeplex.com\">naudio@discussions.codeplex.com</a></p>\r\n<p>You are receiving this email because you subscribed to this discussion on CodePlex. You can <a href=\"http://www.codeplex.com/site/discussions/thread/unsubscribe/77557\">unsubscribe</a> on CodePlex.com.</p>\r\n\r\n<p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at CodePlex.com</p></div></div></div></blockquote></div><br>",
+    "PostedDate": "2010-03-29T09:13:18.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

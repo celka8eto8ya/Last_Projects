@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "708790",
+    "ThreadId": "282137",
+    "Html": "\r\n<p>I've started working on an audio project that plays&nbsp;multiple&nbsp;clips&nbsp;simultaneously. &nbsp;I've modeled my code very much based on the &quot;Audio File Playback&quot; portion of the Demo App which is working quite well.</p>\r\n<p>WaveStream -&gt; SampleChannel -&gt; MeteringSampleProvider -&gt; SampleToWaveProvider -&gt; IWavePlayer</p>\r\n<p><strong>My question is this: where in the 'chain' would I access panning control?</strong> &nbsp;Would I need to insert a new object somewhere in the chain? &nbsp;I only seem to find panning methods in the WaveChannel32 class but am not sure how to&nbsp;incorporate&nbsp;it.</p>\r\n<p>Any advice or sample code using the panning features would be greatly appreciated...</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Ryan</p>\r\n",
+    "PostedDate": "2011-12-07T06:32:22.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "708875",
+    "ThreadId": "282137",
+    "Html": "<p>SampleChannel shows how you can connect together a whole load of simpler ISampleProvider implementors and make them available in a simple class. I may add in a PanningSampleProvider at some point, maybe in the place of the MonoToStereoSampleProvider that is already in there. Depending on your output format from WaveStream you might be already able to insert the PanningSampleProvider in there.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-07T08:37:24.883-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "Hi,\r\n\r\nI am creating a PCM Wave file, but looking at it with the HEX file reader you can see something is wrong.\r\n\r\n5249464626BE020057415645666D7420\r\n1200000001000200007D000000F40100\r\n0400100000006461746100BE02000000\r\n\r\nOn the second line you can see at the beginning:\r\n\r\n1200 0000 SubChunk1Size this should be (0x10) 16 decimal not (0x12) 18 decimal\r\n\r\nAnd then you can see betewenn the Bits per sample and the \"data\" in the third line you got 2 extra bytes that they shouldn't be there:\r\n\r\n0400 = Block allignment = 4\r\n1000 = Bits per sample = 16\r\n0000 = ??????????\r\n6461 = da\r\n7461 = ta\r\n\r\n\r\nWhy is there this extra 2 bytes, it is breaking my wav file reader checker, the SubChunk1Size shoud be 16 on a PCM .\r\n\r\nSomehow there must be a bug somewhere that adds this 2 bytes.\r\n\r\nDoes somebody else got the same problem? is it a library bug?\r\n\r\nI will appreciate if anyone could check this, please!!!!!!!\r\n\r\nMany thanks,\r\nHelios",
+    "LastUpdatedDate": "2014-03-04T08:01:27.133-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-03-04T04:10:46.24-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Header WAVE file problem",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16435
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "nothing wrong with this at all. fmt chunk can be 16 bytes (WAVEFORMAT), 18 bytes (WAVEFORMATEX), or longer. NAudio writes a WAVEFORMATEX by default, which is quite standard.",
+      "PostedDate": "2014-03-04T06:39:27.653-08:00",
+      "Id": 135763
+    },
+    {
+      "Message": "Hi Mark,\n\nThank you for your replay, Is there a way to do a CreateWaveFile in a WAVEFORMAT with NAudio?\n\nMany thanks",
+      "PostedDate": "2014-03-04T07:30:23.23-08:00",
+      "Id": 135769
+    },
+    {
+      "Message": "No, you'd need to make your own customisation of WaveFileWriter to do that",
+      "PostedDate": "2014-03-04T08:01:27.133-08:00",
+      "Id": 135774
+    }
+  ]
+}

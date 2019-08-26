@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "542110",
+    "ThreadId": "239996",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>i try to use the BufferedWaveProvider to play adio data received from network.</p>\r\n<p>Everytime when i am recieving data i call AddSamples to add a new audio block to the queue. But it doesnt play.</p>\r\n<p>The Read method of BufferedWaveProvider is only called 3 times. After having called AddSamples 100 time i get the Exception</p>\r\n<p>&quot;Too many queued buffers&quot;.</p>\r\n<p>The waveformat is 8000, 16, 1.</p>\r\n<p>So no buffer is dequed.</p>\r\n<p>Why does this happen?</p>\r\n<p>Regards</p>\r\n<p>Tobias</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-12-30T04:50:03.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542112",
+    "ThreadId": "239996",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Can you please post the code you are trying to use?</p>\r\n<p>Sebastian</p>\r\n",
+    "PostedDate": "2010-12-30T04:53:28.42-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542116",
+    "ThreadId": "239996",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>i will post the Init and the AddSamples-Part. The whole File would be too large:</p>\r\n<p>public static BufferedWaveProvider PlayBuffer;</p>\r\n<p>public static WaveOut waveOut;</p>\r\n<p>&nbsp;</p>\r\n<p>/* Init Part */</p>\r\n<p>// BufferedWaveProvider</p>\r\n<p>PlayBuffer = new BufferedWaveProvider(new WaveFormat(8000, 16, 1));</p>\r\n<p>// waveOut</p>\r\n<p>waveOut = new WaveOut();</p>\r\n<p>waveOut.Init(PlayBuffer);</p>\r\n<p>waveOut.Play();</p>\r\n<p>&nbsp;</p>\r\n<p>/* Method which is called when data from network is Received */</p>\r\n<p>// recbuffer contains alsways 1600 bytes pf pcm data with the waveformat 8000,16,1</p>\r\n<p>PlayBuffer.AddSamples(recbuffer, 0, recbuffer.Length);</p>\r\n<p>&nbsp;</p>\r\n<p>Tobias</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-12-30T05:02:18.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542129",
+    "ThreadId": "239996",
+    "Html": "\r\n<p>Hi&nbsp;Tobias,</p>\r\n<p>I wrote an enhanced version of&nbsp;BufferedWaveProvider, but I encountered the same problem you are facing.</p>\r\n<p>Basically, the&nbsp;BufferedWaveProvider has an upper limit on the number of buffers it is holding.</p>\r\n<p>It is a typical producer-consumer problem.</p>\r\n<p>If you produce too many buffers, then the consumer (BufferedWaveProvider) can't hold them.</p>\r\n<p>You could change it to a higher value, but it is not really a good solution as (1) it might still break (2) it wastes lots of memory (3) is raises the latency (response time) of the playback</p>\r\n<p>The correct solution, IMO, is to only add buffers to the queue when the queue is not full.</p>\r\n<p>When the queue is full then the client simply doesn't add buffers.</p>\r\n<p>You could look at how I implemented it in my application (Practice#).</p>\r\n<p>I have a dedicated audio processing thread that keeps producing buffer, and adds them to AdvancedBufferedWaveProvider\r\n<strong>only when needed</strong>.</p>\r\n<p>Edit: Of course make sure you actually start playing...otherwise indeed the buffer would never get dequeued, with or without queue monitoring logic.</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>\r\n<p><em>practicesharp.googlecode.com</em></p>\r\n",
+    "PostedDate": "2010-12-30T05:17:30.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542131",
+    "ThreadId": "239996",
+    "Html": "\r\n<p>Hi Yuval,</p>\r\n<p>&nbsp;</p>\r\n<p>thanks for your help. I have already increased the number of buffers.</p>\r\n<p>But this is not my main problem. i can avoid this.</p>\r\n<p>But why is the Read method of BufferedWaveProvider not periodically called? Only three times and then it stops?</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>\r\n<p>Tobias</p>\r\n<p>&nbsp;</p>\r\n<p>BTW: your practicesharp looks really cool</p>\r\n",
+    "PostedDate": "2010-12-30T05:20:36.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542138",
+    "ThreadId": "239996",
+    "Html": "\r\n<p>probably you are using a windowed callback with a console application. try using function callbacks</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-30T05:26:47.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542143",
+    "ThreadId": "239996",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>thanks.</p>\r\n<p>I didnt pass the window handle to my waveout device (the device is created in a thread context).</p>\r\n<p>This solved the problem.</p>\r\n<p>Regards</p>\r\n<p>Tobias</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-12-30T05:38:07.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

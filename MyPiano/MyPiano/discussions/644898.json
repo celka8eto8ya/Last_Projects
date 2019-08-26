@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1444181",
+    "ThreadId": "644898",
+    "Html": "I've written the following code to stream from shoutcast into an app I'm writing with NAudio library. I keep running into every saved wave file, there is about 0.0325 seconds of dead silence at the beginning when writing to file with WaveFileWriter.CreateWaveFile. Does anyone know why this might be happening? Is it because I'm taking from the memory stream perhaps at incomplete intervals? How can I correctly grab a streaming file in chunks and save to file without having gaps?\r<br />\n<br />\nThe stream needs to be truncated like this because it is a web radio stream that runs indefinitely. I'm chopping it into temp files to be played in Unity3D (which is aside from the point in the scope of this question).<br />\n<pre><code>public void StreamMP3FromUrl()\n{\n    var response = WebRequest.Create(url).GetResponse();\n    using (var stream = response.GetResponseStream())\n    {\n        byte[] buffer = new byte[65536]; // 64KB chunks\n        int read;\n        Debug.Log(&quot;Buffering&quot;);\n        while ((read = stream.Read(buffer, 0, buffer.Length)) &gt; 0)\n        {\n            var pos = ms.Position;\n            ms.Position = ms.Length;\n            ms.Write(buffer, 0, read);\n            ms.Position = pos;\n            msLength = (int)ms.Length;\n            if (ms.Length &gt; 32768.0f * 10)\n            {\n\n                CreateWaveFile(ms);\n                ms = new MemoryStream();\n            }\n        }\n        Debug.Log(&quot;No data&quot;);\n        //  ms.Position = 0;\n    }\n    Debug.Log(&quot;StreamMP3FromUrl ended&quot;);\n}\nint soundIndex = 0;\nprivate void CreateWaveFile(Stream stream)\n{\n    using (Mp3FileReader reader = new Mp3FileReader(stream))\n    {\n        WaveFileWriter.CreateWaveFile(&quot;temp&quot; + soundIndex.ToString() + &quot;.wav&quot;, reader);\n        soundIndex += 1;\n    }\n}</code></pre>\n\n",
+    "PostedDate": "2015-09-12T22:36:22.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1444605",
+    "ThreadId": "644898",
+    "Html": "Hello,\r<br />\n<br />\nas far as I know a radio stream contains not only of audio chunks (in fact often mp3 frames) but also of info chunks. Seems you write them to wave file also.\r<br />\nIf not and this is real audio, I can help you few. Assuming a waveformat of 44.1kHz, 2Ch, 16Bit you can calculate the size of your dead audio in bytes:\r<br />\n<br />\nDead audio size in bytes = 0.0325s * 44100 1/s * 2 * 2 bytes = 5733 bytes\r<br />\n<br />\nHope this helps. Greetz,\r<br />\n<br />\nFreefall<br />\n",
+    "PostedDate": "2015-09-16T03:57:03.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

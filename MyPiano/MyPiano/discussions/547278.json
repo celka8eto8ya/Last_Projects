@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1251973",
+    "ThreadId": "547278",
+    "Html": "I'm using <strong>Naudio</strong> and <strong>VST.NET</strong> to create a VST host. \r<br />\nEverything works, but there's a problem .. The <strong>ASIO</strong> driver (I use <strong>ASIO4ALL</strong>) is stopped randomly and I have no way to control it from code .. I tried to intercept <strong>PlaybackStopped</strong> but there never comes.\r<br />\n<br />\nDo you have any idea to solve the problem? (If you need  some code, just ask me)\r<br />\nthanks everyone.<br />\n",
+    "PostedDate": "2014-06-02T06:52:31.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260976",
+    "ThreadId": "547278",
+    "Html": "sorry, I don't know what might be causing this. If you can debug against the NAudio source that might help. What soundcard are you using?<br />\n",
+    "PostedDate": "2014-06-29T15:52:19.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

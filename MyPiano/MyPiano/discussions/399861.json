@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "928616",
+    "ThreadId": "399861",
+    "Html": "\r\n<p>Hi All</p>\r\n<p>Just starting out with NAudio and wondering if some people can point me in the right direction for being able to record audio from a sound card line input - to wave file, while simultaneously being able to play back that same file (maybe minutes later) through\r\n the sound card speaker out.&nbsp;</p>\r\n<p>I've seen many examples of writing to memory and&nbsp;immediately&nbsp;playing back the sound through the speakers, however, I want to write to disk, and then play back the wave file (while it is still recording)...&nbsp;</p>\r\n<p>Basically a time delay program...</p>\r\n<p>Any pointers would be greatly appreciated...</p>\r\n<p>Ash</p>\r\n",
+    "PostedDate": "2012-10-18T01:37:14.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929409",
+    "ThreadId": "399861",
+    "Html": "<p>I have written code that can do this, but it is not easy. A valid WAV file includes the length of the data chunk early on, but since the length is unknown, you'll need custom reader code. I also found that appending to a file on one thread while reading from it on another is fraught with difficulty. I ended up creating a long blank WAV file, and have one thread overwriting the samples in it while another played back from it. You might find it easier not to use a WAV file at all, and just have a raw PCM audio data file.</p>",
+    "PostedDate": "2012-10-19T07:06:03.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

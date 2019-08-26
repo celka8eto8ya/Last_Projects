@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I am trying to use NAudio for the resampling of pcm data.\r\nFor that i use a custom stream class as input to a \"RawSourceWaveStream\" and feed that to a \"WaveFormatConversionStream\".\r\nNAudio tries to read the .Length property of my stream, which is not supported.\r\nThe .CanSeek property of my stream is correctly set to false.\r\n\r\nI installed NAudio via nuget, the version is \"1.7-alpha06\".\r\n\r\nThanks,\r\nLukas",
+    "LastUpdatedDate": "2013-07-29T06:42:02.423-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-07-27T03:44:45.027-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudio does not check the .CanSeek Property of Stream",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16403
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "WaveFormatConversionStream was designed with seekable input in mind. I tend to go a layer underneath and use AcmConversionStream directly myself. If WaveFormatConversionStream gets a revamp in the future I might revisit this.",
+      "PostedDate": "2013-07-29T06:42:02.423-07:00",
+      "Id": 107765
+    }
+  ]
+}

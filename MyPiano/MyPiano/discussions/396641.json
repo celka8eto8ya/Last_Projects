@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "916571",
+    "ThreadId": "396641",
+    "Html": "\r\n<p>I try to play sound twice by this code, but it isn't work. Why? I am using 1.5.9.0</p>\r\n<div style=\"background-color:white; color:black\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Start1()\r\n        {\r\n            waveOutDevice = <span style=\"color:blue\">new</span> WaveOut();\r\n            mainOutputStream = CreateInputStream(<span style=\"color:#a31515\">&quot;0609.mp3&quot;</span>);\r\n            waveOutDevice.Init(mainOutputStream);\r\n            waveOutDevice.Play();\r\n        }\r\n\r\n        <span style=\"color:blue\">private</span> WaveStream CreateInputStream(<span style=\"color:blue\">string</span> fileName)\r\n        {\r\n            WaveChannel32 inputStream;\r\n            <span style=\"color:blue\">if</span>(fileName.EndsWith(<span style=\"color:#a31515\">&quot;.mp3&quot;</span>)) {\r\n                WaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(fileName);\r\n                inputStream = <span style=\"color:blue\">new</span> WaveChannel32(mp3Reader);\r\n            }\r\n            <span style=\"color:blue\">else</span> {\r\n                <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> InvalidOperationException(<span style=\"color:#a31515\">&quot;Unsupported extension&quot;</span>);\r\n            }\r\n            volumeStream = inputStream;\r\n            <span style=\"color:blue\">return</span> volumeStream;\r\n        }\r\n\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Button_Click(<span style=\"color:blue\">object</span> sender, RoutedEventArgs e)\r\n        {\r\n            waveOutDevice.Stop();\r\n            waveOutDevice.Play();\r\n        }\r\n</pre>\r\n<pre>Error text </pre>\r\n<pre><span style=\"font-family:Consolas; font-size:xx-small\"><span style=\"font-family:Consolas; font-size:xx-small\"><p>Buffers already queued on play</p></span></span></pre>\r\n</div>\r\n",
+    "PostedDate": "2012-09-24T03:55:25.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917030",
+    "ThreadId": "396641",
+    "Html": "<p>See <a href=\"http://stackoverflow.com/questions/12568717/playing-the-same-mp3-file-again-using-naudio/12573416#12573416\">my answer on StackOverflow</a></p>",
+    "PostedDate": "2012-09-24T23:20:16.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

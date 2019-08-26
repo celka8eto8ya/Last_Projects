@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1437054",
+    "ThreadId": "642275",
+    "Html": "Hi there.  Newcomer to NAudio, and a big fan so far, but I have one simple question which is really a dealbreaker for my project if the answer is &quot;no&quot; :/<br />\n<br />\nI'm looking to use NAudio to get at DirectSound from vb.net, and I need the ability to play back wav files at a different pitch - easily achieved in vanilla DirectX with DirectSoundBuffer.SetFrequency.<br />\n<br />\nI can't see this method, or any equivalent, exposed though.  Am I missing something?<br />\n<br />\nMany thanks!<br />\n<br />\nEDIT:  Thinking about it, I have no particular need to use DirectSound specifically, if something else will do the job - I just gravitated toward it due to familiarity.<br />\n",
+    "PostedDate": "2015-08-03T08:45:45.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437189",
+    "ThreadId": "642275",
+    "Html": "NAudio does not include a pitch shifting algorithm directly, but it does give you direct access to the samples so you can implement a pitch shifting algorithm yourself. One I use quite often is SuperPitch. You can see an example of using that <a href=\"https://skypefx.codeplex.com/SourceControl/latest#SkypeVoiceChanger/Effects/SuperPitch.cs\" rel=\"nofollow\">here</a><br />\n",
+    "PostedDate": "2015-08-04T06:49:25.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437191",
+    "ThreadId": "642275",
+    "Html": "Thanks for the response Mark, appreciate it.\r<br />\n<br />\nAm I ok to use that code, or a derivative of it, in a commercial application?<br />\n",
+    "PostedDate": "2015-08-04T06:52:39.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437192",
+    "ThreadId": "642275",
+    "Html": "well it originally came from an open source effect in REAPER. I think you are OK, but I can't say for sure since I just ported it. Another alternative I've used in the past is to wrap the soundtouch library, but I've yet to get round to open sourcing my work on that front.<br />\n",
+    "PostedDate": "2015-08-04T06:57:04.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

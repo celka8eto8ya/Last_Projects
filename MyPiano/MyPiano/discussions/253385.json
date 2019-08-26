@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "595227",
+    "ThreadId": "253385",
+    "Html": "<div id=\"x__mcePaste\" style=\"width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>\n<p>Hi,<br />i have problem with reading wav files in Ieee Float format.</p>\n<p><br />here is the file I'm working with: <a href=\"http://tsmaestro.aspone.cz/aa.wav\">http://tsmaestro.aspone.cz/aa.wav</a></p>\n<p><span style=\"color: #000080;\">WaveStream readerStream = new WaveFileReader(\"aa.wav\");</span><br /><span style=\"color: #008000;\">//when debugging, i got following values:</span><br /><span style=\"color: #008000;\">//readerStream.Format.BitsPerSample: 32</span><br /><span style=\"color: #008000;\">//readerStream.Format.Encoding: IeeeFloat</span></p>\n<p><span style=\"color: #000080;\">readerStream = WaveFormatConversionStream.CreatePcmStream(readerStream);</span> <span style=\"color: #008000;\">//throws NoDriver calling acmFormatSuggest</span></p>\n<p><br />if I skipped previous line and run:</p>\n<p><span style=\"color: #000080;\">var format = new WaveFormat(readerStream.WaveFormat.SampleRate, 16, readerStream.WaveFormat.Channels);</span><br /><span style=\"color: #000080;\">readerStream = new WaveFormatConversionStream(format, readerStream);<br /></span><span style=\"color: #008000;\">//I got enother exteption: \"AcmNotPossible calling acmStreamOpen\"</span></p>\n<p>&nbsp;</p>\n<p><span style=\"color: #008000;\">//and this line throws NullReferenceException: </span><br /><span style=\"color: #000080;\">inputStream = new WaveChannel32(readerStream);</span></p>\n<p><br />I also tried Wave32To16stream without success.</p>\n<p><br />I can play the file in Windows Media Player so a suggest it is valid. <br />I have read some threads on this forum and more developers have the same problem.</p>\n<p><br />Thanks for any help.</p>",
+    "PostedDate": "2011-04-11T04:31:29.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "595799",
+    "ThreadId": "253385",
+    "Html": "<p>the whole purpose of this code is to turn a 16 bit WAV file into 32 bit IEEE format (first bit tries to convert to 16 bit PCM, WaveChannel converts to float). Obviously, since your audio is already in that format, most of this code is redundant. The demo would require refactoring a bit to be able to play 3 bit files.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-12T02:57:28.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "595946",
+    "ThreadId": "253385",
+    "Html": "<p>Thanks for your response.</p>\n<p>well, I understand the it's redundant code,&nbsp;basically.</p>\n<p>I just didn't find a way how to:<br />1. &nbsp;convert 32 bit IEEE float&nbsp;stream to 16bit and pass to WavFileWriter.<br />&nbsp; OR<br />2. create WaveChannel32 from WaveStream with 32 IEEE format. (if wav is already in ieee format)</p>\n<p>I have worked around&nbsp;the first point so that&nbsp;I just readed from underlying pcm stream, but I'm not sure if this won't cause some kind of inconsistent state.<br /><br /><br />anyway, you have done great work with this library and support I really appreciate it. I think you should add some info about how&nbsp;to donate to&nbsp;the project's&nbsp;homepage ;) This budget could be spent for&nbsp;some documentation. Consider it!</p>",
+    "PostedDate": "2011-04-12T06:49:16.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "596488",
+    "ThreadId": "253385",
+    "Html": "<p>There is a Wave32To16Conversion stream you can use to go from IEEE to 16 bit samples</p>\r\n<p>WaveChannel32 would need to be modified to accept IEEE input, as it currently accepts 16 bit. In fact, WaveChannel32 is a bit redundant if your input is already 32 bit; why do you need to use it?</p>",
+    "PostedDate": "2011-04-13T03:43:50.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "596685",
+    "ThreadId": "253385",
+    "Html": "<p>Hmm, good question :)</p>\r\n<p>currently I have CreateInputStream method which returns WaveChannel32. When I changed it to WaveStream, I was&nbsp;not able to set volume on stream. Ok, for my reasons I can use</p>\r\n<p>initially I thought that&nbsp;to the wasapiout I&nbsp;must pass all streams in the same format, but I'm working in exslusive mode so this is not very actual. I'm also using WaveChannel32.Sample event for visualisation purposes.</p>\r\n<p>But how to make output volumelevel indicator (like in windows volume mixer)&nbsp;if I don't have OnSample event.</p>\r\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>\r\n<p>And one more question? is there an option to convert 24 bit wav to 32?</p>\r\n<p>One think I would like to achieve is to create peak file(stream,&nbsp;double array...)&nbsp;from any format which&nbsp;I can decode using naudio. In other words, I would like get samlpes with range&nbsp;between &lt;0;1&gt; from any wavestream.</p>",
+    "PostedDate": "2011-04-13T09:32:55.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "597451",
+    "ThreadId": "253385",
+    "Html": "<p>check the latest NAudioDemo, it can now play 24 bit, 32 bit float and 8 bit WAV files</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-14T13:12:18.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "597452",
+    "ThreadId": "253385",
+    "Html": "<p>I should add, I still need to test with mono files at those bit depths. I'm hoping to find time to make a series of small test files soon.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-14T13:12:59.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

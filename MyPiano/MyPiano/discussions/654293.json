@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1472380",
+    "ThreadId": "654293",
+    "Html": "Does anyone know how to make a class that implements IWaveProvider with the ability to change the speed and pitch of the music you play?<br />\n",
+    "PostedDate": "2016-05-04T02:27:54.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1472855",
+    "ThreadId": "654293",
+    "Html": "I use soundtouch.net (<a href=\"https://soundtouchdotnet.codeplex.com/\" rel=\"nofollow\">https://soundtouchdotnet.codeplex.com/</a>) for changing pitch. you can use the wdl resampler to change playbackrate (pitch &amp; speed) - combine with soundtouch and you can modify speed only.<br />\n",
+    "PostedDate": "2016-05-09T06:09:26.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482537",
+    "ThreadId": "654293",
+    "Html": "I blogged about using SoundTouch with NAudio here: <a href=\"http://markheath.net/post/varispeed-naudio-soundtouch\" rel=\"nofollow\">http://markheath.net/post/varispeed-naudio-soundtouch</a> <br />\n",
+    "PostedDate": "2016-08-31T12:37:15.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

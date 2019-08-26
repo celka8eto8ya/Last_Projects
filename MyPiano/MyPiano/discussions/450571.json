@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1070412",
+    "ThreadId": "450571",
+    "Html": "Hi,\r<br />\n<br />\nI hope I explain this properly... Here goes....\r<br />\n<br />\nI need a way to &quot;add&quot; music to whatever is coming in through the MIC jack but without hearing it on the local computer.\r<br />\n<br />\nIs this possible with NAudio please?\r<br />\n<br />\nThis is the scenario I have been given...\r<br />\n<br />\n&quot;Imagine that you are on a call on Skype and whatever mp3 is played using the software is played in a way so that the skype user on other end can hear that and not the user playing it.&quot;\r<br />\n<br />\nAny advice would be much appreciated. I'm a bit of an audio newbie sorry :)\r<br />\n<br />\nThanks\r<br />\n<br />\nTrev<br />\n",
+    "PostedDate": "2013-07-19T03:30:09.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070487",
+    "ThreadId": "450571",
+    "Html": "You can't intercept a soundcard input. You'd need to use Skype4Com to intercept the audio stream sent across the network and mix your MP3 in with your own audio. It is possible, but quite tricky to accomplish if you are new to audio.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-07-19T07:04:41.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070491",
+    "ThreadId": "450571",
+    "Html": "many thanks!\r<br />\n<br />\nTrev<br />\n",
+    "PostedDate": "2013-07-19T07:11:53.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

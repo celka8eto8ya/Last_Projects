@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1252015",
+    "ThreadId": "547287",
+    "Html": "Hi\r<br />\n<br />\nI am enumerating the audio devices and would like to be able to select the appropriate icon based on the device type. By type i mean if it is a speaker a headset microphone or speaker phone and so forth.\r<br />\n<br />\nIs this possible?\r<br />\n<br />\n<em>The Lync Client is doing it somehow, it shows custom icons for the listed audio device types along with a header denoting the type e.g. (Headset, Speaker Phone, Custom Device)</em>\r<br />\n<br />\nAny pointers would be grateley appreciated, thanks in advace!\r<br />\n<br />\n// Matias<br />\n",
+    "PostedDate": "2014-06-02T08:13:47.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260973",
+    "ThreadId": "547287",
+    "Html": "NAudio uses <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/dd370840(v=vs.85).aspx\" rel=\"nofollow\">WASAPI device enumeration</a>, so if there is anything in WASAPI  that can be used to determine the device type, then it can be used in NAudio<br />\n",
+    "PostedDate": "2014-06-29T15:49:41.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

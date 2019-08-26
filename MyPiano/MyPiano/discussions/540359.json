@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1227487",
+    "ThreadId": "540359",
+    "Html": "I have tried to resolve this one myself using various suggestions found is discussions here and elsewhere but I cannot.<br />\n<pre><code>            Dim stream1 As WaveStream = New RawSourceWaveStream(memStm, New Gsm610WaveFormat)\n            Dim pcmStream = WaveFormatConversionStream.CreatePcmStream(stream1)\n            player.Init(New LoopStream(pcmStream))\n            player.Play()</code></pre>\n\nWhere LoopStream is something Mark Heath posted on an earlier discussion, I have been using it to force the WaveOutEvent to keep playing.<br />\n<pre><code>Class LoopStream\n    Inherits WaveStream\n    Public Sub New(ByVal source As WaveStream)\n        _sourceStream = source\n    End Sub\n    Dim _sourceStream As WaveStream\n    Public Overrides ReadOnly Property Waveformat As WaveFormat\n        Get\n            Return _sourceStream.WaveFormat\n        End Get\n    End Property\n    Public Overrides ReadOnly Property Length As Long\n        Get\n            Return Long.MaxValue / 32\n        End Get\n    End Property\n    Public Overrides Property Position As Long\n        Get\n            Return _sourceStream.Position\n        End Get\n        Set(value As Long)\n            _sourceStream.Position = value\n        End Set\n    End Property\n    Public Overrides Function HasData(ByVal count As Integer) As Boolean\n        'infinite loop\n        Return True\n    End Function\n    Public Overrides Function Read(ByVal Buffer() As Byte, ByVal offset As Integer, ByVal count As Integer) As Integer\n        Read = 0\n        While (Read &lt; count)\n            Dim required As Integer = count - Read\n            Dim readThisTime As Integer\n            readThisTime = _sourceStream.Read(Buffer, offset + Read, required)\n            If readThisTime &lt; required Then\n \n            End If\n            If _sourceStream.Position &gt;= _sourceStream.Length Then\n   \n            End If\n            Read += readThisTime\n        End While\n        Return Read\n    End Function\n    Protected Overrides Sub Dispose(ByVal disposing As Boolean)\n        _sourceStream.Dispose()\n        MyBase.Dispose(disposing)\n    End Sub\nEnd Class</code></pre>\n\nBasically, this setup works but is crackling and not playing back well. I've tried to modify the LoopStream Class to provide silence when there is nothing in the buffer, but I am really not sure what I am doing. \r<br />\n<br />\nI have also tried to use a BufferedWaveProvider as that would be ideal but when I use it like this<br />\n<pre><code>    Dim bufferedProvider As New BufferedWaveProvider(New Gsm610WaveFormat)\n            player.Init(bufferedProvider)\n            player.Play()</code></pre>\n\nI get the exception <strong>WaveBadFormat calling waveOutOpen</strong> making me think that I can't use one with the Gsm610WaveFormat.\r<br />\n<br />\nAnd some other info in advance, I am successfully writing the data to a file using a WaveFileWriter and the files are crystal clear. I am using NAudio v1.7. \r<br />\nThanks for any comments or suggestions!<br />\n",
+    "PostedDate": "2014-03-27T10:56:35.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1230324",
+    "ThreadId": "540359",
+    "Html": "you can't play compressed formats directly, you must convert to PCM (using WaveFormatConversionSteam or AcmStream for lower level)<br />\n",
+    "PostedDate": "2014-04-04T06:56:59.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1230332",
+    "ThreadId": "540359",
+    "Html": "Thanks for the reply. I believe that is what I am doing up top. But how can I create an input buffer to keep the audio from being choppy as it enters? I can't pass a PCM stream to a bufferedwaveprovider that I can tell. The Loopstream class is the closest to accomplishes this I've come and I've tried several different ways. I've also tried to use the ACMStream code from the web chat example but I had some trouble. Thanks for NAudio, greatly appreciate it!<br />\n",
+    "PostedDate": "2014-04-04T07:08:26.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1230344",
+    "ThreadId": "540359",
+    "Html": "you can put PCM into a buffered wave provider. That's how the network chat demo with the NAudio source code works<br />\n",
+    "PostedDate": "2014-04-04T07:21:10.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1230354",
+    "ThreadId": "540359",
+    "Html": "Okay, I will spend some more time in that example. I think I was getting pretty close. Thank you. <br />\n",
+    "PostedDate": "2014-04-04T07:41:47.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

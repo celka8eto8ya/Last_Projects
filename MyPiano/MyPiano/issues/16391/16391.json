@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "I'm Trying NAudio in my project.\r\nIt seem that in Mp3FileReader buffer dispose function not work.\r\nI use this scenario:\r\n            mp3_1 = New Mp3FileReader(\"FileAudio.MP3\")\r\n            DSO1.Init(mp3_1)\r\n            DSO1.Play()\r\nThen stop and dispose WaweOut and restart a new file with same routine.\r\nAfter any stop and play, memory is loss.\r\n\r\nIs this routine correct?\r\n\r\nRehards \r\nAlex",
+    "LastUpdatedDate": "2013-04-01T09:59:40.307-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-03-30T16:23:11.217-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Buffer not dispose",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16391
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "You should Dispose your Mp3FileReader as well when you are finished playing it.",
+      "PostedDate": "2013-03-30T23:43:34.81-07:00",
+      "Id": 95384
+    },
+    {
+      "Message": "I have try:\nmp3_1.close\nmp3_1.dispose\nBut the memory used  increases each time use new Mp3FileReader.\nIt seem that the dispose function not releases all file stream.\n\nCam you tell me the proper method?\n\n\nRegards\nAlex",
+      "PostedDate": "2013-03-31T03:15:34.207-07:00",
+      "Id": 95392
+    },
+    {
+      "Message": "then you have disposed it. memory usage does not go down in .net when you dispose something. that only happens when the garbage collector runs. ",
+      "PostedDate": "2013-03-31T08:46:15.99-07:00",
+      "Id": 95401
+    },
+    {
+      "Message": "Can I know the device audio list name?\n\n\n\nRegards\nAlex",
+      "PostedDate": "2013-04-01T09:59:40.307-07:00",
+      "Id": 95486
+    }
+  ]
+}

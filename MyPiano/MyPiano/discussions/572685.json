@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1324426",
+    "ThreadId": "572685",
+    "Html": "Hi,\r<br />\n<br />\nI've got this:\r<br />\n<br />\nIn WCF service where I want mix sounds together:<br />\n<blockquote>\nvar mixer = MixingSampleProvider(sound32.WaveFormat) { ReadFully = true };<br />\n</blockquote>\nand using callbacks to communicate with clients, like this:<br />\n<blockquote>\nclient.Callback.SendAudio(???mixer???);<br />\n</blockquote>\nHere is the question... how can I send audio (stream, byte array, bytes, samples,...) to all clients? What I need to do with income data in client app? How to play this data?\r<br />\n<br />\nSome ideas or examples?<br />\n",
+    "PostedDate": "2014-11-20T11:37:54.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1325280",
+    "ThreadId": "572685",
+    "Html": "Ok... after some research, I found something like this:\r<br />\n<br />\nWhile in local playing of mixed sounds I can use:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">// something like this, I need on server side</span>\n<span style=\"color:Blue;\">var</span> mixer = MixingSampleProvider(sound32.WaveFormat) { ReadFully = <span style=\"color:Blue;\">true</span> };\nmixer.AddMixerInput(someInput);\nmixer.AddMixerInput(someOtherInput);\n\n<span style=\"color:Green;\">// this will be on client side</span>\noutput.Init(mixer);\noutput.Play();\n\r\n</pre></div>Client-server side should looks like this:\r<br />\nServer side:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">var</span> mixer = MixingSampleProvider(sound32.WaveFormat) { ReadFully = <span style=\"color:Blue;\">true</span> };\nmixer.AddMixerInput(someInput);\nmixer.AddMixerInput(someOtherInput);\n\nSampleToWaveProvider sampleToWave = <span style=\"color:Blue;\">new</span> SampleToWaveProvider(_mixer);\n\n<span style=\"color:Blue;\">byte</span>[] bufferByteArray = <span style=\"color:Blue;\">new</span> <span style=\"color:Blue;\">byte</span>[1000];        <span style=\"color:Green;\">// How can I know, that buffer size is correct?</span>\n<span style=\"color:Blue;\">int</span> x = 0;\n\n<span style=\"color:Blue;\">do</span> {\n    sampleToWave.Read(bufferByteArray, x * 10, 10);\n} <span style=\"color:Blue;\">while</span> (x &lt; 100)\n\nclient.Callback.SendAudio(bufferByteArray);               <span style=\"color:Green;\">// some buffer clearings? stockowerflow if mixing is ReadFully set to true?</span>\r\n</pre></div>Client side:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\nBufferedWaveProvider bufferedWave = <span style=\"color:Blue;\">new</span> BufferedWaveProvider(sound32.WaveFormat);\noutput.Init(bufferedWave);\noutput.Play();\n\nbufferedWave.AddSamples(byteArray, 0, byteArray.Length);\n\r\n</pre></div><strong>This is only my idea...</strong> can someone tell if it is good way to do this?\r<br />\nI created local app with something like this for test, but <strong>music is not correct</strong>! Something is wrong with this idea?<br />\n",
+    "PostedDate": "2014-11-23T09:51:01.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340622",
+    "ThreadId": "572685",
+    "Html": "sorry for late reply. Two pointers<br />\n<ol>\n<li>no need to read 10 bytes at a time. Read the whole of your buffer to send. I'd also recommend buffer sizes of around 100ms of audio.</li>\n<li>to test your mixing code, write the mixed audio to a WAV file on the server side. then you can be sure you are sending the right data, before you move on to debugging the client side</li>\n</ol>\n",
+    "PostedDate": "2015-01-10T01:39:14.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

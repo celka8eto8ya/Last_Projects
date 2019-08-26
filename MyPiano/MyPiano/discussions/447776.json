@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1059455",
+    "ThreadId": "447776",
+    "Html": "Man I have been having such trouble figuring this out!! xD\r<br />\n<br />\nFor my task i have to write a program that can record both the microphone and audio playback to hear both sides of the conversation. I have had no problem recording the microphone, but how to i record the audio playback?!?! Any ideas?!\r<br />\n<br />\nThanks in advance for the help!<br />\n",
+    "PostedDate": "2013-06-20T20:12:05.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1059551",
+    "ThreadId": "447776",
+    "Html": "with Windows Vista and above you can capture the system audio using WasapiLoopbackCapture. Note that you capture nothing if no sound is being played.<br />\n",
+    "PostedDate": "2013-06-21T02:27:59.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1060625",
+    "ThreadId": "447776",
+    "Html": "Thank you Markheath! with that bit of info, you sent me to the right place! with a bit more research i figured what the heck that was and was able to successfully capture both audio sources! thanks man!<br />\n",
+    "PostedDate": "2013-06-24T16:34:43.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

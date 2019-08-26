@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1446565",
+    "ThreadId": "645654",
+    "Html": "I can't figure out why this wont work. I get an mp3 that is static. What am I missing? Thanks.<br />\n<pre><code>    public partial class MainWindow : Window\n    {\n        private WaveIn waveIn;\n        Process p = new Process();\n\n        public MainWindow()\n        {\n            InitializeComponent();\n            waveIn = new WaveIn();\n            waveIn.WaveFormat = new WaveFormat();\n            waveIn.DataAvailable += waveIn_DataAvailable;\n        }\n\n        void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            p.StandardInput.BaseStream.Write(e.Buffer, 0, e.BytesRecorded); \n        }\n\n        private void Button_Click(object sender, RoutedEventArgs e)\n        {\n            waveIn.StartRecording();\n            p.StartInfo.FileName = @&quot;c:\\lame.exe&quot;;\n            p.StartInfo.UseShellExecute = false;\n            p.StartInfo.RedirectStandardInput = true;\n            p.StartInfo.Arguments = &quot;-r - testing2.mp3&quot;;\n            p.StartInfo.CreateNoWindow = true;\n            p.Start();\n        }\n\n        private void Button_Click_1(object sender, RoutedEventArgs e)\n        {\n            waveIn.StopRecording();\n            p.StandardInput.Close();\n        }\n    }</code></pre>\n\n",
+    "PostedDate": "2015-09-30T11:02:56.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446673",
+    "ThreadId": "645654",
+    "Html": "By static I mean the whole mp3 sounds kind of like white noise. Just thought I would clear that up. Any help would be appreciated. <br />\n",
+    "PostedDate": "2015-10-01T05:21:10.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446769",
+    "ThreadId": "645654",
+    "Html": "make sure you are passing the right command line arguments for the WaveFormat you are passing in.\r<br />\nI'd also perhaps write to a WAV file at the same time to check the audio you are receiving is correct.<br />\n",
+    "PostedDate": "2015-10-01T14:04:27.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446781",
+    "ThreadId": "645654",
+    "Html": "Thanks for your reply Mark. I set up a wave file writer and the wav file sounds perfect. It sounds like the stdin might be clipping. I have an open mic and the room sound in the mp3 sounds fine but as soon as I say something it sounds like distortion/static. I copied the below from my output window. It is the waveformat being sent and the output from lame.exe. It all seems to be in order. Is it possible for a default wavein to be too hot for stdin?\r<br />\n<br />\n2\r<br />\n44100\r<br />\n16\r<br />\nPcm\r<br />\nAssuming raw pcm input file\r<br />\nLAME version 3.96.1 (<a href=\"http://lame.sourceforge.net/\" rel=\"nofollow\">http://lame.sourceforge.net/</a>)\r<br />\nCPU features: MMX (ASM used), SSE, SSE2\r<br />\nUsing polyphase lowpass filter, transition band: 17249 Hz - 17782 Hz\r<br />\nEncoding &lt;stdin&gt; to testing2.mp3\r<br />\nEncoding as 44.1 kHz 128 kbps j-stereo MPEG-1 Layer III (11x) qval=3<br />\n",
+    "PostedDate": "2015-10-01T19:33:33.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448224",
+    "ThreadId": "645654",
+    "Html": "try recording to WAV and then passing that into LAME, see if that gives the same results.<br />\n",
+    "PostedDate": "2015-10-12T13:37:39.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448227",
+    "ThreadId": "645654",
+    "Html": "Do you mean in two steps?\r<br />\n1) record wave to disk and close \r<br />\n2) send the the finished wave file to lame\r<br />\n<br />\nI have done that and it works fine. <br />\n",
+    "PostedDate": "2015-10-12T13:56:51.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448228",
+    "ThreadId": "645654",
+    "Html": "then something is wrong with the lame command line parameters. <br />\n",
+    "PostedDate": "2015-10-12T14:01:45.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448231",
+    "ThreadId": "645654",
+    "Html": "Okay I'll play around with them. I started this using your EncodeToMp3UsingStdIn method from your pluralsight course with the same results. I think I'll back up to there and try again. Thanks<br />\n",
+    "PostedDate": "2015-10-12T14:23:53.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "218758",
+    "ThreadId": "64298",
+    "Html": "<p>I'm trying to use WaveOut to play wave files. However WaveChannel32 supports only 16 bit wave format. How can I play 8-bit audio (recorded with AudioIn) ?</p>",
+    "PostedDate": "2009-08-03T05:39:06.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "225620",
+    "ThreadId": "64298",
+    "Html": "<p>Hi wkdj,</p>\r\n<p>Is it not possible for you to record the audio in 16 bit to start with?</p>\r\n<p>Alternatively you need to upscale the audio to 16 bit before you read it in to WaveChannel32.</p>\r\n<p>Have a look at this blog post for an example on how to do this with NAudio: <a title=\"http://mark-dot-net.blogspot.com/2008/11/using-naudio-to-replace-babysmash-audio.html\" href=\"http://mark-dot-net.blogspot.com/2008/11/using-naudio-to-replace-babysmash-audio.html\">http://mark-dot-net.blogspot.com/2008/11/using-naudio-to-replace-babysmash-audio.html</a></p>\r\n<p>Cheers,<br>Sebastian</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-08-19T15:10:49.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

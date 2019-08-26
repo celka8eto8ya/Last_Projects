@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "597944",
+    "ThreadId": "254062",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I'm new to NAudio and wanted to know if the following can supported before I start digging in</p>\r\n<p>I'm using .Net 4.0 and my app needs the following:</p>\r\n<p>- support mono and streo wave files at 24bit, 48KHz (I can compromise and use 16bit if I must)</p>\r\n<p>- file streaming (i.e. working with buffers and not a complete file as I'm doing some audio processing in RT)</p>\r\n<p>- support both x86 and x64 platforms</p>\r\n<p>* Can NAudio support that ?&nbsp; if positive, as latency is not an issue with my app, can I use Waveout device ?</p>\r\n<p>My goal is to keep it as simple as possible especialy when installing my app on other machimes.</p>\r\n<p>* Beside .Net 4 client, what are the other prereq, if any, needed to be installed on target machines ?</p>\r\n<p>Tnx in advance,</p>\r\n<p>Hektor</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-04-15T07:19:55.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "597980",
+    "ThreadId": "254062",
+    "Html": "<p>I've just checked in an example of 24 bit WAV playback. Mono and stereo is fine.</p>\r\n<p>Playback at 48kHz is fine, although depending on the output model used that may mean sample rate conversion is applied</p>\r\n<p>Yes, file streaming is completely possible. Have a look at the SkypeFX project for an example. (also PracticeSharp)</p>\r\n<p>NAudio can run on x86 and x64. At the moment it is recommended you build your app to target x86 so it runs as 32 bit on 64 bit windows to ensure there are no interop issues (also ACM codecs seem only to be available for 32 bit)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-15T08:09:18.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598007",
+    "ThreadId": "254062",
+    "Html": "<p>Tnx Mark.</p>\r\n<p>Does v1.3 support 24bits or I need a newer ver ?</p>\r\n<p>I'm asking since I just tried a quick exampe based on Toturial 1. 16 bit files works well but when moving to 24 bits I'm geting this error: \"AcmNotPossible calling acmStreamOpen\"</p>\r\n<p>do I have to install a specific ACM codec ?&nbsp;</p>\r\n<p>Tnx,</p>\r\n<p>Hektor</p>",
+    "PostedDate": "2011-04-15T08:46:27.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598014",
+    "ThreadId": "254062",
+    "Html": "<p>you need to use the latest code from source control. hopefully a 1.4 to be released soon</p>",
+    "PostedDate": "2011-04-15T08:58:14.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598027",
+    "ThreadId": "254062",
+    "Html": "<p>&nbsp;OK, Tnx.</p>\r\n<p>with v1.3 16bit @ 48KHz seems to work fine, so I'll wait for v1.4 to move to 24bit.</p>\r\n<p>Tnx,</p>\r\n<p>Hektor</p>",
+    "PostedDate": "2011-04-15T09:17:07.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598454",
+    "ThreadId": "254062",
+    "Html": "<p>This update is really nice.&nbsp; I am using it on my 24bit FLAC files that get converted to WAV before playback and it works great.&nbsp; Thank you!</p>",
+    "PostedDate": "2011-04-16T11:18:55.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

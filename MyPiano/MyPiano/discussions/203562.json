@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "413191",
+    "ThreadId": "203562",
+    "Html": "<p>Hi</p>\r\n<p>I have just stumbled across your libary and am having some problems getting it to play G711 RTP Packets</p>\r\n<p>I have created a class that inherites the bits i think it needs and reports the waveformat as&nbsp;<span style=\"color:#0000ff;font-size:x-small\"><span style=\"color:#0000ff;font-size:x-small\">Return </span></span><span style=\"font-size:x-small\">WaveFormat.CreateALawFormat(8000, 1)</span></p>\r\n<p>I have a event that fires when a new RTp packet arrives and i then run this code</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">Dim</span> b <span style=\"color:Blue\">As</span> WaveStream\r\n\r\n        b = WaveFormatConversionStream.CreatePcmStream(<span style=\"color:Blue\">New</span> G711_Wave_Stream(packet.DataPointer))\r\n        <span style=\"color:Blue\">Dim</span> c <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">New</span> WaveChannel32(b, 1000, 0)\r\n\r\n        waveOutDevice.Init(c)\r\n\r\n        waveOutDevice.Play()\r\n</pre>\r\n</div>\r\n<p>I think i have something wrong as my app crashes after a few packets and you dont hear anything out of the speakers</p>\r\n<p>Thanks for any help in advance</p>\r\n<p>&nbsp;</p>\r\n<p>Colin</p>\r\n<p>\r\n<p><span style=\"color:#0000ff;font-size:x-small\"><span style=\"color:#0000ff;font-size:x-small\">&lt;font size=&quot;2&quot; color=&quot;#0000ff&quot;&gt;&lt;font size=&quot;2&quot; color=&quot;#0000ff&quot;&gt;\r\n<p>&nbsp;</p>\r\n&lt;/font&gt;&lt;/font&gt;</span>&lt;font size=&quot;2&quot; color=&quot;#0000ff&quot;&gt;\r\n<p>&nbsp;</p>\r\n&lt;/font&gt;</span>\r\n<p>&nbsp;</p>\r\n</p>\r\n</p>",
+    "PostedDate": "2010-03-02T07:10:25.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413607",
+    "ThreadId": "203562",
+    "Html": "<p>when you say &quot;crashes&quot;, do you get an exception?</p>",
+    "PostedDate": "2010-03-03T03:07:10.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413614",
+    "ThreadId": "203562",
+    "Html": "<p>Hi</p>\r\n<p>Thanks for the responce</p>\r\n<p>I have solved the problem it was my missunderstanding of the way to use the libary</p>\r\n<p>Another question i have is does the libary support any other Codec's? eg G.723</p>\r\n<p>Thanks</p>\r\n<p>Colin</p>",
+    "PostedDate": "2010-03-03T03:30:13.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413615",
+    "ThreadId": "203562",
+    "Html": "<p>NAudio uses ACM (audio compression manager) for WaveFormatConversionStream, so it depends if you have an ACM encoder/decoder installed for G.723. I have certainly used it for G.723 and G.728 so it is possible.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-03T03:31:41.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413624",
+    "ThreadId": "203562",
+    "Html": "<p>Hi</p>\r\n<p>Thats brilliant news :) thanks for your help</p>\r\n<p>I may be bothering you in the future</p>\r\n<p>&nbsp;</p>\r\n<p>Colin</p>",
+    "PostedDate": "2010-03-03T03:55:48.78-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "414062",
+    "ThreadId": "203562",
+    "Html": "<p>Hi</p>\r\n<p>Im not as working as i thought i was</p>\r\n<p>Currently i have my RTP data coming into my app in packets of 80 Bytes using G711A</p>\r\n<p>My code is currently for whan a packet arrives is</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">Dim</span> c <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">New</span> WaveFormatConversionStream(WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, 8000, 1, 16000, 2, 16), <span style=\"color:Blue\">New</span> G711_Wave_Stream(packet.DataPointer))\r\n\r\n        <span style=\"color:Green\">'b = WaveFormatConversionStream.CreatePcmStream()</span>\r\n\r\n        playData = <span style=\"color:Blue\">New</span> WaveChannel32(c, 2.0, 1.0)\r\n\r\n        waveOutDevice.Init(playData)\r\n\r\n        waveOutDevice.Play()\r\n</pre>\r\n<pre>I have also created a class call G711_Wave_Stream and the code is as follows</pre>\r\n<pre><div style=\"color:Black;background-color:White\"><pre><span style=\"color:Blue\">Public</span> <span style=\"color:Blue\">Class</span> G711_Wave_Stream\r\n    <span style=\"color:Blue\">Inherits</span> WaveStream\r\n\r\n    <span style=\"color:Blue\">Private</span> Data() <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">Byte</span>\r\n    <span style=\"color:Blue\">Private</span> Pos <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">Long</span>\r\n\r\n    <span style=\"color:Blue\">Public</span> <span style=\"color:Blue\">Sub</span> <span style=\"color:Blue\">New</span>(<span style=\"color:Blue\">ByVal</span> Input() <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">Byte</span>)\r\n        Data = Input\r\n    <span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Sub</span>\r\n\r\n    <span style=\"color:Blue\">Public</span> <span style=\"color:Blue\">Overrides</span> <span style=\"color:Blue\">ReadOnly</span> <span style=\"color:Blue\">Property</span> Length() <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">Long</span>\r\n        <span style=\"color:Blue\">Get</span>\r\n            <span style=\"color:Blue\">Return</span> Data.Length\r\n        <span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Get</span>\r\n    <span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Property</span>\r\n\r\n    <span style=\"color:Blue\">Public</span> <span style=\"color:Blue\">Overrides</span> <span style=\"color:Blue\">Property</span> Position() <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">Long</span>\r\n        <span style=\"color:Blue\">Get</span>\r\n            <span style=\"color:Blue\">Return</span> Pos\r\n        <span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Get</span>\r\n        <span style=\"color:Blue\">Set</span>(<span style=\"color:Blue\">ByVal</span> value <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">Long</span>)\r\n            Pos = value\r\n        <span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Set</span>\r\n    <span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Property</span>\r\n\r\n    <span style=\"color:Blue\">Public</span> <span style=\"color:Blue\">Overrides</span> <span style=\"color:Blue\">Function</span> Read(<span style=\"color:Blue\">ByVal</span> buffer() <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">Byte</span>, <span style=\"color:Blue\">ByVal</span> offset <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">Integer</span>, <span style=\"color:Blue\">ByVal</span> <span style=\"color:Blue\">count</span> <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">Integer</span>) <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">Integer</span>\r\n        Array.Copy(Data, 0, buffer, offset, Data.Length - 1)\r\n        <span style=\"color:Blue\">Return</span> Data.Length\r\n    <span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Function</span>\r\n\r\n    <span style=\"color:Blue\">Public</span> <span style=\"color:Blue\">Overrides</span> <span style=\"color:Blue\">ReadOnly</span> <span style=\"color:Blue\">Property</span> WaveFormat() <span style=\"color:Blue\">As</span> NAudio.Wave.WaveFormat\r\n        <span style=\"color:Blue\">Get</span>\r\n            <span style=\"color:Blue\">Dim</span> a <span style=\"color:Blue\">As</span> WaveFormat\r\n            a = WaveFormat.CreateALawFormat(8000, 1)\r\n            <span style=\"color:Blue\">Return</span> a\r\n        <span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Get</span>\r\n    <span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Property</span>\r\n<span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Class</span>\r\n</pre>\r\n</div>\r\n</pre>\r\n<pre>When audio arrives it comes out the speakers by all grabled and not ledgeable I think i have a problem when the audio is being uncompressed and a lack of knodlege of your libary</pre>\r\n<pre>Any help will be much apeciated</pre>\r\n<pre>Colin</pre>\r\n</div>",
+    "PostedDate": "2010-03-04T03:41:58.68-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "415387",
+    "ThreadId": "203562",
+    "Html": "<p>Hi</p>\r\n<p>&nbsp;</p>\r\n<p>I have been playing with this a bit more and think i have found the problem but i dont know how to impiment it</p>\r\n<p>My input form my RTP source is G711A @ 64000K with 16bit samples but im not sure how to tell the ACM decoder these options to decode the input correctly</p>\r\n<p>&nbsp;</p>\r\n<p>Please can anyone help?</p>\r\n<p>&nbsp;</p>\r\n<p>Colin</p>",
+    "PostedDate": "2010-03-08T03:10:04.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "416985",
+    "ThreadId": "203562",
+    "Html": "<p>that is always the challenge with compression formats - finding the correct WaveFormat structure. If you can get hold of a valid WAV file containing G711A data, you can look at its contents in a hex editor to work out what the WaveFormat structure should&nbsp; look like. With any luck it won't require any &quot;extra bytes&quot;</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-11T07:09:33.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

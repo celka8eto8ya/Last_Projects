@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "602701",
+    "ThreadId": "255245",
+    "Html": "\r\n<p>I am working on an singing program by using NAudio, I wonder anyone have good ideas/ experience to share with me about how to do &quot;Echo Cancellation&quot; and &quot;Noise Supression&quot; during capture and play in real time.&nbsp; appreciate in advance.</p>\r\n",
+    "PostedDate": "2011-04-25T22:39:24.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602971",
+    "ThreadId": "255245",
+    "Html": "<p>NAudio doesn't include any built-in algorithms for echo cancellation or noise suppression. Echo cancellation can be quite tricky to implement. Noise suppression is a bit easier - you typically use a noise gate. You could have a look at http://www.musicdsp.org/ to see if there is anything that can help you.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-26T07:58:51.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629608",
+    "ThreadId": "255245",
+    "Html": "<p>Hi Mark<br /><br />Any plans to implement AEC filter in NAudio?</p>",
+    "PostedDate": "2011-06-18T14:09:36.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629680",
+    "ThreadId": "255245",
+    "Html": "<p>I'm afraid not at the moment, you'd either have to write your own managed AEC, or wrap a third party effect.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-19T00:27:18.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

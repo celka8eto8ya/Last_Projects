@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1262314",
+    "ThreadId": "550463",
+    "Html": "Hi there,<br />\n<br />\nI intend to decode from a continuous stream of input from microphone, sinusoidal signals. In cardre decode tone CCIR ZVEI a radio channel and send it over the network.<br />\nThe tones succeeds with a length of 100 ms and the second appears immediately after, with a total length 500ms.<br />\n<br />\nI tried the FFT and GoertzelFilter, but it seem that I can't work this out.<br />\n<br />\nFirst of all, I want do decode (semi)instantly the incomming frequency.<br />\n<br />\nCan you help me, thank you,<br />\n<br />\nMichael<br />\n",
+    "PostedDate": "2014-07-03T03:54:18.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "570604",
+    "ThreadId": "247166",
+    "Html": "<p>Hi! I have the following code:</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre>IWavePlayer player = <span style=\"color: blue;\">new</span> WaveOut();\nWaveStream reader = <span style=\"color: blue;\">new</span> WaveFileReader(filePath);\nWaveChannel32 input = <span style=\"color: blue;\">new</span> WaveChannel32(reader);\n\nAmplitudeStream ampStream = <span style=\"color: blue;\">new</span> AmplitudeStream(input);\nampStream.AmplitudeEventHandler += <span style=\"color: blue;\">new</span> EventHandler&lt;AmplitudeArgs&gt;(AmplitudeStreamHandler);\n\nplayer.Init(ampStream);\nplayer.Play();\n</pre>\n</div>\n<p>&nbsp;</p>\n<p>AmplitudeStream is a class I made that implements WaveStream so that I can 'track' and send an event whenever data is read from the file. However, my problem is that I want to control how much bytes are read. Since the Read function of AmplitudeStream is  being called by the Play() function, I have no idea on how I can limit the number of bytes read (it is always 35,280). How to do this? I am using the Play() command because I want my file to play so that I can observe. So if there is another way to play the  file during the Read() command, which would look something like:</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">byte</span>[] buffer = <span style=\"color: blue;\">byte</span>[8192]\n<span style=\"color: blue;\">int</span> bytesRead = 0;\n\n<span style=\"color: blue;\">do</span>{\n\nbytesRead = ampStream.Read(buffer,0,buffer.Length);\n\n}<span style=\"color: blue;\">while</span>(bytesRead != 0);\n\n@<span style=\"color: blue;\">override</span>\n<span style=\"color: blue;\">private</span> <span style=\"color: blue;\">int</span> Read(<span style=\"color: blue;\">byte</span>[] buffer, <span style=\"color: blue;\">int</span> offset, <span style=\"color: blue;\">int</span> count)\n{\n\n<span style=\"color: green;\">//some command to play the file here</span>\n\n}\n</pre>\n</div>\n<p>I would like to know.&nbsp;Thanks! Aside from that, is there a way to not use WaveChannel32? Because for some reason, Im getting some errors when I use the reader for input into the AmplitudeStream (mainly because of some byte-float conversion issue).</p>",
+    "PostedDate": "2011-02-22T23:12:21.84-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574327",
+    "ThreadId": "247166",
+    "Html": "<p>the WaveOut buffer sizes control the amount that is Read each time. You can always simply call Read yourself on the wave stream with whatever buffer sizes you like.</p>\r\n<p>WaveChannel32 converts from 16 bit short samples to 32 bit floating point samples. You don't have to use it if you don't want to</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-02T03:10:42.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574328",
+    "ThreadId": "247166",
+    "Html": "<p>Hi!</p>\r\n<p>Thanks! Currently that is what I do, I just manually read from AmplitudeStream. However, what if I want to play the file at the same time? Is there an alternative way to play the file instead of the play function?</p>",
+    "PostedDate": "2011-03-02T03:15:28.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574339",
+    "ThreadId": "247166",
+    "Html": "<p>well your choices are either to modify the WaveOut buffer sizes, or to put your own buffering code in AmplitudeStream.Read so that it deals with blocks of the size you want. This is how the metering code in the NAudioDemo application works</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-02T03:40:23.96-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574341",
+    "ThreadId": "247166",
+    "Html": "<p>Ok I will try that. Ill post again when I have other questions.</p>\r\n<p>Thanks!</p>",
+    "PostedDate": "2011-03-02T03:41:27.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "576485",
+    "ThreadId": "247166",
+    "Html": "<p>Hi!</p>\r\n<p>So ive tried experimenting with modifying the WaveOut and here is what I have so far:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>WaveOut outw = <span style=\"color: blue;\">new</span> WaveOut();\r\nWaveStream reader = <span style=\"color: blue;\">new</span> WaveFileReader(filePath);\r\n\r\n<span style=\"color: blue;\">int</span> buffersize = (<span style=\"color: blue;\">int</span>)(reader.Length / 8192);\r\noutw.NumberOfBuffers = buffersize;\r\nplayer = outw;\r\n\r\nampStream = <span style=\"color: blue;\">new</span> Algo2Stream(reader, <span style=\"color: blue;\">int</span>.Parse(txtBoxSPS2.Text));\r\nampStream.Algo2EventHandler += <span style=\"color: blue;\">new</span> EventHandler&lt;Algo2Args&gt;(Algo2StreamHandler);\r\n\r\nplayer.Init(ampStream);\r\noverallStart = DateTime.Now;\r\nplayer.Play();\r\n</pre>\r\n</div>\r\n</p>\r\n<p>However I am having a bit of a problem since whenever I go in between and observe the buffersize during the Read command, I see that it is only a very small number (I think around 80-200). So it seems I am mis-using the NumberOfBuffers variable of the WaveOut.</p>\r\n<p>Can you help me with this? Thanks!</p>",
+    "PostedDate": "2011-03-06T23:30:16.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "576716",
+    "ThreadId": "247166",
+    "Html": "<p>number of buffers should be either 2 or 3. You control their size by specifying the latency you want.</p>",
+    "PostedDate": "2011-03-07T09:15:31.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1291980",
+    "ThreadId": "561752",
+    "Html": "Hi! \r<br />\n<br />\nI'm developing a desktop application in WPF using NAudio to record Skype calls. I'm using following main components to retrieve audio signals:<br />\n<ul>\n<li>A WaveIn listens to client microphone. This is for recording my voice.</li>\n<li>\nA WasapiLoopbackCapture gathers sound from client soundcard. This is for recording voice of person I'm talking with.\r<br />\nThe two above audio data are saved to one MemoryStream and the stream is written out to a wave file using a FileWriter. <br />\n</li>\n</ul>\nI made the call with my partner via Skype and we heard each other clearly.\r<br />\n<br />\n<strong>The problem is:</strong> After recording, I played back the recorded file and I could hear my voice normally, but I couldn't hear my partner's voice clearly. His voice sounds nearly quiet so it's very hard to recognize what he's saying about. \r<br />\n<br />\n<strong>My questions:</strong><br />\n<ol>\n<li>What is the correct way to develop this kind of application? For recording audio from mic and soundcard simultaneously? Is there any sample app using NAudio for my references? I don't prefer Skype API as it's already closed.</li>\n<li>I tried to boost the volume programmatically, but the sound signal from my partner introduced hiss noise. So I suppose boosting volume should not be a wise way to solve my issue, right?</li>\n<li>\nWhat is the best settings for recording audio with NAudio (bit-rates, freq...)? <br />\n</li>\n</ol>\nI'm not very experienced. Any help will be much appreciated. \r<br />\n<br />\nKind Regards.<br />\n",
+    "PostedDate": "2014-08-21T02:36:37.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

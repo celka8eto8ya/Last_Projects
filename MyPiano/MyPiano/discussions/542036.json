@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1233323",
+    "ThreadId": "542036",
+    "Html": "How would I be able to update a progress bar if I am copying a wav file to a mp3 file\r<br />\n<br />\nI use the following code to copy the file and it works perfectly I just want to be able to show the progress of the copy to the enduser<br />\n<pre><code>        using (reader = new AudioFileReader(FilenameTextBox.Text))\n        {\n            reader.Volume = VolumeTrackBar.Value * 0.5f;\n            using (LameMP3FileWriter writer = new LameMP3FileWriter(string.Format(@&quot;{0}\\{1}.mp3&quot;, DestDirTextBox.Text, SermonTextBox.Text), reader.WaveFormat, 128))\n            {\n                reader.CopyTo(writer);\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2014-04-11T11:47:29.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1233358",
+    "ThreadId": "542036",
+    "Html": "I'd recommend not to use CopyTo and just create a buffer and copy a few seconds at a time. Then you can update your process bar in the loop.<br />\n",
+    "PostedDate": "2014-04-11T14:05:56.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

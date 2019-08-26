@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1136036",
+    "ThreadId": "473802",
+    "Html": "Hi just trying to find the  <a href=\"http://naudio.codeplex.com/wikipage?title=MIDI%20File%20Converter\" rel=\"nofollow\">MIDI File Converter</a>\r<br />\nit says  <a href=\"https://naudio.codeplex.com/releases/view/114106\" rel=\"nofollow\">Download</a> here, but that it just the NAudio page.\r<br />\n<br />\nThanks.\r<br />\n<br />\n<img src=\"http://download-codeplex.sec.s-msft.com/Download?ProjectName=naudio&amp;DownloadId=8474\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2013-12-14T21:49:11.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1136167",
+    "ThreadId": "473802",
+    "Html": "It's one of the sample apps, but it hasn't been worked on for many years. Get the NAudio source code and you can build it yourself.<br />\n",
+    "PostedDate": "2013-12-15T08:47:53.503-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

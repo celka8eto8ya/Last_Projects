@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "898255",
+    "ThreadId": "391085",
+    "Html": "\r\n<p>Mark please can please publish&nbsp;&nbsp;some code exmaple about how pikcup sysex events?<br>\r\nI wnat receive sysex, no send.<br>\r\n<br>\r\nBest regards!</p>\r\n",
+    "PostedDate": "2012-08-10T14:34:36.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "900832",
+    "ThreadId": "391085",
+    "Html": "<p>I'm afraid I have never done this. NAudio has wrappers for the windows midiIn events but you need to read the windows doumentation to find out how best to call them</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-08-17T13:04:16.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

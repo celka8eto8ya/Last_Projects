@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1062159",
+    "ThreadId": "448457",
+    "Html": "Hello,<br />\n<br />\nI hope someone with a little firmer grasp of c# can enlighten me here.  I have imported the NAudio library into Unity and it has brought me much success with MIDI.  However, I am now trying to get access to a device output.  This involves a call to MMDeviceEnumerator:<br />\n<pre><code> public MMDeviceEnumerator()\n {\n       if (System.Environment.OSVersion.Version.Major &lt; 6)\n       {\n           throw new NotSupportedException(&quot;This functionality is only supported on Windows Vista or newer.&quot;);\n        }\n        _realEnumerator = new MMDeviceEnumeratorComObject() as IMMDeviceEnumerator;\n\n}</code></pre>\n\nThe class constructor fails with a NullReferenceException inside Unity on the cast at the bottom.  I am not familiar with Interfaces and I feel this is causing Unity to fall over?<br />\n<br />\nAny help!?<br />\n",
+    "PostedDate": "2013-06-27T13:13:29.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062373",
+    "ThreadId": "448457",
+    "Html": "you are running on Windows right?<br />\n",
+    "PostedDate": "2013-06-28T02:49:25.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062379",
+    "ThreadId": "448457",
+    "Html": "Running Windows 7.  Unity runs off MonoDevelop.  Could this be that the 'CoreAudioApi' is not included in MonoDevelop?<br />\n",
+    "PostedDate": "2013-06-28T02:58:12.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062442",
+    "ThreadId": "448457",
+    "Html": "CoreAudio API is part of Windows. But I have no experience with Mono and MonoDevelop, so I'm afraid I'm unlikely to be able to offer much assistance here<br />\n",
+    "PostedDate": "2013-06-28T06:12:09.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

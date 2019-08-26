@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "830283",
+    "ThreadId": "354036",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I'm trying to get a simple mp3 stream (server -&gt; client) going. At the moment I have a server which</p>\r\n<p>1. Opens the mp3 file</p>\r\n<p>2. Reads one frame</p>\r\n<p>3. Sends the frame to the client</p>\r\n<p>a) More data? Go to 2</p>\r\n<p>The client reads the frames into a memory stream. But here is my current problem, how do I play it?</p>\r\n<p>Thread 1 feeds the memory stream, while thread 2 plays it was my plan. But currently I don't know how to play it.</p>\r\n<p>So any input like help, suggestions, tips would be greatly appreciated.</p>\r\n",
+    "PostedDate": "2012-04-30T09:57:32.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "830384",
+    "ThreadId": "354036",
+    "Html": "<p>There is an example of this in the NAudioDemo project, which uses a BufferedWaveProvider to queue audio for playback. Get the latest code and look at the NAudioDemo MP3 streaming example.</p>",
+    "PostedDate": "2012-04-30T14:29:44.06-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "830678",
+    "ThreadId": "354036",
+    "Html": "<p>This is what I have so far, but I can't figure out why the buffer in Read() is getting full..</p>\r\n<p>http://pastebin.com/QedH4yVZ</p>\r\n<p>(Couldn't get the code tags to work :s)</p>",
+    "PostedDate": "2012-05-01T08:25:49.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "936300",
+    "ThreadId": "401826",
+    "Html": "\r\n<p>Hi</p>\r\n<p>There's a strange problem with WaveIn. When I unplug the Mic jack, recording stops and I can't start it again. I just can start it again if I close the program and open it again.</p>\r\n<p>I followed the problem and found that after unplugging the Mic jack, the program receives WaveInterop.WaveMessage.WaveInClose message.</p>\r\n<p>I have an onboard Realtek High Definition Audio.</p>\r\n<p>Thanks in advance</p>\r\n",
+    "PostedDate": "2012-11-04T05:39:30.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "936301",
+    "ThreadId": "401826",
+    "Html": "<p>You should get a RecordingStopped message, probably with an Exception set. You'd need to dispose WaveIn, and create a new one to start recording again.</p>",
+    "PostedDate": "2012-11-04T05:40:46.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "936305",
+    "ThreadId": "401826",
+    "Html": "<p>I exactly did that, but it doesn't work. To my surprise the windows native sound recorder program works exactly like my application. In both programs (my program and windows sound recorder) I have to close the program and open it again.</p>",
+    "PostedDate": "2012-11-04T06:13:33.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "936309",
+    "ThreadId": "401826",
+    "Html": "<p>sounds like a driver problem then</p>",
+    "PostedDate": "2012-11-04T06:30:44.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "936312",
+    "ThreadId": "401826",
+    "Html": "<p>Yes, but I just can't understand that what's the relation of this problem and closing the programs. It seems that something doesn't release after disposing the WaveIn. How it's possible?</p>",
+    "PostedDate": "2012-11-04T06:38:14.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "936577",
+    "ThreadId": "401826",
+    "Html": "<p>I couldn't find the main problem of the software part, but I solved this problem by disabling the \"front panel jack detection\" in Realtek HD Audio Manager software. I hope it can help some one.</p>",
+    "PostedDate": "2012-11-05T01:04:14.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

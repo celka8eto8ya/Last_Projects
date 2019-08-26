@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "679168",
+    "ThreadId": "274546",
+    "Html": "\r\n<p>Hi, I'm pretty new to working with sound in applications, and considering there aren't copious tutorials on NAudio, I'm a little lost. How can I create the sounds of different instruments using NAudio.Midi? Do I have to create some sort of definition for\r\n them? Thanks!</p>\r\n",
+    "PostedDate": "2011-10-02T15:59:38.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "680848",
+    "ThreadId": "274546",
+    "Html": "<p>NAudio.MIDI can be used for creating MIDI files as well as send MIDI short messages to MIDI out devices. You will need to understand about MIDI events to be able to do this. For example PatchChangeEvent NoteOnEvent NoteOffEvent etc.</p>",
+    "PostedDate": "2011-10-06T08:47:57.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "681526",
+    "ThreadId": "274546",
+    "Html": "<p>Here's the code I have currently:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>MidiEventCollection collection = <span style=\"color: blue;\">new</span> MidiEventCollection(0, 120);\r\n            midiOut.GetType\r\n            collection.AddEvent(<span style=\"color: blue;\">new</span> NoteEvent(1, 1, MidiCommandCode.NoteOn, 45, 100), 0);\r\n            collection.AddEvent(<span style=\"color: blue;\">new</span> NoteEvent(300, 1, MidiCommandCode.NoteOff, 45, 0), 0);\r\n            collection.AddEvent(<span style=\"color: blue;\">new</span> NoteEvent(200, 1, MidiCommandCode.NoteOn, 49, 127), 0);\r\n            collection.AddEvent(<span style=\"color: blue;\">new</span> NoteEvent(400, 1, MidiCommandCode.NoteOff, 49, 0), 0);\r\n            collection.PrepareForExport();\r\n\r\n            MidiFile.Export(<span style=\"color: #a31515;\">\"tempFile.mid\"</span>, collection); \r\n</pre>\r\n</div>\r\nI've figured out what pretty much all of this does, and changing the channel has no effect (except when it's changed to 10). Do I need to own a tangible MIDI output device, or can I instruct the program to play a different instrument. (Sorry for being ignorant on the matter, but as I said, there aren't many tutorials on NAudio.)</p>",
+    "PostedDate": "2011-10-07T16:48:42.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685113",
+    "ThreadId": "274546",
+    "Html": "<p>Windows has a software synthesizer that will be used to play MIDI files if you play them using Windows media player</p>",
+    "PostedDate": "2011-10-17T02:55:59.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

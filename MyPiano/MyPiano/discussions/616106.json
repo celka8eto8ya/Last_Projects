@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1398462",
+    "ThreadId": "616106",
+    "Html": "Hi,\r<br />\n<br />\nI would like to create an application to record the sound using a microphone.\r<br />\nIn my application, when the microphone receive the sound, the label will show the value of amplitude.\r<br />\nI read the discussion <a href=\"http://naudio.codeplex.com/discussions/85739\" rel=\"nofollow\">here</a> to get some idea to create my application.\r<br />\n<br />\nHowever, I don't understand about some point.\r<br />\nBelow are the codes that I got from the link:<br />\n<pre><code>private bool ProcessData(WaveInEventArgs e)\n{\n    bool result = false;\n\n    bool Tr = false;\n    double Sum2 = 0;\n    int Count = e.BytesRecorded / 2;\n    for (int index = 0; index &lt; e.BytesRecorded; index += 2)\n    {\n        double Tmp = (short)((e.Buffer[index + 1] &lt;&lt; 8) | e.Buffer[index + 0]);\n        Tmp /= 32768.0;\n        Sum2 += Tmp * Tmp;\n        if (Tmp &gt; AudioThresh)\n            Tr = true;\n    }\n    Sum2 /= Count;  \n}</code></pre>\n\nMay I know, <br />\n<ol>\n<li>Is it true the sample in 16bits?</li>\n<li>What is the value of Sum2 refer to? is it the value is refer to the amplitude of the sine wave of the audio?</li>\n<li>\nWhy we need to multiply with (Tmp*Tmp)?<br />\n</li>\n</ol>\nI need some advice about this matter.\r<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2015-03-31T17:32:20.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1409858",
+    "ThreadId": "616106",
+    "Html": "<ol>\n<li>Not necessarily, but if you're using WaveIn, 16 bit is the default</li>\n<li>It's the sum of squares - </li>\n<li>\nIt's a simply way of getting all positive values (because samples can go negative).<br />\n</li>\n</ol>\n",
+    "PostedDate": "2015-04-13T09:16:09.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

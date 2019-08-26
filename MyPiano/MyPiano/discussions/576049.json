@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1335483",
+    "ThreadId": "576049",
+    "Html": "Hello Mark,\r<br />\n<br />\nI encountered the problem that your FFT class seems to be quite slow, taking about ~200ms for each 4096 sample aggregation. I optimized my code for drawing and measured it: taking about 15ms with the Marshal and Lockbits method. I also recognized, that other FFT sizes, e.g. 1024 are significantly faster. So, do you look forward to optimize your FFT class one day? Or can you tell me a lightning fast .NET alternative for complex to complex FFT computation?\r<br />\n<br />\nThe second problem I struggle at, is to play Wavestreams on multiple devices at the same time and encounter delays that are clearly hearable. Especially when the Wavestream needs to decompress the samples. So, how can you synchronize several Wavestreams without too much delay und without interruptions in playback?\r<br />\n<br />\nKind regards\r<br />\n<br />\nFreefall\r<br />\n<br />\n<br />\n<br />\n<br />\n<strong><em>About Flac Decoder news:</em></strong>\r<br />\n<br />\n<br />\n<br />\nPS: Thefiloe in the end changed his mind, he said that his flac decoder <strong>may not be used in NAudio</strong> for an unknown reason. I can´t follow this small minded behaviour, I´m sorry for him.\r<br />\nHe has already given permission and the plugin is finished now. So I let it published on google code. Anyway legit, as CSCore is MS-PL.<br />\n",
+    "PostedDate": "2014-12-22T04:54:28.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1335489",
+    "ThreadId": "576049",
+    "Html": "hi Freefall,\r<br />\nFFT is computationally expensive. Make sure you are using a Release build. If you must get faster, then P/Invoking to something like <a href=\"http://fftw.org/\" rel=\"nofollow\">FFTW</a> may be an option. As for decoding on the fly, there will always be some latency involved in decoding, and also the buffer sizes of your output devices have an effect. For the best low latency, ASIO is usually the way to go, but can be harder to work with. \r<br />\n<br />\nAs for the FLAC decoder, a shame about the withdrawal of permission. I'll add a link to your project on google code, so people can use that if they want.\r<br />\n<br />\nthanks\r<br />\nMark<br />\n",
+    "PostedDate": "2014-12-22T05:11:25.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

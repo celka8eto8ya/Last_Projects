@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1036351",
+    "ThreadId": "441734",
+    "Html": "Greetings,\r<br />\nFirst of all hats of the author of such an amazing library, thank you for sharing your hard work for all these years.\r<br />\n<br />\nI'm trying to create a 16bit wav file that is X minutes long, and has zeros in the data section that I will later record to. Is that possible with CreateWaveFile16? \r<br />\nThis is what I tried:<br />\n<pre><code>WaveFormat wform = new WaveFormat(pSampleRate, pBitsPerSample, 1);\nIWaveProvider waveProvider = new NullWaveStream(wform, 248724044); // 47 minute sample\nIWaveProvider wp2 = new Wave16ToFloatProvider(waveProvider);\nISampleProvider sp2 = new WaveToSampleProvider(wp2);\n           WaveFileWriter.CreateWaveFile16(pFilename,sp2);</code></pre>\n\nHowever I can't seem to record to the file later, it always plays back as just a very quick &quot;clicking&quot; noise less than a second long. I think I am doing something wrong when creating the file.\r<br />\n<br />\nAny thoughts? and thanks again!<br />\n",
+    "PostedDate": "2013-04-26T15:47:07.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036553",
+    "ThreadId": "441734",
+    "Html": "No real need to go to a SampleProvider in this instance. Just pass your NullWaveStream into CreateWaveFile.\r<br />\n<br />\nNAudio does not include support for overwriting an existing WAV file though so you'd need your own custom code for that.<br />\n",
+    "PostedDate": "2013-04-27T10:00:29.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1037205",
+    "ThreadId": "441734",
+    "Html": "I've done this and I do use my own code to write the existing WAV file, but for some reason I get a resulting wav which never contains the audio I record but instead just a &quot;pop/click&quot; noise followed by maybe .5 second of silence.\r<br />\n<br />\nI know this is asking a lot, but I'd really appreciate a tip if you have one. If not, no problem. Here is what I have:\r<br />\n<br />\n// Create my wav container\r<br />\n// In this case 47 minutes long, 1 channel, 44100, 16bit<br />\n<pre><code>  WaveFormat wform = new WaveFormat(44100, 16, 1);\n            WaveStream wstream = new NullWaveStream(wform, 248724044);\n            \n            WaveFileWriter.CreateWaveFile(pFilename,wstream);</code></pre>\n\n// Record some audio to a stream<br />\n<pre><code> waveIn = new WaveIn\n                {\n                    WaveFormat = new WaveFormat(44100, 1),\n                    NumberOfBuffers = 3,\n                    BufferMilliseconds = 100\n                };\nms = new MemoryStream();\n waveIn.DataAvailable += WaveIn_DataAvailable;\nwaveIn.RecordingStopped += waveIn_RecordingStopped;\nms.Position = 0;\nwaveIn.StartRecording();\n\n\n        private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            ms.Write(e.Buffer, 0, e.BytesRecorded);\n}</code></pre>\n\n// Stop recording<br />\n<pre><code>waveIn.StopRecording();\n byte[] bytes = ms.ToArray();\n// convert bytes to 16bit (short)\nfor (int i = 0; i &lt; bytes.Count() - 1; i += 2)\n            {\n                var sample = (short) (bytes[i + 1] &lt;&lt; 8 | bytes[i + 0]);\n                double d = sample*ratio;\n                var shrt = (short) Math.Round(d);\n                bytes[i + 1] = (byte) ((shrt &amp; 0xFF00) &gt;&gt; 8);\n                bytes[i + 0] = (byte) (shrt &amp; 0x00FF);\n                //Debug only - use it to verify conversion \n                //short res = (short)(bytes[i + 1] &lt;&lt; 8 | bytes[i + 0]);\n            }\n// write to the wav file we created\nFileStream fs = File.Open(narration_filename, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);\n var binwriter = new BinaryWriter(fs);\ndouble samples_per_millisecond = (1*44100)/1000.0; //channels*sampling rate/1000\nvar offset = (long) (TiradeOffsetMilliseconds*samples_per_millisecond*(16/8));\nif (offset%2 &gt; 0)// odd offset\n                {\n                    \n                    offset = offset - offset%2;\n                }\n //44 bytes is the length of .wav file header\n//https://ccrma.stanford.edu/courses/422/projects/WaveFormat/\n            binwriter.Seek((int) (44 + offset), SeekOrigin.Begin);\nbinwriter.Write(bytes);\n\n            binwriter.Flush();\n\n            fs.Flush();\n\n            // binwriter.BaseStream.Dispose();\n\n            binwriter.Close();\n            \n            fs.Dispose();\n\n            fs.Close();\n\n private void waveIn_RecordingStopped(object sender, EventArgs e)\n        {\n            if (waveIn != null)\n            {\n                waveIn.Dispose();\n            }\n            waveIn = null;\n        }</code></pre>\n\n",
+    "PostedDate": "2013-04-29T09:06:54.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1037426",
+    "ThreadId": "441734",
+    "Html": "Just an update I ended up writing out my own WAV header and got it to work. Honestly I'm still pretty confused as to what I was doing wrong, but one thing I did notice about naudio's wav file headers is that the data seems to be offset by a few bytes and that could interfere with the chunk bytes. If anyone is interested I can take a couple screenshots from a hex editor.<br />\n<br />\nedit: for clarity, the data subchunk writes in to the subchunk2 size.<br />\n",
+    "PostedDate": "2013-04-29T17:20:21.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

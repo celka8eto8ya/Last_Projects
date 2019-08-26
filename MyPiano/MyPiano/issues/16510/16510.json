@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "I'm trying to process an mp3 stream (from the microphone) in memory, without disk I/O, in a Windows Store app. I installed the NuGet package NAudio v1.8.0 but the Mp3FileReader class is not in the namespace NAudio.Wave. Should I be using some other function in this environment?\r\n",
+    "LastUpdatedDate": "2017-02-03T06:21:55.257-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-01-29T20:14:44.893-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Mp3FileReader not in NAudio.Wave namespace",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16510
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "`Mp3FileReader` is not available in Windows Store apps as it calls into APIs that are not permitted in that context.",
+      "PostedDate": "2017-01-30T05:57:36.653-08:00",
+      "Id": 206317
+    },
+    {
+      "Message": "Thanks, Mark.\n\nI have encountered the same problem with speech recognition. Microsoft's quest to make every platform look the same to the user has had the opposite effect on the developer.\n\nI guess I'll have to roll my own if I want it that badly.\n",
+      "PostedDate": "2017-01-30T14:35:08.027-08:00",
+      "Id": 206333
+    },
+    {
+      "Message": "try MediaFoundationReader instead. That should work",
+      "PostedDate": "2017-01-30T15:04:11.11-08:00",
+      "Id": 206334
+    },
+    {
+      "Message": "Still stuck. There seems to be no overload of MediaFoundationReader that will take as stream as an argument. (I can't afford the latency of writing to a file and then reading back again.)\n\nHere is what I tried:\n```\nencodingProfile = MediaEncodingProfile.CreateMp3(AudioEncodingQuality.Low);  \naudioStream = new InMemoryRandomAccessStream();\nawait mediaCapture.StartRecordToStreamAsync(encodingProfile, audioStream);\nusing (var audioStreamTest = audioStream.CloneStream())\n{\n    using (StreamReader reader = new StreamReader(audioStreamTest.AsStreamForRead()))\n        {\n            string textStream = await reader.ReadToEndAsync();\n            MediaFoundationReader mfreader = new MediaFoundationReader(textStream);\n        }\n}\n```\nIt fails, of course, because MediaFoundationReader wants to open a file with path = textStream.\n\nWould I be able to overload MediaFoundationReader to take a text stream instead of a file?\n",
+      "PostedDate": "2017-02-02T13:11:29.11-08:00",
+      "Id": 206379
+    },
+    {
+      "Message": "Someone has recently contributed a `StreamMediaFoundationReader` class which you can try out if you get latest coed. Haven't tried it out myself yet, so can't say how reliable it is",
+      "PostedDate": "2017-02-03T06:21:55.257-08:00",
+      "Id": 206391
+    }
+  ]
+}

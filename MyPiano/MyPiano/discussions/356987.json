@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "840399",
+    "ThreadId": "356987",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<p>Hi guys,</p>\r\n<p>I don't know much about audio but I decided to try and figure out how to make a guitar tuner.&nbsp;</p>\r\n<p>I used some of Mark's code to create a sine wave and calculate the frequency with an FFT.&nbsp;I have a couple of issues with the code below.</p>\r\n<p>1. I'm not getting the right frequency back.&nbsp; I input 440 and get back 298.</p>\r\n<p>2. it takes forever to calculate.&nbsp; 10-20 seconds</p>\r\n<p>Clearly I'm doing one or more things wrong.&nbsp; Any help would be appreciated.</p>\r\n<p>Thanks,</p>\r\n<p>Erik</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>           <span style=\"color:blue\">int</span> sampleRate = 44100;\r\n            <span style=\"color:blue\">double</span> amplitude = 0.25 * <span style=\"color:blue\">short</span>.MaxValue;\r\n            <span style=\"color:blue\">double</span> frequency = Double.Parse(textBox1.Text);\r\n            Complex[] myComplexBuff = <span style=\"color:blue\">new</span> Complex[44100];\r\n            <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> n = 0; n &lt; buffer.Length; n&#43;&#43;)\r\n            {\r\n                buffer[n] = (<span style=\"color:blue\">short</span>)(amplitude * Math.Sin((2 * Math.PI * n * frequency) / sampleRate));\r\n                myComplexBuff[n].X = (<span style=\"color:blue\">float</span>)buffer[n] / <span style=\"color:blue\">short</span>.MaxValue;\r\n                myComplexBuff[n].Y = 0;\r\n            }\r\n            <span style=\"color:green\">//sampleRate = 4096;</span>\r\n            <span style=\"color:blue\">int</span> frames = 1024;\r\n            <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> i =0; i&lt; frames;i&#43;&#43;)\r\n            {\r\n                    myComplexBuff[i].X = myComplexBuff[i].X * (<span style=\"color:blue\">float</span>)FastFourierTransform.HammingWindow(i, frames);\r\n                \r\n            }\r\n            FastFourierTransform.FFT(<span style=\"color:blue\">true</span>, frames, myComplexBuff);\r\n           \r\n            <span style=\"color:blue\">float</span> binSize = sampleRate / frames;\r\n            <span style=\"color:blue\">int</span> minBin = (<span style=\"color:blue\">int</span>)(85 / binSize);\r\n            <span style=\"color:blue\">int</span> maxBin = (<span style=\"color:blue\">int</span>)(300 / binSize);\r\n\r\n            <span style=\"color:blue\">float</span> maxIntensity = 0f;\r\n            <span style=\"color:blue\">int</span> maxBinIndex = 0;\r\n\r\n            <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> bin = minBin; bin &lt;= maxBin; bin&#43;&#43;)\r\n            {\r\n                <span style=\"color:blue\">float</span> real = myComplexBuff[bin].X;\r\n                <span style=\"color:blue\">float</span> imaginary = myComplexBuff[bin].Y;\r\n                <span style=\"color:blue\">float</span> intensity = real * real &#43; imaginary * imaginary;\r\n                <span style=\"color:blue\">if</span> (intensity &gt; maxIntensity)\r\n                {\r\n                    maxIntensity = intensity;\r\n                    maxBinIndex = bin;\r\n                }\r\n\r\n            }\r\n            <span style=\"color:blue\">float</span> freq = binSize * maxBinIndex;\r\n            Debug.WriteLine(freq);\r\n            textBlock1.Text = freq.ToString();\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<div id=\"_mcePaste\" style=\"overflow:hidden; height:1px; left:-10000px; top:105px; width:1px\">\r\n&#65279;</div>\r\n",
+    "PostedDate": "2012-05-24T06:07:02.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840816",
+    "ThreadId": "356987",
+    "Html": "<p>FFT is not quick, and is quite difficult to get your head round if you are new to signal processing.</p>\r\n<p>I wrote an article discussing FFT with NAudio in some detail here:</p>\r\n<p>http://channel9.msdn.com/coding4fun/articles/AutotuneNET</p>",
+    "PostedDate": "2012-05-25T02:00:04.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840883",
+    "ThreadId": "356987",
+    "Html": "<p>Thanks Mark. &nbsp;I've read your article on autotune but it appears I need to read it again and more. &nbsp;:). &nbsp;I'll keep plugging away.</p>",
+    "PostedDate": "2012-05-25T04:50:57.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

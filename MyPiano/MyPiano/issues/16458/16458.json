@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Hi, i have an error when the proyect starts to record, this is the code:\r\n\r\nWasapiLoopbackCapture waveInStream;\r\nWaveFileWriter writer;\r\nbool isRecording = false;\r\n       \r\nprivate void cmdRecord_Click(object sender, System.EventArgs e)\r\n{\r\n            if (isRecording == false)\r\n            {\r\n                this.Enabled = false;\r\n                saveFileDialog1.Filter = \"Wav Files (*.wav)|*.wav\";\r\n                DialogResult result = saveFileDialog1.ShowDialog();\r\n                if (result == DialogResult.OK)\r\n                {\r\n                    string RutaAGrabar = saveFileDialog1.FileName;\r\n                    waveInStream = new WasapiLoopbackCapture();\r\n                    writer = new WaveFileWriter(RutaAGrabar, waveInStream.WaveFormat);\r\n                    waveInStream.DataAvailable += new System.EventHandler<WaveInEventArgs>(waveInStream_DataAvailable);\r\n                    waveInStream.StartRecording();// the error is here, \r\n                    isRecording = true;\r\n                }\r\n                this.Enabled = true;\r\n            }\r\n            else\r\n            {\r\n                waveInStream.StopRecording();\r\n                waveInStream.Dispose();\r\n                waveInStream = null;\r\n                writer.Close();\r\n                writer = null;\r\n                IsRecording = false;\r\n            }\r\n        }\r\n        void waveInStream_DataAvailable(object sender, WaveInEventArgs e)\r\n        {\r\n            writer.WriteData(e.Buffer, 0, e.BytesRecorded);\r\n        }\r\nthanks for any help",
+    "LastUpdatedDate": "2014-11-11T09:07:02.87-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-10-31T10:41:59.36-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Unsopported WaveFormat WasapiLoopbackCapture",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16458
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": " System.ArgumentException\n  HResult=-2147024809\n  Message=Unsupported Wave Format\n  Source=NAudio\n  StackTrace:\n       in NAudio.CoreAudioApi.WasapiCapture.InitializeCaptureDevice()\n       in NAudio.CoreAudioApi.WasapiCapture.StartRecording()\n \n",
+      "PostedDate": "2014-10-31T10:53:02.327-07:00",
+      "Id": 163713
+    },
+    {
+      "Message": "that's unusual. What OS are you using?",
+      "PostedDate": "2014-11-11T09:07:02.87-08:00",
+      "Id": 164498
+    }
+  ]
+}

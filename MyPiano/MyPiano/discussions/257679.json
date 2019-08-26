@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "612943",
+    "ThreadId": "257679",
+    "Html": "\r\n<p>&nbsp;&nbsp;\\naudio-72813\\NAudio\\FileFormats\\Mp3\\Mp3Frame.cs &nbsp; Function:&nbsp;IsValidHeader</p>\r\n<p>frame.FrameLength = (coefficient * frame.BitRate / frame.SampleRate &#43; nPadding) * 4;</p>\r\n<p>frame.FrameLength = coefficient * frame.BitRate / frame.SampleRate &#43; nPadding * 4;</p>\r\n<p>&nbsp;</p>\r\n<p><span title=\"点击可显示其他翻译\">Which</span>&nbsp;<span title=\"点击可显示其他翻译\">is correct</span><span title=\"点击可显示其他翻译\">?</span></p>\r\n",
+    "PostedDate": "2011-05-15T05:19:47.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "612999",
+    "ThreadId": "257679",
+    "Html": "<p>as far as I know, the calculation in the latest source code is correct. It is different for Layer 1 files</p>",
+    "PostedDate": "2011-05-15T09:31:20.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

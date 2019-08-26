@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "580102",
+    "ThreadId": "249614",
+    "Html": "\r\n<p>I am looking for a library to offer me an option to cut audio files. I want to give a parameter, such time start and time end and then cut this&nbsp; part, but I don't know how to start.</p>\r\n",
+    "PostedDate": "2011-03-14T09:59:09.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "581552",
+    "ThreadId": "249614",
+    "Html": "<p>NAudio doens't have a quick and easy class for this. If you ask on StackOverflow I'm sure they would point you in the right direction.</p>\r\n<p>Having said that, NAudio can parse MP3 files and read out blocks, so you can use it to cut MP3 files if you understand how MP3s are structured.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-16T10:17:03.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "587575",
+    "ThreadId": "249614",
+    "Html": "<p>hi,</p>\r\n<p>I have read the some docs for mp3 and found out that each mp3 frame corresponds to 26ms of audio regardless of bit rate or sample rate(See here: http://oreilly.com/catalog/mp3/chapter/ch02.html&nbsp; the Frames per Second section at the very end of the page). So what you can do is skip the frames till you reach the start time and save the frames from that point till the end time.</p>\r\n<p>That is lets say your start time is 20 seconds 150 milliseconds. Convert it to milliseconds: 20150 ms. Now you need to skip: 20150 / 26 frames = 775 frames. So after skipping 775 frames, you reach the start time. Apply the same logic till you reach the end-time, but this time instead of skipping the frames, save them.</p>\r\n<p>Hope this helps.</p>",
+    "PostedDate": "2011-03-28T07:04:30.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "587580",
+    "ThreadId": "249614",
+    "Html": "<p>thx!</p>",
+    "PostedDate": "2011-03-28T07:10:30.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1254085",
+    "ThreadId": "249614",
+    "Html": "<strong>Arnolin wrote:</strong><br />\n<blockquote>\nhi, I have read the some docs for mp3 and found out that each mp3 frame corresponds to 26ms of audio regardless of bit rate or sample rate(See here: <a href=\"http://oreilly.com/catalog/mp3/chapter/ch02.html&nbsp;\" rel=\"nofollow\">http://oreilly.com/catalog/mp3/chapter/ch02.html&nbsp;</a> the Frames per Second section at the very end of the page). So what you can do is skip the frames till you reach the start time and save the frames from that point till the end time. That is lets say your start time is 20 seconds 150 milliseconds. Convert it to milliseconds: 20150 ms. Now you need to skip: 20150 / 26 frames = 775 frames. So after skipping 775 frames, you reach the start time. Apply the same logic till you reach the end-time, but this time instead of skipping the frames, save them. Hope this helps.<br />\n</blockquote>\nhi, Arnolin,\r<br />\nI have read the docs at the website which you listed, but seems that the 26ms for each frame is for MPEG-1 file, not MP3. So are they the same?<br />\n",
+    "PostedDate": "2014-06-07T21:27:58.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1254499",
+    "ThreadId": "249614",
+    "Html": "huzq: MP3 denotes MPEG-1 Layer III encoding, which is defined in ISO 11172-3.  The standard calls for equal length frames (counted in samples) for a given layer (MP3 is almost always 1152 per frame).  At 44.1kHz, MP3 is typically 26.122ms per frame.\r<br />\n<br />\nPlease note, if you're trying to cut frames out of a file, Layer III may place some audio data in the preceding frame as part of a psuedo-VBR scheme (look up: bit reservoir).  Gotta make life more fun for everyone, right?<br />\n",
+    "PostedDate": "2014-06-09T09:23:31.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

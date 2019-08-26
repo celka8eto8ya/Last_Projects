@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1458117",
+    "ThreadId": "649631",
+    "Html": "I'm wondering whether anyone has an example of using a Media Foundation Transform to encode AAC to a stream as opposed to a file?<br />\n\r<br />\nI found this <a href=\"http://stackoverflow.com/questions/19628531/naudio-mediafoundationrecorder-encodetoaac-byte-array-instead-of-file/19631848#19631848\" rel=\"nofollow\">thread</a> from a couple of years back which seems to suggest that it's possible but, looking at the creation of a custom MFTransform was enough to give me a headache and looks like it'd involve quite an indepth knowledge of Media Foundation which I don't reallly have!\r<br />\n<br />\nAny help would be gratefully recieved.\r<br />\n<br />\nThanks,\r<br />\nKenny<br />\n",
+    "PostedDate": "2016-01-05T13:36:36.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1458119",
+    "ThreadId": "649631",
+    "Html": "I did try to get this working ages ago, but it turned out to be a real pain. It is possible in theory but I'm afraid I haven't got an easy answer for you at the moment.<br />\n",
+    "PostedDate": "2016-01-05T13:41:59.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1458172",
+    "ThreadId": "649631",
+    "Html": "That's unfortunate - thanks for the feedback.<br />\n",
+    "PostedDate": "2016-01-06T03:07:24.943-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

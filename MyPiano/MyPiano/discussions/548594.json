@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1256079",
+    "ThreadId": "548594",
+    "Html": "Hey Everyone,\r<br />\n<br />\nI'm working on a project to record straight to a .wav file and wanted to incorporate a waveform that generates on the UI as I record the audio. I haven't been able to find any tutorials of using the WaveformPainter. If anyone has any recommendations or starting points that would be helpful. If you need anymore information please let me know. I'm pretty new to C# so bare with me.\r<br />\n<br />\nThank you! <br />\n",
+    "PostedDate": "2014-06-13T08:54:54.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273601",
+    "ThreadId": "548594",
+    "Html": "hi, the NAudio demo applications show generating waveforms. Also my pluralsight course on NAudio includes some audio waveform drawing examples.<br />\n",
+    "PostedDate": "2014-07-17T08:40:48.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

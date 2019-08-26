@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1205604",
+    "ThreadId": "530673",
+    "Html": "Hi,\r<br />\n<br />\nI'm creating my own little media player and got mp3 and ogg vorbis (through NVorbis.NAudioSupport) working fine. I'm playing the audio through a WaveOutEvent outputdevice.\r<br />\n<br />\nToday I tried adding support for WMA using NAudio.WindowsMediaFormat and got no sound. The wma files are reported as playing but nothing seems to happen. When changing the outputdevice to WaveOut instead of WaveOutEvent, wma files play normally.\r<br />\n<br />\nIs there any way to get wma to play through WaveOutEvent (I like the fact that it plays on a different thread)?<br />\n",
+    "PostedDate": "2014-02-09T04:38:42.24-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206272",
+    "ThreadId": "530673",
+    "Html": "it's the threading that's causing the problem, due to the fact that this is a COM-based API. It's a really annoying problem to fix in .NET. You could try using MediaFoundationReader instead which has a workaround for this issue<br />\n",
+    "PostedDate": "2014-02-10T03:51:45.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206432",
+    "ThreadId": "530673",
+    "Html": "Thank you! MediaFoundationReader is the solution. Many thanks for this fantastic library!<br />\n",
+    "PostedDate": "2014-02-10T09:42:38.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

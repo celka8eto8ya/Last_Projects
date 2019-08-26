@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1002558",
+    "ThreadId": "433470",
+    "Html": "Hi,\r<br />\n<br />\nI am trying to convert an Ima Adpcm stream into a PCM stream.\r<br />\nMy latest attempt looks as follows:<br />\n<pre><code>            var bytes = File.ReadAllBytes(@&quot;c:\\temp\\bytes.bin&quot;);\n            using (var stream = new MemoryStream(bytes))\n            {\n                RawSourceWaveStream rawStream = new RawSourceWaveStream(stream, new ImaAdpcmWaveFormat(8000, 1, 4));\n                WaveFormatConversionStream convertStream = new WaveFormatConversionStream(new WaveFormat(8000, 16, 1), rawStream);\n                var buffer = new byte[640];\n                convertStream.Read(buffer, 0, buffer.Length);\n            }</code></pre>\n\nThis implementations has two problems:<br />\n<ol>\n<li>The WaveFormatConversionStream is trying to create an AcmStream internally and its Ctor throws a DivisionByZero exception because the ImaAdpcm BlockAlign value is zero.</li>\n<li>\nIf I fix that, I get &quot;AcmNotPossible calling acmStreamOpen&quot; from the acmStreamOpen call.<br />\n</li>\n</ol>\nWhen I enumerate the codec on my machine I see this:<br />\n<pre><code>Long Name: Microsoft IMA ADPCM CODEC\nShort Name: Microsoft IMA ADPCM\nDriver ID: 5370400\nFormatTags:\n ===========================================\n   Format 0: 8.000 kHz, 4 Bit, Mono\n      FormatTag: DviAdpcm, Support Flags: Codec\n      WaveFormat: DviAdpcm 8000Hz Channels: 1 Bits: 4 Block Align: 256, AverageBytesPerSecond: 4055 (32.4 kbps), Extra Size: 2\n      Extra Bytes:\n      F9 01 \n   ===========================================</code></pre>\n\nI tried setting the BlockAlign to be 256 and the AvgBPS to 4055 (because the default ImaAdpcm set them to zero) and I still get the same error.\r<br />\n<br />\nHow can I convert my stream into PCM?\r<br />\n<br />\nThank you,\r<br />\nJoe.<br />\n",
+    "PostedDate": "2013-02-17T17:15:48.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002726",
+    "ThreadId": "433470",
+    "Html": "the ImaAdpcmWaveFormat class was never finished. Needs to have everything set up correctly. Probably it is just the samples per block you need to set up   (505 I think)<br />\n",
+    "PostedDate": "2013-02-18T02:04:51.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002909",
+    "ThreadId": "433470",
+    "Html": "I tried filling out the missing parts in a debugger, but acmStreamOpen still fails.\r<br />\nIs there a way to debug this call (maybe enable tracing)?\r<br />\nI used exactly the values as they appear above in the driver format details and it still gave me the same error.<br />\n",
+    "PostedDate": "2013-02-18T09:49:53.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002935",
+    "ThreadId": "433470",
+    "Html": "only thing left to try is to use WaveFormatConversionStream.ConvertToPcm. That uses acmFormatSuggest to let the codec suggest a PCM format it can decode to (although your PCM format looks right to me). If that doesn't work, then the either codec is lying about what waveformat it accepts, or you still haven't got something right. Did you set up samplesPerBlock?<br />\n",
+    "PostedDate": "2013-02-18T10:45:22.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002938",
+    "ThreadId": "433470",
+    "Html": "I actually called AcmStream.SuggestPcmFormat and it gave me the same error.\r<br />\nYes, I've set the samplesPerBlock and the blockAlign and the AvgBytesPerSec...\r<br />\nIs there anything else I can try?<br />\n",
+    "PostedDate": "2013-02-18T10:49:34.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002942",
+    "ThreadId": "433470",
+    "Html": "you need to view the bytes in a hex editor. Create an instance of the ImaWavbeFormat, copy it into a byte array (I think Buffer.BlockCopy can do this), and then byte by byte check it is identical to the WaveFormat returned by the ACM.<br />\n",
+    "PostedDate": "2013-02-18T10:56:22.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

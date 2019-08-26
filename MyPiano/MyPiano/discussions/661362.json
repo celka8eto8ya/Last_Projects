@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1492702",
+    "ThreadId": "661362",
+    "Html": "Hi<br />\n<br />\nI would like to know the following process is possible or not:<br />\n<br />\n<strong>those I know:</strong><br />\nI can generate sinus in left and/or right channel and I can change amplitude during generating as in sinus wave generating sexample code (level * Math.Sin(wt - fi)) I count the samples for calculating the current sample.<br />\n<br />\nNow, I generate 10 seconds samples in an object list and the overridden Read function uses that as sample source.... The amplitude changes in samples during this 10 seconds. Same amplitude is in 2 full periods of sinus and then increases. I know exactly which sample has how many amplitude (level) in samples.<br />\n<br />\n<strong>The question:</strong><br />\nI should stop playing samples if user press a button on keyboard and then I should know amplitude (level) of the actually played sample (not value). So I should know which sample is playing currently... then I would know to calculate the amplitude from current sample number.<br />\n<br />\nHow can I determine which sample was played in sample list when user pressed a button? What is the sample number of current played sample?<br />\n",
+    "PostedDate": "2017-02-15T03:13:45.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493492",
+    "ThreadId": "661362",
+    "Html": "Nobody?<br />\n",
+    "PostedDate": "2017-03-02T02:38:29.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493588",
+    "ThreadId": "661362",
+    "Html": "Divide by Math.Sin(wt - fi) and get the amplitude (=level) from your overridden read sampleprovider?<br />\n",
+    "PostedDate": "2017-03-04T08:47:13.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

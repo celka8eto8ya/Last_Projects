@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1030971",
+    "ThreadId": "440415",
+    "Html": "Hi Mark!\r<br />\nI'm porting application from Windows Phone. I was able to record PCM with your outstanding library, but I do not what classes should I use to convert recorded 44KHz, 32 bit sound to 18Khz, 16 bit sound. Do you have any sample that explains how can I do that? \r<br />\nThanks. <br />\n",
+    "PostedDate": "2013-04-16T01:03:04.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1030987",
+    "ThreadId": "440415",
+    "Html": "please read my article here:\r<br />\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET</a>\r<br />\n<br />\nIt explains the various options for bit depth changing and resampling (which you'd probably need to do as two separate steps, although the Media Foundation Resampler might be able to do it in one)<br />\n",
+    "PostedDate": "2013-04-16T01:34:53.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1396489",
+    "ThreadId": "614260",
+    "Html": "i've got multiple USB headsets (i.e. mic and headphones) on my computer. these headsets also include a push-to-talk (PTT) button.   to get mic and headset device numbers and names, i use these loops:<br />\n<pre><code>            for (int n = 0; n &lt; WaveIn.DeviceCount; n++) {\n                var capabilities = WaveIn.GetCapabilities(n);\n                list_of_input_devices.Add(capabilities.ProductName);\n            }\n\n            for (int n = 0; n &lt; WaveOut.DeviceCount; n++) {\n                var capabilities = WaveOut.GetCapabilities(n);\n                list_of_output_devices.Add(capabilities.ProductName);\n            }</code></pre>\n\ni also have another step that gets the DevicePath for the USB PTT part of the headset; i.e.<br />\n<pre><code>DevicePath = &quot;\\\\\\\\?\\\\hid#vid_047f&amp;pid_faa1&amp;mi_03#8&amp;23e2c66b&amp;0&amp;0000#{4d1e55b2-f16f-11cf-88cb-001111000030}&quot;</code></pre>\n\nfor my application, i now need a way to create a &quot;headset&quot; object which associates a WaveIn devicenumber, a WaveOut devicenumber, and a PTT device path.<br />\n<br />\nis there any way in naudio to figure out the USB DevicePath that corresponds to a WaveIn or WaveOut devicenumber ?<br />\n<br />\nmany thanks.<br />\n",
+    "PostedDate": "2015-03-25T11:21:20.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1423907",
+    "ThreadId": "614260",
+    "Html": "I had a similar problem with a project at work. I needed to associate a microphone and earphone into a headset object. You can see my solution on <a href=\"http://stackoverflow.com/questions/29982645/how-to-associate-a-usb-headsets-microphone-and-earphone-speaker\" rel=\"nofollow\">StackOverflow</a>.\r<br />\n<br />\nHope this will help you.<br />\n",
+    "PostedDate": "2015-05-07T06:28:25.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

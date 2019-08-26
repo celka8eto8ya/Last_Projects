@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1273739",
+    "ThreadId": "551896",
+    "Html": "Hi,\r<br />\n<br />\nI'm tryng to decode and play a raw bytes of a streaming of IMAPCM without header.\r<br />\n<br />\n(Sorry for my bad english)\r<br />\n<br />\nThis is the codec information of the raw audio (I extract the raw streaming by VLC and the information codec by MediaInfo)\r<br />\n<br />\n<img src=\"http://puu.sh/afPcz/32a4f97bb4.png\" alt=\"Image\" />\r<br />\n<br />\nWith that and the information on this  <a href=\"https://naudio.codeplex.com/discussions/348097\" rel=\"nofollow\">discussion</a> I could create the following code that , theoritically, I decode de raw audio to PCM but the PCM stream don't have anything.\r<br />\n<br />\nMy own ImaAdpcmWaveFormat class<br />\n<pre><code>[StructLayout(LayoutKind.Sequential, Pack = 2)]\n    class MyImaAdpcmWaveFormat : NAudio.Wave.WaveFormat\n    {\n        short samplesPerBlock;\n\n        public MyImaAdpcmWaveFormat(int sampleRate, int channels, int bitsPerSample)\n        {\n            this.waveFormatTag = WaveFormatEncoding.ImaAdpcm; //.DviAdpcm;   \n            this.sampleRate = sampleRate;\n            this.channels = (short)channels;\n            this.bitsPerSample = (short)bitsPerSample; //\n            this.extraSize = 2;            \n            this.blockAlign = 256; //\n            this.averageBytesPerSecond = 4055; //\n            this.samplesPerBlock = 505; // \n        }</code></pre>\n\nThe Load_Form method. Here I init all the necesaries elements:<br />\n<pre><code>        private BufferedWaveProvider bufferedWaveProvider = null;\n        private WaveFormat AudioFormat = null;\n        private WaveFileWriter waveWriter = null;\n        private WaveFileWriter waveWriter2 = null;\n\nprivate void Form1_Load(object sender, EventArgs e)\n        {\n            AudioFormat = new MyImaAdpcmWaveFormat(8000, 1, 4);\n            WaveFormat DecodedAudioFormat = new WaveFormat(8000, 16, 1);\n\n            bufferedWaveProvider = new NAudio.Wave.BufferedWaveProvider(DecodedAudioFormat);\n            bufferedWaveProvider.BufferDuration = TimeSpan.FromSeconds(20);\n\n            waveWriter = new NAudio.Wave.WaveFileWriter(&quot;temp.wav&quot;, AudioFormat);\n            waveWriter2 = new NAudio.Wave.WaveFileWriter(&quot;temp2.wav&quot;, DecodedAudioFormat);\n\n            waveOut = new NAudio.Wave.DirectSoundOut(70);\n            waveOut.Init(bufferedWaveProvider);\n            waveOut.Play();               \n\n        }</code></pre>\n\nAnd the method where add the decode audio to the bufferedWaveProvider:<br />\n<pre><code>private void update_sound(object sender, NewAudioFrameEventArgs e)\n        {\n            MemoryStream byteStream = new MemoryStream(e.Frame);            \n\n            using (var reader = new RawSourceWaveStream(byteStream, AudioFormat))\n            {\n                byte[] decoded = ConvertNonSeekableStreamToByteArray(reader);\n\n                waveWriter.Write(decoded, 0, decoded.Length);\n                waveWriter.Flush();\n\n                using (var pcmStream = WaveFormatConversionStream.CreatePcmStream(reader))\n                {\n                    byte[] decoded2 = ConvertNonSeekableStreamToByteArray(pcmStream);\n                    waveWriter2.Write(decoded2, 0, decoded2.Length);\n                    waveWriter2.Flush();\n                    bufferedWaveProvider.AddSamples(decoded2, 0, decoded2.Length);      \n                }\n            }              \n        }\n\nprivate byte[] ConvertNonSeekableStreamToByteArray(Stream NonSeekableStream)\n        {\n            byte[] buffer = new byte[1024];\n\n            using (MemoryStream ms = new MemoryStream())\n            {\n                int read;\n                do\n                {\n                    read = NonSeekableStream.Read(buffer, 0, buffer.Length);\n                    ms.Write(buffer, 0, read);\n                }\n                while (read &gt; 0);\n\n                return ms.ToArray();\n            }\n        }</code></pre>\n\nWhen I try to play the bufferedWaveProvider  it don't sound. If I try to see the temp2.wav it only have 46 byte without any byte of audio.\r<br />\n<br />\nI have something bad? Can someone help me o give some advice?<br />\n",
+    "PostedDate": "2014-07-17T14:46:54.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1277355",
+    "ThreadId": "551896",
+    "Html": "Plis Someone help me<br />\n",
+    "PostedDate": "2014-07-24T07:48:26.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1277373",
+    "ThreadId": "551896",
+    "Html": "I release that waveWriter (where save the Raw stream) is growing but when i can't  listen it with vlc.\r<br />\n<br />\nCould be that  MyImaAdpcmWaveFormat class have wrongs parameter?\r<br />\nWhere o How I could compare?\r<br />\nSome Idea?<br />\n",
+    "PostedDate": "2014-07-24T08:32:47.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278417",
+    "ThreadId": "551896",
+    "Html": "best way to find out what exact format your WaveFormat should be is to examine the ACM codecs themselves as they will provide example WaveFormat structures. The NAudio demo application does this for you - select the ACM format conversion demo and click on the codec that does IMA ADPCM to see its formats enumerated.<br />\n",
+    "PostedDate": "2014-07-28T09:07:06.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278463",
+    "ThreadId": "551896",
+    "Html": "Thanks markheat for your answer.\r<br />\n<br />\nI could extract the following information:\r<br />\n<br />\n   Format 0: 8,000 KHz, 4 bit, Mono<br />\n<pre><code>  FormatTag: DviAdpcm, Support Flags: Codec\n  WaveFormat: DviAdpcm 8000Hz Channels: 1 Bits: 4 Block Align: 256, AverageBytesPerSecond: 4055 (32,4 kbps), Extra Size: 2\n  Extra Bytes:\n  F9 01 \n</code></pre>\n\nBut MyImaAdpcm wave format have that info,<br />\n<pre><code>AudioFormat = new MyImaAdpcmWaveFormat(8000, 1, 4); // creation of the MyImaAdpcmWaveFormat object\n\n[StructLayout(LayoutKind.Sequential, Pack = 2)]\n    class MyImaAdpcmWaveFormat : NAudio.Wave.WaveFormat\n    {\n        short samplesPerBlock;\n\n        public MyImaAdpcmWaveFormat(int sampleRate, int channels, int bitsPerSample)\n        {\n            this.waveFormatTag = WaveFormatEncoding.ImaAdpcm; //.DviAdpcm;   \n            this.sampleRate = sampleRate;\n            this.channels = (short)channels;\n            this.bitsPerSample = (short)bitsPerSample; //\n            this.extraSize = 2;            \n            this.blockAlign = 256; //\n            this.averageBytesPerSecond = 4055; //\n            this.samplesPerBlock = 505; // \n        }</code></pre>\n\nOnly forthe &quot;samplesPerBlock&quot; parameter I don't have any information.\r<br />\n<br />\nCould be that the problem? How i can calculate it?<br />\n",
+    "PostedDate": "2014-07-28T10:52:52.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1286539",
+    "ThreadId": "551896",
+    "Html": "I could found the code for decode de raw audio to pcm.\r<br />\n<br />\nBut when i tried to play de decode data, only noise is playback.\r<br />\n<br />\nIf i decode the raw data to pcm, can i play directly using bufferedWaveProvider?\r<br />\nor i need to do something with the decode data before to put in the bufferedWaveProvider?<br />\n<pre><code>//e.Frame is the raw encode sound data, code by IMA ADPcm\nbyte[] decoded = IMA_decode.adpcm_decode(e.Frame, e.Frame.Length);\nbufferedWaveProvider.AddSamples(decoded, 0, decoded.Length);</code></pre>\n\nCan anyone give some advice?\r<br />\nThanks<br />\n",
+    "PostedDate": "2014-08-05T08:55:43.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1286900",
+    "ThreadId": "551896",
+    "Html": "SamplesPerBlock is the extra bytes 0x1F9 = 505, so that should be correct.\r<br />\nWhat does adpcm_decode actually do?\r<br />\nAnd what is the WaveFormat of your bufferedWaveProvider?<br />\n",
+    "PostedDate": "2014-08-06T03:00:19.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1287110",
+    "ThreadId": "551896",
+    "Html": "This is my code for init the bufferedWaveProvider and the DirectSoundOut:<br />\n<pre><code>DecodedAudioFormat = new WaveFormat(8000, 16, 1);\n\nbufferedWaveProvider = new NAudio.Wave.BufferedWaveProvider(DecodedAudioFormat);\nbufferedWaveProvider.BufferDuration = TimeSpan.FromSeconds(1);\n\nwaveWriter = new NAudio.Wave.WaveFileWriter(&quot;temp2.wav&quot;, DecodedAudioFormat);\n\nwaveOut = new NAudio.Wave.DirectSoundOut(100);\nwaveOut.Init(bufferedWaveProvider);\nwaveOut.Play();        </code></pre>\n\nThe waveformat of the bufferedWaveProvider is PCM at 8000 rate, 16 bit depth and 1 channel.\r<br />\n<br />\nWhen I tried to use MyImaAdpcmWaveFormat class didn't work, I look something for bypass this part.\r<br />\n<br />\nI was looking for the code to decode the raw IMADPCM to raw PCM for then only add that raw bytes to the bufferedWaveProvider.\r<br />\n<br />\nI found the following code for the decode:<br />\n<pre><code>class Adpcm_code\n    {\n        private int pre_sample;\n        private int index;\n\n        public Adpcm_code()\n        {\n            pre_sample = 0;\n            index = 0;\n        }\n\n        private int[] index_adjust = new int[8] {-1,-1,-1,-1,2,4,6,8};\n\n        private int[] step_table = new int[89] \n        {\n            7,8,9,10,11,12,13,14,16,17,19,21,23,25,28,31,34,37,41,45,\n            50,55,60,66,73,80,88,97,107,118,130,143,157,173,190,209,230,253,279,307,337,371,\n            408,449,494,544,598,658,724,796,876,963,1060,1166,1282,1411,1552,1707,1878,2066,\n            2272,2499,2749,3024,3327,3660,4026,4428,4871,5358,5894,6484,7132,7845,8630,9493,\n            10442,11487,12635,13899,15289,16818,18500,20350,22385,24623,27086,29794,32767\n        };\n    \n        public byte[] adpcm_decode(byte[] raw, int len)\n        {\n            int i = 0;\n            int code = 0;\n            int sb = 0;\n            int delta = 0;\n\n            short[] pcm = new short[len * 2];\n            byte[] pcm_byte = new byte[len * 4];\n\n            len &lt;&lt;= 1;\n\n            for (i = 0; i &lt; len; i++)\n            {\n                if ((i &amp; 0x01) == 1)// i es impar\n                {\n                    code = raw[i &gt;&gt; 1] &amp; 0x0f;  // guardo los 4 bit menos significativos de raw[i &gt;&gt; 1]\n                }\n                else                // i es par\n                {\n                    code = raw[i &gt;&gt; 1] &gt;&gt; 4;    // guardo los 4 bit mas significativos de raw[i &gt;&gt; 1]\n                }\n\n                if ((code &amp; 8) != 0) // si el 4 bit es 1\n                {\n                    sb = 1;\n                }\n                else                 // si el 4 bit es 0\n                {\n                    sb = 0;\n                }\n\n                code &amp;= 7;           // Pongo en 0 el 4 bit\n\n                //delta = (step_table[index] * code) / 4 + step_table[index] / 8;   // \n                delta = ((step_table[index] * code) &gt;&gt; 2) + (step_table[index] &gt;&gt; 3);   // \n\n                if (sb == 1)\n                {\n                    delta = -delta;\n                }\n\n                pre_sample += delta;    // \n\n                if (pre_sample &gt; 32767)\n                {\n                    pre_sample = 32767;\n                }\n                else if (pre_sample &lt; -32768)\n                {\n                    pre_sample = -32768;\n                }\n\n                pcm[i] = (short)pre_sample;\n\n                index += index_adjust[code];\n\n                if (index &lt; 0)\n                {\n                    index = 0;\n                }\n                else if (index &gt; 88)\n                {\n                    index = 88;\n                }\n            }\n\n            pcm_byte = shortTobyte(pcm, pcm.Length);\n\n            return pcm_byte;\n        }\n}</code></pre>\n\nI extract this code for an aplication that do the decode. The problem with this aplication it is very old, is write in visual 6, and is write in c++.\r<br />\n<br />\nSo, if the decode code is doing its work, how i have to give the raw pcm bytes to the bufferedWaveProvider?\r<br />\n<br />\nThank for the help, i believe that i'm very close to the solution.<br />\n",
+    "PostedDate": "2014-08-06T09:15:00.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1287117",
+    "ThreadId": "551896",
+    "Html": "just use bufferedWaveProvider.AddSamples<br />\n",
+    "PostedDate": "2014-08-06T09:31:25.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1287200",
+    "ThreadId": "551896",
+    "Html": "I do that, but i can only listen noise\r<br />\n<br />\nwhat could be the problem?<br />\n",
+    "PostedDate": "2014-08-06T10:37:23.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

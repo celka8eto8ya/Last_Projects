@@ -1,0 +1,234 @@
+[
+  {
+    "Id": "612592",
+    "ThreadId": "257586",
+    "Html": "<p>Which class does i have to use to create an audio spectrum? Sorry i had a look on your wpf sample but it is realy confusing because i found nothing to what gets and float array or something else with the data.</p>\n<p>EDIT: I found something and implemented it but it is soo slow:</p>\n<p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> Add(<span style=\"color: blue;\">float</span> value)\n        {\n\n            <span style=\"color: blue;\">if</span> (PerformFFT &amp;&amp; FftCalculated != <span style=\"color: blue;\">null</span>)\n            {\n                fftBuffer[fftPos].X = value;\n                fftBuffer[fftPos].Y = 0;\n                fftPos++;\n                Console.WriteLine(fftPos + <span style=\"color: #a31515;\">\"   \"</span> + fftBuffer.Length); //Here it is too slow takes about 1-2 min until it is 1024\n                <span style=\"color: blue;\">if</span> (fftPos &gt;= fftBuffer.Length)\n                {\n                    fftPos = 0;\n                    <span style=\"color: green;\">// 1024 = 2^10</span>\n                    FastFourierTransform.FFT(<span style=\"color: blue;\">true</span>, 10, fftBuffer);\n                    FftCalculated(<span style=\"color: blue;\">this</span>, fftArgs);\n                }\n            }\n\n            maxValue = Math.Max(maxValue, value);\n            minValue = Math.Min(minValue, value);\n            count++;\n            <span style=\"color: blue;\">if</span> (count &gt;= NotificationCount &amp;&amp; NotificationCount &gt; 0)\n            {\n                <span style=\"color: blue;\">if</span> (MaximumCalculated != <span style=\"color: blue;\">null</span>)\n                {\n                    MaximumCalculated(<span style=\"color: blue;\">this</span>, <span style=\"color: blue;\">new</span> MaxSampleEventArgs(minValue, maxValue));\n                }\n                Reset();\n            }            \n        }\n    }\n</pre>\n</div>\n</p>",
+    "PostedDate": "2011-05-13T13:51:42.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613158",
+    "ThreadId": "257586",
+    "Html": "<p>In the SampleAggregator class in the NAudio WPF demo, it waits until it has enough samples and then calls an FFT</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-16T00:18:48.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613448",
+    "ThreadId": "257586",
+    "Html": "<p>&nbsp;</p>\r\n<p>Yes i know that, but thats not my problem.<br />If i look at the Console.WriteLine(fftPos...); In my programm thats very slow so i have to wait about 10 seconds until 1024 is displayed. In the wpf application of you i just have to wait about 1-2 seconds. So why?</p>\r\n<p>I'm using a bufferedwaveprovider. Is that the problem?</p>",
+    "PostedDate": "2011-05-16T10:16:26.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613469",
+    "ThreadId": "257586",
+    "Html": "<p>you should get to 1024 very quickly. Add needs to be called for every sample, and there should be 44100 of them a second. When are you calling Add?</p>",
+    "PostedDate": "2011-05-16T10:58:21.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613495",
+    "ThreadId": "257586",
+    "Html": "<p>i have modificed the bufferedwaveprovider to use this in an livestream.:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>\r\n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> LoadNextChunk(<span style=\"color: blue;\">byte</span>[] source, <span style=\"color: blue;\">int</span> samplePairsRequired)\r\n        {\r\n            <span style=\"color: blue;\">int</span> sourceBytesRequired = samplePairsRequired * 4;\r\n            sourceBuffer = GetSourceBuffer(sourceBytesRequired);\r\n            \r\n            sourceSamples = sourceBytesRequired / 2;\r\n            sourceBuffer = source;\r\n            sourceWaveBuffer = <span style=\"color: blue;\">new</span> WaveBuffer(sourceBuffer);\r\n            Console.Write(<span style=\"color: #a31515;\">\"sourceBytesRequired: \"</span> + sourceBytesRequired + <span style=\"color: #a31515;\">\"  Byte[50]: \"</span> + source[50] + <span style=\"color: #a31515;\">\"\\n\"</span>);\r\n            sourceSample = 0;\r\n        }\r\n</pre>\r\n</div>\r\n</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre style=\"color: black;\">        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">int</span> Read(<span style=\"color: blue;\">byte</span>[] buffer, <span style=\"color: blue;\">int</span> offset, <span style=\"color: blue;\">int</span> count) \r\n        {\r\n            <span style=\"color: blue;\">int</span> read = <span style=\"color: blue;\">this</span>.buffer.Read(buffer, offset, count);\r\n            <span style=\"color: blue;\">if</span> (read &lt; count)\r\n            {\r\n                <span style=\"color: green;\">// zero the end of the buffer</span>\r\n                Array.Clear(buffer, offset + read, count - read);\r\n            }\r\n\r\n\r\n            <span style=\"color: blue;\">#region</span> left/right\r\n            <span style=\"color: blue;\">float</span> left, right;\r\n\r\n            ISample.LoadNextChunk(buffer, count);\r\n            Web_LiveStream_Filoe.std_Classes.Error.Commentary(<span style=\"color: #a31515;\">\"Count: \"</span> + count + <span style=\"color: #a31515;\">\" Byte[50] : \"</span> + buffer[50] + <span style=\"color: #a31515;\">\"  \"</span> + ISample.GetNextSample(<span style=\"color: blue;\">out</span> left, <span style=\"color: blue;\">out</span> right).ToString());\r\n            \r\n            left = (pan &lt;= 0) ? left : (left * (1 - pan) / 2.0f); <span style=\"color: green;\">//pan 0.0f</span>\r\n            right = (pan &gt;= 0) ? right : (right * (pan + 1) / 2.0f);\r\n            left *= volume;\r\n            right *= volume;\r\n            RaiseSample(left, right);\r\n\r\n            <span style=\"color: green;\">//Stackoverflow weil ich in read wieder read aufrufe --&gt;</span>\r\n            <span style=\"color: green;\">//Aber ich lese in read() in buffer die bytes dadurch kann ich in Stero16SampleProvider Methode umschreiben, dass ich kein</span>\r\n            <span style=\"color: green;\">//Waveprovider brauche sondern einfach nur ein byte arry.</span>\r\n            <span style=\"color: blue;\">#endregion</span>\r\n\r\n            <span style=\"color: blue;\">return</span> count;\r\n        }\r\n<br /></pre>\r\n<pre style=\"color: black;\"><br /></pre>\r\n<pre style=\"color: black;\"><br /></pre>\r\n<pre style=\"color: black;\"><pre>and so i also had to edit the Stereo16SampleProvider:</pre>\r\n</pre>\r\n<pre style=\"color: black;\">        <span style=\"color: blue;\">#region</span> SampleEvent\r\n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">event</span> EventHandler&lt;SampleEventArgs&gt; Sample;\r\n\r\n        <span style=\"color: blue;\">private</span> SampleEventArgs sampleEventArgs = <span style=\"color: blue;\">new</span> SampleEventArgs(0, 0);\r\n\r\n        <span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span>\r\n        <span style=\"color: gray;\">///</span><span style=\"color: green;\"> Raise the sample event (no check for null because it has already been done)</span>\r\n        <span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;/summary&gt;</span>\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> RaiseSample(<span style=\"color: blue;\">float</span> left, <span style=\"color: blue;\">float</span> right)\r\n        {\r\n            \r\n            sampleEventArgs.Left = left;\r\n            sampleEventArgs.Right = right;\r\n            Sample(<span style=\"color: blue;\">this</span>, sampleEventArgs);\r\n        }\r\n        <span style=\"color: blue;\">#endregion</span></pre>\r\n<pre><br /></pre>\r\n<pre>\r\n</pre>\r\n</div>\r\n<p>And then i am calling that simple in an event:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> bufferedWaveProvider_Sample(<span style=\"color: blue;\">object</span> sender, SampleEventArgs e)\r\n        {\r\n            wavPaint.AddMax(e.Left);\r\n        }\r\n\r\n</pre>\r\n</div>\r\n</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-05-16T11:54:01.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613498",
+    "ThreadId": "257586",
+    "Html": "<p>hmmm, the classes are not really supposed to be used that way. the root cause of your problem is that your read method only raises one sample event rather than one for every sample read.</p>",
+    "PostedDate": "2011-05-16T11:58:48.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613500",
+    "ThreadId": "257586",
+    "Html": "<p>hmm what would you do to change that?</p>",
+    "PostedDate": "2011-05-16T12:03:07.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613501",
+    "ThreadId": "257586",
+    "Html": "<p>if you are streaming, use a BufferedWaveProvider as an input to a WaveChannel32. The WaveChannel32 can provide sample events. If WaveChannel32 needs a WaveStream you might need to make a simple adapter class to connect the two together.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-16T12:04:52.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613507",
+    "ThreadId": "257586",
+    "Html": "<p>ok i will try :) tanks</p>",
+    "PostedDate": "2011-05-16T12:17:36.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614787",
+    "ThreadId": "257586",
+    "Html": "<p>ok i have one more question. Why is in the WaveChannel32 the Read Method called soo often and not in the bufferedwaveprovider. Where exacly is that method called?</p>",
+    "PostedDate": "2011-05-18T12:01:35.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614810",
+    "ThreadId": "257586",
+    "Html": "<p>If I am understanding what you are doing right, you are passing a BufferedWaveProvider into the WaveChannel32. So when the sound card wants more data, it calls WaveChannel32.Read. WaveChannel32.Read will call a LoadNextChunk and the sample chunk converter will go off and Read from the BufferedWaveProvider to get more data.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-18T12:35:15.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614833",
+    "ThreadId": "257586",
+    "Html": "<p>ok thanks a lot. But i have 2 more questions :D. First question is still why soundcard calls about 44100 times a second WaveChannel32.Read and about 5-10times bufferedWaveProvider.Read?</p>\n<p>Second questions is: Why my whole computer lags if your wpf demo plays a song?</p>\n<p>&nbsp;</p>\n<p>EDIT: And sorry about my bad english but i m german and it is often really difficult to explain you what I meen</p>",
+    "PostedDate": "2011-05-18T13:08:16.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614845",
+    "ThreadId": "257586",
+    "Html": "<p>WaveChannel32.Read should not be called 44100 times a second unless you are playing at a really low latency! Are you sure it is called that often?</p>\r\n<p>What spec is your PC? The WPF demo is visualising using FFT and drawing a waveform, so it can be a little taxing on the processor as the drawing code isn't particularly optimized.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-18T13:22:37.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614854",
+    "ThreadId": "257586",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>you should get to 1024 very quickly. Add needs to be called for every sample, and there should be 44100 of them a second. When are you calling Add?</p>\r\n</blockquote>\r\n<p>oh i thought you said that there are 44100?</p>\r\n<p>filoe</p>",
+    "PostedDate": "2011-05-18T13:37:50.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614865",
+    "ThreadId": "257586",
+    "Html": "<p>there are 44100 samples per second if you have opened your soundcard at 44.1kHz. The sample aggregator has to look at them all to draw the waveform and calculate the FFT.</p>",
+    "PostedDate": "2011-05-18T13:50:09.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "616028",
+    "ThreadId": "257586",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>If I am understanding what you are doing right, you are passing a BufferedWaveProvider into the WaveChannel32. So when the sound card wants more data, it calls WaveChannel32.Read. WaveChannel32.Read will call a LoadNextChunk and the sample chunk converter  will go off and Read from the BufferedWaveProvider to get more data.</p>\r\n<p>Mark</p>\r\n</blockquote>\r\n<p>ok but how to use a wavechannel instead of a bufferedwaveprovider? I have to use the bufferedwaveprovider because of the memory. So i can free the played bytes and thats not possible with the wavechannel32. :)</p>",
+    "PostedDate": "2011-05-20T11:38:30.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "616048",
+    "ThreadId": "257586",
+    "Html": "<p>What do you mean that's not possible with WaveChannel32? It only holds on to the bytes it needs for each Read and then forgets them. It is how the WPF demo works.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-20T12:41:59.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618313",
+    "ThreadId": "257586",
+    "Html": "<p>ok i don t get it. Could you explain again to me how to get the data of a bufferedwaveprovider which is buffering from network while playing into a wavechannel32?</p>\r\n<p>And 2nd question. Does it makes sense to programme something for a player that should work without taxing on the processor.</p>",
+    "PostedDate": "2011-05-25T14:02:18.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618319",
+    "ThreadId": "257586",
+    "Html": "<p>with NAudio you construct a playback graph. So for example BufferedWaveProvider -&gt; WaveChannel32 -&gt; MeteringStream -&gt; WaveOut.</p>\r\n<p>Also, I'm not sure what you mean about \"without taxing the processor\" - any audio sample manipulation and visualisation you do will be done on the processor. There is no way to avoid this.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-25T14:06:39.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618328",
+    "ThreadId": "257586",
+    "Html": "<p>hmm if I use something like bass.dll or winamp or something else and I have a look on the tastmrg there is a number of 2-3 in cpu collum but if I have a look on that in your wpf sample there are about 50...</p>\n<p>and i know what you mean with&nbsp;BufferedWaveProvider -&gt; WaveChannel32 -&gt; MeteringStream -&gt; WaveOut.</p>\n<p>But which konstruktor or method does i have to use to pass the BufferedWaveProvider into the WaveChannel32 exactly &lt;-- I am just a bit confused at the moment :D</p>",
+    "PostedDate": "2011-05-25T14:20:33.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618330",
+    "ThreadId": "257586",
+    "Html": "<p>Ah yes, WaveChannel32 is expecting a WaveStream and BufferedWaveProvider is only an IWaveProvider. You can make an adaptor class, inheriting from WaveStream and in the Read just passing through from IWaveProvider. In the next NAudio, WaveChannel32 will be  a less important part of the framework.</p>\n<p>As for performance, I suspect it is due to very inefficient visualisation code - the WPF waveform was just a proof of concept. A WriteableBitmap would probably be a much better performing solution. Also, managed code will always struggle to compete with  native C/C++ for things like audio, since .NET introduces some extra overhead (garbage collect, copying instead of casting, out of bounds checking on every array access etc).</p>",
+    "PostedDate": "2011-05-25T14:26:51.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618610",
+    "ThreadId": "257586",
+    "Html": "<p>thanks I have another idea:</p>\n<p>I recieve bytes from network is it possible to write them directly into the wavechannel32 instead of the bufferedwaveprovider?</p>\n<p>&nbsp;</p>\n<p>and 2nd question:<br /> would it make sense to make a c++ dll that recieves the data of the spectrum from my c# application and draws the waveform with on the handle of my panel or something else. Or second idea I recieve a Image from the c++ dll and draw that on my pricturebox.</p>\n<p>&nbsp;</p>\n<p>3rd questoin:<br />How can i create an emty instance of a WaveStream to set that in WaveChannel32 as sourcestream to write in.</p>",
+    "PostedDate": "2011-05-26T05:05:40.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619326",
+    "ThreadId": "257586",
+    "Html": "<p>pls help me :)</p>",
+    "PostedDate": "2011-05-27T06:49:25.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619538",
+    "ThreadId": "257586",
+    "Html": "<p>Well that is what the buffered wave provider is for - feeding audio data from the network into an audio pipeline.</p>\r\n<p>2nd - you could do, although it would probably be simpler just to write a better optimised waveform renderer in C#. As I said, the method of drawing used is not an efficient one.</p>\r\n<p>3rd - You create a class derived from WaveStream</p>",
+    "PostedDate": "2011-05-27T13:16:15.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "622023",
+    "ThreadId": "257586",
+    "Html": "<p>i dont get it :(</p>\r\n<p>could you may write a little sample how to connect the bufferedwaveprovider with a wavechannel32</p>",
+    "PostedDate": "2011-06-02T08:46:41.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "623358",
+    "ThreadId": "257586",
+    "Html": "<p>I'm writing lots of new NAudio demos for the next version. I'll try to include something like this in the list</p>",
+    "PostedDate": "2011-06-06T01:42:38.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "624980",
+    "ThreadId": "257586",
+    "Html": "<p>when do you think your next version comes out?</p>",
+    "PostedDate": "2011-06-08T14:14:44.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "624983",
+    "ThreadId": "257586",
+    "Html": "<p>I don't have a definite date I'm afraid, but I'm hoping sometime over the summer as a lot of new stuff has gone into NAudio 1.5 already and it would be good to get it out there. NAudio is just a hobby project I do in my spare time and it is quite hard keeping up with all the support requests these days (I think StackOverflow is sending a lot of people my way)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-08T14:18:14.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "626085",
+    "ThreadId": "257586",
+    "Html": "<div style=\"color: black; background-color: white;\">\n<pre><br /><span style=\"font-family: 'Segoe UI', 'Microsoft Sans Serif', Arial, Geneva, sans-serif;\"><span style=\"white-space: normal;\">ok i ve done it now thanks a lot :)</span></span></pre>\n</div>",
+    "PostedDate": "2011-06-10T09:25:44.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

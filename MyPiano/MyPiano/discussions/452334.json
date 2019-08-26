@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1076422",
+    "ThreadId": "452334",
+    "Html": "I'm trying to capture volume meter levels for a microphone, but am unable to unless I go to  the &quot;Recording devices&quot; panel in Windows. Once that panel is open, I can view the levels fine via my application. As soon as the panel is closed, I am unable to view the meter levels. The device state is set to &quot;Active&quot; as well. \r<br />\nI'm not sure if the device is automatically disabled when it's not &quot;activated&quot; or &quot;called&quot; from an application. Is there anyway that I can programmatically enable it? Or maybe I'm missing something?\r<br />\n<br />\nI access the levels via the normal method:\r<br />\n<strong>DevCol[cmbDevices.SelectedIndex].AudioMeterInformation.MasterPeakValue;</strong>\r<br />\n<br />\nAny help would be much appreciated.<br />\n",
+    "PostedDate": "2013-08-03T21:29:18.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1076840",
+    "ThreadId": "452334",
+    "Html": "I'm afraid I don't know the answer to this. Probably best to see if you can find an answer on MSDN in the WASAPI documentation.<br />\n",
+    "PostedDate": "2013-08-05T09:08:19.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081718",
+    "ThreadId": "452334",
+    "Html": "Alright, thanks anyways. \r<br />\nBy the way, really nice job you've done on NAudio. Keep up the good work.<br />\n",
+    "PostedDate": "2013-08-17T14:51:38.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

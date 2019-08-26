@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:04:27.39-07:00",
+    "CommentCount": 7,
+    "Custom": null,
+    "Description": "just download latest source 1.5.9 buid release any cpu\r\nrun naudiodemo.exe from bin release and crush\r\nmy os win 7 ultimate x64 sp1\r\nany idea?\r\nProblem signature:\r\n  Problem Event Name:\tAPPCRASH\r\n  Application Name:\tNAudioDemo.exe\r\n  Application Version:\t1.0.1.0\r\n  Application Timestamp:\t4f7c4901\r\n  Fault Module Name:\tKERNELBASE.dll\r\n  Fault Module Version:\t6.1.7601.17651\r\n  Fault Module Timestamp:\t4e21213c\r\n  Exception Code:\te0434f4d\r\n  Exception Offset:\t000000000000cacd\r\n  OS Version:\t6.1.7601.2.1.0.256.1\r\n  Locale ID:\t1037\r\n",
+    "LastUpdatedDate": "2012-10-27T00:04:27.39-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-04-04T07:30:35.233-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "1.5.9 build from source naudiodemo crash on launch",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16344
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "please try this again with a debug build from within visual studio and post the stack trace",
+      "PostedDate": "2012-04-05T01:42:05.42-07:00",
+      "Id": 61585
+    },
+    {
+      "Message": "did in debug and it work.\nso i run in release naudiodemo from visual studio and got \nAn unhandled exception of type 'System.Reflection.ReflectionTypeLoadException' occurred in mscorlib.dll\n\nAdditional information: Unable to load one or more of the requested types. Retrieve the LoaderExceptions property for more information.\n\nand the line was at program.cs\n\n           var mainForm = container.GetExportedValue<MainForm>();\n",
+      "PostedDate": "2012-04-05T03:53:09.07-07:00",
+      "Id": 61593
+    },
+    {
+      "Message": "hmm, possibly the target CPU not set up right. Will have to check when I get the chance",
+      "PostedDate": "2012-04-05T06:02:33.73-07:00",
+      "Id": 61599
+    },
+    {
+      "Message": "ok, yes, NAudio.dll release build should target AnyCPU. I have always shipped the debug build of NAudio. Most recent checkin fixes this,",
+      "PostedDate": "2012-04-05T06:07:13.487-07:00",
+      "Id": 61600
+    },
+    {
+      "Message": "cool just download the latest source from codeplex switch to release anycpu and rebuild\nnow release binaries of naudiodemo.exe works\n10x\n\njust to let you know\nwhen i tried to checkuot using troitesvn for windows 7 x64 \nhttps://hg.codeplex.com/naudio\n\ni got the following errors \nCheckout from https://hg.codeplex.com/naudio, revision HEAD, Fully recursive, Externals included\nUnable to connect to a repository at URL 'https://hg.codeplex.com/naudio'\nThe OPTIONS response did not include the requested activity-collection-set;\n this often means that the URL is not WebDAV-enabled",
+      "PostedDate": "2012-04-05T07:51:02.61-07:00",
+      "Id": 61611
+    },
+    {
+      "Message": "you need to use tortoiseHG not tortoiseSVN, since this is a Mercurial repository",
+      "PostedDate": "2012-04-05T08:07:30.56-07:00",
+      "Id": 61612
+    },
+    {
+      "Message": "10x,\r\nwill do\r\n\r\namazing work u r doing.",
+      "PostedDate": "2012-04-05T09:50:33.18-07:00",
+      "Id": 61615
+    }
+  ]
+}

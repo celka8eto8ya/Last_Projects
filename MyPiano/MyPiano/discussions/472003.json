@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1132097",
+    "ThreadId": "472003",
+    "Html": "Hi,\r<br />\n<br />\nWhen trying to get the FriendlyName and DeviceFriendlyName of an MMDevice in Windows Vista, i always get &quot;Unknown&quot;. In Windows 7 it seems to work fine.\r<br />\nIt returns the name of the playback device as it is shown in the Sound Panel, which might add a number in front of it if you have multiple usb soundcards with the same name connected to the computer.\r<br />\n<br />\nApparently the propertystore does not contain the key with guid PKEY_DeviceInterface_FriendlyName of the chosen device in Vista, while it does have this key in windows 7.\r<br />\n<br />\nDoes anyone know what might be the correct guid for this in Vista?\r<br />\n<br />\nPS: this is the key: new PropertyKey(new Guid(0x026e516e, 0xb814, 0x414b, 0x83, 0xcd, 0x85, 0x6d, 0x6f, 0xef, 0x48, 0x22), 2) \r<br />\n<br />\nThanks in advance!<br />\n",
+    "PostedDate": "2013-12-05T04:02:29.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1132444",
+    "ThreadId": "472003",
+    "Html": "it may be that those keys don't exist with in Vista. Sometimes new keys get introduced.<br />\n",
+    "PostedDate": "2013-12-06T02:48:15.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

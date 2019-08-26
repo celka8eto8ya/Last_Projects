@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1036226",
+    "ThreadId": "441704",
+    "Html": "Hello,\r<br />\nI need to get data from a playing wav file in order to encode them and send them to a voip server. I managed to do this while recording myself using the dataavailable callback.<br />\n<blockquote>\nvoid wi_DataAvailable(object sender, WaveInEventArgs e)<br />\n</blockquote>\nCan i do the same with a wav file?\r<br />\nThank you :)<br />\n",
+    "PostedDate": "2013-04-26T11:16:06.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036370",
+    "ThreadId": "441704",
+    "Html": "I don't think you can do this with WaveIn() unless you are streaming from a device. You may be able to create a virtual device with DirectShow that plays back files, and then uses WaveIn() to intercept the virtual device.\r<br />\n<br />\nWould it not work with your needs to read the bytes out of the wav file in to a stream and then send those bytes to your server?<br />\n",
+    "PostedDate": "2013-04-26T17:52:01.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036479",
+    "ThreadId": "441704",
+    "Html": "<blockquote>\nWould it not work with your needs to read the bytes out of the wav file in to a stream and then send those bytes to your server?<br />\n</blockquote>\nMaybe, How can get the bytes from a wav file? I need to convert them to speex 8 or 16khz(or celt) before sending them so does it means i need the WaveFormat to be 8 or 16Khz? How can i do this? \r<br />\n<br />\nThank you :)<br />\n",
+    "PostedDate": "2013-04-27T05:52:06.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036549",
+    "ThreadId": "441704",
+    "Html": "please read <a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">this article</a> for a detailed explanation of how to convert between audio formats with NAudio.<br />\n",
+    "PostedDate": "2013-04-27T09:54:39.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1037294",
+    "ThreadId": "441704",
+    "Html": "<blockquote>\nWould it not work with your needs to read the bytes out of the wav file in to a stream and then send those bytes to your server?<br />\n</blockquote>\nOk it work thank you<br />\n<blockquote>\nplease read this article for a detailed explanation of how to convert between audio formats with NAudio.<br />\n</blockquote>\nI managed to convert it with the WaveFormatConversionStream Method<br />\n",
+    "PostedDate": "2013-04-29T11:28:32.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

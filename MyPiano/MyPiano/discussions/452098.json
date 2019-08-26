@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1075541",
+    "ThreadId": "452098",
+    "Html": "Dear experts,\r<br />\n<br />\nI am just thinking of starting using NAudio C#. Could you please tell me if and how I can get format of an audio file using NAudio? Because the file extension may not be correct. \r<br />\n<br />\nThanks,\r<br />\nDmitriy Reznik<br />\n",
+    "PostedDate": "2013-08-01T05:42:04.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1075889",
+    "ThreadId": "452098",
+    "Html": "if the file extension can't be trusted, then you'll simply have to guess what format it is. Try loading it into a WaveFileReader, and Mp3FileReader and see whether it works or not. There are hundreds of audio file formats, including raw PCM, and it is not necessarily possible to deduce from the contents what format you are dealing with. I go into a bit of detail on WAV and MP3 file format structures in my <a href=\"http://pluralsight.com/training/Courses/TableOfContents/digital-audio-fundamentals\" rel=\"nofollow\">Digital Audio Fundamentals course</a>.<br />\n",
+    "PostedDate": "2013-08-02T01:42:02.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1075953",
+    "ThreadId": "452098",
+    "Html": "Thank you very much.<br />\n",
+    "PostedDate": "2013-08-02T04:30:02.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

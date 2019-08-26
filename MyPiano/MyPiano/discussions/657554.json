@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1482465",
+    "ThreadId": "657554",
+    "Html": "I currently use the following to play a sound file:<br />\n<pre><code>FireAndForgetAudioSample.AudioPlaybackEngine.Instance.PlaySound(&quot;Sounds/sound.mp3&quot;);</code></pre>\n\nThis file is very long and I want to stop playing the file mid-way.  How do I accomplish this?\r<br />\n<br />\nFurthermore, Can I play other sound files after the &quot;sound.mp3&quot; file has been stopped?\r<br />\n<br />\nAssistance is appreciated.<br />\n",
+    "PostedDate": "2016-08-30T18:55:38.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482478",
+    "ThreadId": "657554",
+    "Html": "Well the whole point of fire and forget is that you &quot;forget&quot; about the file once you've started playing it. If you want to remember it, and control it, then create your own MixingSampleProvider and add and remove inputs as needed. \r<br />\n<br />\nAnd yes, you can play other files after one has stopped, so long as your mixer is set up to always produce sound (i.e. silence) even when no inputs are connected<br />\n",
+    "PostedDate": "2016-08-31T01:31:38.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

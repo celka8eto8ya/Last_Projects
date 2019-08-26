@@ -1,0 +1,122 @@
+[
+  {
+    "Id": "1156124",
+    "ThreadId": "488333",
+    "Html": "How to WAV using G.711 RTP record?\r<br />\n<br />\nI am receiving the RTP attempts to record to WAV.\r<br />\nIt has been well documented.\r<br />\n<br />\nWav files but containing quite a lot of noise.\r<br />\n(It almost can not hear)\r<br />\nHowever, Wireshark is a very clean, renewable\r<br />\n<br />\nHow I can I get a clean recording file?\r<br />\n<br />\n&quot;RTP\t214\tPT=ITU-T G.711 PCMA, SSRC=0x5EA83D50, Seq=30570, Time=1599766842 &quot;\r<br />\n<br />\nmy source , in c#\r<br />\n<br />\n  if (wavOutput == null)<br />\n<pre><code>                {\n\n                    wavOutput = new WaveFileWriter(&quot;Calls\\\\&quot; + CallID + &quot;.wav&quot;, new WaveFormat(8000, 16, 1));\n                }\n</code></pre>\n\nudpPacket.PayloadData.Length.ToString());<br />\n<pre><code>                for (int index = 0; index &lt; udpPacket.PayloadData.Length; index++)\n                {\n\n                     short pcm = MuLawDecoder.MuLawToLinearSample(udpPacket.PayloadData[index]);\n\n                    wavOutput.WriteByte((byte)(pcm &amp; 0xFF));\n                    wavOutput.WriteByte((byte)(pcm &gt;&gt; 8));\n\n\n                }\n</code></pre>\n\nWhat should I do now?\r<br />\nHow do I extract the clean speech\r<br />\n<br />\n<br />\nI saved WAV file processing?\r<br />\n<br />\nHow do I apply codec?\r<br />\n<br />\nI am using C #, I am beginner\r<br />\n<br />\nAsk me a sample of the work.<br />\n",
+    "PostedDate": "2014-01-11T20:16:59.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1160708",
+    "ThreadId": "488333",
+    "Html": "you'll need to extract the compressed audio from the RTP packet - don't also try to decode the headers.\r<br />\nAlso check your bit manipulation is correct. Use BitConverter.GetBytes(pcm) and then write that using wavOutput.Write(bytes, 0, 2)<br />\n",
+    "PostedDate": "2014-01-13T03:18:52.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1161456",
+    "ThreadId": "488333",
+    "Html": "I am a beginner\r<br />\n<br />\nI need a few samples.\r<br />\n<br />\nSIPDUMP I got from a place called in the source\r<br />\n<br />\nIt works well, but just can not hear the voice.\r<br />\n<br />\nI tried all night 3 days\r<br />\n<br />\nCan you help me?\r<br />\n<br />\nThank you. ^^;<br />\n",
+    "PostedDate": "2014-01-13T07:50:32.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1168573",
+    "ThreadId": "488333",
+    "Html": "well the first step is extracting the audio out of the RTP packet. NAudio does not do this. What are you using to do that?<br />\n",
+    "PostedDate": "2014-01-15T03:56:21.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1303645",
+    "ThreadId": "488333",
+    "Html": "I am able to record wave file using above mentioned code.\r<br />\nbut containing quite a lot of noise. \r<br />\nI am looking for help to reduce noise from  recording.<br />\n",
+    "PostedDate": "2014-09-11T07:53:29.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1304124",
+    "ThreadId": "488333",
+    "Html": "according to your description the data is aLaw PCM but you use the uLaw decoder...maybe thats already it...<br />\n",
+    "PostedDate": "2014-09-12T09:15:15.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305545",
+    "ThreadId": "488333",
+    "Html": "If i use ALawDecoder I don't get any audio.... hence I use MuLawDecoder and getting audio but with a lot of noise....<br />\n<br />\nfor (i = 0; i &lt; receiveBytes.Length; i++)<br />\n<pre><code>                    {\n\n\n                            if (i &gt;= 12)\n                            {\n\n                                /*\n                                short pcm = ALawDecoder.ALawToLinearSample(receiveBytes[i]);\n                                wfWriter.WriteByte((byte)(pcm &amp; 0xFF));\n                                wfWriter.WriteByte((byte)(pcm &gt;&gt; 8));*/\n\n                                short pcm = MuLawDecoder.MuLawToLinearSample(receiveBytes[i]);\n\n                                wfWriter.WriteByte((byte)(pcm &amp; 0xFF));\n                                wfWriter.WriteByte((byte)(pcm &gt;&gt; 8));\n\n\n                            }\n\n                    }</code></pre>\n\n",
+    "PostedDate": "2014-09-17T05:26:30.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305867",
+    "ThreadId": "488333",
+    "Html": "hm.... Did you verify the RTP audio data to be correct, e.g. playing a captured stream via wireshark?\r<br />\n<br />\nIn general I think you should be able to hear something if you use the alaw decoder on mulaw PCM data (and vice versa), except for some really weird special cases of the input signal<br />\n",
+    "PostedDate": "2014-09-18T03:29:29.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305896",
+    "ThreadId": "488333",
+    "Html": "I am able to hear audio but I also hear background noise a lot.<br />\n",
+    "PostedDate": "2014-09-18T04:59:32.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305901",
+    "ThreadId": "488333",
+    "Html": "well, if the RTP stream data already contains a lot of noise, the recording of the decoded PCM data will also contain the noise<br />\n",
+    "PostedDate": "2014-09-18T05:26:09.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1308299",
+    "ThreadId": "488333",
+    "Html": "just letting you know, I had the same problem: RTP stream after ALaw decoding had a strange noise, which otherwise shouldn't be there. This happened because I wasn't removing the RTP header (first 12 bytes) from the received byte array, and was playing those 12 bytes also on the speakers which gave me the noise.<br />\n",
+    "PostedDate": "2014-09-26T02:28:35.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1308307",
+    "ThreadId": "488333",
+    "Html": "But I am already removing the first 12 bytes from the received array... but still getting noise....\r<br />\n<br />\nwfWriter = new WaveFileWriter(recordedFileName.Text, new WaveFormat(8000, 16, 1));\r<br />\n.\r<br />\n.\r<br />\n.\r<br />\nfor (i = 0; i &lt; receiveBytes.Length; i++)<br />\n<pre><code>                {\n                        if (i &gt;= 12)\n                        {\n                            /*\n                            short pcm = ALawDecoder.ALawToLinearSample(receiveBytes[i]);\n                            wfWriter.WriteByte((byte)(pcm &amp; 0xFF));\n                            wfWriter.WriteByte((byte)(pcm &gt;&gt; 8));*/\n\n                            short pcm = MuLawDecoder.MuLawToLinearSample(receiveBytes[i]);\n\n                            wfWriter.WriteByte((byte)(pcm &amp; 0xFF));\n                            wfWriter.WriteByte((byte)(pcm &gt;&gt; 8));\n\n\n                        }\n\n                }</code></pre>\n\n",
+    "PostedDate": "2014-09-26T03:17:40.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1308308",
+    "ThreadId": "488333",
+    "Html": "But I am already removing the first 12 bytes from the received array... but still getting noise.... \r<br />\n<br />\nwfWriter = new WaveFileWriter(recordedFileName.Text, new WaveFormat(8000, 16, 1)); \r<br />\n. \r<br />\n. \r<br />\n. \r<br />\nfor (i = 0; i &lt; receiveBytes.Length; i++)<br />\n<pre><code>            {\n                    if (i &gt;= 12)\n                    {\n                        /*\n                        short pcm = ALawDecoder.ALawToLinearSample(receiveBytes[i]);\n                        wfWriter.WriteByte((byte)(pcm &amp; 0xFF));\n                        wfWriter.WriteByte((byte)(pcm &gt;&gt; 8));*/\n\n                        short pcm = MuLawDecoder.MuLawToLinearSample(receiveBytes[i]);\n\n                        wfWriter.WriteByte((byte)(pcm &amp; 0xFF));\n                        wfWriter.WriteByte((byte)(pcm &gt;&gt; 8));\n\n\n                    }\n\n            }</code></pre>\n\n",
+    "PostedDate": "2014-09-26T03:18:03.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1308335",
+    "ThreadId": "488333",
+    "Html": "Yes, you are right. You are doing the same as I do. So, if you have noise, than it means there is noise in the original audio. For example my client was complaining about hearing noise beside the correct audio data and it turned out it was the usb sound card. So you might need to check the audio device you are using. Also try to use some noise filtering algorithm, that might help.<br />\n",
+    "PostedDate": "2014-09-26T04:53:17.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1308337",
+    "ThreadId": "488333",
+    "Html": "Then let me check my sound card.... Thanks!!!!<br />\n",
+    "PostedDate": "2014-09-26T04:59:33.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

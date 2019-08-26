@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "598265",
+    "ThreadId": "254131",
+    "Html": "\r\n<p>I am new here, and Thanks for the great API! I downloaded the released NAudio API 1.3 that was released on Oct 2009 from download tab. That has all the functionalities that I need wihtout any issues. Will I be good to go or should I get the latest one in\r\n Souce Code tab an build the dll myself?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2011-04-15T17:15:23.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598331",
+    "ThreadId": "254131",
+    "Html": "<p>hi, I would recommend getting the latest if you are starting a new application, as there have been lots of small improvements and enhancements. I am hoping to get 1.4 released very shortly.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-16T00:13:39.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

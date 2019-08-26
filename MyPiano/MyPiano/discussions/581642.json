@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1354986",
+    "ThreadId": "581642",
+    "Html": "Hello Mark, I tried to Play a 2GB wav file that I recorded using your wavefilewriter.\r<br />\n<br />\nWaveformat: IEEE float, 32bit, 44100Hz.\r<br />\n<br />\nThe WaveFileReader throws an exception on playback start, &quot;Argument out of range exception&quot;.\r<br />\nSeems, it sets a negative Position in underlying filestream.\r<br />\nFilesize can´t be a Problem, ~6GB is allowed for wave files at least.\r<br />\n<br />\nIdeas Mark?\r<br />\n<br />\n<br />\nMessage:<br />\n<blockquote>\nSystem.ArgumentOutOfRangeException wurde nicht behandelt.<br />\nMessage=&quot;Nicht negative Zahl erforderlich. Parametername: value&quot;<br />\nParamName=&quot;value&quot;<br />\nSource=&quot;mscorlib&quot;<br />\n</blockquote>\nStack Trace:<br />\n<blockquote>\nbei System.IO.FileStream.set_Position(Int64 value)    bei NAudio.FileFormats.Wav.WaveFileChunkReader.ReadWaveHeader(Stream stream)    bei NAudio.Wave.WaveFileReader..ctor(Stream inputStream)    bei NAudio.Wave.WaveFileReader..ctor(String waveFile)[...]<br />\n</blockquote>\n",
+    "PostedDate": "2015-02-23T11:42:05.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354987",
+    "ThreadId": "581642",
+    "Html": "The maximum standard WAV file size is 4GB, although if you are making large files (&gt;2GB), I'd recommend making <a href=\"http://www.markheath.net/post/naudio-rf64-bwf\" rel=\"nofollow\">RF64 files</a>\r<br />\n<br />\nIf you can create some example test code that reproduces this issue, then we can look into getting it fixed.<br />\n",
+    "PostedDate": "2015-02-23T11:58:39.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1355003",
+    "ThreadId": "581642",
+    "Html": "VB .NET (shortened) sample code, that produces the issue:<br />\n<pre><code>Imports NAudio.Wave\n\nPublic Class Form1\n\n    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load\n        Dim waveOut = New WaveOut() With {.DeviceNumber = 0, .DesiredLatency = 225}\n        Dim fileName As String = &quot;C:\\Users\\Martin\\Desktop\\Record3.wav&quot;\n\n        Dim waveReader As IWaveProvider = New WaveFileReader(fileName)\n\n        waveOut.Init(waveReader)\n        waveOut.Play()\n    End Sub\nEnd Class</code></pre>\n\nConcerning bwf, I don´t like that Format as it is not supported by most other Players. Alternative Format: <a href=\"http://de.wikipedia.org/wiki/RIFF_WAVE#Weiterentwicklung\" rel=\"nofollow\">&quot;Sony Pictures Digital Wave 64&quot;</a>, in short &quot;Wave64&quot; with &quot;*.w64&quot; Extension. Also not widely supported though.<br />\n",
+    "PostedDate": "2015-02-23T12:53:07.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1355007",
+    "ThreadId": "581642",
+    "Html": "for &gt;4GB you have to go the RF64 route. What I mean is, what do you do to make a WAV file that has this issue? Can you make one with some calls to WAV file writer that will exhibit this issue when you play it. I have no idea what is in Record3.wav.<br />\n",
+    "PostedDate": "2015-02-23T13:29:28.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1355034",
+    "ThreadId": "581642",
+    "Html": "The &quot;Record3.wav&quot; file has the issue described above. Any bigger record had this issue, although None was &gt;4GB.<br />\n<br />\nSo again, Record3 has the WaveFormat: IEEE float, 32bit, 44100Hz.<br />\n<br />\nI can upload it, but 2GB is a lot for my slow Connection.<br />\n<br />\n<br />\nEdit: I´ve tested more records and the &quot;Magic&quot; border seems to be somewhere between 1 and 2GB file size.<br />\n<br />\nEdit2: I recorded all files using the mediafoundationdecoder on radio streams.<br />\n",
+    "PostedDate": "2015-02-23T15:40:32.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358591",
+    "ThreadId": "581642",
+    "Html": "*Push *<br />\n",
+    "PostedDate": "2015-03-01T23:22:19.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358847",
+    "ThreadId": "581642",
+    "Html": "So they are WAV files, but you didn't use WaveFileWriter to create them? Is that correct? Can you share a code snippet of creating the files?<br />\n",
+    "PostedDate": "2015-03-02T08:56:55.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1362343",
+    "ThreadId": "581642",
+    "Html": "No, I used the WaveFileWriter class provided at your site.<br />\n",
+    "PostedDate": "2015-03-10T15:31:10.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

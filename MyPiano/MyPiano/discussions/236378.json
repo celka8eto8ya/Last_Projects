@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "528234",
+    "ThreadId": "236378",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>&nbsp;</p>\r\n<p>I've got a quick question about how to play audio originating from a byte[] -- basically, I've recorded audio and streamed it over a network, and now I got the bytes from the buffer, but is unsure how to proceed to play it on a IWavePlayer (I guess)</p>\r\n<p>This is my best guess O_O</p>\r\n<p>&nbsp;</p>\r\n<p>private void audioReceive(IAsyncResult asyn)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MemoryStream mem = new MemoryStream();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int readBytes = 0;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StateObject state = (StateObject)asyn.AsyncState;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; readBytes = state.getWorkSocket().EndReceive(asyn);<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mem.Write(state.getBuffer(), 0, readBytes);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mem.Position = 0;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveStream = new WaveFileReader(mem);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveOut.Init(waveStream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveOut.Play();<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mem.Close();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n",
+    "PostedDate": "2010-11-29T05:59:41.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "529060",
+    "ThreadId": "236378",
+    "Html": "\r\n<p>I know its probably a simple issue, I just can't figure it out. Isn't it possible to directly play from a byte[] instead of writing it to a file, then read it into a memory stream again and play it? I guess writing it into a file adds some kind of header\r\n needed, but isn't there something like that for raw byte stored in a buffer too?</p>\r\n<p>&nbsp;</p>\r\n<p>I had a look at the Buffer classes, but they don't seem to be implemented? Atleast I cannot call the constructors.</p>\r\n",
+    "PostedDate": "2010-11-30T14:22:11.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "529062",
+    "ThreadId": "236378",
+    "Html": "\r\n<p>use the <a href=\"http://naudio.codeplex.com/SourceControl/changeset/view/64365#1695970\">\r\nRawSourceWaveStream </a>I recently added (make your own copy of the class if you can't do a get latest)</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-30T14:28:42.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "529116",
+    "ThreadId": "236378",
+    "Html": "\r\n<p>That is wonderfull, just what I was looking for!</p>\r\n<p>&nbsp;</p>\r\n<p>For another question, what would be the best approach to buffer the incomming data and then playing it?</p>\r\n<p>&nbsp;</p>\r\n<p>I tried using a global memorystream as a stream source for the waveStream, and then simply write to the memorystream as data comes in through the network.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;private void audioReceive(IAsyncResult asyn)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int readBytes = 0;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StateObject state = (StateObject)asyn.AsyncState;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; readBytes = state.getWorkSocket().EndReceive(asyn);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; audioBuffer.Write(state.getBuffer(), 0, readBytes);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // audioBuffer is the global memory stream<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; audioBuffer.Position = 0;<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveOut.Play();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.audioSocket.BeginReceive(state.getBuffer(), 0, state.getBufferSize(), SocketFlags.None, new AsyncCallback(audioReceive), state);<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; catch (Exception ez)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MessageBox.Show(&quot;audioReceive: &quot; &#43; this.textbox_nick.Text &#43; &quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot; &#43;ez.ToString());<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;</p>\r\n<p>I get very choppy, sporadic sound which is perfectly understandable considering I rewrite from offset 0 everytime data is received, it was just to test it actually plays something.</p>\r\n<p>The problem is now, I am not sure how this coordination between the memorystream and the waveplayer works out. For example, what are the side effect of waveOut.Play() in terms of the read bytes in the stream? Say if the player plays up to 400 bytes out of\r\n 800, will the stream now be of length 400 or will the streampointer be at 400 out of 800? WIll the waveplayer 'pause' when the stream is empty, and then resume whenever it is filled?</p>\r\n<p>&nbsp;</p>\r\n<p>Love your work, cheers!</p>\r\n",
+    "PostedDate": "2010-11-30T15:47:26.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "529251",
+    "ThreadId": "236378",
+    "Html": "\r\n<p>Try the BufferedWaveProvider, should do what you want:</p>\r\n<p>http://naudio.codeplex.com/SourceControl/changeset/view/64392#1651306</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-30T23:07:11.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

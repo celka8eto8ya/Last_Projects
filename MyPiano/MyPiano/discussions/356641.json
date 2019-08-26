@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "839214",
+    "ThreadId": "356641",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp;</p>\r\n<p>I have several wav files (for instance, 60 files) that I need to mix into one WAV file, but not by concatenating the wav files, but instead, every wav file must be placed on a specific position like in a movie timeline. I hope I explained clearly.</p>\r\n<p>&nbsp;</p>\r\n<p>Is this possible ? Is there a demo that I can take a look ?</p>\r\n<p>&nbsp;</p>\r\n<p>TIA</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-05-21T21:42:25.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "839445",
+    "ThreadId": "356641",
+    "Html": "<p>yes, you can do this with NAudio, but I'm afraid there is no demo.</p>\r\n<p>You build an audio graph like this:</p>\r\n<p>1) each WAV file is converted into a 32 bit floating point stream<br />2) you then use a WaveStream/WaveProvider that can prepend silence to position your inputs relative to one another<br />3) you use a mixer stream to mix them together<br />4) you optionally go back down to 16 bit audio</p>\r\n<p>NAudio has WaveChannel32 for steps 1&amp;2, WaveMixerStream32  for step 3 and Wave32To16Stream for step 4, so you can use them.</p>\r\n<p>You can also do this with ISampleProvider based classes, but you have to make a class to do step 2 yourself.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-05-22T08:32:26.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "839559",
+    "ThreadId": "356641",
+    "Html": "<p>Thank you for your answer.</p>\r\n<p>&nbsp;</p>\r\n<p>Some of the wav files overlaps, that is to say, maybe the position of a wav file is between the start and end position of another wav file. Point 2) needs some modification, because there is no silence ?</p>\r\n<p>&nbsp;</p>\r\n<p>TIA</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-05-22T11:54:23.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "839562",
+    "ThreadId": "356641",
+    "Html": "<p>that is not a problem. the amount of silence is measured from the start of the mixed WAV. it doesn't matter if there are overlaps, since everything will be mixed</p>",
+    "PostedDate": "2012-05-22T12:00:48.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

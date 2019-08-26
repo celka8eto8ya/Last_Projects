@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1019716",
+    "ThreadId": "437675",
+    "Html": "Hi, I just need to be able to concatenate several mp3 files into one. I used NAudio (64 bit version) in my local machine and works great. However on our Windows 2008 Server 64 Bits, I get error:\r<br />\n<br />\nNAudio.MmException: NoDriver calling acmFormatSuggest     at NAudio.MmException.Try(MmResult result, String function) in F:\\MT2LMiddleTier\\Mp3Merge\\Mp3MergeSolution\\NAudio\\n\r<br />\n  audio_88aa8c87b30f\\NAudio\\Wave\\MmeInterop\\MmException.cs:line 39     at NAudio.Wave.Compression.AcmStream.SuggestPcmFormat(WaveFormat compressedFormat) in F:\\MT2LMiddleTier\\Mp3Merge\\Mp3Me\r<br />\n  rgeSolution\\NAudio\\naudio_88aa8c87b30f\\NAudio\\Wave\\Compression\\AcmStream.cs:line 104 \r<br />\n<br />\nGiven that I only need to concatenate the sound files, is there a small modification to the NAudio code that will let it run on Windows Server? \r<br />\n<br />\nor, has someone tweaked Windows Server 2008 to be able to use NAudio? I have complete control of my server, so I can modify the registry or whatever.\r<br />\n<br />\nThanks!!<br />\n",
+    "PostedDate": "2013-03-22T11:05:24.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1020360",
+    "ThreadId": "437675",
+    "Html": "It's because there is no ACM MP3 decoder installed. You don't really need Mp3FileReader anyway. The Mp3Frame class can be used to discover MP3 frames, and you just concatenate them all into a single file.<br />\n",
+    "PostedDate": "2013-03-24T12:45:13.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1021900",
+    "ThreadId": "437675",
+    "Html": "Mark, you have no idea how I appreciate your insight. I was banging my head against a wall for many many hours changing registries on the server and trying this and that  to make it work. It is working great now.  <br />\n",
+    "PostedDate": "2013-03-27T10:14:14.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

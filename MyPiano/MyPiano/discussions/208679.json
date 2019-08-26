@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "428698",
+    "ThreadId": "208679",
+    "Html": "<p>Hi everybody,</p>\r\n<p>I'm currently trying to read a mp3 from a Memory Stream using NAudio, but I'm steel getting the same error &quot;Not a recognised MP3 block&quot;.</p>\r\n<p>For information the MemoryStream is written with a buffer of byte, and this buffer is built using .net Remoting ( the mp3 is on a server ); The method&nbsp;</p>\r\n<pre><span style=\"color:#008000\">remoteOperation.getMusic() <span style=\"color:#000000\">is perfectly working, and return bytes of the mp3 file.</span></span></pre>\r\n<p>I've tried to read with 4 different MP3 files, and same result, but when i tried to read a WAV file using a stream and SoundPlayer it's works.</p>\r\n<p>&nbsp;</p>\r\n<p>This is my code :</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">byte</span>[] bufferReception = remoteOperation.getMusic(lbMusicList.SelectedItem.ToString());\r\n\r\n<div style=\"color:Black;background-color:White\"><pre>Stream ms = <span style=\"color:Blue\">new</span> MemoryStream();\r\n ms.Write(bufferReception, 0, bufferReception.Length);\r\n ms.Position = 0;\r\n\r\n WaveStream ws = <span style=\"color:Blue\">new</span> BlockAlignReductionStream( WaveFormatConversionStream.CreatePcmStream(<span style=\"color:Blue\">new</span> Mp3FileReader(ms))); <span style=\"color:Green\">// this instruction show error</span>\r\n\r\n WaveOut sortie = <span style=\"color:Blue\">new</span> WaveOut(); sortie.Init(ws);\r\n sortie.Play(); \r\n</pre>\r\n</div>\r\n<br><br>I'm sorry for my bad English, i'm french...<br><br>In advance, thank you.<br></pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-04-08T02:11:08.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "428802",
+    "ThreadId": "208679",
+    "Html": "<p>A little answer, the code was true but the 4 MP3 files was wrong, it's perfectly working.</p>",
+    "PostedDate": "2010-04-08T07:24:46.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "428805",
+    "ThreadId": "208679",
+    "Html": "<p>glad you have it working now</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-04-08T07:26:02.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:00:15.62-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "I noticed that once I read some values from an AudioEndpointVolume, my application would crash when I changed the volume manually afterwards. After some searching, I traced the problem to AudioEndpointVolumeCallback where OnNotify gets called when the volume changes. \r\n\r\nIn this method Marshal.PtrToStructure is used, which causes an access violation, causing the crash.\r\n\r\nI'm running Win7 x64 and the latest Naudio (b3a412ad55a8)",
+    "LastUpdatedDate": "2012-10-27T00:00:15.62-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-07-24T15:35:04.9-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "AudioEndpointVolumeCallback causes AccessViolation",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16360
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "My bad, the violation is not caused by C#, as far as I can tell.\n\nCan anyone reproduce this problem?",
+      "PostedDate": "2012-07-24T16:22:17.683-07:00",
+      "Id": 72335
+    },
+    {
+      "Message": "After some more searching, I find the answer in the forum: http://naudio.codeplex.com/discussions/208808/\n\nAll that's needed is, in AudioEndpointVolumeCallback .cs, change the return type of OnNotify to 'void' and remove the 'return 0;' statement, then update the interface in IAudioEndpointVolumeCallback.cs to reflect this change, and the crash is gone.",
+      "PostedDate": "2012-07-25T11:32:22.813-07:00",
+      "Id": 72376
+    },
+    {
+      "Message": "thanks, I've checked in your change. If possible could you build the latest NAudio code and try it out?",
+      "PostedDate": "2012-07-30T07:22:19.71-07:00",
+      "Id": 72638
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1076628",
+    "ThreadId": "452399",
+    "Html": "In Mp3FileReader.cs class:<br />\n<br />\n public Mp3FileReader(string mp3FileName) <br />\n<pre><code>        : this(File.OpenRead(mp3FileName))//given below the error\n    {\n        ownInputStream = true;\n\n    }</code></pre>\n\nhere the issue:<br />\nThe process cannot access the file 'E:\\sudip_media player project work\\my media player project work\\media player 30_07_2013\\Media Player\\NAudioDemo\\bin\\Debug\\Current Song\\TumHo.mp3' because it is being used by another process.!<br />\n",
+    "PostedDate": "2013-08-04T22:49:45.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1076837",
+    "ThreadId": "452399",
+    "Html": "some other process is accessing your MP3 file. You could try to open a stream with less restrictive share permissions and pass that stream into the Mp3FileReader constructor.<br />\n",
+    "PostedDate": "2013-08-05T09:06:15.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1227519",
+    "ThreadId": "540374",
+    "Html": "Hello, I have simple code that would load a wave or mp3 sound, convert it to PCM and then make a stream out of it and play it. I want to be able to extract spectrum and wave output data information before I play the file so I can provide it to my audio analysis algorithms. I'm currently facing several problems:<br />\n<ol>\n<li>\nI have the stream and I want to use Read in a for loop (or at least that's what I think should work is) to extract spectrum and wave data from the sound and analyze it. There is an offset parameter which is of integer type. What units do I have to provide ? Is it in milliseconds? <br />\n</li>\n<li>\nTo use a for loop I need to know the duration of the audio file. I found out that there is a TotalTime member in the stream class but it returns a formatted string with the time (eg. 00:04:08.2940000 ) Should I use that and try to convert it into an integer value (suitable for the Read method offset) or is there a faster way of reading the sound duration in the same format as Read's offset parameter ? <br />\n</li>\n<li>\nOnce I get the loop running and extracting information with the Read method, how do I use the returned value with an FFTWindow function to get the frequency domain values ? Mark, can you please supply a 1-2 line example of how the result from Read is passed to the FFT functions. I need to get an array with 2048 samples for each Read return.<br />\n</li>\n</ol>\nThank you for your time! <br />\n<br />\nP.S. <a href=\"http://channel9.msdn.com/coding4fun/articles/AutotuneNET\" rel=\"nofollow\">http://channel9.msdn.com/coding4fun/articles/AutotuneNET</a> I read this article on Autotuning but the FFT window part really confused me. I didn't get at what point are the 8192 samples returned into an array. <br />\n",
+    "PostedDate": "2014-03-27T12:06:29.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237071",
+    "ThreadId": "540374",
+    "Html": "<ol>\n<li>No, it's in bytes and will be 0. It's simply the standard .NET Stream patterns</li>\n<li>Why do you need to use the duration of the file? You should keep reading until Read returns 0</li>\n<li>I have no 1-2 line example of this I'm afraid. You need to look at the code in Autotune.NET. First convert the 16 bit bytes to floating point samples, then run the windowing function, then pass in the samples to the FFT. The window function itself does not give you frequency domain values - that's what the FFT does.</li>\n</ol>\n",
+    "PostedDate": "2014-04-23T07:32:40.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

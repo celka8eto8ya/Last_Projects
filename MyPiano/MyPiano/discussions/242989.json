@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "554146",
+    "ThreadId": "242989",
+    "Html": "\r\n<p>Hi!</p>\r\n<p>Im new to using NAudio and currently its looking great! Im wondering if any of you can help me with how to use the FFT functionality of NAudio? Im having some difficulties in trying to understand it based on checking the SampleAggregator and AudioGraph cs\r\n files. One of the reasons for this is because the Project file NAudioWpfDemo doesnt work for me for some reason when I try to run it (says theres an error with the MainWindow.xaml file). So I was wondering if you can help me on how to use it?</p>\r\n<p>Basically what I mean to do is to playback a .wav file and perform FFT on it while it is playing.</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2011-01-23T20:57:16.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554290",
+    "ThreadId": "242989",
+    "Html": "\r\n<p>have a look at my recent article on Coding4Fun, which goes into a bit more depth on the use of FFT:</p>\r\n<p>http://blogs.msdn.com/b/coding4fun/archive/2011/01/05/10112293.aspx</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-24T03:55:03.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554331",
+    "ThreadId": "242989",
+    "Html": "\r\n<p>Hi!</p>\r\n<p>Great! This is a very nicely written article! Im sure this will help me very much.</p>\r\n<p>Thanks very much!</p>\r\n",
+    "PostedDate": "2011-01-24T05:09:38.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554814",
+    "ThreadId": "242989",
+    "Html": "\r\n<p>Hi!</p>\r\n<p>I tried to make my own Pitch Detector app using information from the article and I am having a problem. Whenever I try to detect pitch it always returns 0 as the frequency. Can you take a look if I am doing something wrong?</p>\r\n<p>This is the method when you decide to start the pitch detector:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> btnPitch_Click(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n{\r\n    String filename = <span style=\"color:#a31515\">&quot;&quot;</span>;\r\n    OpenFileDialog openFileDialog = <span style=\"color:blue\">new</span> OpenFileDialog();\r\n    openFileDialog.Filter = <span style=\"color:#a31515\">&quot;All Supported Files (*.wav, *.mp3)|*.wav;*.mp3|All Files (*.*)|*.*&quot;</span>;\r\n    openFileDialog.FilterIndex = 1;\r\n    <span style=\"color:blue\">if</span> (openFileDialog.ShowDialog() == DialogResult.OK)\r\n    {\r\n       filename = openFileDialog.FileName;\r\n    }\r\n\r\n     <span style=\"color:blue\">using</span> (WaveFileReader reader = <span style=\"color:blue\">new</span> WaveFileReader(filename))\r\n     {\r\n       IWaveProvider stream32 = <span style=\"color:blue\">new</span> Wave16ToFloatProvider(reader);\r\n       IWaveProvider streamEffect = <span style=\"color:blue\">new</span> FFTDetector(stream32);\r\n\r\n       <span style=\"color:blue\">byte</span>[] buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[8192];\r\n       <span style=\"color:blue\">int</span> bytesRead;\r\n       <span style=\"color:blue\">do</span>\r\n       {\r\n          bytesRead = streamEffect.Read(buffer, 0, buffer.Length);\r\n       } <span style=\"color:blue\">while</span> (bytesRead != 0);\r\n     }\r\n}</pre>\r\n<pre><br></pre>\r\n<pre>This is the FFTDetector class:</pre>\r\n<pre><br></pre>\r\n</div>\r\n<p></p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> FFTDetector(IWaveProvider source)\r\n{\r\n   <span style=\"color:blue\">this</span>.source = source;\r\n   <span style=\"color:blue\">this</span>.sampleRate = source.WaveFormat.SampleRate;\r\n}\r\n\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\r\n{\r\n   <span style=\"color:blue\">if</span> (waveBuffer == <span style=\"color:blue\">null</span> || waveBuffer.MaxSize &lt; count)\r\n   {\r\n     waveBuffer = <span style=\"color:blue\">new</span> WaveBuffer(count);\r\n   }\r\n\r\n   <span style=\"color:blue\">int</span> bytesRead = source.Read(waveBuffer, 0, count);\r\n\r\n   <span style=\"color:blue\">if</span> (bytesRead &gt; 0) bytesRead = count;\r\n\r\n   <span style=\"color:blue\">int</span> frames = bytesRead / <span style=\"color:blue\">sizeof</span>(<span style=\"color:blue\">float</span>);\r\n   <span style=\"color:blue\">float</span> pitch = DetectPitch(waveBuffer.FloatBuffer, frames);\r\n\r\n   Console.WriteLine(<span style=\"color:#a31515\">&quot;Freq: &quot;</span> &#43; pitch);\r\n   <span style=\"color:blue\">return</span> frames * 4;\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Finally, here is the code for DetectPitch method (which I got from the article):</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">float</span> DetectPitch(<span style=\"color:blue\">float</span>[] buffer, <span style=\"color:blue\">int</span> inFrames)\r\n{\r\n   Func&lt;<span style=\"color:blue\">int</span>, <span style=\"color:blue\">int</span>, <span style=\"color:blue\">float</span>&gt; window = HammingWindow;\r\n   <span style=\"color:blue\">if</span> (prevBuffer == <span style=\"color:blue\">null</span>)\r\n   {\r\n      prevBuffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">float</span>[inFrames];\r\n   }\r\n\r\n   <span style=\"color:green\">// double frames since we are combining present and previous buffers</span>\r\n   <span style=\"color:blue\">int</span> frames = inFrames * 2;\r\n   <span style=\"color:blue\">if</span> (fftBuffer == <span style=\"color:blue\">null</span>)\r\n   {\r\n     fftBuffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">float</span>[frames * 2]; <span style=\"color:green\">// times 2 because it is complex input</span>\r\n   }\r\n\r\n   <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> n = 0; n &lt; frames; n&#43;&#43;)\r\n   {\r\n     <span style=\"color:blue\">if</span> (n &lt; inFrames)\r\n     {\r\n        fftBuffer[n * 2] = prevBuffer[n] * window(n, frames);\r\n        fftBuffer[n * 2 &#43; 1] = 0; <span style=\"color:green\">// need to clear out as fft modifies buffer</span>\r\n     }\r\n     <span style=\"color:blue\">else</span>\r\n     {\r\n        fftBuffer[n * 2] = buffer[n - inFrames] * window(n, frames);\r\n        fftBuffer[n * 2 &#43; 1] = 0; <span style=\"color:green\">// need to clear out as fft modifies buffer</span>\r\n     }\r\n   }\r\n\r\n   <span style=\"color:blue\">float</span> binSize = sampleRate / frames;\r\n   <span style=\"color:blue\">int</span> minBin = (<span style=\"color:blue\">int</span>)(85 / binSize);\r\n   <span style=\"color:blue\">int</span> maxBin = (<span style=\"color:blue\">int</span>)(300 / binSize);\r\n\r\n   <span style=\"color:blue\">float</span> maxIntensity = 0f;\r\n   <span style=\"color:blue\">int</span> maxBinIndex = 0;\r\n\r\n    <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> bin = minBin; bin &lt;= maxBin; bin&#43;&#43;)\r\n    {\r\n      <span style=\"color:blue\">float</span> real = fftBuffer[bin * 2];\r\n      <span style=\"color:blue\">float</span> imaginary = fftBuffer[bin * 2 &#43; 1];\r\n      <span style=\"color:blue\">float</span> intensity = real * real &#43; imaginary * imaginary;\r\n      <span style=\"color:blue\">if</span> (intensity &gt; maxIntensity)\r\n      {\r\n         maxIntensity = intensity;\r\n         maxBinIndex = bin;\r\n      }\r\n    }\r\n\r\n    <span style=\"color:blue\">return</span> binSize * maxBinIndex;\r\n}\r\n\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">float</span> HammingWindow(<span style=\"color:blue\">int</span> n, <span style=\"color:blue\">int</span> N) \r\n{\r\n  <span style=\"color:blue\">return</span> 0.54f - 0.46f * (<span style=\"color:blue\">float</span>)Math.Cos((2 * Math.PI * n) / (N - 1));\r\n}\r\n</pre>\r\n</div>\r\nThank you!\r\n<p></p>\r\n",
+    "PostedDate": "2011-01-24T22:39:51.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561803",
+    "ThreadId": "242989",
+    "Html": "\r\n<p>Hi!</p>\r\n<p>I managed to make it work. However, I am getting inaccurate pitch detection. For exampe, the note should be C4 but it outputs A#3 (generally, a few notes below the supposed note).</p>\r\n<p>I tried to check whether it was not broken (i.e. just throwing random notes as a result ... since i know that it returns incorrect results) by making a progression starting from E2 until E6. The result was that on the lower frequency range (around 80Hz -\r\n 150Hz), it returns inaccurate and no pattern whatsoever. However, upon reaching a certain note (C3), it starts to progress properly with the next note C#3 then D3 then D#3 etc. But upon further inspection, its still not accurate based on what is supposed to\r\n be the corresponding note.</p>\r\n<p>What might be the problem? I am using block size of 8192 and minBin of 80/binSize and maxBin of 1300/binSize. My audio is at 44.1khz, 16-bit, mono.</p>\r\n<p>Hope you can help me! Thanks!</p>\r\n",
+    "PostedDate": "2011-02-07T01:46:46.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561921",
+    "ThreadId": "242989",
+    "Html": "\r\n<p>hi bloodfire, I would recommend you asking this question on a DSP forum, as they will better be able to explain the maths to you</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-07T06:23:51.923-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575635",
+    "ThreadId": "242989",
+    "Html": "<p>I've finally got the FFT figured out, but I used the publicly available FFTPACK at&nbsp;<a href=\"http://www.netlib.org/fftpack/\">http://www.netlib.org/fftpack/</a>&nbsp;&nbsp;The library is written in fortran but you can create a DLL that can be used in whatever language  you want, and will run extremely fast. &nbsp;I used <span style=\"font-family: Consolas,'Courier New',Courier,monospace; white-space: pre;\"> <a href=\"http://www.netlib.org/fftpack/rfftf.f\">rfftf.f</a> because I'm only dealing with real values. Instructions on creating a dll from a fortran library can be found here: <a href=\"http://afome.com/fortrandll.php\">http://afome.com/fortrandll.php</a> Once you have your dll working, to use it you just do the following. At the top of your code, insert:</span></p>\n<pre>using System.Runtime.InteropServices;</pre>\n<div style=\"color: black; background-color: white;\">\n<pre>Then in your code, insert:</pre>\n<pre>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;[DllImport(\"FFT.dll\")]&nbsp;public static extern Int32 rffti(ref Int32 size, float[] workArray);<br />&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;[DllImport(\"FFT.dll\")]&nbsp;public static extern Int32 rfftf(ref Int32 size, float[] mainArray, float[] workArray);</pre>\n<pre>Where FFT.dll is your fortran compiled library, and rffti and rfftf are the functions I exported in the dll. Below is the code for the actual usage:</pre>\n<pre>            <span style=\"color: blue;\">int</span> sampleRate = 2048;\n            <span style=\"color: blue;\">float</span> frequency = 500;\n            <span style=\"color: blue;\">float</span>[] data = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[sampleRate];\n            <span style=\"color: blue;\">int</span> j = 0;\n\n            <span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">float</span> i = 0; i &lt; 1; i += 1f / sampleRate)\n            {\n                data[j] = (<span style=\"color: blue;\">float</span>)(Math.Sin(2 * Math.PI * frequency * i));\n                j++;\n            }\n\n            <span style=\"color: blue;\">float</span>[] workArray = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[(sampleRate * 2) + 15];\n\n            rffti(<span style=\"color: blue;\">ref</span> sampleRate, workArray);\n            rfftf(<span style=\"color: blue;\">ref</span> sampleRate, data, workArray);</pre>\n<pre>To get your actual frequency bin values back, you'll need to take the distance of every point as your final value.  For example, to write them to a file:</pre>\n<pre><pre>                StreamWriter striter = new StreamWriter(@\"C:\\fft.txt\");\n                for (int i = 1; i &lt; data.Length - 1; i += 2)\n                {\n                    striter.WriteLine(Math.Sqrt(data[i] * data[i] + data[i + 1] * data[i + 1]));\n                }\n                striter.Close();</pre>\n</pre>\n<pre>You'll notice that I started at 1 rather than 0. The zero spot holds the average power of your FFT. Hope this is useful to someone other than myself. Also, you'll have to map the output to your frequency bins to 1 over your sampleRate, if I remember correctly.</pre>\n</div>",
+    "PostedDate": "2011-03-04T08:42:20.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "576482",
+    "ThreadId": "242989",
+    "Html": "<p>Hi and thanks for this!</p>\r\n<p>I finally managed to get FFT working using Mark's article. But still thanks for your input!</p>",
+    "PostedDate": "2011-03-06T23:24:59.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002251",
+    "ThreadId": "242989",
+    "Html": "Hi Mark, \r<br />\n<br />\nIn your article, this code:<br />\n<pre><code>float sample = ((oldIndex &lt; 0) ? prevBuffer[frames + \n            corr += (sample * buffer[i]);</code></pre>\n\nit shows errors,\r<br />\n&quot;Cannot implicitly convert type 'float' to 'int'. An explicit conversion exists (Are you missing a cast?)&quot;\r<br />\n&quot;Syntax error, ']' expected&quot;\r<br />\n<br />\nAny idea?<br />\n",
+    "PostedDate": "2013-02-16T11:17:29.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002680",
+    "ThreadId": "242989",
+    "Html": "well all the code is in the .NET voice recorder application, and that definitely compiles. I would suspect that line has been truncated somehow. I'd have a look at the source code itself.<br />\n",
+    "PostedDate": "2013-02-18T00:35:24.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1089378",
+    "ThreadId": "242989",
+    "Html": "Hi,<br />\n<br />\nI am performing speech recognition using Windows API and I 'd like to perform speaker detection/recognition to know who is speaking.<br />\n<br />\nI dont need voice print or advanced feature. Just knowing there is 3 users (A, B, and C) and knowing who's speaking.<br />\n<br />\nI retrieved the PitchTracker from the <a href=\"https://pitchtracker.codeplex.com/discussions/349823\" rel=\"nofollow\">article's project</a> and make it works.<br />\n<pre><code>MidiCents: 20 MidiNote: 46 Pitch: 115,1978 RecordIndex: 17\nMidiCents: -41 MidiNote: 45 Pitch: 112,6709 RecordIndex: 18\nMidiCents: -4 MidiNote: 45 Pitch: 110,2652 RecordIndex: 19\nMidiCents: 0 MidiNote: 0 Pitch: 0 RecordIndex: 20\nMidiCents: 0 MidiNote: 0 Pitch: 0 RecordIndex: 21\nMidiCents: -38 MidiNote: 45 Pitch: 112,4994 RecordIndex: 22\nMidiCents: 27 MidiNote: 46 Pitch: 114,678 RecordIndex: 23\nMidiCents: -8 MidiNote: 46 Pitch: 117,14 RecordIndex: 24\nMidiCents: -7 MidiNote: 47 Pitch: 123,9888 RecordIndex: 25\nMidiCents: -36 MidiNote: 47 Pitch: 126,1081 RecordIndex: 26\nMidiCents: -39 MidiNote: 47 Pitch: 126,3387 RecordIndex: 27\nMidiCents: 11 MidiNote: 47 Pitch: 122,6507 RecordIndex: 28\nMidiCents: 0 MidiNote: 46 Pitch: 116,5315 RecordIndex: 29\nMidiCents: -27 MidiNote: 45 Pitch: 111,7825 RecordIndex: 30\nMidiCents: 8 MidiNote: 57 Pitch: 218,8634 RecordIndex: 31</code></pre>\n\nAnd know I don't know how to compare this results of user A with an other sample from user B ?<br />\nMay be I'm completly on the wrong way ?<br />\n<br />\nRegards,<br />\nJp<br />\n",
+    "PostedDate": "2013-09-06T16:38:24.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1090159",
+    "ThreadId": "242989",
+    "Html": "Knowing who is speaking is a really hard algorithm to write. It cannot be done on the basis of pitch alone.<br />\n",
+    "PostedDate": "2013-09-09T05:37:50.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

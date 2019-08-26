@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "804078",
+    "ThreadId": "346940",
+    "Html": "\r\n<p>Wondering since you have sf2 done and sfz started if your going to eventually have midi playback within Naudio without having to use an external sequencer.</p>\r\n",
+    "PostedDate": "2012-03-01T15:58:10.687-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "804196",
+    "ThreadId": "346940",
+    "Html": "<p>It has always been my plan to make a synth/sampler in NAudio, and I've got some basic prototype code, but its not ready yet. Once a sampler has been done, midi playback would be a good next step, but that is still a way off.</p>",
+    "PostedDate": "2012-03-01T23:16:49.78-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

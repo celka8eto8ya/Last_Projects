@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1085998",
+    "ThreadId": "454810",
+    "Html": "Could you implement this into the WasapiLoopBack:<br />\n<pre><code>        unsafe void WasapiLoopBack(object sender, NAudio.Wave.WaveInEventArgs e)\n        {\n\n                    Int32 bytesrecorded = e.BytesRecorded;\n                    byte[] newArray16Bit = new byte[bytesrecorded / 2];\n                    fixed (byte* sourcePtr = e.Buffer)\n                    fixed (byte* targetPtr = newArray16Bit)\n                    {\n                        float* sourceTyped = (float*)sourcePtr;\n                        short* targetTyped = (short*)targetPtr;\n\n                        Int32 count = bytesrecorded / 4;\n                        for (int i = 0; i &lt; count; i++)\n                        {\n                            targetTyped[i] = (Int16)(sourceTyped[i] * Int16.MaxValue);\n                        }\n                    }\n       }</code></pre>\n\nIt works perfectly, and it´s very fast, would be nice to have it inbuilt to the class somehow.<br />\n",
+    "PostedDate": "2013-08-28T19:37:13.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1089382",
+    "ThreadId": "454810",
+    "Html": "Does it actually benefit from the conversion? I am still learning about bit depth and digital audio in general, but if the loopback records the buffer at 8 bit and you convert it to 16 bit doesn't that just increase the potential precision and not actually affect the information in the buffer?<br />\n",
+    "PostedDate": "2013-09-06T17:09:47.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1089394",
+    "ThreadId": "454810",
+    "Html": "Not sure where you got 8 bit from. WasapiLoopBack is in Float, 32 Bit. And no inbuilt conversion is available.\r<br />\nAnd as for most applications, you probably don´t want Float, and 16 bit, or 24 bit.\r<br />\n<br />\nSo this converts it from Float 32bit to 16bit. So there is no benefit in terms of quality, there is probably less quality, but that´s inaudible probably.\r<br />\n<br />\nIf it were in 8 bit, it would be extremely noisy. 16 bit sounds clean and the noise floor is far below what´s audible. 8 bit however has noise no matter what, the noise floor is so high up, that it´s impossible to have any sound audible without hearing the noise probably, at least in all normal scenarios.<br />\n",
+    "PostedDate": "2013-09-06T18:42:13.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1089395",
+    "ThreadId": "454810",
+    "Html": "Ah, for some reason I was under the impression WasapiLoopBack recorded at 8 bit.\r<br />\n<br />\nThanks for clearing that up.\r<br />\n<br />\nJust out of curiosity though if you did convert an 8 bit file to 16 bit, would there be any benefit in terms of noise reduction?<br />\n",
+    "PostedDate": "2013-09-06T18:53:15.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1089397",
+    "ThreadId": "454810",
+    "Html": "No worries, it´s always good to ask, i do it all the time:)\r<br />\n<br />\nAnd no, Quality is always determined by it´s weakest link. Meaning, if it´s 8 bit, it will always have that quality no matter what.\r<br />\n<br />\nSame with anything really, you can´t improve what isn´t there, or well you can &quot;Enhance&quot; but that isn´t necessarily improving, more like, altering.\r<br />\n<br />\nBut i would recommend you to never work with 8 bit, there is no benefit in it, except, less size for Lossless. You should work with Float, and in the end convert to 16 bit or 24 bit (most likely 16 bit).<br />\n",
+    "PostedDate": "2013-09-06T18:57:12.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

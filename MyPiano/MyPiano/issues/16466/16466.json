@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "We are using NAudio in a media library application. As part of our unit testing suite, we run empty MP3 files (0 bytes) through our code to verify that corrupt files are handled correctly. \r\n\r\nUnfortunately, the Mp3FileReader constructor throws a NullReferenceException, which isn't very descriptive and could happen for other reasons. Worse, it leaves the file reference open, so we're unable to clean up the empty test files. \r\n\r\nCan we get a more robust exception, and some resource disposing? Thanks!",
+    "LastUpdatedDate": "2015-02-13T13:42:18.553-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-02-01T16:47:40.443-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Error Handling for Corrupt Files",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 2,
+    "Id": 16466
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I get IndexOutOfRange exception. Are you sure you get NullReferenceException?",
+      "PostedDate": "2015-02-13T13:07:02.04-08:00",
+      "Id": 174559
+    },
+    {
+      "Message": "I've checked in a fix. Will throw InvalidDataException now if there is a zero length file. To be honest though, I tend to recommend using MediaFoundationReader wherever possible now as it is faster and copes better with odd MP3 files",
+      "PostedDate": "2015-02-13T13:28:28.36-08:00",
+      "Id": 174560
+    }
+  ]
+}

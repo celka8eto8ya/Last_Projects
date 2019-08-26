@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "the issue was simply that exclusive mode wasn't accepting IEEE format",
+    "ClosedDate": "2008-06-14T14:18:17.643-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "Need to be able to Initialise the AudioClient in Exclusive mode (without breaking shared mode!)",
+    "LastUpdatedDate": "2008-06-14T14:18:17.643-07:00",
+    "PlannedForRelease": "1.2 Beta",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-06-12T23:31:57.287-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WASAPI Exclusive Mode",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 6351
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

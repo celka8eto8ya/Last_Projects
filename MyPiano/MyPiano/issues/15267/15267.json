@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "I am trying to mute the sound using BooleanMixerControl and its Value property but the result is always false. This effectively mutes the sound but I can never unmute it back. Looking at the source code reveals a \"TODO: pin memory\" and some code commented out. The property \"value\" is never used. The same is true for the latest source.\n\nIs there anything one can do to quick fix this? This is now sorely missed as NAudio is probably the only decent NET library supporting mixer controls.",
+    "LastUpdatedDate": "2013-05-03T11:30:41.96-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-02-08T02:34:35.587-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Setting anything to BooleanMixerControl.Value yields in false",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 15267
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

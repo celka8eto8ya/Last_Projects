@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "841197",
+    "ThreadId": "357225",
+    "Html": "\r\n<p>Hi Mark</p>\r\n<p>further to my last message about my program using WASAPI, my program seems to crash at random, maybe once or twice a day and the following error appears in the event log:</p>\r\n<p>Application: AVR Audio Switch Fix.exe<br>\r\nFramework Version: v4.0.30319<br>\r\nDescription: The process was terminated due to an unhandled exception.<br>\r\nException Info: System.ArgumentException<br>\r\nStack:<br>\r\n&nbsp;&nbsp; at System.IO.UnmanagedMemoryStream.Read(Byte[], Int32, Int32)<br>\r\n&nbsp;&nbsp; at NAudio.Wave.WaveFileReader.Read(Byte[], Int32, Int32)<br>\r\n&nbsp;&nbsp; at NAudio.Wave.SampleProviders.Mono16SampleChunkConverter.LoadNextChunk(NAudio.Wave.IWaveProvider, Int32)<br>\r\n&nbsp;&nbsp; at NAudio.Wave.WaveChannel32.Read(Byte[], Int32, Int32)<br>\r\n&nbsp;&nbsp; at NAudio.Wave.ResamplerDmoStream.Read(Byte[], Int32, Int32)<br>\r\n&nbsp;&nbsp; at NAudio.Wave.WasapiOut.FillBuffer(NAudio.Wave.IWaveProvider, Int32)<br>\r\n&nbsp;&nbsp; at NAudio.Wave.WasapiOut.PlayThread()<br>\r\n&nbsp;&nbsp; at System.Threading.ThreadHelper.ThreadStart_Context(System.Object)<br>\r\n&nbsp;&nbsp; at System.Threading.ExecutionContext.Run(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object, Boolean)<br>\r\n&nbsp;&nbsp; at System.Threading.ExecutionContext.Run(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object)<br>\r\n&nbsp;&nbsp; at System.Threading.ThreadHelper.ThreadStart()</p>\r\n<p>&nbsp;</p>\r\n<p>i'm using a non targeted &quot;catch&quot; command but it's not being caught, and even with a specific catch command for system.argumentexception it still crashes. Can you tell from this why it's crashing?</p>\r\n<p>Thanks</p>\r\n<p>Marc</p>\r\n",
+    "PostedDate": "2012-05-26T07:47:10.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "843189",
+    "ThreadId": "357225",
+    "Html": "<p>what are you actually playing from - a file on the disk or some kind of memory buffer?</p>",
+    "PostedDate": "2012-05-31T08:55:04.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "843195",
+    "ThreadId": "357225",
+    "Html": "<p>i'm playing a wav file from my resources, wouldn't mind playing from a buffer instead since the wav is silent anyway but can't work out how to create a wave in memory. Saw some reference to nullwavestream or something in an naudio post on here but it doesn't seem to exist</p>\r\n<p>i think i fixed the crash anyway - hasn't happened in days. Before i was resetting the stream.position to 0 if it got above 65000 because i thought a variable i was using to record the position might overflow, but it never seems to so i'm just letting it go on forever, so it might have been something to do with that.</p>",
+    "PostedDate": "2012-05-31T09:00:43.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

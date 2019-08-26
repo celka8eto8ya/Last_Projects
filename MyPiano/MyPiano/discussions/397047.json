@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "918083",
+    "ThreadId": "397047",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I have a g.726-32 audio stream (from RTP) which I would like to save out as a WAV file. I am pretty new to working with Audio and could do with a few pointers (and I suppose being told if nAudio supports what I am trying to do).</p>\r\n<p>Am i right in thinking the audio (speech from asterisk in g.726 format from an RTP stream) is IMA-ADPMC?</p>\r\n<p>Can nAudio handle this format of data?</p>\r\n<p>And lastly, can i use nAudio to write out a wav file that windows can play?</p>\r\n<p>Any help is greatly apreciated, and thank you in advance!</p>\r\n<p>Ben</p>\r\n",
+    "PostedDate": "2012-09-26T13:43:27.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "918389",
+    "ThreadId": "397047",
+    "Html": "<p>OK, just to show I am looking into this myself also :)</p>\r\n<p>I've installed the Sharp g.726 Codec, however I am not seeing it listed in the ACM Codec list in the nAudio demo application. I see the Microsoft PCM/ADPCM/IMA-ADPCM codecs, but not the Sharp g.726. Any reason anyone could think this might be?</p>\r\n<p>Cheers,</p>\r\n<p>Ben</p>",
+    "PostedDate": "2012-09-27T05:00:53.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "918405",
+    "ThreadId": "397047",
+    "Html": "<p>you may need to run as a 32 bit process if you are on 64 bit windows, as most ACM codecs are 32 bit and won't show up to a 64 bit process</p>",
+    "PostedDate": "2012-09-27T05:41:49.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "918457",
+    "ThreadId": "397047",
+    "Html": "<p>Cheers Mark,</p>\r\n<p>I can see the Sharp g.726 codec now. So here's the main question, can anyone give me some pointers on where to start on converting a g.726 stream to (this may sound like i have poor understanding) \"a simple\" wav file? Or even an MP3!</p>\r\n<p>Which general pattern do i follow? I had a quick look at the MP3 to wave example, and understand it takes a stream (from the <span style=\"color: #2b91af;\">Mp3FileReader)</span>&nbsp;&nbsp;and writes out a stream in a given format using the <span style=\"color: #2b91af;\">WaveFileWriter.</span></p>\r\n<p>How do I apply this to a realtime process, i.e. I get bytes([]) from an RTP stream and want to write them out to the disk in a format that's more universal.</p>\r\n<p>Thansk again for any help!</p>\r\n<p>Cheers,</p>\r\n<p>Ben</p>",
+    "PostedDate": "2012-09-27T06:59:45.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "918460",
+    "ThreadId": "397047",
+    "Html": "<p>You need to access your codec with the WaveFormatConversion stream. You'll probably have to create your own class that derives from WaveFormat that matches the parameters expected by your codec (you can look at these using the NAudioDemo tool. You can use the WaveFileWriter to write the converted audio to a WAV file.</p>",
+    "PostedDate": "2012-09-27T07:05:37.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

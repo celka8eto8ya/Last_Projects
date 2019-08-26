@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1451844",
+    "ThreadId": "647282",
+    "Html": "Hi I am using wasapi loop back capture in my application to record pure console beeps out putted by the sound card. It's able to record the beeps but it records the console beeps at a quicker duration than set. Does anyone know what the problem may be and is there a solution to this?<br />\n",
+    "PostedDate": "2015-11-11T12:53:24.53-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1452171",
+    "ThreadId": "647282",
+    "Html": "With quicker duration you mean higher playbackrate?\r<br />\n<br />\nI think you either handle the recorded data incorrectly (most likely) or your device is set to a higher playbackrate (some hardware might provide this feature). Another option could be, you resample the input and change Playbackrate this way (e.g. with WDLresamplingsampleprovider).<br />\n",
+    "PostedDate": "2015-11-12T16:23:33.827-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1452222",
+    "ThreadId": "647282",
+    "Html": "Yeah it has a higher playback rate than from what I have set the console beeps too. I also use WaveIn to record the console beeps with noise and the playback of each beeps duration is correct.\r<br />\n<br />\nI have set up the loop back capture as shown on pluralsight and from what people say on stackoverflow. However I sill cannot work out the problem that when its recording its speeding up the beeps when it should not be doing this. If WDLresamplingsampleprovider allows me to resample the rate of the beeps then I will give this a go and see if it works.<br />\n",
+    "PostedDate": "2015-11-13T02:47:57.703-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

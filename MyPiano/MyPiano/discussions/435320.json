@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1010017",
+    "ThreadId": "435320",
+    "Html": "Hi Mark,       <br />\nI'm working on converting a microphone app from DirectX to NAudio.<br />\nI notice from the Windows Control Panel,  microphone sample rates can range across  8000, 11025, 22050, 44100, 48000, 96000, 192000 Hz.<br />\n<br />\nCan waveIn handle all these possible values? Or is there a max value that it will process?<br />\n<pre><code>waveIn = new WaveIn();\nint sampleRate = 192000;\nwaveIn.WaveFormat = new WaveFormat(sampleRate,bitDepth, channels);</code></pre>\n\n<hr />\nQuestion 2: Is there a way to get these input device capabilities for a microphone -- Sample Rate,Bit Depth. <br />\n<br />\nUsing this <br />\n<pre><code>WaveInCapabilities capabilities = WaveIn.GetCapabilities(waveInDevice);</code></pre>\n\nWaveInCapabilities only exposes ProductName and Channels.<br />\n<br />\nThanks for any advice you can provide.<br />\n",
+    "PostedDate": "2013-03-04T08:04:50.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010062",
+    "ThreadId": "435320",
+    "Html": "1) it will depend on your soundcard. Note that WaveOut can resample for you, and it may be that WaveIn will simply record at the native sample rate of the sound card and resample to your requested rate. I would expect that only top end audio cards would do frequencies above 96kHz.\r<br />\n<br />\n2) Probably I should update WaveInCapabilities to allow querying the supported formats enum like WaveOutCapabilities does. You'd have to use reflection to get at that at the moment.<br />\n",
+    "PostedDate": "2013-03-04T09:24:29.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010115",
+    "ThreadId": "435320",
+    "Html": "Ok thanks Mark.\r<br />\n<br />\nIt's not a big deal. Low values (like 8-bits / 8K sample) make the output hiss a little and lowers quality (as expected), but that's the worst that happens.   My USB headset microphone (rated at 16-Bit 44100/48000 Hz) produces very good quality output when I use the rated values. There is no perceivable difference when I use a sample rate higher than 48000 Hz with that mic. So I think I'm in good shape even without being able to query the device Sample Rate and Bit Depth. \r<br />\n<br />\nI'm getting just a bit of delay between speaking and hearing the output. Just a tad of delay, but still noticeable.  I set Latency at 51. If I drop it one to 50, it produces crackling static.<br />\n<pre><code>waveOut.DesiredLatency = 51;</code></pre>\n\nIs there any other settings that might help reduce the output delay? <br />\n",
+    "PostedDate": "2013-03-04T11:08:35.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010685",
+    "ThreadId": "435320",
+    "Html": "You better don't use that extremly low latency values. I guess you can't really do anything against that little delay. You really would have to play it in the exactly same millisecond as you say it. <br />\n",
+    "PostedDate": "2013-03-05T09:00:21.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010731",
+    "ThreadId": "435320",
+    "Html": "Thanks filoe. I know .Net isn't the best at timing. The Forms Timer is only accurate to 55 milliseconds which seems like a life-time in CPU instructions.  But it is what it is. <br />\n",
+    "PostedDate": "2013-03-05T09:54:45.583-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010782",
+    "ThreadId": "435320",
+    "Html": "it's not .NET, its the waveIn and waveOut APIs. They are not particularly low latency. You need to work with WASAPI or ASIO to go to lower latencies.<br />\n",
+    "PostedDate": "2013-03-05T11:15:45.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010787",
+    "ThreadId": "435320",
+    "Html": "Ok, thanks Mark, good to know. I'll keep that in mind. I want to stick with WaveIn/Out for now because I have XP users. And XP is still 40% of the OS marketshare -- too big to ignore.<br />\n",
+    "PostedDate": "2013-03-05T11:22:38.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

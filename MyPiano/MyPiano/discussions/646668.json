@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1449777",
+    "ThreadId": "646668",
+    "Html": "I know this probably sounds simple, but I'm getting started and need to know how to control the volume.  I've seen comments on using the VolumeSampleProvider but I'm having trouble with it.  My current code looks like this:\r<br />\n<br />\nm_WavePlayer = new WaveOut();\r<br />\nm_AudioFileReader = new AudioFileReader(strFullPath);\r<br />\nm_WavePlayer.Init(m_AudioFileReader);\r<br />\nm_WavePlayer.Play();\r<br />\n<br />\nA little help would go a long way...   Thx, Ed<br />\n",
+    "PostedDate": "2015-10-26T15:19:36.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449788",
+    "ThreadId": "646668",
+    "Html": "Here's how i've done it.\r<br />\n<br />\n<br />\nformat = WaveFormat.CreateIeeeFloatWaveFormat(readerStream.WaveFormat.SampleRate, 2);<br />\n<pre><code>        // Provide PCM conversion if needed\n        if (readerStream.WaveFormat.Encoding != WaveFormatEncoding.Pcm)\n        {\n            readerStream = WaveFormatConversionStream.CreatePcmStream(readerStream);\n            readerStream = new BlockAlignReductionStream(readerStream);\n        }\n\n        // Provide conversion to 16 bits if needed\n        if (readerStream.WaveFormat.BitsPerSample != 16)\n        {\n            readerStream = new WaveFormatConversionStream(format, readerStream);\n        }\n\n        mixingSampleProvider = new MixingSampleProvider(format);\n        waveChannel = new WaveChannel32(readerStream);\n\n\n        //Convert wave to samples\n        waveToSample = new WaveToSampleProvider(waveChannel);\n\n        //Provide metering support\n        meterSampleProvider = new MeteringSampleProvider(waveToSample);\n\n        //Provide volume support\n        volumeSampleProvider = new VolumeSampleProvider(meterSampleProvider);\n\n        //Convert samples back to wave\n        sampleToWave = new SampleToWaveProvider(volumeSampleProvider );\n\n        if (waveOutDevice == null)\n        {\n            waveOutDevice = new WaveOutEvent();\n            waveOutDevice.PlaybackStopped += new EventHandler&lt;StoppedEventArgs&gt;(waveOutDevice_PlaybackStopped);\n        }\n\n        waveOutDevice.DeviceNumber = CPCore.Instance.AudioOutDevice.Id;\n        waveOutDevice.Init(sampleToWave);\n\n\n\n</code></pre>\n\nEverytime you need to support a new provider, use the last one as input for the next.\r<br />\n<br />\nLike this:\r<br />\n<br />\n //Convert wave to samples<br />\n<pre><code>        waveToSample = new WaveToSampleProvider(waveChannel);\n\n        //Provide metering support\n        meterSampleProvider = new MeteringSampleProvider(waveToSample);\n\n        //Provide volume support\n        volumeSampleProvider = new VolumeSampleProvider(meterSampleProvider);\n\n        //Add the samples to the mixed stream used to enable crossfading\n        mixingSampleProvider.AddMixerInput(volumeSampleProvider);\n\n        //Add support for equalizer\n        equalizerSampleProvider = new EqualizerSampleProvider(mixingSampleProvider, equalizerBands);\n        equalizerSampleProvider.IsActive = initialEQIsActive.GetValueOrDefault();\n\n        //Convert samples back to wave\n        sampleToWave = new SampleToWaveProvider(equalizerSampleProvider);</code></pre>\n\n",
+    "PostedDate": "2015-10-26T17:22:16.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449860",
+    "ThreadId": "646668",
+    "Html": "Thank you for the suggestion, here is the code that is functional for creating the wave player:<br />\n<pre><code>            m_WavePlayer = new WaveOut();\n            m_AudioFileReader = new AudioFileReader(strFullPath);\n            m_VolSampleProvider = new VolumeSampleProvider(m_AudioFileReader);\n            m_VolSampleProvider.Volume = Volume;\n            m_SmplToWaveProvider = new SampleToWaveProvider(m_VolSampleProvider);\n            m_WavePlayer.Init(m_SmplToWaveProvider);\n</code></pre>\n\nAnd then the volume can dynamically change using this:<br />\n<pre><code>            if (m_VolSampleProvider != null)\n                m_VolSampleProvider.Volume = value;\n</code></pre>\n\nInterestingly, the VolumeSampleProvider and SampleToWaveProvider don't have Dispose() methods.  I'm wondering if I have a memory leak ?<br />\n",
+    "PostedDate": "2015-10-27T10:47:44.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449877",
+    "ThreadId": "646668",
+    "Html": "Another interesting question, when I run this code out of the main form thread (testing) there are no issues at all.  But, in my real application it must be performed from a background thread.  Initially I attempted to create a member variable to be used by a background thread but started having issues similar to cross-threading - errors indicating that it was not called on the thread it was created on.\r<br />\n<br />\nOK, so I decided that I would just create a new instance from whatever thread I planned to use it, then dispose of it after it was done.  But I'm finding that the WaveOut object is hanging the thread when I perform the line of code below, any ideas?<br />\n<pre><code>            m_WavePlayer.Dispose();</code></pre>\n\n",
+    "PostedDate": "2015-10-27T13:55:08.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449974",
+    "ThreadId": "646668",
+    "Html": "First, <code>AudioFileReader</code> already has a <code>Volume</code> property, so no need for an additional <code>VolumeSampleProvider</code>.\r<br />\nSecond, I recommend <code>WaveOutEvent</code> instead of <code>WaveOut</code> when working on non GUI threads.<br />\n",
+    "PostedDate": "2015-10-28T04:38:43.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-10-28T06:30:26.17-07:00"
+  },
+  {
+    "Id": "1450013",
+    "ThreadId": "646668",
+    "Html": "Thank you for the quick response - I have a lot to learn.  So I eliminated the VolumeSampleProvider and seem to have the same results by setting the volume of the AudioFileReader with less complexity.  Also, I have changed to WaveOutEvent and the problem with the background thread also seems to have been solved.\r<br />\n<br />\nThanks so much for the help.<br />\n",
+    "PostedDate": "2015-10-28T06:30:35.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

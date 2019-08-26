@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1227736",
+    "ThreadId": "540430",
+    "Html": "I'm trying to stream a WaveMixerStream32 output over the network. I started first by testing the stream by using WasapiCapture. This works fine<br />\n<pre><code>_wasapiIn = new WasapiCapture(selectedDevice);\n_wasapiIn.DataAvailable += Capture_DataAvailable;\n_wasapiIn.StartRecording();</code></pre>\n\n<pre><code>private void Capture_DataAvailable(object sender, WaveInEventArgs e)\n{\n    var inputStream = new MemoryStream();\n    inputStream.Write(e.Buffer, 0, e.BytesRecorded);\n\n    var inputStreamFormat = new WaveFormat(_wasapiIn.WaveFormat.SampleRate, 16, _wasapiIn.WaveFormat.Channels);\n    using (var inputWaveStream = new RawSourceWaveStream(inputStream, inputStreamFormat))\n    {\n        var outputStreamFormat = new WaveFormat(_clockRate, 16, _channels);\n        using (var outputStream = new WaveFormatConversionStream(outputStreamFormat, inputWaveStream))\n        {\n            var output = new byte[outputStream.Length];\n            outputStream.Read(output, 0, (int)outputStream.Length);\n            Send(new AudioBuffer(output, 0, (int)outputStream.Length));\n        }\n    }\n}</code></pre>\n\nBut now I want to use a WaveStream/WaveMixerStream32 instead. How can I send such stream just as if it was comming from a capture device?<br />\n",
+    "PostedDate": "2014-03-28T03:43:36.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229415",
+    "ThreadId": "540430",
+    "Html": "No one who can give me a hint into the right direction? I just need to know how to make this work with a WaveStream/WaveMixerStream32 as it contains the whole audio stream instead of smaller packets. Is there a way of packetizing the audiostream into smaller chunks? How to choose the right chunk size? <br />\n",
+    "PostedDate": "2014-04-02T04:58:34.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

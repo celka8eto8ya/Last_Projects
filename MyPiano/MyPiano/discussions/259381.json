@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "619787",
+    "ThreadId": "259381",
+    "Html": "\r\n<p>Hello.</p>\r\n<p>I'm wondering how to process the event when i insert (or extract) my headphones or another output device to soundcard jack.</p>\r\n<p>I found an&nbsp;IMMNotificationClient interface and tried to implement it, but because of poor documentation i couldn't even find a way to attach my class to any audio device (or to what i should attach it?).</p>\r\n<p>My eventual purpose is automatic controlling volume for different devices, e.g. when headphones are active - set 10% volume, and when speakers are active - set 100%;</p>\r\n<p>If someone had developed such a task, i'll be very grateful for any kind of help or advice.</p>\r\n<p>And, sorry for my terrible english ^^</p>\r\n",
+    "PostedDate": "2011-05-28T09:52:06.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619789",
+    "ThreadId": "259381",
+    "Html": "<p>I'm afraid I am not an expert on using the IMMNotificationClient interface. NAudio has wrappers for it, but the main thing we support at the moment is simple playback and recording. You might find someone who can help you on stackoverflow.com, or maybe in one of the MSDN forums relating to WASAPI.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-28T09:54:42.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619791",
+    "ThreadId": "259381",
+    "Html": "<p>Thank you for answer. There are already some questions on stackoverflow, and all the answers are referring to your library :)</p>\r\n<p>But anyway, you made great job, and sure i'll use some features of naudio in my project.</p>",
+    "PostedDate": "2011-05-28T10:01:33.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619792",
+    "ThreadId": "259381",
+    "Html": "<p>oh. Larry Osterman is the man who seems to know most about WASAPI. Search for his blog or answers from him in forums and you might find some useful stuff.</p>\r\n<p>I don't find WASAPI to be particularly useful for my needs as all the software I write needs to work on Windows XP too.</p>",
+    "PostedDate": "2011-05-28T10:03:23.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "580612",
+    "ThreadId": "249737",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I'm using NAudio library to capture sound produced by any windows app like mp3 or videp player to get that audio data in order to control my light show contraption based on RGB strips (like I did it already for video). As far I understand following code\r\n should be sufficient to capture sound:</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>            waveInStream = <span style=\"color:blue\">new</span> WaveIn();\r\n            waveInStream.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat(44100, 16, 2);\r\n            waveInStream.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveInStream_DataAvailable);\r\n            waveInStream.StartRecording();\r\n\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Question is how should I interpret that data (bytes) in WaveInEventArgs buffer in order to use them in further processing stages (like FFT, V U meter and similar)? Can I assume that they should follow exact format like in WAV data chunk (like it's defined\r\n in WAV PCM specification)?</p>\r\n<p>Thx.</p>\r\n<p>Ivan</p>\r\n",
+    "PostedDate": "2011-03-15T02:08:35.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "581547",
+    "ThreadId": "249737",
+    "Html": "<p>have a look at the voice recorder app (http://voicerecorder.codeplex.com) and the articles linked to on Coding4Fun for info.</p>\r\n<p>Basically with the setup you have, every two bytes is a sample (use BitConverter.ToShort) in pairs (left sample, right sample)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-16T10:15:51.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

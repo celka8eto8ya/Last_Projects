@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "941381",
+    "ThreadId": "403123",
+    "Html": "\r\n<p>Hey,</p>\r\n<p>I need to play multiple WAV files simultaneously. I found the MultiplexingWaveProvider class, but it does not support playing multiple inputs to one output. Is there a class/provider that would allow me to play several audio tracks simultaneously? If not,\r\n how would I go about making one?</p>\r\n<p>Thanks,<br>\r\nBlake&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-13T21:38:09.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941400",
+    "ThreadId": "403123",
+    "Html": "\r\n<p>There are a number of mixer classes in NAudio. The oldest is WaveMixerStream32, but I recommend using MixingSampleProvider with AudioFileReader as the inputs.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-13T22:45:36.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "424925",
+    "ThreadId": "207632",
+    "Html": "<p>Hi,</p>\r\n<p>I'm new to NAudio .. an not so familiar with it's possibilities</p>\r\n<p>Is it possible to capture only the output of a specified application?<br>If it is can you give me a hint where to start ?</p>\r\n<p>Thx</p>\r\n<p>Neo</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-29T06:54:35.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424974",
+    "ThreadId": "207632",
+    "Html": "<p>at the moment we do not have any loopback recording capabilities in NAudio. You could write it your own if your soundcard has a &quot;what you hear option&quot;</p>\r\n<p>It is never likely to be possible though to capture the output of a specified application, since Windows does not make this a possibility</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-29T08:24:45.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425268",
+    "ThreadId": "207632",
+    "Html": "<p>Hi Mark,</p>\r\n<p>I think that must be possible, because Windows Vista and 7 are displaying a mixer channel for each application with audio output...<br>and I found a software that is able to do it since WinXP&nbsp; http://www.rogueamoeba.com/airfoil/windows/<br>Of course they do not describe how they do it :(</p>\r\n<p>But I think its a proof that it is possible.</p>\r\n<p>Neo</p>",
+    "PostedDate": "2010-03-29T23:51:38.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425293",
+    "ThreadId": "207632",
+    "Html": "<p>I'm afraid I don't think that Win 7 &amp; Vista allow that level of access. I remember Larry Osterman saying this on a forum. Obviously the Windows developers who made the mixer have access to some lower level undocumented API's. If there is some kind of trick you can use, I'm afraid I don't know about it. It is a feature I would like too, since I have often wanted to be able to turn off the sounds from other logged in users on a family PC.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-30T00:26:56.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

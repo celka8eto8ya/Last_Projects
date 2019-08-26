@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "636195",
+    "ThreadId": "263619",
+    "Html": "\r\n<p>Firstly, excellent project !</p>\r\n<p>I'm having some problems in playing files with Broadcast Wave File (BWF) data embebbed in.&nbsp; I get the error in both my own application and the NAudio Demo app.&nbsp; I get the error &quot;Invalid WAV file - No data chunk found&quot;, the file plays fine in other\r\n players.</p>\r\n<p>I'm not sure if this is because the BWF chunk is usually before the data chunk.&nbsp; Looking at the files in RiffPad, I can see that files that play ok have the Data chunk only offset by about 57, whereas ones with BWF data are offset by around 2000 to\r\n 3000 bytes.</p>\r\n<p>If anyone wants a demo file, then I'll upload one.&nbsp;</p>\r\n<p>Thanks</p>\r\n<p>Simon</p>\r\n",
+    "PostedDate": "2011-07-01T13:29:30.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637177",
+    "ThreadId": "263619",
+    "Html": "<p>I'm afraid there is no official BWF support for NAudio at the moment, although I think someone did submit a patch a while back. If you upload an example file somewhere I'll get a copy of it for when I get round to adding BWF support.</p>",
+    "PostedDate": "2011-07-04T14:11:32.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "639947",
+    "ThreadId": "263619",
+    "Html": "\r\n<div>Hi Mark.</div>\r\n<div></div>\r\n<div>Sorry for the delay. I've uploaded a file that caused the error &quot;Unsupported Extension&quot;.</div>\r\n<div></div>\r\n<div><a href=\"http://www.mediafire.com/?b5rvkvyv7gi52ad\">http://www.mediafire.com/?b5rvkvyv7gi52ad</a></div>\r\n<div></div>\r\n<div>Let me know if there is anything I can do with testing or whatever.</div>\r\n<div></div>\r\n<div>Thanks</div>\r\n<div>Simon<br>\r\n</div>\r\n<div>On Mon, Jul 4, 2011 at 10:11 PM, markheath <span dir=\"ltr\">&lt;<a href=\"mailto:notifications@codeplex.com\">notifications@codeplex.com</a>&gt;</span> wrote:<br>\r\n<blockquote style=\"border-left:#ccc 1px solid; margin:0px 0px 0px 0.8ex; padding-left:1ex\">\r\n<div>\r\n<p>From: markheath</p>\r\n<div>\r\n<p>I'm afraid there is no official BWF support for NAudio at the moment, although I think someone did submit a patch a while back. If you upload an example file somewhere I'll get a copy of it for when I get round to adding BWF support.</p>\r\n</div>\r\n<div>\r\n<p>Read the <a href=\"http://naudio.codeplex.com/discussions/263619#post637177\" target=\"_blank\">\r\nfull discussion online</a>.</p>\r\n<p>To add a post to this discussion, reply to this email (<a href=\"mailto:naudio@discussions.codeplex.com?subject=[naudio:263619]\" target=\"_blank\">naudio@discussions.codeplex.com</a>)</p>\r\n<p>To start a new discussion for this project, email <a href=\"mailto:naudio@discussions.codeplex.com\" target=\"_blank\">\r\nnaudio@discussions.codeplex.com</a></p>\r\n<p>You are receiving this email because you subscribed to this discussion on CodePlex. You can\r\n<a href=\"https://naudio.codeplex.com/discussions/263619/unsubscribe/\" target=\"_blank\">\r\nunsubscribe</a> on CodePlex.com.</p>\r\n<p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at CodePlex.com</p>\r\n</div>\r\n</div>\r\n</blockquote>\r\n</div>\r\n<br>\r\n",
+    "PostedDate": "2011-07-09T14:07:32.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "735152",
+    "ThreadId": "263619",
+    "Html": "<p>Has anything been done with BWF support?&nbsp; I just came across this problem with Invalid Chunk Length in a bunch of sound effect libraries from Sound-Ideas.</p>\r\n<p>&nbsp;</p>\r\n<p>Larry</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-02-01T11:32:16.027-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "735489",
+    "ThreadId": "263619",
+    "Html": "<p>sorry, still no BWF support. however I might have some time to revisit this now that 1.5 is out. If you have an example BWF file you can upload somewhere, message me with a link to it, and I'll see if I can find the BWF patch (annoyingly, all the patches got deleted off the codeplex site when I switched to Mercurial)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-02-01T14:59:11.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "735565",
+    "ThreadId": "263619",
+    "Html": "<p>Ok, I will post a couple of files in the next day or so.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-02-01T15:53:56.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "764736",
+    "ThreadId": "263619",
+    "Html": "<blockquote style=\"padding-bottom: 0px; font-style: italic; margin: 0.25em 1em 0px; padding-left: 0.25em; padding-right: 0.25em; padding-top: 0px; border: #ccc 0.1em solid;\"><strong>gamesound2000 wrote:</strong><br />\r\n<p>Ok, I will post a couple of files in the next day or so.</p>\r\n<p>&nbsp;</p>\r\n</blockquote>\r\n<p><br />Ok here is a file that causes the problem:</p>\r\n<p><a href=\"http://dl.dropbox.com/u/38388142/How%20to%20use%20the%20Public%20folder.rtf\">http://dl.dropbox.com/u/38388142/How%20to%20use%20the%20Public%20folder.rtf</a></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-02-14T12:37:44.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "764740",
+    "ThreadId": "263619",
+    "Html": "<p>oops wrong file,</p>\r\n<p><a href=\"http://dl.dropbox.com/u/38388142/FIRE%20WhooshFlameLarge%20SBPF1_482.wav\">http://dl.dropbox.com/u/38388142/FIRE%20WhooshFlameLarge%20SBPF1_482.wav</a></p>",
+    "PostedDate": "2012-02-14T12:38:21.357-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "770707",
+    "ThreadId": "263619",
+    "Html": "<p>Hi gamesound2000, that file isn't a BWF file. The problem is that it has an invalid chunk at the end. The message you see is just a debug.assert message. You can click ignore and the app will continue. If you compile in release mode it won't fire at all. Probably NAudio needs to be able to report this type of error in a different way.</p>",
+    "PostedDate": "2012-02-16T12:24:33.963-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "771383",
+    "ThreadId": "263619",
+    "Html": "<p>actually, I correct myself, it is a BWF file, just not an RF64 one. I've checked in some refactoring of the code which now won't do the debug assert on your file. It also has some experimental RF64 support (although I have no RF64 files to test it with). The refactoring opens the door for future custom classes to interpret certain RIFF chunks, and also possibly attempt to correct for RIFF chunks reporting their size wrong, by searching for the next thing that looks like a RIFF chunk header rather than giving up.</p>",
+    "PostedDate": "2012-02-16T15:08:07.547-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799618",
+    "ThreadId": "263619",
+    "Html": "<p>So far so good.&nbsp; Haven't had any problems with files in my sound library (about 1 TB of files).</p>\r\n<p>&nbsp;</p>\r\n<p>Larry</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-02-24T13:36:41.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

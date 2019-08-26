@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "928188",
+    "ThreadId": "399774",
+    "Html": "\r\n<p>I have been using Naudio for a while now, so I decided to get on board with Nuget. I got the latest version of Nuget, removed my manual references to Naudio in my solution, then I used the Package Manager Console to install Naudio. Unfortunately, my solution\r\n now doesn't build because the Nuget package doesn't appear to include the Windows Media Format stuff. Did I miss a step?</p>\r\n<p>Also, it appears that Nuget just gives you the binaries, so if you want to debug into the Naudio stuff (to find a bug - for example), you have to link to an Naudio solution. Is that the right/best way to do it?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>eejake52</p>\r\n",
+    "PostedDate": "2012-10-17T10:33:16.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929415",
+    "ThreadId": "399774",
+    "Html": "<p>Yes, the NuGet package doesn't include Windows Media. For next NAudio I'll either add another NuGet package, or move the Windows Media code into the main DLL.</p>\r\n<p>And yes to debug NAudio it is best to simply connect to the source code.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-10-19T07:12:36.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

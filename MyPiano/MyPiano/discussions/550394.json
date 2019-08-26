@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1262092",
+    "ThreadId": "550394",
+    "Html": "Hello,\r<br />\n<br />\nIn AudioPlaybackPanel.cs -&gt; OnPreVolumeMeter there's this line:\r<br />\nwaveformPainter1.AddMax(e.MaxSampleValues[0]);\r<br />\nwhere e.MaxSampleValues[0] is a float number\r<br />\n<br />\nIs there a way to get all these float numbers to an array without playing the audio/video?\r<br />\n<br />\nIn other words, how can I get the sound channel of a video without playing it, in order to analyse it?\r<br />\n<br />\nThank you,\r<br />\nOlga.<br />\n",
+    "PostedDate": "2014-07-02T11:46:07.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273588",
+    "ThreadId": "550394",
+    "Html": "you just need something to keep calling Read on the output stream until it reaches the end (Read returns 0)<br />\n",
+    "PostedDate": "2014-07-17T08:30:26.78-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

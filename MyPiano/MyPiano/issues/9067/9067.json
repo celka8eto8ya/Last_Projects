@@ -1,0 +1,86 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "this should be fixed in the latest NAudio now",
+    "ClosedDate": "2012-10-06T02:19:29.287-07:00",
+    "CommentCount": 8,
+    "Custom": "",
+    "Description": "I'm developing a windows service that plays mp3's using Naudio. \nThe service plays mp3's when particular events occurs.\nService works fine for 20 - 30 minutes but randomly I get a MMEXception.WaveStillPlaying ( or InvalidOperationException ) Exception  that i'm not able to catch.\nI'm using Nadio Beta Release [ 1.2 ] ( also I try to use the latest source code available but the problem persists )\nI perform the following operations to play mp3's :\n/******* C# CODE ***************/\n                 NAudio.Wave.WaveOut      wout1 = new NAudio.Wave.WaveOut(0, 200, false);\n                 NAudio.Wave.WaveStream mp3_reader1 = new NAudio.Wave.Mp3FileReader(files[0]);\n                 NAudio.Wave.WaveStream mp32wavConverter1 = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(mp3_reader1);\n                 NAudio.Wave.WaveStream wout_src1 = new NAudio.Wave.BlockAlignReductionStream(mp32wavConverter1);\n                 wout1.Init(wout_src1);\n                 wout1.Play();\n/****************************************/\ni dispose objects to play another mp3 after ( wout_src1.TotalTime.Seconds * 1000 + wout_src1.TotalTime.Minutes * 60 * 1000 + wout_src1.TotalTime.Milliseconds + 200 ) ms , in the following way\n/****** C# CODE **********************/\n            if (wout1 != null)\n            {\n       \n                try\n                {\n                    wout1.Stop();\n                }\n                 catch (NAudio.MmException e)\n                {  // ... //\n                }\n            }\n\n            if (wout_src1 != null)\n            {\n                try\n                {\n                    wout_src1.Close();\n                }\n                catch (NAudio.MmException e)\n                {  // ... //\n                }\n                try\n                {\n                    wout_src1.Dispose();\n                }\n                 catch (NAudio.MmException e)\n                {  // ... //\n                }\n                wout_src1 = null;\n            }\n\n            if (mp32wavConverter1 != null)\n            {\n                try\n                {\n                    mp32wavConverter1.Close();\n                }\n                 catch (NAudio.MmException e)\n                {  // ... //\n                }\n                try\n                {\n                    mp32wavConverter1.Dispose();\n                }\n                 catch (NAudio.MmException e)\n                {  // ... //\n                }\n                mp32wavConverter1 = null;\n            }\n\n            if (mp3_reader1 != null)\n            {\n                try\n                {\n                    mp3_reader1.Close();\n                }\n                 catch (NAudio.MmException e)\n                {  // ... //\n                }\n                try\n                {\n                    mp3_reader1.Dispose();\n                }\n                catch (NAudio.MmException e)\n                {  // ... //\n                }\n                mp3_reader1 = null;\n            }\n\n            if (wout1 != null)\n            {\n                try\n                {\n                    wout1.Dispose();\n                }\n                catch (NAudio.MmException e)\n                {  // ... //\n                }\n                wout1 = null;\n            }\n/*********************************/\n\nUsing Naudio latest source code in Debug Mode i get the following error:\n\n\nSystem.InvalidOperationException non è stata gestita\n  Message=\"Handle non inizializzato.\"\n  Source=\"mscorlib\"\n  StackTrace:\n       in System.Runtime.InteropServices.GCHandle.FromIntPtr(IntPtr value)\n       in System.Runtime.InteropServices.GCHandle.op_Explicit(IntPtr value)\n       in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 285\n  InnerException: \n\n\n\nprivate void Callback(IntPtr hWaveOut, WaveInterop.WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, int dwReserved)\nuMsg = Done\ndwUSer = 0\nwavhdr ={NAudio.Wave.WaveHeader}\ndwReserved = 0",
+    "LastUpdatedDate": "2012-10-06T02:19:29.287-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-01-28T02:38:14.62-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "[MMException] WaveStillPlaying",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 9067
+  },
+  "FileAttachments": [
+    {
+      "FileId": 266437,
+      "FileName": "snipplet.txt",
+      "DownloadUrl": ".\\266437"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I forget the MMException details:\r\n\r\nNAudio.MmException non è stata gestita\r\n  Message=\"WaveStillPlaying calling waveOutWrite\"\r\n  Source=\"NAudio\"\r\n  StackTrace:\r\n       in NAudio.Wave.WaveOutBuffer.WriteToWaveOut() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 155\r\n       in NAudio.Wave.WaveOutBuffer.OnDone() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 119\r\n       in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 290\r\n  InnerException: \r\n",
+      "PostedDate": "2009-01-28T02:49:05.77-08:00",
+      "Id": 41685
+    },
+    {
+      "Message": "thanks for reporting this. Would you mind testing with the latest version, as there have been a few changes to the WaveOut code. Also, what audio chipset are you using, and have you got up to date drivers?",
+      "PostedDate": "2009-01-28T08:24:07.353-08:00",
+      "Id": 41686
+    },
+    {
+      "Message": "Today i will try the latest source code available (ChangeSet 24716 ). \r\nI'm using SigmaTel C-Major Audio integraded chipset device, with the latest driver (5.10.0.4255 ) available from DELL.\r\nAlso i try to find out if a race codition occurs. \r\n",
+      "PostedDate": "2009-01-28T23:56:47.817-08:00",
+      "Id": 41687
+    },
+    {
+      "Message": "I cleaned up my code to handle audio in 1 method.\r\nWith Naudio-24573 i faced the following exceptions:\r\n\r\n/******************************/\r\nCaught : WaveStillPlaying calling waveOutWritesrc[NAudio] stck[   in NAudio.Wave.WaveOutBuffer.WriteToWaveOut() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 155\r\n   in NAudio.Wave.WaveOutBuffer.OnDone() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 119\r\n   in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 290]\r\nCaught : WaveStillPlaying calling waveOutWritesrc[NAudio] stck[   in NAudio.Wave.WaveOutBuffer.WriteToWaveOut() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 155\r\n   in NAudio.Wave.WaveOutBuffer.OnDone() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 119\r\n   in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 290]\r\nCaught : WaveStillPlaying calling waveOutWritesrc[NAudio] stck[   in NAudio.Wave.WaveOutBuffer.WriteToWaveOut() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 155\r\n   in NAudio.Wave.WaveOutBuffer.OnDone() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 119\r\n   in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 290]\r\nCaught : WaveStillPlaying calling waveOutWritesrc[NAudio] stck[   in NAudio.Wave.WaveOutBuffer.WriteToWaveOut() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 155\r\n   in NAudio.Wave.WaveOutBuffer.OnDone() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 119\r\n   in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 290]\r\nCaught : WaveStillPlaying calling waveOutWritesrc[NAudio] stck[   in NAudio.Wave.WaveOutBuffer.WriteToWaveOut() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 155\r\n   in NAudio.Wave.WaveOutBuffer.OnDone() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 119\r\n   in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 290]\r\nCaught : WaveStillPlaying calling waveOutWritesrc[NAudio] stck[   in NAudio.Wave.WaveOutBuffer.WriteToWaveOut() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 155\r\n   in NAudio.Wave.WaveOutBuffer.OnDone() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 119\r\n   in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 290]\r\nCaught : WaveStillPlaying calling waveOutWritesrc[NAudio] stck[   in NAudio.Wave.WaveOutBuffer.WriteToWaveOut() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 155\r\n   in NAudio.Wave.WaveOutBuffer.OnDone() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 119\r\n   in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 290]\r\nCaught : WaveStillPlaying calling waveOutWritesrc[NAudio] stck[   in NAudio.Wave.WaveOutBuffer.WriteToWaveOut() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 155\r\n   in NAudio.Wave.WaveOutBuffer.OnDone() in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveStreams\\WaveOutBuffer.cs:riga 119\r\n   in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24573\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 290]\r\n/******************************************************/\r\n\r\nNow i'm testing naudio-24716.\r\nPheraps i commit an error using the API, see attached snipplet.\r\n\r\nThanks a lot for support :)",
+      "PostedDate": "2009-01-29T09:03:40.597-08:00",
+      "Id": 41688
+    },
+    {
+      "Message": "Using the last Naudio release i faced out this problem:\r\n\r\n/***********/\r\nCaught : Handle non inizializzato.src[mscorlib] stck[   in System.Runtime.InteropServices.GCHandle.FromIntPtr(IntPtr value)\r\n   in System.Runtime.InteropServices.GCHandle.op_Explicit(IntPtr value)\r\n   in NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveOutMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved) in C:\\Documents and Settings\\Simo\\Documenti\\Visual Studio 2008\\Funicolari\\naudio-24716\\NAudio\\Wave\\WaveOutputs\\WaveOut.cs:riga 289\r\n/************************/",
+      "PostedDate": "2009-01-29T09:14:08.09-08:00",
+      "Id": 41689
+    },
+    {
+      "Message": "could you try with windowed callbacks (i.e. pass true as the third parameter to WaveOut). This is the preferred way of using WaveOut. You could also try using DirectSoundOut, if you are still having WaveOut problems\r\n\r\n",
+      "PostedDate": "2009-01-30T07:37:21.913-08:00",
+      "Id": 41690
+    },
+    {
+      "Message": "Thanks.\r\n Sure i'll try tomorrow! But i'm developing a Windows Service (windowless) that handle handle audio playing on 2 different device. Could I select desired device using DirectSound API ?\r\n",
+      "PostedDate": "2009-01-30T13:34:26.653-08:00",
+      "Id": 41691
+    },
+    {
+      "Message": "I'm sure you can playback on different devices if you want. There should be no problems with that. Also, please note that it really doesn't matter that your application has no window. The \"window\" that is used for windowed WaveOut playback is never displayed. It is simply used for its message processing queue. It just seems to be the most reliable way of using the waveOut APIs. ",
+      "PostedDate": "2009-02-01T14:49:57.08-08:00",
+      "Id": 41692
+    }
+  ]
+}

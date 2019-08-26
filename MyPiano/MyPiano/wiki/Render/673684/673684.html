@@ -1,0 +1,66 @@
+<div class="wikidoc">
+<h1>MP3</h1>
+<h2>Convert an MP3 to WAV</h2>
+<p>1) Add the using references for NAudio to your project:</p>
+<pre><span style="color:blue">using </span>NAudio;
+<span style="color:blue">using </span>NAudio.Wave;</pre>
+<p>2) Assuming that you are going to find the location of a MP3 and save the WAV file to the same location:</p>
+<pre><span style="color:blue">public static void </span>Mp3ToWav(<span style="color:blue">string </span>mp3File, <span style="color:blue">string </span>outputFile)
+{
+    <span style="color:blue">using </span>(<span style="color:#2b91af">Mp3FileReader </span>reader = <span style="color:blue">new </span><span style="color:#2b91af">Mp3FileReader</span>(mp3File))
+    {
+        <span style="color:#2b91af">WaveFileWriter</span>.CreateWaveFile(outputFile, reader);
+    }
+}</pre>
+<p>3) You now have a WAV file in the directory of your MP3.</p>
+<p>&nbsp;</p>
+<h2>The complete sample program:</h2>
+<pre><span style="color:blue">using </span>System;
+<span style="color:blue">using </span>System.Collections.Generic;
+<span style="color:blue">using </span>System.ComponentModel;
+<span style="color:blue">using </span>System.Data;
+<span style="color:blue">using </span>System.Drawing;
+<span style="color:blue">using </span>System.Linq;
+<span style="color:blue">using </span>System.Text;
+<span style="color:blue">using </span>System.Windows.Forms;
+
+<span style="color:blue">using </span>NAudio;
+<span style="color:blue">using </span>NAudio.Wave;
+
+<span style="color:blue">namespace </span>ConvertMP3toWAV
+{
+    <span style="color:blue">public partial class </span><span style="color:#2b91af">Form1 </span>: <span style="color:#2b91af">Form
+    </span>{
+        <span style="color:blue">public </span>Form1()
+        {
+            InitializeComponent();
+        }
+
+        <span style="color:blue">private void </span>cmbOpen_Click(<span style="color:blue">object </span>sender, <span style="color:#2b91af">EventArgs </span>e)
+        {
+            <span style="color:#2b91af">OpenFileDialog </span>openFileDialog = <span style="color:blue">new </span><span style="color:#2b91af">OpenFileDialog</span>();
+            openFileDialog.Filter = <span style="color:#a31515">&quot;MP3 Files (*.mp3)|*.mp3|All Files (*.*)|*.*&quot;</span>;
+            openFileDialog.FilterIndex = 1;
+            <span style="color:blue">if </span>(openFileDialog.ShowDialog() == <span style="color:#2b91af">DialogResult</span>.OK)
+            {
+                txtLocation.Text = openFileDialog.FileName;
+            }
+        }
+
+        <span style="color:blue">private void </span>cmbConvert_Click(<span style="color:blue">object </span>sender, <span style="color:#2b91af">EventArgs </span>e)
+        {
+            <span style="color:blue">string </span>outputFileName = txtLocation.Text;
+            outputFileName = outputFileName.Substring(0, txtLocation.TextLength - 3) &#43; <span style="color:#a31515">&quot;wav&quot;</span>;
+            Mp3ToWav(txtLocation.Text, outputFileName);
+        }
+
+        <span style="color:blue">public static void </span>Mp3ToWav(<span style="color:blue">string </span>mp3File, <span style="color:blue">string </span>outputFile)
+        {
+            <span style="color:blue">using </span>(<span style="color:#2b91af">Mp3FileReader </span>reader = <span style="color:blue">new </span><span style="color:#2b91af">Mp3FileReader</span>(mp3File))
+            {
+                <span style="color:#2b91af">WaveFileWriter</span>.CreateWaveFile(outputFile, reader);
+            }
+        }
+    }
+}</pre>
+</div><div class="ClearBoth"></div>

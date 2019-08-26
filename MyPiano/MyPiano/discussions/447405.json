@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1058134",
+    "ThreadId": "447405",
+    "Html": "Hi Mark,<br />\n<br />\nI have used NAudio for getting <strong>stream</strong> from <strong>mp3</strong> file.<br />\n<pre><code>Stream wavestream = new NAudio.Wave.Mp3FileReader(path);</code></pre>\n\nThis is working perfectly on my local machine.But it gives this error in the live server.<br />\n<pre><code>NAudio.MmException: NoDriver calling acmFormatSuggest at NAudio.Wave.Compression.AcmStream.SuggestPcmFormat(WaveFormat compressedFormat) at NAudio.Wave.Mp3FileReader.CreateAcmFrameDecompressor(WaveFormat mp3Format) at NAudio.Wave.Mp3FileReader..ctor(Stream inputStream, FrameDecompressorBuilder frameDecompressorBuilder) at NAudio.Wave.Mp3FileReader..ctor(String mp3FileName) at .......\n</code></pre>\n\nLive server details are :<br />\nWindows Web Server 2008 R2<br />\n64 bit Operating system<br />\n<br />\nI have installed <strong>Lame ACM MP3 Codec</strong> in the live server also.<br />\n<br />\nSo Why am I getting this error in the live server? <br />\n<br />\nIs there any solution for getting stream from mp3 other than using this function (Mp3FileReader)?<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2013-06-18T04:16:46.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1058518",
+    "ThreadId": "447405",
+    "Html": "Mp3FileReader will work best with the Fraunhoffer MP3 codec. Lame is an MP3 encoder - so I'm not even sure it will contain a decoder. Also the expected WAVEFORMAT structure will likely be different between ACM MP3 codecs. If you can install the &quot;Desktop Experience&quot; component of Windows Server that might help.\r<br />\n<br />\nAlso, Mp3FileReader allows pluggable alternative MP3 frame decoders. So you can ask it to use the DmoMp3FrameDecompressor instead, which might be installed.<br />\n",
+    "PostedDate": "2013-06-19T00:49:37.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1058522",
+    "ThreadId": "447405",
+    "Html": "Hi Mark,<br />\n<br />\nThanks for your reply.<br />\n<br />\nI downloaded latest NAudio code and changed it according the solution you mentioned here.<br />\n<br />\n<a href=\"http://stackoverflow.com/questions/5652388/naudio-error-nodriver-calling-acmformatsuggest\" rel=\"nofollow\">http://stackoverflow.com/questions/5652388/naudio-error-nodriver-calling-acmformatsuggest</a><br />\n<br />\nBut I got this error after changing code into DmoMp3FrameDecompressor.<br />\n<pre><code>System.Runtime.InteropServices.COMException (0x80040154): Retrieving the COM class factory for component with CLSID {BBEEA841-0A63-4F52-A7AB-A9B3A84ED38A} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)). at NAudio.Dmo.WindowsMediaMp3Decoder..ctor() at NAudio.FileFormats.Mp3.DmoMp3FrameDecompressor..ctor(WaveFormat sourceFormat) at NAudio.Wave.Mp3FileReader.CreateAcmFrameDecompressor(WaveFormat mp3Format) at NAudio.Wave.Mp3FileReader..ctor(Stream inputStream, FrameDecompressorBuilder frameDecompressorBuilder) at NAudio.Wave.Mp3FileReader..ctor(Stream inputStream) at NAudio.Wave.Mp3FileReader..ctor(String mp3FileName) at ....................................</code></pre>\n\n",
+    "PostedDate": "2013-06-19T01:00:15.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1058523",
+    "ThreadId": "447405",
+    "Html": "looks like you don't have the DMO MP3 frame decompressor either.\r<br />\n<br />\nAnd you don't need to change NAudio code. You can override the MP3 frame decompressor with the constructor that takes two parameters. Pass in (wf =&gt; new DmoMp3FrameDecompressor(wf)\r<br />\n<br />\nI've got a fully managed mp3 frame decompressor over at nlayer.codeplex.com, but it's currently being worked on, so I wouldn't recommend using the latest code.<br />\n",
+    "PostedDate": "2013-06-19T01:04:46.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1058531",
+    "ThreadId": "447405",
+    "Html": "If I install resampledmo.dll, then will it be ok?<br />\n",
+    "PostedDate": "2013-06-19T01:19:27.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1058532",
+    "ThreadId": "447405",
+    "Html": "never tried it myself, but worth a go. It's com, so it will need to be registered. Did you try to install Desktop experience?<br />\n",
+    "PostedDate": "2013-06-19T01:21:36.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1058533",
+    "ThreadId": "447405",
+    "Html": "I will try that also and come back to you<br />\n",
+    "PostedDate": "2013-06-19T01:23:33.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1058557",
+    "ThreadId": "447405",
+    "Html": "Yes it is working.I installed &quot;Desktop Experience&quot;...Thank you so much for your help... :)<br />\n",
+    "PostedDate": "2013-06-19T02:09:10.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "951079",
+    "ThreadId": "405512",
+    "Html": "\r\n<p>I add 2 stream into mixer: first has lenght 1000, second has lenght 2000.</p>\r\n<p>After remove second stream WaveMixerStream32.Lenght = 2000, but&nbsp;should be 1000.</p>\r\n<p>In source code WaveMixerStream32.cs-&gt;RemoveInputStream has line:</p>\r\n<p>newLength = Math.Max(length, inputStream.Length)<br>\r\nmaybe need&nbsp;replace it&nbsp;with:</p>\r\n<p>newLength = Math.Max(newLength, inputStream.Length) ?</p>\r\n<p><span>Or I am wrong</span>?</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-04T04:34:37.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "951080",
+    "ThreadId": "405512",
+    "Html": "\r\n<p>yes, thanks for reporting. That will go in on the next check-in.</p>\r\n",
+    "PostedDate": "2012-12-04T04:36:40.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "951092",
+    "ThreadId": "405512",
+    "Html": "\r\n<p>Thanks for the fast reply.</p>\r\n",
+    "PostedDate": "2012-12-04T04:56:23.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1027634",
+    "ThreadId": "439588",
+    "Html": "Hi,<br />\n<pre><code>I will use NAudio in my project and I got a problem now.\n\nI want WaveOut to play only one channel data (eg. right channel) when WaveStream is a stereo wave stream (mp3 encoding). How I can let WaveOut to filter it?\n</code></pre>\n\nRegards!<br />\n",
+    "PostedDate": "2013-04-08T20:46:35.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1027748",
+    "ThreadId": "439588",
+    "Html": "Not WaveOut will filter this. You have to convert the stream first into mono and then play it. \r<br />\nYou can use the SteroToMonoProvider but this will mix both channels together. I don't know whether something like this already exists. If not you will have to write your own provider.<br />\n",
+    "PostedDate": "2013-04-09T02:56:38.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1028178",
+    "ThreadId": "439588",
+    "Html": "Thanks for your reply!<br />\n<br />\nI try to update WaveOut and its WaveOutBuffer source code like this:<br />\n<br />\nWaveOutBuffer.cs<br />\n<br />\n /// this is called by the WAVE callback and should be used to refill the buffer<br />\n<pre><code>    internal bool OnDone()\n    {\n        int bytes;\n        lock (waveStream)\n        {\n            bytes = waveStream.Read(buffer, 0, buffer.Length);\n        }\n        if (bytes == 0)\n        {\n            return false;\n        }\n        else\n        {\n            //Edit by charley at 2013/4/9\n            //左右声道是交替出现的，所以在间隔处用0填充\n            if (VolumnMode != 1)\n            {\n                for (int i = 0; i &lt; bytes - 1; i += mVolumnSize)\n                {\n                    if (VolumnMode == 2)\n                    {\n                        for (int j = 0; j &lt; mVolumnSize; j++)\n                        {\n                            buffer[i + j] = mLeftVolumn ? buffer[i + j] : (byte)0;\n                        }\n                        mLeftVolumn = !mLeftVolumn;\n                    }\n                    if (VolumnMode == 3)\n                    {\n                        for (int j = 0; j &lt; mVolumnSize; j++)\n                        {\n                            buffer[i + j] = !mLeftVolumn ? buffer[i + j] : (byte)0;\n                        }\n                        mLeftVolumn = !mLeftVolumn;\n                    }\n                }\n            }\n\n            for (int n = bytes; n &lt; buffer.Length; n++)\n            {\n                buffer[n] = 0;\n            }\n        }\n        WriteToWaveOut();\n        return true;\n    }\n</code></pre>\n\nNot well but can meet my requirement.<br />\n<br />\nAny other method and how to write new provider?<br />\n<br />\nNote:<br />\n<br />\nI want to control each channel when wave playing.<br />\n",
+    "PostedDate": "2013-04-09T18:57:18.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

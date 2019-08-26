@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "There is an audible glitch when clicking on certain GUI elements such as the window title bar. The audio will momentarily pause.  This issue can be easily reproduced with the Signal Generator demo. \r\n\r\nSystem:\r\nSurface Pro 3\r\nWindows 8.1\r\nVisual Studio 2013",
+    "LastUpdatedDate": "2016-03-26T03:18:34.047-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-05-01T14:41:54.003-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Audible Glitch when Clicking on Certain GUI Elements",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16477
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Ah, I think this is the problem I'm encountering when changing pan or volume (clicking, or \"glitching\").\n\nBut i get the same clicks if volume is changed programmatically, so maybe not strictly a GUI issue?\n\n(Has this issue been addressed?, or is it unavoidable perhaps?)",
+      "PostedDate": "2016-02-28T22:49:55.963-08:00",
+      "Id": 197064
+    },
+    {
+      "Message": "Glitches can be due to the audio processing getting interrupted, or discontinuities in volume level. I suspect the first is what you are hearing when you click the title bar (maybe a garbage collect happens), and the second is what you hear when changing volume. One way round this is to not do sudden volume movements, but smoothly ramp the volume multiplier to the target value. You'd need to write a custom sample provider to do this though.\n",
+      "PostedDate": "2016-03-26T03:18:34.047-07:00",
+      "Id": 198193
+    }
+  ]
+}

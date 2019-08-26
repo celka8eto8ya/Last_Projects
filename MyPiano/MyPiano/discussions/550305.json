@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1261808",
+    "ThreadId": "550305",
+    "Html": "I make a program in C# desk application and it works, Now I am using the same classes to code for a web application. but I am seeing these problems ,\r<br />\n<br />\nproblem 1 ) \r<br />\nwaveout does not work, it plays the tone for 2 secs and stops\r<br />\n<br />\n2) DirectSoundout will play my tone, but when I call <br />\n<pre><code>        Dout.Stop();\n            Dout.Dispose();\n            Dout = null;</code></pre>\n\nIt does not stop playing.\r<br />\nthe functions are being called, but they are just not doing anything.\r<br />\n3) Dout.Pause() is not doing anything.\r<br />\n4) it does not sound right, it does not sound like the desk application \r<br />\n<br />\nremember, I am using the same classes for both programs. I make my own .dll file.\r<br />\n  so why am i having so many problems with the web app?\r<br />\nhas anything using naudo with  C# ASP.NET Empty Web Application ?<br />\n",
+    "PostedDate": "2014-07-01T21:30:20.543-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1262504",
+    "ThreadId": "550305",
+    "Html": "markheath,\r<br />\n<br />\ndo you know ?\r<br />\nhave you done/ try this before?\r<br />\n<br />\nwhy/how can the same class( ward for ward ) the same class work good for C# application but bad for the  c# ASP.NET Empty Web Application.\r<br />\nThere are ticks when I play it online...\r<br />\n<br />\none of my other classes seem to play right.\r<br />\n<br />\nand why is :\r<br />\n Dout.Stop();<br />\n<pre><code>        Dout.Dispose();\n        Dout = null;</code></pre>\n\nnot working?\r<br />\nit does not stop playing\r<br />\nwhy?<br />\n",
+    "PostedDate": "2014-07-03T11:46:25.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1270118",
+    "ThreadId": "550305",
+    "Html": "Mark or anyone,\r<br />\nDo you have any  advice on this ?\r<br />\nWhy are my classes not working with Asp.net empty web applications but it works as a desktop application \r<br />\nWhy does direct sound stop and pause not working ?\r<br />\nDoes it work for you ? Are anyone ?<br />\n",
+    "PostedDate": "2014-07-16T18:12:13.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273559",
+    "ThreadId": "550305",
+    "Html": "You could try with WaveOutEvent. WaveOut by default will use Windows callbacks and there is no Windows message thread in an ASP.NET web app<br />\n",
+    "PostedDate": "2014-07-17T07:27:48.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273765",
+    "ThreadId": "550305",
+    "Html": "Mark,\r<br />\n<br />\nIt did not work,\r<br />\nhave you done something like this before?\r<br />\ndo you have sample code?<br />\n",
+    "PostedDate": "2014-07-17T17:20:45.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1275800",
+    "ThreadId": "550305",
+    "Html": "Mark \r<br />\n<br />\nanother any other suggestions?\r<br />\nhave you work with ASP.net?\r<br />\ndoes it work for you?<br />\n",
+    "PostedDate": "2014-07-23T15:24:09.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1275811",
+    "ThreadId": "550305",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nYou could try with WaveOutEvent. WaveOut by default will use Windows callbacks and there is no Windows message thread in an ASP.NET web app<br />\n</blockquote>\nI tried this\r<br />\n  waveE = new WaveOutEvent();<br />\n<pre><code>        waveE.Init(IsochonicWave);\n        waveE.Play();\n</code></pre>\n\nbut stop will not work\r<br />\n  waveE.Stop();<br />\n",
+    "PostedDate": "2014-07-23T16:05:14.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278414",
+    "ThreadId": "550305",
+    "Html": "In what way does Stop not work? An exception? Sound keeps playing?\r<br />\nThere are some bugfixes coming that should improve things in ASP.NET in the next drop of NAudio on NuGet (fixes already in source control)<br />\n",
+    "PostedDate": "2014-07-28T09:05:10.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278418",
+    "ThreadId": "550305",
+    "Html": "the sound keep playing <br />\n",
+    "PostedDate": "2014-07-28T09:07:31.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278420",
+    "ThreadId": "550305",
+    "Html": "pause  does not work as will<br />\n",
+    "PostedDate": "2014-07-28T09:08:37.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278421",
+    "ThreadId": "550305",
+    "Html": "what is NuGet?<br />\n",
+    "PostedDate": "2014-07-28T09:09:31.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278427",
+    "ThreadId": "550305",
+    "Html": "An easy way to install NAudio : <a href=\"https://www.nuget.org/packages/Naudio\" rel=\"nofollow\">https://www.nuget.org/packages/Naudio</a><br />\n",
+    "PostedDate": "2014-07-28T09:14:38.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

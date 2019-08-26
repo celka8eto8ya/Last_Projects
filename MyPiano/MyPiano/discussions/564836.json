@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1297792",
+    "ThreadId": "564836",
+    "Html": "Hello,\r<br />\n<br />\nI'm trying to convert a raw wave data (ima adpcm) to pcm with acmstream.convert that is used in NAudio demo (NetworkChatDemo).\r<br />\n<br />\nI could convert a .wave that was encode for Acm Fomat Coversion from Naudio Demo, but I can't convert other raw data that i extract from a camera audio that theorically has Ima wav Adpcm format (4 bit, 1 channel, 8000Hz).\r<br />\n<br />\nWhen I try to debug the problem found that :<br />\n<pre><code> int bytesConverted = conversionStream.Convert(bytesInSourceBuffer, out sourceBytesConverted);</code></pre>\n\nbytesConverted =0 and sourceBytesConverted=65536.\r<br />\n<br />\nWhich could be the reason that conversionStream is not converting?\r<br />\nthe format is wrong?<br />\n",
+    "PostedDate": "2014-09-01T08:48:21.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1298037",
+    "ThreadId": "564836",
+    "Html": "that's one possibility. I often use the AcmStream class directly for this type of situation, which gives you closer access the the ACM API.<br />\n",
+    "PostedDate": "2014-09-02T01:48:21.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1304818",
+    "ThreadId": "564836",
+    "Html": "Hello,\r<br />\n<br />\nAnyone know what is it the format (Big o little endian) of the array byte that i have to give to the waveOut class?\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2014-09-15T07:03:05.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1304824",
+    "ThreadId": "564836",
+    "Html": "little endian<br />\n",
+    "PostedDate": "2014-09-15T07:09:40.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1307494",
+    "ThreadId": "564836",
+    "Html": "Is working, the problem was only the format that I gave the array of byte.\r<br />\n<br />\nI gave in big endian but the DirectSoundOut receive little endian.\r<br />\n<br />\nThank for your help mark.\r<br />\n<br />\nCan you answer what is it the format (Big o little endian) of the buffer that the waveIn class give in its event DataAvailable?\r<br />\n<br />\nAgain, Thank you very much for the help<br />\n",
+    "PostedDate": "2014-09-23T10:06:29.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1307872",
+    "ThreadId": "564836",
+    "Html": "little endian - it always is for PCM on Windows<br />\n",
+    "PostedDate": "2014-09-24T13:27:28.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

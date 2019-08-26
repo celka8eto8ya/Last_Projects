@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Hi there,\r\n\r\nJust starting out with NAudio, but very hopeful it will make my coding life easier once I get past this issue.\r\n\r\nI'm working on a WPF application (.net framework 4.5) that just needs to play any given MP3 file.\r\n\r\nI'm using the following code pulled from a StackOverflow example (but I've also tried different variations, all with the same result):\r\n\r\n```\r\nusing (var ms = File.OpenRead(audioFilePath))\r\nusing (var rdr = new Mp3FileReader(ms))   // exception is thrown here\r\nusing (var wavStream = WaveFormatConversionStream.CreatePcmStream(rdr))\r\nusing (var baStream = new BlockAlignReductionStream(wavStream))\r\nusing (var waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))\r\n{\r\n    waveOut.Init(baStream);\r\n    waveOut.Play();\r\n    while (waveOut.PlaybackState == PlaybackState.Playing)\r\n    {\r\n        Thread.Sleep(100);\r\n    }\r\n}\r\n```\r\n\r\nWhen the Mp3FileReader constructor is called, I get the ArgumentOutOfRangeException and \"Non-negative number required\" message.\r\n\r\nAny suggestions are appreciated, and please let me know if more information is required.\r\nThanks,\r\nGeoffrey",
+    "LastUpdatedDate": "2013-09-09T05:38:50.027-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-09-06T11:40:06.333-07:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Mp3FileReader - ArgumentOutOfRangeException - Non-negative number required",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16407
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "most of that code is completely redundant (that StackOverflow example is a bad one!). You don't need the File.OpenRead, the WaveFOrmatConversionStream or the BlockAlignReductionStream. You should also not use Function callbacks. Use standard WaveOut with Window callbacks, or WaveOutEvent if you really must have a background thread for some reason.\n\nHaving said all that, it might be some kind of issue with your MP3 file. Are you able to share an MP3 file that has this issue?\n",
+      "PostedDate": "2013-09-06T13:53:22.34-07:00",
+      "Id": 112713
+    },
+    {
+      "Message": "You are correct, sir. It was the file itself. \n\nAlso, I've reverted back to the more recently-suggested code; what I posted was just my last attempt before posting my question. \n\nThanks for your quick response!",
+      "PostedDate": "2013-09-06T14:28:17.27-07:00",
+      "Id": 112721
+    }
+  ]
+}

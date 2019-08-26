@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "I call WaveOut.GetPosition up to 60 times per second to sync an animation, and when using the Callback strategy, I get deadlocks very quickly (within 20-30 seconds) and consistently (all the time). I've [described the problem in more detail](http://stackoverflow.com/a/16468906/1174169) on Stack Overflow.\r\n\r\nI made a change in WaveOut.Callback to delegate the work to the thread pool. I'm not sure if this is the best idea, as I'm not so familiar with the source of NAudio. Do you think this is a good idea? I've checked in the changes on [my NAudio fork](https://naudio.codeplex.com/SourceControl/network/forks/cod3monk3y/NAudio/changeset/1b3747e016b6).\r\n\r\nI had to update the profile to 4.0 in order to use the `Task` class. \r\n\r\nThis solves the deadlock issue, and pretty much runs exactly the same way. The only difference (besides non deadlock) is that the thread running the callback isn't an OS thread. It's a thread pool thread.\r\n\r\nThanks!\r\n/cm",
+    "LastUpdatedDate": "2013-07-16T04:48:59.27-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-05-09T12:57:47.64-07:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Deadlock in Callback with WaveOut.GetPosition",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16398
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I strongly advise against using the function callback strategy. It is the source of endless deadlock issues as you have discovered and I am thinking of removing it from NAudio altogether. Either use Window callbacks if at all possible, or use WaveOutEvent instead.",
+      "PostedDate": "2013-05-09T13:26:48.487-07:00",
+      "Id": 99842
+    },
+    {
+      "Message": "Thanks for the comment, Mark. \n\nI'm aware of the issues (clearly!) with the function callback strategy, [from your blog](http://mark-dot-net.blogspot.com/2011/05/naudio-audio-output-devices.html). It's just the only solution that works with our requirements. (Though not-deadlocking is certainly an implicit requirement!)\n\nWe *were* using Window callbacks, but even with \"new window\" the audio stutters during major changes in layout in a WPF app. Since the work is posted to the windows message pump, it must not be making it out in time to fill the buffer properly. I'm sure we could probably tune the app, but it's a large code base that was written by a former employee. \n\nWe tried increasing the `DesiredLatency` in window-strategy mode to ensure that there were 2-4 seconds of audio buffered which could get us through the transition. But this resulted in static playing back when the 2nd buffer was only partially full (short audio file) and other serious failures (like BSoD).\n\nI'd be happy to try WaveOutEvent, but I need access to the current playback position which is only available through WaveOut. Or am I missing something?\n\nDo you have any recommendations or pointers as to where I can get the current playback position using WaveOutEvent, or how to prioritize the messages using the New/Existing Window strategy so that the audio doesn't stutter?\n\nThanks!\n/cm",
+      "PostedDate": "2013-05-09T14:05:57.343-07:00",
+      "Id": 99846
+    },
+    {
+      "Message": "The person who contributed the position reporting only did it for WaveOut, not WaveOutEvent, but the same change could easily be made. It's something I should try to get in for NAudio 1.7. You can either make your own build, or make your own custom version of WaveOutEvent for now. I would stay away from function callbacks though. I tried for over 5 years to flush out all the possible deadlocks. It turns out to be very dependent on soundcard drivers. Some have no issues whatsoever, while other (Realtek is a major culprit) deadlock all over the place.",
+      "PostedDate": "2013-05-09T14:23:26.887-07:00",
+      "Id": 99850
+    },
+    {
+      "Message": "Good to know, thanks. I ended up simply copying the GetPosition() code over to WaveOutEvent and making my own build. Like you said, it was a trivial change. It works great. [Code is up on my fork](https://naudio.codeplex.com/SourceControl/network/forks/cod3monk3y/NAudio/changeset/fb15b8b25d49).\n\nThanks!",
+      "PostedDate": "2013-05-09T14:39:50.867-07:00",
+      "Id": 99854
+    },
+    {
+      "Message": "cool. I checked the same change in too since I happened to have the project loaded up. Would have pulled from your fork if I'd realised, but thanks anyway",
+      "PostedDate": "2013-05-09T16:10:22.563-07:00",
+      "Id": 99860
+    }
+  ]
+}

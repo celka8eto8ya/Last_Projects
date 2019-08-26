@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1224385",
+    "ThreadId": "539461",
+    "Html": "Hi,<br />\n<br />\nI'm writing WPF application with the newest NAudio. I have two problems with playing wave file.<br />\nFirst problem is wit not executing PlaybackStopped event. This is my code:<br />\n<pre><code>        private void InitializeAudio()\n        {\n            System.OperatingSystem osInfo = System.Environment.OSVersion;\n\n            if (osInfo.Version.Major &gt;= 6)\n            {\n                waveOut = new WasapiOut(AudioClientShareMode.Exclusive, false, 300);\n            }\n            else\n            {\n                waveOut = new DirectSoundOut(300);\n            }\n        }\n\n\n        private void CloseWaveOut()\n        {\n            if (waveOut != null)\n            {\n                if (waveOut.PlaybackState == PlaybackState.Playing)\n                {\n                    waveOut.Stop();\n                }\n                waveOut.Dispose();\n                waveOut = null;\n            }\n\n            if (waveStream != null)\n            {\n                waveStream.Close();\n                waveStream.Dispose();\n                waveStream = null;\n            }\n\n            if (waveReader != null)\n            {\n                waveReader.Close();\n                waveReader.Dispose();\n                waveReader = null;\n            }\n        }\n\n\n        private void OnWaveOutPlaybackStopped(object sender, StoppedEventArgs stoppedEventArgs)\n        {\n            log.Debug(&quot;Odtwarzanie pliku wav zakończone&quot;);\n\n            if (stoppedEventArgs.Exception != null)\n            {\n                log.Error(stoppedEventArgs.Exception.Message);\n            }\n            CloseWaveOut();\n            //InitializeAudio();\n        }\n\n\n        private void PlayVoiceMessage()\n        {\n            if (File.Exists(m_waveFile))\n            {\n                try\n                {\n                    CloseWaveOut();\n                    InitializeAudio();\n\n                    waveReader = new WaveFileReader(m_waveFile);\n                    waveStream = new WaveChannel32(waveReader);\n#if DEBUG\n                    string strFormat = waveStream.WaveFormat.ToString();\n                    string strSampleRate = waveStream.WaveFormat.SampleRate.ToString();\n                    string strChannels = waveStream.WaveFormat.Channels.ToString();\n                    string sMsg = String.Format(&quot;Format: {0}, samplerate: {1}, channels: {2}.&quot;, strFormat, strSampleRate, strChannels);\n                    log.Debug(sMsg);\n#endif                                  \n                    waveOut.Init(waveStream);\n                    waveOut.PlaybackStopped += new EventHandler&lt;NAudio.Wave.StoppedEventArgs&gt;(OnWaveOutPlaybackStopped);\n                    log.Info(&quot;Rozpoczynam odtwarzanie pliku wav&quot;);\n                    waveOut.Play();\n\n                    //CloseWaveOut();\n                }\n                catch (Exception e)\n                {\n                    string sMsg = String.Format(&quot;Błąd odtwarzania! w {0}. Przyczyna: {1}.\\nŚcieżka {2}&quot;, e.Source, e.Message, e.StackTrace);\n                    log.Error(sMsg);\n                    AddMessageToLog(sMsg);\n                }\n            }\n            else\n            {\n                log.Error(&quot;Plik Wav nie istnieje&quot;);\n            }\n        }\n</code></pre>\n\nIf I uncomment CloseWaveOut(); just after waveOut.Play(); then sound is immediately cut. If I don't uncomment it playing finishes but event doesn't occur. Can anybody suggest something?<br />\n<br />\nSecond problem is knocking in speekers at the beginning and at the end of playing. Is it possible to avoid this knocking?<br />\n<br />\ntegards<br />\nTomek<br />\n",
+    "PostedDate": "2014-03-19T05:19:12.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1226356",
+    "ThreadId": "539461",
+    "Html": "I solved first problem by adding<br />\n<pre><code>waveStream.PadWithZeroes = false;</code></pre>\n\nin the PlayVoiceMessage() method. Now the event OnWaveOutPlaybackStopped is fired correctly.\r<br />\n<br />\nSecond problem remains. Any suggestions appreciated.\r<br />\n<br />\nregards\r<br />\nTomek<br />\n",
+    "PostedDate": "2014-03-25T02:18:43.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1226360",
+    "ThreadId": "539461",
+    "Html": "I'm not sure what you mean by knocking? Does the Wave file you are playing start and end with silence? <br />\n",
+    "PostedDate": "2014-03-25T02:30:53.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1226367",
+    "ThreadId": "539461",
+    "Html": "Wave file played in WinAmp starts and ends with silence.<br />\n<br />\nI hear some kind of sound in the speakers at the beginning of the playback and at the end. It is the same sound I hear when I turn on my speakers. It is not sound of the switch.<br />\n",
+    "PostedDate": "2014-03-25T02:39:58.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1230312",
+    "ThreadId": "539461",
+    "Html": "It may just be a discontinuity, which will sound as a click. You'd need to apply a small fade to eliminate it. Were the audio files created by trimming existing files?<br />\n",
+    "PostedDate": "2014-04-04T05:58:25.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489651",
+    "ThreadId": "539461",
+    "Html": "I record speech synthesis to wave file.<br />\n<pre><code>                            reader = new SpeechSynthesizer();\n                            reader.SelectVoice(AppSettings.VoiceName);\n                            reader.SpeakCompleted += new EventHandler&lt;SpeakCompletedEventArgs&gt;(OnReaderSpeakCompleted);\n                            reader.SpeakStarted += new EventHandler&lt;SpeakStartedEventArgs&gt;(OnReaderSpeekStarted);\n                            reader.StateChanged += new EventHandler&lt;StateChangedEventArgs&gt;(OnReaderStateChanged);\n\n                            reader.SetOutputToWaveFile(m_waveFile,\n                                new System.Speech.AudioFormat.SpeechAudioFormatInfo(44100, AudioBitsPerSample.Eight, AudioChannel.Mono)\n                            );\n\n                            reader.Speak(strMessage);\n\n                            reader.SpeakAsync(WeatherMessage);\n\n                            reader.Dispose();\n                            reader = null;\n</code></pre>\n\nHow can I add fade before and after playback?<br />\n",
+    "PostedDate": "2016-12-11T11:27:08.077-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1490022",
+    "ThreadId": "539461",
+    "Html": "I changed file playback to memory stream playback and now knock at the beginning and at the end of playback do not occur.<br />\n",
+    "PostedDate": "2016-12-18T02:01:51.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

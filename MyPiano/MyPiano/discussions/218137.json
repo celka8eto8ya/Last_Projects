@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "462607",
+    "ThreadId": "218137",
+    "Html": "<p>Hi,</p>\r\n<p>I know its been mentioned alot, but im currently victim of the MP3 playing problem, where it just seems to bomb out on most mp3 files i try to read. I believe its down to it having a slightly different header section or something or wrapping data differently.</p>\r\n<p>Anyway a few people have mentioned that they have fixed this issue, and ive taken the latest source and built it to get round the Shop() hang on some integrated sound cards but it still doesnt seem to read all Mp3 files, which is a show stopper for the project im currently working on, but there dont really seem to be any better alternatives.</p>\r\n<p>So just wondering if there is any news on if this will be fixed in next build or if there are any quick fixes i can do on the source myself to get it running ok</p>",
+    "PostedDate": "2010-07-02T05:39:08.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

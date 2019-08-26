@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "473397",
+    "ThreadId": "221617",
+    "Html": "<p>Granted the codebase has been around for quite awhile, but is there any possibility of cleaning up the codebase to comply with most of the default Stylecop settings?&nbsp; With the exception of those that would move namespaces or rename classes, of course.&nbsp; But things like cleaning up the comments, explicitly providing visibility, grouping methods/properties/fields by their visibility (that wouldn't impact the structure layout) would make looking over the codebase a lot easier.&nbsp; As of right now the NAudio project alone has several thousand violations so it's definitely no small undertaking. I'd be up for the undertaking if there's actually interest.</p>",
+    "PostedDate": "2010-07-27T15:41:14.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "475230",
+    "ThreadId": "221617",
+    "Html": "<p>For those interested, I did nearly all StyleCop fixes to changeset 57274 with the exception of documentation and explicit parenthesis around math operations.&nbsp; For naming rules I put in a number of SuppressMessage attributes so that there's no breaking changes from the current external API.&nbsp; There hasn't been any functionality or name changes, but nearly every file has been changed due to a lot of implicit conventions (letting the compiler figure out object visibility (private, internal, etc.)), spacing around things like commas, or adhering to &quot;one non-nested class per file&quot;.</p>\r\n<p>Since this repository is SVN based rather than Hg based, the power of using Git-svn came in handy as I could do single commits for each rule.&nbsp; And because of that I can't do a pull request, but I have the file hosted on my website available at <a href=\"http://sleeplessmonkey.com/projects/NAudio_57274_WithStyleCop.zip\">http://sleeplessmonkey.com/projects/NAudio_57274_WithStyleCop.zip</a>.&nbsp; Hopefully others find it useful (and it gets merged into the actual project...)</p>",
+    "PostedDate": "2010-08-01T15:26:06.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "499815",
+    "ThreadId": "221617",
+    "Html": "<p>Hmmm, interesting, if not slightly OCD! I find some of sytlecop's rules to be over fussy. However, I started NAudio ages ago when I was still programming in a Java style so the codebase could do with a bit of a cleanup.</p>\r\n<p>Maybe if I get NAudio changed over to Mercurial, we could look into doing this. Probably not before NAudio 1.4 though.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-29T01:35:05.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "500096",
+    "ThreadId": "221617",
+    "Html": "<p>Being really OCD would be getting into compliance with FxCop/Code Analysis settings as well.&nbsp; Like I said, I'd be more than willing to work with you on defining what StyleCop settings to use and undertake the process of getting the code base into compliance with it.&nbsp; Using StyleCop for Resharper makes quick work of a lot of the issues.</p>",
+    "PostedDate": "2010-09-29T09:50:51.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "506181",
+    "ThreadId": "221617",
+    "Html": "<p>good idea, we'll look at this after I release 1.4</p>",
+    "PostedDate": "2010-10-12T11:23:07.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

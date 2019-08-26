@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1289935",
+    "ThreadId": "561140",
+    "Html": "Hello there\r<br />\nI try to create a record wave files and add records to the end\r<br />\nthank you<br />\n",
+    "PostedDate": "2014-08-14T02:27:51.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291705",
+    "ThreadId": "561140",
+    "Html": "use WaveFileWriter to create WAV files. If you want to append to existing WAV files, you'll need to create your own custom WAV file writer. <br />\n",
+    "PostedDate": "2014-08-20T06:59:11.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1447811",
+    "ThreadId": "561140",
+    "Html": "Hi there, can You provide some code example of that custom  WaveFileWriter? It would be very helpful for me. Thanks.<br />\n",
+    "PostedDate": "2015-10-09T04:10:09.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448181",
+    "ThreadId": "561140",
+    "Html": "Guys, nobody will do all work for you. Just look at WaveFileWriter.cs at source code section.\r<br />\n<br />\nBasically, your approach should be open the filestream in append mode, write the data and finally update wave header (length information).\r<br />\n<br />\nTime to get your lazy bones up ;)<br />\n",
+    "PostedDate": "2015-10-12T06:57:08.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

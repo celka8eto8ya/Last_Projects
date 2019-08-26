@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "723082",
+    "ThreadId": "285625",
+    "Html": "\r\n<p>I have been browsing through this forum and the demo NAudio project for several hours now but I'm still unable to understand how to simply draw a waveform. The example provided is in C#, which is a bit unfamiliar to me. I just can't figure out where to start..\r\n I'd greatly appreciate your help on getting me started.</p>\r\n",
+    "PostedDate": "2012-01-10T06:01:01.23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "729877",
+    "ThreadId": "285625",
+    "Html": "<p>The way to draw a waveform is to examine sample values over a set period (say 200ms), and pick out the highest and lowest values. Then draw a vertical line representing that time. Then move on to the next one. That is how the waveform drawing in NAudio works.</p>",
+    "PostedDate": "2012-01-24T05:18:31.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "734230",
+    "ThreadId": "285625",
+    "Html": "<p>But how do I examine the values? I am able to play the file, but can't extract the amplitude value. I also can't figure out how to create a buffer and read from there. I sort of have it all in my mind, but can't put it down in code..</p>",
+    "PostedDate": "2012-02-01T01:25:11.537-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "734413",
+    "ThreadId": "285625",
+    "Html": "<p>I'm using WaveViewer to show wave file while playback and WavePainter to show waveFile while recording. And in some my post on this forum I have described everything.</p>\r\n<p>Use dataAvailable event:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> input_DataAvailable(<span style=\"color: blue;\">object</span> sender, NAudio.Wave.WaveInEventArgs e)\r\n{   \r\n  <span style=\"color: blue;\">if</span> (OnVolumePeak != <span style=\"color: blue;\">null</span>)\r\n  {\r\n    <span style=\"color: blue;\">float</span> max = 0;\r\n    <span style=\"color: blue;\">float</span> min = 0;\r\n\r\n    <span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> index = 0; index &lt; e.BytesRecorded; index += 2)\r\n    {\r\n      <span style=\"color: blue;\">short</span> sample = (<span style=\"color: blue;\">short</span>)((e.Buffer[index+1]&lt;&lt;8) | (e.Buffer[index]) );\r\n      <span style=\"color: blue;\">float</span> sample32 = sample / 32768f;\r\n\r\n      max = Math.Max(sample32, max);\r\n      min = Math.Min(sample32, min);\r\n    }\r\n\r\n    OnVolumePeak(<span style=\"color: blue;\">this</span>, max, min);\r\n\r\n  }\r\n\r\n  <span style=\"color: blue;\">if</span> (_state == State.RECORDING)\r\n  {\r\n    <span style=\"color: blue;\">if</span> (waveWriter != <span style=\"color: blue;\">null</span>)\r\n    {\r\n      waveWriter.WriteData(e.Buffer, 0, e.BytesRecorded);\r\n      waveWriter.Flush();\r\n    }\r\n\r\n    memStream.Write(e.Buffer, 0, e.BytesRecorded);\r\n  }\r\n            \r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>OnVolumePeak is my event. You can treat is as an ordinary method.</p>\r\n<p>It looks like that:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> am_OnVolumePeak(<span style=\"color: blue;\">object</span> Sender, <span style=\"color: blue;\">float</span> max, <span style=\"color: blue;\">float</span> min)\r\n{\r\n  max = Math.Max(max, Math.Abs(min));\r\n  wavePainter.AddMax(max);\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>When you want to show waveform of existing wave file, WaveViewer has a property called WaveStream.</p>",
+    "PostedDate": "2012-02-01T03:43:14.003-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "736527",
+    "ThreadId": "285625",
+    "Html": "<p>Thank you, but I can't figure out where to get the waveWriter or memstream..</p>",
+    "PostedDate": "2012-02-02T03:51:50.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "737232",
+    "ThreadId": "285625",
+    "Html": "<p>they are instances of WaveFileWriter (part of NAudio) and MemoryStream (part of .NET framework)</p>",
+    "PostedDate": "2012-02-02T12:28:56.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

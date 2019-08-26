@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "131926",
+    "ThreadId": "39739",
+    "Html": "Is there any chance that NAudio will support WMA format in the future?<br>\r\nAlso, is there any possibility of NAudio being able to play an MP3/WMA file via a MemoryStream rather than actually loading the file directly - I would like to be able to stream mp3 files to NAudio via a WCF service and play the stream.<br>\r\n",
+    "PostedDate": "2008-11-12T00:25:28.223-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "131964",
+    "ThreadId": "39739",
+    "Html": "I would like to add WMA support and have begun on some interop around the Windows Media Format SDK, but it may be a while before it is all ready to use. It's a shame that Microsoft don't make using Windows Media Format a lot easier from managed code.<br>\r\n",
+    "PostedDate": "2008-11-12T03:37:20.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

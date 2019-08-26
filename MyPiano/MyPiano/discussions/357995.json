@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "843565",
+    "ThreadId": "357995",
+    "Html": "\r\n<p>When using WaveOutEvent to endlessly playback audio between a start and end marker only works reliably if waveStream.CurrentTime is&nbsp;re-winded to start marker when it reaches the end marker.</p>\r\n<p>Stopping playback on reaching the end marker, re-winding waveStream.CurrentTime and then&nbsp;issuing&nbsp;Play is not robust. Sometimes&nbsp;issuing&nbsp;Play no audio is played even though the PlaybackState&nbsp;is 'Playing'.</p>\r\n<p>Normal&nbsp;play-out&nbsp;(without&nbsp;the use of start and end marker) is also&nbsp;problematic. On reaching the end of playback the stop event is fired which is used to rewind the wavestream to 0. On issuing the next Play (manually&nbsp;clicking&nbsp;on\r\n a button)&nbsp;no audio is played even though the PlaybackState&nbsp;is 'Playing'. After another pause/play cycle&nbsp;play-out&nbsp;is working again.</p>\r\n<p>In your demo program no rewinding takes place as&nbsp;issuing&nbsp;a play&nbsp;freshly&nbsp;creates a new waveout which would neatly mask this issue.</p>\r\n<p>Any ideas?</p>\r\n",
+    "PostedDate": "2012-06-01T07:27:54.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "843897",
+    "ThreadId": "357995",
+    "Html": "<p>I also experience the problem with the next Play command resulting in PlaybackState == Playing but the audio file is not actually playing.&nbsp; I am using an event timer to track the progress of the audio file.&nbsp; If CurrentTime.Ticks is not incrementing, try again.&nbsp; This happens occasionally and stops my player.&nbsp; For now I just issue a command to try the track again.</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (_ticks == AudioRoutines.FileWaveStream.CurrentTime.Ticks &amp;&amp; AudioRoutines.Waveplayer.PlaybackState==PlaybackState.Playing)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (_ticks == AudioRoutines.FileWaveStream.TotalTime.Ticks) return;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PlayOrderListIndex = PlayOrderListIndex - 1;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (PlayOrderListIndex &lt; 0) PlayOrderListIndex = 0;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TrackTimer.Stop();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PlayNexttrack();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _ticks = AudioRoutines.FileWaveStream.CurrentTime.Ticks;</p>",
+    "PostedDate": "2012-06-02T11:20:05.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "844154",
+    "ThreadId": "357995",
+    "Html": "<p>Modifying WaveOutEvent.Play() as follows resolved this issue (for me):</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; public void Play()&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space: pre;\"> </span>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space: pre;\"> </span>if (playbackState == PlaybackState.Stopped)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space: pre;\"> </span>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space: pre;\"> </span>playbackState = PlaybackState.Playing;</p>\r\n<p><span style=\"white-space: pre;\"> </span>ThreadPool.QueueUserWorkItem((state) =&gt; PlaybackThread(), null);</p>\r\n<p><span style=\"white-space: pre;\"> </span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; callbackEvent.Set(); // kicking the thread here can only be good &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;=========Line Added========</p>\r\n<p><span style=\"white-space: pre;\"> </span>}</p>\r\n<p><span style=\"white-space: pre;\"> </span>else if (playbackState == PlaybackState.Paused)</p>\r\n<p><span style=\"white-space: pre;\"> </span>{</p>\r\n<p><span style=\"white-space: pre;\"> </span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Resume();</p>\r\n<p><span style=\"white-space: pre;\"> </span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; callbackEvent.Set(); // give the thread a kick</p>\r\n<p><span style=\"white-space: pre;\"> </span>}</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; }</p>\r\n<p>&nbsp;</p>\r\n<p>So Mark if you agree make it part of the official code.</p>",
+    "PostedDate": "2012-06-03T17:55:24.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847378",
+    "ThreadId": "357995",
+    "Html": "<p>thanks for this suggestion. I'll try to get something like this incorporated in for a future version. Probably WaveInEvent would need a similar fix</p>",
+    "PostedDate": "2012-06-11T03:28:52.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1242703",
+    "ThreadId": "544626",
+    "Html": "I want them to be in one file and play at the same time. so not just in one file and play one after the other, but play at the same time.<br />\nhow do i do that ?<br />\n<br />\nI believe I need to use a mixer <br />\n<br />\nI am trying this code but I am getting an error :<br />\n<pre><code>   {\n        MixingSampleProvider mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100,1));\n           waveout.Init(mixer);\n           waveout.Play();</code></pre>\n\nthe error is <br />\nError\t3\tArgument 1: cannot convert from 'NAudio.Wave.SampleProviders.MixingSampleProvider' to 'NAudio.Wave.IWaveProvider'\t<br />\nError\t2\tThe best overloaded method match for 'NAudio.Wave.WaveOut.Init(NAudio.Wave.IWaveProvider)' has some invalid arguments\t<br />\n<br />\nWhy ?<br />\n",
+    "PostedDate": "2014-05-07T11:37:46.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242749",
+    "ThreadId": "544626",
+    "Html": "ok this is the my mix function:<br />\n<pre><code>\n        void Mixingfunction(List&lt;string&gt; inputFiles)\n       {\n        MixingSampleProvider mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100,1));\n        try\n        {\n\n            for (int y = 0; y &lt; counter; y++)\n            {\n                audioFileReader = new AudioFileReader(inputFiles[y]);\n                mixer.AddMixerInput((ISampleProvider)audioFileReader);\n            }\n        }\n            catch( Exception e)\n            {\n                MessageBox.Show(e.Message);\n                return;\n\n            }\n\n        if (flag == true)\n        {\n            mixer.AddMixerInput((ISampleProvider)sineWaveProvider);\n        }\n        SampleToWaveProvider mixer2 = new SampleToWaveProvider(mixer);\n          waveout.Init(mixer2);\n           waveout.Play();\n        }</code></pre>\n\nI am getting an runtime error at    mixer.AddMixerInput((ISampleProvider)audioFileReader);\r<br />\nthis is when Y is still = to 0.\r<br />\nit says \r<br />\n&quot;All mixer inputs must have the same WaveFormat&quot;\r<br />\nwhat I am doing wrong?<br />\n",
+    "PostedDate": "2014-05-07T13:40:53.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242937",
+    "ThreadId": "544626",
+    "Html": "they must all have the same sample rate, bit depth, and number of channels to be mixed. It's probably just the channel count in your instance. Decide if you want to mix in mono or stereo, and then convert all your inputs to the same channel count<br />\n",
+    "PostedDate": "2014-05-08T02:01:51.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-08T04:58:50.117-07:00"
+  }
+]

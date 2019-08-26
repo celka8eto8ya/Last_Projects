@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1480039",
+    "ThreadId": "656767",
+    "Html": "Im trying to get the pitch of microphone input in real time. I have a capture base class which includes the sample rate, channels etc.,  and the sample aggregator class has taken from Mark's WPF demo<br />\n<br />\nCapture Base<br />\n<pre><code>    public class CaptureBase : IDisposable\n    {\n        static int fftLength = 1024;\n        const int samplingFrequency = 44100;\n        const int channels = 1;\n        const int noOfBuffers = 5;\n        const int bufferMilisecs = 10;\n        const int latency = 50;\n        WaveIn sourceStream;\n        DirectSoundOut soundOut;\n        SampleAggregator sampleAggregator;\n        bool disposed = false;\n        bool isCapturing = false;\n\n        public void StartCapture(Guid selectedDevice)\n        {\n            isCapturing = true;\n           \n            sampleAggregator = new SampleAggregator(fftLength);\n            sampleAggregator.FftCalculated += new EventHandler&lt;FftEventArgs&gt;(FftCalculated);\n            sampleAggregator.PerformFFT = true;\n\n            sourceStream = new WaveIn();\n            sourceStream.NumberOfBuffers = noOfBuffers;\n            sourceStream.BufferMilliseconds = bufferMilisecs;\n            sourceStream.WaveFormat = new WaveFormat(samplingFrequency, channels);\n            sourceStream.DataAvailable += new EventHandler&lt;WaveInEventArgs&gt;(sourceStream_DataAvailable);\n            sourceStream.StartRecording();\n        }\n\n        private void FftCalculated(object sender, FftEventArgs e)\n        {\n              //Analysis.HPS hps = new Analysis.HPS();\n            for (var i = 0; i &lt; e.Result.Length; i++)\n            {\n                Debug.WriteLine(&quot;FFT output.&quot;);\n                Debug.WriteLine(e.Result[i].X);\n                Debug.WriteLine(e.Result[i].Y);     \n                //hps.HarmonicProductSpectrum(e.Result);\n            }\n        }\n\n        public SampleAggregator SampleAggregator\n        {\n            get\n            {\n                return sampleAggregator;\n            }\n        }\n      \n        private void sourceStream_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            byte[] buffer = e.Buffer;\n            int bytesRecorded = e.BytesRecorded;\n           \n            for (int i = 0; i &lt; e.BytesRecorded; i += 2)\n            {\n                short sample = (short)((buffer[i + 1] &lt;&lt; 8) | buffer[i + 0]);\n                float sample32 = (sample / 32758f);\n                sampleAggregator.Add(sample32);\n            }\n        }\n\n        public void Stop()\n        {\n            if (isCapturing)\n            {\n                isCapturing = false;\n            }\n        }\n\n        public void Dispose(bool disposing)\n        {\n            if (disposed) return;\n\n            disposed = true;\n            GC.SuppressFinalize(this);\n            if (isCapturing) Stop();\n        }\n\n        void IDisposable.Dispose()\n        {\n            Dispose(true);\n        }\n    }\n}\n</code></pre>\n\nSample Aggregator<br />\n<pre><code> public class SampleAggregator\n    {\n        private readonly Complex[] fftBuffer;\n        private readonly FftEventArgs fftArgs;\n        private int fftPos;\n        private readonly int fftLength;\n        private int m;\n        public event EventHandler&lt;FftEventArgs&gt; FftCalculated;\n\n        public bool PerformFFT { get; set; }\n\n        public SampleAggregator(int fftLength)\n        {\n            if (!IsPowerOfTwo(fftLength))\n            {\n                throw new ArgumentException(&quot;FFT Length must be a power of two&quot;);\n            }\n            this.m = (int)Math.Log(fftLength, 2.0);\n            this.fftLength = fftLength;\n            this.fftBuffer = new Complex[fftLength];\n            this.fftArgs = new FftEventArgs(fftBuffer);\n        }\n\n        bool IsPowerOfTwo(int x)\n        {\n            return (x &amp; (x - 1)) == 0;\n        }\n\n        public void Add(float value)\n        {\n            if (PerformFFT &amp;&amp; FftCalculated != null)\n            {\n                // Remember the window function! There are many others as well.\n                fftBuffer[fftPos].X = (float)(value * FastFourierTransform.HammingWindow(fftPos, fftLength));\n                fftBuffer[fftPos].Y = 0; // This is always zero with audio.\n                fftPos++;\n                if (fftPos &gt;= fftLength)\n                {\n                    fftPos = 0;\n                    FastFourierTransform.FFT(true, m, fftBuffer);\n                    FftCalculated(this, fftArgs);\n                }\n            }\n        }\n    }\n\n    public class FftEventArgs : EventArgs\n    {\n        [DebuggerStepThrough]\n        public FftEventArgs(Complex[] result)\n        {\n            this.Result = result;\n        }\n        public Complex[] Result { get; private set; }\n    }\n}\n}\n</code></pre>\n\nPlease can someone explain what i have done wrong. <br />\n",
+    "PostedDate": "2016-07-28T06:42:29.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485778",
+    "ThreadId": "656767",
+    "Html": "FFT calculation is CPU intensive, so performance can be an issue. There might be some performance optimisations available when adding to the sample aggregator. You could try running a profiler over it. Also consider running in release mode.<br />\n",
+    "PostedDate": "2016-10-11T03:32:30.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486064",
+    "ThreadId": "656767",
+    "Html": "Yeah. I move it to a background thread. Now it's working. Thanks Mark. \r<br />\n<br />\nI have a small issue.  I used both FFT and harmonic product spectrum (using FFT) to get fundamental frequency value of A4 note (440Hz) to see which one has the more accurate result. But they give results as ;\r<br />\n \r<br />\nHPS : 443.3594 FFT: 441.2985Hz\r<br />\nHPS : 445.3125 FFT: 886.5023Hz\r<br />\nHPS : 443.3594 FFT: 888.455Hz\r<br />\nHPS : 441.4063 FFT: 443.2512Hz\r<br />\n<br />\nI want to use HPS but can you suggest me a way to improve the frequency resolution?<br />\n",
+    "PostedDate": "2016-10-14T01:02:54.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486065",
+    "ThreadId": "656767",
+    "Html": "Not my area of speciality I'm afraid. I suggest asking at a music DSP forum\r<br />\nTry here: <a href=\"http://www.kvraudio.com/forum/viewforum.php?f=33\" rel=\"nofollow\">http://www.kvraudio.com/forum/viewforum.php?f=33</a>\r<br />\nor here: <a href=\"https://dsp.stackexchange.com/\" rel=\"nofollow\">https://dsp.stackexchange.com/</a><br />\n",
+    "PostedDate": "2016-10-14T01:09:32.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486089",
+    "ThreadId": "656767",
+    "Html": "Okay. Thanks Mark<br />\n",
+    "PostedDate": "2016-10-14T06:38:47.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

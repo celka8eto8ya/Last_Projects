@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "499308",
+    "ThreadId": "228811",
+    "Html": "<p>Hi all,</p>\r\n<p>Is it possible to use NAudio lib to split one&nbsp;mixed audio file to two separate files of left channel and right channel?</p>\r\n<p>I have been working on this for the whole day and have not found a way yet...</p>\r\n<p>Any suggestion?</p>\r\n<p>Thanks a lot!</p>\r\n<p>&nbsp;</p>\r\n<p>Regards</p>\r\n<p>Darren</p>",
+    "PostedDate": "2010-09-28T00:08:46.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "499399",
+    "ThreadId": "228811",
+    "Html": "<p>it is possible to use NAudio as the basis for this, but you would need to create your own WaveStream that thre away every other sample</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-28T03:35:34.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "499401",
+    "ThreadId": "228811",
+    "Html": "<p>Thank you Mark, I will try it.</p>",
+    "PostedDate": "2010-09-28T03:41:21.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "499711",
+    "ThreadId": "228811",
+    "Html": "<p>Hi Mark,</p>\r\n<p>I read the wavestream class, it seems this class only for reading wave file, right?</p>\r\n<p>Basically I want to generate two files of left channel recording and right channel recording respectively.</p>\r\n<p>My real case is: I need to record phone calls, and now I can use the NAudio to get caller and receiver's voice in one wave file by using:</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>waveIn.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat(8000, 2);</pre>\r\n</div>\r\n</p>\r\n<p>A strange thing is when I listen to the recording audio, one side is only caller's voice, another side is the voice mixed from both caller and receiver.. I don't understand why..</p>\r\n<p>Can you please give some tips?&nbsp;</p>\r\n<p>Thanks a lot:)</p>\r\n<p>Darren</p>",
+    "PostedDate": "2010-09-28T18:42:35.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "502667",
+    "ThreadId": "228811",
+    "Html": "<p>the byte array you receive from waveIn will consist of 2 bytes left channel, 2 bytes right channel and so on. So you just throw away every other pair of bytes.</p>\r\n<p>Also, when writing to the WaveFile, make sure that you set a mono format, i.e. new WaveFormat(8000,1);</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-05T12:18:47.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "502701",
+    "ThreadId": "228811",
+    "Html": "<p>Thanks a lot Mark, I thought its 4 bytes for each...and failed to split them.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-10-05T13:54:54.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

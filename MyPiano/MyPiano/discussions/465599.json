@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1117919",
+    "ThreadId": "465599",
+    "Html": "I have integrated the Volume Sample Provider code into my Custom Panning Provider class. When the volume is lowered through the UI, I adjust the volume to the left and right channel before I make the panning adjustments.\r<br />\n<br />\nThis method seems to work, but when we lower the volume, I hear a hissing sound. How can we eliminate that?\r<br />\n<br />\nI basically do the following code:\r<br />\n<br />\nthis.sourceBuffer[n] *= LeftVolume\r<br />\nthis.sourceBuffer[n+1] *= RightVolume\r<br />\n<br />\nWhere in my case, left and right volume are the same values (somewhere between 0.0 and 1.0) and after I adjust volume factor, I make a panning adjustment based on either or not the original audio stream is stereo or mono.\r<br />\n<br />\nThoughts?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-11-05T10:40:35.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1118797",
+    "ThreadId": "465599",
+    "Html": "is the audio in the source buffer definitely stereo?<br />\n",
+    "PostedDate": "2013-11-06T02:31:41.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1118858",
+    "ThreadId": "465599",
+    "Html": "I found my problem. When I looked at the panning code for a mono stream, I was doing the same volume code to the current element and the next element, even though I was advancing through the buffer one element at a time:\r<br />\n<br />\nthe following code segment: <br />\n<pre><code>this.sourceBuffer[n] *= Volume\nthis.sourceBuffer[n+1] *= Volume </code></pre>\n\nbecame this:<br />\n<pre><code>this.sourceBuffer[n] *= Volume</code></pre>\n\nand the hissing went away.\r<br />\n<br />\nThanks for the tip....\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-11-06T06:00:56.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1118870",
+    "ThreadId": "465599",
+    "Html": "On another note, anyway to apply volume settings to a WaveProvider buffer?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-11-06T06:18:57.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1118989",
+    "ThreadId": "465599",
+    "Html": "Just noticed the VolumeWaveProvider16, which works with 16-bit PCM, which is what we are using. Does it work with both mono and stereo streams?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-11-06T08:23:23.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1120340",
+    "ThreadId": "465599",
+    "Html": "yes, should do, although it will hard clip any samples that go above maximum.<br />\n",
+    "PostedDate": "2013-11-08T00:24:34.56-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1120381",
+    "ThreadId": "465599",
+    "Html": "thanks....our volume setting is always between 0.0f and 1.0f (floating value anyway), so we never go above that anyway and do not have to worry about any hard clipping.\r<br />\n<br />\nThanks\r<br />\nPaul<br />\n",
+    "PostedDate": "2013-11-08T02:30:12.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

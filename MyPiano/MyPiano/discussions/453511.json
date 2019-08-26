@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "1080935",
+    "ThreadId": "453511",
+    "Html": "Is there a way to know if it´s already recording?\r<br />\nCause i would like to have it in a function, as currently i have to do quite a way around the issue.\r<br />\n<br />\nBut if i can just do something like\r<br />\n<br />\nIf (isrecording)\r<br />\nstoprecording\r<br />\n<br />\nit would make it much easier.\r<br />\n<br />\nIt should be possible, as i can get an error if it´s already recording, which means, it can sense if it is recording.<br />\n",
+    "PostedDate": "2013-08-15T06:47:22.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081007",
+    "ThreadId": "453511",
+    "Html": "You can check if DataAvailable event is triggered or not.\r<br />\n<br />\nFor example , \r<br />\n<br />\nyou can write this in \r<br />\n<br />\n void wi_DataAvailable(object sender, WaveInEventArgs e)<br />\n<pre><code>    {\n        isRecording = true; //Declare this property \n        bwp.AddSamples(e.Buffer, 0, e.BytesRecorded);\n\n    }</code></pre>\n\nAnd in StopRecording() \r<br />\n {\r<br />\n   isRecording = false;\r<br />\n }\r<br />\n<br />\nHope that helps<br />\n",
+    "PostedDate": "2013-08-15T09:14:52.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081009",
+    "ThreadId": "453511",
+    "Html": "Ah true. But is that really a good idea?\r<br />\nMeaning as much as that loop goes on and on, it seems quite, unoptimal so to say.\r<br />\n<br />\nMeaning why say you are in the air all the time till you land, when you just can say it once, and then stop when you have landed.<br />\n",
+    "PostedDate": "2013-08-15T09:17:32.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081014",
+    "ThreadId": "453511",
+    "Html": "Ya I agree this isn't the best way.\r<br />\n<br />\nBut i wont say it will hamper performance, its just one assignment.\r<br />\n<br />\nBTW , Do you knw how to access individual mic from a mic array ?<br />\n",
+    "PostedDate": "2013-08-15T09:30:27.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081016",
+    "ThreadId": "453511",
+    "Html": "True, but still. Hmm, well hopefully Mark will look into it:)\r<br />\n<br />\nMaybe, depends.\r<br />\n<br />\nI can do something like this.\r<br />\n<br />\nHave a combobox, put alla available recording devices in it. Change recording device as i choose it in the combobox.\r<br />\n<br />\nIt´s how i do it in my chat application.<br />\n",
+    "PostedDate": "2013-08-15T09:33:04.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081018",
+    "ThreadId": "453511",
+    "Html": "But if the device is mic array (Consisting of two microphones ) Then how do you access individual microphone from the mic array.<br />\n",
+    "PostedDate": "2013-08-15T09:35:56.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081021",
+    "ThreadId": "453511",
+    "Html": "I pretty much suck at programming, so not really sure what you mean with mic array.<br />\n<br />\nShouldn´t 1 recording device be 1 mic (if it´s a mic)?<br />\nnot 1 device = 2 mics?<br />\n<br />\nHere is how i do it for recording devices a least.<br />\n<pre><code> private void GetAudioDevices()\n        {\n            for (waveInDevice = 0; waveInDevice &lt; NAudio.Wave.WaveIn.DeviceCount; waveInDevice++)\n            {\n                deviceInfo = WaveIn.GetCapabilities(waveInDevice);\n                AudioDevices.Items.Add(deviceInfo.ProductName);\n            }\n            //Select first combobox item\n            if (AudioDevices.Items.Count &gt; 0)\n            {\n                AudioDevices.SelectedIndex = 0;\n            }\n            AudioDevices.Items.Add(&quot;Wasapi Loopback&quot;);\n            ListenAudioAgain = false;\n            AudioDevice = AudioDevices.SelectedItem.ToString();\n        }\n</code></pre>\n\nWasapi Loopback is, well wasapi loopback, and as it´s not audio device, i add it last, so it can be ignored.<br />\n",
+    "PostedDate": "2013-08-15T09:38:54.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081024",
+    "ThreadId": "453511",
+    "Html": "Nah I knw that. \r<br />\n<br />\nThe Thing is when I enumerate devices I get the list as , \r<br />\n Mic array (2 channels)\r<br />\n<br />\nNow this Mic array has 2 mics inside it.  It processes data from both the microphones determines sound direction and stuff. So I get access to Mic array \r<br />\nbut not to the individual micrphones inside it. And I want to access them for some reason\r<br />\n<br />\nAnyways thanks for the help<br />\n",
+    "PostedDate": "2013-08-15T09:42:25.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081025",
+    "ThreadId": "453511",
+    "Html": "Ah good, hmm, i get the picture.\r<br />\nSadly i don´t know how to help you.\r<br />\n<br />\nIf it is 2 objects in the array, it should be easy to choose 1 object i guess, sadly i don´t have anything like that, so can´t test.\r<br />\n<br />\nSorry<br />\n",
+    "PostedDate": "2013-08-15T09:44:57.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081027",
+    "ThreadId": "453511",
+    "Html": "Its not that easy thats the problem. I guess If nobody answers here then I will have to write my custom audio effect implementation in c++.\r<br />\nI wish NAudio could help.<br />\n",
+    "PostedDate": "2013-08-15T09:46:41.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081030",
+    "ThreadId": "453511",
+    "Html": "Well seems so. Hmm, i think Mark probably could understand this.\r<br />\nNAudio is an excellent library so it can probably be solved.\r<br />\n<br />\nYou can try adding it to the Issue tracker?\r<br />\n<br />\nMark is a busy man i think, so he isn´t that active in the forums, but will probably check the issue and have a good look at it.<br />\n",
+    "PostedDate": "2013-08-15T09:49:04.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1484287",
+    "ThreadId": "658135",
+    "Html": "Hey, your library is great. My question is you are planning to have mono version for Mac or Linux?\r<br />\nThanks.<br />\n",
+    "PostedDate": "2016-09-21T00:54:20.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1484448",
+    "ThreadId": "658135",
+    "Html": "hi there, a very large part of NAudio is wrappers for Windows APIs, so most of it unfortunately won't work on Mac or Linux. You could perhaps pull out the platform agnostic bits into a .NET core package<br />\n",
+    "PostedDate": "2016-09-22T11:25:28.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

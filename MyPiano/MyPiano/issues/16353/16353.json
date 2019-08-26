@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Wasapi Loopback recording, mixed together with recording from microphone is the solution to this",
+    "ClosedDate": "2012-10-05T14:49:17.527-07:00",
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "Need to record all sounds from sound card. So that mic+output was written to file. Is it possible? Cant find any examples, found just ones that allow to write mic. ",
+    "LastUpdatedDate": "2012-10-05T14:49:17.527-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-05-25T02:10:43.487-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Need to record all sounds from sound card.",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16353
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "this is called loopback recording and is possible with WASAPI (so you can't use it in Windows XP)",
+      "PostedDate": "2012-05-25T02:30:54.97-07:00",
+      "Id": 66666
+    },
+    {
+      "Message": "// can't set WaveFormat as WASAPI doesn't support SRC\nwaveIn = new WasapiLoopbackCapture();\nfrom demo?.. But it records just output, no mic sound (",
+      "PostedDate": "2012-05-25T02:37:31.333-07:00",
+      "Id": 66667
+    },
+    {
+      "Message": "yes you must also record any microphones you want and mix after. It is unfortunately that WASAPI does not provide built in SRC, so you have to do it yourself.",
+      "PostedDate": "2012-05-25T03:33:32.013-07:00",
+      "Id": 66671
+    },
+    {
+      "Message": "Check out this thread for a WasapiLoopbackCapture class that takes the output from your soundcard and turns it into a wavein device you can record or whatever...\n\nhttps://naudio.codeplex.com/discussions/203605/",
+      "PostedDate": "2012-08-08T06:35:29.05-07:00",
+      "Id": 73678
+    }
+  ]
+}

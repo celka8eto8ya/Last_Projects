@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "503899",
+    "ThreadId": "230053",
+    "Html": "<p>Hi,</p>\r\n<p>using NAudio i am getting the data from microphone in DataAvailable event but how can i convert it to Mpeg1 Layer 2 format then compress it to&nbsp; Mono 44.1Khz, bit rate 64KBits/s.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>\r\n<p>shaileh</p>",
+    "PostedDate": "2010-10-07T13:36:06.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "506173",
+    "ThreadId": "230053",
+    "Html": "<p>NAudio cannot save in MP3 format. Have a look at voicerecorder.codeplex.com for an example of how to use NAudio to record audio and then use LAME.exe to convert it to MP3.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-12T11:17:51.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

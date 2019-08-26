@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "672914",
+    "ThreadId": "272883",
+    "Html": "\r\n<p>I am a big fan of this libary and just wrote a few classes for controlling a live stream with an fft implemationen. It is working but the fft doesn t look very nice. It looks like it lags a lot.</p>\r\n<p>I made a few tests about the speed but render function just takes (average) 1.2ms. And every (average) 20.9ms a new fft result is calculated.\r\n<br>\r\nSo i have no idea why it lags. But the problem is, it looks like.</p>\r\n<p>So I made a few tests with bass.dll and this one works very very nice.<br>\r\nI updated the visualation every 45ms and the result was more then nice. But how can I implement that?</p>\r\n<p>Another thing i notized is that bass.dll has not as heavy steps as naudio. If I am using your fft agregator class and the calculated input from the wavechannel32 on sample evnet I have big &quot;steps&quot; in the visualation. That means from update to update the\r\n values of the bars I draw are from 0 - 200.<br>\r\nBut in bass.dll they don t do something like that. Because if I have a value of 0 and 20ms later a value of 200 and another 20ms later a value of 10 it looks very bad...</p>\r\n<p>&nbsp;</p>\r\n<p>So someone knows a good algorithm to draw a really nice fft Visualation?</p>\r\n",
+    "PostedDate": "2011-09-16T13:31:10.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682283",
+    "ThreadId": "272883",
+    "Html": "<p>done it now look at http://naudio.codeplex.com/workitem/16333</p>",
+    "PostedDate": "2011-10-10T13:45:37.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "544078",
+    "ThreadId": "240505",
+    "Html": "\r\n<p>I&acute;m trying to decode a wav file encoded with NAudio ADPCM codec (WaveFormatConversionStream) to PCM, but when the file has more than 30 seconds, it shows me this exception &quot;<strong>AcmNotPossible calling acmStreamSize</strong>&quot;</p>\r\n<p>my &quot;decoder&quot; code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>WaveStream waveStream = <span style=\"color:blue\">new</span> WaveFileReader(<span style=\"color:#a31515\">&quot;OUTPUT_ADPCM.WAV&quot;</span>);\r\n\r\nNAudio.Wave.WaveFormat targetFormat = <span style=\"color:blue\">default</span>(NAudio.Wave.WaveFormat);\r\n\r\ntargetFormat = NAudio.Wave.WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, 8000, 1, 8000, 1, 8);\r\n\r\n<span style=\"color:blue\">using</span> (WaveStream convertedStream = <span style=\"color:blue\">new</span> WaveFormatConversionStream(targetFormat, waveStream))\r\n{                    \r\n     WaveFileWriter.CreateWaveFile(<span style=\"color:#a31515\">&quot;OUTPUT_PCM.wav&quot;</span>, convertedStream);\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>What's the meaning of this exception? Where is the error?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2011-01-04T18:44:00.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "544207",
+    "ThreadId": "240505",
+    "Html": "\r\n<p>it is the ACM codec reporting that it can't convert a whole block. look at the NAudio source code for the CreateWaveFile function, and experiment with different block sizes (or ignore errors on the final block)</p>\r\n<p>Mark</p>\r\n<div id=\"x__mcePaste\" style=\"left:-10000px; top:0px; width:1px; height:1px; overflow:hidden\">\r\n<p>if you work with the latest code, the Mp3FileReader is much more accurate at reporting length, and offers the additional benefit of not requiring you to perform the format conversion (Read returns PCM). This will hopefully be released in the not too distant\r\n future as NAudio 1.4</p>\r\n<p>Mark</p>\r\n</div>\r\n",
+    "PostedDate": "2011-01-05T02:34:45.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "544365",
+    "ThreadId": "240505",
+    "Html": "\r\n<p>Mark,</p>\r\n<p>I look at CreateWaveFile function, and I try to change the block sizes with no sucess.</p>\r\n<p>I try to change the size of the buffer at this point in CreateWaveFile</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">byte</span>[] buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[stream.WaveFormat.SampleRate * stream.WaveFormat.Channels * 16];</pre>\r\n</div>\r\n<p></p>\r\n<p>I use this:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">byte</span>[] buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[stream.Length];\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>And it works!!!</p>\r\n<p>&nbsp;</p>\r\n<p>Is there any incompatibility with buffer size and WaveFormatConversionStream<a id=\"x_file_6_9_7_12\" href=\"http://naudio.codeplex.com/SourceControl/changeset/view/64823#7832\"></a>.Read?</p>\r\n<p>Thanks again.</p>\r\n",
+    "PostedDate": "2011-01-05T07:51:35.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "544374",
+    "ThreadId": "240505",
+    "Html": "\r\n<p>you need to be careful not to end up passing in too much to the ACM codec, or you'll end up with other buffers not being big enough. Apart from that you should be ok</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-05T08:09:10.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

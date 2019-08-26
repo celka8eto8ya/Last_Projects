@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1449584",
+    "ThreadId": "646606",
+    "Html": "Hello,\r<br />\n<br />\nI'm using NAudio library in my C# project for recording audio. I write below the description of my trouble:\r<br />\n<br />\nBefore recording of audio (Wave) starts, a user selects one of available input devices. We want to record audio in 16bits and sample rate of 48kHz so we use WaveFormat object in initialization of WaveFileWriter. The code looks like this:<br />\n<pre><code>waveSource = new WaveIn();\nwaveSource.DeviceNumber = deviceNumber;\nWaveFormat waveFormat = new WaveFormat(sampleRate, bits, waveSource.WaveFormat.Channels);\nwaveSource.WaveFormat = waveFormat;\n\nwaveSource.DataAvailable += OnDataAvailable;\nwaveSource.RecordingStopped += OnRecordingStopped;\n\nmemoryStream = new MemoryStream();\nwaveWriter = new WaveFileWriter(memoryStream, waveSource.WaveFormat);</code></pre>\n\nIt works as expected on some sound cards, but the same code has a problem on proffesional high-end sound card. The problem is, that only half of the range is used, i.e. when setting 16bits/sample, the output wave has ranges in &lt;-16384, 16384&gt; or &lt;-2^14, 2^14&gt; instead of &lt;-2^15, 2^15&gt;. Moreover, when I switch bit depth to 8bits/sample, samples are -32640 -32641 -32640 32640 -32640 etc, which is really strange.\r<br />\n<br />\nIs there any way how to fix this?\r<br />\n<br />\nThanks for your help!<br />\n",
+    "PostedDate": "2015-10-24T07:50:19.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449989",
+    "ThreadId": "646606",
+    "Html": "Are you driving the input to clipping? a 15 bit range is just -6bB off full scale. I wouldn't worry about this at all.\r<br />\nAlso, your numbers for 8 bit don't make any sense, as each sample will be 1 byte, and therefore cannot have a value greater than 256<br />\n",
+    "PostedDate": "2015-10-28T05:39:12.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

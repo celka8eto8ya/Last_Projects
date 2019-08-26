@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1057711",
+    "ThreadId": "447280",
+    "Html": "Hello Mark, Can you explain me why you use 3 buffers for recording in WaveInEvent class? I'm thinking that you can use 2 buffers and switch them and not loose data.But why 3?\r<br />\n<br />\nThank you<br />\n",
+    "PostedDate": "2013-06-17T06:09:58.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057720",
+    "ThreadId": "447280",
+    "Html": "that comes from ages ago (2002), when I started NAudio and I was struggling for performance. I've changed the default to 2 for WaveOut - I thought I'd done if for WaveIn as well. It's less confusing working with two buffers as well.<br />\n",
+    "PostedDate": "2013-06-17T06:16:35.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057730",
+    "ThreadId": "447280",
+    "Html": "Thank you for your quick answear:)\r<br />\n<br />\nIf I change it to 2 in my project, it should work well without modifying other parts?<br />\n",
+    "PostedDate": "2013-06-17T06:32:45.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057735",
+    "ThreadId": "447280",
+    "Html": "sorry now I see that this buffers is public:) and don t have to change anything in naudio<br />\n",
+    "PostedDate": "2013-06-17T06:51:26.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057738",
+    "ThreadId": "447280",
+    "Html": "there's a public NumberOfBuffers property, so just set it to 2 immediately after creating WaveInEvent<br />\n",
+    "PostedDate": "2013-06-17T06:54:49.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057739",
+    "ThreadId": "447280",
+    "Html": "yep:)<br />\n",
+    "PostedDate": "2013-06-17T06:56:20.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

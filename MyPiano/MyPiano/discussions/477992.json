@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1142234",
+    "ThreadId": "477992",
+    "Html": "I thought i also post this here:\r<br />\nReady for xmas there is a preview release of the new vvvv audio engine for everyone to check out. \r<br />\n<br />\nFor now the focus of the engine was not so much DSP programming but flexible signal routing for large scale media installations and VST support. \r<br />\n<br />\nFor those who do not know vvvv, there is a concept which is called 'Spreads'. This lets you send an array/list of data over a single connection (cable). This applied to audio signals gives very powerful routing options. For example, if you create a VSTHost node, load a stereo effect into it and connect a link with 16 audio channels to it, the engine will create 8 instances of the effect. You can then switch between the instances with a number to control them individually or you can expose a parameter as a pin to vvvv and control this parameter for all instances at once. \r<br />\n<br />\nSee an example in the video below at about 1:50 min. \r<br />\n<br />\nThe concept of spreads goes even further: If you provide multiple vst files to the VSTHost node, you can (if they are mono plugins) open different plugins for each channel of the signal Spread. \r<br />\n<br />\nYou can download the alpha release here: \r<br />\n<a href=\"http://vvvv.org/contribution/vvvv.audio-pack-alpha\" rel=\"nofollow\">http://vvvv.org/contribution/vvvv.audio-pack-alpha</a> \r<br />\n<br />\nThis video shows a bit clicking around with the engine. Better videos to come when i had some sleep Smile: \r<br />\n<br />\n<a href=\"http://www.youtube.com/watch?v=VchIgx5jtns\" rel=\"nofollow\">http://www.youtube.com/watch?v=VchIgx5jtns</a>\r<br />\n<br />\nBig credits to: \r<br />\nMarc Heath for NAudio \r<br />\nMarc Jacobi for VST.NET \r<br />\nAleksey Vaneev for r8brain SRC \r<br />\n<br />\nThis is <a href=\"http://vvvv.org/forum/add-windows-only-to-the-site-no-point-people-clicking-download-call-it-windows-download\" rel=\"nofollow\">windows only</a>. \r<br />\n<br />\nMerry xmas!<br />\n",
+    "PostedDate": "2013-12-25T15:39:49.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1142296",
+    "ThreadId": "477992",
+    "Html": "wow, looks really cool! I've always wanted to integrate NAudio with VST.NET. Great work!<br />\n",
+    "PostedDate": "2013-12-26T02:06:43.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1142312",
+    "ThreadId": "477992",
+    "Html": "thank you very much! was working smoothly... very productive framework. without it, i wouldn't be able to achieve this. <br />\n",
+    "PostedDate": "2013-12-26T03:59:10.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

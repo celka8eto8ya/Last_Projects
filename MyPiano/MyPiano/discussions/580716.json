@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1352331",
+    "ThreadId": "580716",
+    "Html": "Hello,\r<br />\n<br />\nI've been writing some code based on the &quot;Play a Sine Wave&quot; example, here:\r<br />\n<br />\n<a href=\"http://mark-dot-net.blogspot.co.uk/2009/10/playback-of-sine-wave-in-naudio.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.co.uk/2009/10/playback-of-sine-wave-in-naudio.html</a>\r<br />\n<br />\nMy code is working very nicely, but I want to be able to save the generated sound to a .wav file, and I can't seem to find the right magic spell to get this to work.\r<br />\n<br />\nCould anyone point me in the right direction, or provide some extra code for the above example that will allow the sine wave sound to be written to a .wav file?\r<br />\n<br />\nMany thanks,\r<br />\n<br />\nAdam.<br />\n",
+    "PostedDate": "2015-02-13T12:50:24.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352332",
+    "ThreadId": "580716",
+    "Html": "you can use WaveFileWriter to create a WAV file. Read from the sine wave provider and write into the WaveFileWriter. Just remember that the sine provider will never end so stop writing when you have enough<br />\n",
+    "PostedDate": "2015-02-13T12:54:49.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-02-13T13:17:51.967-08:00"
+  },
+  {
+    "Id": "1352341",
+    "ThreadId": "580716",
+    "Html": "Thanks for the quick reply, Mark, I've got this working now. For the benefit of anyone else reading this, here's how I did it:\r<br />\n<br />\nI declared a class-level WaveFileWriter object named &quot;writer&quot; in my SineWaveProvider32 class. I then added a new method to the class:<br />\n<pre><code>    /// &lt;summary&gt;\n    /// Start recording audio to the specified .wav file\n    /// &lt;/summary&gt;\n    /// &lt;param name=&quot;filename&quot;&gt;&lt;/param&gt;\n    public void StartRecording(string filename)\n    {\n        writer = new NAudio.Wave.WaveFileWriter(filename, this.WaveFormat);\n    }\n</code></pre>\n\nThis gets called from my form and tells it to instantiate the writer and set its filename. Make sure to call this after first calling the SetWaveFormat method.\r<br />\n<br />\nThen in the Read method, I added the following code, just after the end of the for() loop:<br />\n<pre><code>        // Do we have a writer object?\n        if (writer != null)\n        {\n            // Yes, so write the samples we've just added to the file\n            writer.WriteSamples(buffer, 0, sampleCount);\n\n            // Have we reached the termination point?\n            if (sample &gt; 20000)\n            {\n                // Yes, so dispose of and remove the writer\n                writer.Dispose();\n                writer = null;\n            }\n        }\n</code></pre>\n\nThis stops after generating ~20,000 samples, of course the dispose section can be adjusted to terminate under whatever circumstances are needed.\r<br />\n<br />\nI'm having a huge amount of fun playing with NAudio, by the way, thank you so much for creating it!\r<br />\n<br />\nBest regards,\r<br />\n<br />\nAdam.<br />\n",
+    "PostedDate": "2015-02-13T13:17:42.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352345",
+    "ThreadId": "580716",
+    "Html": "awesome, glad you got it working<br />\n",
+    "PostedDate": "2015-02-13T13:26:13.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

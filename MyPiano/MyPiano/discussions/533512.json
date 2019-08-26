@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1211968",
+    "ThreadId": "533512",
+    "Html": "Hi,\r<br />\n<br />\nI've implemented the NAudio streaming demo, and have run into an issue that appears to be related to VBR MP3 files. The issue is that the first frame's sample rate always seems to be misinterpreted, meaning that the output will either be pitched up or down.\r<br />\n<br />\nI could easily work around this by skipping a frame or two, or using the median from the first few frames. However, I don't have an extensive collection of VBR files to test with, and don't know what the edge cases are for this situation.\r<br />\n<br />\nIs it possible that the Mp3Frame implementation is missing some VBR voodoo?\r<br />\n<br />\nI wouldn't mind getting my hands dirty and contribute a proper fix, but I haven't got a clue on where to start.<br />\n",
+    "PostedDate": "2014-02-21T15:59:45.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213442",
+    "ThreadId": "533512",
+    "Html": "Can you upload a sample? Use filedropper.com or similar<br />\n",
+    "PostedDate": "2014-02-23T22:52:16.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213555",
+    "ThreadId": "533512",
+    "Html": "<a href=\"https://mega.co.nz/#!bYFkRBCT!3PF1wHNi0eDBJ8kGhn7gEOKJgRoqgPB13m7si0vGivQ\" rel=\"nofollow\">https://mega.co.nz/#!bYFkRBCT!3PF1wHNi0eDBJ8kGhn7gEOKJgRoqgPB13m7si0vGivQ</a>\r<br />\n<br />\nThis one should have a different sample rate on the first frame, but I've also encountered a file (can't find it though) that had the first two frames 'corrupted'.\r<br />\n<br />\nI'm currently working around it by doing a look-ahead of 5 frames, and fetching the rates from the last frame.<br />\n<pre><code>Mp3Frame[] lookAhead = new Mp3Frame[INIT_FRAME_LOOKAHEAD];\nfor (int i = 0; i &lt; INIT_FRAME_LOOKAHEAD; i++)\n{\n    lookAhead[i] = Mp3Frame.LoadFromStream(stream);\n}\n\n// Use the last look-ahead frame to get meta-data from\ndecompressor = this.CreateFrameDecompressor(lookAhead[INIT_FRAME_LOOKAHEAD - 1]);\n\n// Initialize the audio buffer\naudioBuffer = new BufferedWaveProvider(decompressor.OutputFormat);\naudioBuffer.BufferDuration = TimeSpan.FromSeconds(BUFFER_DURATION);\n\n// Decompress the frames, and add them to the audio buffer\nthis.BufferFrame(frame, decompressor, audioBuffer);\nfor (int i = 0; i &lt; INIT_FRAME_LOOKAHEAD; i++)\n{\n    this.BufferFrame(lookAhead[i], decompressor, audioBuffer);\n}</code></pre>\n\n",
+    "PostedDate": "2014-02-24T02:20:16.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215475",
+    "ThreadId": "533512",
+    "Html": "It plays fine in my app.\r<br />\n<br />\nTry using the latest source instead of the official 1.7 release.<br />\n",
+    "PostedDate": "2014-02-27T00:11:16.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216336",
+    "ThreadId": "533512",
+    "Html": "I was using 0c574d1f00a8.\r<br />\n<br />\n0c574d1f00a8, e2fde200b783 (latest) and 1.7.0.15 (latest release) are all displaying this issue.\r<br />\n<br />\nNote that as indicated in my first post, I'm streaming it from a web server (you can use Apache, IIS or something else), and that is where the problem presents itself.<br />\n",
+    "PostedDate": "2014-02-28T14:55:26.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216359",
+    "ThreadId": "533512",
+    "Html": "MP3FileReader skips over corrupted frames and it checks for sample rate changes so it should throw an exception if the stream is in bad form.\r<br />\n<br />\nPerhaps you could upload a sample of that stream you are having issues with. Dump all the bytes or frames to a file, you may need to dump the xing header at the front of the file first, grab it using Mp3FileReader.XingHeader<br />\n",
+    "PostedDate": "2014-02-28T17:05:50.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216439",
+    "ThreadId": "533512",
+    "Html": "<pre><code>Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();\nserializer.Formatting = Newtonsoft.Json.Formatting.Indented;\n\nStringWriter writer = new StringWriter();\nserializer.Serialize(writer, frame, typeof(Mp3Frame));\nFile.WriteAllText(&quot;frame0&quot;, writer.ToString());\n\nwriter = new StringWriter();\nserializer.Serialize(writer, XingHeader.LoadXingHeader(frame), typeof(XingHeader));\nFile.WriteAllText(&quot;xing0&quot;, writer.ToString());\n\n// Do a look-ahead of a couple of frames, because VBR MP3 files\n// will often contain an invalid sample rate in the first frame\nMp3Frame[] lookAhead = new Mp3Frame[INIT_FRAME_LOOKAHEAD];\nfor (int i = 0; i &lt; INIT_FRAME_LOOKAHEAD; i++)\n{\n    lookAhead[i] = Mp3Frame.LoadFromStream(stream);\n\n    writer = new StringWriter();\n    serializer.Serialize(writer, lookAhead[i], typeof(Mp3Frame));\n    File.WriteAllText(&quot;frame&quot; + (i + 1).ToString(), writer.ToString());\n\n\n    writer = new StringWriter();\n    serializer.Serialize(writer, XingHeader.LoadXingHeader(lookAhead[i]), typeof(XingHeader));\n    File.WriteAllText(&quot;xing&quot; + (i + 1).ToString(), writer.ToString());\n}</code></pre>\n\nResults: <a href=\"https://mega.co.nz/#!PUNSxQqJ!aPPxj3PzYRQWhKIsIEmT9NFfijc_xaRI1tSe47wnK7o\" rel=\"nofollow\">https://mega.co.nz/#!PUNSxQqJ!aPPxj3PzYRQWhKIsIEmT9NFfijc_xaRI1tSe47wnK7o</a>\r<br />\n<br />\nNote, the raw data is base64 encoded in the JSON structure.<br />\n",
+    "PostedDate": "2014-03-01T05:04:35.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216469",
+    "ThreadId": "533512",
+    "Html": "The sample rate changes which in theory should be picked up.\r<br />\n<br />\nCould you upload a sample of the mp3 stream itself? It would be much easier if I had an MP3 that exhibits the problem.\r<br />\n<br />\nJust dump the raw data to a file frame by frame using File.WriteAllBytes()<br />\n",
+    "PostedDate": "2014-03-01T08:16:16.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

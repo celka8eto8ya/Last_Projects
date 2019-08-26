@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "644827",
+    "ThreadId": "265831",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>If I create a WaveChannel32 instance like:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>WaveChannel32 wavref = <span style=\"color:blue\">new</span> WaveChannel32(<span style=\"color:blue\">new</span> WaveFileReader(<span style=\"color:#a31515\">&quot;myfile.wav&quot;</span>));\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>is there any way I can get the WaveFormat for the underlying stream (the WaveFileReader)?</p>\r\n<p>If not this seems to be a bit of a shortcoming.&nbsp; WaveChannel32 has a WaveFormat but this is hard coded in the constructor to stereo 32 bit.&nbsp; I need to make some decisions on the format of the underlying (input) wav file format.</p>\r\n<p>I guess I will have to break out the statement into a few lines and keep a reference to the underlying stream myslf - is this correct?</p>\r\n<p>Thanks,</p>\r\n<p>Ian</p>\r\n",
+    "PostedDate": "2011-07-20T01:11:57.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647612",
+    "ThreadId": "265831",
+    "Html": "<p>yes, that would be good a way to do it</p>",
+    "PostedDate": "2011-07-26T02:25:23.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

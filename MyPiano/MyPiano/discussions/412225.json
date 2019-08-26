@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "963993",
+    "ThreadId": "412225",
+    "Html": "\r\n<p>Hi,<br>\r\nI'm little newbie to the NAudio API.</p>\r\n<p>I'd like to convert an M4A audio file (produced by iOS Dropvox app) to a Wav or PCM MemoryStream.&nbsp;Then use this Stream as an AudioStream for a&nbsp;SpeechRecognitionEngine.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>      <span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> ms = File.OpenRead(file))\r\n      <span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(ms))\r\n      <span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> pcmStream = WaveFormatConversionStream.CreatePcmStream(mp3Reader))\r\n      <span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> baStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(pcmStream)) {\r\n        sre.SetInputToWaveStream(baStream);\r\n        RecognitionResult rr = sre.Recognize();\r\n      }</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>It's seems&nbsp;Mp3FileReader can't read M4A. I don't know if there is any workaround ?&nbsp;</p>\r\n<p>Thanks !<br>\r\nRegards&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-20T15:32:58.677-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "965934",
+    "ThreadId": "412225",
+    "Html": "\r\n<p>MP3 is not the same as MP4 so the Mp3FileReader can't play it. The next NAudio includes MediaFoundationReader which will be able to decode M4A. There is no public release yet, but if you want to build the latest from Source Code (click the tab above) you\r\n can use it.</p>\r\n<p>(by the way, there is no need for pcmStream or baStream above. For MP3s, just use mp3Reader)</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-21T00:24:58.993-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "966860",
+    "ThreadId": "412225",
+    "Html": "\r\n<p>Thanks I'll try</p>\r\n<p>I thought&nbsp;<span>MediaFoundationReader was only working on Windows 8 ? Does it works with Windows 7 ?</span></p>\r\n",
+    "PostedDate": "2012-12-21T04:33:04.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967090",
+    "ThreadId": "412225",
+    "Html": "\r\n<p>No, it will work on Windows 7 too. The Media Foundation API was actually introduced with Windows Vista.</p>\r\n",
+    "PostedDate": "2012-12-21T06:54:23.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967229",
+    "ThreadId": "412225",
+    "Html": "\r\n<p>Ok get it alpha2 ! Works fine with wav output.</p>\r\n<p>What is best practice to output into a MemoryStream ? The&nbsp;WaveFileWriter.CreateWaveFile only takes a string (filename) &agrave; as parameter. I see code with loop/read but there might be a more straigh forward function ?</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> reader = <span style=\"color:blue\">new</span> MediaFoundationReader(file))\n<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> resampler = <span style=\"color:blue\">new</span> MediaFoundationResampler(reader, 16000))\n<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> memoryStream = <span style=\"color:blue\">new</span> MemoryStream()) {\n  WaveFileWriter.CreateWaveFile(<span style=\"color:blue\">new</span> MemoryStream(), resampler);\n}\n</pre>\r\n</div>\r\n<p></p>\r\n<p>EDIT: Found: resampler.CopyTo(memoryStream );</p>\r\n<p>Now trying to get the good audio format for Microsoft and Google reconizer</p>\r\n",
+    "PostedDate": "2012-12-21T13:14:21.677-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

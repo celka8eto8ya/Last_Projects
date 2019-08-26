@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1462850",
+    "ThreadId": "651166",
+    "Html": "I want to output Wav file to microphone input.\r<br />\n<br />\n<br />\nThanks for your help<br />\n",
+    "PostedDate": "2016-02-11T06:47:59.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464111",
+    "ThreadId": "651166",
+    "Html": "I'm afraid this is not possible directly in Windows. The workaround is to use a virtual audio device that creates virtual inputs and outputs that you can connect together, so you can play sound into one device and it appear as the input on another. Here's <a href=\"http://software.muzychenko.net/eng/vac.htm\" rel=\"nofollow\">an example</a> of software that can do this. Otherwise you have to physically connect a soundcard output to an input with a cable.<br />\n",
+    "PostedDate": "2016-02-23T04:54:21.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

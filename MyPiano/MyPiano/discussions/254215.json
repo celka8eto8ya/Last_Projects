@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "598571",
+    "ThreadId": "254215",
+    "Html": "\r\n<p>e.g. such parameters:</p>\r\n<p>AVRT_PRIORITY_CRITICAL (2)<br>\r\nAVRT_PRIORITY_HIGH (1)<br>\r\nAVRT_PRIORITY_LOW (-1)<br>\r\nAVRT_PRIORITY_NORMAL (0)</p>\r\n<p>&nbsp;</p>\r\n<p>So can we customize it actually?</p>\r\n",
+    "PostedDate": "2011-04-16T21:59:00.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598992",
+    "ThreadId": "254215",
+    "Html": "<p>NAudio doesn't have support for setting these values at the moment. You are free to modify the code yourself though.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-18T04:06:43.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "599009",
+    "ThreadId": "254215",
+    "Html": "<p>All are just inside the avrt.dll or avrt.h</p>\r\n<p>and you may have a look here:<br /><a href=\"http://msdn.microsoft.com/en-us/library/ms684847(v=VS.85).aspx#thread_ordering_service_functions\">http://msdn.microsoft.com/en-us/library/ms684847(v=VS.85).aspx#thread_ordering_service_functions</a></p>\r\n<p>And all the functions of MMCSS have the initial of \"Av\"</p>\r\n<p>especially the most useful function:</p>\r\n<p>BOOL WINAPI AvSetMmThreadPriority(<br />&nbsp; __in&nbsp; HANDLE AvrtHandle,<br />&nbsp; __in&nbsp; AVRT_PRIORITY Priority<br />);</p>",
+    "PostedDate": "2011-04-18T04:33:55.78-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

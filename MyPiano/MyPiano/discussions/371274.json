@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "870635",
+    "ThreadId": "371274",
+    "Html": "\r\n<p>I'd like to have these references and the WinForms controls moved into a&nbsp;separate&nbsp;assembly, please. Sound is not intrinsically visible to human eye, after all (and not all projects contain references to WinForms ;))</p>\r\n",
+    "PostedDate": "2012-07-17T01:58:41.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "870640",
+    "ThreadId": "371274",
+    "Html": "\r\n<p>After looking at the code, I came to think that it is better to create a proper &quot;Strategy&quot; class for each member of the&nbsp;WaveCallbackStrategy enum, and remove&nbsp;WaveCallbackInfo class entirely. Then you can move UserControls and Windows into a separate\r\n assembly once the audio playback/recording related classes (non visual stuff ;)) are freed from WinForms dependencies.</p>\r\n",
+    "PostedDate": "2012-07-17T02:11:58.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893067",
+    "ThreadId": "371274",
+    "Html": "<p>yes, I would like to move the WinForms suff out in the future. But it shouldn't stop you using NAudio in a non WinForms context.</p>",
+    "PostedDate": "2012-07-30T07:24:17.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893117",
+    "ThreadId": "371274",
+    "Html": "<p>It's working fine in my non-WinForms project, thanks for commenting on my request ^^</p>",
+    "PostedDate": "2012-07-30T08:43:33.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044633",
+    "ThreadId": "371274",
+    "Html": "I would like to see these references added as part of the NuGet package(s), since they're required.  It took me a long time to figure out why an Azure deployment was failing because of this :(<br />\n",
+    "PostedDate": "2013-05-16T10:08:17.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1045227",
+    "ThreadId": "371274",
+    "Html": "@tommck, what class in NAudio were you using that needed WinForms in Azure?<br />\n",
+    "PostedDate": "2013-05-17T10:54:46.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

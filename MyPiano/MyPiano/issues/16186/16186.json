@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "just put the URL of any MP3 file",
+    "ClosedDate": "2011-06-28T13:36:44.203-07:00",
+    "CommentCount": 1,
+    "Custom": "",
+    "Description": "The default URL for MP3 stream is not working. \nhttps://radio.reaper.fm/stream/ is generation unable to connect remote server. Is there any other free URL to test?",
+    "LastUpdatedDate": "2012-01-06T02:13:33.42-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-06-28T12:50:26.067-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "MP3 Stream is not playing",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16186
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "try this one : http://mp3.live.tv-radio.com/fip/all/fip-32k.mp3",
+      "PostedDate": "2012-01-06T02:13:33.42-08:00",
+      "Id": 52201
+    }
+  ]
+}

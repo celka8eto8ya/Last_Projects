@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "718514",
+    "ThreadId": "284535",
+    "Html": "<p>I'm experimenting on how to play mp3 using Naudio. My simple app has one windows form and one button to play/pause the music. The app however has two major problem:</p>\n<ol>\n<li>While it was intended that if the music is playing and the play button is pressed, the app should stop playing. Instead when the button is re-pressed, the app restart the music and then (sometime) throw an exception </li>\n<li>If the button is pressed two or three times (and &nbsp;without any delay)&nbsp;,the app throw a&nbsp;NAudio.MmException (Message=InvalidParameter calling acmStreamClose) </li>\n</ol>\n<p>Can someone tell me what's wrong with my code? Below is my code:&nbsp;</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre><pre><div style=\"color: black; background-color: white;\"><pre><span style=\"color: blue;\">using</span> System;\n<span style=\"color: blue;\">using</span> System.Windows.Forms;\n<span style=\"color: blue;\">namespace</span> NaudioTesting\n{\n    <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">partial</span> <span style=\"color: blue;\">class</span> Form1 : Form\n    {\n        <span style=\"color: blue;\">public</span> Form1()\n        {\n            InitializeComponent();\n        }\n\n        <span style=\"color: blue;\">private</span> NAudio.Wave.BlockAlignReductionStream stream = <span style=\"color: blue;\">null</span>;\n\n        <span style=\"color: blue;\">private</span> NAudio.Wave.DirectSoundOut output = <span style=\"color: blue;\">null</span>;\n\n       \n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> LoadFile(<span style=\"color: blue;\">string</span> filePath)\n        {\n            DisposeWave();\n\n            <span style=\"color: blue;\">if</span> (filePath.EndsWith(<span style=\"color: #a31515;\">\".mp3\"</span>))\n            {\n                NAudio.Wave.WaveStream pcm =\n                    NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(<span style=\"color: blue;\">new</span> NAudio.Wave.Mp3FileReader(filePath));\n                stream = <span style=\"color: blue;\">new</span> NAudio.Wave.BlockAlignReductionStream(pcm);\n            }\n            <span style=\"color: blue;\">else</span> <span style=\"color: blue;\">if</span> (filePath.EndsWith(<span style=\"color: #a31515;\">\".wav\"</span>))\n            {\n                NAudio.Wave.WaveStream pcm = <span style=\"color: blue;\">new</span> NAudio.Wave.WaveChannel32(<span style=\"color: blue;\">new</span> NAudio.Wave.WaveFileReader(filePath));\n                stream = <span style=\"color: blue;\">new</span> NAudio.Wave.BlockAlignReductionStream(pcm);\n            }\n            <span style=\"color: blue;\">else</span> <span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> InvalidOperationException(<span style=\"color: #a31515;\">\"Not a correct audio file type.\"</span>);\n\n            output = <span style=\"color: blue;\">new</span> NAudio.Wave.DirectSoundOut();\n            output.Init(stream);\n            output.Play();\n        }\n\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> playPauseButton_Click(<span style=\"color: blue;\">object</span> sender, EventArgs e)\n        {\n            <span style=\"color: blue;\">string</span> filePath = <span style=\"color: #a31515;\">\"GetLoud.mp3\"</span>;\n            LoadFile(filePath);\n            <span style=\"color: blue;\">if</span> (output != <span style=\"color: blue;\">null</span>)\n            {\n                <span style=\"color: blue;\">if</span> (output.PlaybackState == NAudio.Wave.PlaybackState.Playing) output.Pause();\n                <span style=\"color: blue;\">else</span> <span style=\"color: blue;\">if</span> (output.PlaybackState == NAudio.Wave.PlaybackState.Paused) output.Play();\n            }\n        }\n\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> DisposeWave()\n        {\n            <span style=\"color: blue;\">try</span>\n            {\n                <span style=\"color: blue;\">if</span> (output != <span style=\"color: blue;\">null</span>)\n                {\n                    <span style=\"color: blue;\">if</span> (output.PlaybackState == NAudio.Wave.PlaybackState.Playing) output.Stop();\n                    output.Dispose();\n                    output = <span style=\"color: blue;\">null</span>;\n                }\n                <span style=\"color: blue;\">if</span> (stream != <span style=\"color: blue;\">null</span>)\n                {\n                    stream.Dispose();\n                    stream = <span style=\"color: blue;\">null</span>;\n                }\n            }\n            <span style=\"color: blue;\">catch</span> (NAudio.MmException)\n            {\n                <span style=\"color: blue;\">throw</span>;\n            }\n        }\n\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> Form1_FormClosing(<span style=\"color: blue;\">object</span> sender, FormClosingEventArgs e)\n        {\n            DisposeWave();\n        }\n    }\n}\n\n</pre>\n</div>\n<br /></pre>\n</pre>\n</div>",
+    "PostedDate": "2011-12-29T17:39:18.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "718586",
+    "ThreadId": "284535",
+    "Html": "<p>what version of NAudio are you using? You shouldn't need the BlockAlignmentReductionStream or the WaveFormatConversionStream with the latest version.</p>",
+    "PostedDate": "2011-12-30T00:38:12.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "718628",
+    "ThreadId": "284535",
+    "Html": "<p>@markheath: Thanks for your reply. I just fixed the problem in my app. It seems I needed to check if the output is not null before I call the loadFile function. Anyways, speaking of the Naudio version, I am using the latest version. As you mentioned, I \"<span>e BlockAlignmentReductionStream or the WaveFormatConversionStream with the latest version\". What is that and how is that supposed to easy my burden. Even though now things worked out well, I would love to improve my code.</span></p>",
+    "PostedDate": "2011-12-30T03:47:56.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "718637",
+    "ThreadId": "284535",
+    "Html": "<p>it is just that the latest NAudio's Mp3FileReader already converts to PCM, and already copes with non-block aligned reposition requests, making it more robust and easy to use out of the box.</p>",
+    "PostedDate": "2011-12-30T04:19:05.89-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

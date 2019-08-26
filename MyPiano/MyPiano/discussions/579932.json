@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1350706",
+    "ThreadId": "579932",
+    "Html": "I using ASIO NAudio in a network application. I need float[] to byte[] for ASIO Record data.\r<br />\n<br />\nasioOut.InitRecordAndPlayback(null, 1, 44100);\r<br />\nasioOut.AudioAvailable += AsioAudioAvailable;\r<br />\nasioOut.Play();\r<br />\n<br />\nprivate void AsioAudioStreamAvailable(object sender, AsioAudioAvailableEventArgs e)\r<br />\n{\r<br />\n   e.GetAsInterleavedSamples();\r<br />\n<br />\n}\r<br />\n<br />\ni need float[] (e) to byte[] (PCM16BIT)...\r<br />\n<br />\nplease help me...<br />\n",
+    "PostedDate": "2015-02-10T11:41:40.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1351939",
+    "ThreadId": "579932",
+    "Html": "hi, have a read of my article on <a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">how to convert between various audio formats</a>. It should point you in the right direction<br />\n",
+    "PostedDate": "2015-02-12T13:01:56.96-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

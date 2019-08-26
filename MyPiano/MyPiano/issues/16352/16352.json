@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:01:50.683-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "The default \"BufferMilliseconds\" is 100ms.\r\n\r\nint bufferSize = BufferMilliseconds * WaveFormat.AverageBytesPerSecond / 1000;\r\n\r\nFor a 11,025 sample rate, 16 bit format, bufferSize = 2205, which is incorrect.\r\n\r\nSuggested Fix:\r\n int bufferSize = BufferMilliseconds * WaveFormat.AverageBytesPerSecond / 1000;\r\n\r\nif (bufferSize % WaveFormat.BlockAlign != 0)\r\n{\r\n     bufferSize -= bufferSize % WaveFormat.BlockAlign;\r\n}",
+    "LastUpdatedDate": "2012-10-27T00:01:50.683-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-05-24T14:11:04.527-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveIn.CreateBuffers() Calculating bufferSize returns odd length for 16 bit samples",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16352
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks, will get this fixed",
+      "PostedDate": "2012-05-25T02:03:28.077-07:00",
+      "Id": 66661
+    },
+    {
+      "Message": "ok, checked in a fix for WaveIn and WaveInEvent",
+      "PostedDate": "2012-05-25T02:08:01.24-07:00",
+      "Id": 66662
+    },
+    {
+      "Message": "Or another possible option maybe:\n\nint bufferSize = (WaveFormat.BlockAlign * WaveFormat.SamplesPerSecond * BufferMilliseconds) / 1000  ;",
+      "PostedDate": "2012-05-25T05:30:24.643-07:00",
+      "Id": 66678
+    }
+  ]
+}

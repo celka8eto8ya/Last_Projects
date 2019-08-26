@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "550664",
+    "ThreadId": "242116",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Does anyone know how to get the volume of the sound being recorded by NAudio, I've tried various&nbsp;snippets&nbsp;on this forum but they aren't working as I would expect (A 0-1 or 0-100 float that represents the volume of the audio).</p>\r\n<p>Any help on this is appreciated,</p>\r\n<p>Thanks,</p>\r\n<p>Danny</p>\r\n",
+    "PostedDate": "2011-01-17T09:58:49.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "551397",
+    "ThreadId": "242116",
+    "Html": "\r\n<p>have a look at the NAudio demo, which draws a waveform and shows a volume meter</p>\r\n",
+    "PostedDate": "2011-01-18T10:50:28.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "551421",
+    "ThreadId": "242116",
+    "Html": "\r\n<p>I've had a look at that document and it works great (i.e. I've been able to grab the volume of a file being played) but how would I port it over to grab the audio of a, say microphone?</p>\r\n<p>Excuse my ignorance but audio is a new field for me and I'm unable to find any documentation.</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-01-18T11:35:48.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "551463",
+    "ThreadId": "242116",
+    "Html": "\r\n<p>for a recording example, have a look at the .NET voice recorder: http://voicerecorder.codeplex.com and see my article on coding4fun:</p>\r\n<p>http://blogs.msdn.com/b/coding4fun/archive/2009/10/08/9905168.aspx</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-18T12:33:31.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "551497",
+    "ThreadId": "242116",
+    "Html": "\r\n<p>That's EXACTLY what I'm after, thanks a lot Mark!</p>\r\n<p>Btw I noticed waveIn.DeviceNumber is missing from the latest version, any alternatives or has it been completely removed?</p>\r\n<p>Thanks again.</p>\r\n",
+    "PostedDate": "2011-01-18T13:17:58.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "551531",
+    "ThreadId": "242116",
+    "Html": "\r\n<p>it's still part of WaveIn, just not in IWaveIn, as that interface can be implemented by other technologies that don't have a concept of device number</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-18T14:33:37.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

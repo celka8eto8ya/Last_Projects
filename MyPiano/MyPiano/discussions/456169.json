@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1089935",
+    "ThreadId": "456169",
+    "Html": "I am trying to get the Asio output to playback through the waveProvider.  It looks like waveProvider needs a byte array of 16 bit samples, but ASIO output is a 32 bit float array.  How can I go about converting this output to play through the waveProvider?<br />\n",
+    "PostedDate": "2013-09-08T13:36:15.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1090153",
+    "ThreadId": "456169",
+    "Html": "WaveProvider can be any format. So why not just play back audio at 32 bit float? You can use WaveFloatTo16Provider to get to 16 bit from float as well if you want<br />\n",
+    "PostedDate": "2013-09-09T05:30:58.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

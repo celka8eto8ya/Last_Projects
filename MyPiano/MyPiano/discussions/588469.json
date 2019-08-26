@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1367649",
+    "ThreadId": "588469",
+    "Html": "Some of my MP3s will throw this exception every time I try to play them:<br />\n<pre><code> NAudio.MmException: AcmNotPossible calling acmFormatSuggest\n   bei NAudio.Wave.Compression.AcmStream.SuggestPcmFormat(WaveFormat compressedFormat)\n   bei NAudio.Wave.AcmMp3FrameDecompressor..ctor(WaveFormat sourceFormat)\n   bei NAudio.Wave.Mp3FileReader.CreateAcmFrameDecompressor(WaveFormat mp3Format)\n   bei NAudio.Wave.Mp3FileReader..ctor(Stream inputStream, FrameDecompressorBuilder frameDecompressorBuilder)\n   bei NAudio.Wave.Mp3FileReader..ctor(Stream inputStream)\n   bei NAudio.Wave.Mp3FileReader..ctor(String mp3FileName)\n   bei NAudio.Wave.AudioFileReader.CreateReaderStream(String fileName)\n   bei NAudio.Wave.AudioFileReader..ctor(String fileName)</code></pre>\n\nWhy is that?<br />\n",
+    "PostedDate": "2015-03-20T14:22:19.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1409864",
+    "ThreadId": "588469",
+    "Html": "Maybe it is invalidly detecting an MP3 frame in the album art, which can happen. Have you tried playing it using MediaFoundationReader instead?<br />\n",
+    "PostedDate": "2015-04-13T09:19:01.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

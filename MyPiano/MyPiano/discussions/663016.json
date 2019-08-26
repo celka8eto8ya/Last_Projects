@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1496589",
+    "ThreadId": "663016",
+    "Html": "Hi guys,\r<br />\nI've got a problem with playing me stream by DirectSoundOut. I open same wav file by OpenFileDialog - It's Ok, Then read data from wav file and convert them to float, then I apply my function for effecting that samples, and conver them to byte[] and read - and now start the problem when the stream of effected data is in DirectSoundOut - I can't hear fluent, effected sound but it sounds like one sample is played more times, its change when i change latency, but if I've got small latency, I can't hear sound and when I  raise latency, I've got problem, which I described above.\r<br />\nI think, It becase:\r<br />\n1) This process is to time-consuming, and data are not being processed in this time, becase my function for effecting is transfer function, which can be variable in time - you got graph of this function and you can change possition of points of this graph and on this point is applied polynomial regression to get function with parametr, this method I call in Read method and fit samples to the equation. \r<br />\n2) I can't found the best latency...<br />\n<pre><code>        private BlockAlignReductionStream stream = null;\n        private NAudio.Wave.DirectSoundOut output = null;\n        private void button1_Click(object sender, EventArgs e)\n        {\n            OpenFileDialog open = new OpenFileDialog();\n            open.Filter = &quot;Wave File (*.wav)|*.wav;&quot;;\n            if (open.ShowDialog() != DialogResult.OK) return;\n            textBox1.Text = open.FileName;\n            WaveChannel32 wave = new WaveChannel32(new WaveFileReader(open.FileName));\n            EffectStream effect = new EffectStream(wave);\n            stream = new BlockAlignReductionStream(effect);\n            output = new DirectSoundOut();\n            output.Init(stream);\n            output.Play();\n            button2.Enabled = true;\n            chart1.Enabled = true;\n        }\n</code></pre>\n\nthis is part of code, where I try to open file and play effected file<br />\n<blockquote>\n</blockquote>\n<pre><code> public float getFunction(float x)\n        {\n           double[] arrayX = new double[chart1.Series[0].Points.Count()]; // Získáme polohu bodů z grafu na ose x\n           double[] arrayY = new double[chart1.Series[0].Points.Count()];// Získáme polohu bodů z grafu na ose y\n           double[] arrayResult = { };\n\n            for (int i = 0; i &lt; chart1.Series[0].Points.Count(); i++) // naplnění \n            {\n\n                arrayX[i] = (chart1.Series[0].Points[i].XValue);\n                arrayY[i] = (chart1.Series[0].Points[i].YValues[0]);\n            }\n            arrayResult = (PolyRegression.Polyfit(arrayX, arrayY, 8)); // instance of class PolyRegression for solving a system of equation\n            // System of equation,  functionVarA-E are coefficients \n            double functionVarI = arrayResult[0];\n            double functionVarH = arrayResult[1];\n            double functionVarG = arrayResult[2];\n            double functionVarF = arrayResult[3];\n            double functionVarE = arrayResult[4]; \n            double functionVarD = arrayResult[5];\n            double functionVarC = arrayResult[6];\n            double functionVarB = arrayResult[7];\n            double functionVarA = arrayResult[8];\n            double equationVar = 0;\n\n            equationVar = functionVarA * (Math.Pow(x, 8)) + functionVarB * (Math.Pow(x, 7)) + functionVarC * (Math.Pow(x, 6)) + functionVarD * (Math.Pow(x, 5)) + functionVarE * (Math.Pow(x, 4)) + functionVarF * (Math.Pow(x, 3)) + functionVarG * (Math.Pow(x, 2)) + functionVarH * x + functionVarI; // Transfer function\n            float Transfer = Convert.ToSingle(equationVar); //Convert to float\n            return Transfer; .\n        }\n</code></pre>\n\nthis is code for getting transfer function from graph<br />\n<pre><code>public class PolyRegression\n    {\n        public static double[] Polyfit(double[] x, double[] y, int degree)\n    {\n        // Count of coefficients from system of equations, plynimial regression \n        var v = new DenseMatrix(x.Length, degree + 1);\n        for (int i = 0; i &lt; v.RowCount; i++)\n            for (int j = 0; j &lt;= degree; j++) v[i, j] = Math.Pow(x[i], j);// v[i, j] - levá strana rovnice, Math.Pow(x[i],j) - pravá strana \n        var yv = new DenseVector(y).ToColumnMatrix();\n        QR qr = v.QR(); // triangle matrix\n        var r = qr.R.SubMatrix(0, degree + 1, 0, degree + 1);\n        var q = v.Multiply(r.Inverse());\n        var p = r.Inverse().Multiply(q.TransposeThisAndMultiply(yv));\n        return p.Column(0).ToArray();\n    }\n    }</code></pre>\n\nthis is how I solve coeffincients<br />\n<pre><code>public override int Read(byte[] buffer, int offset, int count)\n        {\n            Console.WriteLine(&quot;DirectSoundOut requested {0} bytes&quot;, count);\n\n            int read = SourceStream.Read(buffer, offset, count);\n           \n            for (int i = 0; i &lt; read / 4 ; i++)\n            {\n                float sample = BitConverter.ToSingle(buffer, i * 4 );\n                        sample = frm.getFunction(sample);\n               \n                  byte[] bytes = BitConverter.GetBytes(sample);\n                  buffer[i * 4 + 0] = bytes[0];\n                  buffer[i * 4 + 1] = bytes[1];\n                  buffer[i * 4 + 2] = bytes[2];\n                  buffer[i * 4 + 3] = bytes[3];\n                  \n            }\n\n            return read;\n        }</code></pre>\n\nand this is my read function in EffectStream\r<br />\n<br />\nSo guys, heve you got any idea, what I have to do? I need hear fluent effected sound.\r<br />\nThank you so much for your advices and comments. :-)<br />\n",
+    "PostedDate": "2017-05-18T23:57:27.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496605",
+    "ThreadId": "663016",
+    "Html": "Your Read method seems correct to me, so I assume your &quot;getFunction&quot; is causing the problems.\r<br />\n<br />\nAlso you can discard BlockAlignReductionStream, as it is not needed here.<br />\n",
+    "PostedDate": "2017-05-19T08:32:48.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496666",
+    "ThreadId": "663016",
+    "Html": "Could I ask? I this project I want to apply waveshaper effect and but with changing transfer function - getFunction(double x) - is my stransfer function, and I get I when I take position of points from my chart and apply Polyregression to get polynomial function equationVar = functionVarA * (Math.Pow(x, 8)) + functionVarB * (Math.Pow(x, 7)) + functionVarC * (Math.Pow(x, 6)) + functionVarD * (Math.Pow(x, 5)) + functionVarE * (Math.Pow(x, 4)) + functionVarF * (Math.Pow(x, 3)) + functionVarG * (Math.Pow(x, 2)) + functionVarH * x + functionVarI. \r<br />\nAnd than I want to play this effected destroyed sound -  when I click play button I want to hear effected sound insted of my wav file sound, and still I want to have chance to changing transfer function when I played audio. \r<br />\nAnd my problem is / If I apply this function on read method - I can't hear fluent effected sound. \r<br />\nSo I aks. Is any solution for waveshaper effect in NAudio? \r<br />\nI'll be soooo gratefull for answer. Thank you so much... <br />\n",
+    "PostedDate": "2017-05-23T03:13:10.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496709",
+    "ThreadId": "663016",
+    "Html": "As I said before, I assume your poly function is doing the distortions.\r<br />\n<br />\n<a href=\"https://skypefx.codeplex.com/\" rel=\"nofollow\">Here</a> is an example how to do realtime effects with NAudio.<br />\n",
+    "PostedDate": "2017-05-24T12:08:06.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496726",
+    "ThreadId": "663016",
+    "Html": "Yes, my polyfuction is doing distortions and I want to changing parametres  functionVarI, functionVarH, functionVarG, functionVarF etc. in realtime by dragging and moving points in chart of my poly function and in real time counting this parameters and play destroyed sound...  \r<br />\n",
+    "PostedDate": "2017-05-24T23:28:26.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496733",
+    "ThreadId": "663016",
+    "Html": "OIC!!!.... I don't have to do fft for apply, just what I have to do is from my chart of function se treshold - is first poin for -values and last point for +value of my input and knee of effect and I don't realy understant how i can implement my other nonlinearities - other points in chart... I will think about it...<br />\n",
+    "PostedDate": "2017-05-25T04:57:10.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

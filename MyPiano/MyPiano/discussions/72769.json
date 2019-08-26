@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "248521",
+    "ThreadId": "72769",
+    "Html": "<p>I'm looking at your (very extensive) NAudio library to be able to control the mixer playback and recording volumes as well as mute selected devices.&nbsp; As you know (probably painfully) there is quite a difference between Vista audio and everything that came before it.&nbsp; I'd like to find one way to control these values regardless whether the code is running on Vista or previous Windows versions.&nbsp; Can you point me in the right direction to find information about how to do this with NAudio?&nbsp;</p>\r\n<p>Many thanks,</p>\r\n<p>Steve</p>",
+    "PostedDate": "2009-10-22T05:02:31.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "248526",
+    "ThreadId": "72769",
+    "Html": "<p>Hi Steve,</p>\r\n<p>yes I am painfully aware of this. I recently tried to write code that could control your microphone recording level that worked on both Vista and XP. I found it next to impossible (short of writing two sets of code, one for XP and one for Vista). If I ever do work out a solution, you can be sure I'll add it in to NAudio</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-22T05:38:35.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "248527",
+    "ThreadId": "72769",
+    "Html": "\r\n<div>LOL... I'm not surprised!  What a pain, \r\nhuh?  Thanks for the reply and great work!</div>\r\n<div> </div>\r\n<div>sr</div>\r\n<div style=\"font:10pt Tahoma\">\r\n<div><br></div>\r\n<div style=\"background:#f5f5f5\">\r\n<div style=\"font-color:black\"><b>From:</b> [email removed] </div>\r\n<div><b>Sent:</b> Thursday, October 22, 2009 8:38 AM</div>\r\n<div><b>To:</b> [email removed] </div>\r\n<div><b>Subject:</b> Re: Playback/Recording Volume Controls & Mute \r\n[naudio:72769]</div></div></div>\r\n<div><br></div>\r\n\r\n\r\n<p>From: markheath</p>\r\n<div id=ThreadNotificationPostBody>\r\n<p>Hi Steve,</p>\r\n<p>yes I am painfully aware of this. I recently tried to write code that could \r\ncontrol your microphone recording level that worked on both Vista and XP. I \r\nfound it next to impossible (short of writing two sets of code, one for XP and \r\none for Vista). If I ever do work out a solution, you can be sure I'll add it in \r\nto NAudio</p>\r\n<p>Mark</p></div>\r\n",
+    "PostedDate": "2009-10-22T05:40:19.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

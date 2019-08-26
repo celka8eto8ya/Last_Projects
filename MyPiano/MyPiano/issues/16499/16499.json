@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "I'm receiving a COM error after my app exits if I call UnRegisterEventClient.\r\n\r\nHere is a code snippet:\r\nprivate Dictionary<uint, SessionsEventCallbacks.NAudioEventCallbacks> _sessionNotifications = new Dictionary<uint, SessionsEvents.NAudioEventCallbacks>();\r\n// NAudioEventCallbacks inherits from IAudioSessionEventsHandler\r\n...\r\nprivate void OnSessionCreated(object sender, IAudioSessionControl newSession)\r\n{\r\n  AudioSessionControl audioSession = new AudioSessionControl(newSession);\r\n  SessionsEvents.NAudioEventCallbacks notifications = new SessionsEventCallbacks.NAudioEventCallbacks();\r\n  notifications.contentCat = 0;\r\n  notifications.programType = 0;\r\n  notifications.processId = (int)audioSession.GetProcessID;\r\n  notifications.processName = Process.GetProcessById((int)audioSession.GetProcessID).ProcessName;\r\n  notifications.domain = string.Empty;\r\n  notifications.youtubeCategory = string.Empty;\r\n  notifications.audioSession = audioSession;\r\n  notifications.SessionEndedCallback  = AudioStopped;\r\n\r\n  _sessionNotifications.Add((uint)notifications.processId, notifications);\r\n  audioSession.RegisterEventClient(notifications);\r\n}\r\n\r\nI call UnRegisterEventClient from AudioStopped.\r\n\r\nAny help would be greatly appreciated!\r\n\r\nThanks,\r\nRandall Deetz",
+    "LastUpdatedDate": "2016-08-31T12:31:12.983-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-08-24T00:29:15.41-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "COM Exception & UnRegisterEventClient",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16499
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I'm noticing that after calling UnRegisterEventClient, if I change audioSessionEventCallback to null in the debugger, the problem goes away. ",
+      "PostedDate": "2016-08-24T11:07:24.003-07:00",
+      "Id": 203747
+    },
+    {
+      "Message": "thanks for reporting this issue and workaround. if you have a proposed fix for the library feel free to submit a PR at github",
+      "PostedDate": "2016-08-31T12:31:12.983-07:00",
+      "Id": 203821
+    }
+  ]
+}

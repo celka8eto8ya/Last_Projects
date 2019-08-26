@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "592274",
+    "ThreadId": "252647",
+    "Html": "\r\n<p>Is it possible to load an audio file and inject it directly into the windows microphone recording stream via NAudio ? IF yes, how? I can't seem to find any decent API documentation for NAudio</p>\r\n",
+    "PostedDate": "2011-04-05T12:01:49.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592846",
+    "ThreadId": "252647",
+    "Html": "<p>I'm afraid this is not possible with NAudio. You would need a virtual device driver that emulates a microphone to do this in windows.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-06T08:15:48.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592883",
+    "ThreadId": "252647",
+    "Html": "<p>I don't get it, why are the windows recording channels protected so strongly against writing ?</p>\n<p>&nbsp;</p>\n<p>edit: can I somehow select a certain output channel with NAudio ?</p>",
+    "PostedDate": "2011-04-06T09:03:52.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

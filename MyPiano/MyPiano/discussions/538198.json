@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1219991",
+    "ThreadId": "538198",
+    "Html": "I'd like to record audio and immediately draw the waveform of the recorded audio and.... meanwhile being able to play (scrub actually) in the audio that was recorded.\r<br />\n<br />\nWhat will probably make it complex is that I want to play in the audiofile that is still being recorded.\r<br />\n<br />\nAlthough I'm a vb.net programmer, I can read C# quite well. Would anyone have examples that would proof the concept/possibility of these principles? <br />\n",
+    "PostedDate": "2014-03-06T10:32:09.963-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1220856",
+    "ThreadId": "538198",
+    "Html": "Probably the easiest solution is to buffer recorded audio into memory using something similar to BufferedWaveProvider. You can play from a WAV file you are writing to, but it is fairly tricky to get right. <br />\n",
+    "PostedDate": "2014-03-09T15:53:29.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223195",
+    "ThreadId": "538198",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Hi Mark,</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\">thanks for your answer. You responded to our message on the forum, but I also sent you a personal email.</span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\">The forum is not the place to discuss possible payment etc. so that's why I mailed you.</span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\">The message that I mean is underneath here. If possible, could you reply to me? thanks!</span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\">regards,</span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\">Martijn</span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\">------</span></p>\r\n<p><span lang=\"EN-US\">Hi Mark,</span></p>\r\n<p><span lang=\"EN-US\"></span></p>\r\n<p><span lang=\"EN-US\">I've been meaning to mail you for a while.</span></p>\r\n<p><span lang=\"EN-US\">My company develops audio related products on a small scale. I've been following the Naudio developments for a while now.</span></p>\r\n<p><span lang=\"EN-US\">I'll cut to the point.</span></p>\r\n<p><span lang=\"EN-US\">We need to develop a product that can record audio and meanwhile play (scrub rather) thru the same file. Ideally you would be able to scrub right upto the current recording marker.</span></p>\r\n<p><span lang=\"EN-US\">The biggest challenge lies in reading the data that is still being written in. We also need the waveform of the recorded audio to be drawn up immediately, so you can visualize where you want to scrub. But that's not really the hard part.</span></p>\r\n<p><span lang=\"EN-US\"></span></p>\r\n<p><span lang=\"EN-US\">We need to select the most suitable audio library for it and we are currently doing just that.</span></p>\r\n<p><span lang=\"EN-US\">We develop a lot of applications and our preferred language is\r\n</span><a href=\"http://VB.net\"><span lang=\"EN-US\">VB.net</span></a><span lang=\"EN-US\">.</span></p>\r\n<p><span lang=\"EN-US\"></span></p>\r\n<p><span lang=\"EN-US\">I realize Naudio is open source, nevertheless I would like to ask you these questions:</span></p>\r\n<p><span lang=\"EN-US\"></span></p>\r\n<p><span lang=\"EN-US\">-Would the above, to your opinion, be achievable?</span></p>\r\n<p><span lang=\"EN-US\">-If yes, would you or someone else be able to supply us with a code example, as a proof of concept, preferably in\r\n</span><a href=\"http://VB.net\"><span lang=\"EN-US\">VB.net</span></a><span lang=\"EN-US\"></span></p>\r\n<p><span lang=\"EN-US\">-if yes too, what would you like to see in return? Our budgets are limited, but a reasonable payment for such a thing should be possible I think.</span></p>\r\n<p><span lang=\"EN-US\"></span></p>\r\n<p><span lang=\"EN-US\"></span></p>\r\n<p><span lang=\"EN-US\">Hope to hear soon,</span></p>\r\n<p><span lang=\"EN-US\"></span></p>\r\n<p><span lang=\"EN-US\">best regards,</span></p>\r\n<p><span lang=\"EN-US\"></span></p>\r\n<p>Martijn</p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span lang=\"EN-US\" style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<div style=\"border:none; border-top:solid #B5C4DF 1.0pt; padding:3.0pt 0cm 0cm 0cm\">\r\n<p><b><span lang=\"EN-US\" style=\"font-size:10.0pt; font-family:\"></span></b></p>\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2014-03-16T02:31:11.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

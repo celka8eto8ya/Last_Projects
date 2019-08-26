@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1495410",
+    "ThreadId": "662512",
+    "Html": "We're generating brief audio tones at varying frequencies at a high rate.  This is used for audible feedback.  We used the sample SineWaveProvider class along with the WasapiOut class.  On each request, we set this up, play the tone, the SineWaveProvider fills in the buffer as requested and the sound plays at the specified frequency.\r<br />\n<br />\nWhat we get, though, when playing many brief tones in sequence are these clicking/popping/static type noises along side the sounds.\r<br />\n<br />\nNot sure what's causing them.  Anyone else have a similar experience?  Any ideas?<br />\n",
+    "PostedDate": "2017-04-11T20:05:41.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495556",
+    "ThreadId": "662512",
+    "Html": "Got this working thanks to a helpful suggestion from Mark Heath.  We're now doing the following and don't have the problem of clicking/popping artifacts when playing tones at a high rate.\r<br />\n<br />\n1) We're using the FadeInOutSampleProvider in between the SineWaveProvider and the output player object.  When requested to play a tone by the application, this is used to do a 5ms fade in and then fade out after the tone.\r<br />\n<br />\n2) After the fade-out, we no longer call Stop() on the output player object.  We just let it continue playing at 0 volume and then use a timer which, if no tones are requested for a period of time (1s) then calls Stop().  If another tone is requested before this times expires, we reset the timer, etc.  This way we're not starting/stopping the player at such a high rate which was another source of the clicking/popping artifacts.\r<br />\n<br />\nHope this helps someone else!<br />\n",
+    "PostedDate": "2017-04-17T10:27:14.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

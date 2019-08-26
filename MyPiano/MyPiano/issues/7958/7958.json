@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Well spotted. I've checked in your fix. Partial reads can cause all sorts of problems for various output driver models, which is why the PadWithZeroes is the default",
+    "ClosedDate": "2008-11-02T03:27:59.837-08:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "NAudio\\Wave\\WaveStreams\\WaveChannel32.cs\n\n        public override int Read(byte[] destBuffer, int offset, int numBytes)\n        {\n.....\n            return numBytes;\n        }\n\nBecause the PadWithZeroes seems to be TRUE by default, this may have gone unnoticed but once I set it to false and wondered why does this thing keep on reading as if the source file I have it on was infinite I noticed this.\n\nBased on how the method is written right now it should probably return bytesWritten;",
+    "LastUpdatedDate": "2008-11-02T03:27:59.837-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-11-02T00:12:56.103-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveChannel32 Read should return bytes read instead of bytes requested",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7958
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "873724",
+    "ThreadId": "373798",
+    "Html": "\r\n<p>Is this possible to convert Existing Audio of type Mp3 to Wav , and Wma to Wav Format</p>\r\n",
+    "PostedDate": "2012-07-18T07:54:46.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "879552",
+    "ThreadId": "373798",
+    "Html": "<p>yes, the Mp3FileReader already does this, and there is a WmaFileReader as well in the WMA assembly if you build from source.</p>",
+    "PostedDate": "2012-07-20T03:54:43.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "883429",
+    "ThreadId": "373798",
+    "Html": "<p>ya ya i got it mark,thanks a lot</p>",
+    "PostedDate": "2012-07-21T09:59:11.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

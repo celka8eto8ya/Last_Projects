@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "984694",
+    "ThreadId": "429088",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I experience dropouts in irregular time spans when I try to record via WasapiLoopbackCapture (tried on three PCs - even on a intel core i7 in idle mode). Does anyone have an idea on how to fix this problem?</p>\r\n<p>Thanks in advance.</p>\r\n",
+    "PostedDate": "2013-01-09T13:52:41.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "985413",
+    "ThreadId": "429088",
+    "Html": "\r\n<p>do you mean missing samples, or recording samples that have a value of 0? How long do you have to record before this problem is observed? Is there any chance it could be coinciding with a run of the .NET garbage collector?</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2013-01-11T05:40:08.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "985471",
+    "ThreadId": "429088",
+    "Html": "\r\n<p>Thank you very much for your reply!</p>\r\n<p>I mean missing samples (like the original sound from the computer is: ABCDEF and the recording is like ABDEF). Sometimes it occurs after 10 seconds, sometimes after 2 minutes and sometimes I get a record without any issue... In the DataAvailable Method I\r\n just write the buffer to the file with writer.Write(e.Buffer, 0, e.BytesRecorded); ...</p>\r\n<p>Thank you very much for your help!</p>\r\n",
+    "PostedDate": "2013-01-11T07:22:51.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "985686",
+    "ThreadId": "429088",
+    "Html": "\r\n<p>hmmm, not sure what is causing that. It might possibly be the garbage collector, in which case recording with larger buffer sizes might help, although unfortunately that isn't currently configurable in WasapiCapture, which is something that probably ought\r\n to be rectified in a future NAudio.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2013-01-11T14:28:16.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

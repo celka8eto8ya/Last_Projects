@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "996340",
+    "ThreadId": "431939",
+    "Html": "Hi there,\r<br />\n<br />\nOur product currently has version 1.5.3.0 and based the SkypeVoiceChanger article, you used an unreleased version of NAudio (v 1.5.4.0).\r<br />\n<br />\nGiven what you had stated, should I be using the 1.6 release to make use of the effects engine you had described in the Skype Voice Changer article?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-04T13:12:14.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996342",
+    "ThreadId": "431939",
+    "Html": "yes, 1.6 is probably a good choice. The most of the effects engine wasn't in NAudio anyway. It resided in a separate assembly called jsnet.<br />\n",
+    "PostedDate": "2013-02-04T13:18:49.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996344",
+    "ThreadId": "431939",
+    "Html": "thank for your quick response. Another question....I would like to use a 2 band EQ (bass, treble only). Is this available, or would I have to make a custom 2-band EQ from the 3-band EQ example?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-04T13:20:56.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996353",
+    "ThreadId": "431939",
+    "Html": "yes, just use 2 bands of the 3 band eq<br />\n",
+    "PostedDate": "2013-02-04T13:38:14.143-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996373",
+    "ThreadId": "431939",
+    "Html": "Although I am not new to C#, I am sort of new to NAudio....how would one go about make use of the 1.6 framework to integrate the 3BandEQ as an example. The namespaces are so different, so am wondering which classes do I start playing with? \r<br />\n<br />\n<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-04T14:20:28.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997372",
+    "ThreadId": "431939",
+    "Html": "ok.....something doesn't make sense. Does NAudio 1.6 have an effects engine? How would you integrate a single bass/treble equalizer effect? Is it all based on the ISampleProvider framework?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-06T08:16:40.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997373",
+    "ThreadId": "431939",
+    "Html": "there is no effects framework per se, but the ISampleProvider interface is designed to make it as easy as possible to implement one. Just implement ISampleProvider, and in the Read method, you can do whatever DSP you like on the samples you read out of your source sample provider.<br />\n",
+    "PostedDate": "2013-02-06T08:18:03.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

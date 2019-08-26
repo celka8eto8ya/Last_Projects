@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "837839",
+    "ThreadId": "356204",
+    "Html": "\r\n<p>I'm new to NAudio and need to create a wave viewer,&nbsp;<span>but</span><span>&nbsp;</span><span>do not want to</span><span>&nbsp;</span><span>play the selected song,</span></p>\r\n<p>How do you doing?</p>\r\n<p>&nbsp;</p>\r\n<p>Tanks.</p>\r\n<p>&nbsp;</p>\r\n<p>PS:&nbsp;<span>I'm</span><span>&nbsp;</span><span>developing</span><span>&nbsp;</span><span>from the</span><span>&nbsp;</span><span>demo version,&nbsp;<span>I can</span><span>&nbsp;</span><span>I do</span><span>?</span></span></p>\r\n",
+    "PostedDate": "2012-05-17T12:44:09.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "838065",
+    "ThreadId": "356204",
+    "Html": "<p>you just need to call the Read method repeatedly on the WaveProvider that you would normally give to WaveOut. This pulls all the audio data through and the events that the waveform drawer is listening to will fire</p>",
+    "PostedDate": "2012-05-18T01:37:22.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "838260",
+    "ThreadId": "356204",
+    "Html": "<p>It worked!</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you!</p>",
+    "PostedDate": "2012-05-18T13:07:13.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

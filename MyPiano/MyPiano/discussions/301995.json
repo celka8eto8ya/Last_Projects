@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "751072",
+    "ThreadId": "301995",
+    "Html": "<p>ive got truespeech data which i need to play with naudio.</p>\n<p>96 bytes of data is to be played on an interval of 85 ms. how do i accomplish this?</p>\n<p>&nbsp;</p>\n<p>MemoryStream ms = new MemoryStream(Encoding.Default.GetBytes(truepeechdata));</p>\n<p>RawSourceWaveStream rws = new RawSourceWaveStream(ms, WaveFormat.CreateMuLawFormat(8000, 1));&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WaveFormatConversionStream pcmStream = (WaveFormatConversionStream)WaveFormatConversionStream.CreatePcmStream(rws);&nbsp;</p>\n<p>&nbsp;WaveOut wo = new WaveOut(this.Handle);&nbsp;</p>\n<p>wo.Init(pcmStream);</p>\n<p>wo.Play();</p>\n<p>&nbsp;</p>\n<p>something like this produce a tick sound..</p>",
+    "PostedDate": "2012-02-09T22:33:00.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "759147",
+    "ThreadId": "301995",
+    "Html": "<p>you are marking your rawsourcewavestream as being mulaw, but if it is truespeech, then you will need to pass in the correct WaveFormat. Use the TrueSpeechWaveFormat class instead.</p>",
+    "PostedDate": "2012-02-12T11:34:26.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "762240",
+    "ThreadId": "301995",
+    "Html": "<p>i used the truespeechwaveformat class and the sound is playing but its too much breaking in between.</p>\n<p>&nbsp;</p>\n<p>TrueSpeechWaveFormat tspf = new TrueSpeechWaveFormat();</p>\n<p>WaveOut wo =&nbsp;new WaveOut(this.Handle);</p>\n<p>MemoryStream ms = new MemoryStream(Encoding.Default.GetBytes(dataToPlay));</p>\n<p><br />RawSourceWaveStream rws = new RawSourceWaveStream(ms, tspf); &nbsp; &nbsp; &nbsp;</p>\n<p>&nbsp;WaveFormatConversionStream pcmStream = (WaveFormatConversionStream)WaveFormatConversionStream.CreatePcmStream(rws);&nbsp; &nbsp;</p>\n<p>wo.Init(pcmStream);</p>\n<p>wo.Play();</p>\n<p>&nbsp;</p>\n<p>do i need to change any truespeech format? bits per second or anything?</p>",
+    "PostedDate": "2012-02-14T00:57:39.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "762287",
+    "ThreadId": "301995",
+    "Html": "<p>yes, well actually it would be more like new TrueSpeechWaveFormat(...)</p>",
+    "PostedDate": "2012-02-14T01:29:09.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "763554",
+    "ThreadId": "301995",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>yes, well actually it would be more like new TrueSpeechWaveFormat(...)</p>\r\n</blockquote>\r\n<p>TrueSpeechWaveFormat(..) nothing in there to specify :|</p>\r\n<p>&nbsp;</p>\r\n<p>cud you be more specific pls?</p>",
+    "PostedDate": "2012-02-14T07:57:56.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "776327",
+    "ThreadId": "301995",
+    "Html": "<p>just do new TrueSpeechWaveFormat()</p>",
+    "PostedDate": "2012-02-17T14:11:15.65-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

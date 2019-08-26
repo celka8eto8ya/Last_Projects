@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1088730",
+    "ThreadId": "455606",
+    "Html": "Hi,<br />\n<br />\nI am drawing the waveform of a wav file on a mediaobject representation. <br />\nThe user can make the duration of this media object smaller. The wav is then played only the duration and the rest is cut off. <br />\nI can draw the waveform of the entire wav no problem, and for the smaller duration I thought I could just change the length of the wavestream like so:<br />\n<pre><code>WaveDrawer wd = new WaveDrawer();\nwd.WaveStream = new NAudio.Wave.WaveFileReader(lr.URL);\nTimeSpan ts = (_representedObject as MediaObject).Duration;\nwd.WaveStream.SetLength((long)(wd.WaveStream.WaveFormat.AverageBytesPerSecond * ts.TotalSeconds));\nwd.FitToScreen(RectSingleLoop.Width);\n....</code></pre>\n\nBut this results in the exception &quot;Can't set length of WaveFormatString&quot;.<br />\nWhat am I doing wrong? Or is there another way to go about this?<br />\n<br />\nThank you!<br />\n",
+    "PostedDate": "2013-09-05T05:51:45.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1089132",
+    "ThreadId": "455606",
+    "Html": "You can't change the length of a WaveStream. I'd probably create a wrapper WaveStream with a shorter duration, whose Read method passes into the full WaveFileReader, but doesn't read more than the specified length. Have a look at OffsetSampleProvider for an idea of how this would be implemented.<br />\n",
+    "PostedDate": "2013-09-06T02:02:39.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

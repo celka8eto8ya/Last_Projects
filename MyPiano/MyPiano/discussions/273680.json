@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "676077",
+    "ThreadId": "273680",
+    "Html": "<p>What is the status of 64-bit support&nbsp;in NAudio and WPF Sound Visualization Library? I am totally new to these libraries and I am considering using the latter in one of my projects (a 64-bit application). Thanks.</p>",
+    "PostedDate": "2011-09-23T18:22:29.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "680852",
+    "ThreadId": "273680",
+    "Html": "<p>the latest NAudio in source control should work fine in 64 bit. I can't speak for the SVL, but I doubt it has any interop in it, so it is likely to work in 64 bit</p>",
+    "PostedDate": "2011-10-06T08:51:28.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

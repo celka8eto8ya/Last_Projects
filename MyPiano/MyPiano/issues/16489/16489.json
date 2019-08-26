@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I use NAudio WaveInEvent in a telecommunications software VB.net very simple.\r\nSometimes, the class does not generate sound!\r\nWould anyone have a solution?\r\nhere is my code:\r\n\r\nImports NAudio.Wave\r\nFriend Class NaudioMicro\r\n    'Nombre paquets audio reçus par PTT\r\n    Private NbPaquetsAudioParPTT As Integer = 0\r\n    'Microphone Availability (if NbPaquetsAudioParPTT > 0)\r\n    Private _MicrophoneAvailability As Boolean = True\r\n    'Indique que le recorder est en mode capture\r\n    Private _IsCapturing As Boolean = False\r\n    'Indicator for Display\r\n    Private DisplaySignal As Boolean = False\r\n    'Recorder Naudio\r\n    Private WithEvents _WaveInDevice As NAudio.Wave.WaveInEvent\r\n\r\n    Friend Event OnDisplayMessage(ByVal Message As String)\r\n    Friend Event OnCaptured(ByVal AudioStream() As Byte, ByVal NumSamples As Integer)\r\n    Friend Event OnError(ByVal Source As String, ByVal Méthode As String, ByVal Message As String, ByVal Stack As String)\r\n\r\n    Friend Sub StartCapture()\r\n        Try\r\n            If _IsCapturing = False Then\r\n                _IsCapturing = True\r\n                _WaveInDevice = New WaveInEvent()\r\n                _WaveInDevice.DeviceNumber = 0\r\n                _WaveInDevice.WaveFormat = New WaveFormat(8000, 16, 1)\r\n                _WaveInDevice.NumberOfBuffers = 2\r\n                _WaveInDevice.BufferMilliseconds = 60\r\n                _WaveInDevice.StartRecording()\r\n                NbPaquetsAudioParPTT = 0\r\n                RaiseEvent OnDisplayMessage(\"Microphone opening...\")\r\n            End If\r\n        Catch Ex As Exception\r\n            RaiseEvent OnError(\"NaudioMicro\", \"StartCapture\", Ex.Message, Ex.StackTrace)\r\n        End Try\r\n    End Sub\r\n\r\n    Friend Sub StopCapture()\r\n        Try\r\n            If _IsCapturing Then\r\n                If _WaveInDevice IsNot Nothing Then\r\n                    _WaveInDevice.StopRecording()\r\n                    _WaveInDevice.Dispose()\r\n                    _WaveInDevice = Nothing\r\n                    _MicrophoneAvailability = CBool(IIf(NbPaquetsAudioParPTT > 0, True, False))\r\n                End If\r\n                _IsCapturing = False\r\n                RaiseEvent OnDisplayMessage(\"Closing microphone: \" & NbPaquetsAudioParPTT.ToString & \" packets of 960 bytes generated!\")\r\n            End If\r\n        Catch Ex As Exception\r\n            RaiseEvent OnError(\"NaudioMicro\", \"StopCapture\", Ex.Message, Ex.StackTrace)\r\n        End Try\r\n    End Sub\r\n \r\n    Private Sub _WaveInDevice_DataAvailable(ByVal sender As Object, ByVal e As NAudio.Wave.WaveInEventArgs) Handles _WaveInDevice.DataAvailable\r\n        NbPaquetsAudioParPTT += 1\r\n        RaiseEvent OnCaptured(e.Buffer, NbPaquetsAudioParPTT)\r\n    End Sub\r\n\r\n    Friend ReadOnly Property IsCapturing() As Boolean\r\n        Get\r\n            IsCapturing = _IsCapturing\r\n        End Get\r\n    End Property\r\n\r\n       Friend ReadOnly Property MicrophoneAvailability() As Boolean\r\n        Get\r\n            MicrophoneAvailability = _MicrophoneAvailability\r\n        End Get\r\n    End Property\r\nEnd Class",
+    "LastUpdatedDate": "2016-02-04T08:41:38.477-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-02-04T08:41:38.477-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveInEvent",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16489
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

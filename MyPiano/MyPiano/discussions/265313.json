@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "642977",
+    "ThreadId": "265313",
+    "Html": "<p>EDIT:&nbsp; please delete</p>",
+    "PostedDate": "2011-07-15T08:21:46.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643000",
+    "ThreadId": "265313",
+    "Html": "<p>Just put it somewhere, usually in a \"lib\" folder under your solution folder, and then do an Add Reference in visual studio</p>",
+    "PostedDate": "2011-07-15T08:47:45.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643010",
+    "ThreadId": "265313",
+    "Html": "<p>thanks</p>",
+    "PostedDate": "2011-07-15T08:56:56.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

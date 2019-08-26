@@ -1,0 +1,130 @@
+[
+  {
+    "Id": "602949",
+    "ThreadId": "255302",
+    "Html": "\r\n<p>Hello :)<br>\r\n<br>\r\nI'm developping in an application in Csharp and I want to read a sound file in an external sound card,is there a function which give me the possibility to play sound using the name of the sound card and the name &nbsp;of the audio file .<br>\r\n<br>\r\nThank you in advance&nbsp;</p>\r\n",
+    "PostedDate": "2011-04-26T07:21:40.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602953",
+    "ThreadId": "255302",
+    "Html": "<p>have a look at the NAudioDemo application and you will see how you can select which output device you should play to</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-26T07:29:34.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602957",
+    "ThreadId": "255302",
+    "Html": "<p>Thank you for replying, I'm a beginner in Csharp and I cant understand such codes very well,can you give me more details please? Can you give me the xode of the function whichcan play sound in a specific sound card?</p>",
+    "PostedDate": "2011-04-26T07:36:01.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602960",
+    "ThreadId": "255302",
+    "Html": "<p>For example, when you use WaveOut you can specify the DeviceNumber. (0 is the default device).</p>\r\n<p>So to select device 3:</p>\r\n<p>var waveOut = new WaveOut();<br />waveOut.DeviceNumber = 3;<br />waveOut.Init(...</p>\r\n<p>To find out which device number is which output, you call WaveOut.GetCapabilities(deviceNumber). deviceNumber must be less than WaveOut.DeviceCount</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-04-26T07:42:29.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "603147",
+    "ThreadId": "255302",
+    "Html": "<p>So if I want to create 3 buttons and I have 3 sound cards and each button is related to a sound card (for example button1 is related to sound card1 ...) which code can help me to play an audio file in the specific sound card ??? Please give me a code,because I'm preparing a general alarm &nbsp;and such code will help me .</p>",
+    "PostedDate": "2011-04-26T12:43:56.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "603645",
+    "ThreadId": "255302",
+    "Html": "<p>where is the problem if you want to select soundcard number 1 WaveOut.DeviceNumer = 1; ... if you want to select number 2&nbsp;WaveOut.DeviceNumer = 2;</p>",
+    "PostedDate": "2011-04-27T08:32:53.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604079",
+    "ThreadId": "255302",
+    "Html": "<p>Thank you for replying but I really didn't understand how can I use this function,sorry for bothering but please give me a clear code,how can I specify to each button in which sound card it should play sound.</p>\r\n<p>Thank you in advance.</p>",
+    "PostedDate": "2011-04-28T05:06:20.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604144",
+    "ThreadId": "255302",
+    "Html": "<p>The audio device I/O API are all same except ASIO, no matter the internal or external devices<br />just depends on the OS, and the ASIO is depends on the spec. of every devices whatever int. or ext.</p>",
+    "PostedDate": "2011-04-28T07:34:33.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604151",
+    "ThreadId": "255302",
+    "Html": "<p>So how can I select a device ? I read need to see the code and to try it to understand it</p>",
+    "PostedDate": "2011-04-28T07:40:40.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604154",
+    "ThreadId": "255302",
+    "Html": "<p>To select device 1:</p>\r\n<p>var waveOut = new WaveOut();<br /> waveOut.DeviceNumber = 1;</p>\r\n<p>To select device 2:</p>\r\n<p>var waveOut = new WaveOut();<br /> waveOut.DeviceNumber = 2;</p>\r\n<p>To select device 3:</p>\r\n<p>var waveOut = new WaveOut();<br /> waveOut.DeviceNumber = 3;</p>\r\n<p>It's that simple.</p>",
+    "PostedDate": "2011-04-28T07:43:04.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604163",
+    "ThreadId": "255302",
+    "Html": "<p>So if I want to play a sound in card sound number 1 i should do this? :</p>\r\n<p>&nbsp;</p>\r\n<p>namespace alarmee{</p>\r\n<p>&nbsp;&nbsp; &nbsp;public partial class Form1 : Form &nbsp; {</p>\r\n<p>&nbsp;&nbsp; &nbsp; public Form1()&nbsp;&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp;{&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;InitializeComponent();&nbsp;</p>\r\n<p>&nbsp;&nbsp; &nbsp;}&nbsp;&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp;[System.Runtime.InteropServices.DllImport(\"winmm.DLL\", EntryPoint = \"PlaySound\", SetLastError = true, CharSet = CharSet.Unicode, ThrowOnUnmappableChar = true)]&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;private static extern bool PlaySound(string szSound, System.IntPtr hMod, PlaySoundFlags flags);</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;[System.Flags]&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;public enum PlaySoundFlags : int&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SND_SYNC = 0x0000,&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SND_ASYNC = 0x0001,&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SND_NODEFAULT = 0x0002,&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SND_LOOP = 0x0008,&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SND_NOSTOP = 0x0010,&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SND_NOWAIT = 0x00002000,&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SND_FILENAME = 0x00020000,&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SND_RESOURCE = 0x00040004&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br /><br /></p>\r\n<p>System.Media.SoundPlayer sp = new SoundPlayer();</p>\r\n<p>&nbsp;&nbsp;private void button1_Click(object sender, EventArgs e)&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{<br />&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//Dans ton constructeur : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp;var waveOut = new WaveOut();&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp;waveOut.DeviceNumber = 1;<br />&nbsp;&nbsp;string chemin = \"..//..//Sequences//alarme.wav\";</p>\r\n<p>&nbsp;&nbsp;sp.SoundLocation = chemin;&nbsp;&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;sp.LoadCompleted += new AsyncCompletedEventHandler(sp_LoadCompleted);&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>sp.LoadAsync();&nbsp;&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp;&nbsp;}</p>\r\n<p>&nbsp;&nbsp; &nbsp;//Puis &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp;private void sp_LoadCompleted(object sender, AsyncCompletedEventArgs e)&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{ &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp;sp.PlayLooping();&nbsp;&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp;}</p>\r\n<p>}}</p>\r\n<p>&nbsp;</p>\r\n<p>It doesn't work .</p>",
+    "PostedDate": "2011-04-28T07:53:29.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604167",
+    "ThreadId": "255302",
+    "Html": "<p>this is an NAudio forum. Your code doesn't use NAudio at all. I don't think the Windows PlaySound API will let you select a soundcard.</p>",
+    "PostedDate": "2011-04-28T07:57:16.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604174",
+    "ThreadId": "255302",
+    "Html": "<p>So how can I solve this problem please?</p>",
+    "PostedDate": "2011-04-28T08:06:41.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604691",
+    "ThreadId": "255302",
+    "Html": "<p>OK here's how you play a WAV file in NAudio</p>\r\n<p>private WaveOut waveOut;</p>\r\n<p>waveOut = new WaveOut();<br /> waveOut.DeviceNumber = 0; // for default device<br />var reader = new WavFileReader(\"my-wav-file.wav\");<br />waveOut.Init(reader);<br />waveOut.Play();</p>\r\n<p>n.b. make waveOut a class member as Play is not a blocking call. Remember to Dispose it when you are finished with it.</p>",
+    "PostedDate": "2011-04-29T01:30:48.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604853",
+    "ThreadId": "255302",
+    "Html": "<p>Thank you very much for your help,now I can play mu soun file in a specific device :)</p>",
+    "PostedDate": "2011-04-29T07:42:13.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "606152",
+    "ThreadId": "255302",
+    "Html": "<p>Hello&nbsp;</p>\r\n<p>A freind gave me this code (This is the code of Form2 wich allows me to redirect the sound for the specific device) but&nbsp;when I install the three sound cards together only one sound card is able to play sound in her speakers but when I install them separetly they works :( can you help me to find a solution please????</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> System;\r\n<span style=\"color: blue;\">using</span> System.Collections.Generic;\r\n<span style=\"color: blue;\">using</span> System.ComponentModel;\r\n<span style=\"color: blue;\">using</span> System.Data;\r\n<span style=\"color: blue;\">using</span> System.Drawing;\r\n<span style=\"color: blue;\">using</span> System.Linq;\r\n<span style=\"color: blue;\">using</span> System.Text;\r\n<span style=\"color: blue;\">using</span> System.Windows.Forms;\r\n<span style=\"color: blue;\">using</span> NAudio.Wave;\r\n<span style=\"color: blue;\">using</span> NAudio.CoreAudioApi;\r\n\r\n<span style=\"color: blue;\">namespace</span> AudioWithNAudio\r\n{\r\n    <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">partial</span> <span style=\"color: blue;\">class</span> Form2 : Form\r\n    {\r\n        <span style=\"color: blue;\">string</span> fileName = <span style=\"color: blue;\">null</span>;\r\n        WaveOut wave = <span style=\"color: blue;\">null</span>;\r\n        <span style=\"color: blue;\">private</span> NAudio.Wave.WaveFileReader waveReader = <span style=\"color: blue;\">null</span>;\r\n        <span style=\"color: blue;\">private</span> NAudio.Wave.DirectSoundOut output = <span style=\"color: blue;\">null</span>;\r\n        <span style=\"color: blue;\">int</span> waveOutDevices = 0;\r\n        <span style=\"color: blue;\">public</span> Form2()\r\n        {\r\n            InitializeComponent();\r\n        }\r\n\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> Form2_Load(<span style=\"color: blue;\">object</span> sender, EventArgs e)\r\n        {\r\n            hideButtons();\r\n             fileName = (<span style=\"color: #a31515;\">\"alarm.wav\"</span>);\r\n             <span style=\"color: green;\">//bttnPlayAll.Enabled = false;</span>\r\n             detectDevices();          \r\n             \r\n        }\r\n\r\n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> hideButtons()\r\n        {\r\n\t\t\r\n            bttnAudioDevice1.Visible = <span style=\"color: blue;\">false</span>;\r\n            bttnAudioDevice2.Visible = <span style=\"color: blue;\">false</span>;\r\n            bttnAudioDevice3.Visible = <span style=\"color: blue;\">false</span>;\r\n            bttnAudioDevice4.Visible = <span style=\"color: blue;\">false</span>;\r\n            bttnAudioDevice5.Visible = <span style=\"color: blue;\">false</span>;\r\n        }\r\n\r\n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> detectDevices()\r\n        {\r\n             waveOutDevices = WaveOut.DeviceCount;\r\n            <span style=\"color: blue;\">switch</span> (waveOutDevices)\r\n            {\r\n                <span style=\"color: blue;\">case</span> 1:\r\n                    bttnAudioDevice1.Visible = <span style=\"color: blue;\">true</span>;\r\n                    <span style=\"color: blue;\">break</span>;\r\n                <span style=\"color: blue;\">case</span> 2:\r\n                    bttnAudioDevice2.Visible = <span style=\"color: blue;\">true</span>;\r\n                    bttnAudioDevice1.Visible = <span style=\"color: blue;\">true</span>;\r\n                    <span style=\"color: blue;\">break</span>;\r\n                <span style=\"color: blue;\">case</span> 3:\r\n                      bttnAudioDevice2.Visible = <span style=\"color: blue;\">true</span>;\r\n                    bttnAudioDevice1.Visible = <span style=\"color: blue;\">true</span>;\r\n                    bttnAudioDevice3.Visible = <span style=\"color: blue;\">true</span>;\r\n                    <span style=\"color: blue;\">break</span>;\r\n                <span style=\"color: blue;\">case</span> 4:\r\n                         bttnAudioDevice2.Visible = <span style=\"color: blue;\">true</span>;\r\n                    bttnAudioDevice1.Visible = <span style=\"color: blue;\">true</span>;\r\n                    bttnAudioDevice3.Visible = <span style=\"color: blue;\">true</span>;\r\n                    bttnAudioDevice4.Visible = <span style=\"color: blue;\">true</span>;\r\n                    <span style=\"color: blue;\">break</span>;\r\n                <span style=\"color: blue;\">case</span> 5:\r\n                            bttnAudioDevice2.Visible = <span style=\"color: blue;\">true</span>;\r\n                    bttnAudioDevice1.Visible = <span style=\"color: blue;\">true</span>;\r\n                    bttnAudioDevice3.Visible = <span style=\"color: blue;\">true</span>;\r\n                    bttnAudioDevice4.Visible = <span style=\"color: blue;\">true</span>;\r\n                    bttnAudioDevice5.Visible = <span style=\"color: blue;\">true</span>;\r\n                    <span style=\"color: blue;\">break</span>;\r\n            }\r\n        }\r\n\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> bttnAudioDevice1_Click(<span style=\"color: blue;\">object</span> sender, EventArgs e)\r\n        {\r\n            wave = <span style=\"color: blue;\">new</span> WaveOut();\r\n            wave.DeviceNumber = 0;\r\n            playSound();\r\n\r\n        }\r\n\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> bttnAudioDevice2_Click(<span style=\"color: blue;\">object</span> sender, EventArgs e)\r\n        {\r\n            wave = <span style=\"color: blue;\">new</span> WaveOut();\r\n            wave.DeviceNumber = 1;\r\n            playSound();\r\n        }\r\n\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> bttnAudioDevice3_Click(<span style=\"color: blue;\">object</span> sender, EventArgs e)\r\n        {\r\n            wave.DeviceNumber = 2;\r\n            playSound();\r\n        }\r\n\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> bttnAudioDevice4_Click(<span style=\"color: blue;\">object</span> sender, EventArgs e)\r\n        {\r\n            wave.DeviceNumber = 3;\r\n            playSound();\r\n        }\r\n\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> bttnAudioDevice5_Click(<span style=\"color: blue;\">object</span> sender, EventArgs e)\r\n        {\r\n            wave.DeviceNumber = 4;\r\n            playSound();\r\n        }\r\n\r\n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> playAllAvailableDevices()\r\n        {\r\n             wave = <span style=\"color: blue;\">new</span> WaveOut();\r\n             <span style=\"color: blue;\">switch</span> (waveOutDevices)\r\n             {\r\n                 <span style=\"color: blue;\">case</span> 1:\r\n\r\n                     wave.DeviceNumber = 0;\r\n                     playAllSound();\r\n                     <span style=\"color: blue;\">break</span>;\r\n                 <span style=\"color: blue;\">case</span> 2:\r\n                     wave.DeviceNumber = 0;\r\n                     playAllSound();\r\n                     wave.DeviceNumber = 1;\r\n                     playAllSound();\r\n                     <span style=\"color: blue;\">break</span>;\r\n                 <span style=\"color: blue;\">case</span> 3:\r\n                     wave.DeviceNumber = 0;\r\n                     playAllSound();\r\n                     wave.DeviceNumber = 1;\r\n                     playAllSound();\r\n                     wave.DeviceNumber = 2;\r\n                     playAllSound();\r\n                     <span style=\"color: blue;\">break</span>;\r\n                 <span style=\"color: blue;\">case</span> 4:\r\n                     wave.DeviceNumber = 0;\r\n                     playAllSound();\r\n                     wave.DeviceNumber = 1;\r\n                     playAllSound();\r\n                     wave.DeviceNumber = 2;\r\n                     playAllSound();\r\n                     wave.DeviceNumber = 3;\r\n                     playAllSound();\r\n                     <span style=\"color: blue;\">break</span>;\r\n                 <span style=\"color: blue;\">case</span> 5:\r\n                     wave.DeviceNumber = 0;\r\n                     playAllSound();\r\n                     wave.DeviceNumber = 1;\r\n                     playAllSound();\r\n                     wave.DeviceNumber = 2;\r\n                     playAllSound();\r\n                     wave.DeviceNumber = 3;\r\n                     playAllSound();\r\n                     wave.DeviceNumber = 4;\r\n                     playAllSound();\r\n                     <span style=\"color: blue;\">break</span>;\r\n             }\r\n        }\r\n\r\n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> playAllSound()\r\n        {\r\n           \r\n            waveReader = <span style=\"color: blue;\">new</span> NAudio.Wave.WaveFileReader(fileName);\r\n            output = <span style=\"color: blue;\">new</span> NAudio.Wave.DirectSoundOut();\r\n\r\n            output.Init(<span style=\"color: blue;\">new</span> NAudio.Wave.WaveChannel32(waveReader));\r\n            output.Play();\r\n        }\r\n\r\n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> playSound()\r\n        {\r\n            disposeWave();<span style=\"color: green;\">// stop previous sounds before starting</span>\r\n            waveReader = <span style=\"color: blue;\">new</span> NAudio.Wave.WaveFileReader(fileName);\r\n            output = <span style=\"color: blue;\">new</span> NAudio.Wave.DirectSoundOut();\r\n           \r\n            output.Init(<span style=\"color: blue;\">new</span> NAudio.Wave.WaveChannel32(waveReader));\r\n            output.Play();\r\n        }\r\n\r\n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> disposeWave()\r\n        {\r\n            <span style=\"color: blue;\">if</span> (output != <span style=\"color: blue;\">null</span>)\r\n            {\r\n                <span style=\"color: blue;\">if</span> (output.PlaybackState == NAudio.Wave.PlaybackState.Playing)\r\n                {\r\n                    output.Stop();\r\n                    output.Dispose();\r\n                    output = <span style=\"color: blue;\">null</span>;\r\n                }\r\n            }\r\n            <span style=\"color: blue;\">if</span> (wave != <span style=\"color: blue;\">null</span>)\r\n            {\r\n                wave.Dispose();\r\n                wave = <span style=\"color: blue;\">null</span>;\r\n            }\r\n        }\r\n\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> Form2_FormClosing(<span style=\"color: blue;\">object</span> sender, FormClosingEventArgs e)\r\n        {\r\n            disposeWave();\r\n        }\r\n\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> bttnStop_Click(<span style=\"color: blue;\">object</span> sender, EventArgs e)\r\n        {\r\n            <span style=\"color: blue;\">if</span> (output != <span style=\"color: blue;\">null</span>)\r\n            {\r\n                <span style=\"color: blue;\">if</span> (output.PlaybackState == NAudio.Wave.PlaybackState.Playing)\r\n                {\r\n                    output.Stop();\r\n                 \r\n                }\r\n            }\r\n        }\r\n\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> bttnPlayAll_Click(<span style=\"color: blue;\">object</span> sender, EventArgs e)\r\n        {\r\n            playAllAvailableDevices();\r\n        }\r\n    }\r\n}\r\n\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2011-05-02T15:45:41.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

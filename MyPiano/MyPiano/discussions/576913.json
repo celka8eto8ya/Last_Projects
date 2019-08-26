@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1339169",
+    "ThreadId": "576913",
+    "Html": "Dear NAudio community,\r<br />\n<br />\nI'm a novice when in comes to computer audio, and have not worked with NAudio before, but it looks like it might be a fit for an application I need to develop.  I'm hoping that the community can offer some help.\r<br />\n<br />\nThe key is simultaneously playing back some predefined tone through an output on the card and recording from an input to the card.  Some type of high-quality 24-bit 48 kHz or better sound card would perform the following:<br />\n<ol>\n<li>\nCreate some number of seconds of a test waveform.  For example, a 200 Hz sine wave at 600 Volts RMS that runs for 1 second.  (I understand that the output level would need to be measured/calibrated, and is only going to provide some % of whatever full scale is).<br />\n</li>\n<li>\nPlay that waveform to one (or both) channels of a sound card (selectable before the test is run).<br />\n</li>\n<li>\nAfter some short amount of settling delay (programmable in milliseconds), record from one (or both) inputs of a sound card.<br />\n</li>\n<li>\nNote that the recording needs to be going on while the playback is still occurring.<br />\n</li>\n<li>\nSave the recorded data and pass it to something external (like a MATLAB program) for further analysis, and/or do other mathematical manipulations of the playback and recorded data, such as taking a ratio, multiplying by a scaling factor, etc.<br />\n</li>\n<li>\nThe GUI needs to be &quot;easy to use&quot;, streamlined, slick, and modern, and using Visual Studio with C# is a likely approach.<br />\n</li>\n</ol>\nThe MATLAB portion and other math manipulations aren't the worrisome part for me.  I’m trying to find a way to simultaneously play back a signal and record a response on the same sound card.\r<br />\n<br />\nHow can simultaneous playback and recording using the same sound card be done in NAudio?  Can you point me to any specific examples for reference?\r<br />\n<br />\nSince I am new to all of this, is there a preferred type of driver/interface to the sound card?  For example, I've seen several references that state that if ASIO is available, you should use it, but they really don't explain why.   I know there are many other interface types out there, including WASAPI, WDM-KS, DirectSound, and perhaps others, but I do not know the strengths and weaknesses of each yet.  So if I have a choice with NAudio, what driver/interface should I use, and why?\r<br />\n \r<br />\nThanks in advance for your help!\r<br />\n<br />\nScott<br />\n",
+    "PostedDate": "2015-01-05T10:03:15.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340293",
+    "ThreadId": "576913",
+    "Html": "Hi,\r<br />\n<br />\nI have almost the same question and i'm also novice on this topic.\r<br />\n<br />\nI have an audio stream that will be consumed by &quot;something&quot; (like a speech engine) and I'd like to also write the stream to a file.\r<br />\n<br />\nI don't know if NAudio has a magical double stream ? \r<br />\n<br />\nJp<br />\n",
+    "PostedDate": "2015-01-09T01:44:12.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340354",
+    "ThreadId": "576913",
+    "Html": "\r\n<div dir=\"ltr\">Thanks Jp,\r\n<div><br>\r\n</div>\r\n<div>I have not received any other responses, which is very disappointing. I'm hoping that your added interest will encourage someone in the group to help answer our common questions.</div>\r\n<div><br>\r\n</div>\r\n<div>As an aside, I have also been looking at PortAudio, which apparently can playback and record simultaneously, but the examples are not terribly enlightening, and I have not received much help from their mailing list, either.</div>\r\n<div><br>\r\n</div>\r\n<div>Will let you know if I get any other information to work with.</div>\r\n<div><br>\r\n</div>\r\n<div>Kind regards,</div>\r\n<div><br>\r\n</div>\r\n<div>Scott</div>\r\n</div>\r\n<div><br>\r\n<div></div>\r\n</div>\r\n",
+    "PostedDate": "2015-01-09T05:44:29.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340516",
+    "ThreadId": "576913",
+    "Html": "Hi Scott,\r<br />\n<br />\nyou can do most of those things with NAudio. The SignalGenerator class can make the sounds you want. MonoToStereo convertors will allow you to choose which side the audio should be played through. WaveIn can record from the soundcard. Here's a post from my blog on how to record the audio you are playing back:\r<br />\n<a href=\"http://www.markheath.net/post/how-to-record-and-play-audio-at-same\" rel=\"nofollow\">http://www.markheath.net/post/how-to-record-and-play-audio-at-same</a>\r<br />\n<br />\nHope this points you in the right direction\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2015-01-09T14:02:50.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

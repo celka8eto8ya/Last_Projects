@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "485096",
+    "ThreadId": "224925",
+    "Html": "<p>Why the only possible wave-in capability is to use WinMM or Wasapi (where is DirectSound??) Or im missing something?</p>\r\n<p>Also IWaveIn lacks device selection capabilities...</p>",
+    "PostedDate": "2010-08-26T04:16:02.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "485711",
+    "ThreadId": "224925",
+    "Html": "<p>the WaveIn constructor lets you select devices. IWaveIn is generic and each recording method has its own mechanism. DirectSound recording hasn't been implemented yet</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-08-27T08:04:53.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

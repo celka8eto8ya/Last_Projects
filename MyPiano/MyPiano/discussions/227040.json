@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "492845",
+    "ThreadId": "227040",
+    "Html": "<p>Is there a way to modify the Skype voice changer to record the audio file with the effect. I know how to write the audio file using the following code:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveFileWriter writer = new WaveFileWriter(Environment.CurrentDirectory + &quot;//Record.wav&quot;, audioGraph.outStream.WaveFormat);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte[] buffer = new byte[audioGraph.outStream.GetReadSize(4000)];<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while (true)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int bytesRead = audioGraph.outStream.Read(buffer, 0, buffer.Length);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (bytesRead == 0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writer.WriteData(buffer, 0, bytesRead);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writer.Dispose();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writer.Close();</p>\r\n<p>&nbsp;</p>\r\n<p>but the effect is not saved with it. Any ideas?</p>",
+    "PostedDate": "2010-09-13T08:57:55.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "500001",
+    "ThreadId": "227040",
+    "Html": "<p>the stream is already been read by SkypeVoiceChanger, so you would need to intercept with perhaps another wrapped Stream in order to save the data</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-29T07:16:33.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "500008",
+    "ThreadId": "227040",
+    "Html": "<p>I should add, have a look at WaveRecorder in the latest NAudio source</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-29T07:25:40.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

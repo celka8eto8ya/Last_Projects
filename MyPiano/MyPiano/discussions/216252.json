@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "456254",
+    "ThreadId": "216252",
+    "Html": "<p>I saw in this link:&nbsp;<a href=\"http://msdn.microsoft.com/enus/library/ms679146.aspx\">http://msdn.microsoft.com/enus/library/ms679146.aspx</a></p>\r\n<p>That WASAPI can actually be used for loopback recording (e.g. record what is heard on the computer's speakers), regardless of sound-card/driver support and OS settings.</p>\r\n<p>Is that possible via NAudio? That would really be a great feature on Win7!</p>",
+    "PostedDate": "2010-06-16T09:25:20.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "456256",
+    "ThreadId": "216252",
+    "Html": "<p>see the class on this thread:</p>\r\n<p>http://naudio.codeplex.com/Thread/View.aspx?ThreadId=212980</p>\r\n<p>let me know how you get on with it</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-06-16T09:30:17.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

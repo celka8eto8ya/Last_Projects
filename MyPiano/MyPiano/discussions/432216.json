@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "997394",
+    "ThreadId": "432216",
+    "Html": "Hi Mark,\r<br />\nI re-built the NAudio 1.6 source code to target .Net 4.0 Client Profile. The build succeeded with no errors. My app seems to run fine with 4.0 as the target .Net framework. \r<br />\n<br />\nAre there any gotchas you are aware of with running NAudio with .Net 4.0 ? I'd prefer not to require users to install multiple  .Net versions. The app runs on Windows 8/7/Vista/XP.\r<br />\n<br />\nI only rebuilt these two assemblies, not the whole NAudio solution or demos.\r<br />\nNAudio.dll\r<br />\nNAudio.WindowsMediaFormat.dll<br />\n",
+    "PostedDate": "2013-02-06T09:19:09.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997801",
+    "ThreadId": "432216",
+    "Html": "NAudio does not need to be rebuilt to work with .NET 4.0. I use it all the time in .NET 4 applications. There is no need to have .NET 3.5 installed.<br />\n",
+    "PostedDate": "2013-02-07T02:06:07.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997839",
+    "ThreadId": "432216",
+    "Html": "Thanks Mark. I thought if an assembly was built with .Net 2.0, you needed to have .Net 2.0 framework installed on the users machine. So this is good news. It makes my integration easier. I still have to rebuild NAudio to 'sign' the assemblies, but that's the only extra step for me -- piece of cake. \r<br />\n<br />\nBTW, my integration project with NAudio is almost complete. It's working and sounding great!! And the coding is 10 times eaiser than DirectSound. I can't wait to get rid of DirectSound as a pre-req. Most potential users don't have DirectX 9.0c installed and just give up immediately. Thanks to you and your compadres for your excellent work.  You guys rock. I'll be sending a donation as soon as I get it published.<br />\n",
+    "PostedDate": "2013-02-07T03:10:42.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997846",
+    "ThreadId": "432216",
+    "Html": "great, glad you are finding it useful. If you want to send me a link to your app, I'll include it in the list of things using NAudio.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-07T03:22:38.517-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997871",
+    "ThreadId": "432216",
+    "Html": "Hey thanks. That would be great. I messaged you the link. :-)<br />\n",
+    "PostedDate": "2013-02-07T04:25:11.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006014",
+    "ThreadId": "432216",
+    "Html": "Hi Mark,\r<br />\nI just published the app with the NAudio integration.  If you will include it in the list of apps using NAudio, I'd appreciate it. \r<br />\n<a href=\"http://breakthrusoftware.com/html/products/soundmgr/index.html\" rel=\"nofollow\">http://breakthrusoftware.com/html/products/soundmgr/index.html</a>\r<br />\n<br />\nI have to say the integration was pretty painless. You guys did a great job with the API. Thanks again for all your help.<br />\n",
+    "PostedDate": "2013-02-24T13:54:10.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006195",
+    "ThreadId": "432216",
+    "Html": "great! I've linked to it on the NAudio homepage. Looks a cool app.<br />\n",
+    "PostedDate": "2013-02-25T02:09:55.403-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006208",
+    "ThreadId": "432216",
+    "Html": "Thanks Mark. You rock! :-)<br />\n",
+    "PostedDate": "2013-02-25T02:43:41.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

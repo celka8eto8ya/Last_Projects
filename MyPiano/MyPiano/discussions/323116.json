@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "775113",
+    "ThreadId": "323116",
+    "Html": "\r\n<p>I am trying to capture four channels of audio from an Alesis io4 four channel sound card. I am desperately trying to find some examples of how to do this but all I can find are examples of multi-channel output, which does not seem relevant to me. any help\r\n would be greatly appreciated!</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-02-17T07:08:25.28-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "775148",
+    "ThreadId": "323116",
+    "Html": "<p>I'm not sure you'll be able to do this with NAudio until we implement ASIO recording I'm afraid. Have you tried WaveIn with 4 channels?</p>",
+    "PostedDate": "2012-02-17T07:16:08.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "775248",
+    "ThreadId": "323116",
+    "Html": "<p>thanks mark. what i have tried is this:</p>\n<p>(if channels are 2 it works but not with 4)</p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">int</span> channels = 4;\n\nWaveIn waveInStream = <span style=\"color: blue;\">new</span> WaveIn();\n\nwaveInStream.DeviceNumber = 0;       //this is my device - WaveIn.GetCapabilities(0).Channels == 2  \n\nwaveInStream.WaveFormat = <span style=\"color: blue;\">new</span> WaveFormat(waveInStream.WaveFormat.SampleRate, channels); //works only when channel is 2\n\nwaveInStream.DataAvailable += <span style=\"color: blue;\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveInStream_DataAvailable);\n\nwaveInStream.StartRecording();</pre>\n</div>",
+    "PostedDate": "2012-02-17T07:42:21.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "775264",
+    "ThreadId": "323116",
+    "Html": "<p>yes, they don't tend to bother making the waveIn and waveOut drivers suport multi-channel. You could try WasapiIn if you are on Windows Vista or 7</p>",
+    "PostedDate": "2012-02-17T07:46:49.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "775352",
+    "ThreadId": "323116",
+    "Html": "<p>could you elaborate or point me to an example. i can't find any reference to&nbsp;<span>WasapiIn. which name space is this part of?</span></p>",
+    "PostedDate": "2012-02-17T08:08:23.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "775362",
+    "ThreadId": "323116",
+    "Html": "<p>NAudio.CoreAudioApi.WasapiCapture might work for you</p>",
+    "PostedDate": "2012-02-17T08:10:12.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "775524",
+    "ThreadId": "323116",
+    "Html": "<p>ok great thanks, so far so good. that seems to start and it's indicating four channel audio!</p>\r\n<p>next issue: the encoding is&nbsp;WaveFormatEncoding.Extensible</p>\r\n<p>in my&nbsp;DataAvailable handler i'd like to decode this into samples for each of the four channels. is there an easy way to do this?</p>",
+    "PostedDate": "2012-02-17T08:52:13.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "775532",
+    "ThreadId": "323116",
+    "Html": "<p>BitConverter class is probably best. What bit depth is it recording at?</p>",
+    "PostedDate": "2012-02-17T08:54:00.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "775567",
+    "ThreadId": "323116",
+    "Html": "<p>bits per sample: 32</p>\r\n<p>extra size: 22</p>\r\n<p>channels: 4</p>\r\n<p>i was expecting 4x16 bits - so not quite sure how to unpack this? assume it's not just interleaved in a simple way?</p>",
+    "PostedDate": "2012-02-17T09:02:47.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "775591",
+    "ThreadId": "323116",
+    "Html": "<p>yes they will be interleaved, but it looks like integers. BitConverter.ToInt32(buffer, offset) will do it</p>",
+    "PostedDate": "2012-02-17T09:07:47.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "784271",
+    "ThreadId": "323116",
+    "Html": "<p>i am struggling to decode the data stream. it certainly seems to have 4 bytes per chunk. however, when i convert this using the bitconverter method as you&nbsp;describe&nbsp;i get very large numbers even on channel with no input. so i suspect it might by byte ordering. this is a sample of the first 8 bytes in the data:</p>\n<p>//ch1 - signal input</p>\n<p>data[0] 0</p>\n<p>data[1]&nbsp;0</p>\n<p>data[2]&nbsp;64</p>\n<p>data[3]&nbsp;185</p>\n<p>//ch2 - no signal input<br /> data[4] 0</p>\n<p>data[5]&nbsp;0</p>\n<p>data[6] 0</p>\n<p>data[7]&nbsp;184</p>\n<p>//ch3.&amp;4 like ch2</p>\n<p>&nbsp;</p>\n<p>is it possible this is stored as bigendian? as that would make &nbsp;more sense to then!</p>",
+    "PostedDate": "2012-02-20T08:09:44.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "784720",
+    "ThreadId": "323116",
+    "Html": "<p>i think i solved the issue with byte order - it does indeed seem to be big endian.</p>\n<p>but &nbsp;another question on this - i am handling the&nbsp;DataAvailable event obviously to get my information. all i need is amplitude and i'd like to determine this with as little latency as possible. at the moment this event isn't being called very often. is there  a way to get this more often with less data?</p>\n<p>btw - as i don't need an output (to the souncard or a file) ive just started capture by calling&nbsp;wasapiIn.StartRecording(); this seems to work fine.</p>",
+    "PostedDate": "2012-02-20T09:51:27.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799861",
+    "ThreadId": "323116",
+    "Html": "<p>Please could you provide me your code for initialisation ?</p>\r\n<p>I try to use the MAYA44 Soundcard with 4 channels, but no success.</p>",
+    "PostedDate": "2012-02-25T07:48:30.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

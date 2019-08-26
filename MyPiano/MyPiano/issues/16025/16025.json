@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:15:50.347-07:00",
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "On 64bit the DirectSoundOut class fails to Initialize.\r\n\r\nThe processSamples() function on the DirectSoundOut class calls InitialiseDirectSound(); (typo spoiler: Initialise is spelt with a Z as 'Initialize' not Initialise ;) ) and will throw on the call to 'notify.SetNotificationPositions(3, notifies)' with the following exception:\r\n\r\n{System.ArgumentException: Value does not fall within the expected range.\r\n   at NAudio.Wave.DirectSoundOut.IDirectSoundNotify.SetNotificationPositions(UInt32 dwPositionNotifies, DirectSoundBufferPositionNotify[] pcPositionNotifies)\r\n   at NAudio.Wave.DirectSoundOut.InitialiseDirectSound()\r\n\r\nHowever the exception is swallowed due to the processSamples() function swallowing all exceptions: \r\ncatch (Exception)\r\n{\r\n      // Do nothing!\r\n }\r\n\r\nDue to the swallowing of that exception, the AddSamples function on the BufferedWaveProvider later throws another exception with 'InvalidOperationException(\"Buffer full\")'.\r\n\r\nThe first ArgumentException on the call to 'notify.SetNotificationPositions(3, notifies)' that also later causes the InvalidOperationException is due to an invalid packing (Pack = 2) on the DirectSoundBufferPositionNotify structure.\r\n\r\nSolution/Recommendations:\r\n1) Move the call to InitialiseDirectSound(); outside the Try/Catch clause in the processSamples() function to prevent any thrown exceptions from being swallowed during the DirectSound initialization.\r\n2) Correct the packing of the DirectSoundBufferPositionNotify structure by removing it entirely:\r\n\r\nE.G.\r\n       [StructLayout(LayoutKind.Sequential)]\r\n        internal struct DirectSoundBufferPositionNotify\r\n        {\r\n            public UInt32 dwOffset;\r\n            public IntPtr hEventNotify;\r\n        }\r\n\r\n3) Correct the spelling of InitialiseDirectSound by renaming it to InitializeDirectSound ;)",
+    "LastUpdatedDate": "2012-10-27T00:15:50.347-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-06-07T10:23:16.457-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "DirectSoundOut 64bit issue",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16025
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Thanks for the report. NAudio is currently set to target x86 only for reasons like these. However, when the time comes to make it target any cpu (hopefully soon) I will try out your suggestions.\r\nps Where I come from, initialise is spelled with an s ;)\r\n",
+      "PostedDate": "2011-06-08T14:40:05.697-07:00",
+      "Id": 41815
+    },
+    {
+      "Message": "The DirectSoundBufferPositionNotify packing is still incorrect on x86, If you want to wait that's ok ;)",
+      "PostedDate": "2011-06-10T00:42:45.453-07:00",
+      "Id": 41816
+    },
+    {
+      "Message": "ok, see what you mean now. I finally got myself a 64 bit dev machine last week, which makes it much easier for me to test these things. Will try to get a fix in soon.",
+      "PostedDate": "2011-06-10T01:20:52.227-07:00",
+      "Id": 41817
+    },
+    {
+      "Message": "checked in a fix",
+      "PostedDate": "2011-06-14T13:50:43.787-07:00",
+      "Id": 41818
+    }
+  ]
+}

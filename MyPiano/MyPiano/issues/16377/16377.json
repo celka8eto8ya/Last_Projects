@@ -1,0 +1,100 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 12,
+    "Custom": null,
+    "Description": "I'm writing a game and I'd like to use NAudio to add sound to it. I followed a few examples and was rather pleased with NAudio's API and performance.\n\nI ran into the following issue: NAudio will not play short audio files. I've used WaveChannel32.Length to get the following numbers.\nFiles with length 755712 or less will not play.\nFiles with length 5935104 do play.\nI'm not sure where the exact limit is. There are no exceptions thrown. I was hoping to use NAudio to play files of about 1 second long. Is anyone else having this issue? Is there a fix? Do I need to find a different library?",
+    "LastUpdatedDate": "2013-01-09T02:51:10.23-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-12-09T07:49:59.937-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Playing Short Audio Files",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16377
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "what output driver are you using? I wonder if it reaches the end of the input stream before it finishes filling the initial buffer. A quick workaround would be to make an IWaveProvider that puts a bit of trailing silence on the end.",
+      "PostedDate": "2012-12-14T04:00:10.71-08:00",
+      "Id": 84146
+    },
+    {
+      "Message": "Here's the NAudio code I'm calling.\n\nInitializing:\nWaveMixerStream32 mixer = new WaveMixerStream32();\nmixer.AutoStop = false;\n\nIWavePlayer waveOutDevice = new WaveOut();\nwaveOutDevice.Init(mixer);\nwaveOutDevice.Play();\n\nWaveChannel32 sample = CreateInputStream(filename);\n\nLoading functions: (From tutorial, really :b)\n        private static WaveChannel32 CreateInputStream(string fileName)\n        {\n            if (!File.Exists(fileName))\n            {\n                throw new InvalidOperationException(\"Cannot find audio file: \" + fileName);\n            }\n\n            WaveChannel32 inputStream;\n            if (fileName.EndsWith(\".mp3\"))\n            {\n                WaveStream mp3Reader = new Mp3FileReader(fileName);\n                inputStream = new WaveChannel32(mp3Reader);\n            }\n            else if (fileName.EndsWith(\".wav\"))\n            {\n                WaveStream mp3Reader = new WaveFileReader(fileName);\n                inputStream = new WaveChannel32(mp3Reader);\n            }\n            else\n            {\n                throw new InvalidOperationException(\"Unsupported extension\");\n            }\n            return inputStream;\n        }\n\nPlay sound:\nmixer.AddInputStream(sample);\n\nStop sound:\nmixer.RemoveInputStream(sample);\n\n\nI don't have an idea how to make an IWaveProvider that adds trailing silence. But instead I've added trailing silence in my audio files and tried out stuff that way. I found some rather curious things.\n\nIf I add 30 seconds of trailing silence to a 1 second effect sound, it won't play it.\nIf I add 10 seconds of silence before the 1 second effect and 30 seconds after, it won't play it.\nIf I put three 1 second effects in sequence, separated by 5 seconds and add 30 seconds after the last one, I will hear only the last 2 effects in the sequence.\n\nIt seems like silence and short sounds aren't enough to be taken serious by the library. It feels like the first effect in the sequence is just lost trying to convince the system that there's actual sound in the file.\n\nDoes anyone have a good idea?\nI can work around this issue by making a single sound file of all my effects and adding the first effect twice. It's ugly, but it should work.",
+      "PostedDate": "2012-12-22T23:42:00.773-08:00",
+      "Id": 84838
+    },
+    {
+      "Message": "there should be no problem with short sounds. I've made a drum machine example in the WPF demo that plays loads of short sounds. I can't see a problem with your code although WaveMixerStream32 is an ancient class that really I'd like to take out of NAudio - it was written for one very specific application a long time ago. If you can, I'd recommend using a similar approach to the WPF demo app. Use AudioFileReader to get your samples as an ISampleProvider, and the MixingSampleProvider to mix them together.",
+      "PostedDate": "2012-12-23T00:18:07.897-08:00",
+      "Id": 84839
+    },
+    {
+      "Message": "Losing the WaveMixerStream32 helped a lot! Thanks. The short files now play nicely. Here's my current rapid-hack code:\n\nWaveOut playbackDevice = new WaveOut();\nAudioFileReader samp2 = new AudioFileReader(<FileOne>);\nAudioFileReader samp3 = new AudioFileReader(<FileTwo>);\nMixingSampleProvider mixy = new MixingSampleProvider(new List<ISampleProvider> { samp2, samp3 });\n\nplaybackDevice.Init(new SampleToWaveProvider(mixy));\nplaybackDevice.PlaybackStopped += Stopped;\nplaybackDevice.Play();\nThread.Sleep(TimeSpan.FromSeconds(60.0)); // Prevent program from closing before files are done.\n\nFunction Stopped simple prints \"Stopped\" to the terminal.\n\nIf I put 1-second files in one and two, it mixes them nicely. It does exactly what I want them to do.\nIf I put 16-second files in one and two, it mixes them correctly but stops playing them after about 1 second.\nHow come?\n\nI'd like to be able to play long music files and short effects. I imagine I'd use a MixingSampleProvider to mix it all together. I've seen it has functions: AddMixerInput, RemoveMixerInput. Perfect! But it needs to be able to handle a single 60-second file playing, and then suddenly mixing in a 1-second file. And then another! And then the same one again! Am I on the right track to getting this set up?\n",
+      "PostedDate": "2012-12-23T10:43:30.12-08:00",
+      "Id": 84845
+    },
+    {
+      "Message": "what type of application are you running? A console app? In which case you should be using WaveOutEvent",
+      "PostedDate": "2012-12-23T11:31:14.04-08:00",
+      "Id": 84847
+    },
+    {
+      "Message": "Hehe, yes, it is a console app. But I'm running a 3D engine from there. The WaveOutEvent fixed this issue. Thanks once again.\n\nNow I have my short and long files loaded in, and I've linked them up to events in the game. Every time the mouse is moved over a button, I do this:\nsample.Position = 0;\nif(!isAdded)\n{\n    isAdded = true;\n    mixer.AddMixerInput(sample as ISampleProvider);\n}\nWhen the mouse is removed from the button it was over (guaranteed to occur), I do this:\nif(isAdded)\n{\n    isAdded = false;\n    mixer.RemoveMixerInput(sample);\n}\nWhere mixer = MixingSampleProvider and sample = AudioFileReader.\nIt seems that this works only once. The sample cannot be reset and re-added to the mixer. Can you help me?\n\nAdditionally, at initialization, I do this:\nwaveOutDevice = new WaveOutEvent();\nISampleProvider samp = new AudioFileReader(<AudioFile>);\nmixer = new MixingSampleProvider(new List<ISampleProvider> { samp });\n            \nwaveOutDevice.Init(new SampleToWaveProvider(mixer));\nwaveOutDevice.PlaybackStopped += PlaybackStopped;\nwaveOutDevice.Play();\n\nI've found that creating a MixingSampleProvider with an empty List<ISampleProvider> causes a null-ref exception. So I've just added a sample at start-up. There's nothing wrong with a start-up jingle. But perhaps this is related to the issue?",
+      "PostedDate": "2012-12-24T00:46:01.277-08:00",
+      "Id": 84856
+    },
+    {
+      "Message": "you will need to set samp.Position = 0 before re-adding it to the mixer.\nthe constructor that takes a list of inputs needs at least one because it needs to know what WaveFormat we are using. I think there is another constructor you use.",
+      "PostedDate": "2012-12-24T02:08:31.95-08:00",
+      "Id": 84857
+    },
+    {
+      "Message": "Setting Position = 0; before re-adding the AudioFileReader to the MixingSampleProvider doesn't fix it. I already did that in my original code. I can only play an AudioFileReader once.\n\nAdditionally, I peeked at the WaveFormat that creating a MixingSampleProvider with a sample creates and produced one in code. Like this:\nWaveFormat format = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2);\nAnd then I fed format to the MixingSampleProvider constructor. The result is no sound at all.\nI've inspected the WaveFormat made with the sample and compared it to the WaveFormat made with CreateIeeeFloatWaveFormat. They appear identical.\n\nI am at a loss on both points. Do you have any ideas?",
+      "PostedDate": "2012-12-24T08:21:50.583-08:00",
+      "Id": 84864
+    },
+    {
+      "Message": "It may be that you are running out of input data. If Read ever returns 0 then the playback automatically ends. One thing that I didn't get round to adding to MixingSampleProvider was an automatic way to ensure Read always returns the number of samples requested. I've checked in a new property (ReadFully) that you can set to true to do this. Or you can have create a trivial SilenceSampleProvider which is a mixer input that always returns 0s, and then playback will never end until you explicitly request it to.",
+      "PostedDate": "2012-12-25T11:47:12.623-08:00",
+      "Id": 84877
+    },
+    {
+      "Message": "I've created a SilenceProvider that implements ISampleProvider. Like you said, it's pretty easy. But for potential future visitors:\n    public class SilenceProvider : ISampleProvider\n    {\n        private readonly WaveFormat format;\n\n        public SilenceProvider(WaveFormat format)\n        {\n            this.format = format;\n        }\n\n        public int Read(float[] buffer, int offset, int count)\n        {\n            for (int i = 0; i < count; i++)\n            {\n                buffer[offset + i] = 0;\n            }\n            return count;\n        }\n\n        public WaveFormat WaveFormat\n        {\n            get { return format; }\n        }\n    }\n\nI just pass it the WaveFormat of an actual sample so that I am certain that the formats match.\n\nNAudio now works exactly as I want it within my application. Thank you very much, markheath, for you time and support. I'd like to add your name and \"NAudio\" to the the credits list of my free game. (It will one day be finished, I think.) And sorry for messing up this thread... I took it quite off-topic there. But! I've gained a good insight into the workings of NAudio.\n",
+      "PostedDate": "2012-12-26T16:56:26.58-08:00",
+      "Id": 84932
+    },
+    {
+      "Message": "great, glad you got it working in the end. I've improved MixingSampleProvider, to hopefully make things easier for people trying to do the same thing in the future.",
+      "PostedDate": "2012-12-27T00:17:13.68-08:00",
+      "Id": 84946
+    },
+    {
+      "Message": "marking as fixed with the changes to MixingSampleProvider",
+      "PostedDate": "2013-01-09T02:51:10.23-08:00",
+      "Id": 85603
+    }
+  ]
+}

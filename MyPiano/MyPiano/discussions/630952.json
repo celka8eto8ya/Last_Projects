@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1414633",
+    "ThreadId": "630952",
+    "Html": "Hello guys,<br />\n<br />\nI am using NAudio to mixing two audio files together. I have 2 MP3s which I convert to WAV and then mix them together. However the converting function requires WAV to be saved into harddrive. <br />\nIs there any solution which can provide me with WAV stream or someting else, but in memory only? <br />\n<br />\nCurrent conversion is: <br />\n<pre><code>using (Mp3FileReader reader = new Mp3FileReader(mp3File)) {\n                WaveFileWriter.CreateWaveFile(outputFile, reader);\n            }</code></pre>\n\nI would like to give my program 2 input MP3s and save one final mixed WAV.<br />\n",
+    "PostedDate": "2015-04-16T02:16:45.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

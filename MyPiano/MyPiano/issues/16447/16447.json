@@ -1,0 +1,51 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "\r\n\r\nhi,\r\n\r\ncan anyone tell me house to access the windows microphone properties/enhancements programmatically, \r\ncan it be access through MIXERLINECONTROL\r\n\r\n\r\nthanks",
+    "LastUpdatedDate": "2014-07-17T07:34:40.613-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-07-05T22:03:42.667-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "access to microphone properties/enhancement programmatically",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16447
+  },
+  "FileAttachments": [
+    {
+      "FileId": 876419,
+      "FileName": "sound driver.PNG",
+      "DownloadUrl": ".\\876419"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "hi, yes the mixer APIs ought to be able to find this control, but in practice it can be very hard to do. Easiest thing is just to experiment with the mixer API controls and see if you can find the control you are after.",
+      "PostedDate": "2014-07-17T07:34:40.613-07:00",
+      "Id": 152699
+    }
+  ]
+}

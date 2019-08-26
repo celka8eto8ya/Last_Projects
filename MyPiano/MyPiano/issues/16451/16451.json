@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I am using the Wasapi provider and in __WasapiOut.cs__, the implementation of __Stop()__ has a subtle issue in it.  With rapid calls to __Stop()__/__Play()__ back to back (actually, __Play()__ and then __Stop()__ and then __Play()__ again when the __PlaybackStopped__ event is raised), a null reference exception can happen in __Stop()__ where __playThread.Join()__ is called.\r\n\r\nA small race can exist where playThread is null when a call is made into this method, causing a null reference exception..  If execution resumes, the thread continues to pump data and audio will continue to play.  \r\n\r\nAdding an __object__ member to the class and using it as a __lock__ for the entire code in __Stop()__ and also in __Play()__ resolves the issue.  Also, I would suggest using an event to get the worker/play thread to die.  This would allow the thread to fall out of the __WaitAny(...)__ call faster allowing for more timely cleanup.\r\n\r\nAdded to the top of the class:\r\n```\r\n        protected object _locker = new object();\r\n```\r\n\r\n__Play()__ and __Stop()__ methods:\r\n```\r\n        /// <summary>\r\n        /// Begin Playback\r\n        /// </summary>\r\n        public void Play()\r\n        {\r\n            lock( _locker )\r\n            {\r\n                if( playbackState != PlaybackState.Playing )\r\n                {\r\n                    if( playbackState == PlaybackState.Stopped )\r\n                    {\r\n                        playThread = new Thread( new ThreadStart( PlayThread ) );\r\n                        playbackState = PlaybackState.Playing;\r\n                        playThread.Start();\r\n                    }\r\n                    else\r\n                    {\r\n                        playbackState = PlaybackState.Playing;\r\n                    }\r\n                }\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// Stop playback and flush buffers\r\n        /// </summary>\r\n        public void Stop()\r\n        {\r\n            lock( _locker )\r\n            {\r\n                if( playbackState != PlaybackState.Stopped )\r\n                {\r\n                    playbackState = PlaybackState.Stopped;\r\n                    playThread.Join();\r\n                    playThread = null;\r\n                }\r\n            }\r\n        }\r\n```",
+    "LastUpdatedDate": "2014-09-04T13:56:22.223-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-09-04T13:56:22.223-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Null Ref Crash With Multiple Play/Stop Calls Back-To-Back",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16451
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

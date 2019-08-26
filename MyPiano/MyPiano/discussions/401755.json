@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "936041",
+    "ThreadId": "401755",
+    "Html": "\r\n<p>I found the maximum amplitude of a <span style=\"color:#0000ff\">wavefile1</span> in respect to 1. I want to play a\r\n<span style=\"color:#800080\">wavefile2</span> whose maximum amplitude is at 1 with the same volume in realtime as\r\n<span style=\"color:#0000ff\">wavefile1</span> to have them at equal volume when playing together; in other words:</p>\r\n<p><em>How to multiply the amplitude of <span style=\"color:#800000\">wavefile2</span> with - for instance - 0.3 in realtime?</em></p>\r\n<p>What would be the elegant way to do this with NAudio?</p>\r\n",
+    "PostedDate": "2012-11-03T06:08:41.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "936065",
+    "ThreadId": "401755",
+    "Html": "<p>You can adjust volume using any of the SampleProviders or WaveProviders with a volume property. For example, if you use AudioFileReader, then you can simply set its Volume to 0.3</p>",
+    "PostedDate": "2012-11-03T08:29:07.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "936082",
+    "ThreadId": "401755",
+    "Html": "<p>Now it is working. Thanks for your help.</p>",
+    "PostedDate": "2012-11-03T09:39:25.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

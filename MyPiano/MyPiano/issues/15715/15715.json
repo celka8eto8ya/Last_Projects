@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:17:37.02-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The NAudio.CoreAudioApi.Interfaces.MMDevice.FriendlyName incorrectly indexes properties and returns the description on the input/output instead of the device friendly name.  This can lead to confusion if you have multiple devices that provide inputs or outputs with the same name, as they will appear with no way to distinguish between them.  Changing this to return the PKEY_Device_FriendlyName instead of PKEY_Device_DeviceDesc brings the returned values in line with what other apps/libraries report for available audio sources.\r\n\r\nA patch is attached that corrects this problem.  It adds some constructors to PropertyKey, changes some of the NAudio.CoreAudioApi.PropertyKeys Guid entries into PropertyKey entries, and adds support to PropertyStore for indexing by PropertyKey",
+    "LastUpdatedDate": "2012-10-27T00:17:37.02-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-04-18T19:16:25.62-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "MMDevice.FriendlyName returns DeviceDescription instead",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 15715
+  },
+  "FileAttachments": [
+    {
+      "FileId": 266448,
+      "FileName": "changes.txt",
+      "DownloadUrl": ".\\266448"
+    }
+  ],
+  "Comments": []
+}

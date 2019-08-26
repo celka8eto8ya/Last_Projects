@@ -1,0 +1,194 @@
+[
+  {
+    "Id": "967523",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>Hello community,<br>\r\n<br>\r\nWith the following piece of code:<br>\r\n<br>\r\n</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>         LoopStream inputStream;\n            <span style=\"color:blue\">if</span> (fileName.EndsWith(<span style=\"color:#a31515\">&quot;.mp3&quot;</span> ))\n            {\n                <span style=\"color:blue\">var</span> mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(fileName);\n                inputStream = <span style=\"color:blue\">new</span> LoopStream(mp3Reader);\n            }\n</pre>\r\n</div>\r\n<p>&nbsp;A friend of mine is&nbsp;receiving&nbsp;the error &quot;&nbsp;AcmNotPossible calling acmStreamOpen&quot;<br>\r\n<br>\r\n&nbsp;The stack trace looks something like this:<br>\r\n<br>\r\n&nbsp; &nbsp;at NAudio.Wave.AcmMp3FrameDecompressor..ctor(WaveFormat sourceFormat)&nbsp; &nbsp;at NAudio.Wave.Mp3FileReader.CreateAcmFrameDecompressor(WaveFormat mp3Format)&nbsp; &nbsp;at NAudio.Wave.Mp3FileReader..ctor(Stream inputStream, FrameDecompressorBuilder\r\n frameDecompressorBuilder)&nbsp; &nbsp;at NAudio.Wave.Mp3FileReader..ctor(Stream inputStream)&nbsp; &nbsp;at NAudio.Wave.Mp3FileReader..ctor(String mp3FileName)&nbsp; &nbsp;at Dream.World.AssetManager.CreateInputStream(String fileName)<br>\r\n<br>\r\nDoes anyone have any ideas?&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-22T22:55:22.293-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967526",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>It means you don't have an ACM codec installed that can decompress MP3. What operating system are you running on?</p>\r\n",
+    "PostedDate": "2012-12-22T23:44:17.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967595",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>Hi, I also seem to run into this problem running the NAudio Demo on Windows 8 when I set the target framework to be 4.0 or 4.5. If I set the target framework to be 3.5, it works fine. I did not have this problem under Windows 7 even with .Net 4.0.</p>\r\n<p>I haven't found a way around this and am quite stuck right now. Hope this helps!</p>\r\n",
+    "PostedDate": "2012-12-23T07:17:27.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967598",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>in the NAudio demo app, can you go to the ACM codec tab and see what codecs you have installed. Also are you running 32 bit or 64 bit (the executable, not your OS)</p>\r\n",
+    "PostedDate": "2012-12-23T07:24:09.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967606",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>It crashes when I try to access it. I run in 32 bit.</p>\r\n",
+    "PostedDate": "2012-12-23T08:08:25.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967609",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>that is very strange. I am using WIndows 8, and I have no problem running NAudio demo in any version of .NET (I've tried 4.0 and 4.5). What line does it crash on? Is there a stack trace?</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-23T08:18:54.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967611",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>No I don't have a stack trace as the program just crashes. I debugged to see where the problem seemed to be and it seems to occur in the WaveFormatCustomMarshaler when this is called :</p>\r\n<p><span>in</span></p>\r\n<p><span></span></p>\r\n<pre>WaveFormat�SuggestPcmFormat(WaveFormat�compressedFormat)\n{\n..\nMmException.Try(AcmInterop.acmFormatSuggest(IntPtr.Zero,�compressedFormat,�suggestedFormat,�Marshal.SizeOf(suggestedFormat),�AcmFormatSuggestFlags.FormatTag),�&quot;acmFormatSuggest&quot;);\n</pre>\r\n<pre>\n</pre>\r\n",
+    "PostedDate": "2012-12-23T08:25:06.31-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967618",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>Enabling unmanaged code debugging gives me this :&nbsp;</p>\r\n<p>Unhandled exception at 0x57fc2170 in NAudioDemo.exe: 0xC0000005: Access violation.</p>\r\n<pre> \tmsaud32_divx.acm!57fc2170() \t\n \t[Frames below may be incorrect and/or missing, no symbols loaded for msaud32_divx.acm]\t\n \tmsaud32_divx.acm!57fbf195() \t\n \tntdll.dll!77ea2846() \t\n \tntdll.dll!77ea2893() \t\n \tntdll.dll!77ea9cb3() \t\n \tntdll.dll!77ea9b87() \t\n \tntdll.dll!77ea9b10() \t\n \tntdll.dll!77eaa247() \t\n \tntdll.dll!77ea7229() \t\n \tKernelBase.dll!7741e7db() \t\n \twinmmbase.dll!74cf38be() \t\n \tkernel32.dll!77c1f939() \t\n \twinmmbase.dll!74cf3e87() \t\n \tntdll.dll!77e91348() \t\n \tntdll.dll!77e6075a() \t\n \tntdll.dll!77e606bd() \t\n \twinmmbase.dll!74cf45a7() \t\n \twinmmbase.dll!74cf43d4() \t\n \tmsacm32.dll!73d220d6() \t\n \tmsacm32.dll!73d220e9() \t\n \tmsacm32.dll!73d22b04() \t\n \tmsacm32.dll!73d22dea() \t\n \tntdll.dll!77e9f670() \t\n \tntdll.dll!77e9f62e() \t\n \tntdll.dll!77e9f670() \t\n \tntdll.dll!77e9f62e() \t\n \tntdll.dll!77f2d04a() \t\n \tntdll.dll!77ed8b2a() \t\n \t[External Code]\t\n&gt;\tNAudio.dll!NAudio.Wave.Compression.AcmDriver.EnumerateAcmDrivers() Line 133 &#43; 0x2e bytes\tC#\n \tNAudioDemo.exe!NAudioDemo.AcmPanel.AcmForm_Load(object sender = {NAudioDemo.AcmPanel}, System.EventArgs e = {System.EventArgs}) Line 23 &#43; 0x6 bytes\tC#\n \t[External Code]\t\n \tNAudioDemo.exe!NAudioDemo.MainForm.buttonLoadDemo_Click(object sender = {SelectedItem = Cannot evaluate expression because a native frame is on top of the call stack.}, System.EventArgs e = {X = 90 Y = 48 Button = Left}) Line 39 &#43; 0x21 bytes\tC#\n \tNAudioDemo.exe!NAudioDemo.MainForm.listBoxDemos_DoubleClick(object sender = {SelectedItem = Cannot evaluate expression because a native frame is on top of the call stack.}, System.EventArgs e = {X = 90 Y = 48 Button = Left}) Line 55 &#43; 0xe bytes\tC#\n \tuser32.dll!76fa77d8() \t\n \tuser32.dll!76fa78cb() \t\n \tuser32.dll!76fa787a() \t\n \tuser32.dll!76fa899d() \t\n \tuser32.dll!76fa8a66() \t\n \t[External Code]\t\n \tNAudioDemo.exe!NAudioDemo.Program.Main() Line 26 &#43; 0x8 bytes\tC#\n \tmscoreei.dll!7397f5a3() \t\n \tkernel32.dll!77c24c95() \t\n \tmscoree.dll!739f7f16() \t\n \tmscoree.dll!739f4de3() \t\n \tkernel32.dll!77c28543() \t\n \tntdll.dll!77eaac69() \t\n \tntdll.dll!77eaac3c() \t</pre>\r\n",
+    "PostedDate": "2012-12-23T08:51:56.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967622",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>interesting, looks like you have a divx ACM codec that might be causing the problem. Perhaps its largest WaveFormat size is bigger than the maximum I had allocated (with WaveFormatExtraData). Having said that I can't see how that would cause an access violation.</p>\r\n<p>Are you able to debug against the actual NAudio source code? You could put breakpoints on WaveFormat.MarshalFromPtr and WaveFormat.MarshalToPtr. You could also see if WaveFormatCustomMarshaller.GetNativeDataSize is being called. Perhaps that is a problem.</p>\r\n",
+    "PostedDate": "2012-12-23T09:12:11.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967639",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>I can confirm that&nbsp;<span>MarshalToPtr is being called, and that&nbsp;<span>GetNativeDataSize never is. Since I also crash with the line :</span></span></p>\r\n<p><span><span></p>\r\n<pre>AcmInterop.acmDriverEnum(new AcmInterop.AcmDriverEnumCallback(DriverEnumCallback), IntPtr.Zero, 0);</pre>\r\n</span></span>\r\n<p></p>\r\n<p><span><span>I'm not sure the problem is with WaveFormat.</span></span></p>\r\n",
+    "PostedDate": "2012-12-23T10:04:15.657-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967645",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>is DriverEnumCallback getting called? Can you try putting a breakpoint on that?</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-23T10:11:58.267-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967646",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>Nope, it crashes before that.</p>\r\n",
+    "PostedDate": "2012-12-23T10:12:41.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967657",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>that's very strange. I guess it could be that you have a badly behaving ACM codec, but I would expect at least acmDriverEnum to work. If you go to help | about in Windows Media Player and click tech support information, what ACM codecs does it show?</p>\r\n",
+    "PostedDate": "2012-12-23T11:04:52.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967663",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<h3>Audio Codecs</h3>\r\n<table>\r\n<tbody>\r\n<tr>\r\n<th align=\"left\">Type</th>\r\n<th align=\"left\">Name</th>\r\n<th align=\"left\">Format</th>\r\n<th align=\"left\">Binary</th>\r\n<th align=\"center\">Version</th>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Microsoft GSM 6.10 Audio CODEC</td>\r\n<td align=\"left\">0031</td>\r\n<td align=\"left\">msgsm32.acm</td>\r\n<td align=\"right\">6.2.9200.16384</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Microsoft CCITT G.711 A-Law and u-Law CODEC</td>\r\n<td align=\"left\">0007</td>\r\n<td align=\"left\">msg711.acm</td>\r\n<td align=\"right\">6.2.9200.16384</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Fraunhofer IIS MPEG Layer-3 Codec (professional)</td>\r\n<td align=\"left\">0055</td>\r\n<td align=\"left\">l3codecp.acm</td>\r\n<td align=\"right\">3.4.0.0</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Microsoft IMA ADPCM CODEC</td>\r\n<td align=\"left\">0011</td>\r\n<td align=\"left\">imaadp32.acm</td>\r\n<td align=\"right\">6.2.9200.16384</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Microsoft ADPCM CODEC</td>\r\n<td align=\"left\">0002</td>\r\n<td align=\"left\">msadp32.acm</td>\r\n<td align=\"right\">6.2.9200.16384</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Messenger Audio Codec</td>\r\n<td align=\"left\">028E</td>\r\n<td align=\"left\">sirenacm.dll</td>\r\n<td align=\"right\">15.4.3555.308</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Microsoft PCM Converter</td>\r\n<td align=\"left\">0001</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n",
+    "PostedDate": "2012-12-23T11:16:56.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967664",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>interesting, there is no msaud32_divx.acm in that list. Can you try building your app targetting x64 and see what happens?</p>\r\n",
+    "PostedDate": "2012-12-23T11:21:23.783-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967667",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>It works now. It seems I have some cleaning up to do with the codecs I have installed. Thanks.</p>\r\n",
+    "PostedDate": "2012-12-23T11:29:39.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967694",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>What's the suggested action for the players of my game? Should I follow these steps?</p>\r\n",
+    "PostedDate": "2012-12-23T13:05:04.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967709",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>hi vaughands, what OS are you running on?</p>\r\n",
+    "PostedDate": "2012-12-23T14:57:19.357-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "969707",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>Windows XP</p>\r\n",
+    "PostedDate": "2012-12-24T19:20:10.403-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "970819",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>OK, use the NAudioDemo application to examine what ACM codecs you do have. XP usually comes with an MP3 decoder so I'm surprised you don't see one.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-25T11:47:55.967-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "971161",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>This PC has one and I can assure you the demo application works to play a audio file. (I just tried). So I'm not sure why MY Mp3FileReader would crash on the same file. :(</p>\r\n",
+    "PostedDate": "2012-12-25T17:52:26.137-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "971791",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>is your OS 64 bit and your app running as a 64 bit process by any chance?</p>\r\n",
+    "PostedDate": "2012-12-26T00:17:14.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "979805",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>That's not the case, no. Sorry. It looks like it's failing in the try function.</p>\r\n",
+    "PostedDate": "2012-12-26T19:08:06.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "980653",
+    "ThreadId": "415247",
+    "Html": "\r\n<p>Well that is very strange - you are saying that NAudioDemo works, but your app with the exact same code doesn't? Are they both using the same version of NAudio?</p>\r\n",
+    "PostedDate": "2012-12-27T00:18:08.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

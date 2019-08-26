@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "515285",
+    "ThreadId": "232998",
+    "Html": "\r\n<p>so i'm trying to send a controllerchaing the sustain pedal all the way down. pushnge event -- specifically 127 on CC 64, effectively pushing the sustain pedal down.</p>\r\n<p>the code i have for it is this:</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ControlChangeEvent e = new ControlChangeEvent(0, 1, MidiController.Sustain, 127);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ControlActionSettings.Output.Send(e.GetAsShortMessage());</p>\r\n<p>Output up there is, as you'd assume, is a MidiOut.&nbsp; When I send that though, two things happen</p>\r\n<p>* First, the notes i send after are not sustained<br>\r\n* Secondly, when I watch with MidiMon it doesn't show any difference between sending a controller with a controller type of Sustain vs a controller type of AllNotesOff or something else.&nbsp; Weird!</p>\r\n<p>Thoughts?&nbsp; Any advice?&nbsp; Reasons why this code is fucked?</p>\r\n<p>also related question -- with most music programs, is the sustain message sent WHEN the pedal is pressed down, or is it sent when a note is sent and the pedal is also pressed down?</p>\r\n",
+    "PostedDate": "2010-10-31T21:37:24.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "518126",
+    "ThreadId": "232998",
+    "Html": "\r\n<pre style=\"font-family:consolas\">GetAsShortMessage isn't implemented for all MidiEvents. I've just checked in one for ControlChangeEvent. <br>Please get the latest code and see if it works for you.<br><br>Mark<br></pre>\r\n",
+    "PostedDate": "2010-11-06T05:07:30.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "589532",
+    "ThreadId": "251995",
+    "Html": "\r\n<p>Hello! <br>\r\nExcuse me for my bad English in advance. <br>\r\nHow can I get through the library NAudio data from an audio buffer (microphone) into a double array in C #? Or other type of array, for me to convert the variable is not an issue.\r\n<br>\r\nSo I clicked on the button -&gt; array filled -&gt; button pressed and the array is finished.\r\n<br>\r\nI honestly say that I have not even any thoughts = (. <br>\r\nThanks in advance for any help!</p>\r\n",
+    "PostedDate": "2011-03-31T07:35:22.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592898",
+    "ThreadId": "251995",
+    "Html": "<p>when you record from the microphone, you get a byte array. You can use the .NET BitConverter function to convert each pair of bytes to a short sample value. Then turn those sample values into doubles (usually by dividing by 32768.0)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-06T09:19:22.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592907",
+    "ThreadId": "251995",
+    "Html": "<p>Big thanks!</p>",
+    "PostedDate": "2011-04-06T09:35:59.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

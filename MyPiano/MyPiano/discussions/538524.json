@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1221061",
+    "ThreadId": "538524",
+    "Html": "I'm new to NAudio and have tried the &quot;starter&quot; code<br />\n<pre><code>using NAudio;\nusing NAudio.Wave;\n\nnamespace testMedia{\n    IWavePlayer waveOutDevice;\n    AudioFileReader audioFileReader;\n\n    public Form1(){\n        waveOutDevice = new WaveOut();\n        audioFileReader = new AudioFileReader(&quot;testMedia.mp3&quot;);\n        waveOutDevice.Init(audioFileReader);\n        waveOutDevice.Play();\n    }\n}</code></pre>\n\nThe problem is that no matter what file I choose, it only plays through the left speaker on my headphones. But if i open that file in WMP or iTunes it works fine (plays through both speakers). \r<br />\n<br />\nAnd just to note I haven't been able to test my actual speakers yet but I will be in the morning.<br />\n",
+    "PostedDate": "2014-03-10T07:52:11.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1221228",
+    "ThreadId": "538524",
+    "Html": "Is that mp3 file mono?<br />\n",
+    "PostedDate": "2014-03-10T15:30:27.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1221446",
+    "ThreadId": "538524",
+    "Html": "that's a little strange. Should play through both even if the file is mono. Does the NAudio Demo app play it OK?<br />\n",
+    "PostedDate": "2014-03-11T07:13:51.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

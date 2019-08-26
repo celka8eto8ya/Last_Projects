@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1135728",
+    "ThreadId": "473560",
+    "Html": "I'm using NAudio 1.7 (naudio-f8a517a55f2d)<br />\n<br />\nI have the following code<br />\n<pre><code>                   wfr = new WaveFileReader(st.parent.Sounds.GetSound(sound));\n                    if (wfr.WaveFormat.Encoding != WaveFormatEncoding.Pcm &amp;&amp; wfr.WaveFormat.Encoding != WaveFormatEncoding.IeeeFloat)\n                    {\n                        wfr = WaveFormatConversionStream.CreatePcmStream(wfr);\n                        wfr = new BlockAlignReductionStream(wfr);\n                    }                    \n                    wout = new WaveOut();\n                    wout.Init(wfr);\n                    wout.Volume = st.parent.Volume / 100f;\n                    player = new WaveOutEvent();\n                    player.PlaybackStopped += new EventHandler&lt;StoppedEventArgs&gt;(player_PlaybackStopped);\n                    player.Init(wfr);\n</code></pre>\n\nThe st.parent.Sounds.GetSound(sound) call returns<br />\n<pre><code>return new FileStream(sr2.resourceName, FileMode.Open, FileAccess.Read);\n</code></pre>\n\nHowever this code for certain sounds fails in wout.Init(wfr) with InvalidParameter.<br />\n<br />\nIf I follow the code down to;<br />\n<pre><code>       internal MmResult WaveOutOpen(out IntPtr waveOutHandle, int deviceNumber, WaveFormat waveFormat, WaveInterop.WaveCallback callback)\n        {\n            MmResult result;\n            if (Strategy == WaveCallbackStrategy.FunctionCallback)\n            {\n                result = WaveInterop.waveOutOpen(out waveOutHandle, (IntPtr)deviceNumber, waveFormat, callback, IntPtr.Zero, WaveInterop.WaveInOutOpenFlags.CallbackFunction);\n            }\n            else\n            {\n                result = WaveInterop.waveOutOpenWindow(out waveOutHandle, (IntPtr)deviceNumber, waveFormat, this.Handle, IntPtr.Zero, WaveInterop.WaveInOutOpenFlags.CallbackWindow);\n            }\n            return result;</code></pre>\n\nI can see that the waveFormat is 16 bit PCM, 22KHz 1 channel.<br />\n<br />\n<br />\nIf I use the NAudio demo using the simpleplayback demo and open the same file and play it works. Following that code the waveformat is given is IEEEFloat.<br />\n<br />\nI can't see what the AudioFileReader is doing differently than my code above using WaveFileReader, and no I can;t just use AudioFileReader because I need to use a Stream which AudioFileReader doesn't support.<br />\n",
+    "PostedDate": "2013-12-14T02:28:50.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1138163",
+    "ThreadId": "473560",
+    "Html": "it's the soundcard drivers. Try opening WaveOut with different WaveFormat's and see what works. (just make a RawSourceWaveStream as a quick way to try different WaveFormats).<br />\n",
+    "PostedDate": "2013-12-19T03:57:38.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1138235",
+    "ThreadId": "473560",
+    "Html": "Thank you for the reply, I shall have a look at that. What then is the best way to support the sound formats like AudioFileReader but with the ability to take a stream rather than just a filename?<br />\n<br />\nBeen looking again and the extra step that AudioFileReader seems to take is to use a ConvertWaveProviderIntoSampleProvider which converts the PCM into IEEEFloat. I suppose I shall try and follow suit and put that in so that I can use WaveProvider with as many formats as possible.<br />\n",
+    "PostedDate": "2013-12-19T06:56:56.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1138613",
+    "ThreadId": "473560",
+    "Html": "This change seems to work.<br />\n<pre><code>                    wfr = new WaveFileReader(st.parent.Sounds.GetSound(sound));\n                    if (wfr.WaveFormat.Encoding != WaveFormatEncoding.Pcm &amp;&amp; wfr.WaveFormat.Encoding != WaveFormatEncoding.IeeeFloat)\n                    {\n                        wfr = WaveFormatConversionStream.CreatePcmStream(wfr);\n                        wfr = new BlockAlignReductionStream(wfr);\n                    }\n                    SampleChannel sampleChannel = new SampleChannel(wfr,false);\n                    wout = new WaveOut();\n                    wout.Init(sampleChannel);\n                    wout.Volume = st.parent.Volume / 100f;\n                    player = new WaveOutEvent();\n                    player.PlaybackStopped += new EventHandler&lt;StoppedEventArgs&gt;(player_PlaybackStopped);\n                    player.Init(sampleChannel);\n</code></pre>\n\n",
+    "PostedDate": "2013-12-19T13:04:07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

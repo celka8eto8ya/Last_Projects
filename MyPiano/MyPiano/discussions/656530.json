@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1479253",
+    "ThreadId": "656530",
+    "Html": "I am trying to convert vorbis to wav and I am getting an exception, with the additional info &quot;NoDriver calling acmFormatSuggest&quot;.<br />\n<pre><code>var reader = new VorbisWaveReader(&quot;song.ogg&quot;);\nvar converter = WaveFormatConversionStream.CreatePcmStream(reader);\nvar waveOut = new WaveOut();\nwaveOut.Init(reader);\nwaveOut.Play();</code></pre>\n\nthe CreatePcmStream method throws the exception.<br />\n",
+    "PostedDate": "2016-07-19T00:10:04.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479304",
+    "ThreadId": "656530",
+    "Html": "What is the WaveFormat of VorbisWaveReader?<br />\n",
+    "PostedDate": "2016-07-19T12:27:29.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479320",
+    "ThreadId": "656530",
+    "Html": "IeeeFloat, stereo, 32 bit, 44.1khz \r<br />\n<br />\nI'm starting to realize that the problem is CreatePcmStream.\r<br />\n<br />\nI need to get a pcm wavestream from the vorbiswavereader, and it does not have to run in real time in my app (i can load into memory, process, then return a wavestream if necessary)\r<br />\n<br />\nwhat are the best options?<br />\n",
+    "PostedDate": "2016-07-19T15:16:38.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479338",
+    "ThreadId": "656530",
+    "Html": "It should already be playable directly. Have you tried just passing the reader directly into WaveOut.Init?<br />\n",
+    "PostedDate": "2016-07-20T00:17:21.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

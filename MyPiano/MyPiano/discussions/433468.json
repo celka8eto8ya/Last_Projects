@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1002554",
+    "ThreadId": "433468",
+    "Html": "Hi,\r<br />\n<br />\nI'm trying to convert an IMA Adpcm stream into a WAV stream.\r<br />\nThis is my latest attempt:<br />\n<pre><code>            var bytes = File.ReadAllBytes(@&quot;c:\\temp\\bytes.bin&quot;);\n            using (var stream = new MemoryStream(bytes))\n            {\n                RawSourceWaveStream rawStream = new RawSourceWaveStream(stream, new ImaAdpcmWaveFormat(8000, 1, 4));\n                WaveFormatConversionStream convertStream = new WaveFormatConversionStream(new WaveFormat(8000, 16, 1), rawStream);\n                var buffer = new byte[640];\n                convertStream.Read(buffer, 0, buffer.Length);\n            }</code></pre>\n\nThis attempt has failed because the WaveFormatConversionStream is trying to create an AcmStream which in turn doing sourceBufferSize -= (sourceBufferSize % sourceFormat.BlockAlign);\r<br />\nSince ImaAdpcmWafeFormat initializes BlockAlign to be 0, I get DivisionByZeroException.\r<br />\nI fixed that by doing this: sourceBufferSize -= sourceFormat.BlockAlign != 0 ? (sourceBufferSize % sourceFormat.BlockAlign) : 0;\r<br />\nSo I passed this line.\r<br />\nNow it fails while calling acmStreamOpen with the error: &quot;AcmNotPossible calling acmStreamOpen&quot;.\r<br />\nI don't understand why. When I enumerate my codecs I see the Microsoft IMA ADPCM CODEC and the following:\r<br />\n ===========================================\r<br />\n   Format 0: 8.000 kHz, 4 Bit, Mono<br />\n<pre><code>  FormatTag: DviAdpcm, Support Flags: Codec\n  WaveFormat: DviAdpcm 8000Hz Channels: 1 Bits: 4 Block Align: 256, AverageBytesPerSecond: 4055 (32.4 kbps), Extra Size: 2\n  Extra Bytes:\n  F9 01 </code></pre>\n\n===========================================\r<br />\nWhich is exactly the format of my stream.\r<br />\n<br />\nHow can I make this conversion to work?\r<br />\n<br />\nThank you,\r<br />\nJoe.<br />\n",
+    "PostedDate": "2013-02-17T16:59:07.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

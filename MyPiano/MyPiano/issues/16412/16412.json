@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2013-11-12T11:10:08.547-08:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Change\r\n\r\n```\r\n public void ClearBuffer()\r\n        {\r\n            this.circularBuffer.Reset();\r\n        }\r\n\r\nto\r\n\r\n public void ClearBuffer()\r\n        {\r\n if (this.circularBuffer!=null)\r\n            this.circularBuffer.Reset();\r\n        }\r\n```",
+    "LastUpdatedDate": "2017-12-11T15:05:51.43-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-10-18T16:29:30.733-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Clearing a BufferedWaveProvider that hasn't had samples added raises an exception",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16412
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks, have fixed for NAudio 1.7",
+      "PostedDate": "2013-10-20T12:40:12.577-07:00",
+      "Id": 118990
+    }
+  ]
+}

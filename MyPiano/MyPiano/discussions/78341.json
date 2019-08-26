@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "268038",
+    "ThreadId": "78341",
+    "Html": "<p>Hi Folks,</p>\r\n<p>I am having trouble&nbsp;using the WaveFormatConversionStream.&nbsp; I am trying to convert one WAV&nbsp;to another&nbsp;WAV with a higher sample rate, and I am hearing a significant loss of quality.&nbsp;</p>\r\n<p>The original is:</p>\r\n<p>Bit Rate:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 245kbps<br>Sample Size:&nbsp;&nbsp;&nbsp;16 bit&nbsp;<br>Channels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>Sample Rate&nbsp;&nbsp;&nbsp;16 kHz<br>Audio Format&nbsp; PCM</p>\r\n<p>The code I am using is below, I have a WPF app that has buttons corresponding to the methods here.&nbsp; Just to be clear, I hear the output both times, just that the original sounds MUCH better than the converted one.&nbsp; The converted one almost sounds like the microphone was clipping, but that is not the case since the original is fine.&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>        <div style=\"color:Black;background-color:White\"><pre>       <span style=\"color:Blue\">private</span> <span style=\"color:Blue\">void</span> InitWave()\r\n       {\r\n           originalStream = <span style=\"color:Blue\">new</span> WaveFileReader(<span style=\"color:#A31515\">@&quot;C:\\temp\\waves\\original.wav&quot;</span>);\r\n       }</pre>\r\n</div>\r\n<span style=\"color:Blue\"><span style=\"white-space:pre\"> </span>private</span> <span style=\"color:Blue\">void</span> btOriginal_Click(<span style=\"color:Blue\">object</span> sender, RoutedEventArgs e)</pre>\r\n<pre>        {            &nbsp;</pre>\r\n<pre><span style=\"white-space:pre\">\t\t</span>PlayWaveStream(originalStream);        &nbsp;</pre>\r\n<pre><span style=\"white-space:pre\">\t</span>}</pre>\r\n<pre></pre>\r\n<pre>        <span style=\"color:Blue\">private</span> <span style=\"color:Blue\">void</span> btConverted_Click(<span style=\"color:Blue\">object</span> sender, RoutedEventArgs e)        &nbsp;</pre>\r\n<pre><span style=\"white-space:pre\">\t</span>{            &nbsp;</pre>\r\n<pre><span style=\"white-space:pre\">\t\t</span>WaveFormat format = <span style=\"color:Blue\">new</span> WaveFormat(44100,16,originalStream.WaveFormat.Channels);</pre>\r\n<pre><span style=\"white-space:pre\">\t\t</span>WaveStream w1 = <span style=\"color:Blue\">new</span> WaveFormatConversionStream(format, originalStream);</pre>\r\n<pre><span style=\"white-space:pre\">\t\t</span>PlayWaveStream(w1);        &nbsp;</pre>\r\n<pre><span style=\"white-space:pre\">\t</span>}</pre>\r\n<pre><span style=\"color:Blue\"><span style=\"white-space:pre\"><span style=\"color:#000000\">\t</span></span>private</span> <span style=\"color:Blue\">void</span> PlayWaveStream(WaveStream stream)</pre>\r\n<pre><span style=\"white-space:pre\">\t</span>{</pre>\r\n<pre><span style=\"color:Blue\"><span style=\"white-space:pre\"><span style=\"color:#000000\">\t<span style=\"white-space:pre\">\t</span></span></span>using</span> (WaveOut waveOut = <span style=\"color:Blue\">new</span> WaveOut(WaveCallbackInfo.FunctionCallback()))</pre>\r\n<pre><span style=\"white-space:pre\">\t\t</span>{</pre>\r\n<pre><span style=\"white-space:pre\">\t\t\t</span>waveOut.Init(stream);</pre>\r\n<pre><span style=\"white-space:pre\">\t\t\t</span>waveOut.Play();</pre>\r\n<pre><span style=\"color:Blue\"><span style=\"white-space:pre\"><span style=\"color:#000000\">\t<span style=\"white-space:pre\">\t\t</span></span></span>while</span> (waveOut.PlaybackState == PlaybackState.Playing)</pre>\r\n<pre><span style=\"white-space:pre\">\t\t\t</span>{</pre>\r\n<pre><span style=\"white-space:pre\">\t\t\t\t</span>System.Threading.Thread.Sleep(100);</pre>\r\n<pre><span style=\"white-space:pre\">\t\t\t</span>}</pre>\r\n<pre><span style=\"white-space:pre\">\t\t</span>}</pre>\r\n<pre><span style=\"white-space:pre\">\t</span>}</pre>\r\n<pre></pre>\r\n</div>\r\n<p>&nbsp;Any ideas as to what I am missing or what I can try to improve the quality of the conversion would be appreciated.&nbsp; I have tried to use a BlockAlignReductionStream as well but no difference.</p>\r\n<p>Thanks!</p>\r\n<p>Joe</p>",
+    "PostedDate": "2009-12-16T07:40:23.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "271853",
+    "ThreadId": "78341",
+    "Html": "<p>Joe</p>\r\n<p>I'm new to nAudio, but I think your problem is that WaveFormatConversionStream is using the Audio Compression Manager to change the sample rate. It is unlikely to be doing resampling which is what is required.</p>\r\n<p>Take a look at the ResamplerDMOStream. Not sure, but this may do proper resampling rather than just averaging samples. Even with proper resampling, you will get some degredation&nbsp;in quality when up-sampling.</p>\r\n<p>Hope this helps.</p>\r\n<p>Cheers</p>\r\n<p>Matt</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-12-30T14:42:49.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "271952",
+    "ThreadId": "78341",
+    "Html": "<p>Hi Joe,</p>\r\n<p>ACM should be able to convert sample rates with no problem. I'm not sure exactly what is going on. Perhaps instead of playing the WAV file you could convert it to another WAV file at 44.1kHz.</p>\r\n<p>Then try playing that file to see if there is any distortion.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-12-31T04:11:57.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272848",
+    "ThreadId": "78341",
+    "Html": "<p>@matt69 - thanks for the suggestion, I will give this a shot.</p>\r\n<p>@markheath - I think my code was mis-formatted and so hard to read, but I believe I am already trying to do what you are suggesting and this is the issue. &nbsp;Can you let me know if I misunderstood what you meant?</p>\r\n<p>Thanks,</p>\r\n<p>Joe</p>",
+    "PostedDate": "2010-01-04T04:32:10.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272940",
+    "ThreadId": "78341",
+    "Html": "<p>what I mean is, instead of playing the WAV file, use WaveFileWriter.CreateWavFile to make a new WAV file and see if that is converted correctly by playing it with windows media player. This is just to narrow down where the problem is (in conversion or in playback).</p>",
+    "PostedDate": "2010-01-04T08:38:27.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272941",
+    "ThreadId": "78341",
+    "Html": "<p>I see what you mean. &nbsp;I have tried both playing and creating the wav file to disk but the result is the same.&nbsp;</p>",
+    "PostedDate": "2010-01-04T08:41:11.253-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "274723",
+    "ThreadId": "78341",
+    "Html": "<p>can you upload an example of your source file, so I can try to convert it myself?</p>",
+    "PostedDate": "2010-01-08T03:57:49.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

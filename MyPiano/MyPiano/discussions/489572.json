@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1157404",
+    "ThreadId": "489572",
+    "Html": "Hi\r<br />\n<br />\nI am trying to create my own simple Game 2D Engine that work with OpenTK and NAudio as the Audio Engine\r<br />\n<br />\nI was targeting the game engine to run on few platform, at least at Windows, Mac and Linux and I dont need MP3 support, I just need Wave and OGG player\r<br />\n<br />\nis it any chance to run the apps with NAudio on other platform?<br />\n",
+    "PostedDate": "2014-01-12T05:01:10.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1158167",
+    "ThreadId": "489572",
+    "Html": "To play OGG (basically a FLAC stream in an OGG container) you will need the MediaFoundation API which is Windows-only (Vista/7/8). I'm quite sure Mono/Linux doesn't support MediaFoundation (correct me if I'm wrong).\r<br />\n<br />\nPerhaps Linux has a similar audio library which you can use?<br />\n",
+    "PostedDate": "2014-01-12T10:00:51.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1161136",
+    "ThreadId": "489572",
+    "Html": "I would recommend OpenAL for your audio engine.  NAudio is really Windows-only.\r<br />\n<br />\nDepending on which codec(s) you are using in Ogg, you may use one (or more) of the following:\r<br />\n<br />\nFor Vorbis: <a href=\"http://nvorbis.codeplex.com\" rel=\"nofollow\">NVorbis</a> - Fully managed, written by yours truly. ;)\r<br />\nFor FLAC: <a href=\"http://flacbox.codeplex.com\" rel=\"nofollow\">FlacBox</a> - Fully managed, just found it from Google.\r<br />\nFor Opus: <a href=\"https://github.com/JohnACarruthers/Opus.NET\" rel=\"nofollow\">Opus.NET</a> - P/Invoke wrapper around libogg/libopus\r<br />\nFor Speex: <a href=\"https://nspeex.codeplex.com/\" rel=\"nofollow\">NSpeex</a> - Fully managed, just found it from Google.\r<br />\n<br />\nA web search should provide alternatives if you would rather use them or if you are using a different codec in the Ogg container (unlikely).<br />\n",
+    "PostedDate": "2014-01-13T05:57:35.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1161242",
+    "ThreadId": "489572",
+    "Html": "yes, NAudio has lots of wrappers for Windows APIs which simply won't work on Linux.\r<br />\n<br />\nSome nice finds there ioctlLR - I keep meaning to update the AudioFileReader class so all of these add-ons can easily be plugged in.<br />\n",
+    "PostedDate": "2014-01-13T06:36:10.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1165143",
+    "ThreadId": "489572",
+    "Html": "Mark, how about <a href=\"http://pastebin.com/dH57MJkF\" rel=\"nofollow\">this</a> for the add-on API? :)<br />\n",
+    "PostedDate": "2014-01-14T06:39:24.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1165176",
+    "ThreadId": "489572",
+    "Html": "yes, similar to the lines I was thinking of, except I may create a base interface that all the plugins implement, and give them the ability to optionally support reading from a Stream.<br />\n",
+    "PostedDate": "2014-01-14T06:50:22.03-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1168983",
+    "ThreadId": "489572",
+    "Html": "Thanks for your reply!\r<br />\nI manage to use OpenAL<br />\n",
+    "PostedDate": "2014-01-15T06:23:27.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1169143",
+    "ThreadId": "489572",
+    "Html": "CXO2: I'm glad it worked out.  Good luck with your project.\r<br />\n<br />\nMark: OK, a few questions (and my recommendations):<br />\n<ul>\n<li>Abstract base class or interface?  (interface)</li>\n<li>Use an attribute and pass a Type to AudioFileReader, or put &quot;discovery&quot; info on a property and pass an instance to AudioFileReader?  (attribute)</li>\n<li>\n.ctor(string) w/ exception for invalid file, bool TryLoad(string), or bool CheckSignature(byte[])?  (CheckSignature, but it's harder to implement)<br />\n</li>\n</ul>\nIn any case, it would be simple to implement as a set of generic methods in AudioFileReader (i.e., AddCodec&lt;T&gt;() where T : ICodecReader, new()).<br />\n",
+    "PostedDate": "2014-01-15T07:19:27.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

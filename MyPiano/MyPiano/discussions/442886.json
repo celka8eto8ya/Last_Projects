@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1040643",
+    "ThreadId": "442886",
+    "Html": "Hi,<br />\n<br />\nFirst of all, thank you all for this great project. Great piece of work indeed. I wish MSFT would officially support this project, I'm sure this is gonna happen sooner or later.<br />\n<br />\nI downloaded NAudio and implemented some features.<br />\n<ul>\n<li>Created 'Pitch' structure and accompanying 'Note' and 'Accidentals' enums and an int 'Octave' property, that together have value of a MIDI note, plus various functions for manipulation of musical pitches, conversion and parsing between verbal pitch (A0, Bb-1, G# etc.) and midi value, equality operators and more.</li>\n<li>Inverted instrument list to enum</li>\n<li>Enumeration of drum types</li>\n<li>\nControl note duration via sophisticated flags enum that converts verbal duration to midi code (Quarter Eight etc.)<br />\n</li>\n</ul>\nMy questions are:<br />\n<ol>\n<li>How can I have my fork hosted on CodePlex while using TFS as source control?</li>\n<li>Is it likely that my contributions will ever be committed to the official release or I will always remain chasing up the changes?</li>\n</ol>\n",
+    "PostedDate": "2013-05-07T18:06:12.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042743",
+    "ThreadId": "442886",
+    "Html": "Hi, to answer your first question, I use Mercurial for source control, so if you want to use TFS it will not be a &quot;fork&quot; in the sense that you can issue pull requests. Nothing stopping you creating your own project that is a fork.\r<br />\n<br />\nFor the second question, I advise you start by reading the patch submission guidelines <a href=\"https://naudio.codeplex.com/documentation\" rel=\"nofollow\">here</a>\r<br />\n<br />\nAs a general rule, the submissions I accept are either bugfixes to existing NAudio components, or new components which I think will be useful to a wide range of users (the goal is not to collect every conceivably possible audio related class). NAudio is very loosely coupled, so most of the time you can extend it simply by creating your own new classes that derive from existing ones, or adding extension methods. It is rare that you would actually need to make your own custom fork of NAudio - just put your extensions in your own assembly. This is actually how I add almost all new features to NAudio - I create the components in another project, and once I am convinced they work well and might be general purpose, I move them into the core library. <br />\n",
+    "PostedDate": "2013-05-13T03:52:55.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042751",
+    "ThreadId": "442886",
+    "Html": "\r\n<div dir=\"ltr\">\r\n<div>\r\n<div style=\"font-family:tahoma,sans-serif; color:rgb(51,0,51)\">​Hi and thanks for your reply,</div>\r\n<div style=\"font-family:tahoma,sans-serif; color:rgb(51,0,51)\">I didn't actually mean 'fork' but rather to add some features.</div>\r\n<div style=\"font-family:tahoma,sans-serif; color:rgb(51,0,51)\">But I appreciate your advise. I will add extension methods and external features as you said.</div>\r\n<div style=\"font-family:tahoma,sans-serif; color:rgb(51,0,51)\"><br>\r\n</div>\r\n<div style=\"font-family:tahoma,sans-serif; color:rgb(51,0,51)\">Best regards,</div>\r\n<div style=\"font-family:tahoma,sans-serif; color:rgb(51,0,51)\">And thanks for the awesome work!​</div>\r\n<br>\r\n</div>\r\n<div><br>\r\n<div></div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2013-05-13T04:07:03.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

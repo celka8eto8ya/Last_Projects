@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "553674",
+    "ThreadId": "242850",
+    "Html": "\r\n<p>Hi</p>\r\n<p>&nbsp;</p>\r\n<p>I would like to record audio from a program such as winamp or internet explore. Is that possible? Can I record any sound that is sent to the speakers? I have been looking at WaveIn, but it seems I am only able to record from input devices.</p>\r\n<p>Thank you</p>\r\n",
+    "PostedDate": "2011-01-22T08:36:55.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "553693",
+    "ThreadId": "242850",
+    "Html": "\r\n<p>Nevermind... I just neede the right drivers to enable the stereo mixer.</p>\r\n",
+    "PostedDate": "2011-01-22T09:23:24.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

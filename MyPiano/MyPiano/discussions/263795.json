@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "636912",
+    "ThreadId": "263795",
+    "Html": "<p>First, i want to say thank you for your time doing the support for NAudio. This is a great help for me (not only for me) in working with Audio buffers &amp; streams.</p>\n<p>Now, I like to do \"simple\" resampling of 16bit, 8kHz data into 16bit, 44,1Khz data and vice versa.</p>\n<p>After testing the ACM based ConversionStream the result was very bad. Like mentioned in another discussion thread, it sounds robotic and out of tune.</p>\n<p>Alternatives for better ACM - PCM sample rate conversion didn't found.</p>\n<p>So I tried the ResamplerDmoStream. But it hangs in the Read method on IsAcceptingData() --&gt; mediaObject.GetInputStatus:</p>\n<p>&nbsp;</p>\n<pre> public bool IsAcceptingData(int inputStreamIndex)\n        {\n            DmoInputStatusFlags flags;\n            int hresult = mediaObject.GetInputStatus(inputStreamIndex, out flags);  //&lt;-- here it hangs\n            Marshal.ThrowExceptionForHR(hresult);\n            return (flags &amp; DmoInputStatusFlags.DMO_INPUT_STATUSF_ACCEPT_DATA) == DmoInputStatusFlags.DMO_INPUT_STATUSF_ACCEPT_DATA;\n        }\n<br />Are there any hints, why the interface is locking here? Disabling the IsAcceptionData method results in 0 reads, but without hanging.<br />Am I missing something in the framework installation? I have a Win7 64x Os, .Net Framework 4.0 installed using VS 2010 and the directX SDK 2009.<br />Thank you very much for your help.<br /><br />Best regards,<br /><br />Micha.<br /><br /><br />\n\n</pre>\n<p>&nbsp;</p>",
+    "PostedDate": "2011-07-04T03:16:09.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637173",
+    "ThreadId": "263795",
+    "Html": "<p>Not come across this issue before, although I tend to use the ACM codec since it is more widely available. Are you able to write a short unit test that recreates the hang on your PC?</p>",
+    "PostedDate": "2011-07-04T14:06:11.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637336",
+    "ThreadId": "263795",
+    "Html": "<p>I will try to build a unit test.</p>\r\n<p>Another question I have, are there better ACM PCM codecs I could use than the one from Microsoft? I didn't found any alternatives for PCM sample rate conversion.</p>",
+    "PostedDate": "2011-07-05T01:15:01.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637361",
+    "ThreadId": "263795",
+    "Html": "<p>the main issue with the ACM conversion codecs is that they don't do filtering - you have to write your own.</p>",
+    "PostedDate": "2011-07-05T02:15:46.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637452",
+    "ThreadId": "263795",
+    "Html": "<p>I have to say, that the stream read method is called inside a Asio bufferCallback. The callback can be backtracked to a thread running in the asio driver. I don't know what the Asio driver is doing there internally.</p>\r\n<p>I'am using the Asio driver from ESI for a Maya44 USB Audio interface. Maybe the behaviour is different with the Asio4All driver?</p>\r\n<p>The solution with a Test project called MyNAudioTests you can download here: https://rapidshare.com/files/2233536498/NAudio.exe</p>\r\n<p>&nbsp;It is a whole NAudio solution with some adaptations regarding my project.</p>\r\n<p>The file is named NAudio.exe because it is a selfextracting 7Zip archive. You will need the passwort \"mediatec\" to extract it.</p>\r\n<p>Best regards. Thanks again for your investigations.</p>\r\n<p>Micha.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-07-05T05:46:52.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637458",
+    "ThreadId": "263795",
+    "Html": "<p>Oh I see, you're using ASIO. If at all possible, provide audio at the sample rate of your soundcard. Also ResamplerDmoStream should probably only be used on the thread it is created on.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-05T05:53:57.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637468",
+    "ThreadId": "263795",
+    "Html": "<p>My ASIO driver doesn't support 8Khz tough the device specification said it. I suggest it will not be so easy to find an ASIO driver really swallow this sample rate.</p>\r\n<p>I like to implement the rate conversion, because in my eyes it is pretty unsure which ASIO device/driver would be used in the final analysis.</p>\r\n<p>I will try to test what you suggested, regarding the thread the ResamplerDmoStream will running in.</p>",
+    "PostedDate": "2011-07-05T06:17:18.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "638071",
+    "ThreadId": "263795",
+    "Html": "<p>You were right.</p>\r\n<p>Because the ASIO and the DMO driver has a COM interface, you can use a ResamplerDmoStream in an ASIO&nbsp; bufferCallback only if it is created inside the bufferCallback itself.</p>\r\n<p>It seems to be a matter of STA / MTA thread apartment.</p>\r\n<p>&nbsp;</p>\r\n<p><br />\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><br />\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2011-07-06T05:44:25.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "638159",
+    "ThreadId": "263795",
+    "Html": "<p>Yes, I need to hurry up and get a fully managed resampler into NAudio. The DMO was a pain to wrap and is a pain to use.</p>",
+    "PostedDate": "2011-07-06T07:46:40.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "638687",
+    "ThreadId": "263795",
+    "Html": "<p>But, DMO Resampling sounds much better than ACM resampling.</p>\r\n<p>So, for me right now DMO is a working alternative to the MS-PCM ACM codec. I just worked around the threading problem.</p>\r\n<p>Thanks again for the hint.</p>\r\n<p>Micha.</p>",
+    "PostedDate": "2011-07-07T04:26:56.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "638688",
+    "ThreadId": "263795",
+    "Html": "<p>glad its working for you. I can't use DMO very often since a lot of my code needs to work on Windows XP.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-07T04:29:38.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

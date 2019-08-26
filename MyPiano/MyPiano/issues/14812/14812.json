@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:19:08.787-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi,\r\nthe 'fact' chunk that WavFileWriter creates should contain the number of samples *per channel*, not the overall number of samples. However, WavFileWriter does not take into account the number of channels.",
+    "LastUpdatedDate": "2012-10-27T00:19:08.787-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-12-02T03:18:38.903-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WavFileWriter - wrong fact chunk",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 14812
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks, have checked in a fix. I guess its fairly rare to have stereo non-pcm wav files so this one slipped through. It only really works for compressed formats where there is a meaningful bitsPerSample value.",
+      "PostedDate": "2010-12-04T03:58:47.143-08:00",
+      "Id": 41749
+    }
+  ]
+}

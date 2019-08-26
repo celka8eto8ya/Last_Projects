@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1340946",
+    "ThreadId": "577441",
+    "Html": "Mark, <br />\nAwesome library/utility man... Nice work!<br />\n<br />\nI have written an application that allows the user to convert audio files while copying to a new/better file structure for the QSC TouchMix 16.<br />\n<br />\nThe file format is recorded from the device onto a USB drive to a 44.1k or 48k 32 bit IEEE wav format.  I give the option to change the bit rate to 16 or 24 while copying.  This works great for the 44.1 files, but the 48k files fail to load.  I tried to load the file in your sample app and it fails as well.  Are 48k files supported in Media Foundation?  If they're not, is there another way to convert the bit rate of 48k wav files using your utility?  Or if there's a better way to do this not using the Media Foundation library would be nice as well (example code please).<br />\n<br />\nHere's a link to one of the files I was trying to convert:<br />\n<a href=\"https://app.box.com/s/o8h8241cwvypcj2epjjd\" rel=\"nofollow\">https://app.box.com/s/o8h8241cwvypcj2epjjd</a><br />\n<br />\nThanks again man for a great tool!  Let me know what you think.<br />\nThanks!<br />\nScott<br />\n<br />\nDo you guys have any answer on this?  BTW, the file I'm trying to convert is 48k, 32 bit PCM - I just want to change them to 24 or 16bit.  Thanks!<br />\n",
+    "PostedDate": "2015-01-11T20:45:30.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1351985",
+    "ThreadId": "577441",
+    "Html": "hey, sorry for the delay. my article here is the most thorough thing I've written on <a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">converting between audio formats</a>. When you say &quot;fails to load&quot; what error do you get? Is it initializing the soundcard? Perhaps you have a soundcard that doesn't support above 48kHz.<br />\n",
+    "PostedDate": "2015-02-12T15:04:43.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352021",
+    "ThreadId": "577441",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Mark,</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Thanks so much for the reply. I did see that article. It’s great and very thorough but doesn’t give me anything for changing the bit rate from 32 to 24. The MediaFoundation framework would work great for me but\r\n doesn’t seem to load 48/32 bit PCM files. Try loading this file (<a href=\"https://app.box.com/s/o8h8241cwvypcj2epjjd\">https://app.box.com/s/o8h8241cwvypcj2epjjd</a>) in your MediaFoundation example for changing formats. I can definitely play this file on my\r\n system but won’t load using MediaFoundation. Check it out and let me know what you think.</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Thanks!<br>\r\nScott</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<div style=\"border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0in 0in 0in\">\r\n<p><b><span style=\"font-size:11.0pt; font-family:\"></span></b></p>\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2015-02-12T18:51:23.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352073",
+    "ThreadId": "577441",
+    "Html": "haven't had a chance to check out your file yet, but you should be able to load it with WaveFileReader and then use Pcm32BitToSampleProvider to get to floating point samples. Then multiply each sample by sampleValue * 8388607.0 to get an int. Then write three least significant bytes of that int to file. Would like to add better bit depth conversion support into NAudio in the future as this is something a lot of people struggle with. We could probably do with a SampleToWaveProvider24 as well, which would make your task easy.<br />\n",
+    "PostedDate": "2015-02-12T23:47:06.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352076",
+    "ThreadId": "577441",
+    "Html": "OK, had a few minutes to spare so have made a SampleToWaveProvider24. It's in the latest NAudio source. Convert your 32 bit PCM file into 24 like this:<br />\n<pre><code>            using (var reader = new WaveFileReader(input))\n            {\n                var sp = reader.ToSampleProvider();\n                var wp24 = new SampleToWaveProvider24(sp);\n                WaveFileWriter.CreateWaveFile(output, wp24);\n            }</code></pre>\n\n",
+    "PostedDate": "2015-02-13T00:04:14.967-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352395",
+    "ThreadId": "577441",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Dude, you are awesome! Thanks so much for that. I will check it out and let you know how it works. BTW, if you’re a musician or do any recording, check out the QSC Touchmix, it really rocks if you play small clubs\r\n and don’t want to haul around 200 lbs. of equipment. It replaces your mixer and outboard effects. It sounds great too! This application I’m writing just rearranges the session recording files for easier mixing/mastering and I’m using your tool to convert the\r\n audio files while moving them because there some DAWs out there that don’t read 32bit PCM files.</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Thanks again!<br>\r\nScott</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<div style=\"border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0in 0in 0in\">\r\n<p><b><span style=\"font-size:11.0pt; font-family:\"></span></b></p>\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2015-02-13T20:40:48.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352401",
+    "ThreadId": "577441",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Worked perfectly!</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<div style=\"border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0in 0in 0in\">\r\n<p><b><span style=\"font-size:11.0pt; font-family:\"></span></b></p>\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2015-02-13T21:34:58.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352411",
+    "ThreadId": "577441",
+    "Html": "Glad it worked for you. That QSC Touchmix looks a nice piece of kit.<br />\n",
+    "PostedDate": "2015-02-13T23:54:07.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

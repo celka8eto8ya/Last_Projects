@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Just google lock this and there's plenty of explanation to go around. Short of it is that user of the class (eg. CLR) may lock the class too and cause a deadlock.  The recommended approach are is private lock objects: object mylock = new object(); .... lock (mylock) { }\r\n\r\nI ran into the WaveFileReader race condition again even with the Stream.Synchronized around the stream making it a SyncStream.\r\n\r\nThe way it happened is that while the PlayThread is doing it's thing and eventually accessing the file, in the GUI thread I had exposed the ability to use the stream Position. And it worked very nicely yesterday until I made some minor changes elsewhere and now it started breaking when reaching the end of the file.\r\n\r\nSo I tried the naive way of putting a lock around the read and the position but that only resulted in a deadlock when user was trying to set Position to be larger than filesize.\r\n\r\n\r\nSummary: The way to go is probably do just like the framework. ie. no Stream.Synchronized that I suggested before and maybe even no locks in the Position code because they'll just fool the user into thinking he can call them from whatever thread when that's not the case. The necessary synchronization needs to happen on the client app because only he will ultimately know how the stuff is called.",
+    "LastUpdatedDate": "2013-05-03T08:55:38.793-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-11-13T12:13:08.143-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Position set .. lock (this) { }",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 8072
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "has been resolved in the latest NAudio",
+      "PostedDate": "2013-05-03T08:55:38.793-07:00",
+      "Id": 99309
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "I have written an application that uses nAudio to play wav files when 'events' happen, and records audio from the microphone.\r\n\r\nI am occasionally getting a NAudio.MmException \"WaveStillPlaying calling waveUnprepareHeader\" from NAudio.Wave.WaveInBuffer.Reuse().\r\n\r\nI am using nAudio 1.5.4. \r\n\r\nAny thoughts on what causes it, and how I can resolve it?",
+    "LastUpdatedDate": "2013-02-25T08:41:20.53-08:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-01-18T00:56:49.437-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveStillPlaying calling waveUnprepareHeader",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16385
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I have moved to nAudio 1.6 and have not been able to recreate the issue since.",
+      "PostedDate": "2013-02-25T07:54:07.543-08:00",
+      "Id": 91428
+    },
+    {
+      "Message": "great, thanks for letting me know",
+      "PostedDate": "2013-02-25T08:41:03.933-08:00",
+      "Id": 91432
+    }
+  ]
+}

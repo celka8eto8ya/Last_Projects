@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1005370",
+    "ThreadId": "434156",
+    "Html": "Hi Mark,\r<br />\nI'm planning on including NAudio.dll, NAudio.WindowsMediaFormat.dll and the NAudio license text file in my app MSI installer file.\r<br />\n<br />\nI'm assuming I do NOT need to include NAudio.xml with the app because that is just for development intellisense. Correct? \r<br />\n<br />\nThe app seems to run fine without it, but I want to make sure I before I publish.\r<br />\nThanks.<br />\n",
+    "PostedDate": "2013-02-22T11:11:49.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1005419",
+    "ThreadId": "434156",
+    "Html": "yes that's right<br />\n",
+    "PostedDate": "2013-02-22T13:07:56.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1005423",
+    "ThreadId": "434156",
+    "Html": "Great. Thanks Mark.<br />\n",
+    "PostedDate": "2013-02-22T13:11:55.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

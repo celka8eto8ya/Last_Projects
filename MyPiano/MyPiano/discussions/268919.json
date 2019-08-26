@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "657465",
+    "ThreadId": "268919",
+    "Html": "\r\n<p>hi everyone!</p>\r\n<p>when i set the WaveChannel32 position attibute of my object (x) i do this</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>x.Position = 119815;<br>Console.writeline(<span style=\"color:#a31515\">&quot;set position to 119815 = &quot;</span> &#43; x.Position &#43; <span style=\"color:#a31515\">&quot; (&quot;</span> &#43; x.CurrentTime &#43; <span style=\"color:#a31515\">&quot;)&quot;</span>);<br>x.Position = 119816;<br>Console.writeline(<span style=\"color:#a31515\">&quot;set position to 119816 = &quot;</span> &#43; x.Position &#43; <span style=\"color:#a31515\">&quot; (&quot;</span> &#43; x.CurrentTime &#43; <span style=\"color:#a31515\">&quot;)&quot;</span>);<br></pre>\r\n</div>\r\n<p></p>\r\n<p>I hope to reiceive this output&#65279; </p>\r\n<pre>position 119815 = 119815 (00:00:00.34566355)<br>position 119816 = 119816 (00:00:00.34566379)</pre>\r\n<p></p>\r\n<p>instead my output is this...</p>\r\n<pre>position 119815 = 129024 (00:00:00.34000000)<br>position 119816 = 119816 (00:00:00.36600000)</pre>\r\n<p>Why after i set position to 119816 it goes to 129024? how can i have a better precision of buffer position?</p>\r\n<p>I tried to use DirectSound, WaveOut and Wasapi (on sharedmode) but the problem persists.</p>\r\n<p>I hope in your help! thanks!</p>\r\n",
+    "PostedDate": "2011-08-12T15:11:54.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "663311",
+    "ThreadId": "268919",
+    "Html": "<p>you have to set the position by the granularity of BlockAlign. What is the underlying WaveFormat?</p>",
+    "PostedDate": "2011-08-25T08:41:03.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "663469",
+    "ThreadId": "268919",
+    "Html": "<p>are you saying that i can't set an exact position value but only an approximation? I need a better precision than 0.026 second... what do you mean by \"What is the underlying WaveFormat?\"?</p>\r\n<p>thanks for the answer!</p>",
+    "PostedDate": "2011-08-25T13:39:54.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "675357",
+    "ThreadId": "268919",
+    "Html": "<p>I mean, are you playing an MP3 file, or some other compressed format?</p>",
+    "PostedDate": "2011-09-22T08:49:49.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

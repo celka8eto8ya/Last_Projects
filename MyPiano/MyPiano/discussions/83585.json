@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "287371",
+    "ThreadId": "83585",
+    "Html": "<p>Hi,<br><br>I want a Spectrum Analyzer for a music player that I want to develop. I came across NAudio, I tested the FFT and made a bar animation. But, why the left side is too high? <br><br>The image below describes what I'm talking about. I use the same code from SpectrumAnalyser.xaml.cs and a YScale of 6000.<br><br><a title=Image href=\"http://picasaweb.google.com/lh/photo/QCgu_dZXCsPneIHfrku0mQ?feat=directlink\">http://picasaweb.google.com/lh/photo/QCgu_dZXCsPneIHfrku0mQ?feat=directlink</a><br><br>How can I make the visualization more even?</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2010-02-08T17:22:16.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "287650",
+    "ThreadId": "83585",
+    "Html": "<p>I've noticed that as well. I must admit the FFT was thrown in at the very last minute before a demo I was doing, and I never got round to investigating the cause of the high values on the left-hand-side. One suggestion I heard was that the presence of a DC offset can cause this, so perhaps a high-pass filter would help things along a bit.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-02-09T06:10:57.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

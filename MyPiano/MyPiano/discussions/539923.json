@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1225849",
+    "ThreadId": "539923",
+    "Html": "Using the sample code for <a href=\"http://mark-dot-net.blogspot.co.uk/2014/02/fire-and-forget-audio-playback-with.html\" rel=\"nofollow\">FireAndForget</a> sound playback, I'm loading up 31 CachedSound objects and playing them back at small intervals (&lt;100ms). Playing the sounds using the same code as used in the sample leads to sounds being &quot;queued up&quot; and played back at regular intervals.\r<br />\n<br />\nI clearly don't understand how the MixingSampleProvider is supposed to work since it seems like it should be playing my sounds as I send them, not playing the last 4 sounds I sent it some time ago at once.\r<br />\n<br />\nMy only other working solution at this point has been to create a new IWavePlayer, Channel ,and Stream for each sound, which is clearly not an optimal solution. I need upwards of 40-50 very short (&lt;1second) sounds to be played in rapid succession; for example a sound for each key on the keyboard played back like someone is typing. Mixers seems like the way to go, but I can't get over this sound delay.<br />\n",
+    "PostedDate": "2014-03-23T23:38:48.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1226328",
+    "ThreadId": "539923",
+    "Html": "There will be a latency of the duration of the buffer you are using in your IWavePlayer. Also the MixingSampleProvider does only allow new inputs to be added between calls to Read, so if during the time of one buffer you added four sounds, they would all end up getting added to start at the exact same instant. A quick fix to this would be the OffsetSampleProvider. You can look at the drum machine demo in the WPF sample project, which shows how much more accurate queuing up of sounds to be played can be achieved. <br />\n",
+    "PostedDate": "2014-03-25T00:29:01.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-03-25T01:16:44.617-07:00"
+  },
+  {
+    "Id": "1226339",
+    "ThreadId": "539923",
+    "Html": "Thank you. That answered all of my questions and shed some light on the issue which is now resolved.<br />\n",
+    "PostedDate": "2014-03-25T01:17:12.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

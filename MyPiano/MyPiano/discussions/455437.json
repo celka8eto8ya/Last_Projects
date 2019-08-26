@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1088053",
+    "ThreadId": "455437",
+    "Html": "i m new in c# .net \r<br />\nim working on mp3. i want to get the actual data of one frame of a mp 3 file, as there is first header then side information of the frame is also there. I only need to get the actual bits with no header and ancillary info. \r<br />\nCan I use NAudio to do that? \r<br />\nI have found Mp3FileReader class and Mp3Frame class there. Also found a RawData variable but don't know how to use them.<br />\n",
+    "PostedDate": "2013-09-03T22:22:21.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1088151",
+    "ThreadId": "455437",
+    "Html": "what are you trying to achieve? the rawdata is the MP3 header's actual bits.<br />\n",
+    "PostedDate": "2013-09-04T03:09:55.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1088414",
+    "ThreadId": "455437",
+    "Html": "my problem is to search a specific voice from many voice by help of a voice sample,wording of sample and searching may b different. Suppose we have a recording of meeting an i want to search only the voice of a specific person and i have a voice sample of that person \r<br />\ntool: c# \r<br />\nis there any help in naudio regarding thi??<br />\n",
+    "PostedDate": "2013-09-04T12:48:55.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1088737",
+    "ThreadId": "455437",
+    "Html": "I would suggest using Mp3FileReader (or <a href=\"http://nlayer.codeplex.com\" rel=\"nofollow\">NLayer</a>) to decode the file.  Once you have the raw PCM samples, you'll need to do voice analysis.  I'm not familiar with the state of the art there, but there's plenty of documentation out there: <a href=\"http://lmgtfy.com/?q=voice+analysis+algorithm\" rel=\"nofollow\">Google</a>.\r<br />\n<br />\nGood luck!<br />\n",
+    "PostedDate": "2013-09-05T06:02:28.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

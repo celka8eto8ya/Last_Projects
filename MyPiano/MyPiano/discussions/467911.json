@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1121650",
+    "ThreadId": "467911",
+    "Html": "Sorry for my english :)<br />\n<br />\nWhat i should do, that two different streams start playing in one moment?<br />\nHere's the image of main form:<br />\n<a href=\"https://drive.google.com/file/d/0B25yBb9__tugZ1RBSlJydXBYUkU/edit?usp=sharing\" rel=\"nofollow\">IMAGE</a><br />\nBy this code, it starts playing with some delay, after some time when i'm click &quot;play&quot;.<br />\n<pre><code>    public partial class Form1 : Form\n    {\n        public Form1()\n        {\n            InitializeComponent();\n        }\n\n        AsioOut player1, player2;\n        Mp3FileReader reader1, reader2;\n        WaveChannel32 stream1, stream2; \n\n        private void Obut_Click(object sender, EventArgs e)\n        {\n            var ofd = new OpenFileDialog();\n            ofd.Filter = &quot;Audio files|*.wav;*.mp3&quot;;\n            if (ofd.ShowDialog() == DialogResult.OK)\n            {\n                this.reader1 = new Mp3FileReader(ofd.FileName);\n                this.stream1 = new WaveChannel32(reader1);\n                VolumeUpdate1();\n                DriverUptade1();\n                this.player1.Init(this.stream1);\n                \n            }\n        }\n\n        private void Obut2_Click(object sender, EventArgs e)\n        {\n            var ofd = new OpenFileDialog();\n            ofd.Filter = &quot;Audio files|*.wav;*.mp3&quot;;\n            if (ofd.ShowDialog() == DialogResult.OK)\n            {\n                this.reader2 = new Mp3FileReader(ofd.FileName);\n                this.stream2 = new WaveChannel32(reader2);\n                VolumeUpdate2();\n                DriverUptade2();\n                this.player2.Init(this.stream2);\n            }\n        }\n        private void Form1_Load(object sender, EventArgs e)\n        {\n            Cleanup1();\n            foreach (var device in AsioOut.GetDriverNames())\n            {\n                this.Dbox.Items.Add(device);\n            }\n            if (this.Dbox.Items.Count &gt; 0)\n            {\n                this.Dbox.SelectedIndex = 0;\n            }\n        }\n\n        private void VolumeUpdate1()\n        {\n            if (Vol1.Value != 0)\n            {\n                stream1.Volume = (float)Vol1.Value * 0.01F;\n            }\n            else\n            {\n                stream1.Volume = 0.0F;\n            }            \n        }\n\n        private void VolumeUpdate2()\n        {\n            if (Vol2.Value != 0)\n            {\n                stream2.Volume = (float)Vol2.Value * 0.01F;\n            }\n            else\n            {\n                stream2.Volume = 0.0F;\n            }\n        }\n\n        private void Cleanup1()\n        {\n            if (this.player1 != null)\n            {\n                this.player1.Dispose();\n                this.player1 = null;\n            }\n            if (this.reader1 != null)\n            {\n                this.reader1.Dispose();\n                this.reader1 = null;\n            }\n        }\n\n        private void DriverUptade1()\n        {\n            if (player1 != null)\n            {\n                player1.Dispose();\n                player1 = null;\n            }\n\n            if (player1 == null)\n            {\n                player1 = new AsioOut(Dbox.Text);\n                player1.ChannelOffset = Convert.ToInt32(ChOfset1.Text);\n            }\n        }\n\n        private void DriverUptade2()\n        {\n            if (player2 != null)\n            {\n                player2.Dispose();\n                player2 = null;\n            }\n\n            if (player2 == null)\n            {\n                player2 = new AsioOut(Dbox.Text);\n                player2.ChannelOffset = Convert.ToInt32(ChOfset2.Text);\n            }\n        }\n\n        private void PBut_Click(object sender, EventArgs e)\n        {\n            try\n            {\n                Play();\n            }\n            catch (Exception ex)\n            {\n                MessageBox.Show(ex.Message);\n            }\n        }\n\n        private void Form1_FormClosing(object sender, FormClosingEventArgs e)\n        {\n            Cleanup1();\n        }\n\n        private void Play()\n        {\n            this.reader1.Position = 0;\n            this.reader2.Position = 0;\n            this.player1.Play();\n            this.player2.Play();\n        }\n\n        private void SBut_Click(object sender, EventArgs e)\n        {\n            player1.Stop();\n            player2.Stop();\n        }\n\n        private void Vol_Scroll(object sender, EventArgs e)\n        {\n            VolumeUpdate1();\n        }\n\n        private void Vol2_Scroll(object sender, EventArgs e)\n        {\n            VolumeUpdate2();\n        }\n    }\n}</code></pre>\n\n",
+    "PostedDate": "2013-11-10T21:52:18.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1121700",
+    "ThreadId": "467911",
+    "Html": "for perfect synchronization, you should mix the two together (e.g. using MixingSampleProvider) and use a single output device<br />\n",
+    "PostedDate": "2013-11-11T01:57:34.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1121744",
+    "ThreadId": "467911",
+    "Html": "Ok, but if i use a single output, how can i select different channels for first track (0,1) and for second (2,3)?<br />\n",
+    "PostedDate": "2013-11-11T04:13:17.703-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1122448",
+    "ThreadId": "467911",
+    "Html": "try the MultiplexingWaveProvider/MultiplexingSampleProvider for multi-channel output. To be honest I am surprised that your soundcard driver lets you open multiple instances of ASIO out for the same device.<br />\n",
+    "PostedDate": "2013-11-12T09:48:54.817-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1122524",
+    "ThreadId": "467911",
+    "Html": "It's my mistake. My card not support it. This causes an exception in this case. Thanks for the advice, MultiplexingWaveProvider looks like exactly what I need.<br />\n",
+    "PostedDate": "2013-11-12T12:45:32.657-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

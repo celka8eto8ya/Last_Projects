@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1006990",
+    "ThreadId": "434560",
+    "Html": "I was using the PanningSampleProvider to convert a mono to a stereo output, so I can pan left/right audio. If the signal that is coming in is already in stereo format (i.e., it already has two channels), how can I use the existing PanningSampleProvider to perform the balance between the left and right channels?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-26T07:48:15.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006992",
+    "ThreadId": "434560",
+    "Html": "PanningSampleProvider expects a mono input. When you have a stereo signal, panning gets complicated. Does it just adjust the volumes in the left &amp; right channels (a balance control), or can it actually move some signal from the right channel to the left? You'd be best off writing your own stereo panning/balance/width provider that works how you want<br />\n",
+    "PostedDate": "2013-02-26T07:51:31.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1425875",
+    "ThreadId": "434560",
+    "Html": "Is there a description of the steps to perform, if my input and expected output is a WaveStream?<br />\n",
+    "PostedDate": "2015-05-17T13:11:02.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1428672",
+    "ThreadId": "434560",
+    "Html": "why do you need the output to be a WaveStream? Best approach is just to convert to SampleProvider (and back to 16 bit WaveProvider if necessary later). <br />\n",
+    "PostedDate": "2015-06-03T13:42:41.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

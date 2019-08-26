@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "308897",
+    "ThreadId": "101922",
+    "Html": "<p>Hello,</p>\r\n<p>&nbsp;</p>\r\n<p>I've implemented the following using NAudio 1.3, a sampling rate of 44.1Khz and 2 channels:</p>\r\n<p><a href=\"http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html\">http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html</a></p>\r\n<p>&nbsp;</p>\r\n<p>However, when I play the sine wave I get a frequency that is twice that which I am computing i.e. if I compute a 1000Hz wave, what I'm hearing coming out of the speakers is actually 2000Hz. Anyone else see this?</p>\r\n<p>-L</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-02-20T13:49:52.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "309102",
+    "ThreadId": "101922",
+    "Html": "<p>On further experimentation, this only seems to be happening with 2-channel output. Specifying single channel produces the correct pitch. Fortunately my application only requires single channel output.</p>\r\n<p>-L</p>",
+    "PostedDate": "2010-02-20T14:07:41.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "362610",
+    "ThreadId": "101922",
+    "Html": "<p>the code to create the sine wave needs to double-up each sample (one for left channel, one for right channel) if you are delivering stereo audio</p>",
+    "PostedDate": "2010-02-22T05:57:15.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

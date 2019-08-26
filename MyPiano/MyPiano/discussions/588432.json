@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1367513",
+    "ThreadId": "588432",
+    "Html": "Hi\r<br />\n<br />\nI just downloaded the last naudio from github.\r<br />\n<br />\nI am trying to modify the naudio demo to capture what windows plays.\r<br />\n<br />\nI tried the following code which I saw here and there on the internet.<br />\n<pre><code>waveIn = new NAudio.Wave.WasapiLoopbackCapture();</code></pre>\n\nI also tried<br />\n<pre><code>waveIn = new WasapiLoopbackCapture();</code></pre>\n\nBut I always get the following error.\r<br />\n<br />\n<em>&quot;The type or namespace name 'WasapiLoopbackCapture' could not be found (are you missing a using directive or an assembly reference?)&quot;</em>\r<br />\n<br />\nSo I am wondering if WasapiLoopbackCapture class was removed or even never existed in the first place.\r<br />\nIs there a workaround?\r<br />\n<br />\nAny help will be greatly appreciated.\r<br />\nThanks for advance.<br />\n",
+    "PostedDate": "2015-03-20T06:06:15.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1367521",
+    "ThreadId": "588432",
+    "Html": "Not sure why you're seeing this. <a href=\"https://github.com/naudio/NAudio/blob/9844639a1b0579fdd179fc066b88e8c9891af6f5/NAudio/Wave/WaveInputs/WasapiLoopbackCapture.cs\" rel=\"nofollow\">WasapiLoopbackCapture is here</a> <br />\n",
+    "PostedDate": "2015-03-20T06:21:03.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-03-20T06:27:50.913-07:00"
+  },
+  {
+    "Id": "1367527",
+    "ThreadId": "588432",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nNot sure why you're seeing this. <a href=\"https://github.com/naudio/NAudio/blob/9844639a1b0579fdd179fc066b88e8c9891af6f5/NAudio/Wave/WaveInputs/WasapiLoopbackCapture.cs\" rel=\"nofollow\">WasapiLoopbackCapture is here</a><br />\n</blockquote>\nI am sorry, it seems that I checked out a wrong version from github.\r<br />\nThank you for your prompt reply.<br />\n",
+    "PostedDate": "2015-03-20T06:27:45.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

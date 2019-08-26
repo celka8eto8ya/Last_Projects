@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "598608",
+    "ThreadId": "254226",
+    "Html": "\r\n<p>I am coding on an &#65279;singing program, NAudio library is really helpful library on this, and just one thing make me &#65279;puzzled, that I found the delay time a little bit long than I expected when recording, how to adjust delay/buffer time?</p>\r\n<p>my code snipped below</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">var</span>  waveIn = <span style=\"color:blue\">new</span> WaveIn();\r\nWaveInProvider inProvider = <span style=\"color:blue\">new</span> WaveInProvider(waveIn);\r\n<span style=\"color:blue\">var</span> recordOut = <span style=\"color:blue\">new</span> WaveOut();\r\nrecordOut.Init(inProvider);\r\nrecordOut.Play();\r\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2011-04-17T01:56:09.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598985",
+    "ThreadId": "254226",
+    "Html": "<p>You can adjust buffer sizes on both WaveIn and WaveOut using the DesiredLatency setting (in milliseconds). You'll have to experiment, as if you set it too low you will get dropouts.</p>",
+    "PostedDate": "2011-04-18T04:01:29.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "600783",
+    "ThreadId": "254226",
+    "Html": "<p>Appreciate, it works after I set recordOut.DesiredLatency = 50;</p>",
+    "PostedDate": "2011-04-20T21:29:53.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

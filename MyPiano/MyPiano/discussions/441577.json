@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1035718",
+    "ThreadId": "441577",
+    "Html": "I am using the Soundtouch engine to modify the tempo. When the tempo is modified to about 50%, the resulting audio produces an echo affect. It is more noticeable the lower you go.\r<br />\n<br />\nAny suggestions on how to smooth out the audio, so there is no echo?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-04-25T09:08:59.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036555",
+    "ThreadId": "441577",
+    "Html": "this is probably a question for the Soundtouch developers<br />\n",
+    "PostedDate": "2013-04-27T10:03:03.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1444078",
+    "ThreadId": "644872",
+    "Html": "I'm trying to write the input from a WasapiCapture and WasapiLoopbackCapture to a wave file similar to <a href=\"http://stackoverflow.com/questions/19676932/naudio-recording-multiple-line-in\" rel=\"nofollow\">http://stackoverflow.com/questions/19676932/naudio-recording-multiple-line-in</a>. I don't want to write to separate files and then mix later but would rather mix before writing to 1 file. I'm having trouble wrapping my head around the more complex method described in <a href=\"http://stackoverflow.com/a/19679279\" rel=\"nofollow\">http://stackoverflow.com/a/19679279</a>. Can somebody give a more detailed example?<br />\n",
+    "PostedDate": "2015-09-11T14:30:45.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1444429",
+    "ThreadId": "644872",
+    "Html": "It's fairly tricky to write, Basically when audio arrives from both sources, I'd put it into a BufferedWaveProvider. If both BufferedWaveProviders have more than a set amount of data in, mix that amount of audio into the mixed file. Otherwise wait for more to arrive. Then when recording ends, make sure you mix the last leftovers. I'm afraid I don't have a code sample to share at the moment.<br />\n",
+    "PostedDate": "2015-09-15T01:11:48.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

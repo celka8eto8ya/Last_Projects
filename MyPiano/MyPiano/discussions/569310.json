@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1311517",
+    "ThreadId": "569310",
+    "Html": "I have a strange ArgumentOutOfRangeException when using the AudioFileReader and try to get the TotalMilliseconds when iam at the end of the file.\r<br />\n<br />\n(my file is{00:02:49.6910000} min/sec/ms long )\r<br />\n<br />\nI have the following:<br />\n<pre><code>var currentPlayTime = audioFileReader.CurrentTime.TotalMilliseconds;</code></pre>\n\nwhere my audioFileReader has the following properties:<br />\n<pre><code>Length = 59867136\n__Position = 59867136__</code></pre>\n\nNow I got the Exception with the following information:\r<br />\n{&quot;Index was out of range. Must be non-negative and less than the size of the collection.\\r\\nParameter name: index&quot;}\r<br />\n<br />\n   at System.ThrowHelper.ThrowArgumentOutOfRangeException()\r<br />\n   at System.Collections.Generic.List`1.get_Item(Int32 index)\r<br />\n   at NAudio.Wave.Mp3FileReader.get_Position()\r<br />\n   at NAudio.Wave.AudioFileReader.get_Position()\r<br />\n   at NAudio.Wave.WaveStream.get_CurrentTime()\r<br />\n   at AudioTransmission.Execute(CancellationToken ct) in c:\\Projects\\TEST\\AudioTransmission.cs:line 185\r<br />\n<br />\nIt seems that the exception is thrown when we are at the end of the file and we try to get the currenttime of the audiofile ...\r<br />\n<br />\n<br />\nany help is really appreciated ..\r<br />\nthanks in advance\r<br />\n<br />\nIam using the NAudio version 1.7.1.17 (From NuGet)...<br />\n",
+    "PostedDate": "2014-10-08T04:58:18.903-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

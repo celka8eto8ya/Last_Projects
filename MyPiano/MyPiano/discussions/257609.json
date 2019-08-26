@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "612710",
+    "ThreadId": "257609",
+    "Html": "\r\n<p>Dear All,</p>\r\n<p>Is there any way we can plan a &quot;<em><strong>Header less</strong></em>&quot; wave file using NAudio. If so kindly link me to the sample / walk through / pointer using NAudio</p>\r\n<p>Thanks,</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-05-14T02:01:50.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "612713",
+    "ThreadId": "257609",
+    "Html": "<p>yes, you need to use the RawSourceWaveStream. You have to tell it the WaveFormat that your headerless audio is in.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-14T02:19:39.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613207",
+    "ThreadId": "257609",
+    "Html": "<p>Thanks Mark,</p>\r\n<p>While I am using <strong>RawSourceWaveStream</strong> I could able to run my HeaderLess audio stream, but now the effect is too <strong>noisy</strong>. By some R&amp;D I could able to find that Audio File I am playing is&nbsp; 44.1 KHz 16bit Stereo which is encoded to 44.1 Khz 4 bit.&nbsp; I am not able to convert (decode) it back, so that I can play the normal song.</p>\r\n<p>&nbsp;</p>\r\n<p>Kindly help !</p>\r\n<p>TIA</p>",
+    "PostedDate": "2011-05-16T03:05:25.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613215",
+    "ThreadId": "257609",
+    "Html": "<p>four bit??!! that would sound terrible! Is it actually something like ADPCM?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-16T03:15:44.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613228",
+    "ThreadId": "257609",
+    "Html": "<p>Mark,</p>\r\n<p>The sound is terrible, Kindly help me with some pointers for decoding / expand it to 16 bit Stereo using NAudio. ( or as a matter of fact anywhere !)</p>\r\n<p>Thanks,</p>",
+    "PostedDate": "2011-05-16T03:31:28.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613310",
+    "ThreadId": "257609",
+    "Html": "<p>well without information about your raw file, you must guess. You could try:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">var</span> a = <span style=\"color: blue;\">new</span> AdpcmWaveFormat(44100, 1);\r\n<span style=\"color: blue;\">var</span> b = <span style=\"color: blue;\">new</span> ImaAdpcmWaveFormat(44100, 1, 4);\r\n</pre>\r\n</div>\r\nThen you would need to pass the RawSourceStream into a WaveFormatConversionStream. For example:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">var</span> outputStream = WaveFormatConversionStream.CreatePcmStream(rawSourceStream);\r\n</pre>\r\n</div>\r\nMark</p>",
+    "PostedDate": "2011-05-16T05:41:50.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

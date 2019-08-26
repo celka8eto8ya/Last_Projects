@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "530442",
+    "ThreadId": "236951",
+    "Html": "\r\n<p>Good day !</p>\r\n<p>I would like to use NAudio to stream music from a local server I have that serves mp3s over http. Currently, I don't think NAudio supportrs this as I get an exception when trying to load a downloaded stream.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>So far here is my code:</p>\r\n<p>[...]</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>                mainOutputStream = CreateInputStream(track.TrackUri.OriginalString);\r\n                waveOut = <span style=\"color:blue\">new</span> NAudio.Wave.WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, <span style=\"color:blue\">false</span>, 300);\r\n                <span style=\"color:blue\">if</span> (waveOut != <span style=\"color:blue\">null</span>)\r\n                {\r\n                    waveOut.Init(mainOutputStream);\r\n                    waveOut.Play();<div style=\"color:black; background-color:white\"><pre>                <span style=\"color:blue\">var</span> stream = (<span style=\"color:blue\">new</span> WebClient()).OpenRead(fileName);</pre>\r\n<pre>[...]</pre>\r\n<pre>And this is the portion that creates the wavestream\r\n\r\n                WaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(stream);\r\n                <span style=\"color:green\">//WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(mp3Reader);</span>\r\n                <span style=\"color:green\">//WaveStream blockAlignedStream = new BlockAlignReductionStream(mp3Reader);</span>\r\n                inputStream = <span style=\"color:blue\">new</span> WaveChannel32(mp3Reader);\r\n                inputStream.Pan = 0;\r\n                inputStream.Volume = 1;\r\n</pre>\r\n</div>\r\n<br></pre>\r\n<pre>Upon creating the Mp3FileReader, I get an exception stating: </pre>\r\n<pre>&quot;This stream does not support seek operations.&quot;</pre>\r\n<pre><br></pre>\r\n<pre>Are there any plans to support streaming in the near future? Anybody have a working solution for this ?</pre>\r\n<pre><br></pre>\r\n<pre>Thanks!</pre>\r\n<pre>Eric.</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2010-12-02T18:57:40.687-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "530546",
+    "ThreadId": "236951",
+    "Html": "\r\n<p>hi Eric,</p>\r\n<p>Please see this <a href=\"http://mark-dot-net.blogspot.com/2010/11/state-of-mp3-playback-support-in-naudio.html\">\r\nblog post</a> I wrote recently about this. It is the table of content generation that causes the main issue now. I'd like to fix that in a future version of NAudio.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-03T01:57:48.53-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "548190",
+    "ThreadId": "236951",
+    "Html": "\r\n<p>There is a solution to this - Converting the non-seekable stream to a byte array. Then creating a memory stream of the byte array.<br>\r\nWorks like a charm but dont know if there are any drawbacks or issues(I have only tried playback and it works).</p>\r\n<p><br>\r\nExample:<br>\r\n....</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>Stream myStream = <span style=\"color:blue\">new</span> MemoryStream(ConvertNonSeekableStreamToByteArray(myNonSeekableStream));\r\nWaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(myStream);\r\n</pre>\r\n</div>\r\n<p>....<br>\r\n</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">static</span> <span style=\"color:blue\">byte</span>[] ConvertNonSeekableStreamToByteArray(Stream NonSeekableStream)\r\n{\r\n    MemoryStream ms = <span style=\"color:blue\">new</span> MemoryStream();\r\n    <span style=\"color:blue\">byte</span>[] buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[1024];\r\n    <span style=\"color:blue\">int</span> bytes;\r\n    <span style=\"color:blue\">while</span> ((bytes = NonSeekableStream.Read(buffer, 0, buffer.Length)) &gt; 0)\r\n    {\r\n        ms.Write(buffer, 0, bytes);\r\n    }\r\n    <span style=\"color:blue\">byte</span>[] output = ms.ToArray();\r\n    <span style=\"color:blue\">return</span> output;\r\n}\r\n</pre>\r\n</div>\r\n<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>\r\nReferences and credits to:<br>\r\nhttp://kseesharp.blogspot.com/2009/03/c-convert-non-seekable-stream-to-byte.html<br>\r\nhttp://bytes.com/topic/c-sharp/answers/248201-convert-byte-array-stream\r\n<p></p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-12T11:29:54.203-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "548196",
+    "ThreadId": "236951",
+    "Html": "\r\n<p>Cool thanks !&nbsp;</p>\r\n<p>I'll definitely give this a try. Does this first load up the entire MP3 first ? Or will stream it ? What about a seekable stream ? If all of this works, maybe we can add this to NAudio ?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks!</p>\r\n<p>Eric.</p>\r\n",
+    "PostedDate": "2011-01-12T11:38:03.113-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "548197",
+    "ThreadId": "236951",
+    "Html": "\r\n<p>It will stream it! :D</p>\r\n",
+    "PostedDate": "2011-01-12T11:38:59.697-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "548198",
+    "ThreadId": "236951",
+    "Html": "\r\n<p>Sweet thanks!</p>\r\n",
+    "PostedDate": "2011-01-12T11:41:52.557-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561509",
+    "ThreadId": "236951",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>Faleij wrote:</strong><br>\r\n<p>It will stream it! :D</p>\r\n</blockquote>\r\n<p>No, it won't stream it. ConvertNonSeekableStreamToByteArray reads all the stream content to the end and writes it to the byte array before playing.</p>\r\n",
+    "PostedDate": "2011-02-06T09:24:02.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561553",
+    "ThreadId": "236951",
+    "Html": "\r\n<p>I posted about this on my blog a while back. The MP3 reader class does read the whole way through in advance in order to accurately report length and support re-streaming. I'd like to make a genuine streaming option for it in the future, but for now you\r\n would need to customise the MP3FileReader</p>\r\n<p>http://mark-dot-net.blogspot.com/2010/11/state-of-mp3-playback-support-in-naudio.html</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-06T11:54:14.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

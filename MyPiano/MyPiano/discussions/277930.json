@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "692320",
+    "ThreadId": "277930",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>can you explain me please for what the destractor in the WaveFileWriter class?</p>\r\n<p>and why is called even if i call myFile.Dispose/Close?</p>\r\n<p>Thank in advance</p>\r\n",
+    "PostedDate": "2011-11-01T12:44:21.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "692610",
+    "ThreadId": "277930",
+    "Html": "<p>It is there for if you forget to call Dispose. It shouldn't get called though if you dispose because GC.SuppressFinalize will be called</p>",
+    "PostedDate": "2011-11-02T03:01:44.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

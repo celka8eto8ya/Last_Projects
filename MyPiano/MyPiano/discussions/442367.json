@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1038637",
+    "ThreadId": "442367",
+    "Html": "Hi!\r<br />\nWhen i'm recording mic and just flush wavWriter after each DataAvalible call i get corrupted wav file:\r<br />\n<br />\nwriterSound.Write(e.Buffer, 0, e.BytesRecorded);\r<br />\nwriterSound.Flush();\r<br />\n<br />\n<br />\nBut when i call .Close when my form is closing then wav file is working.\r<br />\nProblem is that my form process can be killed, it's possible to do Flush works?<br />\n",
+    "PostedDate": "2013-05-02T09:00:10.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1038642",
+    "ThreadId": "442367",
+    "Html": "You need the Close because it has to update the size of the data chunk in the headers. I suppose this might be a useful feature to consider for a future NAudio version.<br />\n",
+    "PostedDate": "2013-05-02T09:02:16.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1038648",
+    "ThreadId": "442367",
+    "Html": "Ok, when i'm don't closing wav file there are fmt chunk missing.<br />\nMaybe it's possible to fix that wav file using Naudio?<br />\n<br />\n//Edit<br />\nOk i must just insert two values file size - 8 and file size - 8 - 42 after data in wav file.<br />\n",
+    "PostedDate": "2013-05-02T09:20:14.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1039018",
+    "ThreadId": "442367",
+    "Html": "yes, its the chunk header sizes that aren't filled in<br />\n",
+    "PostedDate": "2013-05-03T06:21:52.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

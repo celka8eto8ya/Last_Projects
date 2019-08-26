@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "953807",
+    "ThreadId": "406213",
+    "Html": "\r\n<p>Hello everyone,</p>\r\n<p>I am a new user of NAudio and I am trying to capture audio from my webcam using WaveIn and is working fine. But I am not getting how to achieve simultaneous playback of this captured audio.</p>\r\n<p>Could you please help me to do this? What interface should I use here?</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2012-12-10T02:32:47.893-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953816",
+    "ThreadId": "406213",
+    "Html": "\r\n<p>Hey guys I got the answer. We just need to use WaveOut object with the help of WaveInProvider! It was very simple... :-)</p>\r\n",
+    "PostedDate": "2012-12-10T02:45:38.697-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953858",
+    "ThreadId": "406213",
+    "Html": "\r\n<p>Hello guys,</p>\r\n<p>Now there is one more issue. I wanted to enable/disable audio playback at run time but without stopping the audio capture. I am stopping the playback using WaveOut.Stop() method but after few seconds my application is throwing InvalidOperationException (with\r\n message Buffer full). I went through the code and I observed that there is no way to stop the working of WaveInProvider; it go on adding captured audio samples to the BufferedWaveProvider because WaveIn is still capturing audio samples. And once buffer is\r\n full then BufferedWaveProvider throws InvalidOperationException.</p>\r\n<p>Will you please suggest some possible solution for solving this issue?</p>\r\n<p>I was thinking of adding Start and Stop methods to the IWaveProvider interface. Will it be fine?</p>\r\n",
+    "PostedDate": "2012-12-10T03:54:47.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953939",
+    "ThreadId": "406213",
+    "Html": "\r\n<p>Well you can either stop putting audio into your buffer while you are stopped, or simply set your BufferedWaveProvider up to discard on overflow (set the DiscardOnBufferOverflow property to true).</p>\r\n",
+    "PostedDate": "2012-12-10T06:22:03.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953973",
+    "ThreadId": "406213",
+    "Html": "\r\n<p>Hello sir,</p>\r\n<p>Thanks for your reply. But I am not able to follow any of these two solutions because WaveInProvider don't provide any method to stop putting audio into the buffer while playback is stopped and DiscardOnBufferOverflow property is defined in BufferedWaveProvider\r\n whose object is private in WaveInProvider so I cannot use this object from my code.</p>\r\n",
+    "PostedDate": "2012-12-10T07:04:14.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953986",
+    "ThreadId": "406213",
+    "Html": "\r\n<p>Don't use WaveInProvider then. It's a very simple class that uses WaveIn and BufferedWaveProvider.</p>\r\n",
+    "PostedDate": "2012-12-10T07:18:35.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954313",
+    "ThreadId": "406213",
+    "Html": "\r\n<p>I am directly using BufferedWaveProvider and its working now. Thank you.</p>\r\n",
+    "PostedDate": "2012-12-10T21:42:40.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

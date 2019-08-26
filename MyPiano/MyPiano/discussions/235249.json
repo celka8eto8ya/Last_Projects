@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "524104",
+    "ThreadId": "235249",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>I think NAudio is really cool, but it would be even cooler with Ogg Vorbis playback support.</p>\r\n<p>So I looked around for a managed library (C#) and found with csvorbis (Vorbis#), it is LGPL so it seems like a good candidate.</p>\r\n<p>The link contains a very raw/drafty version of an NAudio Ogg Vorbis wrapper that uses csvorbis.</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/downloads/detail?name=NAudioOggVorbis.zip\">http://code.google.com/p/practicesharp/downloads/detail?name=NAudioOggVorbis.zip</a></p>\r\n<p>(The zip contains a free Ogg Vorbis Audio that I download from vorbis.com)</p>\r\n<p>The code is not ready for &quot;production&quot; but it does play the file very nicely, including a random seek a file position based on Time (using CurrentTime).</p>\r\n<p>Also the original Vorbis# code is full of warnings which need to be cleaned up..but it seems to be working just fine.</p>\r\n<p>What do you think?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/downloads/detail?name=NAudioOggVorbis.zip\">http://code.google.com/p/practicesharp</a></p>\r\n",
+    "PostedDate": "2010-11-18T16:48:18.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "526438",
+    "ThreadId": "235249",
+    "Html": "\r\n<p>thanks for this. NAudio can't include any LGPL code due to its MSPL license. However, we could add Ogg playback to a demo project at some point as a demo of what is possible.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-24T07:02:22.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "526450",
+    "ThreadId": "235249",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>No problem.</p>\r\n<p>Regarding the licenses (not an expert at all)&nbsp;- Why can't MSPL include LGPL? AFAIK MSPL does not mandate distributing of its own sources but it can still include sources of other projects.</p>\r\n<p>I mean, assuming the NAudioOgg was a LGPL plug-in (a C# project outside of NAudio), I don't see a contradiction.</p>\r\n<p>Also - would you consider moving NAudio to LGPL? What is the big advantage of using MSPL over LGPL? I'm probably missing something here.</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-11-24T07:25:20.69-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "526455",
+    "ThreadId": "235249",
+    "Html": "\r\n<p>I can only include LGPL as compiled binaries - so it would be OK for the demo project. NAudio is MSPL as it is the most commercial friendly licence.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-24T07:32:02.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "526465",
+    "ThreadId": "235249",
+    "Html": "\r\n<p>OK, last few questions: what about the reverse?</p>\r\n<p>Can I use NAudio with my LGPL code? I understand these licenses are incompatible, but not sure - is it OK?</p>\r\n<p>Are there any restrictions? Do I need to include a license file (e.g. NAUDIO_LICENSE) or something similar?</p>\r\n<p>What if my project was under MIT license? Would that be OK for NAudio and Practice#?</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-11-24T07:45:38.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "526478",
+    "ThreadId": "235249",
+    "Html": "\r\n<p>yes, NAudio can be used in any project. The NAudio license is permissive, so you can include the NAudio.dll or the whole source tree if you prefer</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-24T08:03:05.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "526554",
+    "ThreadId": "235249",
+    "Html": "\r\n<p>Thanks for the explanations.</p>\r\n<p>As a result I decided to also include all 3rd party sources, NAudio in particular, in&nbsp;&nbsp;Practice# GoogleCode subversion repository.</p>\r\n<p>This kind of &quot;gaps between the two worlds&quot; (LGPL and MS-PL).</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-11-24T10:26:47.943-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

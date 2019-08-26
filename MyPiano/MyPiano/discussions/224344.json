@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "483066",
+    "ThreadId": "224344",
+    "Html": "<p>I am using naudio to generate pulse width modulation audio signals for controlling a pair of servo's. &nbsp;Currently I am using the WaveProvider32 class that Mark Heath wrote (<a href=\"http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html\">http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html</a>) which implements the IWaveProvider interface. The sample rate is 44100</p>\r\n<p>The audio signal is basically a block N wide where the first part of the signal all the values are high, and for the remainder of the block the values are low. &nbsp;Since the Read operation asks for more samples than the width of the block I just repeat the signal until I fill up the buffer. &nbsp;The problem I have is that the length of the buffer is not a multiple of the width of my signal block, so part of the last block is cut off which screws with the servo and makes it twitch. &nbsp;I realize I could do some code fanciness to keep track of it and offset the beginning of the next read, but I would be easier if I could set the number of values that WaveProvider had to provide at once so that I could make it a multiple (or maybe the exact width) of the signal block size.</p>\r\n<p>Is that possible?</p>",
+    "PostedDate": "2010-08-21T06:35:35.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "489669",
+    "ThreadId": "224344",
+    "Html": "<p>the read size is determined by the latency of the playback device. You could fiddle with that (look at the WaveOut class) to see if you can force it to be the right size.</p>",
+    "PostedDate": "2010-09-06T04:17:42.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

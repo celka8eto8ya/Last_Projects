@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1019818",
+    "ThreadId": "437707",
+    "Html": "I resampled a wav file to 16 bit PCM, 8000khz, mono and would like to get some features out of it. This requires me to read the wav file to a float[]. <br />\n<pre><code>using(WaveFileReader reader = new WaveFileReader(@&quot;C:\\Users\\me\\Desktop\\somefile.wav&quot;)){\n// read data to float[]?\n}</code></pre>\n\nreally new to NAudio<br />\n",
+    "PostedDate": "2013-03-22T14:58:52.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1019911",
+    "ThreadId": "437707",
+    "Html": "AudioFileReader will give you the samples already converted to floats. Alternatively put a Pcm16ToSampleProvider after the reader<br />\n",
+    "PostedDate": "2013-03-23T01:32:16.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

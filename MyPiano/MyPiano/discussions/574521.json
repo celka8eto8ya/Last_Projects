@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "1330601",
+    "ThreadId": "574521",
+    "Html": "Hi Mark,\r<br />\n<br />\nI have a problem that happens very rarely. Sometimes my application will crash after a play command. I am not able to catch the exception i my application domain. My windows logs will tell me Event Name: BEX with error code c0000005. I am using NAudio 1.7 and the  directsoundout class.\r<br />\n<br />\nWindows logs were able to report the following error prior to my c0000005 error:\r<br />\n<br />\nException Info: System.AccessViolationException\r<br />\nStack:\r<br />\n   at NAudio.Wave.DirectSoundOut+IDirectSoundBuffer.Stop()\r<br />\n   at NAudio.Wave.DirectSoundOut.StopPlayback()\r<br />\n   at NAudio.Wave.DirectSoundOut.PlaybackThreadFunc()\r<br />\n   at System.Threading.ThreadHelper.ThreadStart_Context(System.Object)\r<br />\n   at System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object, Boolean)\r<br />\n   at System.Threading.ExecutionContext.Run(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object, Boolean)\r<br />\n   at System.Threading.ExecutionContext.Run(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object)\r<br />\n   at System.Threading.ThreadHelper.ThreadStart()\r<br />\n<br />\nAny ideas what can cause this AccessViolationException?<br />\n",
+    "PostedDate": "2014-12-10T07:16:45.547-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1332023",
+    "ThreadId": "574521",
+    "Html": "I get these too actually. I have had this problem for a while but never investigated it. I did yesterday and saw the c0000005 error too, multiple times. I thought it might be something else than NAudio but it seems that it is the cause..<br />\n",
+    "PostedDate": "2014-12-15T06:01:43.923-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1332024",
+    "ThreadId": "574521",
+    "Html": "My errors also happends randomly btw but i've only seen it on one of my PCs, running Windows 8.1. Never on my Windows 7.<br />\n",
+    "PostedDate": "2014-12-15T06:03:06.613-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1332037",
+    "ThreadId": "574521",
+    "Html": "I'm afraid these types of thing can be very hard to track down. Make sure your drivers are up to date. Also consider using WaveOutEvent instead of DirectSoundOut to see if that improves matters.<br />\n",
+    "PostedDate": "2014-12-15T06:21:32.53-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1332567",
+    "ThreadId": "574521",
+    "Html": "Yup, thats a headache..\r<br />\n<br />\nWhich drivers are you reffering to, audio drivers, motherboard drivers or?<br />\n",
+    "PostedDate": "2014-12-15T11:53:12.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1332707",
+    "ThreadId": "574521",
+    "Html": "Soundcard drivers, although motherboard ones might help too, if you are using onboard soundcards like Realtek, which have had issues with NAudio in the past. Personally, I don't use DirectSoundOut at all, so I don't really have a feel for its long-term stability. From the stack-trace, the Access Violation is happening in the call to Stop, so possibly something has already gone wrong that causes playback to unexpectedly stop at this point. Things like the computer hibernating / sleeping, or usb soundcards being unplugged could possibly cause this type of crash.<br />\n",
+    "PostedDate": "2014-12-15T14:41:52.447-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1334336",
+    "ThreadId": "574521",
+    "Html": "I'm using WaveOutEvent and get this error. <br />\n",
+    "PostedDate": "2014-12-17T16:28:06.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1337512",
+    "ThreadId": "574521",
+    "Html": "what's the stacktrace when you use WaveOutEvent? Is it calling Stop again?\r<br />\nIs it possible for you to use regular WaveOut (with Windowed callbacks) instead?\r<br />\n<br />\nAlso, are you getting PlaybackStopped event, and if so, is the Exception property set to anything?<br />\n",
+    "PostedDate": "2014-12-28T07:51:31.33-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1345822",
+    "ThreadId": "574521",
+    "Html": "I am also getting this error at times when I call the Stop method of the AsioOut.cs class, which is in turn calling <strong>asioDriverVTable.stop(pASIOComObject)</strong> in the AsioDriver class.  In fact, in AsioOut.cs-&gt;driver_BufferUpdate, I had to comment out the Stop() call within <strong>if (read == 0)</strong> because the application would hang or crash there with all three ASIO drivers I tried.<br />\n",
+    "PostedDate": "2015-01-26T08:03:00.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354460",
+    "ThreadId": "574521",
+    "Html": "what soundcard are you using? maybe we should add an option to not auto-stop when the end of the input stream is reached, and just keep playing silence, and let the calling application call Stop when it is ready<br />\n",
+    "PostedDate": "2015-02-20T12:54:26.577-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354623",
+    "ThreadId": "574521",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nwhat soundcard are you using? maybe we should add an option to not auto-stop when the end of the input stream is reached, and just keep playing silence, and let the calling application call Stop when it is ready<br />\n</blockquote>\nI've had problems when using the ASIO4All driver, the driver for my Prism Sound Orpheus, and the TUSB Audio ASIO driver that ships with some USB to SPDIF converters.\r<br />\n<br />\nRegarding the option to not autostop, I think that is a good idea.  I've been doing something similar  because one of the software ASIO drivers I use is a convolution engine for room correction, and there is quite a lag as it refills its buffer after a stop.  So I've moved to using the MixingSampleProvider to keep from stopping between songs.  The only time I specifically call stop is if I am switching sample rates.  Otherwise I use a class similar to that AutoDisposeFileReader I found in one of your blog posts, and add a new mixer input when it is time to play a new track.<br />\n",
+    "PostedDate": "2015-02-21T10:07:55.783-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

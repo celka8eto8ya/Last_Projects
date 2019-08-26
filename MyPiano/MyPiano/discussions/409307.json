@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "960799",
+    "ThreadId": "409307",
+    "Html": "\r\n<p>Hello everyone,</p>\r\n<p>I am not able to find the preferred/default audio format for the selected audio capture device. Actually I am using IWaveIn.WaveFormat property to get the audio format but I am not sure if its a default format. How NAudio retrieves this WaveFormat? (I am\r\n facing problem if I try to use this&nbsp;format for recording, audio codec is not supporting this format!).</p>\r\n<p>I was comparing the default format retrieved using NAudio and DirectShow and I found that both are different! DirectShow provides a way to get the preferred format list for the audio capture device (using\r\n<a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/dd390426(v=vs.85).aspx\" target=\"_blank\">\r\nIPin::EnumMediaTypes</a>), is there any way in NAudio to get the same list?</p>\r\n",
+    "PostedDate": "2012-12-20T02:59:18.857-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "961024",
+    "ThreadId": "409307",
+    "Html": "\r\n<p>As far as I know, WaveIn doesn't offer this capability. Wasapi in does though if you are using Windows Vista or above. There is some enum wrappers for DirectSound in NAudio, but it doesn't cover the whole API, and I suspect EnumMediaTypes is not included,</p>\r\n",
+    "PostedDate": "2012-12-20T03:47:56.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "961522",
+    "ThreadId": "409307",
+    "Html": "\r\n<p>The WaveFormat that I am getting using IWaveIn.WaveFormat for my capture device has values as follows - BitsPerSample = 32, SampleRate = 48000 and Channels = 1. I want to record using Windows Media Audio 9.2 codec but this codec does not support a stream\r\n with such format. I tried other formats (available in this codec) which has same Sample Rate and Channel values but my output recording is not proper (audio is like blablakchilblachilbal...)!!!</p>\r\n",
+    "PostedDate": "2012-12-20T05:33:23.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "965492",
+    "ThreadId": "409307",
+    "Html": "\r\n<p>I want to capture audio with stereo CBR so I tried configuring my wavIn instance with a WaveFormat (stereo) which is supported by the codec but it is not working and throws &quot;Unsupported wave format&quot; exception! &nbsp;I tried almost all stereo formats that are\r\n available in the codec but same exception is coming for all.</p>\r\n<p>What should I do? Any suggestion?</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2012-12-20T22:24:24.353-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "965927",
+    "ThreadId": "409307",
+    "Html": "\r\n<p>you can't capture audio directly in a compressed audio format. You must capture it in PCM and then encode it afterwards. Read\r\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\">\r\nthis article</a> on CodeProject to get a better understanding of working with compressed audio formats.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-21T00:23:34.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "966370",
+    "ThreadId": "409307",
+    "Html": "\r\n<p>Thank you for your reply. I am going through the article that you have suggested.</p>\r\n<p>But actually I was creating WasapiCapture instance for my audio capture device and I faced above issues. But I tried creating WaveIn instance, configuring it with the required WaveFormat (16 kbps, 44 kHz, 2 channels), capturing with this instance and is\r\n working fine. I am also able to record received audio samples using above mentioned codec.</p>\r\n<p>Thank you so much for your help.</p>\r\n",
+    "PostedDate": "2012-12-21T02:16:01.74-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "966379",
+    "ThreadId": "409307",
+    "Html": "\r\n<p>yes, but you will still be recording in PCM. For WMA you'd need to encode afterwards</p>\r\n",
+    "PostedDate": "2012-12-21T02:18:42.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

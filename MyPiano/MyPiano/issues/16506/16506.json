@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "If an audiobook (m4b) file is longer than 24 hours in length and the AudioFileReader.Position is set anywhere past the 24 hour mark,  AudioFileReader.Play will produce the error:   __\"Not a legal OleAut date\"__  and the file won't play.  \r\n\r\nNote that the file will successfully play through and beyond the 24 hour mark while playing continuously.  However, attempting to set the Position greater than 24 hours and then playing will cause the above mentioned error to occur.\r\n\r\nThis also occurs after setting the AudioFileReader.CurrentTime to a Timespan > 24 hours (1 day or greater).\r\n\r\nUnfortunately, this makes the NAudio component unusable for  an audiobook application.  :(",
+    "LastUpdatedDate": "2017-01-10T23:55:57.15-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-01-10T23:55:57.15-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Audiobook length > 24 hours Playing issue",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16506
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

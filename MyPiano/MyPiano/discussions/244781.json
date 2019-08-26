@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "561258",
+    "ThreadId": "244781",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm working on an app for WP7 that needs to play MIDI data. &nbsp;As you might be aware, there's no MIDI support in WP7; so I need a library with a built-in MIDI synth of some sort. &nbsp;It can be as basic as a sine wave, though if I could find a sample-based\r\n synth I'd be happier. &nbsp;So, two questions: &nbsp;Are there any plans to port NAudio to WP7? &nbsp;And (assuming NAudio doesn't have a synth), are there any plans to add that functionality to the library, or are there any other libraries out there that\r\n can do that? &nbsp;Heck, if NAudio had a MIDI synth I'd probably port it to WP7 myself.</p>\r\n<p>Thanks for any info you can provide!</p>\r\n<p>Mike</p>\r\n",
+    "PostedDate": "2011-02-05T09:17:01.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561557",
+    "ThreadId": "244781",
+    "Html": "\r\n<p>I'm not actively moving NAudio to WP7 as most of it is irrelevant (i.e. interop wrappers for stuff that doesn't exist on the Windows Phone), but there are certainly some parts that could move across. I'm afraid that there is no synth in NAudio either. Unfortunately,\r\n it is not a trivial undertaking to create a good software synthesizer and I don't know of any fully managed solutions.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-06T11:58:32.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

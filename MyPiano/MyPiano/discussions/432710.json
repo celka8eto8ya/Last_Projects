@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "999545",
+    "ThreadId": "432710",
+    "Html": "I'm facing some issues with my application - Practice#.\r<br />\nOne some machines, the playback stops playing randomly - there is no error or exception, but I can see that a native thread is exiting with error 0 when the playback halts.\r<br />\nNAudio doesn't report back about a failure.\r<br />\n<br />\nI managed to replicate this consistently, it happens with many different test cases. Important to note that an another machine (also Windows 7 Pro 64 bit) none of these issues ever happen.\r<br />\n<br />\nSo I suspected it was the sound driver and/or card.\r<br />\nOne of the weird ways to reproduce the issue, was to run in debug mode then simply set a break point anywhere in the code in VS.NET Express, not even in a running place that triggers the break point. That would break the audio playback immediately and kill the thread !!??!!\r<br />\n<br />\nI currently use the driver WasapiOut, and I simply changed it to WaveOut.\r<br />\nNow the problems never replicate.\r<br />\n<br />\nThis is the WasapiOut creation, latency was set to 125msec:\r<br />\nm_waveOutDevice = new WasapiOut(global::NAudio.CoreAudioApi.AudioClientShareMode.Shared, m_latency);\r<br />\n                    <br />\nAnd the WaveOut creation:\r<br />\nm_waveOutDevice = new WaveOut();\r<br />\n<br />\nI guess I can stay with WaveOut for now, but I don't like this workaround.\r<br />\nWith DirectSoundOut I had different issues in the past, it would also get stuck occasionally\r<br />\n<br />\nAudio initialization processing is running on a non UI thread.\r<br />\n<br />\nAny ideas?<br />\n",
+    "PostedDate": "2013-02-11T05:30:12.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000011",
+    "ThreadId": "432710",
+    "Html": "what version of NAudio are you using? The PlaybackStopped event should provide an exception if there was a problem in the audio playback thread<br />\n",
+    "PostedDate": "2013-02-12T06:18:17.137-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000016",
+    "ThreadId": "432710",
+    "Html": "It happens with NAudio 1.6.0.0, but also happened with the previous version (1.5.4.0)\r<br />\n<br />\nYes, I saw the event - will hook it up and report the exception.\r<br />\n<br />\nA comment about that event design pattern - I think exceptions should be logged, regardless of a client subscribing to an event. The current implementation assumes that the user of the provider knows about that event for exception handling - first, the name is misleading (what if I don't want to know if play back stopped after a stop(), it actually means PlaybackHadException), and then it requires an explicit subscription for exception handling.\r<br />\n<br />\nI think a much better approach would add logging - Always log any given exception (using a framework like NLog), and then these exception are not 'swallowed' by the system when a user doesn't know about this exception mechanism. <br />\n",
+    "PostedDate": "2013-02-12T06:33:01.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000019",
+    "ThreadId": "432710",
+    "Html": "I just hooked up the event handler - the StoppedEventArgs argument comes in with a null Exception inner object<br />\n",
+    "PostedDate": "2013-02-12T06:37:48.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000030",
+    "ThreadId": "432710",
+    "Html": "Probably the easiest way for you to debug this is to copy the entire code for WasapiOut into your own project and use that instance of WasapiOut instead. Then you can put a breakpoints in the PlayThread to see why it is exiting. \r<br />\nThe only ways out of PlayThread should be:<br />\n<ol>\n<li>The user requests stop (playbackState gets set to Stopped)</li>\n<li>The input IWaveProvider's Read method returns 0 (also sets playbackState to Stopped)</li>\n<li>An exception is thrown (should be visible in the PlaybackStopped event)</li>\n</ol>\n",
+    "PostedDate": "2013-02-12T07:10:02.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000036",
+    "ThreadId": "432710",
+    "Html": "Got it, thanks.\r<br />\nYes, I noticed that case 1 (regular stop, no exception) comes with a null.\r<br />\n<br />\nWill copy the code and let you know.<br />\n",
+    "PostedDate": "2013-02-12T07:21:16.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1280327",
+    "ThreadId": "432710",
+    "Html": "I've located the problem with wasapiout, it happens on some computers only, but they are the quality ones for example, expensive boards like gigabyte ud3.\r<br />\nOn it I frequently get Read() request from wasapiout with 0 requested bytes. It seems dmoresampler mess it up. When call read with 0 as count, then 0 will always get returned from input and in case of mixer it will remove inputs, and in case of my custom classes will trigger reached end unless i prevent read of input when count is 0.\r<br />\n<br />\ni found this resamplerdmo function in source<br />\n<pre><code>    public override int Read(byte[] buffer, int offset, int count)\n    {\n        int outputBytesProvided = 0;\n\n        while (outputBytesProvided &lt; count)\n        {\n            if (resampler.MediaObject.IsAcceptingData(0))\n            {\n                // 1. Read from the input stream \n                int inputBytesRequired = (int)OutputToInputPosition(count - outputBytesProvided);\n                byte[] inputByteArray = new byte[inputBytesRequired];\n                int inputBytesRead = inputProvider.Read(inputByteArray, 0, inputBytesRequired);\n                if (inputBytesRead == 0)\n                {\n                    //Debug.WriteLine(&quot;ResamplerDmoStream.Read: No input data available&quot;);\n                    break;\n                }\n                // 2. copy into our DMO's input buffer\n                inputMediaBuffer.LoadData(inputByteArray, inputBytesRead);\n\n                // 3. Give the input buffer to the DMO to process\n                resampler.MediaObject.ProcessInput(0, inputMediaBuffer, DmoInputDataBufferFlags.None, 0, 0);\n\n                outputBuffer.MediaBuffer.SetLength(0);\n                outputBuffer.StatusFlags = DmoOutputDataBufferFlags.None;\n\n                // 4. Now ask the DMO for some output data\n                resampler.MediaObject.ProcessOutput(DmoProcessOutputFlags.None, 1, new DmoOutputDataBuffer[] { outputBuffer });\n\n                if (outputBuffer.Length == 0)\n                {\n                    Debug.WriteLine(&quot;ResamplerDmoStream.Read: No output data available&quot;);\n                    break;\n                }\n\n                // 5. Now get the data out of the output buffer\n                outputBuffer.RetrieveData(buffer, offset + outputBytesProvided);\n                outputBytesProvided += outputBuffer.Length;\n\n                Debug.Assert(!outputBuffer.MoreDataAvailable, &quot;have not implemented more data available yet&quot;);\n            }\n            else\n            {\n                Debug.Assert(false, &quot;have not implemented not accepting logic yet&quot;);\n            }\n        }\n\n        position += outputBytesProvided;\n        return outputBytesProvided;\n    }\n\n</code></pre>\n\nSeems this parameter inputBytesRequired somehow becomes zero and read is called.\r<br />\nIt make no difference if i initialized wasapi from 32bit floats or 16bit shorts.\r<br />\nOn some computers this problem will simply never manifest.\r<br />\nIm not sure how to solve it other than prevent read in my effect_after_mixer class, and im not sure could this problem make any distorsion in the output<br />\n",
+    "PostedDate": "2014-08-01T18:12:58.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1280331",
+    "ThreadId": "432710",
+    "Html": "possibly related to this too\r<br />\n<a href=\"http://naudio.codeplex.com/discussions/540778\" rel=\"nofollow\">http://naudio.codeplex.com/discussions/540778</a><br />\n",
+    "PostedDate": "2014-08-01T18:21:19.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1197318",
+    "ThreadId": "526105",
+    "Html": "Hi!\r<br />\n<br />\n<br />\nMy problem is that I want to know the preferred sample rate for the soundcard (on Windows 8, in a Windows Store app). \r<br />\n<br />\nI'm a NAudio newbie, so please bear with me - I have searched the net and the source code and still don't know how this should be done. \r<br />\n<br />\nMy experiments are related to sound generation (I started out here: <a href=\"http://mark-dot-net.blogspot.se/2009/10/playback-of-sine-wave-in-naudio.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.se/2009/10/playback-of-sine-wave-in-naudio.html</a> ), and I have discovered that if I use an inappropriate sample rate there is a latency of one second. I have asked a few questions in the blog post I mentioned, and one suggestion I got was that I could ask WasapiOut for the WaveFormat. However, I am using NAudio 1.7, the preview release of WinRT support, and there is only WasapiOutRT, which doesn't seem to have this option. \r<br />\n<br />\nFor now I have hard coded the sample rate to 48000, and it works great on my device, but I'd like the code to work on other machines as well. \r<br />\n<br />\nDoes anyone have an idea of how to do this? \r<br />\n<br />\nBest regards, \r<br />\nHåkan <br />\n",
+    "PostedDate": "2014-01-25T09:18:55.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198295",
+    "ThreadId": "526105",
+    "Html": "I think if you simply create an instance of WasapiOut, its WaveFormat property should indicate the current device sample rate. In Windows is is usually 44.1kHz or 48kHz.<br />\n",
+    "PostedDate": "2014-01-26T12:53:15.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "286294",
+    "ThreadId": "83270",
+    "Html": "<p>All,</p>\r\n<p>I'm working on a VoIP softphone type application.&nbsp; I'm trying to play audio coming from an RTP stream. I can successfully decode the RTP stream and extract the RAW encoded audio. I have been successful buffering the stream and playing it all at once, but I need to be able to play this is real time.&nbsp;</p>\r\n<p>I've created a class derived from WaveStream to take in RAW G711 data from a memory stream. Below is the method I'm using to play the stream.&nbsp; Right now every time I receive a new RTP message, I call this method, but I can only call it once before it bombs out.</p>\r\n<p>&nbsp;</p>\r\n<p>Here's the code that gets called every time a new RTP packet arrives</p>\r\n<p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>memStream = <span style=\"color:Blue\">new</span> MemoryStream(encodedData); \r\naudioPlayback.Play(memStream);\r\n</pre>\r\n</div>\r\n</p>\r\n<p>Here's the method I use to play back from the memory stream</p>\r\n<p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">public</span>  <span style=\"color:Blue\">void</span> Play(MemoryStream memoryStream)\r\n        {\r\n            <span style=\"color:Green\">//naudio test</span>\r\n            <span style=\"color:Blue\">using</span> (memoryStream)\r\n            {\r\n\r\n\r\n                <span style=\"color:Green\">//memoryStream.Position = 0;</span>\r\n                RawWavStream waveStream = <span style=\"color:Blue\">new</span> RawWavStream(memoryStream);\r\n                WaveStream conversionStream = WaveFormatConversionStream.CreatePcmStream(waveStream);\r\n                <span style=\"color:Blue\">using</span> (WaveStream blockAlignedStream = <span style=\"color:Blue\">new</span> BlockAlignReductionStream(conversionStream))\r\n                {\r\n                    <span style=\"color:Blue\">using</span> (WaveOut waveOut = <span style=\"color:Blue\">new</span> WaveOut(WaveCallbackInfo.FunctionCallback()))\r\n                    {\r\n                        waveOut.Init(blockAlignedStream);\r\n                        waveOut.Play();\r\n                        <span style=\"color:Blue\">while</span> (waveOut.PlaybackState == PlaybackState.Playing)\r\n                        {\r\n                            System.Threading.Thread.Sleep(100);\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n\r\n        }\r\n</pre>\r\n</div>\r\n</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-02-05T08:32:39.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423651",
+    "ThreadId": "83270",
+    "Html": "<p>I would be tempted to have a single instance of WaveOut, and then feed data to it whenever it becomes available. i.e. your &quot;RawWavStream&quot; ought to be able to be given new MemoryStream objects when they arrive</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-25T09:15:01.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "429470",
+    "ThreadId": "83270",
+    "Html": "<p>Take a look at my bufferedsamplestream class here: <a href=\"http://naudio.codeplex.com/Thread/View.aspx?ThreadId=80369\">http://naudio.codeplex.com/Thread/View.aspx?ThreadId=80369</a></p>\r\n<p>You basically feed the class byte[] sample buffers and it queues them up until something comes along to start reading from the stream. &nbsp;If the stream doesn't have any buffered samples it produces silence.</p>\r\n<p>&nbsp;</p>\r\n<p>- Michael</p>",
+    "PostedDate": "2010-04-09T21:31:39.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

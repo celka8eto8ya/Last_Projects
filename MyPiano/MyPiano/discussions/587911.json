@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1366640",
+    "ThreadId": "587911",
+    "Html": "hi,\r<br />\nFirst, I apologize for my English.\r<br />\nI'll be right down to it. I should make to reproduce the audio tracks on different sound cards with a single player.\r<br />\nI asked myself if it was possible, and if you can get some advice about it.\r<br />\n<br />\nMany thanks,\r<br />\nPstariell<br />\n",
+    "PostedDate": "2015-03-18T06:09:14.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1409860",
+    "ThreadId": "587911",
+    "Html": "Not easily I'm afraid. The easiest way would be to just play the same thing out of both soundcards separately. However, you will struggle to get perfect syncrhonization<br />\n",
+    "PostedDate": "2015-04-13T09:18:05.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

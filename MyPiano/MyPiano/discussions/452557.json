@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1077244",
+    "ThreadId": "452557",
+    "Html": "Hi,\r<br />\n<br />\ni'm trying to make an application which sends audio to an Ip Phone. My main problem is that i manage to get audio feed from the microphone (which is in PCM format) and convert it to the ip phone's format which is mu-law.\r<br />\n<br />\nI've read somewhere that I might need to use a converter (WaveFormatConversionStream), however that works with WaveStreams and all I have is a byte[] which I get as parameter in the OnDataAvailable function. How can I do this to work?<br />\n",
+    "PostedDate": "2013-08-06T06:39:14.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1077246",
+    "ThreadId": "452557",
+    "Html": "have a look at the code in the NAudioDemo network chat example. It does exactly this, and goes one layer below WaveFormatConversionStream to use the Acm classes directly, which is probably simpler than trying to create a WaveStream<br />\n",
+    "PostedDate": "2013-08-06T06:41:26.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1077258",
+    "ThreadId": "452557",
+    "Html": "Thanks for the fast reply.\r<br />\n<br />\nI used the Encode function from the MuLawChatCodec.cs which is simpler to use, and I can hear the actual speech but there is a lot of static also. Any ideas?<br />\n",
+    "PostedDate": "2013-08-06T07:05:23.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1077260",
+    "ThreadId": "452557",
+    "Html": "the input must be 8kHz, 16 bit, mono. So make sure the input is correct.<br />\n",
+    "PostedDate": "2013-08-06T07:08:05.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1077587",
+    "ThreadId": "452557",
+    "Html": "Thanks, it worked.<br />\n",
+    "PostedDate": "2013-08-07T00:49:44.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1077596",
+    "ThreadId": "452557",
+    "Html": "best way to trouble-shoot your problem is to make 2 WAV files\r<br />\nfirst WAV file just write the audio you record straight to WAV. check that sounds OK\r<br />\nsecond WAV write the mu-law audio to WAV (with a MU-law wave header). check that sounds OK.<br />\n",
+    "PostedDate": "2013-08-07T01:23:47.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

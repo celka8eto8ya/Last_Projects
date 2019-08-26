@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "553221",
+    "ThreadId": "242756",
+    "Html": "\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>Using the following code I can get the current output volume for the default playback device:</pre>\r\n<pre><div style=\"color:black; background-color:white\"><pre>selectedDevice = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);\r\n<span style=\"color:blue\">while</span> (<span style=\"color:blue\">true</span>)\r\n{\r\n\tVolumeLeft = (<span style=\"color:blue\">int</span>)(selectedDevice.AudioMeterInformation.PeakValues[0] * 100);\r\n\tVolumeRight = (<span style=\"color:blue\">int</span>)(selectedDevice.AudioMeterInformation.PeakValues[1] * 100);\r\n\tThread.Sleep(sampleDelay);\r\n}\r\n</pre>\r\n</div>\r\n<br></pre>\r\n<pre>However, when replacing the device to the default recording device I do not get any values except 0.</pre>\r\n<pre>selectedDevice = devEnum.GetDefaultAudioEndpoint(<span style=\"color:#008000\">DataFlow.<strong>Capture</strong></span>, Role.Multimedia);\r\n<span style=\"color:blue\">while</span> (<span style=\"color:blue\">true</span>)\r\n{\r\n\tVolumeLeft = (<span style=\"color:blue\">int</span>)(selectedDevice.AudioMeterInformation.PeakValues[0] * 100);\r\n\tVolumeRight = (<span style=\"color:blue\">int</span>)(selectedDevice.AudioMeterInformation.PeakValues[1] * 100);\r\n\tThread.Sleep(sampleDelay);\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>I've verified that the correct recoding device is returned and I can see the volume bar changing in the Windows Sound property page.</p>\r\n<p>Is this&nbsp;supposed&nbsp;to just work?</p>\r\n",
+    "PostedDate": "2011-01-21T06:28:42.317-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554292",
+    "ThreadId": "242756",
+    "Html": "\r\n<p>I'm afraid I don't know, it might even be dependent on your drivers. It might be best to find a forum that answers questions specifically about WASAPI to get an answer to this question.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-24T03:56:21.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

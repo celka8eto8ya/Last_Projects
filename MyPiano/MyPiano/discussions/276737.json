@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "687500",
+    "ThreadId": "276737",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I've two mp3 files let's say 1.mp3 and 2.mp3. Is it possible to do following with NAudio?</p>\r\n<p>1. Take first file i.e. 1.mp3. Play it for 10 seconds.</p>\r\n<p>2. Now play that file i.e. 1.mp3 in background with volume of 10% and parallelly start playing 2.mp3 with full volume until it's not completed.</p>\r\n<p>3. Now again play 1.mp3 for 10 seconds with full volume.</p>\r\n<p>Please help me to achieve this. Can someone provide me example of achieving this. Any help is appreciated.</p>\r\n<p>Thank you.</p>\r\n<p>Viresh</p>\r\n",
+    "PostedDate": "2011-10-21T08:50:20.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "689196",
+    "ThreadId": "276737",
+    "Html": "<p>I am VERY interested in this exact same feature.&nbsp; Thanks !</p>\r\n<p>George</p>",
+    "PostedDate": "2011-10-25T12:08:24.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "689667",
+    "ThreadId": "276737",
+    "Html": "<p>There are no code examples doing exactly what you want, but it is perfectly possible to achieve. In NAudio you need to build up a graph of WaveStreams. There will be a mixer stream that will have two inputs in your examples. Then you would create a WaveStream derived class that can delay the start of your MP3, and limit it to 10 seconds (override the Read method to return 0s until you are ready to start, and then read from the real MP3 file stream until the 10 seconds are up).</p>\r\n<p>In the latest source code there is a simple drum machine demo, which isn't exactly what you are after, but it will give a feel for how you can sequence sounds to appear at the right moment.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-10-26T08:08:11.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "691952",
+    "ThreadId": "276737",
+    "Html": "<p>Hi Mark,</p>\n<p>Thanks for your reply.&nbsp; Following is the code which I'm using but can you please tell me how can I control volume of both mp3 at specific interval? I can able to start 2nd mp3 after 10 seconds but I want to decrease the volume of 1st mp3 and want to increase  the volume of 2nd mp3. Also how can I repeat 1st mp3 in background, if it's length is less than 2nd mp3?</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var background = new WaveFileReader(\"1.wav\");<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var message = new WaveFileReader(\"message.wav\");<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var mixer = new WaveMixerStream32();<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mixer.AutoStop = true;<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var messageOffset = background.TotalTime;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var messageOffsetted = new WaveOffsetStream(<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; message, TimeSpan.FromSeconds(10), TimeSpan.Zero, message.TotalTime.Subtract(TimeSpan.FromSeconds(30)));<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var background32 = new WaveChannel32(background);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background32.PadWithZeroes = false;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background32.Volume = 0.3f;<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mixer.AddInputStream(background32);<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var message32 = new WaveChannel32(messageOffsetted);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; message32.PadWithZeroes = false;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; message32.Volume = 0.7f;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mixer.AddInputStream(message32);<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveFileWriter.CreateWaveFile(\"mycomposed.wav\", new Wave32To16Stream(mixer));</p>\n<p>Regards,</p>\n<p>Viresh</p>",
+    "PostedDate": "2011-10-31T21:36:57.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

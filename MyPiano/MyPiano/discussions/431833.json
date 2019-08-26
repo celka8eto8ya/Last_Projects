@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "995880",
+    "ThreadId": "431833",
+    "Html": "Hi, \r<br />\n<br />\nFirst of all, thank you for this incredible library.   My game would literally be lost without it, it'd likely end up relying on something like XACT instead.\r<br />\n<br />\nI noticed on the forum that when the MP3 license is mentioned you've said that one isn't required.  Why is that?  I was under the impression that any use of the MP3 format required a license?\r<br />\n<br />\nYour elaboration would be greatly appreciated as I'd rather not have to go to the lengths of adding Ogg Vorbis support.\r<br />\n<br />\nThanks muchly,\r<br />\n<br />\nSteve\r<br />\nPunchbag Entertainment<br />\n",
+    "PostedDate": "2013-02-03T16:06:05.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996009",
+    "ThreadId": "431833",
+    "Html": "Windows comes with an MP3 decoder, which you are licensed to use already.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-04T02:58:40.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996056",
+    "ThreadId": "431833",
+    "Html": "Hi Mark,\r<br />\n<br />\nThat's great, thank you for coming back to me.\r<br />\n<br />\nKind Regards,\r<br />\n<br />\nSteve<br />\n",
+    "PostedDate": "2013-02-04T04:51:23.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996217",
+    "ThreadId": "431833",
+    "Html": "mingoox:\r<br />\n<br />\nA couple of points to consider, as well:\r<br />\n<br />\n1) Ogg Vorbis support with NAudio is simple: <a href=\"http://nvorbis.codeplex.com/\" rel=\"nofollow\">NVorbis</a> (specifically NVorbis.NAudioSupport).  Also on <a href=\"http://www.nuget.org/packages/NVorbis.NAudioSupport/\" rel=\"nofollow\">NuGet</a>.  The usage is generally similar to Mp3FileReader.\r<br />\n<br />\n2) If you are in the U.S., and this is a commercial project, MP3 might come with baggage you don't want.  Specifically, you might need a license to distribute the encoded files - OR - might need to use a licensed encoder to get the distribution license.  IANAL, so please check with an attorney if you want to make sure.\r<br />\n<br />\nPerformance differences between NVorbis and NAudio MP3 are hard to say offhand...  NVorbis isn't native code, so it has some CLR overhead to deal with.  NAudio MP3 is partially native code (all the expensive parts), but pays the P/Invoke &quot;tax&quot; for the privilege.  NVorbis uses larger buffers, but NAudio MP3 has to use multiple buffers.  Benchmarks will be your friend here.\r<br />\n<br />\nIf you choose to use Vorbis, I recommend using the latest version of the <a href=\"http://www.geocities.jp/aoyoume/aotuv/\" rel=\"nofollow\">aoTuv encoder</a>.\r<br />\n<br />\nGood luck with your project!<br />\n",
+    "PostedDate": "2013-02-04T08:51:49.18-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996355",
+    "ThreadId": "431833",
+    "Html": "Hi ioctlLR,\r<br />\n<br />\nThanks for your advice!  I have actually integrated NVorbis already (I melded the support it provides into AudioFileReader for consistency).  Thanks for the encoder link, that'll no doubt come in very handy.\r<br />\n<br />\nI've found that OggVorbis files are substantially slower to initialise, at least using NVorbis, and that they sometimes suffer a quality issue when I fade the volume in/out.  I can work around the slower initialisation using an audio thread and pre-loading the files, but I don't suppose you have any advise regarding the volume quality issue?  Currently as you can imagine from what I've described so far, I have the NVorbis VorbisStreamReader working the same way as an Mp3FileReader within the AudioFileReader class.\r<br />\n<br />\nKind Regards,\r<br />\n<br />\nSteve<br />\n",
+    "PostedDate": "2013-02-04T13:43:25.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996391",
+    "ThreadId": "431833",
+    "Html": "mingoox:\r<br />\n<br />\nCool.  That sounds like a nice little addition to NAudio.\r<br />\n<br />\nThe startup performance is a bit of a concern...  Let's move this over to the NVorbis project so we don't pollute Mark's inbox with unrelated discussion... :)\r<br />\n<br />\nDo you mind creating a bug report?<br />\n",
+    "PostedDate": "2013-02-04T15:09:44.687-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996410",
+    "ThreadId": "431833",
+    "Html": "Hi ioctlLR,\r<br />\n<br />\nI have a feeling it was down to the file I was playing rather than anything else, since my own files are both decent quality and loading quickly :)  I will skip over to NVorbis if I have any other issues though, at the moment I'm just working on getting my code to respect NVorbis better and to avoid spamming sfx, etc.\r<br />\n<br />\nCheers for your replies\r<br />\n<br />\nSteve<br />\n",
+    "PostedDate": "2013-02-04T15:52:57.56-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247552",
+    "ThreadId": "431833",
+    "Html": "Hi Mark, \r<br />\ni m using Naudio to convert a Wav file to Mp3 with the following code. My concern is do i need a license for mp3 ?\r<br />\nThanks\r<br />\nusing (var retMs = new MemoryStream())<br />\n<pre><code>        using (var ms = new MemoryStream(wavFile))\n        using (var rdr = new WaveFileReader(ms))\n        {\n            using (var conversionStream = WaveFormatConversionStream.CreatePcmStream(rdr))\n            {\n                using (var wtr = new LameMP3FileWriter(retMs, conversionStream.WaveFormat, LAMEPreset.STANDARD))\n                {\n                    conversionStream.CopyTo(wtr);\n                    wtr.Close();\n                    return retMs.ToArray();\n                }\n            }</code></pre>\n\n",
+    "PostedDate": "2014-05-20T11:24:12.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247821",
+    "ThreadId": "431833",
+    "Html": "Technically, yes, you are supposed to pay for a license if you sell commercial software that can create MP3s. One way some companies work around this is by asking users to download LAME themseleves<br />\n",
+    "PostedDate": "2014-05-21T03:03:44.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247902",
+    "ThreadId": "431833",
+    "Html": "Hi Mark,\r<br />\nthanks for your answer. Actually dont really sell anything, i m working on a company website which need to hear their customer service recordings. The recording are save in wav gsm 6.10 format. Clients will log in and hear those recordings. As wav file especially gsm 6.10 doesn't work with all browser, i want to convert the recordings in mp3 and then use JPlayer to play them. Therefore i was wondering if there is any legal concerns.\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2014-05-21T05:32:27.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247907",
+    "ThreadId": "431833",
+    "Html": "IANAL, but here's my take on the license:\r<br />\n<br />\nIf you are writing it for your employer to use and no one outside your employer will access it, you do <em>not</em> need a license.  Otherwise, you probably do.<br />\n",
+    "PostedDate": "2014-05-21T05:37:21.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

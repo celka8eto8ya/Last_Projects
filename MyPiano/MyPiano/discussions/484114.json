@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1151078",
+    "ThreadId": "484114",
+    "Html": "Hello,\r<br />\n<br />\nDoes NAudio provide an easy way to perform .wav file to .mp3 file creation similar to this ( .mp3 to .wav) code snippet <br />\n<pre><code>        Mp3FileReader reader = new Mp3FileReader(iPath);\n        WaveFileWriter.CreateWaveFile(oPath, reader);\n</code></pre>\n\nIncidentally, I would use compression specs identical to the file I read from in snippet.\r<br />\n<br />\nmany thanks.............<br />\n",
+    "PostedDate": "2014-01-08T13:53:17.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151331",
+    "ThreadId": "484114",
+    "Html": "With the MediaFoundationEncoder in Windows 8 you can convert to MP3. \r<br />\nOtherwise, you could use Corey's Lame wrapper <a href=\"https://github.com/Corey-M/NAudio.Lame\" rel=\"nofollow\">https://github.com/Corey-M/NAudio.Lame</a>\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2014-01-09T05:37:36.273-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1152760",
+    "ThreadId": "484114",
+    "Html": "Thank you, good to know.<br />\n",
+    "PostedDate": "2014-01-10T22:02:41.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

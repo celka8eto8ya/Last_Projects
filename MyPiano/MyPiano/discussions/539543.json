@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1224632",
+    "ThreadId": "539543",
+    "Html": "Hi @ all,<br />\n<br />\nI found NAudio library few days ago and I tried implement it in my communication software. The my purpose of use was to create voice chat app. I'm successfully recording mic input and sending it through System.Net.Sockets. The voice chat is working, but after some time, one side stops playing. I can still see incoming data (byte arrays), but nothing can be heared (after minute, or two or few secs in some cases). Where's the problem? How to play wave byte stream correctly? My class below:<br />\n<br />\nI use v 1.6 because I develop in Visual Studio 2010 - 1.7 was compiled for .NET 4.5. I have Try Catch block on PlayData method, when data are received from sockets. No exception being thrown.<br />\n<pre><code>Imports NAudio\nImports System.IO\n\nPublic Class SoundHelper\n\n    Private WithEvents wav As New Wave.WaveIn()\n\n    Public Event AudioDataToSend(ByVal AudioBytes() As Byte)\n\n    Private m_bwp As New Wave.BufferedWaveProvider(New Wave.WaveFormat(8000, 16, 1))\n\n    Private initialized As Boolean = False\n\n    Public Sub New()\n        m_bwp.BufferLength = 80000\n        m_bwp.DiscardOnBufferOverflow = True\n    End Sub\n\n    Public Sub New(ByVal blnStartRecording As Boolean)\n        If blnStartRecording Then\n            StartRecording()\n        End If\n    End Sub\n\n    Public Sub StartRecording()\n        wav.StartRecording()\n    End Sub\n\n    Public Sub StopRecording()\n        wav.StopRecording()\n    End Sub\n\n\n    Private Sub wav_DataAvailable(ByVal sender As Object, ByVal e As NAudio.Wave.WaveInEventArgs) Handles wav.DataAvailable\n        RaiseEvent AudioDataToSend(e.Buffer)\n    End Sub\n\n    Public Sub PlayData(ByVal AudioBytes() As Byte)\n        Dim MS As New MemoryStream(AudioBytes)\n        Dim dec() As Byte = MS.ToArray\n\n        m_bwp.AddSamples(dec, 0, dec.Length)\n        MS.Close()\n        Dim latency As Integer = 50\n        Dim cbi As Wave.WaveCallbackInfo = Wave.WaveCallbackInfo.FunctionCallback\n        Dim out_dev As New Wave.DirectSoundOut\n        out_dev.Volume = 1\n\n        If initialized = False Then\n            out_dev.Init(m_bwp)\n            out_dev.Play()\n            initialized = True\n        End If\n\n    End Sub\n\n    Private Function cnssb(ByVal nss As Wave.WaveStream) As Byte()\n        Dim memstr As New MemoryStream\n        Dim buff(1024) As Byte\n        Dim bytes As Integer\n\n        bytes = nss.Read(buff, 0, buff.Length)\n        While bytes &gt; 0\n            memstr.Write(buff, 0, bytes)\n            bytes = nss.Read(buff, 0, buff.Length)\n        End While\n\n        Dim by() As Byte = memstr.ToArray\n        Return by\n    End Function\nEnd Class\n</code></pre>\n\n",
+    "PostedDate": "2014-03-19T19:20:36.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1224684",
+    "ThreadId": "539543",
+    "Html": "First, 1.7 was not compiled for .NET 4.5 and you can use it in VS 2010 with no issues whatsoever.\r<br />\n<br />\nSecond, you should just have one output device, and not re-create it every time you call PlayData<br />\n",
+    "PostedDate": "2014-03-20T01:00:47.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1224733",
+    "ThreadId": "539543",
+    "Html": "Thanks. I saw some messages in VS, so I thought about .NET 4.5 - I'll read more carefully next time.\r<br />\n<br />\nI assume, that you mean Wave.DirectSoundOut object by output device. I'll declare it on class level, make some tests and let you know.\r<br />\n<br />\nThanks anyway.<br />\n",
+    "PostedDate": "2014-03-20T03:55:10.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1224992",
+    "ThreadId": "539543",
+    "Html": "Hi again,<br />\n<br />\nI have slightly refactored my code based on your recommendations, using now v 1.7 - message displayed in VS was there because of targeting my app to .NET 2. I retargeted it to .NET 4 and now it's OK.<br />\n<br />\nThe worst thing: The issue persists - now it happenes when about 2MBytes are transferred, but number is not same in all cases. One side stops playing received sound... But when I think, the issue can be that one side stops recording,but still sending data. Is that possible? Any suggestions?<br />\n<br />\nOf course, I'll continue to inspect, what's wrong and will let you know, if I find something.<br />\n<pre><code>Imports NAudio\nImports System.IO\n\nPublic Class SoundHelper\n\n    Private WithEvents wav As New Wave.WaveIn()\n\n    Public Event AudioDataToSend(ByVal AudioBytes() As Byte)\n\n    Private m_bwp As New Wave.BufferedWaveProvider(New Wave.WaveFormat(8000, 16, 1))\n    Private out_dev As New Wave.DirectSoundOut\n\n    Private initialized As Boolean = False\n\n    Public Sub New()\n        SetDefaultBufferConfiguration()\n    End Sub\n\n    Public Sub New(ByVal blnStartRecording As Boolean)\n        SetDefaultBufferConfiguration()\n\n        If blnStartRecording Then\n            StartRecording()\n        End If\n    End Sub\n\n    Private Sub SetDefaultBufferConfiguration()\n        m_bwp.BufferLength = 80000\n        m_bwp.DiscardOnBufferOverflow = True\n    End Sub\n\n    Public Sub StartRecording()\n        wav.StartRecording()\n    End Sub\n\n    Public Sub StopRecording()\n        wav.StopRecording()\n    End Sub\n\n    Private Sub wav_DataAvailable(ByVal sender As Object, ByVal e As NAudio.Wave.WaveInEventArgs) Handles wav.DataAvailable\n        RaiseEvent AudioDataToSend(e.Buffer)\n    End Sub\n\n    Public Sub PlayData(ByVal AudioBytes() As Byte)\n        Dim MS As New MemoryStream(AudioBytes)\n        Dim dec() As Byte = MS.ToArray\n\n        m_bwp.AddSamples(dec, 0, dec.Length)\n        MS.Close()\n        Dim latency As Integer = 50\n        Dim cbi As Wave.WaveCallbackInfo = Wave.WaveCallbackInfo.FunctionCallback\n\n        out_dev.Volume = 1\n\n        If initialized = False Then\n            out_dev.Init(m_bwp)\n            out_dev.Play()\n            initialized = True\n        End If\n\n    End Sub\n\n    Private Function cnssb(ByVal nss As Wave.WaveStream) As Byte()\n        Dim memstr As New MemoryStream\n        Dim buff(1024) As Byte\n        Dim bytes As Integer\n\n        bytes = nss.Read(buff, 0, buff.Length)\n        While bytes &gt; 0\n            memstr.Write(buff, 0, bytes)\n            bytes = nss.Read(buff, 0, buff.Length)\n        End While\n\n        Dim by() As Byte = memstr.ToArray\n        Return by\n    End Function\nEnd Class\n</code></pre>\n\n",
+    "PostedDate": "2014-03-20T13:13:08.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1225002",
+    "ThreadId": "539543",
+    "Html": "Subscribe to the PlaybackStopped event, see if it fires, and see if there is a value in the Exception property of the event args.\r<br />\nAlso, you don't need WaveCallbackInfo - that does nothing.\r<br />\nYou could also see if WaveInEvent works better for you than WaveIn<br />\n",
+    "PostedDate": "2014-03-20T13:49:09.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1225023",
+    "ThreadId": "539543",
+    "Html": "Thanks for suggestions! I subcribed to event and see this error:<br />\n<blockquote>\nDirectSound buffer timeout<br />\n</blockquote>\nI think, that I can reinitialize playback, when this event is fired - but have to do more test. I'll let you know.<br />\n",
+    "PostedDate": "2014-03-20T15:07:28.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1225036",
+    "ThreadId": "539543",
+    "Html": "Yes, when event PlaybackStopped is raised, I reinitialize DirectSoundOut object and sound still playing.<br />\n<br />\nIt still throws some errors, but user can't see them while chatting over network.<br />\n<blockquote>\n20.3.2014 23:58:13: Playback stopped with following message: DirectSound buffer timeout<br />\n20.3.2014 23:58:15: Playback stopped with following message: DirectSound buffer timeout<br />\n20.3.2014 23:58:16: Playback stopped with following message: DirectSound buffer timeout<br />\n20.3.2014 23:58:18: Playback stopped with following message: DirectSound buffer timeout<br />\n20.3.2014 23:58:20: Playback stopped with following message: DirectSound buffer timeout<br />\n20.3.2014 23:58:20: Playback stopped with following message: DirectSound buffer timeout<br />\n20.3.2014 23:58:21: Playback stopped with following message: DirectSound buffer timeout<br />\n20.3.2014 23:58:23: Playback stopped with following message: DirectSound buffer timeout<br />\n</blockquote>\nThese error were throwed in short duration, but whole test was about 5 mins long.<br />\n<br />\nHere's the final working code. <br />\n<pre><code>Imports NAudio\nImports System.IO\n\nPublic Class SoundHelper\n\n    Private WithEvents wav As New Wave.WaveIn()\n\n    Public Event AudioDataToSend(ByVal AudioBytes() As Byte)\n\n    Private m_bwp As New Wave.BufferedWaveProvider(New Wave.WaveFormat(8000, 16, 1))\n    Private WithEvents out_dev As New Wave.DirectSoundOut\n\n    Private initialized As Boolean = False\n\n    Public Sub New()\n        SetDefaultBufferConfiguration()\n    End Sub\n\n    Public Sub New(ByVal blnStartRecording As Boolean)\n        SetDefaultBufferConfiguration()\n\n        If blnStartRecording Then\n            StartRecording()\n        End If\n    End Sub\n\n    Private Sub SetDefaultBufferConfiguration()\n        m_bwp.BufferLength = 80000\n        m_bwp.DiscardOnBufferOverflow = True\n    End Sub\n\n    Public Sub StartRecording()\n        wav.StartRecording()\n    End Sub\n\n    Public Sub StopRecording()\n        wav.StopRecording()\n    End Sub\n\n    Private Sub wav_DataAvailable(ByVal sender As Object, ByVal e As NAudio.Wave.WaveInEventArgs) Handles wav.DataAvailable\n        RaiseEvent AudioDataToSend(e.Buffer)\n    End Sub\n\n    Public Sub PlayData(ByVal AudioBytes() As Byte)\n        Dim MS As New MemoryStream(AudioBytes)\n        Dim dec() As Byte = MS.ToArray\n\n        m_bwp.AddSamples(dec, 0, dec.Length)\n        MS.Close()\n        Dim latency As Integer = 50\n\n        out_dev.Volume = 1\n\n        If initialized = False Then\n            out_dev.Init(m_bwp)\n            out_dev.Play()\n            initialized = True\n        End If\n    End Sub\n\n    Private Function cnssb(ByVal nss As Wave.WaveStream) As Byte()\n        Dim memstr As New MemoryStream\n        Dim buff(1024) As Byte\n        Dim bytes As Integer\n\n        bytes = nss.Read(buff, 0, buff.Length)\n        While bytes &gt; 0\n            memstr.Write(buff, 0, bytes)\n            bytes = nss.Read(buff, 0, buff.Length)\n        End While\n\n        Dim by() As Byte = memstr.ToArray\n        Return by\n    End Function\n\n    Private Sub out_dev_PlaybackStopped(ByVal sender As Object, ByVal e As NAudio.Wave.StoppedEventArgs) Handles out_dev.PlaybackStopped\n        If e.Exception.Message &lt;&gt; &quot;&quot; Then\n            WriteLog(&quot;audio-debug&quot;, &quot;Playback stopped with following message: &quot; &amp; e.Exception.Message)\n            out_dev = New Wave.DirectSoundOut\n            initialized = False\n        End If\n    End Sub\nEnd Class\n</code></pre>\n\n",
+    "PostedDate": "2014-03-20T16:05:17.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-03-20T16:07:00.893-07:00"
+  }
+]

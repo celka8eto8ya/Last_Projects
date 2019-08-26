@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "539721",
+    "ThreadId": "239356",
+    "Html": "\r\n<p>Hi, many thanks for the great library!&nbsp; I've just started using it and I have a few questions.&nbsp;</p>\r\n<p>My application is placing various wav sounds (read from wav files) into a &quot;master&quot; output file at various locations.&nbsp; I allow the user to specify the Pan, Volume and Time when placing the input into the output mix.&nbsp; Also the input files may be\r\n of different wav formats (e.g. 16-bit/32-bit, float/pcm, and so on).</p>\r\n<p>So far the approach I'm using is to read them in using WaveFileReader, pass that into a WaveChannel32 to control Pan/Volume and convert them to 32-bit float.&nbsp; Then I create a WaveOffsetStream to specify the Time offset, and add that to a WaveMixer32\r\n to generate the output file.</p>\r\n<p>However, the problems I've hit are:</p>\r\n<p>1) If the input is already 32-bit the WaveChannel32 rejects it (it only accepts 16-bit PCM)</p>\r\n<p>2) The WaveOffsetStream only accepts PCM, so I'm having to down-grade the input back to 16-bit PCM</p>\r\n<p>3) the WaveMixer32 only accepts 32-bit float, so I have to re-upgrade it back up to 32-bit float to add it here.</p>\r\n<p>&nbsp;</p>\r\n<p>So far my naive approach for #2 and #3 above is to simply convert them in between steps using &#65279;Wave32To16Steam and WaveChannel32 as needed.&nbsp; But this seems like alot of unecessary conversions and extra code to deal with.&nbsp; Is there a simpler way\r\n to do this, or would it be beneficial for me to create additional WaveChannelNN classes to handle the various types of input?&nbsp; I would be happy to contribute any additional wav stream classes I come up with, if they fit into the architectural model you\r\n have in mind.</p>\r\n<p>I suppose another solution would be to change the order of operations such that I read the file, add it to the WaveOffsetStream (still in original format), and *then* create a WaveChannel32 to alter the volume/pan.&nbsp; However, I currently let the user\r\n preview the altered sample before adding it to the output so I would have to do that separately. Also this does not solve the problem #1 above.</p>\r\n<p>Any input would be greatly appreciated.&nbsp; Again, thank you for providing this nice library!&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Randy</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-12-22T20:33:35.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "540226",
+    "ThreadId": "239356",
+    "Html": "\r\n<p>The original classes were written to put the WaveOffsetStream before the WaveChannel32. Seems like you might need to make your own WaveOffsetStream and WaveChannel32 stream that can accept 32 bit input (should be quite easy to write based on the existing\r\n ones)</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-24T03:10:05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "540284",
+    "ThreadId": "239356",
+    "Html": "\r\n<p>Mark, thanks for the reply.&nbsp; Yes I think I may take that approach. I'm playing with some different ideas at the moment.</p>\r\n<p>Another question is what (if any) of the existing classes would be best if i want to generate a sample programmatically?&nbsp; In this case I really just need to manipulate the raw byte/float buffer and somehow inject it into a stream.&nbsp; Any suggestions?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2010-12-24T08:45:34.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "541583",
+    "ThreadId": "239356",
+    "Html": "\r\n<p>randbro:</p>\r\n<p><a href=\"http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html\">http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html</a></p>\r\n<p>&nbsp;</p>\r\n<p>Sebastian</p>\r\n",
+    "PostedDate": "2010-12-29T02:36:45.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "541975",
+    "ThreadId": "239356",
+    "Html": "\r\n<div>Thank you for the link! Do you know if there a built-in way to feed a IWaveProvider into a WaveStream? In this case I need to output it to a wav file.</div>\r\n<div></div>\r\n<div>Thanks!</div>\r\n<div>Randy<br>\r\n<br>\r\n</div>\r\n<div>On Wed, Dec 29, 2010 at 5:36 AM, OpenSebJ <span dir=\"ltr\">&lt;<a href=\"mailto:notifications@codeplex.com\" target=\"_blank\">notifications@codeplex.com</a>&gt;</span> wrote:<br>\r\n<blockquote style=\"border-left:#ccc 1px solid; margin:0px 0px 0px 0.8ex; padding-left:1ex\">\r\n<div>\r\n<p>From: OpenSebJ</p>\r\n<div>\r\n<p>randbro:</p>\r\n<p><a href=\"http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html\" target=\"_blank\">http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html</a></p>\r\n<p></p>\r\n<p>Sebastian</p>\r\n</div>\r\n<div>\r\n<div>\r\n<p>Read the <a href=\"http://naudio.codeplex.com/Thread/View.aspx?ThreadId=239356&ANCHOR#Post541583\" target=\"_blank\">\r\nfull discussion online</a>.</p>\r\n<p>To add a post to this discussion, reply to this email (<a href=\"mailto:naudio@discussions.codeplex.com?subject=[naudio:239356]\" target=\"_blank\">naudio@discussions.codeplex.com</a>)</p>\r\n<p>To start a new discussion for this project, email <a href=\"mailto:naudio@discussions.codeplex.com\" target=\"_blank\">\r\nnaudio@discussions.codeplex.com</a></p>\r\n<p>You are receiving this email because you subscribed to this discussion on CodePlex. You can\r\n<a href=\"https://naudio.codeplex.com/discussions/239356/unsubscribe/\" target=\"_blank\">\r\nunsubscribe</a> on CodePlex.com.</p>\r\n<p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at CodePlex.com</p>\r\n</div>\r\n</div>\r\n</div>\r\n</blockquote>\r\n</div>\r\n<br>\r\n",
+    "PostedDate": "2010-12-29T18:58:57.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "543616",
+    "ThreadId": "239356",
+    "Html": "\r\n<p>IWaveProvider is a more lightweight version of WaveStream - it doesn't report length or position and can't reposition. The NAudio library hasn't yet been fully updated to support IWaveProvider everywhere, but it is not hard to make your own adapter if necessary,\r\n or modify existing classes to work with IWaveProvider instead of WaveStream</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-04T02:43:07.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

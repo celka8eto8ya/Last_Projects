@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "642791",
+    "ThreadId": "265258",
+    "Html": "\r\n<p>Hello Mark.</p>\r\n<p>&nbsp;</p>\r\n<p>I have window that display fft of playing audio file.</p>\r\n<p>I need to know when in a specific hz the power pass the power limit.</p>\r\n<p>For example: between 400hz and 600hz the power limit is -10db when the limit passed I want to know that.</p>\r\n<p>How can I get the freq. and the power of each freq. ?</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you vey much!</p>\r\n",
+    "PostedDate": "2011-07-15T00:16:56.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643684",
+    "ThreadId": "265258",
+    "Html": "<p>I would suggest you ask on StackOverflow about how to interpret the results of an FFT. I usually take the \"magnitude\" of each complex number and then the log base 10 of that, but I'm not sure that necessarily gives the power in dB.</p>",
+    "PostedDate": "2011-07-18T06:05:20.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643697",
+    "ThreadId": "265258",
+    "Html": "<p>ok thanks anyway</p>",
+    "PostedDate": "2011-07-18T06:45:41.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

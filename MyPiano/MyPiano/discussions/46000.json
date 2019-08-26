@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "153493",
+    "ThreadId": "46000",
+    "Html": "I can get NAudio's AudioPlaybackForm demo to work on Vista 32-bit, but on the same machine, it crashes when I try to play a sound using Windows 7 64-bit.&nbsp; In fact I can't get NAudio to play back any sound on the 64-bit partition, using any of the output drivers (WaveOut, DSound, WASAPI).&nbsp; The NAudio coding4fun sample code also doesn't work on 64-bit.<br>\r\n<br>\r\nI have no doubt the Win7 aspect of my machine is an unsupported configuration -- but has anyone had any success playing sounds back on Vista 64-bit?&nbsp; Is that configuration supported?<br>\r\n<br>\r\np.s. congratulations on the coding4fun article Mark!<br>\r\n",
+    "PostedDate": "2009-02-02T13:58:50.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "153612",
+    "ThreadId": "46000",
+    "Html": "Hi Rob,<br>\r\n<br>\r\nI would love to add 64 bit support to NAudio, but don't have a PC with 64 bit windows at the moment. Most likely, the problems are with the P/Invoke interop signatures using Int32 when they should be using IntPtr. It's definitely on the TODO list though (along with a lot of other things!)<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-02-02T23:26:07.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "153730",
+    "ThreadId": "46000",
+    "Html": "Mark, thank you very much for this response. I understand, as I've been in the position of wanting to debug a 64-bit app without having a machine available. If you do ever get around to investigating 64-bit support, if you could ping me (maybe respond to this thread again?) that would be great. <br>\r\n<br>\r\nall the best<br>\r\nRob<br>\r\n",
+    "PostedDate": "2009-02-03T05:42:54.16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "154352",
+    "ThreadId": "46000",
+    "Html": "I can't confirm the crash using wav files, but it crashes with mp3 files.<br>\r\n<br>\r\n<br>\r\nI might look into this, I have a Windows Vista/Windows 7 x64 development PC, and I can confirm that most WASAPI/CoreAudioApi Interfaces work fine on 64 bit Vista. The problem is, I can't debug 64 bit code, since I use SharpDevelop (no 64 bit debugger).<br>\r\n<br>\r\n64bit recap using a wave file:<br>\r\n<br>\r\nwaveOut playback works.<br>\r\nDirectSound doesn't , but it crashes because of a System.ArgumentException.<br>\r\nWASAPI also works fine<br>\r\n<br>\r\nEDIT: another 64 bit bug is that ASIO is not supported, but compiled to 32 bit, I can select ASIO as output (but it crashes ;P). I don't know which is correct behaviour, however, as I don't have ASIO drivers, I'd say it's the 32 bit version with the bug.<br>\r\n",
+    "PostedDate": "2009-02-04T10:36:56.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "155743",
+    "ThreadId": "46000",
+    "Html": "thanks for the info Frank. A quick solution for people wanting to use NAudio on x64 might be to compile as x86 only, which I have heard (but not personally verified) causes Windows to run it in an x86 emulation mode.<br>\r\n",
+    "PostedDate": "2009-02-09T04:27:32.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "157757",
+    "ThreadId": "46000",
+    "Html": "Hi Mark,<br>\r\n<br>\r\nI can confirm your suggestion works on Windows XP 64 Bit Edition. I found your software today when looking for other .Net Open Source audio libraries but was confused about why I couldn't get a basic wave file to play until I found this. The error message I was getting was rather odd and it took a few moments to track down where it was being called from. But once I found this, changed the output for x86 all worked as expected. I'd suggest you change the default setting for this libary to out put as x86 until you do have a chance to get to a x64 environment. <br>\r\n<br>\r\nClick Build &gt; Configuration Manager and then change all of the projects platform to x86<br>\r\n<br>\r\nAlso in reference to ASIO I have ASIO4ALL v2 installed and it worked fine once I changed the projects platform to x86.<br>\r\n<br>\r\nThanks for the great library.<br>\r\n<br>\r\nCheers,<br>\r\nSebastian<br>\r\n",
+    "PostedDate": "2009-02-14T21:10:09.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "158673",
+    "ThreadId": "46000",
+    "Html": "I can also confirm Sebastian's comment for Windows 7 Beta 64 bit.&nbsp; Creating a new x86 Build Configuration in Visual Studio for NAudio enables it to work.&nbsp; I have only tested WaveOut and DirectSound output.<br>\r\n",
+    "PostedDate": "2009-02-17T13:57:10.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244290",
+    "ThreadId": "46000",
+    "Html": "<p>I also had problems on x64 (Windows 7). I changed the Target Platform to &quot;Any CPU&quot; value in Visual Studio and all earned.</p>\r\n<p>Thank you for your library</p>",
+    "PostedDate": "2009-10-10T18:41:32.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244464",
+    "ThreadId": "46000",
+    "Html": "<div id=\"result_box\" dir=ltr>I was wrong. The library does not work on X64 platform. If you change the value of Target Platform to &quot;Any CPU&quot; project starts but when trying to convert constantly gives &quot;InvalidParameter calling acmStreamPrepareHeader&quot; for any wav files. The project does not work on x64 and works on x86 platform (in Virtual PC)</div>",
+    "PostedDate": "2009-10-11T16:58:14.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244651",
+    "ThreadId": "46000",
+    "Html": "<p>Atreides07, you need to set it to target x86, even though you are using x64. It should then work. This has been done in NAudio 1.3</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-12T06:31:41.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1497339",
+    "ThreadId": "663385",
+    "Html": "Hello,\r<br />\nI'm trying to get all sound with WasapiLoopbackCapture. It works fine. If no sound, comes no data. If I start for example youtube video, I become data. Until I stop and start video again. After second start event is triggered, but there comes no data (e.BytesRecorded is always 0). Here is the code:\r<br />\n<br />\nIWaveIn audioSource = null;\r<br />\n<br />\nInitialisation:\r<br />\nMMDeviceEnumerator devices = new MMDeviceEnumerator();\r<br />\nMMDevice device = devices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);\r<br />\naudioSource = new WasapiLoopbackCapture(device);\r<br />\naudioSource.DataAvailable += AudioSource_DataAvailable;\r<br />\naudioSource.RecordingStopped += AudioSource_RecordingStopped;\r<br />\naudioSource.StartRecording();\r<br />\n<br />\nevent\r<br />\nConvertAndWrite(e.Buffer, e.BytesRecorded);\r<br />\n<br />\nThank you,\r<br />\nOleg<br />\n",
+    "PostedDate": "2017-07-07T03:04:21.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

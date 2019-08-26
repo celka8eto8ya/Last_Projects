@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1346554",
+    "ThreadId": "578747",
+    "Html": "Do you know the best way to convert a 48k 32bit PCM wav file to a 48k 24bit file?<br />\n<br />\n Here's a link to one of the files I was trying to convert:<br />\n<a href=\"https://app.box.com/s/o8h8241cwvypcj2epjjd\" rel=\"nofollow\">https://app.box.com/s/o8h8241cwvypcj2epjjd</a><br />\n<br />\n Thanks again man for a great tool! Let me know what you think.<br />\n Thanks!<br />\n Scott<br />\n<br />\nMark, why do you hate me so?<br />\n",
+    "PostedDate": "2015-01-27T20:14:02.547-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1348032",
+    "ThreadId": "578747",
+    "Html": "You can easily go from 24 bit to floating point with Pcm24BitToSampleProvider, or from 32 bit with floating point with Pcm32BitToSampleProvider. But going from floating point back to 24 bit is something that has not been added to NAudio yet. You could take SampleToWaveProvider16 and use it as a template for making a 24 bit one.\r<br />\nAlternatively, you may find that MediaFoundationResampler can do the conversion you want in one step. It;s surprisingly powerful.\r<br />\n<br />\nAlso, check out my article on <a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">converting between wave formats</a>\r<br />\n<br />\nAnd please don't take it personally if I take a while to get back to you. NAudio is only a spare time project for me, and I have well over 100 outstanding requests for help. Sadly, I can't keep up at the moment, but I am doing my best to repond to as many people as possible.<br />\n",
+    "PostedDate": "2015-02-01T13:22:42.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1348081",
+    "ThreadId": "578747",
+    "Html": "Mark,\r<br />\nThanks so much for your reply, and I totally understand your situation.  I have many (development project) balls in the air as well and know how hard it can be keeping up with things.  I appreciate your reply.\r<br />\n<br />\nAs for the 48k/32bit files, I am currently using the MediaFoundationResampler with great success when resampling 44.1k files but it always throws an error for 48k files (see my link for a test WAV file).  I'll try taking the SampleToWaveProvider method to see if I can make it work with 32 to 24 bit conversion.\r<br />\n<br />\nThanks again!\r<br />\nScott<br />\n",
+    "PostedDate": "2015-02-01T19:46:40.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

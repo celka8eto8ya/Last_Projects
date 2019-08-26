@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "678720",
+    "ThreadId": "274402",
+    "Html": "\r\n<p>Hi. I found NAudio looking for detect if any sound is playing, I don't need to record anything neither play anything. I know there is a lof of examples, but probably they do a lot of interesting things, and I'm going to get lost. Please can you help me to\r\n find a basic example to achieve what I'm looking for?</p>\r\n<p>Thanks and sorry for my english.</p>\r\n",
+    "PostedDate": "2011-09-30T09:44:52.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685100",
+    "ThreadId": "274402",
+    "Html": "<p>You need to start monitoring the input using the WaveIn class, and then examine the buffers of audio you receive to see if there is a signal higher than a threshold of your chosing.</p>",
+    "PostedDate": "2011-10-17T02:32:18.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685216",
+    "ThreadId": "274402",
+    "Html": "<p>Ok thanks, do you know where can I find examples of that?</p>",
+    "PostedDate": "2011-10-17T08:09:03.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685218",
+    "ThreadId": "274402",
+    "Html": "<p>No examples of exactly that, but have a look at my .NET voice recorder application to see recording in action. A level meter is shown, which you could use as the basis for your sound detection.</p>\r\n<p>It's at:</p>\r\n<p>http://voicerecorder.codeplex.com</p>",
+    "PostedDate": "2011-10-17T08:10:44.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

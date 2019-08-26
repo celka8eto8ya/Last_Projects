@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1482415",
+    "ThreadId": "657536",
+    "Html": "Howdy, <br />\n<br />\nHow do I change the folder in which AudioFileReader plays a file from.  Currently, I must place the file I want to play in the path: &quot;C:\\Users\\VoodooSixTwo\\Desktop\\TestProject\\bin\\Debug&quot;.  This works perfectly, however, I want to instead play a file from a folder in the bin folder (i.e. &quot;C:\\Users\\VoodooSixTwo\\Desktop\\TestProject\\bin\\Debug\\Sounds&quot;.<br />\n<br />\nIs AudioFileReader hard coded to play files from the bin\\Debug folder?<br />\n<br />\nI am using the FireandForgetEngine and calling the action:<br />\n<pre><code>   FireAndForgetAudioSample.AudioPlaybackEngine.Instance.PlaySound(&quot;song.mp3&quot;);\n</code></pre>\n\nAny assistance is greatly appreciated.<br />\n",
+    "PostedDate": "2016-08-30T04:32:05.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482442",
+    "ThreadId": "657536",
+    "Html": "This is to do with the Working Directory that your application is running in, which by default will be bin\\Debug. So you can just say &quot;\\Sounds\\song.mp3&quot; to get at files in a relative folder, or pass the full path into PlaySound.<br />\n",
+    "PostedDate": "2016-08-30T12:51:42.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482456",
+    "ThreadId": "657536",
+    "Html": "Thanks,<br />\n<br />\nAfter looking closely, the \\ should be /.<br />\n<br />\nAlso, no / required prior to Sounds.  Below works flawlessly:<br />\n<pre><code> FireAndForgetAudioSample.AudioPlaybackEngine.Instance.PlaySound(&quot;Sounds/song.mp3&quot;);</code></pre>\n\nGreat software you have assembled here.<br />\n",
+    "PostedDate": "2016-08-30T15:22:29.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:05:38.127-07:00",
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "If you ever had a look at the wpf visualation you can see that it is very slow. \r\nSo it looks like its lagging.\r\nIf you want to change that just change playbackDevice in AudioPlayBack.cs from IWavePlayer to WaveOut and change the following lines:\r\n\r\n        private void CreateDevice()\r\n        {\r\n            playbackDevice = new WaveOut();\r\n            playbackDevice.DesiredLatency = 100;\r\n        }\r\n\r\nBut there is also a little problem with the desiredLatency. Because the lower you sett it the better visualation you will get. But remember the lower you set the bader music quality you will get.\r\nSo you have to set someting in the middle. I am listeing on 100 at the moment. It it sounds quite nice but if you are listening on 50 its just crap :D\r\nSo you have to choose the value on yourself what ever you like. You can also take 1 but please turn of the volume :)\r\n\r\nso you may fix that in demo :)",
+    "LastUpdatedDate": "2012-10-27T00:05:38.127-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-10-10T11:24:24.047-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WPF Demo Visualisation Lags",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16333
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I had to develop my own visualizations and had speed issues to and had to make some pretty extensive work to make them work live AND scroll live. Id be happy to contribute them to the project if anyone is interested. They are WPF based, but can easily be used in Winforms with a few changes.",
+      "PostedDate": "2011-10-30T17:19:39.973-07:00",
+      "Id": 48170
+    },
+    {
+      "Message": "hi kudzu, only just saw your comment. I'd be interested in seeing what you've done in this area. ",
+      "PostedDate": "2012-09-26T06:18:30.587-07:00",
+      "Id": 77785
+    },
+    {
+      "Message": "Its been a year since I worked on this stuff.  I have the code around somewhere... I'll try to dig it out sometime.",
+      "PostedDate": "2012-09-26T06:40:54.287-07:00",
+      "Id": 77786
+    },
+    {
+      "Message": "I've changed it to 200 for the demo.",
+      "PostedDate": "2012-10-06T12:03:55.433-07:00",
+      "Id": 78840
+    }
+  ]
+}

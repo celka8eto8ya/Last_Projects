@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1070114",
+    "ThreadId": "450504",
+    "Html": "Okay i have spammed a bit, so understand that my questions are probably to &quot;hard&quot;.<br />\nMeaning i ask for to much in one question, as i see other have much better structure when asking.<br />\n<br />\nSo will ask a, probably, simple thing this time.<br />\n<pre><code>                Aut = new NAudio.Wave.AsioOut();\n               Wasout = new NAudio.Wave.WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 0);\n                waveIn = new NAudio.Wave.WaveInProvider(sourceStream);\n                sourceStream.BufferMilliseconds = 4;\n               sourceStream.StartRecording();\n               Aut.AudioAvailable += new EventHandler&lt;NAudio.Wave.AsioAudioAvailableEventArgs&gt;(Aut_AudioAvailable);\n\n               Aut.InitRecordAndPlayback(waveIn, 2, 48000) ;\n               Aut.Play();</code></pre>\n\nThere is my Asio playback. You can ignore the WASAPI there, it´s just for test purposes currently.<br />\n<br />\nNow, as you can see, i have an EvetHandler, so i am trying to save the stream.<br />\nIn wavein, it was pretty straightforward, but i can´t do it in ASIO.<br />\n<pre><code>        void Aut_AudioAvailable(object sender, NAudio.Wave.AsioAudioAvailableEventArgs e)\n        {\n\n            //waveWriter.Write(e.InputBuffers, 0, e.SamplesPerBuffer);\n        }</code></pre>\n\nI don´t know what to write in waveWriter. so i have been trying the command available.<br />\nI have also tried search alot for it, but it seems no one has done recording with Asio, at least not put it on the Internet (Using NAudio).<br />\n<br />\nThanks<br />\n<br />\nEDIT: waveWriter = new NAudio.Wave.WaveFileWriter(tmpfile.FileName, sourceStream.WaveFormat);<br />\nForgot to post that if it´s necessary.<br />\n",
+    "PostedDate": "2013-07-18T10:11:53.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070485",
+    "ThreadId": "450504",
+    "Html": "if you're doing ASIO, then for performance, NAudio gives you access to the raw buffers. You can call GetAsInterleavedSamples() on the event args to get floating point samples in a float array. You can then write those to file.<br />\n",
+    "PostedDate": "2013-07-19T07:03:13.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070489",
+    "ThreadId": "450504",
+    "Html": "I am trying to do that, but i don´t know how to do it:(<br />\n<pre><code>        void Aut_AudioAvailable(object sender, NAudio.Wave.AsioAudioAvailableEventArgs e)\n        {\n            float[] samples = null;\n            \n            samples = e.GetAsInterleavedSamples();\n            int offset = 0;\n            waveWriter.WriteSamples(samples, offset, 1);\n        }\n</code></pre>\n\nHere is what i am writing currently, to no avail though.<br />\n",
+    "PostedDate": "2013-07-19T07:07:12.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070701",
+    "ThreadId": "450504",
+    "Html": "Can someone please give me a bit more hint?\r<br />\nI am really new to this.\r<br />\nI can save normal audio (Wasapi, Wavein etc),\r<br />\n<br />\nBut i can´t save anything from ASIO as i don´t know what to do.\r<br />\n<br />\nI would really like to get it working.\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-07-19T16:05:11.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070891",
+    "ThreadId": "450504",
+    "Html": "Well got it working a bit atleast, but it seems i missunderstood what it was.\r<br />\n<br />\nI am trying to record ASIO output, not ASIO input.\r<br />\n<br />\nMeaning, if i playback using ASIO, i want to record that playback, is this possible?<br />\n",
+    "PostedDate": "2013-07-20T20:07:58.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071128",
+    "ThreadId": "450504",
+    "Html": "no, not unless you are the one playing back the audio, in which case just write it to file as well as to soundcard.<br />\n",
+    "PostedDate": "2013-07-22T01:31:10.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071557",
+    "ThreadId": "450504",
+    "Html": "Well it is my soundcard that does the playback.\r<br />\n<br />\nBut i &quot;solved&quot; it, by saving the incoming audio through udp (it´s from my network chat application).\r<br />\nSo well it works:)\r<br />\n<br />\nBut i don´t get one thing\r<br />\n<br />\nwaveWriter.WriteSamples(samples, offset, 1);\r<br />\n<br />\nOn this line of code, it´s pretty simple.\r<br />\n<br />\nSamples = e.GetAsInterleavedSamples();\r<br />\noffset = 0 (or you can just write 0 and not use a variable)\r<br />\nBut then, the last, Count.\r<br />\n<br />\nI have no idea about that, i had to guess my way through, and the number for my mic was 192.\r<br />\nAnother one had 1024.\r<br />\n<br />\nI don´t know how to calculate that number, so i am just writing till it works,s<br />\n",
+    "PostedDate": "2013-07-22T17:45:56.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072150",
+    "ThreadId": "450504",
+    "Html": "count is the number of samples you want to write. Use samples.Length.<br />\n",
+    "PostedDate": "2013-07-24T01:30:36.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072157",
+    "ThreadId": "450504",
+    "Html": "Great, thanks:)<br />\n",
+    "PostedDate": "2013-07-24T01:37:36.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

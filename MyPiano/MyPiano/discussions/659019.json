@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1487005",
+    "ThreadId": "659019",
+    "Html": "I would like to keep getting the default audio endpoint but to prevent a memory leak I need to dispose of these objects.<br />\n<pre><code>Dim de As New MMDeviceEnumerator\nDim device As MMDevice = de.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia)</code></pre>\n\nCan anyone suggest a solution?<br />\n",
+    "PostedDate": "2016-10-27T06:29:40.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488133",
+    "ThreadId": "659019",
+    "Html": "you can call de.Dispose() for the enumerator\r<br />\nin theory setting device to null should allow the memory to be freed once the garbage collector runs.<br />\n",
+    "PostedDate": "2016-11-16T15:12:18.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488742",
+    "ThreadId": "659019",
+    "Html": "MMDeviceEnumerator is not disposable. Garbage collection does nothing if I set device to null. (v1.7.3.0)<br />\n",
+    "PostedDate": "2016-11-24T07:58:31.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

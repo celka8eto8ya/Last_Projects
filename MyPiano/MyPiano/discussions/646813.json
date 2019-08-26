@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1450380",
+    "ThreadId": "646813",
+    "Html": "Everytime I try to encode to AAC using MediaFoundationEncoder from a bufferdwaveprovider I get the following error.<br />\nThe request is invalid because Shutdown() has been called. (Exception from HRESULT: 0xC00D3E85)<br />\n<br />\nAny idea what could be causing this?<br />\n<br />\nThanks,<br />\nDan<br />\n",
+    "PostedDate": "2015-10-29T19:21:29.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1450860",
+    "ThreadId": "646813",
+    "Html": "the MFShutdown API should be called once at the end of the application. Are you actually calling MediaFoundationApi.Startup() at the beginning of your program?<br />\n",
+    "PostedDate": "2015-11-04T06:00:08.253-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

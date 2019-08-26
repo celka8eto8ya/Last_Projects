@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "934402",
+    "ThreadId": "401298",
+    "Html": "\r\n<p>So I have this code.&nbsp;There is a Stop-Button ( button1 ), which stops playback. When the form is loaded, the file is played. While the file is playing I want to get the current volume of the file by running a function.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        IWavePlayer waveOutDevice;\n        WaveStream mainOutputStream;\n        WaveChannel32 volumeStream;\n\n        <span style=\"color:blue\">private</span> WaveStream CreateInputStream(<span style=\"color:blue\">string</span> fileName)\n        {\n            WaveChannel32 inputStream;\n            <span style=\"color:blue\">if</span> (fileName.EndsWith(<span style=\"color:#a31515\">&quot;.mp3&quot;</span>))\n            {\n                WaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(fileName);\n                inputStream = <span style=\"color:blue\">new</span> WaveChannel32(mp3Reader);\n            }\n            <span style=\"color:blue\">else</span>\n            {\n                <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> InvalidOperationException(<span style=\"color:#a31515\">&quot;Unsupported extension&quot;</span>);\n            }\n            volumeStream = inputStream;\n            <span style=\"color:blue\">return</span> volumeStream;\n        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Stop()\n        {\n            <span style=\"color:blue\">if</span> (waveOutDevice != <span style=\"color:blue\">null</span>)\n            {\n                waveOutDevice.Stop();\n            }\n            <span style=\"color:blue\">if</span> (mainOutputStream != <span style=\"color:blue\">null</span>)\n            {\n                <span style=\"color:green\">// this one really closes the file and ACM conversion</span>\n                volumeStream.Close();\n                volumeStream = <span style=\"color:blue\">null</span>;\n                <span style=\"color:green\">// this one does the metering stream</span>\n                mainOutputStream.Close();\n                mainOutputStream = <span style=\"color:blue\">null</span>;\n            }\n            <span style=\"color:blue\">if</span> (waveOutDevice != <span style=\"color:blue\">null</span>)\n            {\n                waveOutDevice.Dispose();\n                waveOutDevice = <span style=\"color:blue\">null</span>;\n            }\n        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Play(<span style=\"color:blue\">string</span> was)\n        {\n            waveOutDevice = <span style=\"color:blue\">new</span> WaveOut();\n            mainOutputStream = CreateInputStream(was);\n            waveOutDevice.Init(mainOutputStream);\n            waveOutDevice.Play();\n            \n        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Form1_Load(<span style=\"color:blue\">object</span> sender, EventArgs e)\n        {\n            Play(<span style=\"color:#a31515\">@&quot;E:\\Eigene Audiodateien\\Musik\\Alben\\Pur\\Abenteuerland\\ -  - .mp3&quot;</span>);\n        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> button1_Click(<span style=\"color:blue\">object</span> sender, EventArgs e)\n        {\n            Stop();\n        }\n</pre>\r\n</div>\r\n<p>So what does a function like this has to look like at &quot;....&quot;?</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>    <span style=\"color:blue\">private</span> <span style=\"color:blue\">int</span> currentVolumeLevel(...some suitable parameters...)\n    {\n      <span style=\"color:blue\">int</span> currentVolumeLevelValue = 0;\n      <span style=\"color:green\">//....</span>\n      <span style=\"color:blue\">return</span> currentVolumeLevelValue;\n    }\n</pre>\r\n</div>\r\n<p>I am not talking about the volume level you can adjust with windows' sound controls. I am talking about the currently played sound file's volume at this very position it is playing right now, based on something like a byte[] array.</p>\r\n<p>Thanks in advance.</p>\r\n",
+    "PostedDate": "2012-10-30T13:49:22.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "934573",
+    "ThreadId": "401298",
+    "Html": "<p>The NAudioDemo shows how to do this (see AudioPlaybackPanel.cs). You can use a MeteringSampleProvider to raise regular events with the maximum sample value.</p>",
+    "PostedDate": "2012-10-31T00:23:06.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "934656",
+    "ThreadId": "401298",
+    "Html": "<p>I do not understand your sample. Please create the function currentVolumeLevel for us.</p>",
+    "PostedDate": "2012-10-31T03:22:36.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1483376",
+    "ThreadId": "657866",
+    "Html": "A lot of the documentation I've seen is gear towards playing audio files (.wav and .mp3) I'm doing something a bit different. My application is generating sound on the fly as floating point numbers in the range of 1.0 to -1.0.  Whats the easiest way to go about pushing these values out to the sound card? <br />\n",
+    "PostedDate": "2016-09-10T19:25:36.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483942",
+    "ThreadId": "657866",
+    "Html": "Yes, you can do this in NAudio quite easily. There are two ways. First, create an <code>ISampleProvider</code> implementation and in the <code>Read</code> method provide the number of samples asked for. This is the easiest option and is how the <code>SignalGenerator</code> class works if you want an example.\r<br />\n<br />\nAlternatively, some applications may be better suited to a separate thread generating audio and putting the raw samples into a <code>BufferedWaveProvider</code> which is supplying the playback device. In this case you need to make sure you are producing audio in real-time so there aren't gaps in the audio, and you don't overfill the buffer.<br />\n",
+    "PostedDate": "2016-09-17T07:19:02.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483966",
+    "ThreadId": "657866",
+    "Html": "Hmm. I can't seem to make heads or tails of the SignalGenerator class or the demo that uses it.  I mean I can see it's generating sound data but not where it's feeding it to so that it ultimately makes it to the sound card and speakers. \r<br />\n<br />\n<br />\nSo I tried using the BufferedWaveProvider but nothing happens. No sound comes out. Is there something I missed?  My class looks like this.<br />\n<pre><code>public class Speaker_Naudio : Speaker\n    {\n        BufferedWaveProvider bwp;\n        public Speaker_Naudio(short BitsPerSample, short Channels, int SamplesPerSecond)\n        {\n            bitspersample = BitsPerSample;\n            bwp = new BufferedWaveProvider(WaveFormat.CreateALawFormat(SamplesPerSecond, Channels));\n        }\n        public override bool BufferSoundData(double[] data)\n        {\n            if (bwp.BufferedBytes &lt; data.Length)\n            {\n                byte[] bytebuff = FloatsToBytes(data);\n                bwp.AddSamples(bytebuff, 0, bytebuff.Length);\n                return true;\n            }\n            return false;\n        }\n}</code></pre>\n\nPreviously I was using XNA but they are dropping support for it so I'm switching away. \r<br />\n<br />\nThis class makes sound.<br />\n<pre><code>public class Speaker_XNA : Speaker\n    {\n        DynamicSoundEffectInstance DynSoundInst;\n        public Speaker_XNA(short BitsPerSample, short Channels, int SamplesPerSecond)\n        {\n            DynSoundInst = new DynamicSoundEffectInstance(SamplesPerSecond, (AudioChannels)Channels);\n            FrameworkDispatcher.Update();\n            bitspersample = BitsPerSample;\n            FrameworkDispatcher.Update();\n        }\n        override public bool BufferSoundData(double[] data)\n        {\n            if (DynSoundInst.PendingBufferCount &lt;= 1)\n            {\n                DynSoundInst.SubmitBuffer(FloatsToBytes(data));\n                DynSoundInst.Play();\n                return true;\n            }\n            else\n                return false;\n        }\n    }</code></pre>\n\n",
+    "PostedDate": "2016-09-17T13:52:00.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1484198",
+    "ThreadId": "657866",
+    "Html": "it's really not that hard. The <code>Read</code> method has a float buffer and tells you how many samples it wants. Just generate that number of samples and copy them in.\r<br />\n<br />\nThen you can play your custom sample provider directly<br />\n",
+    "PostedDate": "2016-09-20T05:32:57.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "955200",
+    "ThreadId": "406556",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I am working on a project where i use Naudio to merge 2 mp3 files, the second mp3 file is inserted 20 seconds into the first using the offsetsampleprovider to add 20 seconds silence before using wavemixerstream32 to merge the 2 streams.</p>\r\n<p>I would like the first file to fade to 50% of the volume at ~18 secs, keeping the volume at 50% until 25 secs and the fading back to 100%. I am saving the result to a file. the file is totally 5 mins.</p>\r\n<p>How can I accomplish the fading part using Naudio?</p>\r\n<p>Thanks!</p>\r\n<p>Karl</p>\r\n",
+    "PostedDate": "2012-12-12T09:51:30.69-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955302",
+    "ThreadId": "406556",
+    "Html": "\r\n<p>The FadeInOutSampleProvider is close to what you want but not exactly right. You could copy the source code and modify it to fade to just 50%. I guess a configurable fade-out value would be a good additional feature for this class.</p>\r\n",
+    "PostedDate": "2012-12-12T13:08:36.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955304",
+    "ThreadId": "406556",
+    "Html": "\r\n<p>Thanks, I will try it out!</p>\r\n<p>Karl</p>\r\n",
+    "PostedDate": "2012-12-12T13:14:50.203-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955803",
+    "ThreadId": "406556",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Thanks for pointing me in the right direction, I ended up rewriting the FadeInOutSampleProvider, fading down to 50% could be done changing the mupliplier and fading up in the middle of the track by adding a few more states and checking the total time converted\r\n to samples.</p>\r\n<p>Fading down: 1.0F - 0.5F * (fadeSamplePosition / CSng(fadeSampleCount))</p>\r\n<p>Fading up:&nbsp;&nbsp;0.5F + 0.5F * (fadeSamplePosition / CSng(fadeSampleCount))</p>\r\n<p>Though I have a problem knowing how to get&nbsp;the result&nbsp;into the mixer.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">Dim</span> wave_song <span style=\"color:blue\">As</span> WaveStream = <span style=\"color:blue\">New</span> AudioFileReader(<span style=\"color:#a31515\">&quot;c:\\samples\\song.mp3&quot;</span>)\r\n<span style=\"color:blue\">Dim</span> song_isample <span style=\"color:blue\">As</span> ISampleProvider = <span style=\"color:blue\">New</span> WaveToSampleProvider(wave_song)\r\n<span style=\"color:blue\">Dim</span> fader <span style=\"color:blue\">As</span> myFadeInOutSampleProvider\r\nfader = <span style=\"color:blue\">New</span> myFadeInOutSampleProvider(song_isample)\r\nfader.setfade(5000, 20000) \r\n\r\n<span style=\"color:blue\">Dim</span> waveprovider <span style=\"color:blue\">As</span> SampleToWaveProvider = <span style=\"color:blue\">New</span> SampleToWaveProvider(fader)\r\n\r\n<span style=\"color:blue\">Dim</span> mixer <span style=\"color:blue\">As</span> WaveMixerStream32\r\nmixer = <span style=\"color:blue\">New</span> WaveMixerStream32()\r\n<span style=\"color:green\">' Doesnt work</span>\r\nmixer.AddInputStream(waveprovider)\r\nmixer.AddInputStream(wave2) <span style=\"color:green\">' From above snippet</span>\r\n\r\n<span style=\"color:green\">' Works</span>\r\nWaveFileWriter.CreateWaveFile(<span style=\"color:#a31515\">&quot;c:\\samples\\test2.wav&quot;</span>, waveprovider)\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>How can I convert back to a wavestream from my fader Isampleprovider so i can put it in the mixer.</p>\r\n<p>Karl</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-13T13:52:38.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955819",
+    "ThreadId": "406556",
+    "Html": "\r\n<p>use MixingSampleProvider instead of WaveMixerStream32. Then use sampleToWaveProvider at the very end (probably you want SampleToWaveProvider16).</p>\r\n",
+    "PostedDate": "2012-12-13T14:29:06.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062025",
+    "ThreadId": "406556",
+    "Html": "Hello Karl,\r<br />\nI have a situation nearly identical to yours , though it uses wav files to start with.\r<br />\nI would be really grateful if you could share your code in which you have made changes to the fadeinOut by adding states for partial fading in or Out and changing the fade start or fade stop points.<br />\n",
+    "PostedDate": "2013-06-27T08:45:59.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

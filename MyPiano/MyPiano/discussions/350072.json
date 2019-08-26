@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "815596",
+    "ThreadId": "350072",
+    "Html": "\r\n<p>I'm trying to figure out if NAudio might be able to help with my challenge. Basically I want to be able to produce text-to-speech output to the non-default audio device on a PC?</p>\r\n<p>I will have a machine running 24/7 that will be used as my media server, and will have the HDMI output running to a receiver for streaming of audio/video. However I also want to write an additional application that will run on that same machine, that will&nbsp;independently\r\n make some voice based announcements triggered by various activity or events.</p>\r\n<p>For that purpose I was wondering if I could get a set of USB speakers (with built in DSP - like the Ricco P26) that are connected to that same machine, and so my TTS output could (hopefully) always be routed out through those speakers. This would allow me\r\n to make announcements regardless of whether the AV receiver via HDMI is on/off and also not interfere with whatver might be playing if it was on.</p>\r\n<p>Is this possible at all? Looking at the Microsoft Speech API, it offers methods for outputting to the default audio device (not likely to be useful), or a stream/file. What I need however is a way to output to a non-default audio device, and I recall reading\r\n somewhere that NAudio may be able to help with that at least.</p>\r\n<p>Any insights/suggestions would be very much appreciated!</p>\r\n",
+    "PostedDate": "2012-03-26T06:54:01.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816073",
+    "ThreadId": "350072",
+    "Html": "<p>I've not used TTS very much, but if it doesn't offer output to a specific soundcard, you couold use output to stream, and then put the contents of that stream into a BufferedWaveProvider as they are written. Then you can play that BufferedWaveProvider with any output device in NAudio.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-03-27T06:36:19.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "647559",
+    "ThreadId": "266566",
+    "Html": "\r\n<p>I am confused if NAudio Library is receiving audio data that was not filtered. Maybe data were filtered along under some API.</p>\r\n<p>for my new project, we want to use this library to capture data that includes ultrasonic wave data.</p>\r\n<p>this wave are those that cannot be heard by the adult human. its frequency i think ranges from 18-20khz.</p>\r\n<p>That is what i want to do and want to know if you guyz here has something helpful.</p>\r\n",
+    "PostedDate": "2011-07-26T00:38:33.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647577",
+    "ThreadId": "266566",
+    "Html": "<p>NAudio does not filter the recorded data at all.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-26T01:31:32.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647581",
+    "ThreadId": "266566",
+    "Html": "<p>Thanks for the reply...</p>\r\n<p>Is the audio data retrieve from WASAPI(exclusive mode) considered raw data? that was not yet changed?</p>",
+    "PostedDate": "2011-07-26T01:36:19.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647582",
+    "ThreadId": "266566",
+    "Html": "<p>yes, it is given to us directly from the soundcard</p>",
+    "PostedDate": "2011-07-26T01:38:06.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647590",
+    "ThreadId": "266566",
+    "Html": "<p>I see. Thanks.</p>\r\n<p>Maybe my application is always running,</p>\r\n<p>does always capturing and playing sound through exclusive mode make the other application not able to use the sound resources?</p>\r\n<p>like for example I am recording sound for 4 hours, while recording, can other application use the microphone?&nbsp;</p>\r\n<p>does playing on exclusive mode makes other application to wait for the availability of the speaker?</p>",
+    "PostedDate": "2011-07-26T01:51:30.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647594",
+    "ThreadId": "266566",
+    "Html": "<p>with WASAPI, exclusive mode means that only your application can access the soundcard.</p>",
+    "PostedDate": "2011-07-26T01:53:31.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647596",
+    "ThreadId": "266566",
+    "Html": "<p>thank you very much for the immediate response...it helps a lot.</p>",
+    "PostedDate": "2011-07-26T01:57:24.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

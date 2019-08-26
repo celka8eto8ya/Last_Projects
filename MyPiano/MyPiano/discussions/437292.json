@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1018097",
+    "ThreadId": "437292",
+    "Html": "hello<br />\n<br />\nI use this code to extract audio samples from mic... I want the frequency of each sample ... Must I use FFT or something like it , Or just there is simple way from Naudio to do it?<br />\n<pre><code> private void Window_Loaded(object sender, RoutedEventArgs e)\n        {\n  \n            int waveInDevices = WaveIn.DeviceCount;\n            for (int waveInDevice = 0; waveInDevice &lt; waveInDevices; waveInDevice++)\n            {\n                WaveInCapabilities deviceInfo = WaveIn.GetCapabilities(waveInDevice);\n              this.Title+=string.Format(&quot;Device {0}: {1}, {2} channels&quot;,\n                    waveInDevice, deviceInfo.ProductName, deviceInfo.Channels);\n            }\n\n           WaveIn waveIn = new WaveIn();\n            waveIn.DeviceNumber = 0;\n            waveIn.DataAvailable += waveIn_DataAvailable;\n            int sampleRate = 8000; // 8 kHz\n            int channels = 1; // mono\n            waveIn.WaveFormat = new WaveFormat(sampleRate, channels);\n            waveIn.StartRecording();\n\n        }\n        void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n\n            for (int index = 0; index &lt; e.BytesRecorded; index += 2)\n            {\n                short sample = (short)((e.Buffer[index + 1] &lt;&lt; 8) |\n                                        e.Buffer[index + 0]);\n                float sample32 = sample / 32768f;\n                ProcessSample(sample32);\n            }\n        }\n\n        void ProcessSample(float x)\n        {\n            label1.Content = x.ToString() + &quot;   &quot;;\n            progressBar1.Value = (x + 1) * 50;\n        }</code></pre>\n\nthank you :)<br />\n",
+    "PostedDate": "2013-03-20T01:24:46.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1018326",
+    "ThreadId": "437292",
+    "Html": "Yes, FFT is a very good way of getting frequency information. There are other approaches, particularly if your incoming signal has a single tone (e.g. you are making a guitar tuner). Look at the demo code that comes with NAudio to see FFT in action to draw a spectrum analyzer with NAudio.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-03-20T08:48:28.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1018432",
+    "ThreadId": "437292",
+    "Html": "I thank you very much..that was helpfull<br />\n",
+    "PostedDate": "2013-03-20T11:08:58.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

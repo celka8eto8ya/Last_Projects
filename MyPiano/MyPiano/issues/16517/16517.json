@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi,\r\n\r\nWe are using NAudio DLL version 1.6 in our .net WPF application with VS 2013 to play wave sound. We are getting issue from some of our clients where our .net WPF application is getting crashed randomely with following exception:\r\n\r\n\r\n<application log>\r\n2017/06/28 13:46:38.506 FATAL [42:] .App - Reached App.HandleUnhandledException. System.InvalidOperationException: Handle is not initialized.\r\n   at System.Runtime.InteropServices.GCHandle.FromIntPtr(IntPtr value)\r\n   at NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveMessage uMsg, IntPtr dwInstance, WaveHeader wavhdr, IntPtr dwReserved)\r\n</application log>\r\n   \r\nAt same time, we see below mentioned issue in window error log:  \r\n   \r\n   === Windows Error Reporting (6/28/2017 1:47:14 PM)\r\nFault bucket 1630219759, type 25\r\nEvent Name: APPCRASH\r\nResponse: Not available\r\nCab Id: 0\r\n\r\nProblem signature:\r\nP1: UCA.exe\r\nP2: 7.3.0.103\r\nP3: 58b6859c\r\nP4: clr.dll\r\nP5: 4.7.2053.0\r\nP6: 58fa6bb3\r\nP7: c0000005\r\nP8: 00030c12\r\nP9: \r\nP10: \r\n\r\nAttached files:\r\nC:\\Users\\megan\\AppData\\Local\\Temp\\WER6D4F.tmp.WERInternalMetadata.xml\r\nC:\\Users\\megan\\AppData\\Local\\Temp\\WER7913.tmp.appcompat.txt\r\nC:\\Users\\megan\\AppData\\Local\\Temp\\WER7EBF.tmp.mdmp\r\n\r\nThese files may be available here:\r\nC:\\Users\\megan\\AppData\\Local\\Microsoft\\Windows\\WER\\ReportArchive\\AppCrash_UCA.exe_71d9d0d9a27670d5b8e566794863ef35f6a_2dbeecea\r\n\r\nAnalysis symbol: \r\nRechecking for solution: 0\r\nReport Id: a130b63c-5ba3-11e7-be8b-dc4a3e9c8ee3\r\nReport Status: 9\r\n=== Application Error (6/28/2017 1:46:41 PM)\r\nFaulting application name: UCA.exe, version: 7.3.0.103, time stamp: 0x58b6859c\r\nFaulting module name: clr.dll, version: 4.7.2053.0, time stamp: 0x58fa6bb3\r\nException code: 0xc0000005\r\nFault offset: 0x00030c12\r\nFaulting process id: 0xcac\r\nFaulting application start time: 0x01d2eeda17125ad6\r\nFaulting application path: C:\\Program Files (x86)\\Mitel\\Unified Communicator Advanced 7.3\\UCA.exe\r\nFaulting module path: C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\clr.dll\r\nReport Id: a130b63c-5ba3-11e7-be8b-dc4a3e9c8ee3\r\n=== .NET Runtime (6/28/2017 1:46:40 PM)\r\nApplication: UCA.exe\r\nFramework Version: v4.0.30319\r\nDescription: The process was terminated due to an internal error in the .NET Runtime at IP 6ECA0C12 (6EC70000) with exit code 80131506.\r\n\r\n\r\nPlease help us in determining the root cause and solution of this issue.\r\n\r\nThanks & Regards,\r\nArun Jain ",
+    "LastUpdatedDate": "2017-06-29T00:55:24.923-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-06-29T00:55:24.923-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Getting UnhandledException in WPF application using NAUDIO 1.6 DLL",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16517
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

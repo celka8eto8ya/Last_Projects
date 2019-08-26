@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1356028",
+    "ThreadId": "581925",
+    "Html": "I am working on streaming mp3 from url source for a few days.It almost works good except a small problem. The problem is that there is some momentary interruptions while playing mp3. I couldnt figure out why this happening. I need help and my code is like that. Sorry it's too long but maybe you want to try.<br />\n<pre><code>private void buttonPlay_Click(object sender, EventArgs e)\n        {\n           \n \n            string url = &quot;http://freedownloads.last.fm/download/569264057/Get%2BGot.mp3&quot;;\n            bool playingStarted = false;\n \n            WaveStream str;\n            WaveFormat format = GetWaveFormat(url);\n \n            HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;\n            HttpWebResponse resp = req.GetResponse() as HttpWebResponse;\n \n            int contentLength=(int)resp.ContentLength;\n \n            Stream stream = resp.GetResponseStream();\n \n            BufferedWaveProvider provider = new BufferedWaveProvider(format);\n            provider.BufferDuration = TimeSpan.FromMinutes(20);\n            \n            byte[] buffer = new byte[format.SampleRate];\n            byte[] totalBuffer = new byte[contentLength];\n            byte[] mp3StreamBuffer = new byte[format.SampleRate];\n            \n            int bytesRead = 0, totalBytes=0;\n            int decBytes = 0;\n            long skipTo = 0;\n           \n            Task.Factory.StartNew(() =&gt;\n            {\n                while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) &gt; 0)\n                {\n                    Buffer.BlockCopy(buffer, 0, totalBuffer, totalBytes, bytesRead);\n \n                    totalBytes += bytesRead;\n \n                    this.Invoke((MethodInvoker)delegate { progressBar2.Value = (int)(totalBytes * 100.0 / contentLength); });\n \n                    if (totalBytes &lt; format.AverageBytesPerSecond) \n                        continue;\n \n                    str = new Mp3FileReader(new MemoryStream(totalBuffer));\n \n                    str.Position = skipTo;\n \n                    while ((decBytes = str.Read(mp3StreamBuffer, 0, mp3StreamBuffer.Length)) &gt; 0) \n                    {\n                        provider.AddSamples(mp3StreamBuffer, 0, decBytes);\n                    }\n \n                    skipTo = str.Position;\n \n                    if (playingStarted)\n                    {\n                        playingStarted = false;\n                        Task.Factory.StartNew(() =&gt;\n                        {\n                            \n                            play.Init(provider);\n                            play.Play();\n                        });\n                    }\n                }\n            });\n \n        }\n \n        \n \n        WaveFormat GetWaveFormat(string url)\n        {\n            HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;\n            HttpWebResponse resp = req.GetResponse() as HttpWebResponse;\n            Stream stream = resp.GetResponseStream();\n            byte[] buffer = new byte[2048];\n            int readBytes = 0, bytesReceived = 0;\n \n            MemoryStream ms = new MemoryStream();\n \n            while ((readBytes = stream.Read(buffer, 0, buffer.Length)) &gt; 0)\n            {\n                ms.Write(buffer, 0, readBytes);\n                bytesReceived += readBytes;\n                if (bytesReceived &gt;= 10000) break;\n            }\n            req.Abort();\n            resp.Close(); ms.Position = 0;\n            WaveStream tempStream = new Mp3FileReader(ms);\n            return tempStream.WaveFormat;\n        }</code></pre>\n\n",
+    "PostedDate": "2015-02-26T08:43:31.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356244",
+    "ThreadId": "581925",
+    "Html": "you will get stuttering if you can't download as fast as you need to play. Check out my <a href=\"http://markheath.net/post/how-to-play-back-streaming-mp3-using\" rel=\"nofollow\">article here</a> for a possible approach to buffering streaming MP3.<br />\n",
+    "PostedDate": "2015-02-26T23:45:53.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356323",
+    "ThreadId": "581925",
+    "Html": "I read your article before getting started and but i couldnt do it with your algorithym. Even if download progressbar is on 50%, played duration is 10 sec and mp3 durations is long enough this problem occurs again .Can yolu give me your NAudioDemo source code?<br />\n",
+    "PostedDate": "2015-02-27T03:30:16.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356325",
+    "ThreadId": "581925",
+    "Html": "it's all here on CodePlex. Click the Source Code link above and look in the NAudioDemo project<br />\n",
+    "PostedDate": "2015-02-27T03:36:15.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

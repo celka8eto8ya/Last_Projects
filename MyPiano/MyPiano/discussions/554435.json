@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1278454",
+    "ThreadId": "554435",
+    "Html": "ok I am going this:<br />\n<pre><code>dataGridView1.Rows.Clear();\n            dataGridView2.Rows.Clear();\n            double Frequency3 = Convert.ToDouble(textBox1.Text);\n            double Frequency2 = Convert.ToDouble(textBox2.Text);\n            double Peak3 = 2; //Convert.ToDouble(PeakTXT3.Text);\n            Complex [] list = new Complex[16384 * 2];\n            double[] F1 = new double[16384 * 2];\n            for (int n = 0; n &lt; (16384 * 2); n++)\n            {\n                list[n].X  = (float)(Peak3 * (Math.Sin((Math.PI * n * Frequency3 / 44100D))) + Peak3 * (Math.Sin((Math.PI * n * Frequency2 / 44100D))));\n               \n            }\n            FastFourierTransform temp = new FastFourierTransform();\n            FastFourierTransform.FFT(true,list.Length,list );\n            for (int i = 0; i &lt; list.Length; i++)\n            {\n                if (((i / list.Length) * 44100) &gt;= (44100 / 2))\n                {\n                    break;\n\n                }\n                if (list[i].X &gt; 0)\n                {\n                    F1[i] = ((double)i / (16384D * 2D)) * 44100D;\n                    dataGridView1.Rows.Add(F1[i],list[i].X);\n                }\n            }\n        }</code></pre>\n\nso i tested it with \r<br />\nfrequency3 = 500HZ\r<br />\nfrequency2 = 180Hz\r<br />\nand when i print it out\r<br />\nit has peaks at\r<br />\n69.98291015625Hz\r<br />\n285.31494140625Hz\r<br />\n777.886962890625HZ \r<br />\n994.564819335938 HZ\r<br />\n...\r<br />\n<br />\nand not\r<br />\n500HZ or 180Hz\r<br />\nso am I doing something wrong ?\r<br />\nor what ?\r<br />\n<br />\noh I am using  NAudio  Version 1.6.0.0\r<br />\nis that ok?<br />\n",
+    "PostedDate": "2014-07-28T10:20:03.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291706",
+    "ThreadId": "554435",
+    "Html": "the output of FFT is a complex number. You need to take its magnitude rather than just looking at the real portion. It would be a good idea to do some research on FFTs. They are quite complicated for people new to signal processing. You may also need to apply a window function before applying the FFT.<br />\n",
+    "PostedDate": "2014-08-20T07:04:25.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

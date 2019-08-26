@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1472770",
+    "ThreadId": "654426",
+    "Html": "Help please!<br />\n",
+    "PostedDate": "2016-05-08T04:11:34.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1472853",
+    "ThreadId": "654426",
+    "Html": "Use WaveOut.Volume property for this<br />\n",
+    "PostedDate": "2016-05-09T06:07:14.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1472884",
+    "ThreadId": "654426",
+    "Html": "if you reduce the sound waveout ( 1 ) , and the decrease of the sound and waveout ( 2 )<br />\n",
+    "PostedDate": "2016-05-09T11:59:42.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1472885",
+    "ThreadId": "654426",
+    "Html": "<strong>Freefall wrote:</strong><br />\n<blockquote>\nUse WaveOut.Volume property for this<br />\n</blockquote>\nif you reduce the sound waveout ( 1 ) , and the decrease of the sound and waveout ( 2 )<br />\n",
+    "PostedDate": "2016-05-09T12:00:13.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1473465",
+    "ThreadId": "654426",
+    "Html": "Dude, I don´t understand what your problem is. Despite the fact, you got all you need to know, why you spam the forum with one more thread?\r<br />\n<br />\nI shouldn´t do this, as you learn nothing when I write the code for you...<br />\n<pre><code>'\n'VB .NET Example Code\n'\nPrivate Sub RunSeveralPlaybacks()\n\n    Dim WaveOut1 As New WaveOut()\n    Dim WaveOut2 As New WaveOut()\n\n    WaveOut1.Volume = 0.7f '70% Volume\n    WaveOut2.Volume = 0.4f '40% Volume\n\n    WaveOut1.Init(New Mp3FileReader(&quot;C:\\Test1.mp3&quot;))\n    WaveOut2.Init(New Mp3FileReader(&quot;C:\\Test2.mp3&quot;))\n\n    WaveOut1.Play()\n    WaveOut2.Play()\n\nEnd Sub</code></pre>\n\n<strong>In future don´t spam, research yourself and as a last when nothing helped, ask precise and readable questions!</strong><br />\n",
+    "PostedDate": "2016-05-14T18:01:22.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

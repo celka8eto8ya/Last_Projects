@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "248968",
+    "ThreadId": "72892",
+    "Html": "<p>Hi all,</p>\r\n<p>has anyone ever tried to use the wasapi with a non MixFormat Waveformat? I try to get it working with 8kHz, 16bit and 1 channel without luck. I even changed the call to audioClient.IsFormatSupported to AudioClientShareMode.Exclusive but with the same result.</p>\r\n<p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">if</span> (!audioClient.IsFormatSupported(AudioClientShareMode.Exclusive, WaveFormat))\r\n{\r\n<span style=\"color:Blue\">    throw</span> <span style=\"color:Blue\">new</span> ArgumentException(<span style=\"color:#A31515\">&quot;Unsupported Wave Format&quot;</span>);\r\n}\r\n</pre>\r\n</div>\r\n</p>\r\n<p>thanks in advance,</p>\r\n<p>Christoph</p>",
+    "PostedDate": "2009-10-23T05:48:10.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "248970",
+    "ThreadId": "72892",
+    "Html": "<p>hi Christoph,</p>\r\n<p>I'm afraid that WASAPI limits your options to only those wave formats natively supported by the soundcard. It won't do any sample rate conversion for you. Personally, I think this was a mistake by Microsoft to leave this limitation in, meaning that very few apps will adopt the WASAPI interface.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-23T05:50:30.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "248995",
+    "ThreadId": "72892",
+    "Html": "<p>Hi Mark,</p>\r\n<p>thanks for that info! It's really a shame that wasapi doesn't support any conversions.</p>\r\n<p>Appart from wasapi, what s the API you would recommend for doing VoIP (so low latency is a issue)? NAudio supports a variety so its hard to decide which one to choose?</p>\r\n<p>Christoph</p>",
+    "PostedDate": "2009-10-23T06:56:35.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "249004",
+    "ThreadId": "72892",
+    "Html": "<p>Hi Christoph,</p>\r\n<p>I'm afraid .NET is not a good choice for low latency audio (mainly due to the garbage collector). I would write it in C/C++ instead. You are not likely to get much below 50ms latency reliably with NAudio.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-23T07:16:45.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "249053",
+    "ThreadId": "72892",
+    "Html": "<p>I understand! From testing the latency is at least 500ms (two side recording and playback) what are the parameters to reduce the latency to a minimum? I can set the desired latency on the playback but without making any difference in the resulting latency also the buffer size settings on the recording side are changeable. Would that give me an improvement if I set it to the same frame size as the encoders requires?</p>\r\n<p>I am sorry if I bother you with all that basic stuff :) but its quite hard to get a good source off information on that topic ! Also would you recommend Directsound over waveXXX for that purpose?</p>\r\n<p>thanks,<br>Christoph</p>\r\n<p>btw: I am using Naudio for that project (<a href=\"http://nspeex.codeplex.com/\">http://nspeex.codeplex.com/</a>) where its used for accessing the soundcard before encoding and decoding it with Speex.</p>",
+    "PostedDate": "2009-10-23T10:19:35.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "249333",
+    "ThreadId": "72892",
+    "Html": "<p>when you are doing voip you have at least three sources of latency - recording latency, network latency and playback latency. It can add up very quickly. In NAudio the WaveIn and WaveOut let you specify buffer durations and the number of buffers used. You can try going down to two buffers (default is three) and making them shorter. Setting to the same frame size that the encoder requires might help a little as it saves cutting up and combining buffers.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-24T12:33:43.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

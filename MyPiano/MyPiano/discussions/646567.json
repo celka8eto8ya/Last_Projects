@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1449506",
+    "ThreadId": "646567",
+    "Html": "I want to compare DownSampling from NAudio with DownSampling in Matlab. For that I have to know what filter is applied and what would be the equalivent in Matlab. At the moment I use decimate function of Matlab for downsampling. <br />\n<br />\nAs far as I understand a IIR-Filter off order 4 (2*BiQuad) is applied. But when I use FIR of order 4 in matlab, the signals are not similiar as they should be.<br />\n<br />\nThe best result I got, was when doing the resampling with MediaFoundationResampler off quality 60 and a Chebyshev Type 1 off order 8 in Matlab. But there I have no Idea what kind off filter is applied in MediaFoundation.<br />\n<br />\nThx for helping me out.<br />\n",
+    "PostedDate": "2015-10-23T06:26:39.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

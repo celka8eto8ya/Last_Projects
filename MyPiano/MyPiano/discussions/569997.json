@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1314118",
+    "ThreadId": "569997",
+    "Html": "wrote the karplus-strong algorithm in c# using Naudio. I plays the sound, but it does not stop. It should get to 0 and you should not hear anything.\r<br />\nbut I code get point where it just repeats the same value over and over. so I when in and did the math but hand and I see why. \r<br />\nwell I kind of see why\r<br />\narray[90] = -0.19160895\r<br />\narray[91] = - 0.193147987\r<br />\n0.996 * 0.5 * ( array[90] + array[91] ) = -0.191608954626\r<br />\narray[90] = -0.19160895\r<br />\nsee is is the same number!!!\r<br />\ndo the sound does not get to 0 and it does not stop.\r<br />\narray[91] = - 0.193147987\r<br />\narray[92] = -0.194699377\r<br />\n0.996 * 0.5 * ( array[91] + array[92] ) = -0.193147987\r<br />\narra[91] = -0.193147987272\r<br />\nthis is my class :<br />\n<pre><code>using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing NAudio.Wave;\n\nnamespace test\n{\n    class Guitar : WaveStream\n    {\n      public  Guitar()\n        {\n            Frequency = 0;\n            n2 = 0;\n            rnd1 = new System.Random();\n            t = 0;\n        }\n        public double Frequency { get; set; }\n        public double Amplitude { get; set; }\n        static int n2;\n        public long Bufferlength { get; set; }\n        private long position;\n         float[] temp;\n        public override long Length { get { return Bufferlength; } }\n        public override WaveFormat WaveFormat { get { return WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); } }\n        Random rnd1;\n        static int t;\n\n    public override long Position\n        {\n            get\n            {\n                // we'll just return the number of bytes read so far\n                return position;\n            }\n            set\n            {\n                position = value;\n            }\n        }\n\n    public override int Read(byte[] buffer, int offset, int sampleCount)\n    {\n        int N = (int)(44100D/Frequency);\n        float sum;\n        if (n2 ==0)\n        {\n         temp = new float[N];\n         for (int i = 0; i &lt; N; i++)\n         {\n             temp[i] = (float)(0.1 * rnd1.Next(-5, 5));\n             byte[] bytes = BitConverter.GetBytes(temp[i]);\n             buffer[i * 4 + 0] = bytes[0];\n             buffer[i * 4 + 1] = bytes[1];\n             buffer[i* 4 + 2] = bytes[2];\n             buffer[i * 4 + 3] = bytes[3];\n         }\n         n2 = 1; \n         for (int r = N; r &lt; sampleCount / 4; r++)\n         {\n             if (t == (N-1))\n                 t = 0;\n             sum = (float)(0.996 * 0.5 * (temp[t] + temp[t + 1]));\n             temp[t] = sum;\n             t++;\n             byte[] bytes = BitConverter.GetBytes(sum);\n             buffer[r * 4 + 0] = bytes[0];\n             buffer[r * 4 + 1] = bytes[1];\n             buffer[r * 4 + 2] = bytes[2];\n             buffer[r * 4 + 3] = bytes[3];\n         }\n         return sampleCount;\n        }\n        for (int r =0; r &lt; sampleCount/4; r++)\n        {\n            if (t == (N-1)) \n                t = 0;\n            sum = (float)(0.996 *0.5 *( temp[t] + temp[t + 1]));\n            temp[t] = sum;\n            t++;\n            byte[] bytes = BitConverter.GetBytes(sum);\n            buffer[r * 4 + 0] = bytes[0];\n            buffer[r * 4 + 1] = bytes[1];\n            buffer[r * 4 + 2] = bytes[2];\n            buffer[r * 4 + 3] = bytes[3];\n        }\n\n        return sampleCount;\n    }\n    \n    }\n}\n</code></pre>\n\nam I doing something wrong ?<br />\n",
+    "PostedDate": "2014-10-16T14:22:17.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1314679",
+    "ThreadId": "569997",
+    "Html": "mark can you help?<br />\n",
+    "PostedDate": "2014-10-18T15:38:23.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1315996",
+    "ThreadId": "569997",
+    "Html": "Sorry, I'm afraid I am not familiar with the  karplus-strong algorithm. You may find it easier to write your code implementing an ISampleProvider instead of waveStream though. Then you can deal exclusively with floating point samples, and don't need the BitConverter<br />\n",
+    "PostedDate": "2014-10-23T06:16:08.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1318309",
+    "ThreadId": "569997",
+    "Html": "mark \r<br />\ndo you know anyone that might be able to help me ?<br />\n",
+    "PostedDate": "2014-11-01T21:38:42.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1320967",
+    "ThreadId": "569997",
+    "Html": "I'd recommend asking on signal processing forums.<br />\n",
+    "PostedDate": "2014-11-11T09:06:20.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

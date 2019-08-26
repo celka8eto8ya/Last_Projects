@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1091674",
+    "ThreadId": "456663",
+    "Html": "How I can get source code samples of old versions? I need for source code NAudio-1-4-Sample-Apps (without MEF).\r<br />\nThanks.<br />\n",
+    "PostedDate": "2013-09-12T04:46:40.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1091772",
+    "ThreadId": "456663",
+    "Html": "You can get the source code for any version by Clicking Source Code then History above, and navigating to any changeset you like. \r<br />\nBut really, there is no advantage to looking at the sample apps from this far back. MEF doesn't affect anything to do with how the NAudio code is used, just how the demo app loads its list of demos. You can use all the samples in the current demo apps without using MEF at all.<br />\n",
+    "PostedDate": "2013-09-12T08:13:54.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1091788",
+    "ThreadId": "456663",
+    "Html": "Thanks.\r<br />\nI do not understand the sequence initialization, use, shutting down.\r<br />\nI want to do the following:<br />\n<ol>\n<li>Play the file. At the same time draw a sound.</li>\n<li>Record the sound of the same length simultaneously drawing sound.</li>\n<li>Play the recorded audio.\r<br />\nPerform steps 1-3 for different files.\r<br />\nWith examples from 00322b5b2db8 think I shall understand quickly. Because I do not know MEF (But I'll know soon ;) )</li>\n</ol>\n",
+    "PostedDate": "2013-09-12T08:36:52.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

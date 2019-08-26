@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "714943",
+    "ThreadId": "283637",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm stuck with this simple task:</p>\r\n<p>- I have a memorystream containing raw data (ALaw compressed)</p>\r\n<p>- I want to play this memorystream as it is (I don't want to write it to the disk)</p>\r\n<p>How ho I do that?</p>\r\n",
+    "PostedDate": "2011-12-20T09:45:26.27-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715388",
+    "ThreadId": "283637",
+    "Html": "<p>1st of all, sorry for the double post, it was not done on purpose.</p>\r\n<p>I managed to save a wave file to disk and this is cool, but it's not my scope.</p>\r\n<p>The raw data comes from MS TTS (Text to speech) and it is working as expected. In order to test the code, please add a reference to System.Speech</p>\r\n<p>and add&nbsp;</p>\r\n<p>using System.Speech;</p>\r\n<p>using System.Speech.AudioFormat;</p>\r\n<p>using System.Speech.Synthesis;</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>            MemoryStream memStream = <span style=\"color: blue;\">new</span> MemoryStream();\r\n\r\n            SpeechSynthesizer speaker = <span style=\"color: blue;\">new</span> SpeechSynthesizer();\r\n            speaker.Rate = 0;\r\n            speaker.Volume = 100;\r\n            speaker.SelectVoice(<span style=\"color: #a31515;\">\"Microsoft Sam\"</span>);\r\n\r\n            SpeechAudioFormatInfo ALawFormat = <span style=\"color: blue;\">new</span> SpeechAudioFormatInfo(EncodingFormat.ALaw, 8000, 8, 1, 1, 2, <span style=\"color: blue;\">null</span>);\r\n\r\n            speaker.SetOutputToAudioStream(memStream, ALawFormat);\r\n\r\n            speaker.Speak(<span style=\"color: #a31515;\">\"Hello world!\"</span>);\r\n\r\n            ByteArrayToFile(<span style=\"color: #a31515;\">@\"C:\\temp\\MyRawFile.raw\"</span>, memStream.ToArray());\r\n\r\n            WaveFormat format = WaveFormat.CreateALawFormat(8000, 1);\r\n\r\n            FileStream fs = <span style=\"color: blue;\">new</span> FileStream(<span style=\"color: #a31515;\">@\"C:\\temp\\MyRawFile.raw\"</span>, FileMode.Open);\r\n\r\n            <span style=\"color: blue;\">using</span> (RawSourceWaveStream reader = <span style=\"color: blue;\">new</span> RawSourceWaveStream(fs, format))\r\n            {\r\n                WaveFileWriter.CreateWaveFile(<span style=\"color: #a31515;\">@\"C:\\temp\\MyRawFile.wav\"</span>, reader);\r\n                reader.Close();\r\n            }\r\n\r\n            fs.Close();\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>when speaker.speak() is executed, memStream contains my audio file, raw data, ALaw encoded. If I save the file (using ByteArrayToFile) and then use Audacity, the file plays perfectly well (Microsoft Sam voice is crap, but we overlook it now).</p>\r\n<p>The example provided here is to be clear enough on what kind of audio I'm working with.</p>\r\n<p>So, my question is: what should I do in order to play that memStream with NAudio?</p>\r\n<p>This is a big deal to me, since I can't open the VS solution (I don't have vs 2010, am stuck to 2008) and can't find any kind of documentation around this simple task.</p>\r\n<p>Can anyone please help me? I'm a bit frustrated :(</p>",
+    "PostedDate": "2011-12-21T03:35:11.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715392",
+    "ThreadId": "283637",
+    "Html": "<p>Pass your RawSourceStream into WaveFormatConversionStream.CreatePcmStream(). The output from that can be played with WaveOut.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-21T03:41:30.993-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715413",
+    "ThreadId": "283637",
+    "Html": "<p>Thanks Mark!</p>\r\n<p>It works!</p>\r\n<p>Have no idea if this is completely correct, but it works and I'm happy with it.</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><div style=\"color: black; background-color: white;\"><pre>memStream.Position = 0;\r\n<span style=\"color: blue;\">using</span> (RawSourceWaveStream NewReader = <span style=\"color: blue;\">new</span> RawSourceWaveStream(memStream, format))\r\n{\r\n<span style=\"white-space: pre;\">\t</span>WaveStream ws = WaveFormatConversionStream.CreatePcmStream(NewReader);\r\n                \r\n<span style=\"white-space: pre;\">\t</span>WaveOut wo = <span style=\"color: blue;\">new</span> WaveOut();\r\n<span style=\"white-space: pre;\">\t</span>wo.Init(ws);\r\n<span style=\"white-space: pre;\">\t</span>wo.Play();\r\n<span style=\"white-space: pre;\">\t</span>NewReader.Close();\r\n}\r\n</pre>\r\n</div>\r\n</pre>\r\n</div>\r\n<span style=\"font-family: Consolas, 'Courier New', Courier, monospace;\"><span style=\"white-space: pre;\"><br /></span></span></p>",
+    "PostedDate": "2011-12-21T05:07:45.993-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715424",
+    "ThreadId": "283637",
+    "Html": "<p>you're on the right lines, but your WaveOut object is in danger of getting garbage collected before playback has finished. wo.Play just starts playback, so you are closing your input stream before it has finished playing it.</p>",
+    "PostedDate": "2011-12-21T05:36:03.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "716658",
+    "ThreadId": "283637",
+    "Html": "<p>LOL, 2 days later I faced the problem...</p>\r\n<p><span class=\"hps\">I am ashamed to</span><span>&nbsp;</span><span class=\"hps\">ask, but... what should I do instead?</span></p>\r\n<p><span class=\"hps\">When closing the form containing the above code I receive am error:</span></p>\r\n<p><span class=\"hps\">AcmStreamHEader dispose was not called at AcmStreamHeader.Finalize()</span></p>\r\n<p>I tried to understand as many as I could, but it's really hard. The demo code does not work with VS2010 express (I don't have a vs2010 enterprise license) and, on the other hand, I can't find any specific documentation talking about a simple task (in my eyes) as playing some audio should be.</p>\r\n<p>Any kind of help will be a lot appreciated.</p>\r\n<p>Thanks in advance</p>",
+    "PostedDate": "2011-12-23T08:28:55.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "716665",
+    "ThreadId": "283637",
+    "Html": "<p>Save ws to a class member variable, and when you have finished playing, call ws.Dispose()</p>\r\n<p>out of interest, what doesn't work in VS2010 express?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-23T08:42:33.077-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "716684",
+    "ThreadId": "283637",
+    "Html": "<p>well, I fixed the issue with VS2010, just deleting the Ntest project.</p>\r\n<p>It had something to do with nuget which is not installed in my system</p>",
+    "PostedDate": "2011-12-23T09:13:41.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

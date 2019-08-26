@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1015889",
+    "ThreadId": "436766",
+    "Html": "I'm using the NAudio library to capture Audio Input in C#:<br />\n<pre><code>int _deviceID;\ndouble _previewVal;\nprivate void PreviewData()\n{\n    WaveIn waveIn = new WaveIn();\n    waveIn.DeviceNumber = _deviceID;\n    waveIn.DataAvailable += waveIn_DataAvailable;\n    int sampleRate = 8000; // 8 kHz\n    int channels = 1; // mono\n    waveIn.WaveFormat = new WaveFormat(sampleRate, channels);\n    waveIn.StartRecording();\n}\nvoid waveIn_DataAvailable(object sender, WaveInEventArgs e)\n{\n    for (int index = 0; index &lt; e.BytesRecorded; index += 2)\n    {\n        short sample = (short)((e.Buffer[index + 1] &lt;&lt; 8) |\n                                e.Buffer[index + 0]);\n        _previewVal = sample / 327.68f;\n    }\n}</code></pre>\n\nThe function PreviewData is called simultaneously for each audio input device (which are 4 in my system). When I only call the method for one device it seems to be working but if I call it once more I get the exception &quot;AlreadyAllocated calling waveInOpen&quot;. Does someone know how to work around this?<br />\n",
+    "PostedDate": "2013-03-15T06:12:37.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015892",
+    "ThreadId": "436766",
+    "Html": "You can only open each device for recording once. Are ou user you are using a different device number each time?<br />\n",
+    "PostedDate": "2013-03-15T06:22:38.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015895",
+    "ThreadId": "436766",
+    "Html": "The code above is in the class Microphone and PreviewData is called in it's constructor.\r<br />\nThis is the Method where the instances are created:<br />\n<pre><code>        private ObservableCollection&lt;Microphone&gt; devices = new ObservableCollection&lt;Microphone&gt;();\n        private void UpdateMicrophones()\n        {\n            int waveInDevices = WaveIn.DeviceCount;\n            devices.Clear();\n            for (int waveInDevice = 0; waveInDevice &lt; waveInDevices; waveInDevice++)\n            {\n                devices.Add(new Microphone(waveInDevice));\n            }\n        }</code></pre>\n\nSo I'm not recording one device multiple times but I want to record all the devices with different ID at the same time<br />\n",
+    "PostedDate": "2013-03-15T06:30:25.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015897",
+    "ThreadId": "436766",
+    "Html": "How many physical soundcards do you have?\r<br />\nHave you made 100% sure deviceID is what you are expecting it to be?\r<br />\nDo you always dispose waveIn before opening it again?<br />\n",
+    "PostedDate": "2013-03-15T06:32:41.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015903",
+    "ThreadId": "436766",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nHow many physical soundcards do you have?<br />\n</blockquote>\nOnly one. That could be a point of course.<br />\n<strong>markheath wrote:</strong><br />\n<blockquote>\nHave you made 100% sure deviceID is what you are expecting it to be?<br />\n</blockquote>\nYes, it is definitely different in each instance. Beginning at 1 and increasing with each instance.<br />\n<strong>markheath wrote:</strong><br />\n<blockquote>\nDo you always dispose waveIn before opening it again?<br />\n</blockquote>\nNo, I'm not doing that. But if I do so the DataAvailable event wouldn't be fired anymore, would it?<br />\n",
+    "PostedDate": "2013-03-15T06:38:34.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015909",
+    "ThreadId": "436766",
+    "Html": "Your soundcard driver might be not allowing you to open all the &quot;devices&quot; simultaneously \r<br />\n<br />\nOnce you have opened a waveIn device and called start recording, the DataAvailable event will keep firing, until you call StopRecording and Dispose, Then, and only then can you open it again<br />\n",
+    "PostedDate": "2013-03-15T06:44:20.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016259",
+    "ThreadId": "436766",
+    "Html": "Allright then I gotta do it different. Thanks for the replies.<br />\n",
+    "PostedDate": "2013-03-16T00:30:20.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151218",
+    "ThreadId": "436766",
+    "Html": "@Artenuvielle: What solution did you found to handle multiple input devices?<br />\n",
+    "PostedDate": "2014-01-08T23:50:28.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1241344",
+    "ThreadId": "544260",
+    "Html": "Hi everyone, i am new to NAudio and got here directed by a MSDN user...\r<br />\nhope you can help me.\r<br />\nI am developing an application for a thesis and the function i am struggling with is recording the audio result of 2 media player components playing.\r<br />\nImagine a  2-decks DJ pad where i open 1 mp3 file in each deck, and want to record the resulting mix (while playing) on  mp3 or wav format.\r<br />\nSo far i have implemented the start / stop recording from the mic but the quality is very poor.\r<br />\nIs there a possibility to record the result of the waveout?\r<br />\nThanks for any help you can give me.\r<br />\nAlex<br />\n",
+    "PostedDate": "2014-05-04T16:18:47.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1241580",
+    "ThreadId": "544260",
+    "Html": "I think you should enable stereo-mix (and set it as default) on your sound preferences. That way your sound is redirected to your line-in I believe. Check out <a href=\"http://www.youtube.com/watch?v=7QY6gBeabSw\" rel=\"nofollow\">http://www.youtube.com/watch?v=7QY6gBeabSw</a>\r<br />\n<br />\nIt's a workaround but it might help. I dont think NAudio can provide you with such a feature.<br />\n",
+    "PostedDate": "2014-05-05T08:07:07.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1241590",
+    "ThreadId": "544260",
+    "Html": "have a look at WasapiLoopbackCapture which can record what you are playing on your system<br />\n",
+    "PostedDate": "2014-05-05T08:16:10.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1241655",
+    "ThreadId": "544260",
+    "Html": "<strong>Sebbe909 wrote:</strong><br />\n<blockquote>\nI think you should enable stereo-mix (and set it as default) on your sound preferences. That way your sound is redirected to your line-in I believe. Check out <a href=\"http://www.youtube.com/watch?v=7QY6gBeabSw\" rel=\"nofollow\">http://www.youtube.com/watch?v=7QY6gBeabSw</a><br />\n<br />\nIt's a workaround but it might help. I dont think NAudio can provide you with such a feature.<br />\n</blockquote>\nthanks sebbe i have tried it but doesn't work because it expects something inserted in the line in jack.\r<br />\nThe goal i want to achieve is another.<br />\n",
+    "PostedDate": "2014-05-05T10:10:41.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1241658",
+    "ThreadId": "544260",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nhave a look at WasapiLoopbackCapture which can record what you are playing on your system<br />\n</blockquote>\nit seems interesting i have left a comment asking if it id VB.NET compliant<br />\n",
+    "PostedDate": "2014-05-05T10:11:08.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1241931",
+    "ThreadId": "544260",
+    "Html": "yes, you can use WasapiLoopbackCapture in VB.NET<br />\n",
+    "PostedDate": "2014-05-06T01:52:23.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1241935",
+    "ThreadId": "544260",
+    "Html": "I have found this one and i think it may help but i am unable to port it to VB.NET\r<br />\n<br />\n<a href=\"http://mark-dot-net.blogspot.co.uk/2014/03/how-to-record-and-play-audio-at-same.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.co.uk/2014/03/how-to-record-and-play-audio-at-same.html</a><br />\n",
+    "PostedDate": "2014-05-06T01:58:42.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

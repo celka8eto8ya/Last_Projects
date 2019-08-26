@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": "",
+    "Description": "This is a great library, however I've noticed a couple of things:\n\nI have downloaded the latest source code naudio-71848.\nWhile trying out the mixdif application, loading a 192kHz wave file and playing, the program crashes after 1.8 seconds with the message: WaveStillPlaying calling waveOutWrite at WaveoutBuffer.cs at line 154.\n\nThe other error which occurs is when I alternate playing and pausing > 10 times. First the sound starts to stutter, finaly the library locks up. \nIt does call the WaveInterop.waveOutRestart(hWaveOut) function, however it doesn't play anymore.",
+    "LastUpdatedDate": "2011-04-18T11:16:22.433-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-04-17T04:44:18.78-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "crashes at playing high sampling rate wave files, chrashes in rapid playback repeat",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 15702
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for reporting. I'm amazed that a 192kHz file plays at all in NAudio! The mixdiff application hasn't seen much attention for a while, so it could have some bugs",
+      "PostedDate": "2011-04-18T09:16:25.96-07:00",
+      "Id": 41769
+    },
+    {
+      "Message": "Windows always seems to take care of automatic samplerate converting.. :) \r\nThe crashes do not seem to be related to Mixdiff however. All the demo programs show the same behaviour, so the problem seems to be within the library, Maby it's related with MME?\r\nI have tried cranking up the amount of buffers and increasing the latency, (thus larger buffersizes), but this didn't help so far.\r\nNote that the pause/play crash thing also occurs while playing standard 48kHz wave files.\r\nThe code looks good so I'm not sure yet what would cause the problem. Maby it has to do with buffer freeing or such..\r\nBy the way, I'm using winXP SP3.\r\n\r\n",
+      "PostedDate": "2011-04-18T11:16:22.433-07:00",
+      "Id": 41770
+    }
+  ]
+}

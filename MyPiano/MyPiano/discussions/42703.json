@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "141903",
+    "ThreadId": "42703",
+    "Html": "Hi,<br>\r\n<br>\r\nDoes NAudio work under Mono/*nix?<br>\r\nAny plans to support said platforms?<br>\r\nIs it tried to any unmanaged code?<br>\r\n<br>\r\nBy the way, you seriously need to write some documentation... Maybe, just some examples... WITHOUT gui, simple stuff in terminal/console please...<br>\r\nAPI documentation would also be great, as far as I can see you have doc-comments to generate it...<br>\r\n<br>\r\nRegards Jonas Finnemann Jensen.<br>\r\n",
+    "PostedDate": "2008-12-19T09:55:20.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "142000",
+    "ThreadId": "42703",
+    "Html": "Hi Jonas,<br>\r\nI'm afraid NAudio won't work under Mono as it relies on a very large amount of unmanaged code (although maybe if you combined it with something like WINE it might work).<br>\r\n<br>\r\nAs for documentation, yes I know that NAudio is severely lacking in this regard. I have been writing a few articles on my blog which may be of some help to you: <a href=\"http://mark-dot-net.blogspot.com/search/label/NAudio\">http://mark-dot-net.blogspot.com/search/label/NAudio</a> <br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-12-19T23:40:59.26-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

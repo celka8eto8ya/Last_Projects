@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1475644",
+    "ThreadId": "655390",
+    "Html": "Hi,<br />\nI found your project to play mp3's and it works perfectly!<br />\nI would like to implement it in my exe (need only 2 functions):<br />\n<ul>\n<li>\nmp3reader and waveout.<br />\n</li>\n</ul>\nIs there a way to get a minimal version? My exe is only 300kb and integrating this, will increase it to 700kb.<br />\n<br />\nIt would be nice to have a minimal version that simply plays mp3, without utils, info about the song and so on.<br />\n<br />\nThanks,<br />\nAdriano<br />\n",
+    "PostedDate": "2016-06-10T02:02:18.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

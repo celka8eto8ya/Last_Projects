@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1247127",
+    "ThreadId": "545873",
+    "Html": "I am attempting to create a streamed conversion for our GSM.610 encoded WAV files (call recordings) to an Mp3 file. Here is the code within the HttpHandler:<br />\n<pre><code>    BackgroundWorker bw = new BackgroundWorker();\n    HttpContext httpContext;\n\n    public void ProcessRequest(HttpContext context)\n    {\n        //Build context object and add Bin path to conversion DLLs\n        httpContext = context;\n        CheckAddBinPath();\n\n        //Get file name from Query String\n        if (context.Request.QueryString[&quot;AudioFilename&quot;] == null)\n            return;\n        else\n            sAudioFilename = context.Request.QueryString[&quot;AudioFilename&quot;].ToString();\n\n         //Buffered conversion\n         bw.DoWork += new DoWorkEventHandler(bw_DoWork);\n         bw.RunWorkerAsync();\n\n         //All in 1 conversion\n        //httpContext.Response.Buffer = false;\n        //httpContext.Response.ContentType = &quot;audio/mpeg&quot;;\n        //httpContext.Response.BinaryWrite(ConvertGSMToMP3(new AudioFileReader(sPath + sAudioFilename)));\n        //httpContext.Response.Flush();\n    }\n    private void bw_DoWork(object sender, DoWorkEventArgs e)\n    {\n        //Variables\n        int iFileSize = 0;          //Size of file in bytes\n        int iTotalCount = 0;        //Total bytes read\n        int iBufferSize = 2048;     //Buffer size cap/default\n        bool bProcessing = true;    //Determines the processing/converting state of the current file\n\n        //Read file and get file size\n        var GSMchunk = new AudioFileReader(sPath + sAudioFilename);\n\n        //Check if the file is smaller than the default byte size\n        iFileSize = (int)GSMchunk.Length;\n        if (iBufferSize &gt; iFileSize)\n            iBufferSize = iFileSize;\n\n        //While reading\n        while (bProcessing)\n        {\n            //Buffer to be converted\n            byte[] bBuffer = new byte[iBufferSize];\n\n            //Read the next buffer dependant on remaining bytes in file   \n            if (iBufferSize &gt; (iFileSize - iTotalCount))\n            {\n                //Last read\n                iBufferSize = iFileSize - iTotalCount;\n                GSMchunk.Read(bBuffer, iTotalCount, iBufferSize);\n                bProcessing = false;\n            }\n            else\n            {\n                //Continue reading\n                iTotalCount += GSMchunk.Read(bBuffer, iTotalCount, iBufferSize);\n            }\n\n            //Convert the current buffer\n            byte[] bAudioConverted = ConvertGSMToMP3(bBuffer);\n\n            //Send converted buffer to the audio player\n            httpContext.Response.Buffer = false;\n            httpContext.Response.ContentType = &quot;audio/mpeg&quot;;\n            httpContext.Response.BinaryWrite(bAudioConverted);\n        }\n\n        //Clean up and flush the response context\n        GSMchunk.Close();\n        httpContext.Response.Flush();\n    }\n    //Conversion passing in buffer\n    public byte[] ConvertGSMToMP3(byte[] bBuffer)\n    {\n        byte[] MP3data = null;\n\n        try\n        {\n            using (MemoryStream GSMstream = new MemoryStream(bBuffer))\n            {\n                using (MemoryStream MP3strm = new MemoryStream())\n                {\n                    using (var MP3wri = new LameMP3FileWriter(MP3strm, WaveFormat.CreateIeeeFloatWaveFormat(8000, 1), 32))\n                    {\n                        GSMstream.CopyTo(MP3wri); //####EXCEPTION THROWN HERE####\n                        MP3data = MP3strm.ToArray();   \n                    }\n                }\n            }\n        }\n        catch\n        {\n            MP3data = null;\n        }\n\n        return MP3data;\n    }\n</code></pre>\n\nWhen this is run, the first buffer converts as expected. However, when we arrive at the 2nd conversion, I believe the LameMP3FileWriter object does not dispose of the unmanaged code (in libmp3lame.32.dll) and the debugger stalls when attempting to convert on the second pass. This stalls on the commented line '//####EXCEPTION THROWN HERE####'. \r<br />\n<br />\nI have taken the LameMP3FileWriter line out of the using statement and manually called MP3wri.Dispose(); and MP3wri.Flush(); after I moved the array to the output byte array. This works as expected the first time around, but rather than throwing the ExecutionEngineException on the second pass, it throws an AccessViolation exception. This further proves my theory that the resource was not being disposed of initially, but manually disposing the resource causes the next pass to lose track of &quot;where&quot; the dll is.\r<br />\n<br />\nMy question to the kind person who may understand this issue and can help me out here: am I using this library incorrectly, or is there some issue with the LameMP3FileWriter object that does not properly dispose of the unmanaged dll? What do I need to do to get this to work as expected?\r<br />\n<br />\nNote: If I alter the code to do the entire conversion in one pass, the conversion works flawlessly. However, with large files (4+ hour long calls), this will not work. I do not want my users to wait for 2+ minutes while the file converts in memory. I want to stream what I have completed while the rest of the file is being converted.<br />\n",
+    "PostedDate": "2014-05-19T12:32:58.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247847",
+    "ThreadId": "545873",
+    "Html": "LameMP3FileWriter is not part of NAudio. You might want to ask whoever wrote it.<br />\n",
+    "PostedDate": "2014-05-21T03:37:20.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248551",
+    "ThreadId": "545873",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nLameMP3FileWriter is not part of NAudio. You might want to ask whoever wrote it.<br />\n</blockquote>\nWith only using NAudio's library, I need to do the following:<br />\n<ol>\n<li>Grab a WAV GSM610 encoded audio file.</li>\n<li>Set a buffer size and convert only on that buffer until the entire file is complete.</li>\n<li>\nWhile converting the file, stream the converted audio bytes to the HTML5 audio player.<br />\n</li>\n</ol>\nIs this possible with NAudio? If so, how can I do this?<br />\n",
+    "PostedDate": "2014-05-22T12:19:34.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248907",
+    "ThreadId": "545873",
+    "Html": "Yes, NAudio can decode GSM610 using the WaveFormatConversionStream. You are in complete control of how many bytes you play.\r<br />\nWith regards to streaming the audio, NAudio does not provide any network capabilities, so you'd need to do that yourself. <br />\n",
+    "PostedDate": "2014-05-23T07:21:42.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

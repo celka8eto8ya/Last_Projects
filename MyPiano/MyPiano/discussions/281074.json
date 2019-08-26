@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "704294",
+    "ThreadId": "281074",
+    "Html": "\r\n<p>So I'm trying to record mic input and send it over the network to make a chat program. &nbsp;I have tested both the sample application from NAudio and making my own application which just uses a basic G.711 a-law codec, but I can't get either to actually\r\n play the audio when it's sent over the network. &nbsp;They are both confirmed working when 127.0.0.1 is used though, and I have also verified that the ports are open and have sent other data (files and video) through the same port and successfully received.\r\n &nbsp;If I put a breakpoint I can even see the audio data coming through, but it just refuses to play. &nbsp;I'm using the BufferedWaveProvider and WaveOut to play the audio. &nbsp;Any ideas what might cause this?</p>\r\n",
+    "PostedDate": "2011-11-28T09:48:14.583-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710853",
+    "ThreadId": "281074",
+    "Html": "<p>does the NAudioDemo app not work? Can you debug to see if the BufferedWaveProvider is filling up with data?</p>",
+    "PostedDate": "2011-12-12T03:54:37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

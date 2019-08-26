@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "636993",
+    "ThreadId": "263815",
+    "Html": "\r\n<p>Hi All,</p>\r\n<p>&nbsp;&nbsp;&nbsp; I am getting security exception while uploading my code with naudio into the Godaddy sever. My error was &quot;System.Security.Policy.PolicyException: Required permissions cannot be acquired.&quot;</p>\r\n<p>Please help me, how can I resolve this error in godaddy server. In my local application it works great. Please help...</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Neeraja.</p>\r\n",
+    "PostedDate": "2011-07-04T05:29:57.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637176",
+    "ThreadId": "263815",
+    "Html": "<p>I'd ask about this on stackoverflow, since I am not an expert on web hosting permissions. Make sure you include the full stack trace for the exception.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-04T14:10:12.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "678030",
+    "ThreadId": "263815",
+    "Html": "<p>Hi,</p>\r\n<p>Any update on this.. I am having the same issue. This is where i am getting the issue..</p>\r\n<p>1. Upload the song file using file upload control.</p>\r\n<p>2. File uploaded successfully. I am able to download it through url.</p>\r\n<p>3. Try to open the file using NAudio Mp3FileReader.. Failed.. Security Issue..</p>\r\n<p>4. Second Alternatively.. I opened FileStream to the file it failed for not having permission to open the file.</p>\r\n<p>5. Third alternatively .. Stored file in the database. Opened a memory stream .. passed stream to MP3FileReader.. Failed</p>\r\n<p>Manish</p>",
+    "PostedDate": "2011-09-29T00:28:43.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "678068",
+    "ThreadId": "263815",
+    "Html": "<p>Hi Manish,</p>\r\n<p>If you are facing this in your hosting server that hosting server must be dedicated server. Shared hosting server won't permit this dll, so if you host your site on dedicated server this problem definately resolved. I have done the same and i am able to run this dll in my website. Let me know your views on this.</p>\r\n<p>Thanks,</p>\r\n<p>Neeraja.</p>",
+    "PostedDate": "2011-09-29T02:01:22.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

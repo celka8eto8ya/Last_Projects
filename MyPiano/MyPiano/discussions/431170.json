@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "993281",
+    "ThreadId": "431170",
+    "Html": "\r\n<p>Hello, Now I creating my project about Effect Guitar by DSP. then my project have some problem about MIC input to effectStream. Because I get data form MIC-input by WaveIn and get data into BufferWaveProvider. But I can't to get input data to pass effectStream.\r\n Please help me give some a sample code to get data pass effectStream.</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Start()\r\n        {\r\n            Stop();\r\n            waveOuts = <span style=\"color:blue\">new</span> WaveOut();\r\n            sourceStream = <span style=\"color:blue\">new</span> WaveIn();\r\n            sourceStream.BufferMilliseconds = 20;\r\n            sourceStream.DeviceNumber = 0;\r\n            sourceStream.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat(44100, 16, 2);\r\n            sourceStream.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(sourceStream_DataAvailable);\r\n\r\n            waveBuffer = <span style=\"color:blue\">new</span> BufferedWaveProvider(sourceStream.WaveFormat);\r\n            waveBuffer.DiscardOnBufferOverflow = <span style=\"color:blue\">true</span>;\r\n\r\n            sourceStream.StartRecording();\r\n\r\n            <span style=\"color:green\">//effectStream = new EffectStream(effects, waveBuffer);</span>\r\n\r\n            waveOuts.Init(waveBuffer);\r\n            waveOuts.Play();          \r\n        }\r\n\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> sourceStream_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs args)\r\n        {\r\n            waveBuffer.AddSamples(args.Buffer, 0, args.BytesRecorded);\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>How I can get data to pass effectStream for my output. Please help me. Thank you so much.</p>\r\n<p>Ps. Sorry for my English is poor. And I beginner in C#. Sorry very much.</p>\r\n",
+    "PostedDate": "2013-01-28T13:59:28.32-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994549",
+    "ThreadId": "431170",
+    "Html": "you need to set up an effect pipeline. You are doing roughly the right thing, its just that EffectStream is expecting a WaveStream. I'd modify EffectStream to simply require an IWaveProvider. It dones't really need a WaveStream. Then you will be able to call waveOuts.Init(effectStream)<br />\n",
+    "PostedDate": "2013-01-31T00:01:55.463-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "995649",
+    "ThreadId": "431170",
+    "Html": "Thank you for answer. But I can't understand about to modify EffectStream to simply require an IWaveProvider. Please show me how to modify this. Thank you very much.<br />\n",
+    "PostedDate": "2013-02-02T13:34:56.277-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996013",
+    "ThreadId": "431170",
+    "Html": "change the EffectStream code so its constructor takes an IWaveProvider, and so that EffectStream just implements IWaveProvider. Then you can delete its Length and Position properties. Makes life simpler.<br />\n",
+    "PostedDate": "2013-02-04T03:05:10.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997397",
+    "ThreadId": "431170",
+    "Html": "Thank you for advise to modify. Now I can take an IWaveProvider into EffectStream but it have warning about effects have null parameter when I click play Mic input it had show error about effects. Please help me to take effect pass Mic real-time and show me for example to take Mic input pass effectStream. Because I have dead line to present project on 8 Feb but now it have problem. Thank you very much.<br />\n<pre><code>public class EffectStream : IWaveProvider\n    {\n        private EffectChain effects;\n        public IWaveProvider sourceIn;\n        private object effectLock = new object();\n        private object sourceLock = new object();\n\n        public EffectStream(EffectChain effects, IWaveProvider sourceStreamIn)\n        {\n            this.effects = effects;\n            this.sourceIn = sourceStreamIn;\n             //effects have null\n            foreach (Effect effect in effects)\n            {\n                InitialiseEffect(effect);\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2013-02-06T09:24:52.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "999586",
+    "ThreadId": "431170",
+    "Html": "Do you actually have any effects in your effects chain?<br />\n",
+    "PostedDate": "2013-02-11T07:17:19.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1005957",
+    "ThreadId": "431170",
+    "Html": "Hi, Mark. Please help me. Now I modify EffectStream to simply require an IWaveProvider. But when I call waveOuts.Init(effectStream). It shown clean sound. It sound not process with effect. Please advise me about to get sound to pass effect. Thank you.<br />\n",
+    "PostedDate": "2013-02-24T11:06:02.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006379",
+    "ThreadId": "431170",
+    "Html": "well what effects have you put into your effect chain?<br />\n",
+    "PostedDate": "2013-02-25T08:21:31.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

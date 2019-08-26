@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "181483",
+    "ThreadId": "53900",
+    "Html": "Hi there,<br>\r\n<br>\r\nI'd like to run a wav file through a notch filter before saving the resulting output to another wave file. This factory method in BiQuadFilter looks like what I need:<br>\r\n<br>\r\n<span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">\r\n<p>public </p>\r\n</span>\r\n<p>&nbsp;</p>\r\n</span>\r\n<p><span style=\"font-size:13px;color:#0000ff\">static</span><span style=\"font-size:13px\"> </span><span style=\"font-size:13px;color:#2b91af\">BiQuadFilter</span><span style=\"font-size:13px\"> NotchFilter(</span><span style=\"font-size:13px;color:#0000ff\">float</span><span style=\"font-size:13px\"> sampleRate, </span><span style=\"font-size:13px;color:#0000ff\">float</span><span style=\"font-size:13px\"> centreFrequency, </span><span style=\"font-size:13px;color:#0000ff\">float</span><span style=\"font-size:13px\"> q)<br>\r\n<br>\r\nI don't see how to get my samples into the Transform method though:<span style=\"font-size:13px\">\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>BiQuadFilter.Transform(</p>\r\n</span>\r\n<p><span style=\"font-size:13px;color:#0000ff\">float</span><span style=\"font-size:13px\">[] inBuffer, </span><span style=\"font-size:13px;color:#0000ff\">float</span><span style=\"font-size:13px\">[] outBuffer)<br>\r\n<br>\r\nThe first problem is that in my existing code I'm reading byte arrays from a <span style=\"font-size:13px;color:#2b91af\">WaveFileReader and I don't see how to get from byte arrays to float arrays. Is there a class in NAudio for this already?<br>\r\n<br>\r\nThe second problem is that <span style=\"font-size:13px;color:#2b91af\">BiQuadFilter isn't a public class. Is this class ready for use yet?<br>\r\n<br>\r\nCheers,<br>\r\n<br>\r\n<br>\r\nEliot Stock.\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p> </p>\r\n</span></span></span></p>\r\n<p>&nbsp;</p>\r\n</span></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2009-04-20T13:08:15.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "190338",
+    "ThreadId": "53900",
+    "Html": "<p>Hi Eliot,</p>\r\n<p>Take a look at my article on Coding4Fun for a description of how to run audio through effects in NAudio. I have no idea whether the BiQuadFilter works or not. I coded it years ago and never got round to using it in earnest.</p>\r\n<p>http://blogs.msdn.com/coding4fun/archive/2009/02/02/9391048.aspx</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-05-14T09:56:09.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "456173",
+    "ThreadId": "53900",
+    "Html": "<p>...in the end it war running the BiQuadFilter?</p>",
+    "PostedDate": "2010-06-16T06:46:35.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

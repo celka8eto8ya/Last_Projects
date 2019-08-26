@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1057425",
+    "ThreadId": "447207",
+    "Html": "How can I convert a sample(float32) to a 24bit pcm?<br />\nI tried different ways like:<br />\n<pre><code>                float sample32 = _buffer[i] * 8388608f;\n                byte* p = (byte*)&amp;sample32;\n                buffer[bufferOffset++] = p[1];\n                buffer[bufferOffset++] = p[2];\n                buffer[bufferOffset++] = p[3];</code></pre>\n\nbut i don't get it :(<br />\n<br />\nEDIT solved:<br />\n<pre><code>                uint sample32 = (uint)(_buffer[i] * 8388608f);\n                byte* psample32 = (byte*)&amp;sample32;\n                buffer[bufferOffset++] = psample32[0];\n                buffer[bufferOffset++] = psample32[1];\n                buffer[bufferOffset++] = psample32[2];</code></pre>\n\n",
+    "PostedDate": "2013-06-16T09:48:17.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

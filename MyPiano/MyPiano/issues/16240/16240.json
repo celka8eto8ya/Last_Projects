@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "see comments for workaround",
+    "ClosedDate": "2012-09-26T06:14:26.627-07:00",
+    "CommentCount": 1,
+    "Custom": "",
+    "Description": "Based on your help at StackOverflow, I created a WaveStream that wrapped an IWaveProvider which was backed by a CircularBuffer. A challenge I ran into was that other stream implementations that take a WaveStream in their constructor assume that the Length property of the injected stream will not change, which is not the case for my stream since the buffer can be written to while the stream is reading.\n\nWaveChannel32 and WaveFormatConversionStream should have their Length.get property changed to always call .Length on the source stream. It's a touch more inefficient, but necessary for streams that are read/write.",
+    "LastUpdatedDate": "2012-09-26T06:14:26.627-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-07-10T14:16:27.45-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Don't assume Streams are fixed-length",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16240
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "if you aren't using fixed-length streams, don't use WaveStream, just use IWaveProvider. WaveStream is for fixed-length, repositionable streams. IWaveProvider is intended for streams that we don't know the length of. Returning 0 from the Read method signifies the end has been reached. It is quite possible to make an entire playback pipeline with format conversion and mixing without ever needing the Length and Position properties. NAudio 1.5 will make it easier to do this in a 32 bit floating point audio pipeline with the SampleProvider interface.",
+      "PostedDate": "2011-07-10T23:25:07.657-07:00",
+      "Id": 41796
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1474947",
+    "ThreadId": "655178",
+    "Html": "I am attempting to use NAudio in a UWP.   I would like to read a wav file and resample it into a 22050, 8-bit byte array.\r<br />\n<br />\nUsing your UWP demo, I added the following to your Load() method:<br />\n<pre><code>            CreateReader();\n            byte[] wavByteArray = new byte[reader.Length];\n            var result = reader.ReadAsync(wavByteArray, 0, (int)reader.Length);</code></pre>\n\nWhen I select a file, it is picked correctly, and during the read, MediaFoundationReader.cs throws an exception. (bottom)\r<br />\n<br />\n In the old 8.1 version of NAudio, I had used the MediaFoundationResampler, which I guess is not there anymore?  Maybe there is some step I am missing to resample the incoming stream correctly?<br />\n<pre><code>using (var resampler = new MediaFoundationResampler(sourceProvider, waveformat) { ResamplerQuality = 60 }</code></pre>\n\nException thrown is below:<br />\n<pre><code>System.InvalidCastException was unhandled by user code\n  HResult=-2147467262\n  Message=Unable to cast COM object of type 'System.__ComObject' to interface type 'NAudio.MediaFoundation.IMFSourceReader'. This operation failed because the QueryInterface call on the COM component for the interface with IID '{70AE66F2-C809-4E4F-8915-BDCB406B7993}' failed due to the following error: No such interface supported (Exception from HRESULT: 0x80004002 (E_NOINTERFACE)).\n  Source=mscorlib\n  StackTrace:\n       at System.StubHelpers.StubHelpers.GetCOMIPFromRCW(Object objSrc, IntPtr pCPCMD, IntPtr&amp; ppTarget, Boolean&amp; pfNeedsRelease)\n       at NAudio.MediaFoundation.IMFSourceReader.ReadSample(Int32 dwStreamIndex, Int32 dwControlFlags, Int32&amp; pdwActualStreamIndex, MF_SOURCE_READER_FLAG&amp; pdwStreamFlags, UInt64&amp; pllTimestamp, IMFSample&amp; ppSample)\n       at NAudio.Wave.MediaFoundationReader.Read(Byte[] buffer, Int32 offset, Int32 count)\n       at System.IO.Stream.&lt;&gt;c.&lt;BeginReadInternal&gt;b__39_0(Object )\n       at System.Threading.Tasks.Task`1.InnerInvoke()\n       at System.Threading.Tasks.Task.Execute()\n  InnerException: \n</code></pre>\n\n",
+    "PostedDate": "2016-06-02T13:17:26.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1475046",
+    "ThreadId": "655178",
+    "Html": "It might be a threading issue, I had a similar thing with the WMA Reader.\r<br />\n<br />\nAlternatively, use WDL (WdlResamplingSampleProvider) to resample the audio.<br />\n",
+    "PostedDate": "2016-06-03T18:30:13.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1475751",
+    "ThreadId": "655178",
+    "Html": "The error arises during the creation of the reader, which is needed before you use the WDL.\r<br />\n<br />\nSo I cannot get to the WDL step.  Back in 8.1, you had to tell the reader what format it was expecting to read.  Maybe its related?\r<br />\n<br />\nThe exception thrown is from the Read method of MediaFoundationReader.cs.<br />\n",
+    "PostedDate": "2016-06-10T08:17:13.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1476597",
+    "ThreadId": "655178",
+    "Html": "Not knowing what to make of this error, I opened up the NAudio.Universal master code and ran it, and had the exact same exception.  When I hit the 'load' button and feed it a .wav file it triggers an exception.  Picture attached on OneDrive.  The error appears on line 223 of MediaFoundationReader.cs   Anyone have a clue?  At least it's not something I did.\r<br />\n<br />\n<a href=\"https://1drv.ms/i/s!Apomoggzevs3g9cUuVVCUQJOEzYyqA\" rel=\"nofollow\">https://1drv.ms/i/s!Apomoggzevs3g9cUuVVCUQJOEzYyqA</a>\r<br />\n<br />\nSystem.InvalidCastException was unhandled by user code\r<br />\n  HResult=-2147467262\r<br />\n  Message=Unable to cast COM object of type 'System.__ComObject' to interface type 'NAudio.MediaFoundation.IMFSourceReader'. This operation failed because the QueryInterface call on the COM component for the interface with IID '{70AE66F2-C809-4E4F-8915-BDCB406B7993}' failed due to the following error: No such interface supported (Exception from HRESULT: 0x80004002 (E_NOINTERFACE)).\r<br />\n  Source=mscorlib\r<br />\n  StackTrace:<br />\n<pre><code>   at System.StubHelpers.StubHelpers.GetCOMIPFromRCW(Object objSrc, IntPtr pCPCMD, IntPtr&amp; ppTarget, Boolean&amp; pfNeedsRelease)\n   at NAudio.MediaFoundation.IMFSourceReader.ReadSample(Int32 dwStreamIndex, Int32 dwControlFlags, Int32&amp; pdwActualStreamIndex, MF_SOURCE_READER_FLAG&amp; pdwStreamFlags, UInt64&amp; pllTimestamp, IMFSample&amp; ppSample)\n   at NAudio.Wave.MediaFoundationReader.Read(Byte[] buffer, Int32 offset, Int32 count)\n   at System.IO.Stream.&lt;&gt;c.&lt;BeginReadInternal&gt;b__39_0(Object )\n   at System.Threading.Tasks.Task`1.InnerInvoke()\n   at System.Threading.Tasks.Task.Execute()</code></pre>\n\nInnerException: <br />\n",
+    "PostedDate": "2016-06-17T05:56:50.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1476891",
+    "ThreadId": "655178",
+    "Html": "To get around this problem, I simply did not use the async version of the Read method.  No errors that way.\r<br />\nvar result = reader.Read(wavByteArray, 0, x);<br />\n",
+    "PostedDate": "2016-06-20T13:38:09.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1447026",
+    "ThreadId": "645794",
+    "Html": "Hi! I'm trying to create application that will receive the bytes and send the bytes. I'm using AsioOut class. So i know how to playback audio, but what should I do to listen the recieved audio at the same time with that?\r<br />\nThanks.<br />\n",
+    "PostedDate": "2015-10-04T15:03:38.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448886",
+    "ThreadId": "645794",
+    "Html": "hi, ASIO is designed for super low latency performance, but this does mean you need to be comfortable working with low level audio manipulation. It may be easier for you to just put received audio into a <code>BufferedWaveProvider</code>  turn it into an <code>ISampleProvider</code> with the <code>ToSampleProvider</code> extension, and then mix that with whatever else you are playing using a <code>MixingSampleProvider</code><br />\n",
+    "PostedDate": "2015-10-17T02:34:56.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

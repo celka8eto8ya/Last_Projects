@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1465447",
+    "ThreadId": "652048",
+    "Html": "Hi, I've been trying to use naudio to create a noise gate. I saw there was a method called SimpleGate, but I haven't been able to use it. Inside DSP I only get access to BiQuadFilter, Complex, EnvelopeGenerator, FourierTransform and ImpulseResponseConvolution. \r<br />\n<br />\nIs the SimpleGate method still available? If not, I can try to implement the noise gate but is there a way of getting the float samples back to a way that I can feed them into a filer?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2016-03-03T11:31:18.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466599",
+    "ThreadId": "652048",
+    "Html": "when implementing effects, the best option is to implement the ISampleProvider interface. That way in the Read method you get floats in and emit floats out. Then all you need is to find a good noise gate algorithm - you could find one on musicdsp, or adapt the one from simple gate.<br />\n",
+    "PostedDate": "2016-03-11T14:11:57.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

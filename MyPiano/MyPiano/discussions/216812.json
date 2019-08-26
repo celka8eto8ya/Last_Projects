@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "458310",
+    "ThreadId": "216812",
+    "Html": "Hi, most of the MP3's ive tried work under nAudio,  but for some reason one of the sample mp3's under windows 7 doesnt.\r\n\r\n\r\nunder the sample music folder, its called &quot;Maid with the Flaxen Hair.mp3&quot;\r\n\r\n\r\nWMP plays it without issue.\r\n\r\n\r\n\r\nhere is the error.\r\n\r\n\r\n\r\nSystem.FormatException was unhandled\r\n  Message=Not a recognised MP3 block\r\n\r\n       at NAudio.Wave.Mp3Frame..ctor(Stream input) in G:\\projects\\media center\\wpf\\NAudio-1-3\\Source Code\\NAudio\\FileFormats\\Mp3\\Mp3Frame.cs:line 153\r\n\r\n\r\ncheers\r\nAnton",
+    "PostedDate": "2010-06-21T20:07:31.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "458311",
+    "ThreadId": "216812",
+    "Html": "ug, for some reason codeplex is killing my newlines",
+    "PostedDate": "2010-06-21T20:09:54.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "458390",
+    "ThreadId": "216812",
+    "Html": "<p>Hi, I am aware of this issue. We could fix it by simply going byte by byte through the file to find the first valid MP3 frame, but I need to implement some kind of pushback input stream first so that it doesn't break streaming MP3s over the network</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-06-22T01:13:28.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

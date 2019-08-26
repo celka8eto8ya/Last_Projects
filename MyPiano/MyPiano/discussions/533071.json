@@ -1,0 +1,282 @@
+[
+  {
+    "Id": "1211041",
+    "ThreadId": "533071",
+    "Html": "I'm trying to get my spectrum analyzer to display a more realistic curve.<br />\n<br />\nAt the moment most of the frequency band is at the bass end. Here is a 20hz to 20000hz sine wave clip (its only 620KB M4V format)<br />\n<a href=\"http://www.filedropper.com/fft\" rel=\"nofollow\">http://www.filedropper.com/fft</a><br />\n<br />\nI calculate the FFT 2048 complex samples at a time<br />\nFastFourierTransform.FFT(true, m, complexClone);<br />\n<br />\n<br />\nRather than post the code I have right now I'd rather just know the 'proper' way of converting the FFT data to 16 bars.<br />\n<br />\nFor example, do I need to use FastFourierTransform.HammingWindow?<br />\n<br />\nDo I mix L and R this way? float fLandR = (float)Math.Sqrt(fL * fL [PLUS] fR * fR);<br />\n",
+    "PostedDate": "2014-02-20T02:58:26.403-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1211115",
+    "ThreadId": "533071",
+    "Html": "I suppose in its current form I could hack the values or lookup table so as to move the frequency range to the right in the bar range of something like 1-1-1-1-1-2-2-3-3-4-4-4-5-6-8-8 but I'd rather do it properly in the first place rather than patch existing code.<br />\n",
+    "PostedDate": "2014-02-20T05:23:25.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213533",
+    "ThreadId": "533071",
+    "Html": "using a windowing function should remove some false positives from your FFT result due to simply chopping the audio up at arbitrary points. I'm not an expert, but I did write a bit about FFT <a href=\"http://channel9.msdn.com/coding4fun/articles/AutotuneNET\" rel=\"nofollow\">here</a><br />\n",
+    "PostedDate": "2014-02-24T01:41:55.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215358",
+    "ThreadId": "533071",
+    "Html": "I was under the impression that the Windows simply removed 'radiation' rather than actually change the frequency range but I'll give it a try and have a look at the article.\r<br />\nThanks.<br />\n",
+    "PostedDate": "2014-02-26T15:11:14.42-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215456",
+    "ThreadId": "533071",
+    "Html": "Hi K24A3, are you trying to convert audio into frequency graph?<br />\n",
+    "PostedDate": "2014-02-26T22:43:05.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215476",
+    "ThreadId": "533071",
+    "Html": "Hi no it's just a 16 bar spectrum analyser as shown in the video link in the first post. \r<br />\n<br />\nIt works fine but most of the freq range is pushed to the first few bars with the high 18000hz-20000hz range covering the other 12 or so bars.<br />\n",
+    "PostedDate": "2014-02-27T00:14:35.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215510",
+    "ThreadId": "533071",
+    "Html": "I see..Do you know anyway to convert audio of waveform to frequency?<br />\n",
+    "PostedDate": "2014-02-27T01:28:36.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215526",
+    "ThreadId": "533071",
+    "Html": "Audio data to a graph? I'm no expert but I'd start with using an FFT and dumping the data to a canvas/graph.<br />\n",
+    "PostedDate": "2014-02-27T02:02:56.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215542",
+    "ThreadId": "533071",
+    "Html": "FFT is not something related to graph? How you get the frequency of the audio?<br />\n",
+    "PostedDate": "2014-02-27T02:41:42.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215544",
+    "ThreadId": "533071",
+    "Html": "You need an FFT to calculate the frequencies.\r<br />\n<br />\nFirst you implement a Sample Aggregator to collect the audio samples, then process some of those samples (say every 100ms) using an FFT into frequency data, then draw that data to the graph.\r<br />\n<br />\nThe NAudio WPF demo app has all you need except for the graph which you need to create yourself.<br />\n",
+    "PostedDate": "2014-02-27T02:47:22.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215591",
+    "ThreadId": "533071",
+    "Html": "I see.. In the sample aggregator, does this following code calculate the frequency?<br />\n<pre><code>        if (PerformFFT &amp;&amp; FftCalculated != null)\n        {\n            fftBuffer[fftPos].X = (float)(value * FastFourierTransform.HammingWindow(fftPos, fftLength));\n            fftBuffer[fftPos].Y = 0;\n            fftPos++;\n            if (fftPos &gt;= fftBuffer.Length)\n            {\n                fftPos = 0;\n                // 1024 = 2^10\n                FastFourierTransform.FFT(true, m, fftBuffer);\n                FftCalculated(this, fftArgs);\n            }\n        }</code></pre>\n\nand what does this code mean:<br />\n<pre><code>        maxValue = Math.Max(maxValue, value);\n        minValue = Math.Min(minValue, value);\n        count++;\n        if (count &gt;= NotificationCount &amp;&amp; NotificationCount &gt; 0)\n        {\n            if (MaximumCalculated != null)\n            {\n                MaximumCalculated(this, new MaxSampleEventArgs(minValue, maxValue));\n            }\n            Reset();\n        }\n</code></pre>\n\nSorry if I asked something stupid but I really do not know which one is calculate the frequency of audio. As I not so familiar with FFT. First time use it. Thank you.<br />\n",
+    "PostedDate": "2014-02-27T04:52:55.467-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215607",
+    "ThreadId": "533071",
+    "Html": "<ol>\n<li>\nYes, FastFourierTransform.FFT() calculates the FFT<br />\n</li>\n<li>\nYou probably dont need the MaximumCalculated event. The FftCalculated event should be used to send the frequency data to the graph control.<br />\n</li>\n</ol>\n",
+    "PostedDate": "2014-02-27T05:48:47.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215637",
+    "ThreadId": "533071",
+    "Html": "So the fftBuffer is the result of frequency of the audio file input?<br />\n",
+    "PostedDate": "2014-02-27T06:24:25.783-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215860",
+    "ThreadId": "533071",
+    "Html": "Yes<br />\n",
+    "PostedDate": "2014-02-27T14:16:54.547-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215934",
+    "ThreadId": "533071",
+    "Html": "Thx a lot.. Thx for the help.. So I have to call FftCalculated to get the frequency of the audio?<br />\n",
+    "PostedDate": "2014-02-27T19:58:08.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215936",
+    "ThreadId": "533071",
+    "Html": "Correct<br />\n",
+    "PostedDate": "2014-02-27T20:17:44.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215952",
+    "ThreadId": "533071",
+    "Html": "Thx for the help.. But the fftBuffer is set to the private. So if I want to use the fftBuffer is it ok that I set it to public?<br />\n",
+    "PostedDate": "2014-02-27T22:04:00.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215956",
+    "ThreadId": "533071",
+    "Html": "No leave the class as it is, you dont need to change anything. You need to set up the FFT Event callback<br />\n<pre><code>            var inputStream = new AudioFileReader(fileName);\n            fileStream = inputStream;\n            var aggregator = new SampleAggregator(inputStream);\n            aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;\n            aggregator.PerformFFT = true;\n            aggregator.FftCalculated += (s, a) =&gt; OnFftCalculated(a); // &lt;&lt;&lt; EVENT\n\n            //aggregator.MaximumCalculated += (s, a) =&gt; OnMaximumCalculated(a);\n            playbackDevice.Init(aggregator);\n\n\n    protected virtual void OnFftCalculated(FftEventArgs e)\n    {\n        // Send the complex array (paired float array) e.Result[] to your graph\n    }</code></pre>\n\n",
+    "PostedDate": "2014-02-27T22:46:04.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216030",
+    "ThreadId": "533071",
+    "Html": "Sorry, I dumb. When only call the OnFftCalculated?<br />\n",
+    "PostedDate": "2014-02-28T02:13:16.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216077",
+    "ThreadId": "533071",
+    "Html": "You probably dont need the MaximumCalculated volume for a freq graph.<br />\n",
+    "PostedDate": "2014-02-28T03:59:33.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216113",
+    "ThreadId": "533071",
+    "Html": "ya.. You have told me.. But how do I call OnFftCalculated? since it requires a FftEventArgs as parameter. What I doing is create a line chart that will add all the x and y points to draw out a line graph. So how do I call OnFftCalculated to do that? Sorry keep troubling you.<br />\n",
+    "PostedDate": "2014-02-28T06:05:07.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216173",
+    "ThreadId": "533071",
+    "Html": "When you create the aggregator, use this line to create the event\r<br />\n<br />\naggregator.FftCalculated += (s, a) =&gt; OnFftCalculated(a); // &lt;&lt;&lt; EVENT\r<br />\n<br />\n<br />\nfftEventArgs is handled by Linq using =&gt;\r<br />\nIf you dont understand Linq, just copy and paste the code, it should work fine.\r<br />\n<br />\nThen add this function<br />\n<pre><code>protected virtual void OnFftCalculated(FftEventArgs e)\n{\n    // Send the complex array (paired float array) e.Result[] to your graph\n\n}\n</code></pre>\n\n",
+    "PostedDate": "2014-02-28T07:50:18.967-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216400",
+    "ThreadId": "533071",
+    "Html": "Thx for the reply. I done what you have told me. But I still fail to call out the event. When I debug I found that it does not call that function out. I look through the code few hours already but still cant find out where I missed. Could you help me check it? Here is my code in the Form1.cs. Thanks a lot.\r<br />\n<br />\npublic Form1()<br />\n<pre><code>    {\n        InitializeComponent();\n    }\n\n    public event EventHandler&lt;FftEventArgs&gt; FftCalculated;\n\n    protected virtual void OnFftCalculated(FftEventArgs e)\n    {\n        var result = e.Result;\n        var lines = new Series(&quot;lines&quot;);\n\n        lines.ChartType = SeriesChartType.Line;\n\n        for (int i = 0; i &lt; result.Count(); i++)\n        {\n            lines.Points.Add(new DataPoint(result[i].X, result[i].Y));\n        }\n        lines.YAxisType = AxisType.Primary;\n        chart1.Series.Add(lines);\n    }\n\n    string fileName = null;\n    private WaveStream fileStream;\n\n    private void button1_Click(object sender, EventArgs e)\n    {\n        OpenFileDialog open = new OpenFileDialog();\n        //open.InitialDirectory = path;\n        open.Filter = &quot;Wave File (*.wav)|*.wav|MP3 File (*.mp3)|*mp3;&quot;;\n        if (open.ShowDialog() != DialogResult.OK)\n            return;\n\n        fileName = open.FileName;\n\n        var inputStream = new AudioFileReader(fileName);\n        fileStream = inputStream;\n        var aggregator = new SampleAggregator(inputStream);\n        aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;\n        aggregator.PerformFFT = true;\n        aggregator.FftCalculated += (s, a) =&gt; OnFftCalculated(a);\n    }</code></pre>\n\n",
+    "PostedDate": "2014-02-28T23:53:31.277-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216458",
+    "ThreadId": "533071",
+    "Html": "I found out I didnt added in playbackDevice.Init(aggregator); does it is the reason that the event cant called out? But it come another error after I added in the code.<br />\n<br />\nArgument 1: cannot convert from 'test2.SampleAggregator' to 'NAudio.Wave.IWaveProvider'\t<br />\nThe best overloaded method match for 'NAudio.Wave.IWavePlayer.Init(NAudio.Wave.IWaveProvider)' has some invalid arguments<br />\n<br />\nI do not what is wrong..<br />\n",
+    "PostedDate": "2014-03-01T06:58:29.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216470",
+    "ThreadId": "533071",
+    "Html": "Not sure why that is happening, make sure you have not changed SampleAggregator.cs \r<br />\n<br />\nPerhaps you could upload the whole project if you can, it would be much easier that way.<br />\n",
+    "PostedDate": "2014-03-01T08:18:48.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216476",
+    "ThreadId": "533071",
+    "Html": "I have created testing project almost same like my main project. Here is the link. I guess I have missed out something.\r<br />\n<br />\n<a href=\"https://www.dropbox.com/s/99ls1eymh9m74w0/test2.rar\" rel=\"nofollow\">https://www.dropbox.com/s/99ls1eymh9m74w0/test2.rar</a>\r<br />\n<br />\nHope you can help. Thanks a lot<br />\n",
+    "PostedDate": "2014-03-01T08:44:39.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216595",
+    "ThreadId": "533071",
+    "Html": "That compile error is happening because you are using NAudio 1.5 in the bin\\debug folder. Use the NAudio 1.7 dll instead.\r<br />\n<br />\nIf you dont need to play the audio and just want to process the audio data, do the following:<br />\n<pre><code>    private void button1_Click(object sender, EventArgs e)\n    {\n        OpenFileDialog open = new OpenFileDialog();\n        open.Filter = &quot;Wave File (*.wav)|*.wav|MP3 File (*.mp3)|*mp3;&quot;;\n        if (open.ShowDialog() != DialogResult.OK)\n            return;\n\n        fileName = open.FileName;\n\n        // if(playbackDevice == null) playbackDevice = new WaveOut {DesiredLatency = 200};\n\n        var inputStream = new AudioFileReader(fileName);\n        fileStream = inputStream;\n        SampleAggregator aggregator = new SampleAggregator(inputStream);\n        aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;\n        aggregator.PerformFFT = true;\n        aggregator.FftCalculated += (s, a) =&gt; OnFftCalculated(a);\n        //aggregator.MaximumCalculated += (s, a) =&gt; OnMaximumCalculated(a);\n        //playbackDevice.Init(aggregator);\n\n        System.Diagnostics.Debug.WriteLine(&quot;Init done&quot;);\n\n        int read = 0;\n        float[] buffer = new float[1024];\n\n        do\n        {\n            read = aggregator.Read(buffer,0,buffer.Length);\n        }while(read &gt; 0);\n\n        //playbackDevice.Play();\n    }\n\n</code></pre>\n\nThe FFT data is now being sent to OnFftCalculated but it is throwing an exception. I'm not familiar with form charts but you probably just need to change the name of lines every time OnFftCalculated is called.\r<br />\nstem.ArgumentException: A chart element with the name 'lines' already exists in the 'SeriesCollection'.<br />\n",
+    "PostedDate": "2014-03-01T16:35:15.113-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216744",
+    "ThreadId": "533071",
+    "Html": "Thx for the help. You are so pro in it. Can I know what is the buffer and read used for? I will try to solve the chart part. The System.Diagnostics.Debug.WriteLine(&quot;Init done&quot;);  is just for testing? Thx a lot.<br />\n",
+    "PostedDate": "2014-03-01T21:49:12.817-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216782",
+    "ThreadId": "533071",
+    "Html": "The buffer that you created each time store different value when it is created. Can explain to me why it will like that?<br />\n",
+    "PostedDate": "2014-03-01T23:03:09.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216971",
+    "ThreadId": "533071",
+    "Html": "It is used just to send the samples to OnFftCalculated(). The buffer itself is not used.\r<br />\n<br />\nWriteLine is just for debug output. <br />\n",
+    "PostedDate": "2014-03-02T05:51:05.197-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217000",
+    "ThreadId": "533071",
+    "Html": "I see..But why each time it send value to OnFftCalculated, the value also not the same one? When i debug it, I notice that each time the  samples sent to OnFftCalculated FftEventArgs e has different value and end up with my graph no longer a line graph.<br />\n",
+    "PostedDate": "2014-03-02T06:33:50.82-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217291",
+    "ThreadId": "533071",
+    "Html": "Each call to OnFftCalculated is a snapshot of the frequency range of the current audio sample being played (or being sent), the audio length of the sample is about 0.1 seconds. I dont know what kind of graph you are creating but the FFT data array in e.result are values from -1 to 1, starting from the bass end to the treble end (about 20hz to 20000hz).\r<br />\n<br />\nIf you are creating a wafeform have a look at the WPF demo app in NAudio.<br />\n",
+    "PostedDate": "2014-03-02T14:35:07.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217482",
+    "ThreadId": "533071",
+    "Html": "So what you mean is the fftbuffer is store the sample of 1024 type of frequency each second? Is that anyway to get the summarized frequency of each second?<br />\n",
+    "PostedDate": "2014-03-02T19:53:15.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217814",
+    "ThreadId": "533071",
+    "Html": "You currently have:<br />\naggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;<br />\n<br />\nSo it will send 100ms of data every time. Change it to below if you want 1 second invervals:<br />\naggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 10;<br />\n<br />\nThe e.Result array stores the frequency ranges of that 100ms.<br />\n<br />\nIf you want to plot the frequency you want to do something like below (assuming your graph is 1024 pixels horizontal):<br />\n<pre><code>int hCount = 0;\nforeach(Complex c in e.Result)\n{\n    DrawLine(hCount, yourGraphHeight/2, hCount, yourGraphHeight/2+c.X*(yourGraphHeight/2)); // Example function\n    hCount++;\n}</code></pre>\n\n...&#43; is the plus symbol<br />\n",
+    "PostedDate": "2014-03-03T03:41:50.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1218119",
+    "ThreadId": "533071",
+    "Html": "Thx a lot. I have get what you mean. I try to implement it. If any problem I post it here. Sorry for the inconvenience caused. Thx for your help.<br />\n",
+    "PostedDate": "2014-03-03T09:41:55.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

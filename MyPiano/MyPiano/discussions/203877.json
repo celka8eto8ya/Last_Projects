@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "414365",
+    "ThreadId": "203877",
+    "Html": "<p>Hi,</p>\r\n<p>I'm trying to use NAudio to get spectrum histogram values of audio files, which I will then use as input to another application. &nbsp;I looked at the source for the Spectrum Analyzer to see how it consumes the FFT output. &nbsp;I understand that it is plotting the magnitude of each complex value as the y value of a point in the PolyLine, and using the position n in the FFT output array as the x value of the point. &nbsp;Is it possible to translate this x value to the corresponding frequency in Hz in the original audio?</p>\r\n<p>Thanks,</p>\r\n<p>Ben</p>",
+    "PostedDate": "2010-03-04T14:26:17.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "416968",
+    "ThreadId": "203877",
+    "Html": "<p>I can't remember the equation off the top of my head. Ask at Music-DSP (http://www.musicdsp.org/) or on the KVR developer forum (http://www.kvraudio.com/forum/viewforum.php?f=33) or even on stackoverflow (http://stackoverflow.com/) and you should get your answer<br><br>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-11T06:43:50.297-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

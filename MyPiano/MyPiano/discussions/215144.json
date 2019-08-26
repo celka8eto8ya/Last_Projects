@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "452317",
+    "ThreadId": "215144",
+    "Html": "<p>Can some one help me write in C# how can I record with Naudio (or other way) only sound come from micro line.</p>",
+    "PostedDate": "2010-06-06T23:40:50.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "452964",
+    "ThreadId": "215144",
+    "Html": "<p>Have a look at the <a href=\"http://voicerecorder.codeplex.com\">.NET Voice Recorder</a> sample project to see how to use NAudio to record from a microphone</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-06-08T06:43:46.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "454054",
+    "ThreadId": "215144",
+    "Html": "<p>Thank Mark,<br>I saw the sample but it register all sound in my computer and not only sound enter by microphone line.</p>",
+    "PostedDate": "2010-06-10T08:55:55.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "455660",
+    "ThreadId": "215144",
+    "Html": "<p>try opening the recording mixer in Windows and seeing what recording source is selected.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-06-15T07:45:23.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "459483",
+    "ThreadId": "215144",
+    "Html": "---From: markheath\r\n\r\n---see the class on this thread:\r\n\r\n---http://naudio.codeplex.com/Thread/View.aspx?ThreadId=212980\r\n\r\n---let me know how you get on with it\r\n\r\n---Mark\r\n-----------------------------------\r\n\r\n\r\nHi Mark,\r\n\r\nIt not resolve my problem.\r\n\r\nThank\r\n\r\n",
+    "PostedDate": "2010-06-24T06:28:19.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

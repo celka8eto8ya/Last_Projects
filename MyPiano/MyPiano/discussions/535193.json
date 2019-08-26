@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1214293",
+    "ThreadId": "535193",
+    "Html": "Hello,<br />\n<br />\nI'm trying to calculate the signal energy of the audio signal for each frame as the data are available (when buffer is full). However, I cannot get the calculated float representation to match the wavread I do from Matlab for comparing.<br />\n<br />\nI'm doing this every time buffer if full:<br />\n<ol>\n<li>writing to wavfile just for comparison purpose</li>\n<li>copy buffer to byte array, mic2</li>\n<li>\nconvert to 16-bit then to double which does not work. <br />\n<pre><code>             writer2.Write(e.Buffer, 0, e.BytesRecorded);\n             Array.Copy(e.Buffer, mic2, e.Buffer.Length);\n\n\n             int tempint = 0;\n             for (int index = 0; index &lt; 110; index = index + 2)\n             {\n                 int a = ((mic2[index + 1] &lt;&lt; 8) | mic2[index]);\n                 Debug.WriteLine(a);\n                double x = ((double)a - 32768.0) / 32768.0;\n                 tempint++;\n\n             }\n</code></pre>\n\n</li>\n</ol>\nThis is run in the event handler for WaveInEventArgs. I tried both little and big endian. Any ideas?<br />\n<br />\nAlso, when I am using bufferSize 2, when the buffer is full, does it get wiped out completely? <br />\nBecause when I compare e.Buffer with mic2, they do not seem to match which might be causing a problem.<br />\n",
+    "PostedDate": "2014-02-25T00:35:42.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215858",
+    "ThreadId": "535193",
+    "Html": "Try BitConverter.ToInt16 on each pair of bytes. This will give you a signed short. Then divide by 32768.<br />\n",
+    "PostedDate": "2014-02-27T14:15:55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1122252",
+    "ThreadId": "468220",
+    "Html": "Hi <br />\nI am capturing system  speaker audio with the help of  WasapiLoopbackCapture(). I put this whole code in a console application and invoke this from cmd. Now the problem is when is execute this I am unable to call stop method as it is stuck in recording. what I want first I call my exe like this &quot;captureAudio.exe start&quot; and its will exit from  exe and when I want to stop then I call  &quot;captureAudio.exe stop&quot; . is it possible here is my code.<br />\n I use thread to invoke but it still stuck...<br />\nAny  help. Thanks <br />\n<br />\nstatic void Main(string[] args)<br />\n<pre><code>    {\n\n\n        string[] argReceived = args[0].Split('-');\n        for (int i = 0; i &lt; argReceived.Length; i++)\n        {\n            Debug.WriteLine(i + &quot; : = &quot; + argReceived[i]);\n        }\n        Thread captureAudio;\n       if (argReceived[0] == &quot;start&quot;)\n        {\n\n            captureAudio = new Thread(new ThreadStart(wavtomp3));\n            captureAudio.Start();\n\n        }\n\n\n\n\n    }\n\n</code></pre>\n\nstatic void wavtomp3()<br />\n<pre><code>    {\n\n        // Start recording from loopback\n        waveIn = new WasapiLoopbackCapture();\n       // MessageBox.Show(&quot;Sample Rate=&quot; + waveIn.WaveFormat.SampleRate.ToString());\n        string fname = DateTime.Now.Ticks.ToString();\n        fname = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments  + &quot;\\\\23295\\\\&quot; + fname + &quot;.mp3&quot;;\n        wri = new LameMP3FileWriter(fname, waveIn.WaveFormat, 44);\n\n        waveIn.DataAvailable += waveIn_DataAvailable;\n        waveIn.RecordingStopped += waveIn_RecordingStopped;\n        waveIn.StartRecording();\n\n    }\n\n    static void waveIn_RecordingStopped(object sender, StoppedEventArgs e)\n    {\n        if (waveIn != null) // working around problem with double raising of RecordingStopped\n        {\n            waveIn.Dispose();\n            waveIn = null;\n        }\n        if (wri != null)\n        {\n            wri.Close();\n            wri = null;\n        }\n\n    }\n\n    static void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n    {\n        if (wri != null)\n\n            if (e.BytesRecorded == 0)\n            {\n                wri.Write(e.Buffer, 0, 12800);\n                Debug.WriteLine(&quot;Adding Silence To File No Sound is playing&quot;);\n            }\n            else if (e.BytesRecorded &gt; 0)\n            {\n                wri.Write(e.Buffer, 0, e.BytesRecorded);\n                Debug.WriteLine(&quot;Sound Playing From Sound Card and recording&quot;);\n            }\n\n        Debug.WriteLine(&quot;bytes record=&quot; + e.BytesRecorded);\n\n    }</code></pre>\n\n",
+    "PostedDate": "2013-11-12T01:14:35.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1122446",
+    "ThreadId": "468220",
+    "Html": "you can't launch a second instance of your app to stop the first instance recording. A simple solution might simply be to have a Console.ReadKey in there, so the user can press a key to stop recording<br />\n",
+    "PostedDate": "2013-11-12T09:45:36.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

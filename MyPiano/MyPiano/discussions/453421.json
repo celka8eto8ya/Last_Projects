@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1080626",
+    "ThreadId": "453421",
+    "Html": "Hello Friends,\r<br />\n<br />\nI have to access individual mic from a mic array for quality purpose.\r<br />\nI am able to enumerate audio capturing devices and also perform loopback capture properly and very easily (Thanks to NAudio ).\r<br />\nBut When I enumerate the audio devices I get the following,\r<br />\n<br />\nFront Mic Array(2 channels)\r<br />\nNow the front mic array has two microphones, and i want to use them individually to test there performance.\r<br />\n<br />\nCan you please explain How I can achieve this ?\r<br />\nCan I use NAudio for it , if yes How ? if Not what is the alternative?\r<br />\n<br />\nThanks \r<br />\nYogesh<br />\n",
+    "PostedDate": "2013-08-14T09:47:33.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082728",
+    "ThreadId": "453421",
+    "Html": "If there are two microphones it should provide a stereo input, so record them both and throw away the samples from the channel you don't want. <br />\n",
+    "PostedDate": "2013-08-20T08:23:01.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082791",
+    "ThreadId": "453421",
+    "Html": "Thanks a lot for reply  Mark.\r<br />\nFollowing is my data available event\r<br />\n<br />\n// bwp is BufferedWaveProvider\r<br />\n// wo.init(bwp)\r<br />\n<br />\n void wi_DataAvailable(object sender, WaveInEventArgs e)<br />\n<pre><code>    {\n        bwp.AddSamples(Make2Bytes0(e), 0, e.BytesRecorded); // Make2Bytes0(e) -&gt; Makes this pattern 00bb00bb00bb00bb\n    }</code></pre>\n\nHere I am eliminating 1 channel by sending 0 on it. But this causes sound from only one speaker ?\r<br />\n<br />\nI want to test sound recorded by one microphone , by playing it on both the speakers.\r<br />\n<br />\nThis is my first encounter with audio details, \r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-08-20T10:43:50.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082830",
+    "ThreadId": "453421",
+    "Html": "so instead of zeroing the left channel, copy the samples from the right channel. By the way, unless you are working with 8 bit audio, you'll need to treat every pair of two bytes as a single sample<br />\n",
+    "PostedDate": "2013-08-20T12:28:23.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082862",
+    "ThreadId": "453421",
+    "Html": "Hi Mark,\r<br />\nThanks A lot that did work :) .\r<br />\n<br />\nBut just one last question, \r<br />\nI know that microphone arrays are used to process data from the two mics(Determine direction and enhance the quality and stuff)  , so the stream I get while recording is it raw stream of bytes or Processed stream of bytes (Processed as in , does microphone perform any operations on these to enhance them ) ?\r<br />\nWill this affect testing microphones ?\r<br />\n<br />\nThanks a lot<br />\n",
+    "PostedDate": "2013-08-20T13:24:33.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083088",
+    "ThreadId": "453421",
+    "Html": "It depends on your soundcard drivers. But I would expect it to normally just give the raw samples without any processing.<br />\n",
+    "PostedDate": "2013-08-21T06:16:45.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

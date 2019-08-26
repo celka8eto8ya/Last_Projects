@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1258744",
+    "ThreadId": "549364",
+    "Html": "I am trying to save a mix file. It works, but not when I add an effect to the mix.\r<br />\nit throws an error because the file goes to 2 Gb.\r<br />\n<br />\nI do not know why.\r<br />\nI read in a file and I changed the volume in it and then I add it to a mix and try to save it.\r<br />\nbut it does not stop. after this I can play the file but it is like 2.49 hours long. but the 1st part of the file in right...\r<br />\n<br />\nI do not understand, I can play the mix with the  effect and it works right. it even stop when is it done... \r<br />\n<br />\nbut why with I try and write it, it does not?\r<br />\nthis is my code:<br />\n<pre><code>\n                MixingSampleProvider mixernew = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 2));\n\n                try\n                {\n\n                    for (int y = 0; y &lt; file.Count; y++)\n                    {\n                        audioFileReader = new AudioFileReader(file[y]);\n                        mixernew.AddMixerInput((ISampleProvider)audioFileReader);\n\n                    }\n\n                    if (effectflat == true)\n                    {\n                        for (int i = 0; i &lt; stream.Count; i++)\n                        {\n                            mixernew.AddMixerInput(stream[i]);\n                        }\n\n \n                    }\n                   \n                    SampleToWaveProvider mixer3 = new SampleToWaveProvider(mixernew);\n                 \n                    SaveFileDialog save2 = new SaveFileDialog();\n                    save2.Filter = &quot;Wave file (*.wav)|*.wav;&quot;;\n                    if (save2.ShowDialog() != DialogResult.OK) return;\n\n                        WaveFileWriter.CreateWaveFile(save2.FileName, mixer3);\n                  \n                }\n                catch (Exception)\n                {\n                    MessageBox.Show(&quot;error file not mad&quot;);\n                }\n                MessageBox.Show(&quot;File Saved&quot;);</code></pre>\n\nI am about done with a program I am working on and this is the last part I need help with\r<br />\ncan someone please help me?\r<br />\n<br />\nthis is the effect file:<br />\n<pre><code>\nusing System;\nusing System.IO;\nusing System.Collections.Generic;\n\nusing NAudio.Wave;\n\nnamespace Isochronic_tones_generator\n{\n    public class EffectStream : WaveStream \n    {\n        public WaveStream SourceStream { get; set; }\n\n        public List&lt;IEffect&gt; Effects { get; private set; }\n        static int counter;\n        public EffectStream(WaveStream stream)\n        {\n            this.SourceStream = stream;\n            this.Effects = new List&lt;IEffect&gt;();\n            number = 1;\n            counter = 0;\n        }\n\n       public float number  { get; set; }\n        public override long Length\n        {\n            get { return SourceStream.Length; }\n        }\n\n        public override long Position\n        {\n            get\n            {\n                return SourceStream.Position;\n            }\n            set\n            {\n                SourceStream.Position = value;\n            }\n        }\n\n        public override WaveFormat WaveFormat\n        {\n            get { return SourceStream.WaveFormat; }\n        }\n\n        public override int Read(byte[] buffer, int offset, int count)\n        {\n            Console.WriteLine(&quot;DirectSoundOut requested {0} bytes&quot;, count);\n\n            int read = SourceStream.Read(buffer, offset, count);\n\n            for (int i = 0; i &lt; read / 4; i++)\n            {\n                float sample = BitConverter.ToSingle(buffer, i * 4);\n                sample = sample * number;\n\n                byte[] bytes = BitConverter.GetBytes(sample);\n\n                //bytes.CopyTo(buffer, i * 4);\n\n               buffer[i * 4 + 0] = bytes[0];\n                buffer[i * 4 + 1] = bytes[1];\n                buffer[i * 4 + 2] = bytes[2];\n                buffer[i * 4 + 3] = bytes[3]; \n            }\n         \n            return read;\n        }\n    }\n}\n</code></pre>\n\n",
+    "PostedDate": "2014-06-22T19:44:30.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1259029",
+    "ThreadId": "549364",
+    "Html": "I have been testing the code and it turns out that  when I play the mix file, it does not stop.<br />\n\r<br />\nit never calls PlaybackStopped event \r<br />\n<br />\nso  more than likely the problem with saving the mix and  stop after it is done in the same thing\r<br />\n<br />\ndoes anyone know what might be wrong with this ?\r<br />\n<br />\n it does not stop if i use an  BufferedWaveProvider\r<br />\nor if I uses a effect.\r<br />\n<br />\nMatt can you tell me what I need to add or Change?<br />\n",
+    "PostedDate": "2014-06-23T13:00:04.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1259038",
+    "ThreadId": "549364",
+    "Html": "BufferedWaveProvider.cs \r<br />\ndoes not have a Disposed\r<br />\nwhat does it not just start when the buffer is empty ?\r<br />\ni make the buffer size    <br />\ndouble time = Convert.ToDouble(timetxt.Text) * 44100D *60D *4;\r<br />\n  tonebuffer.BufferLength = (int)time;\r<br />\n<br />\nso why does it not call the stop event after that ?\r<br />\nwhat am I missing ?<br />\n",
+    "PostedDate": "2014-06-23T13:26:41.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1259102",
+    "ThreadId": "549364",
+    "Html": "can anyone help me with this?\r<br />\n<br />\nI really do not see anything else I can do to get it to stop once it is done\r<br />\nis there another class i should use with BufferedWaveProvider<br />\n",
+    "PostedDate": "2014-06-23T22:02:45.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "Released in NAudio 1.4",
+    "ClosedDate": "2011-05-27T13:35:54.98-07:00",
+    "CommentCount": 2,
+    "Custom": "",
+    "Description": "With the NAudio library I'm trying to mix some audio using a WaveMixerStream32 so I'm using WaveChannel32 to feed it the streams in the proper format. I've got an exception with the following message:\n\nOffset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.\n\nThe minimum example I could make that also throw that error didn't include WaveMixerStream32 at all with took me to the conclusion that the problem was in how I'm using WaveChannel32. The code is this:\n\nvar audio = new WaveFileReader(OriginalAudioFileName);\nvar audio32 = new WaveChannel32(new WaveFileReader(OriginalAudioFileName));\nWaveFileWriter.CreateWaveFile(PublicAudioFileName + \"audio.wav\", audio);\nWaveFileWriter.CreateWaveFile(PublicAudioFileName + \"audio32.wav\", audio32);\n\naudio.wav is generated just fine. audio32.wav is 58 bytes and that line thrown the exception.\n\nhttp://stackoverflow.com/questions/1994843/wavechannel32-gives-me-an-exception-offset-and-length-were-out-of-bounds",
+    "LastUpdatedDate": "2011-05-27T13:35:54.98-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-01-03T12:45:17.08-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveChannel32 gives me an exception: Offset and length were out of bounds",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 11377
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "have checked in a fix to WaveChannel32",
+      "PostedDate": "2010-01-04T02:56:47.98-08:00",
+      "Id": 41808
+    },
+    {
+      "Message": "It's working now! Thanks.",
+      "PostedDate": "2010-01-04T23:44:34.623-08:00",
+      "Id": 41809
+    }
+  ]
+}

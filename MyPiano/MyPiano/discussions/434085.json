@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1005130",
+    "ThreadId": "434085",
+    "Html": "Hello all,<br />\n<br />\nI am using WaveOutEvent and AudioFileReader class to play my audio files. I wanted to provide a functionality where user can play a given file for specified duration. Here there is a scenario where audio file duration could be less than the duration specified by user. So I want to replay the same file again and again until user specified duration completes. I tried following ways:<br />\n<ol>\n<li>Create WaveOutEvent instance, initialize it, play file, on PlayingStopped dispose this instance, create new WaveOutEvent instance, initialize it, play file, ... until duration completes. [But continuously creating and disposing WaveOutEvent instance throws AccessViolationException after some time]</li>\n<li>\nCreate WaveOutEvent instance, initialize it, play file, on PlayingStopped initalize it again, play file, ... until duration completes, and then dispose WaveOutEvent. [But this way is raising MMException with AlreadyAllocated result]<br />\n</li>\n</ol>\nIs there any other way to do so?<br />\nIf we set the Position of AudioFileReader to zero and then call WaveOutEvent.Play then its not working! Why so?<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2013-02-22T02:26:47.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006378",
+    "ThreadId": "434085",
+    "Html": "if you need to keep replaying the same file, I'd open the output device only once, and reposition the input file to the begining. Don't call initialize twice on the same instance of WaveOutEvent though - this isn;t a supported workflow in NAudio at the moment. I don't know why repositioning to the start should not work for you. You can test by creating an AudioFileReader, reading some data with Read, then setting Position =0, and do another Read. It should return &gt;0 bytes.<br />\n",
+    "PostedDate": "2013-02-25T08:20:48.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006722",
+    "ThreadId": "434085",
+    "Html": "Hello sir,<br />\nI tried using AudioFileReader in the way that you suggested and it is working as you said. That means re-positioning to the start should work for me.<br />\n<br />\nSo I was trying to find out what is going wrong and I found that when you call Play for the second time, the PlaybackThread waits infinitely at callbackEvent.WaitOne() call. Now this might be because when 1st PlaybackThread completes reading all the buffers and exits, callbackEvent must be remaining in non signaled state. Is it the case? and if yes then Should we call callbackEvent.Set() before exiting from the PlaybackThread?<br />\n<br />\nI have one more doubt, how come callbackEvent.WaitOne() is returning immediately for the first time? (I have this doubt because you have initialized callbackEvent with initial state as non signaled!)<br />\n",
+    "PostedDate": "2013-02-25T23:37:09.58-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006962",
+    "ThreadId": "434085",
+    "Html": "can you try the fix suggested here, and see if that resolves it for you?\r<br />\n<a href=\"http://naudio.codeplex.com/discussions/357995#post844154\" rel=\"nofollow\">http://naudio.codeplex.com/discussions/357995#post844154</a>\r<br />\n<br />\nIt's something on my TODO list for NAudio 1.7, but I've not got round to putting it in yet.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-26T07:00:20.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007373",
+    "ThreadId": "434085",
+    "Html": "I will try the suggested fix but could you please help me to clear my previous doubt (last para in my previous post).<br />\n",
+    "PostedDate": "2013-02-26T21:11:22.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007376",
+    "ThreadId": "434085",
+    "Html": "I tried the suggested fix, its working fine but we will force callbackEvent to go in signaled state each time when a new PlaybackThread is started which is not necessary if Stop was called previously (because stop is already calling callbackEvent.Set()).<br />\n<br />\nWhat if we call it as follows:<br />\n<pre><code>    private void DoPlayback()\n    {\n        if (this.buffers == null || this.waveStream == null)\n            return;\n\n        TimeSpan waitTime = TimeSpan.FromSeconds((double)this.buffers[0].BufferSize / (this.waveStream.WaveFormat.AverageBytesPerSecond * 2));\n        while (playbackState != PlaybackState.Stopped)\n        {\n            if (callbackEvent.WaitOne())\n            {\n                // requeue any buffers returned to us\n                if (playbackState == PlaybackState.Playing)\n                {\n                    int queued = 0;\n                    foreach (var buffer in buffers)\n                    {\n                        if (buffer.InQueue || buffer.OnDone())\n                        {\n                            queued++;\n                        }\n                    }\n                    if (queued == 0)\n                    {\n                        // we got to the end\n                        this.playbackState = PlaybackState.Stopped;\n\n                        callbackEvent.Set();          &lt;&lt;&lt;&lt;&lt;&lt;&lt; calling Set here\n                    }\n                }\n            }\n        }\n    }</code></pre>\n\n",
+    "PostedDate": "2013-02-26T21:21:02.273-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007513",
+    "ThreadId": "434085",
+    "Html": "sounds like a good suggestion. will try to get something like this into the next NAudio<br />\n",
+    "PostedDate": "2013-02-27T03:59:47.24-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202879",
+    "ThreadId": "434085",
+    "Html": "sorry it's taken a while, but this is now in the latest NAudio sourcecode<br />\n",
+    "PostedDate": "2014-02-05T03:16:32.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

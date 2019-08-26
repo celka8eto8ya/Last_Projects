@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1178220",
+    "ThreadId": "508602",
+    "Html": "can I increase my sound buffer size? \r<br />\n<br />\nright now I am getting \r<br />\n<br />\n17640 bytes coming in at a time. \r<br />\n<br />\nthen \r<br />\n<br />\ni do this code: \r<br />\n<br />\nint bytesRecorded = e.BytesRecorded;<br />\n<pre><code>    buffer1 = new double[(8192)];\n    //  WriteToFile(buffer, bytesRecorded);\n    int tempint = 0;\n    for (int index = 0; index &lt; 16384; index += 2)\n    {\n\n        short sample = (short)((buffer[index + 1] &lt;&lt; 8) |\n                                buffer[index + 0]);\n\n        float sample32 = sample / 32768f;\n        buffer1[tempint] = (double)sample32;\n        tempint++;</code></pre>\n\nand then I send it to my FFT \r<br />\n<br />\nmy FFT only works at 2^(number) samples at a time \r<br />\n<br />\nso I can only do 8192 samples at a time \r<br />\n<br />\nI wanted to do more samples at a time, so I can get an higher accuracy <br />\n",
+    "PostedDate": "2014-01-18T12:52:59.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1187624",
+    "ThreadId": "508602",
+    "Html": "can anyone help me?<br />\n",
+    "PostedDate": "2014-01-21T07:28:43.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1188738",
+    "ThreadId": "508602",
+    "Html": "Use a SampleChannel or ToSampleProvider to capture the audio samples using an event/callback function.\r<br />\n<br />\nIn the event/callback function you capture each sample (L and R values) one by one and add them to a List&lt;&gt; or an array with a size of 2048. When the sample count reaches 2048, send the data to the FFT and reset the array back to zero.<br />\n",
+    "PostedDate": "2014-01-21T15:43:46.003-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1189380",
+    "ThreadId": "508602",
+    "Html": "K24A3\r<br />\n<br />\nI do not understand...\r<br />\ncan you upload some sample code?\r<br />\nalso 2048 samples is less than 8192 samples\r<br />\nI want to do  65536 samples or more<br />\n",
+    "PostedDate": "2014-01-21T21:33:24.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1189626",
+    "ThreadId": "508602",
+    "Html": "This is for playback, but recording should be a similar setup<br />\n<pre><code>Init()\n{\n    WaveStream _waveStream = new AudioFileReader(sAudioFile);\n    SampleChannel _waveChannel =  new SampleChannel(_waveStream, true);\n\n    MeteringSampleProvider _postVolumeMeter;\n    _waveChannel.PreVolumeMeter += OnPreVolumeMeter;\n    _postVolumeMeter = new MeteringSampleProvider(_waveChannel);\n    _postVolumeMeter.StreamVolume += OnPostVolumeMeter;\n}\n\n\nList&lt;float&gt; FFTList = new FFTList();\n\n// This will be called 65536 or more times\nvoid OnPostVolumeMeter(object sender, StreamVolumeEventArgs e)\n{\n    FFTList.Add(e.MaxSampleValues[0]); // L\n    FFTList.Add(e.MaxSampleValues[1]); // R\n\n    if(FFTList.Count&gt;=2048)\n    {\n        //process FFT Data.... 2048 samples at a time\n        SendFFTDataToFFTControl(FFTList.Clone()); // YOUR FFT FUNCTION\n        FFTList.Clear();\n    }\n}</code></pre>\n\n&amp;#43 is a plus symbol<br />\n",
+    "PostedDate": "2014-01-21T22:50:46.78-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1191308",
+    "ThreadId": "508602",
+    "Html": "could you add some comments?<br />\n",
+    "PostedDate": "2014-01-22T10:05:55.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1191315",
+    "ThreadId": "508602",
+    "Html": "_postVolumeMeter.StreamVolume += OnPostVolumeMeter;\r<br />\n<br />\nis a event?\r<br />\nso does it happen when the microphone buffer is full?<br />\n",
+    "PostedDate": "2014-01-22T10:07:11.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1191731",
+    "ThreadId": "508602",
+    "Html": "you can adjust the buffer sizes for recording (e.g you could increase latency), but with some types of recording device this is not necessarily possible or desirable. So the general approach suggested by K24A3 is the right one. However, it will not work as desired, since you are doing the FFT only on max values.\r<br />\n<br />\nPut received samples into a buffer and when you have the desired amount, perform the FFT. If you look through the NAudio demo code, you'll see examples of this in action. I often call the class that does this a &quot;<a href=\"https://naudio.codeplex.com/SourceControl/latest#NAudioWpfDemo/AudioPlaybackDemo/SampleAggregator.cs\" rel=\"nofollow\">SampleAggregator</a>&quot;<br />\n",
+    "PostedDate": "2014-01-22T12:43:41.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1192246",
+    "ThreadId": "508602",
+    "Html": "MarthHeath\r<br />\n<br />\nhow do i change the buffer sizes?<br />\n",
+    "PostedDate": "2014-01-22T16:47:07.573-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1192829",
+    "ThreadId": "508602",
+    "Html": "Specify it in the constructor. For example:<br />\n<pre><code>            _wavein = new WaveIn()\n            {\n                BufferMilliseconds = 100; // Default 100\n            };  </code></pre>\n\n",
+    "PostedDate": "2014-01-22T22:44:46.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193188",
+    "ThreadId": "508602",
+    "Html": "update<br />\n<br />\nok i just tried this<br />\n<br />\nvoid Voice()<br />\n<pre><code>    {\n        //Byte[] buffer = new Byte[10];\n        // sound from the Mic\n\n        int deviceNumber = 0;\n        waveIn = new WaveIn();\n        waveIn.BufferMilliseconds = 32768;\n        waveIn.DeviceNumber = deviceNumber;\n        waveIn.DataAvailable += waveIn_DataAvailable;\n        waveIn.WaveFormat = new WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(deviceNumber).Channels);\n        waveIn.StartRecording();\n\n\n    }\n</code></pre>\n\nand now I get now my buffer is 1485304.<br />\nbut how?<br />\n<br />\nI am sampling at 44100 Hz.<br />\nwhich is 2.267573e-5  S.<br />\nand <br />\n32768ms * 0.001S = 32.768S<br />\nso my buffer should only be  1445068.8  samples big<br />\nbut it is 1485304  samples big?<br />\nI am using the debugger to check the size of my buffer<br />\nI did (32768 * 0.001) / (1/44100) = 1445068.8 samples<br />\nwhat math am I doing wrong ? or is C# rounding weirdly <br />\nand how do I get my buffer to be 44100 sizes big ?<br />\n",
+    "PostedDate": "2014-01-23T06:44:39.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193234",
+    "ThreadId": "508602",
+    "Html": "yes, I really would recommend steering clear of upping the buffer sizes beyond a max of 500ms. The SampleAggregator approach I mentioned above is a more reliable approach<br />\n",
+    "PostedDate": "2014-01-23T07:35:38.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

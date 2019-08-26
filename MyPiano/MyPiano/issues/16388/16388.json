@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "It would be nice if the common controller values BankSelectMSB (0) and BankSelectLSB (32) were added to the MIdiContoller enum. The current workaround is to simply specify the integer values, but an enum entry would make things a lot clearer.\r\n\r\nA complete list of controller values is available at:\r\nhttp://www.midi.org/techspecs/midimessages.php#3",
+    "LastUpdatedDate": "2013-02-21T07:04:47.243-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-02-19T18:01:25.28-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Two Common Controller Constants Missing From MidiController Enum",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16388
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "good suggestion, I've added them and a few other common ones",
+      "PostedDate": "2013-02-20T01:29:04.733-08:00",
+      "Id": 90912
+    },
+    {
+      "Message": "thanks for implementing my suggestion!",
+      "PostedDate": "2013-02-21T07:04:47.243-08:00",
+      "Id": 91078
+    }
+  ]
+}

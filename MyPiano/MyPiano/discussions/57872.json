@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "195651",
+    "ThreadId": "57872",
+    "Html": "<p>Hi Mark,</p>\r\n<p>First off all, congrats on developing this library. It is a very usefull codebase and the only free one worth looking ionto that I found.</p>\r\n<p>I would like to know if MIDI and/or Ogg playback is possible because the Demo only showcase MP3 and WAV playback at the time and we need to implement MIDI playback at least.</p>\r\n<p>Is there a way I could add MIDI playback to the library and if yes, is there a procedure I could follow to get things up and running quickly ?</p>\r\n<p>Thanks for your time!</p>\r\n<p>JD.</p>",
+    "PostedDate": "2009-05-29T05:52:30.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "198914",
+    "ThreadId": "57872",
+    "Html": "<p>Hi JD,</p>\r\n<p>I'm afraid that ogg playback is not supported yet. To do so, I would probably try to find a managed library that can convert ogg to WAV, and from there it would be simple to create an ogg reader WAV stream. MIDI playback is more involved, as you need a synthesizer (hardware or software) to play back the sounds. At some point in the future I would love to see if I could use some of the VST.NET project to load a soft-synth and play back MIDI.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-06-08T01:37:57.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "226624",
+    "ThreadId": "57872",
+    "Html": "<p>Hi Mark, what about playing MIDI? I mean playing it from memory and not playing a file directly.</p>\r\n<p>I'm going to write a MIDI player with some filtering features, like note pitching, channel muting and tempo changer.</p>\r\n<p>I'm comparing NAudio with the MIDIToolkit from CodeProject (<a href=\"http://www.codeproject.com/KB/audio-video/MIDIToolkit.aspx\">here</a>).<br>MIDI Toolkit can  play MIDI directly from its model, without the needing to save it into a file.<br>It raises an event at each event&nbsp; sent to MIDI Out, this gives an hook to patch the MIDI on the fly.</p>\r\n<p>This is great for me because:</p>\r\n<ol>\r\n<li>I can read the MIDI and play it directly</li>\r\n<li>I can apply MIDI filters at runtime, enabling and disabling them while playing</li>\r\n<li>I don't need to create several temp file</li>\r\n</ol>\r\n<p>I'd like to use NAudio because I think its object model is better, the library seems faster and, also, it has analog audio support which could be a great plus in the future.</p>\r\n<p>Is there a way to play a MIDI directly from its object model?</p>\r\n<p>Thanks for your work</p>",
+    "PostedDate": "2009-08-22T05:11:53.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "226827",
+    "ThreadId": "57872",
+    "Html": "<p>Hi nicorac,</p>\r\n<p>I'm afraid I haven't finished writing the wrappers for the Windows midiOut API's. Part of the reason is that they are only really useful if you are controlling external hardware or have a MIDI synthesizer on your soundcard. For those people like myself who rely mainly on software synths, the midiOut is of limited benefit. Maybe a future feature of NAudio would be to expand this area, but I am not actively working on it at the moment.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-08-23T09:04:44.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

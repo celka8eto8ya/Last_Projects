@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1070004",
+    "ThreadId": "450466",
+    "Html": "I'm using WaveOutEvent to play music files. But how do i use this to implement simple crossfading, so a new song starts like 5 sec before that current is done.\r<br />\n<br />\nThanks in advance!<br />\n",
+    "PostedDate": "2013-07-18T05:48:16.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070488",
+    "ThreadId": "450466",
+    "Html": "To play two things at once, use the MixingSampleProvider. And to fade in and out, use the FadeInOutSampleProvider. So begin a fade-out on the original file, and then add a new input to the mixer that is at the beginning of a fade-in.<br />\n",
+    "PostedDate": "2013-07-19T07:05:46.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070855",
+    "ThreadId": "450466",
+    "Html": "Thanks for your help.\r<br />\n<br />\n<br />\nI'm not sure how to do this.. this is my code for playing a file. I clean up and dispose everything before this between every play.<br />\n<pre><code>            WaveStream readerStream = null;\n            WaveFormat format;\n\n            readerStream = new Mp3FileReader(mediaPath);\n\n            format = WaveFormat.CreateIeeeFloatWaveFormat(readerStream.WaveFormat.SampleRate, readerStream.WaveFormat.Channels);\n\n            // Provide PCM conversion if needed\n            if (readerStream.WaveFormat.Encoding != WaveFormatEncoding.Pcm)\n            {\n                readerStream = WaveFormatConversionStream.CreatePcmStream(readerStream);\n                readerStream = new BlockAlignReductionStream(readerStream);\n            }\n\n            // Provide conversion to 16 bits if needed\n            if (readerStream.WaveFormat.BitsPerSample != 16)\n            {\n                readerStream = new WaveFormatConversionStream(format, readerStream);\n            }\n\n            mixingSampleProvider = new MixingSampleProvider(format);\n            waveChannel = new WaveChannel32(readerStream);\n\n            // Chain the DSP Equalizer Effect - DSP Equalizer must come AFTER WaveChannel32 because it\n            //  was coded to expect Ieee Float samples, NOT PCM samples\n            mixerEffect = new EqualizerEffect();\n            mixerEffect.OnFactorChanges();\n\n            readerStream = new DSPEffectStream(waveChannel, mixerEffect);\n\n            //Convert wave to samples\n            waveToSample = new WaveToSampleProvider(waveChannel);\n\n            //Provide metering support\n            meterSampleProvider = new MeteringSampleProvider(waveToSample);\n\n            //Provide volume support\n            volumeSampleProvider = new VolumeSampleProvider(meterSampleProvider);\n\n            //Add the samples to the mixed stream used to enable crossfading\n            mixingSampleProvider.AddMixerInput(volumeSampleProvider);\n\n            //Convert samples back to wave\n            sampleToWave = new SampleToWaveProvider(mixingSampleProvider);\n\n            waveOutDevice = new WaveOutEvent();\n            waveOutDevice.DeviceNumber = playbackAudioDevice.Id;\n            waveOutDevice.Init(sampleToWave);</code></pre>\n\nI obviously can't repeat that to enable crossfade. How should i implement this? and is this the correct way of initializing the different providers?\r<br />\n<br />\nI hope you can push me in the right direction :)<br />\n",
+    "PostedDate": "2013-07-20T13:25:21.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071319",
+    "ThreadId": "450466",
+    "Html": "And how is i supposed to clean up correcly?\r<br />\n<br />\nI sometimes get a &quot;dispose not called&quot;<br />\n<pre><code>if (waveOutDevice != null)\n            {\n                waveOutDevice.Stop();\n                waveOutDevice.Dispose();\n                waveOutDevice = null;\n            }\n\n            if (waveChannel != null)\n            {\n                waveChannel.Close();\n                waveChannel.Dispose();\n                waveChannel = null;\n            }</code></pre>\n\n",
+    "PostedDate": "2013-07-22T07:40:18.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071355",
+    "ThreadId": "450466",
+    "Html": "did you Dispose your mp3filereader?\r<br />\nAlso, what version of NAudio are you using? Only the debug build reports dispose not called issues\r<br />\nAnd Mp3FileReader already returns 16 bit PCM, so no need for the extra conversion steps.\r<br />\nYour audio pipeline is OK, just include the FadeInOutSampleProvider in the chain as well<br />\n",
+    "PostedDate": "2013-07-22T08:27:19.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071687",
+    "ThreadId": "450466",
+    "Html": "I tested it ealier today, at the dispose not called error occoures because of an exception for at specific file. So not a general problem i think.\r<br />\n<br />\nI'm using 1.6 and yes, i'm currently only running it in debug mode :)\r<br />\n<br />\nOkay cool, thanks.\r<br />\n<br />\n<br />\nI'm not sure how to do this. Can you answer these questions:\r<br />\n<br />\nThe code i posted is from a method that i call every time i play a new file. So it disposes it all and reinitialize all of it. Is that wrong when i want to crossfade? i mean, should i reuse some of it?\r<br />\nThe reason that i get confused is that if i want to crossfade, i would have to add a stream into the mixingSampleProvider correct? but what about all the other code that touches the stream, like volume, mixereffect etc. \r<br />\n<br />\nI hope it makes sense ;)<br />\n",
+    "PostedDate": "2013-07-23T02:58:48.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072152",
+    "ThreadId": "450466",
+    "Html": "the fade step is the last step in the audio pipeline. You just put it after volume, mixereffect etc.<br />\n",
+    "PostedDate": "2013-07-24T01:34:07.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072236",
+    "ThreadId": "450466",
+    "Html": "Okay thanks, but what about the closing/disposing of it all between the song change? :)<br />\n",
+    "PostedDate": "2013-07-24T05:29:52.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1073439",
+    "ThreadId": "450466",
+    "Html": "when the fadeout has ended, you'd need to dispose the file that had just finished playing and remove it from the mixer inputs. This will require you to make your own ISampleProvider for crossfading. NAudio does not include a ready made part for this, but I will consider it perhaps for a future demo<br />\n",
+    "PostedDate": "2013-07-26T05:25:22.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

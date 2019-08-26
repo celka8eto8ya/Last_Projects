@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "984305",
+    "ThreadId": "428956",
+    "Html": "\r\n<p>Does naudio have any plans to support playing AAC (.m4a) files? Right now when you try to load one into AudioFileReader</p>\r\n<p>fileWaveStream<span> </span><span>=</span><span> </span><span>new</span><span>\r\n</span><span>AudioFileReader</span><span>(@</span>&quot;c:\\music\\test.m4a&quot;<span>);</span></p>\r\n",
+    "PostedDate": "2013-01-08T21:37:32.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "984309",
+    "ThreadId": "428956",
+    "Html": "\r\n<p>The issue is with&nbsp;CreateReaderStream<span>(</span><span>string</span><span> </span>\r\nfileName<span>) in audioFileReader it doesn't look for anything other than &quot;.wav&quot;,&quot;.mp3&quot;, and &quot;.aiff&quot;. I'm I just stupid and missing something and should be using another FileReader?&nbsp;</span></p>\r\n",
+    "PostedDate": "2013-01-08T21:46:13.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "985680",
+    "ThreadId": "428956",
+    "Html": "\r\n<p>You will be able to play AAC in NAudio 1.7 using the MediaFoundationReader so long as you are using Windows 7 and above. You can try this out by building the latest code or getting a prerelease from NuGet if you are interested.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2013-01-11T14:18:22.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248639",
+    "ThreadId": "428956",
+    "Html": "I have a whole house jukebox application running on Windows XP. I just updated it from NAudio 1.5 to NAudio 1.7 and so far it is mostly working.\r<br />\nQuestion 1 - The waveOutDevice.PlaybackStopped event changed signature in NAudio 1.6, but that was easily found and fixed. But now, if I manually Stop playback, the event is properly detected, but if the song reaches End-Of-File, the event is not raised/detected ( and the application restarts). In the past we had to use  mainOutputStream.PadWithZeroes = False to ensure we got an event on EOF. Is there a new trick?\r<br />\n<br />\nQuestion 2 -  I tried to play an AAC file and got an exception (of course - you said &quot;Windows 7 and above&quot;). My question is, should I use the MediaFoundationReader for WMA files? I.E. is it just the AAC files that need Windows 7, or is it the MediaFoundationReader?\r<br />\n<br />\nThanks,\r<br />\nJake<br />\n",
+    "PostedDate": "2014-05-22T16:03:18.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248683",
+    "ThreadId": "428956",
+    "Html": "It turns out that question #1 is a regression issue. The same problem, and the same fix, was discussed in <a href=\"https://naudio.codeplex.com/discussions/399818\" rel=\"nofollow\">this</a>this thread. I made the same changes and it is working now.\r<br />\n<br />\nQuestion #2 remains.\r<br />\n<br />\nJake<br />\n",
+    "PostedDate": "2014-05-22T20:44:33.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248851",
+    "ThreadId": "428956",
+    "Html": "MediaFoundationReader will be able to play WMA. NAudio does also have a separate WMA assembly that you could use if Windows XP support is needed with a class called WmaFileReader.\r<br />\n<br />\nIt's a pain that the SyncContext in ASP.NET doesn't work. I might have to make it injectable. I wasn't really expecting too many people to be playing audio on a web server.<br />\n",
+    "PostedDate": "2014-05-23T05:53:50.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248938",
+    "ThreadId": "428956",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nIt's a pain that the SyncContext in ASP.NET doesn't work. I might have to make it injectable. I wasn't really expecting too many people to be playing audio on a web server.<br />\n</blockquote>\nIf I'm the only one using that class in a Windows Service (i.e. not in a Windows Form), then I could look into the issue and perhaps debug it further. Does your roadmap includes a future for WaveOutEvent? If so, and if you want me to look into it, just let me know where to look, for a starting point to get up to speed on that portion of the code.\r<br />\n<br />\nJake<br />\n",
+    "PostedDate": "2014-05-23T08:12:06.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

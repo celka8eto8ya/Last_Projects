@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "932367",
+    "ThreadId": "400780",
+    "Html": "\r\n<p></p>\r\n<div>First, congratulations for the work you've done. It's really awesome.</div>\r\n<div>Secondly, for comming back to the point, I wanted to know if it's possible for you to use&nbsp;<span>Git</span>&nbsp;as distributed version control system for your source code repositories.&nbsp;<span>Git</span>&nbsp;makes extending and contributing to\r\n the projects much easier than with Subversion and CVS - no more any need to 'join the team' or to 'ask for write access', just fork and code. Whenever we have something ready simply ping you so you can pull from our fork and integrate it back into mainline.Git</div>\r\n<div></div>\r\n<div>Valeriu</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-10-25T06:03:23.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932373",
+    "ThreadId": "400780",
+    "Html": "<p>I use Mercurial for NAudio, so you can fork and issue pull requests. Just click Source Code above and then Fork.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-10-25T06:09:52.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932382",
+    "ThreadId": "400780",
+    "Html": "<p>I'm doing that already. I've forked the NAudio source code and it's ok. Nonetheless i think that Github, which is more than just a git server control, it offers more of a social coding network and brings more contributors to interesting projects, like this one. It offers a greater visualisation of changes occuring on all the differents forks with links to your commits hierarchy. The same for the code browsing ... The web interface of github is way faster / better then CodePlex.</p>\r\n<p>But in the end, I'm not saying that CodePlex is not good enough but I'm just proposing you to take a look (whenever you have some free time) on GitHub. You might like it.</p>\r\n<p>Here's a url to one of my projects source code browser :&nbsp;<a href=\"https://github.com/lvaleriu/bltoolkit\">https://github.com/lvaleriu/bltoolkit</a></p>\r\n<p>, all forks graph :&nbsp;<a href=\"https://github.com/igor-tkachev/bltoolkit/network\">https://github.com/igor-tkachev/bltoolkit/network</a></p>\r\n<p>Valeriu</p>",
+    "PostedDate": "2012-10-25T06:21:16.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932431",
+    "ThreadId": "400780",
+    "Html": "<p>Yes, github is really nice and I have an account there and have contibuted to some projects.</p>\r\n<p>There are a few reasons why I have no plans at the moment to move there though:</p>\r\n<p>- There is a long history of discussions and issues for NAudio on Codeplex that would not easily move across. Also existing forks would need to be moved.</p>\r\n<p>- I prefer Mercurial to Git and github forces all projects to use Git.</p>\r\n<p>- My place of work blocks the ports git uses, making it very hard for me to do anything with git at work.</p>\r\n<p>My hope is that codeplex keeps evolving to be competitive with github. There have been some steps in the right direction recently.</p>",
+    "PostedDate": "2012-10-25T07:22:46.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "937386",
+    "ThreadId": "400780",
+    "Html": "Thank you very much for this clarification. I understend very well your motivation to rest on CodePlex and I respect it.\r\n<div><br>\r\n<br>\r\n<div>On Thu, Oct 25, 2012 at 4:22 PM, markheath <span dir=\"ltr\">&lt;<a href=\"mailto:notifications@codeplex.com\" target=\"_blank\">notifications@codeplex.com</a>&gt;</span> wrote:<br>\r\n<blockquote style=\"margin:0 0 0 .8ex; border-left:1px #ccc solid; padding-left:1ex\">\r\n<div>\r\n<p>From: markheath</p>\r\n<div>\r\n<p>Yes, github is really nice and I have an account there and have contibuted to some projects.</p>\r\n<p>There are a few reasons why I have no plans at the moment to move there though:</p>\r\n<p>- There is a long history of discussions and issues for NAudio on Codeplex that would not easily move across. Also existing forks would need to be moved.</p>\r\n<p>- I prefer Mercurial to Git and github forces all projects to use Git.</p>\r\n<p>- My place of work blocks the ports git uses, making it very hard for me to do anything with git at work.</p>\r\n<p>My hope is that codeplex keeps evolving to be competitive with github. There have been some steps in the right direction recently.</p>\r\n</div>\r\n<div>\r\n<div>\r\n<p>Read the <a href=\"http://naudio.codeplex.com/discussions/400780#post932431\" target=\"_blank\">\r\nfull discussion online</a>.</p>\r\n<p>To add a post to this discussion, reply to this email (<a href=\"mailto:naudio@discussions.codeplex.com?subject=[naudio:400780]\" target=\"_blank\">naudio@discussions.codeplex.com</a>)</p>\r\n<p>To start a new discussion for this project, email <a href=\"mailto:naudio@discussions.codeplex.com\" target=\"_blank\">\r\nnaudio@discussions.codeplex.com</a></p>\r\n<p>You are receiving this email because you subscribed to this discussion on CodePlex. You can\r\n<a href=\"https://naudio.codeplex.com/discussions/400780/unsubscribe/\" target=\"_blank\">\r\nunsubscribe</a> on CodePlex.com.</p>\r\n<p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at CodePlex.com</p>\r\n</div>\r\n</div>\r\n</div>\r\n</blockquote>\r\n</div>\r\n<br>\r\n</div>\r\n",
+    "PostedDate": "2012-11-06T10:05:44.293-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

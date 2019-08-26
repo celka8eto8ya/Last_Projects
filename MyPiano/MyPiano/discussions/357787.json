@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "842920",
+    "ThreadId": "357787",
+    "Html": "\r\n<p>My program uses Naudio.Wave.WaveOut to play out audio on a USB audio device. If the USB audio device is removed during playback to GUI playback panel is no longer updated. Any&nbsp;interaction&nbsp;with the&nbsp;playback panel&nbsp;result in the whole&nbsp;program&nbsp;to\r\n freeze. My&nbsp;approach&nbsp;was to move all the&nbsp;Naudio.Wave.WaveOut functionality into its&nbsp;own&nbsp;thread (BackgroundWorker to be presice) so that if playback bombs out it will not influence the GUI thread in a negative manner. However, try as\r\n I may (wasting almost 2 days) I just could not get audio to play out using &nbsp;Naudio.Wave.WaveOut from a non GUI thread. I also tried WaveOutEvent without luck. All I got was one callback with stopped state after issuing play.</p>\r\n<p>&nbsp;</p>\r\n<p>Is there something fundamental about WaveOut and WaveOutEvent that it will only work in a GUI&nbsp;thread? Also I want to add that WaveOut is way more robust than WaveOutEvent if you really hammer a play/pause button.</p>\r\n",
+    "PostedDate": "2012-05-30T23:03:50.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "843015",
+    "ThreadId": "357787",
+    "Html": "<p>WaveOutEvent is what you should be using if you don't want audio on the GUI thread. I fairly recently <a href=\"http://naudio.codeplex.com/SourceControl/changeset/changes/b60118a6fd78\">added some code</a> in to handle removing USB audio devices so make sure you are working with the very latest NAudio (I have some preview builds on nuget)</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-05-31T03:35:33.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "843039",
+    "ThreadId": "357787",
+    "Html": "<p>Yes, I did use the very latest code, naudio_60216c3b9380, &nbsp;and in a &nbsp;non GUI thread WaveOutEvent was not working for me.</p>",
+    "PostedDate": "2012-05-31T04:18:05.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "843060",
+    "ThreadId": "357787",
+    "Html": "<p>what about if you run NAudio demo? does playback work as normal in that with WaveOutEvent selected?</p>",
+    "PostedDate": "2012-05-31T05:26:21.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "843385",
+    "ThreadId": "357787",
+    "Html": "<p>In NAudio Demo (x64), using AudioPlaybackPanel with the Ouptut driver set to 'WaveOut' and the callback Mechanism set to 'Event' playback does work. WaveOutEvent is used but it is defined within the scope of AudioPlaybackPanel. My&nbsp;initial&nbsp;thought was that Playback was happening on the GUI thread.&nbsp;On closer examination I realised that playback is indeed happening in it own thread. Removing the USB audio device during playback did result in a stop event in which e.Message was not null. So all is well with the demo.</p>\r\n<p>&nbsp;</p>\r\n<p>Removing the USB audio device during playback does not in all cases result in a stop event. My program is&nbsp;capable&nbsp;of recording and playback&nbsp;independently and both can happen at the same time. When the USB&nbsp;audio&nbsp;device&nbsp;is removed the playback stop event never fires (probably&nbsp;because WaveIn bombs first and no further&nbsp;clean-up&nbsp;is scheduled).</p>\r\n<p>&nbsp;</p>\r\n<p>I guess if either the recording or playback bombs that both are no longer functional.&nbsp;</p>",
+    "PostedDate": "2012-05-31T21:04:21.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "843823",
+    "ThreadId": "357787",
+    "Html": "<p>I would expect both WaveIn and WaveOut to report errors on the USB device being removed. I can't understand why you wouldn't get a playback stopped event.</p>",
+    "PostedDate": "2012-06-02T02:29:18.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "905294",
+    "ThreadId": "357787",
+    "Html": "<p>WaveOut in FunctionCallback mode does not generate a PlaybackStopped event on USB device pull out. I switched to WaveOutEvent and that worked.</p>",
+    "PostedDate": "2012-08-28T12:45:24.4-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908765",
+    "ThreadId": "357787",
+    "Html": "<p>I don't recommend using FunctionCallback. It has been nothing but trouble. WaveOutEvent is the preferred approach.</p>",
+    "PostedDate": "2012-09-05T09:38:54.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

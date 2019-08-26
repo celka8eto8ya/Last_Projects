@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "532816",
+    "ThreadId": "237575",
+    "Html": "\r\n<p>Hello.</p>\r\n<p>I need to conver midi to my own format.</p>\r\n<p>How can i convert MidiEvent.AbsoluteTime to milliseconds?</p>\r\n",
+    "PostedDate": "2010-12-08T05:05:00.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "533897",
+    "ThreadId": "237575",
+    "Html": "\r\n<p>you need to work it out based on the tempo and the delta ticks per quarter note. I can't remember the formula off-hand, but you should be able to find one on google</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-10T06:51:11.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "551754",
+    "ThreadId": "237575",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>markheath wrote:</strong><br>\r\n<p>you need to work it out based on the tempo and the delta ticks per quarter note. I can't remember the formula off-hand, but you should be able to find one on google</p>\r\n<p>Mark</p>\r\n</blockquote>\r\n<p>Hello Mark,<br>\r\nfirst off all let me say, your naudio library is great. <br>\r\nI try to use it, for my own programmed Database in C# to analyize midi-File collections. I made some changes, like Yamaha XG Sysex a.s.o, but I didn't find the solution to calculate the length of a midifile.\r\n<br>\r\nI tried to compare the length-value from mci-api, absoluteTime, Tempo and deltaTicksPerQuarterNote (from class MidiFile) but it seems that here is no relation.</p>\r\n<p>Please, could you post how the midifile length (in ms) can be calculated?</p>\r\n<p>Thanks of all midibase:)</p>\r\n",
+    "PostedDate": "2011-01-19T00:24:59.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "605320",
+    "ThreadId": "237575",
+    "Html": "<p>I&nbsp;used this method to calculate how many micro second for a quater note within a precise BPM. So maybe it will help.</p>\n<p><br />/// M&eacute;thod to calculate how many micro second for each quater note at a precise BPM.</p>\n<p>public static int Calculator_micro_second_4th_for_bpm(double bpm)<br />{<br />&nbsp; //one micro second = 0,000001 second<br />&nbsp; //So, multiplication by 1000000 (1 million)<br />&nbsp; const int microsecond= 1000000;<br />&nbsp; int answer = 0;<br />&nbsp; double temp=60;<br />&nbsp; temp = temp / ((double)bpm);<br />&nbsp; temp = temp * microsecond;<br />&nbsp; answer = (int)temp;<br />&nbsp; return answer;<br />}</p>",
+    "PostedDate": "2011-04-30T11:02:55.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

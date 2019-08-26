@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "106694",
+    "ThreadId": "32147",
+    "Html": "I should implement this function in my project, Now I do not know how to implement this function. I got this NAudio component, but I don't know how to use it. Please give a help for this.<br>\r\n&nbsp;<br>\r\nThanks and best regards!\r\n",
+    "PostedDate": "2008-07-23T19:08:47.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "108184",
+    "ThreadId": "32147",
+    "Html": "Hi there,<br>\r\nYour soundcard probably already supports feeding the input from line-in out to the output of your soundcard, so no programming is needed at all.<br>\r\nTo do this within NAudio, you need to use the WaveInStream and when you get an event indicating that you have captured some audio, buffer it. Then you would need to create a custom WaveStream that could supply the buffered data to the WaveOut interface (which would need to be set at the same sample rate and bit depth).<br>\r\n",
+    "PostedDate": "2008-07-31T02:05:47.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "115101",
+    "ThreadId": "32147",
+    "Html": "Dear Markheath!<br>\r\n<br>\r\nPlease tell about how to create a custom Wavestream to supply buffered data to WaveOut Interface.<br>\r\n<br>\r\nRegards<br>\r\n<br>\r\n",
+    "PostedDate": "2008-09-01T03:20:06.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "115831",
+    "ThreadId": "32147",
+    "Html": "you create a class that inherits from WaveStream. You will need to override the Read method to provide bytes from your buffer.<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-09-03T15:21:42.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "246016",
+    "ThreadId": "32147",
+    "Html": "<p>i am new to audio stuff. can you post the read function of the derived wavestream for this.</p>",
+    "PostedDate": "2009-10-15T06:26:40.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

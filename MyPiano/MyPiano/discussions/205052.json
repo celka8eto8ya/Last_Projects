@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "418494",
+    "ThreadId": "205052",
+    "Html": "<p>&nbsp;</p>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">d:\\projects\\soundshop\\ConsoleApplication2\\ConsoleApplication2\\Program.cs(18,20): error CS1729: 'NAudio.Wave.WaveIn' does not contain a constructor that takes 2 arguments</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">d:\\projects\\soundshop\\ConsoleApplication2\\ConsoleApplication2\\Program.cs(21,35): error CS0120: An object reference is required for the non-static field, method, or property 'ConsoleApplication2.Program.waveInStream_DataAvailable(object, NAudio.Wave.WaveInEventArgs)'</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">\r\n<p>d:\\projects\\soundshop\\ConsoleApplication2\\ConsoleApplication2\\Program.cs(27,10): (Related location</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>)</p>\r\n</div>\r\n<p>\r\n<p>I tried using the example at&nbsp;http://opensebj.blogspot.com/2009/04/naudio-tutorial-5-recording-audio.html to record audio. &nbsp;here's my exact code:</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<p>using NAudio.CoreAudioApi;<br>using NAudio.Wave;<br>using System;<br>using System.Collections.Generic;<br>using System.Linq;<br>using System.Text;</p>\r\n<p>namespace ConsoleApplication2<br>{<br>&nbsp;&nbsp;class Program<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp; &nbsp;static void Main(string[] args)<br>&nbsp;&nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp;WaveIn waveInStream;</p>\r\n<p>&nbsp;&nbsp; &nbsp;waveInStream = new WaveIn(44100,2);</p>\r\n<p>&nbsp;&nbsp; &nbsp;//waveInStream = new WaveIn();</p>\r\n<p>&nbsp;&nbsp; &nbsp;waveInStream.DataAvailable += new EventHandler&lt;WaveInEventArgs&gt;(waveInStream_DataAvailable);</p>\r\n<p>&nbsp;&nbsp; &nbsp;waveInStream.StartRecording();</p>\r\n<p>&nbsp;&nbsp; &nbsp;}</p>\r\n<p>&nbsp;&nbsp; &nbsp;void waveInStream_DataAvailable(object sender, WaveInEventArgs e)</p>\r\n<p>&nbsp;&nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp;}</p>\r\n<p>&nbsp;&nbsp; &nbsp;}</p>\r\n<p>&nbsp;&nbsp;}</p>\r\n<div></div>\r\n<div>I get these errors:</div>\r\n<div></div>\r\n<div>d:\\projects\\soundshop\\ConsoleApplication2\\ConsoleApplication2\\Program.cs(18,20): error CS1729: 'NAudio.Wave.WaveIn' does not contain a constructor that takes 2 arguments</div>\r\n</p>\r\n<p>d:\\projects\\soundshop\\ConsoleApplication2\\ConsoleApplication2\\Program.cs(21,35): error CS0120: An object reference is required for the non-static field, method, or property 'ConsoleApplication2.Program.waveInStream_DataAvailable(object, NAudio.Wave.WaveInEventArgs)'</p>\r\n<p>using visual studio 2010</p>\r\n<p>&nbsp;</p>\r\n</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-15T18:11:07.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423629",
+    "ThreadId": "205052",
+    "Html": "<p>yes, the WaveIn signature has changed. Call the parameterless constructor and then set the desired capture format by setting the WaveFormat property.</p>\r\n<p>I would advise you create a GUI application rather than a console app, as your application will exit before anything has been recorded as it stands</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-25T08:42:48.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "453002",
+    "ThreadId": "205052",
+    "Html": "can you please show the equivalent code for that? I'm having the same problem.",
+    "PostedDate": "2010-06-08T07:41:30.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

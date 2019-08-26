@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "468307",
+    "ThreadId": "219711",
+    "Html": "<p>Hi,</p>\r\n<p>I have a sound card with 8 mono outputs. I would like to create an application that allows me to play different .wav files simultaniously (synchronised)&nbsp;through outputs that I have specified - i.e. wav1 through outputs 1 &amp; 2 and wav2 through outputs 3 &amp; 4. Is this possible using nAudio? How would I go about acheiving this?</p>\r\n<p>Thanks in advance...&nbsp;</p>",
+    "PostedDate": "2010-07-16T11:18:47.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "468332",
+    "ThreadId": "219711",
+    "Html": "You might find that the different outputs are presented as WaveOut devices in stereo pairs already. I would have an experiment with the different WaveOut devices on your machine and see what happens. This kind of thing is very much down to the soundcard manufacturer's approach to writing drivers.\r\n\r\nMark",
+    "PostedDate": "2010-07-16T12:43:31.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "468449",
+    "ThreadId": "219711",
+    "Html": "<p>Thanks Mark,</p>\r\n<p>I'll do some experimenting...</p>",
+    "PostedDate": "2010-07-16T23:53:12.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

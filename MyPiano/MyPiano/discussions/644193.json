@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1441848",
+    "ThreadId": "644193",
+    "Html": "Hovering over the class gives me a short definition: Buffered WaveProvider taking source data from WaveIn. \r<br />\n<br />\nIt's a little too general so I'm not sure of its uses. I'm looking at some code from a sample project I found on youtube to try and understand this library better. But what I'm trying to achieve and what the original person who wrote the code were trying to achieve differ somewhat along the way. \r<br />\n<br />\nSo I just want to know a bit about this class, and then I can see if it has a place within my project. <br />\n",
+    "PostedDate": "2015-08-25T07:30:11.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448890",
+    "ThreadId": "644193",
+    "Html": "It basically saves you wiring up a <code>BufferedWaveProvider</code> to a <code>WaveIn</code>, but it may be dropped in a future version, as it has not been maintained for a while, and a helper method could probably make the connection just as well.<br />\n",
+    "PostedDate": "2015-10-17T03:35:04.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1228908",
+    "ThreadId": "540778",
+    "Html": "Hi\r<br />\n<br />\nI wonder if anyone can point out what's going wrong. Sometimes when I play music for long periods, the music just stops playing.\r<br />\n<br />\nAfter leaving my PC up and running overnight I was able to debug it and I noticed that WasapiOutRT's PlaybackState was Playing but underlying WaveStream's CurrentTime didn't change. WasapiOutRT had buffer of about 80k bytes. I tried pausing/stopping the player and skipping the wavestream and then playing again but it was still stuck.\r<br />\n<br />\nThis might happen in couple of hours or overnight or sometimes it takes even longer. It's not related to any song.\r<br />\n<br />\nI don't dispose my WasapiOutRT or MixingSampleProvider/SampleToWaveProvider at all (I do dispose WaveStream and remove them from mixing sample provider). According to task manager my app's memory consumption stays low.\r<br />\n<br />\nHere is part of my initialization code:<br />\n<pre><code>        NAudio.MediaFoundation.MediaFoundationApi.Startup();\n        this.WasapiPlayer = new WasapiOutRT(AudioClientShareMode.Shared, 200);\n\n        this.Mixer = new NAudio.Wave.SampleProviders.MixingSampleProvider(new ISampleProvider[] { item.FadeInOutProvider });\n\n        this.WaveProvider = new NAudio.Wave.SampleProviders.SampleToWaveProvider(Mixer);\n\n        await WasapiPlayer.Init(this.WaveProvider);\n</code></pre>\n\nIs WasapiPlayer intended to be used this way (not disposing it and playing music 24/7 for days/weeks)? Any idea why music stops and doesn't continue even after calling WasapiOutRT.Stop() and Play()?\r<br />\n<br />\nRegards,\r<br />\nJanne<br />\n",
+    "PostedDate": "2014-04-01T00:32:36.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239506",
+    "ThreadId": "540778",
+    "Html": "hi, I've done some bugfixing to WasapiOutRT recently, so maybe worth testing your app again. I'm afraid I don't have the time at the moment to do long-running tests of my own.<br />\n",
+    "PostedDate": "2014-04-29T12:21:12.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

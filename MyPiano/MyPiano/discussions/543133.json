@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1237258",
+    "ThreadId": "543133",
+    "Html": "I'm using the NAudio.dll to play mp3 files in C#, and I have all the controls, and the volume meters showing up in my main Form1, but I also have a Form2, where I need to show those volume meters as well.<br />\n<br />\nThe main form have the volume meters from control NAudio.Gui.VolumeMeter<br />\n<br />\nDoes anybody with NAudio code knowledge knows how to achieve this?<br />\n<br />\nThanks.<br />\n<a href=\"http://naudio.codeplex.com/SourceControl/latest#NAudio/Gui/VolumeMeter.cs\" rel=\"nofollow\">http://naudio.codeplex.com/SourceControl/latest#NAudio/Gui/VolumeMeter.cs</a><br />\n",
+    "PostedDate": "2014-04-23T14:13:08.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239543",
+    "ThreadId": "543133",
+    "Html": "You'd need to implement your own messaging strategy to send a message to the controls on the other form. But essentially when you get the volume notifications, update controls on both forms.<br />\n",
+    "PostedDate": "2014-04-29T14:12:12.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

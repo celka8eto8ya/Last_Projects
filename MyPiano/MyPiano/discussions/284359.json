@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "717860",
+    "ThreadId": "284359",
+    "Html": "<p>First off I just found this library and I love it. I have been able to play WAV and MP3 with no problem. However when I try to play WMA nothing happens even though when debugging it reports the state is still playing. So if you could possibly point out my  problem it would be great. Here is my code, sorry it is in Vb...</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre>    <span style=\"color: blue;\">Sub</span> Main()<br />        <span style=\"color: blue;\">Dim</span> waveoutdevice <span style=\"color: blue;\">As</span> IWavePlayer<br />        <span style=\"color: blue;\">Dim</span> mainoutputstream <span style=\"color: blue;\">As</span> WaveStream<br />        waveoutdevice = <span style=\"color: blue;\">New</span> WasapiOut(AudioClientShareMode.<span style=\"color: blue;\">Shared</span>, 100)<br />        mainoutputstream = CreateInputStream(<span style=\"color: #a31515;\">\"\\Test.wma\"</span>)<br />        waveoutdevice.Init(mainoutputstream)<br />        waveoutdevice.Play()<br />        <span style=\"color: blue;\">Do</span> <span style=\"color: blue;\">While</span> waveoutdevice.PlaybackState &lt;&gt; PlaybackState.Stopped<br />            Threading.Thread.Sleep(100)<br />        <span style=\"color: blue;\">Loop</span><br />        waveoutdevice.Dispose()<br />        mainoutputstream.Dispose()<br />    <span style=\"color: blue;\">End</span> <span style=\"color: blue;\">Sub</span><br />    <span style=\"color: blue;\">Private</span> <span style=\"color: blue;\">Function</span> CreateInputStream(<span style=\"color: blue;\">ByVal</span> fileName <span style=\"color: blue;\">As</span> <span style=\"color: blue;\">String</span>) <span style=\"color: blue;\">As</span> WaveStream<br />        <span style=\"color: blue;\">Dim</span> inputStream <span style=\"color: blue;\">As</span> WaveChannel32<br /><br />        <span style=\"color: blue;\">If</span> fileName.EndsWith(<span style=\"color: #a31515;\">\".mp3\"</span>) <span style=\"color: blue;\">Then</span><br />            <span style=\"color: blue;\">Dim</span> mp3Reader <span style=\"color: blue;\">As</span> WaveStream = <span style=\"color: blue;\">New</span> Mp3FileReader(fileName)<br />            inputStream = <span style=\"color: blue;\">New</span> WaveChannel32(mp3Reader)<br />        <span style=\"color: blue;\">ElseIf</span> fileName.EndsWith(<span style=\"color: #a31515;\">\".wav\"</span>) <span style=\"color: blue;\">Then</span><br />            <span style=\"color: blue;\">Dim</span> wavreader <span style=\"color: blue;\">As</span> WaveStream = <span style=\"color: blue;\">New</span> WaveFileReader(fileName)<br />            inputStream = <span style=\"color: blue;\">New</span> WaveChannel32(wavreader)<br />        <span style=\"color: blue;\">ElseIf</span> fileName.EndsWith(<span style=\"color: #a31515;\">\".wma\"</span>) <span style=\"color: blue;\">Then</span><br />            <span style=\"color: blue;\">Dim</span> wmareader <span style=\"color: blue;\">As</span> WaveStream = <span style=\"color: blue;\">New</span> WMAFileReader(fileName)<br />            inputStream = <span style=\"color: blue;\">New</span> WaveChannel32(wmareader)<br />        <span style=\"color: blue;\">Else</span><br />            <span style=\"color: blue;\">Throw</span> <span style=\"color: blue;\">New</span> InvalidOperationException(<span style=\"color: #a31515;\">\"Unsupported extension\"</span>)<br />        <span style=\"color: blue;\">End</span> <span style=\"color: blue;\">If</span><br />        <span style=\"color: blue;\">Return</span> inputStream<br />    <span style=\"color: blue;\">End</span> <span style=\"color: blue;\">Function</span><br /></pre>\n</div>",
+    "PostedDate": "2011-12-28T06:50:30.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "719785",
+    "ThreadId": "284359",
+    "Html": "<p>if MP3 and WAV are playing, then there is likely nothing wrong with your code and you have found a problem with WMA file reader (which is fairly new to NAudio and hasn't been extensively tested yet). If you are able to step into NAudio code then you could see what the WMAFileReader.Read method is doing</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-01-03T05:41:47.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "720430",
+    "ThreadId": "284359",
+    "Html": "<p>[quote]if MP3 and WAV are playing, then there is likely nothing wrong with  your code and you have found a problem with WMA file reader (which is  fairly new to NAudio and hasn't been extensively tested yet). If you are  able to step into NAudio code then you could  see what the WMAFileReader.Read method is doing</p>\r\n<p>Mark[/quote]</p>\r\n<p>Thanks for the reply Mark. I really don't have have the time to figure it out... But I think will will simply just drop support for WMA in my app for now. WAV, MP3 are really the only formats I need. Thanks for your time.</p>",
+    "PostedDate": "2012-01-04T11:22:51.267-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

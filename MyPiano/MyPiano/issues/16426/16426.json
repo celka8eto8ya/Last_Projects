@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hey,\r\nI'm trying to read the length of WAV and AAC/M4A-Files, but it always throws an Exception \"Unsupported File\".\r\nI tried it with different codes, but it always throws the same Exception.\r\n\r\n1st try:\r\n```\r\n        public System.TimeSpan getTotalTime(string path)\r\n        {\r\n            waveOutDevice = new WaveOut();\r\n            System.TimeSpan time = new TimeSpan();\r\n            if (path.EndsWith(\".mp3\") == true)\r\n            {\r\n                time = new Mp3FileReader(path).TotalTime;\r\n            }\r\n            if (path.EndsWith(\".aac\") == true | path.EndsWith(\".m4a\") == true)\r\n            {\r\n                time = new MediaFoundationReader(path).TotalTime;\r\n            }\r\n            if (path.EndsWith(\".wav\") == true)\r\n            {\r\n                time = new WaveFileReader(path).TotalTime;\r\n            }\r\n            return time;\r\n        }\r\n```\r\n\r\n2nd try\r\n```\r\n        public System.TimeSpan getTotalTime(string path)\r\n        {\r\n            waveOutDevice = new WaveOut();\r\n            System.TimeSpan time = new TimeSpan();\r\n            if (path.EndsWith(\".mp3\") == true)\r\n            {\r\n                mainOutputStream = new WaveChannel32(new Mp3FileReader(path));\r\n            }\r\n            if (path.EndsWith(\".aac\") == true | path.EndsWith(\".m4a\") == true)\r\n            {\r\n                mainOutputStream = new WaveChannel32(new MediaFoundationReader(path));\r\n            }\r\n            if (path.EndsWith(\".wav\") == true)\r\n            {\r\n                mainOutputStream = new WaveChannel32(new WaveFileReader(path));\r\n            }\r\n            return mainOutputStream.TotalTime;\r\n        }\r\n```\r\n\r\nNone of my trys worked. I also tried different versions.\r\nIt should be able to check the Total Length before playing the files, but even if the files are played, i get the same Exception \"unsupported file\".\r\nBut MP3 is working. Only WaveFileReader and MediaFoundationReader are throwing this Exception.\r\nHope you can help me :)",
+    "LastUpdatedDate": "2014-01-23T13:21:18.45-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-01-15T13:26:12.43-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveFileReader & MediaFoundationReader Error",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16426
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "well MediaFoundationReader can only handle AAC files if you have an AAC media foundation encoder installed. What OS are you using? You can use the NAudio WPF demo if you want to explore what codecs are installed",
+      "PostedDate": "2014-01-23T13:21:18.45-08:00",
+      "Id": 131361
+    }
+  ]
+}

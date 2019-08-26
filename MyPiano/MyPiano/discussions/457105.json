@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1093280",
+    "ThreadId": "457105",
+    "Html": "Hi!<br />\n<br />\nI want to know if I could use NAudio to make 2 simple executable files,<br />\none that plays audio streamed in a tcp port listen socket and<br />\nother that record audio and connect to a specified tcp socket host/port and streams there the recorded sound.<br />\n<br />\nI know that is the inverse of traditional streaming daemons, but what I Want is to had one computer with speakers and others without speakers be able to stream their sound to the other computer.<br />\n<br />\nCan this be possible with NAudio? which classes I need to use?<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2013-09-16T12:20:38.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094445",
+    "ThreadId": "457105",
+    "Html": "To capture audio that is being played on one computer you would use WasapiLoopbackCapture. To play back streamed audio from the network, take a look at the NetworkChat demo source code in the NAudioDemo application<br />\n",
+    "PostedDate": "2013-09-19T05:59:55.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094457",
+    "ThreadId": "457105",
+    "Html": "Cool! I will see that then.\r<br />\nThanks.<br />\n",
+    "PostedDate": "2013-09-19T06:26:28.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

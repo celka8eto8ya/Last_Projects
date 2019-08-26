@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "631345",
+    "ThreadId": "262388",
+    "Html": "<p>FFT has about 1024 Complex Arrays as parameter.</p>\n<p>But if i only what to draw about 20 i get a problem because i am only drawing 20 out of 1024. So i would like to calc average.</p>\n<p>I am calculating that with a algorithm like that. I am just creating a new Complex variable. Then I am adding to the X and Y of the variable the values and divide in the end. A simple complex calculation.</p>\n<p>But I have seen that after a number of complexes in the array of 1024 the values of those complexes (X/Y) are sooo small that i don t want to calculate them into the average. I know my english is bad so here is a screenshot:</p>\n<p>http://s1.directupload.net/images/110622/lohcustk.png</p>\n<p>What would you say is the average array index of the yellow line because i don t want to calc that in my programm. I want to calc so less as possible</p>\n<p>&nbsp;</p>\n<p>EDIT:</p>\n<p>In this screen: http://s1.directupload.net/images/110622/d7g3uw2j.png it seems like that is 1024/3 is that always something around that value or only in my livestream?</p>",
+    "PostedDate": "2011-06-22T12:08:05.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636202",
+    "ThreadId": "262388",
+    "Html": "<p>You usually get the magnitude sqrt(real * real + im * im) and then take the log base 10 of it before plotting FFT.</p>",
+    "PostedDate": "2011-07-01T13:40:00.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

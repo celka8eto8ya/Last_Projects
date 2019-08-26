@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "425069",
+    "ThreadId": "207686",
+    "Html": "<p>Hi,</p>\r\n<p>is it possible to mute a wave stream in the mixer?</p>\r\n<p>Regards.</p>",
+    "PostedDate": "2010-03-29T12:50:23.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425073",
+    "ThreadId": "207686",
+    "Html": "<p>are you using WaveChannel32 as mixer inputs? if so, simply set the Volume control to 0 to mute it</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-29T12:56:11.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425471",
+    "ThreadId": "207686",
+    "Html": "<p>I was looking for a mute property (like the one in other mixers). I guess I should of thought of that. Thanks Mark.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-30T06:56:51.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

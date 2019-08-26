@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1138170",
+    "ThreadId": "474877",
+    "Html": "i want to concatenate two wav file and merge last 2 seconds of first file with first 2 seconds of second file and create new file. means when first file last two second remaining, another file should start in background(merging).  <br />\n",
+    "PostedDate": "2013-12-19T04:01:41.503-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140987",
+    "ThreadId": "474877",
+    "Html": "You can use WaveFileReaders and WaveFileWriter to easily concatenate. Use the WaveFormat.AverageBytesPerSecond to see how much you need to read. Mixing is a bit more complicated, since you normally do it with sample providers and a MixingSampleProvider. Have a look at AudioFileReader, MixingSampleProvider and OffsetSampleProvider, in order to create your concatenated and mixed stream.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-12-23T12:52:01.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

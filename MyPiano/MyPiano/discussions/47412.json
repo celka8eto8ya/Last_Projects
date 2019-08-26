@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "158680",
+    "ThreadId": "47412",
+    "Html": "I am trying to implement looping of an MP3 played via WaveOut, and seeking advice for the best way to do so.<br>\r\n<br>\r\nMy first thought was to handle the PlaybackStopped event and replay from the beginning.&nbsp; however, that event never seems to be raised. In WaveOut.cs the only method that calls RaisePlaybackStoppedEvent is the Callback method, and that would happen only if buffer.OnDone() returns false.&nbsp; But buffer.OnDone seems to always return true for my MP3. <br>\r\n<br>\r\nSo, two questions:<br>\r\n- Since PlaybackStopped is a new (experimental?) addition to the interface, is it the correct way to loop an MP3, or is there a better way?<br>\r\n- Any idea why OnDone() always returns false?<br>\r\n<br>\r\nwith many thanks in advance<br>\r\nRob<br>\r\n",
+    "PostedDate": "2009-02-17T14:07:51.22-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "158706",
+    "ThreadId": "47412",
+    "Html": "Hi Rob, <br>\r\nPlaybackStopped is probably not the best mechanism for looping. <br>\r\n<br>\r\nOnDone returns false because the source WaveStream's Read method didn't return 0 bytes. A lot of the WaveStreams in NAudio will always return the number of bytes requested. One simple way to implement looping is to create a new derived WaveStream that in its Read method simply calls the Read method of your source WaveStream (i.e. the one reading from MP3). Then if its Position goes beyond Length and you want to loop, set the source Position back to the start, otherwise return zero.<br>\r\n<br>\r\nHere is some very rough example code (sorry I am rushing this post a little)<br>\r\n<br>\r\nclass LoopingWaveStream : WaveStream<br>\r\n{<br>\r\n<br>\r\n....<br>\r\n<br>\r\nint Read(byte[] buffer, int offset, int count)<br>\r\n{<br>\r\n&nbsp;&nbsp;&nbsp; if(source.Position &gt; source.Length)<br>\r\n&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(IsLooping)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; source.Position = 0;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br>\r\n&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp; return source.Read(buffer, offset, count);<br>\r\n}<br>\r\n<br>\r\n}<br>\r\n<br>\r\nHTH<br>\r\nMark<br>\r\n<br>\r\n",
+    "PostedDate": "2009-02-17T15:13:42.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "158712",
+    "ThreadId": "47412",
+    "Html": "Mark, this is extremely helpful, thank you. I am basing my code off of the NAudio sample player app.<br>\r\n<br>\r\nI have:<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveStream mp3Reader = new Mp3FileReader(fileName);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(mp3Reader);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveStream blockAlignedStream = new BlockAlignReductionStream(pcmStream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inputStream = new WaveChannel32(blockAlignedStream);<br>\r\n<br>\r\nWould you <em>replace </em>one of these streams with the LoopingWaveStream?&nbsp; The outer WaveChannel32 stream perhaps? Or would it be best to wrap the whole thing in another LoopingWaveStream derived as per your code above?<br>\r\n",
+    "PostedDate": "2009-02-17T15:29:54.137-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "158828",
+    "ThreadId": "47412",
+    "Html": "Hi Rob,<br>\r\n<br>\r\nYes, the LoopingWaveStream would be another wrapper around the top level WaveChannel32.<br>\r\n<br>\r\nAn alternate approach to looping which I have used on occasion is to simply have a timer on your main form that periodically checks to see if Position &gt; Length and resets it if it is so (or stops if you don't want to loop). Quite simple and effective, although if you absolutely must have no gap in the audio you should go with the LoopingWaveStream (and even so the sample code I gave you doesn't ensure perfect looping - to get that the Read method would need to potentially read a bit from the end, move to the start, and then read a bit more.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-02-17T22:54:50.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "159026",
+    "ThreadId": "47412",
+    "Html": "Hi Mark,<br>\r\n<br>\r\nYour first suggestion was correct - I am trying to create 'perfect' looping right down to the sample, and am willing to invest in extra plumbing to get it.&nbsp; I also need Volume control, so I created a LoopingWaveChannel32 to wrap the WaveChannel32 as per your first suggestion.<br>\r\n<br>\r\nAll properties and methods in my LoopingWaveChannel32 pass through to the WaveChannel32, except for the Read method, which is essentially as you suggested.<br>\r\n<br>\r\nHowever, we don't seem to be getting perfect looping.&nbsp; On the wrapped WaveChannel32, I am setting PadWithZeros to false.&nbsp; If PadWithZeros were <strong>true</strong>, I would expect &quot;imperfect&quot; looping (some samples zeroed out at the end), and to be to occasionally be hitting this block in WaveChannel32's Read method:<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 3. Fill out with zeroes<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (PadWithZeroes &amp;&amp; <strong>bytesWritten &lt; numBytes</strong>)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Array.Clear(destBuffer, offset + bytesWritten, numBytes - bytesWritten);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bytesWritten = numBytes;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n<br>\r\nI would have thought that sometimes bytesWritten should be &lt; numBytes -- but my custom logic in LoopingWaveChannel32 would handle that situation by looping back around to the beginning of the sound.<br>\r\n<br>\r\nDo I need to dig deeper to prevent zero-padding at the end of the sound?<br>\r\n<br>\r\nwith many thanks again<br>\r\nRob<br>\r\n<br>\r\n<br>\r\n<strong>\r\n[edit] </strong>Since writing this note, I've hit a breakpoint set within the if block above twice - once where it required an additional 8 bytes, and once where the bytesWritten was approx. half the size of numBytes.&nbsp; Is it possible that I have been testing with MP3s of a length that just happens to occasionally perfectly fill the buffer?\r\n",
+    "PostedDate": "2009-02-18T08:42:46.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "159691",
+    "ThreadId": "47412",
+    "Html": "Hi Rob,<br>\r\n<br>\r\nYou are probably also using the WaveFormatConversionStream, which can also perform zero padding in some circumstances, due to the difficulties of getting MP3 playback working reliably. You could try taking that out of WaveFormatConversionStream and seeing what it does. <br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-02-19T05:57:56.447-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

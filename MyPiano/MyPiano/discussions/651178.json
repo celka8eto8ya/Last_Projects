@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1462874",
+    "ThreadId": "651178",
+    "Html": "Hi mark, I need to receive SysEx message but I don t found how to do this using MidiIn Events.\r<br />\n<br />\nHave you any idea ?<br />\n",
+    "PostedDate": "2016-02-11T09:17:20.497-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464110",
+    "ThreadId": "651178",
+    "Html": "I'm afraid I haven't tried this myself. I believe the <a href=\"https://midinet.codeplex.com/\" rel=\"nofollow\">MIDI.NET</a> project might have support for this. <br />\n",
+    "PostedDate": "2016-02-23T04:51:58.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

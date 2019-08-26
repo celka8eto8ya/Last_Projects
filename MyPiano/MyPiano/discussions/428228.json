@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "982242",
+    "ThreadId": "428228",
+    "Html": "\r\n<p>I can use</p>\r\n<p>WaveIn wi = new WaveIn() in a form application,</p>\r\n<p>but if it is a console application it gives an exception that is</p>\r\n<p>&quot;Use WaveInEvent to record on a background thread&quot;</p>\r\n<p>What can be the problem?</p>\r\n",
+    "PostedDate": "2013-01-02T01:05:32.657-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "982245",
+    "ThreadId": "428228",
+    "Html": "\r\n<p>I have changed waveIn class with WaveInEvent class, and the problem is solved now. &nbsp;have only changed the variable decleration, is there anything that must be handled?</p>\r\n",
+    "PostedDate": "2013-01-02T01:35:08.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

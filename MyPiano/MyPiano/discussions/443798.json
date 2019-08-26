@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1044073",
+    "ThreadId": "443798",
+    "Html": "I am working with a speed drummer, and need to detect each beat of a single drum. How would I do this using NAudio?<br />\n",
+    "PostedDate": "2013-05-15T12:34:04.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1045240",
+    "ThreadId": "443798",
+    "Html": "NAudio gives you access to the raw samples. You'd need to implement your own transient detection algorithm. How simple this is depends on what sort of signal you are looking at. If you can isolate a single drum then it is not too hard. If you mic a full kit, then it would be a much more tricky problem.<br />\n",
+    "PostedDate": "2013-05-17T11:01:40.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

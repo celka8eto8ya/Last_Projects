@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "The WaveFileReader constructor that opens a file using a filename calls into the other constructor taking a stream. This other constructor calls a method to verify the RIFF header, but when this fails, an exception is thrown back to the caller.\r\n\r\nThis has the unfortunate effect that the first constructor, given the filename, doesn't get a chance to close the stream it opened. The stream is thus left open until GC or similar takes care of it.\r\n\r\nThe best way to handle this would be to do the following:\r\n\r\n1. Refactor out the contents of the constructor taking a stream into a new, private, constructor, that also takes the `ownInput` value as a parameter.\r\n2. Change the two existing constructors to chain to the new one, passing true/false for that new parameter as appropriate\r\n3. The new constructor would have a try/catch block around it (or at least around the stream construction and RIFF header check), and if exception was thrown in the RIFF header validation, and ownInput is true, dispose of the stream before throwing the exception up the chain.",
+    "LastUpdatedDate": "2014-07-18T08:51:36.75-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-07-18T04:43:19.793-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Bug in WaveFileReader if opening invalid RIFF file by filename",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 4,
+    "Id": 16448
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This issue originates from a Stack Overflow question here:\n\nhttp://stackoverflow.com/questions/24824027/not-a-wave-file-no-riff-header-locks-file#24824075",
+      "PostedDate": "2014-07-18T04:47:00.08-07:00",
+      "Id": 152834
+    },
+    {
+      "Message": "thanks for reporting, will try to get this fixed for a future NAudio",
+      "PostedDate": "2014-07-18T05:25:28.11-07:00",
+      "Id": 152838
+    }
+  ]
+}

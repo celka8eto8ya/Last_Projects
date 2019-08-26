@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I use NAudio in my application, it almost allways runs good, but sometimes it crashes.I read the code of NAudio, and i found maybe the crash is caused by the memory leak in the following code.\r\n```\r\npublic static IList<MixerControl> GetMixerControls(IntPtr mixerHandle, MixerLine mixerLine, MixerFlags mixerHandleType)\r\n{\r\n\tList<MixerControl> controls = new List<MixerControl>();\r\n\tif (mixerLine.ControlsCount > 0)\r\n\t{\r\n\t\tint mixerControlSize = Marshal.SizeOf(typeof(MixerInterop.MIXERCONTROL));\r\n\t\tMixerInterop.MIXERLINECONTROLS mlc = default(MixerInterop.MIXERLINECONTROLS);\r\n\t\tIntPtr pmc = Marshal.AllocHGlobal(mixerControlSize * mixerLine.ControlsCount);\r\n\t\tmlc.cbStruct = Marshal.SizeOf(mlc);\r\n\t\tmlc.dwLineID = mixerLine.LineId;\r\n\t\tmlc.cControls = mixerLine.ControlsCount;\r\n\t\tmlc.pamxctrl = pmc;\r\n\t\tmlc.cbmxctrl = Marshal.SizeOf(typeof(MixerInterop.MIXERCONTROL));\r\n\t\tMmResult err = MixerInterop.mixerGetLineControls(mixerHandle, ref mlc, mixerHandleType);\r\n\t\tif (err != MmResult.NoError)\r\n\t\t{\r\n\t\t\tMarshal.FreeHGlobal(pmc);\r\n\t\t\tthrow new MmException(err, \"mixerGetLineControls\");\r\n\t\t}\r\n\t\tfor (int i = 0; i < mlc.cControls; i++)\r\n\t\t{\r\n\t\t\tlong address = pmc.ToInt64() + (long)(mixerControlSize * i);\r\n\t\t\tMixerInterop.MIXERCONTROL mc = (MixerInterop.MIXERCONTROL)Marshal.PtrToStructure((IntPtr)address, typeof(MixerInterop.MIXERCONTROL));\r\n\t\t\tMixerControl mixerControl = MixerControl.GetMixerControl(mixerHandle, mixerLine.LineId, mc.dwControlID, mixerLine.Channels, mixerHandleType);\r\n\t\t\tcontrols.Add(mixerControl);\r\n\t\t}\r\n\t}\r\n\treturn controls;\r\n}\r\n```\r\nIn the code above, it uses Marshal.AllocHGlobal to allocate memory for pmc, but when the function normally returns, the Marshal.FreeHGlobal is not called.\r\n\r\nI think we can improve the code as below:\r\n\r\n```\r\npublic static IList<MixerControl> GetMixerControls(IntPtr mixerHandle, MixerLine mixerLine, MixerFlags mixerHandleType)\r\n{\r\n\tList<MixerControl> controls = new List<MixerControl>();\r\n\tif (mixerLine.ControlsCount > 0)\r\n\t{\r\n\t\tint mixerControlSize = Marshal.SizeOf(typeof(MixerInterop.MIXERCONTROL));\r\n\t\tMixerInterop.MIXERLINECONTROLS mlc = default(MixerInterop.MIXERLINECONTROLS);\r\n\t\tIntPtr pmc = Marshal.AllocHGlobal(mixerControlSize * mixerLine.ControlsCount);\r\n\t\tmlc.cbStruct = Marshal.SizeOf(mlc);\r\n\t\tmlc.dwLineID = mixerLine.LineId;\r\n\t\tmlc.cControls = mixerLine.ControlsCount;\r\n\t\tmlc.pamxctrl = pmc;\r\n\t\tmlc.cbmxctrl = Marshal.SizeOf(typeof(MixerInterop.MIXERCONTROL));\r\n\t\tMmResult err = MixerInterop.mixerGetLineControls(mixerHandle, ref mlc, mixerHandleType);\r\n\t\tif (err != MmResult.NoError)\r\n\t\t{\r\n\t\t\tMarshal.FreeHGlobal(pmc);\r\n\t\t\tthrow new MmException(err, \"mixerGetLineControls\");\r\n\t\t}\r\n\t\tfor (int i = 0; i < mlc.cControls; i++)\r\n\t\t{\r\n\t\t\tlong address = pmc.ToInt64() + (long)(mixerControlSize * i);\r\n\t\t\tMixerInterop.MIXERCONTROL mc = (MixerInterop.MIXERCONTROL)Marshal.PtrToStructure((IntPtr)address, typeof(MixerInterop.MIXERCONTROL));\r\n\t\t\tMixerControl mixerControl = MixerControl.GetMixerControl(mixerHandle, mixerLine.LineId, mc.dwControlID, mixerLine.Channels, mixerHandleType);\r\n\t\t\tcontrols.Add(mixerControl);\r\n\t\t}\r\n        Marshal.FreeHGlobal(pmc);\r\n\t}\r\n\treturn controls;\r\n}\r\n```\r\nAnd I hope it will help the ones who encounter the same problem with me.\r\n\r\n",
+    "LastUpdatedDate": "2017-12-11T15:05:51.43-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-06-24T02:10:20.887-07:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Memory leak in MixerControl.GetMixerControls",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16400
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for reporting, have fixed with a finally statement. Let me know if this works for you",
+      "PostedDate": "2013-06-24T05:41:52.73-07:00",
+      "Id": 103918
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "835571",
+    "ThreadId": "355577",
+    "Html": "\r\n<p>I have an app that uses WaveIn to record audio. It records it in chunks... to do this, it calls:</p>\r\n<p>waveIn.StartRecording()</p>\r\n<p>... and then after a few seconds, it calls:</p>\r\n<p>waveIn.StopRecording()</p>\r\n<p>Right after it calls waveIn.StopRecording(), it allocates a new WaveIn object and calls StartRecording() on it to start recording the next chunk of audio.</p>\r\n<p>Is this a reasonable approach?</p>\r\n<p>What I'm finding is that occassionally, this happens when calling StartRecording():</p>\r\n<p>Error while starting recording: MemoryAllocationError calling waveInOpen</p>\r\n<p>at NAudio.MmException.Try(MmResult result, String function)</p>\r\n<p>at NAudio.Wave.WaveIn.OpenWaveInDevice()</p>\r\n<p>at NAudio.Wave.WaveIn.StartRecording()</p>\r\n<p>Any thoughts on how to avoid this?</p>\r\n",
+    "PostedDate": "2012-05-12T12:06:29.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "835988",
+    "ThreadId": "355577",
+    "Html": "<p>You need to properly dispose of the old WaveIn to avoid memory leaks. Also, it would be better to use just one instance of WaveIn, calling Start and Stop. An alternative is to just call StartRecording once and ignore the DataAvailable events when you don't want data.</p>",
+    "PostedDate": "2012-05-14T03:47:54.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

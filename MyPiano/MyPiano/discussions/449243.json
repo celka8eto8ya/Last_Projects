@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1065248",
+    "ThreadId": "449243",
+    "Html": "Hi,\r<br />\n<br />\nI've been looking into NAudio recently and think it could help me.\r<br />\nIm using C#.\r<br />\n<br />\nI have managed to save to a wavfile from mic input using this:<br />\n<pre><code>private void waveInEvent_DataAvailable(object sender, WaveInEventArgs e) {\n    waveFileWriter.Write(e.Buffer, 0, e.BytesRecorded);\n}</code></pre>\n\nThis i need to convert to a flac file. For this i use a simple Process.Start(...) using a downloaded libFlac.exe on the created wav file. If there is support in NAudio to save a wav to flac format that would be great. I haven't found something yet but perhaps there are?\r<br />\n<br />\nThe issue now is that i want to stop recording programmatically. I've seen examples on the web when people has a stop recording button which does this for them, i want to stop recording when i detect that there is &quot;no&quot; incoming audio, perhaps check a threshold value?\r<br />\n<br />\nWould be glad if someone could help!\r<br />\n<br />\n//Daniel Svensson, from Sweden.<br />\n",
+    "PostedDate": "2013-07-07T06:16:37.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1066147",
+    "ThreadId": "449243",
+    "Html": "you need to break the audio into blocks of (say) 20ms, and then if no sample in that time period has a value above your threshold, then you consider it to be silence and use that.\r<br />\n<br />\nNAudio doesn't contain built-in save as FLAC, so using a command line tool is probably the easiest option. If it supports getting the samples from stdin, then you could create it on the fly.<br />\n",
+    "PostedDate": "2013-07-09T07:52:51.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1066177",
+    "ThreadId": "449243",
+    "Html": "Hi,\r<br />\n<br />\nThanks for answering me.\r<br />\n<br />\nDo you mean the audio/byte-data in e.Buffer that i need to split up into blocks?\r<br />\nHow do i know the corresponding bytesize to ~20ms? Could you provide some pseudo\r<br />\nperhaps?\r<br />\n<br />\nHow does the DataAvailbale work actually? Is it called once only after StopRecording() call\r<br />\nor is it called whenever there are input to write?\r<br />\n<br />\n//Daniel<br />\n",
+    "PostedDate": "2013-07-09T08:38:48.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1068393",
+    "ThreadId": "449243",
+    "Html": "use WaveFormat.AverageBytesPerSecond to convert between bytes and time\r<br />\n<br />\nDataAvailable is called whenever a buffer full of audio is returned by the soundcard<br />\n",
+    "PostedDate": "2013-07-15T06:39:00.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1340633",
+    "ThreadId": "577357",
+    "Html": "Does someone have a good example how to convert Wasapi output to PCM?<br />\nWould like to dump WaveIn API and use Wasapi, but seems its a bit more complicated.<br />\n<br />\nI need to convert continuous stream. So conversion must convert continuously:<br />\nFormat: IEEE to PCM<br />\nRate: 44,1KHz to 16KHz<br />\nChannels: Stereo to Mono<br />\nBits: 32 to 16<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2015-01-10T02:52:54.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340767",
+    "ThreadId": "577357",
+    "Html": "It's possible to do this, but will be multi-step. First you'd go from stereo to mono (mixing or discarding one channel), then from IEEE (32) bit too 16 bit PCM. Then finally resampling.\r<br />\n<br />\nNAudio has streams/sample providers for all these tasks, but if you want to create a pipeline you need to be careful only to pull audio from it at the rate it arrives\r<br />\n<br />\nyou could  do something like:\r<br />\n<br />\nWasapiIn -&gt; BufferedWaveProvider -&gt; WaveToSampleProvider -&gt; StereoToMonoSampleProvider -&gt; SampleToWaveProvider16 -&gt; WaveFormatConversionStream\r<br />\n<br />\nCheck my article on CodeProject for a more in depth look of the techniques you have available:\r<br />\n<br />\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET</a><br />\n",
+    "PostedDate": "2015-01-11T00:53:42.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

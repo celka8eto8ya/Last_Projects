@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1369415",
+    "ThreadId": "589181",
+    "Html": "Are there any examples for convolution in NAudio? How to use the class ImpulseResponseConvolution?<br />\n<br />\n<strong>EDIT</strong>:<br />\nDo I have to create two <strong>AudioFileReaders</strong> (sound and impulse reaction), read them both into float array buffers and pass them into the Convolve function to get the convolved float array back?<br />\n",
+    "PostedDate": "2015-03-21T06:25:47.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1390945",
+    "ThreadId": "589181",
+    "Html": "Ok. I've got convolution to &quot;<em>work</em>&quot;. It's really slow through / unusable for samples longer than few seconds because of that. Or maybe its because of <strong>AudioFileReader</strong> reading the whole file into memory.\r<br />\n<br />\nI've used 2x <strong>AudioFileReader</strong> for the <strong>sound</strong> and the <strong>impulse response</strong>.\r<br />\n<br />\nThen I've made two float arrays for those with a fixed size of 88200 (first 2 seconds of the sound) and 44100 (the size of the impulse response).\r<br />\n<br />\nI wrote the convolution to another float array (convolution result) and then<br />\n<pre><code>writer.WriteSamples(convolutionResult, 0, 88200);</code></pre>\n\nout to a file.\r<br />\n<br />\nThe sample is weird through. Sounds amplified its 4 seconds in length instead of 2 (88200). Something wrong with the float array sizes?<br />\n",
+    "PostedDate": "2015-03-23T11:48:23.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1409797",
+    "ThreadId": "589181",
+    "Html": "The ImpulseResponseConvolution is one of the oldest bits in NAudio, and to be honest, it should probably be removed from the library. It doesn't really handle the issues around mono / stereo impulses and inputs. And I have a feeling that most commerical software that does convolution does it all in the frequency domain (FFT first, convolve, then inverse FFT).<br />\n",
+    "PostedDate": "2015-04-13T08:48:43.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

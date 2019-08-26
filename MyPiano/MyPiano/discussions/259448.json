@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "620031",
+    "ThreadId": "259448",
+    "Html": "\r\n<p><span id=\"result_box\" lang=\"en\"><span title=\"Cliquer ici pour voir d'autres traductions\">hello</span><span title=\"Cliquer ici pour voir d'autres traductions\">,</span><br>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">I</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nwas</span> <span title=\"Cliquer ici pour voir d'autres traductions\">sorry</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nabout</span> <span title=\"Cliquer ici pour voir d'autres traductions\">the</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nenglish</span> <span title=\"Cliquer ici pour voir d'autres traductions\">(</span><span title=\"Cliquer ici pour voir d'autres traductions\">google</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">translate</span><span title=\"Cliquer ici pour voir d'autres traductions\">)</span><span title=\"Cliquer ici pour voir d'autres traductions\">, well</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">I</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nwant</span> <span title=\"Cliquer ici pour voir d'autres traductions\">to capture</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">the sound</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nthat</span> <span title=\"Cliquer ici pour voir d'autres traductions\">passes through</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">the sound card</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\n(</span><span title=\"Cliquer ici pour voir d'autres traductions\">input</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\n/</span> <span title=\"Cliquer ici pour voir d'autres traductions\">output)</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nand</span> <span title=\"Cliquer ici pour voir d'autres traductions\">save to</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">a</span><span title=\"Cliquer ici pour voir d'autres traductions\">. wav file</span><span title=\"Cliquer ici pour voir d'autres traductions\">, I</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">managed</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nto</span> <span title=\"Cliquer ici pour voir d'autres traductions\">capture</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">with</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nWaveIn</span> <span title=\"Cliquer ici pour voir d'autres traductions\">Naudio</span><br>\r\n<br>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">Sincerely,</span></span></p>\r\n",
+    "PostedDate": "2011-05-29T13:29:23.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620032",
+    "ThreadId": "259448",
+    "Html": "<p>Look at the NAudioDemo app source code that comes with NAudio. This shows you exactly how to do that.</p>\r\n<p>For another example, look at voicerecorder.codeplex.com which is also built using NAudio</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-29T13:32:55.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620048",
+    "ThreadId": "259448",
+    "Html": "<p><span id=\"result_box\" lang=\"en\"><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">it's</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">the same</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">thing</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">can</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">not</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">save</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">waveout</span><span title=\"Cliquer ici pour voir d'autres traductions\">,</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">and</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I can not</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">Execute</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">voicerecorder.codeplex.com</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">is a</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">bug</span></span></p>\r\n<p><br /><br /> <img src=\"http://dc360.4shared.com/img/RWb07k0L/s7/0.8312086353052797/pic-naudio.bmp\" alt=\"\" /></p>",
+    "PostedDate": "2011-05-29T13:58:02.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620049",
+    "ThreadId": "259448",
+    "Html": "<p>what error message do you see? does it start recording?</p>",
+    "PostedDate": "2011-05-29T14:00:20.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620052",
+    "ThreadId": "259448",
+    "Html": "<p>Error in this:</p>\r\n<p><br /> <br /> <img src=\"http://dc360.4shared.com/img/xBLkHZzV/s7/0.010830284873315832/pic-naudio2.JPG\" alt=\"\" width=\"664\" height=\"371\" /></p>\r\n<p>&nbsp;</p>\r\n<p>with the first I can record just wavein, but me I like to record wave discussion (wavein/waveout) in file .wav, record wave (micro+speaker) :(</p>",
+    "PostedDate": "2011-05-29T14:07:43.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620054",
+    "ThreadId": "259448",
+    "Html": "<p>If you are able to download and run the source-code from Visual Studio, then we can find out what is causing the error.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-29T14:13:00.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620060",
+    "ThreadId": "259448",
+    "Html": "<p><span id=\"result_box\" lang=\"en\"><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">think</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">you did</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">not</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">understand</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">my</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">concern</span><span title=\"Cliquer ici pour voir d'autres traductions\">, my</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">problem</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">and</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">how to</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">record</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">his</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">WaveOut/</span><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">waveInput</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">same</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">time</span><span title=\"Cliquer ici pour voir d'autres traductions\">,</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">because</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I want to record</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">all</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">the</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">conversations</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">going on</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">my</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">use</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">so I</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">can</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">monitor the quality of</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">work</span><span title=\"Cliquer ici pour voir d'autres traductions\">.</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">So</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">managed</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">to</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">record</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">the</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">sound</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">from</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">the mic, </span><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">i like record sound speaker</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">that</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">matches the</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">client</span> <span class=\"hps atn\" title=\"Cliquer ici pour voir d'autres traductions\">(</span><span title=\"Cliquer ici pour voir d'autres traductions\">waveout</span><span title=\"Cliquer ici pour voir d'autres traductions\">)</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">...</span></span></p>",
+    "PostedDate": "2011-05-29T14:33:17.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620062",
+    "ThreadId": "259448",
+    "Html": "<p>OK, this depends on your soundcard. You need a soundcard that supports a \"what you hear\" option. Have a look at the Record properties of the Windows mixer.&nbsp; It can be done in WASAPI with loopback recording, although NAudio support for this is limited at the moment. See this article for more info:</p>\r\n<p>https://blogs.msdn.com/b/larryosterman/archive/2008/07/11/whatever-happened-to-wave-out-mix.aspx</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-29T14:42:45.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620065",
+    "ThreadId": "259448",
+    "Html": "<p><span id=\"result_box\" lang=\"en\"><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">it</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">is</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">there</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">another solution</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">or</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">another</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">dll</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">that</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">can</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">record</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">sound</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">because</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">look at the</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">configuration</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">of my</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">sound card</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">is</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">off</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">the</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">record</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">of</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">waveoutput</span><span title=\"Cliquer ici pour voir d'autres traductions\">,</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">so</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I think</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">to find</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">a</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">dll</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">or</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">library</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">...</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">am</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">very</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">sorry</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">...</span> <span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">:</span><span title=\"Cliquer ici pour voir d'autres traductions\">)</span></span></p>\r\n<p><span id=\"result_box\" lang=\"en\"><span title=\"Cliquer ici pour voir d'autres traductions\">Sincerely,</span></span></p>\r\n<p><span lang=\"en\"><span title=\"Cliquer ici pour voir d'autres traductions\"><br /></span></span></p>",
+    "PostedDate": "2011-05-29T15:07:50.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620203",
+    "ThreadId": "259448",
+    "Html": "<p>If you can use WASAPI, maybe this will help:</p>\r\n<p>http://naudio.codeplex.com/discussions/203605</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-30T02:14:54.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1060780",
+    "ThreadId": "448140",
+    "Html": "Hi Mark,\r<br />\n<br />\nWhen I was trying to read a mp3 file using NAudio, I got this error.<br />\n<pre><code>Got a frame at sample rate 44100, in an MP3 with sample rate 48000. Mp3FileReader does not support sample rate changes.</code></pre>\n\nThen what method should be used to read this kind of mp3 files?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-06-25T02:38:35.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1060848",
+    "ThreadId": "448140",
+    "Html": "Savinda,\r<br />\n<br />\nThe simplest way to do it (and I use the term &quot;simplest&quot; loosely) is to implement your own MPEG stream reader (the part that reads the raw frames out of the file) and pass the frames to Mp3FrameDecompressor as you need them decoded.  That way you can catch sample rate changes as you go.\r<br />\n<br />\n<strong>Please note</strong>:  If you are outputting the decoded data in any way, you'll need to resample the frames that are not at the same rate as the file.  There are plenty of ways to do it, but you might consider using a ResamplerDmoStream.<br />\n",
+    "PostedDate": "2013-06-25T05:11:54.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1060853",
+    "ThreadId": "448140",
+    "Html": "Sample rate changes ought not to occur in most MP3 files. I think the most common cause of this problem is NAudio accidentally interpreting the album art as an MP3 frame (in this case as a 48kHz frame), and then the first real frame comes along and it has a different sample rate. I've tried several times to fix this, but with only partial success. I do try to skip over the ID3V2 tags and I have reviewed the code several times, but I can't see anything wrong with it.\r<br />\n<br />\nAn alternative solution you can use if this is your problem is the MediaFoundationReader I've added for NAudio 1.7 (currently in alpha). It should be better at detecting the first real MP3 frame.<br />\n",
+    "PostedDate": "2013-06-25T05:19:07.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1107167",
+    "ThreadId": "448140",
+    "Html": "What does the sample rate change actually affect? \r<br />\n<br />\nWe have to grab the raw data from each MP3 frame for hashing in our application, and we have a test from (presumably an old edge case in our catalogue) that has two sets of id3 tags at the end of the track. This test track worked fine in NAudio 1.3.10, but I just tried upgrading to 1.6 and we get the above exception for it. If I comment out the throw inside Mp3FileReader.cs our code still works fine though.\r<br />\n<br />\nSo is the sample rate change a horrible thing? Would you be opposed to a patch that allows clients to disable the check?\r<br />\n<br />\nI can't seem to work around it any other way. Great library, BTW. We've been using it for years with very few issues!\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2013-10-14T06:54:02.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1107170",
+    "ThreadId": "448140",
+    "Html": "it affects playback - you'd be playing sound at the wrong sample rate which would sound wrong. What is usually happening though is that there is some data at the start of the MP3 file (maybe album art?) that is being interpreted incorrectly as a frame. If you try with the very latest code, this issue will hopefully be resolved for all MP3s that don't actually have a sample rate change in them. <br />\n",
+    "PostedDate": "2013-10-14T06:58:08.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1107179",
+    "ThreadId": "448140",
+    "Html": "Thanks for the reply. \r<br />\n<br />\nI think in this situation it's from the doubled up tags at the end of the track rather than a sample rate change (the track sounds fine). I've tried with the current master branch too and the problem is still there (ie failing the rate comparison and throwing the above exception).<br />\n",
+    "PostedDate": "2013-10-14T07:21:46.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1107180",
+    "ThreadId": "448140",
+    "Html": "In fact it's one of the last frames of the file that throws this - it's fine for the rest of it.<br />\n",
+    "PostedDate": "2013-10-14T07:22:23.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112035",
+    "ThreadId": "448140",
+    "Html": "hmmm, not sure what is causing this. I'd need an example MP3 file. If you are able to use MediaFoundationReader when NAudio 1.7 comes out then that might be a good idea.<br />\n",
+    "PostedDate": "2013-10-25T03:56:01.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127194",
+    "ThreadId": "448140",
+    "Html": "FYI, I was having the same issue with Mp3FileReader (&quot;Mp3FileReader does not support sample rate changes&quot;) on some of my mp3 files, switched over to using MediaFoundationReader as Mark suggested, resolved my issues!  Thanks Mark!<br />\n",
+    "PostedDate": "2013-11-20T11:20:35.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127289",
+    "ThreadId": "448140",
+    "Html": "yes, MediaFoundationReader is a good solution if you can use it. I have tried so many times to fix this issue, and thought I had finally done so in NAudio 1.7 but obviously not. Basically, NAudio is getting some false positives where it thinks its found an MP3 frame which actually isn;t one. I've read and re-read the MP3Frame header spec to try to find anything that might help eliminate these false positives but haven;t found anything yet. Might actually need to parse out the contents of the frame as well to get better accuracy. <br />\n",
+    "PostedDate": "2013-11-20T14:32:13.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1328557",
+    "ThreadId": "448140",
+    "Html": "I also encountered this problem with the latest NAudio library when running Mp3FileReader against a bunch of &quot;sliced and diced&quot; MP3 files. These files have partial MP3 frames at the beginning of the file which seems to be where Mp3FileReader gets into trouble.\r<br />\n<br />\nI was able to write a &quot;MP3 Frame Walker&quot; method that only picks up valid MP3 frames (C# source code is avail if you want it).  The strategy that I used was to do a byte-by-byte search for a valid MP3 frame header (same as Mp3FileReader) but before declaring the frame header valid, attempt to decode the next N frame headers.  As a bonus, this technique removes the need to pay any attention whatsoever to the ID3V1 or ID3V2 tags.\r<br />\n<br />\nI wrote the code to allow for a variable probe depth but a probe depth of 1 parsed all my &quot;problem files&quot; correctly.<br />\n",
+    "PostedDate": "2014-12-03T13:34:47.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340553",
+    "ThreadId": "448140",
+    "Html": "Yes, I think I'll eventually have to move to this approach. I'm leaning towards encouraging people just to use MediaFoundationReader these days, since it's only Windows XP in which you can't use it.<br />\n",
+    "PostedDate": "2015-01-09T15:34:50.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

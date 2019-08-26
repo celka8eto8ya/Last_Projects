@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "633938",
+    "ThreadId": "263028",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I want to do an application that read pcm stream from tcp connection and display spectrum and waveform.</p>\r\n<p>1. I want to know if it possible to display spectrum and waveform without play the file, I mean I don't care if it play in backgroung but I donw want to hear the sound.</p>\r\n<p>2. I saw to classes that I can use &quot;SampleChannel&quot; and &quot;WaveChannel32&quot; which is better? and what is the comparable method in &quot;SampleChannel&quot; to &quot;RaiseSample&quot; in WaveChannel32&quot; ?</p>\r\n<p>3. I familiar with NAudio lib (more or less) and I'll very appreciate if someone can give me a brief how do to that.</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-06-27T21:43:37.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636199",
+    "ThreadId": "263028",
+    "Html": "<p>1. yes, just call the Read method in a loop to pull samples from your input stream</p>\r\n<p>2. SampleChannel is going to be new for NAudio 1.5. You can easily create your own ISampleProvider that has a RaiseSample event if you need it.</p>\r\n<p>3. not sure what this question means</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-01T13:35:54.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636692",
+    "ThreadId": "263028",
+    "Html": "<p>Thanks! you are helped&nbsp;enough</p>",
+    "PostedDate": "2011-07-03T11:39:49.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

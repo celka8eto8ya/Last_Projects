@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi Mark\r\nThnaks for your greate n audio\r\ni use naudio 1.7 and have problem with Mp3FileReader.\r\nwhen i use Mp3FileReader and give it path sometimes my program stops on this line and everiting stop\r\nand suddenly it continue.\r\n\r\n if (File.Exists(@\"mp3 path\"))\r\n                {\r\n                    try\r\n                    {\r\n                        mp3Reader = new Mp3FileReader(@\"mp3 path\");\r\n                        waveOut = new WaveOut();\r\n                        waveOut.PlaybackStopped += new EventHandler<StoppedEventArgs>(PlaybackStoppedEventHandler);\r\n\r\n                        waveOut.Init(mp3Reader);\r\n                        waveOut.Play();\r\n                    }\r\n}\r\n\r\nmy program must not stops like this.could you please tell where i missed or is wrong?\r\n\r\nRegard Mohammad Ehsan Afsari",
+    "LastUpdatedDate": "2015-01-09T15:36:11.88-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-12-01T05:44:06.473-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "issue with Mp3FileReader",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16459
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Mp3FileReader makes a table of contents in its constructor which may take a few hundred milliseconds on a long file. Try using MediaFoundationReader if possible for a better performing option.",
+      "PostedDate": "2015-01-09T15:36:11.88-08:00",
+      "Id": 169810
+    }
+  ]
+}

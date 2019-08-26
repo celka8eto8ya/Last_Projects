@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1076321",
+    "ThreadId": "452315",
+    "Html": "Is there a way to control the buffer?<br />\nCurrently it seems to mess around at about 600ms.<br />\n<br />\nOkay it seems it went better when i got it to 16 bit.<br />\n<br />\nBut i still have a problem. Waloop stops recording after around 5 seconds.<br />\nIf i reset it, it will start again about 5 secs.<br />\n<br />\nI have no idea why.<br />\n<pre><code> void SendWaloop(object sender, NAudio.Wave.WaveInEventArgs e)\n       {\n           byte[] newArray16Bit = new byte[e.BytesRecorded / 2];\n           short two;\n           float value;\n           for (int i = 0, j = 0; i &lt; e.BytesRecorded; i += 4, j += 2)\n           {\n               value = (BitConverter.ToSingle(e.Buffer, i));\n               two = (short)(value * short.MaxValue);\n\n               newArray16Bit[j] = (byte)(two &amp; 0xFF);\n               newArray16Bit[j + 1] = (byte)((two &gt;&gt; 8) &amp; 0xFF);\n           }\n           if (connect == true)\n           {\n               udpClient.Send(newArray16Bit, newArray16Bit.Length, otherPartyIP.Address.ToString(), 1500);\n\n           }\n          \n       }\n\n                    Waloop = new WasapiLoopbackCapture();\n                    waveIn = new WaveInProvider(Waloop);\n                    Waloop.StartRecording();\n\nThis are the Wasapi parts.</code></pre>\n\n",
+    "PostedDate": "2013-08-03T09:47:13.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

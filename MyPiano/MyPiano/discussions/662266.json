@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1494805",
+    "ThreadId": "662266",
+    "Html": "I'm working on a project to create and electronic version of a musical instrument and I've figured out I'm having some phase issues between some of the samples.  Each sample is recorded at 44100, 16 bit mono. It is exactly 1 cycle for the frequency.  I need to be able to feed two 16 bit streams in preferably from two 16 bit integer arrays and shifting one to play ahead or behind the other so that I can  get the best match for phase between the two channels.  The plan is to feed the output real time to Adobe Audition and use it's frequency and phase analysis tools to do the visualization.\r<br />\n<br />\nFor this to work and make it easy,  I want to play the 1 cycle in a loop but increase or decrease the starting point for one loop relative to what is playing in the other channel. Once I figure out the best offset to use I'll recreate the data array to start at that point.  This data is then used in an Arduino type processor to actually reproduce the sound based on the wave data for each note. \r<br />\n<br />\n I guess this all boils down to can NAudio take two 16bit arrays and feed them separately in as left and right channel of a stereo wave output? <br />\n\r<br />\nCan I control the starting point and duration in terms of number of samples when playing? \r<br />\n<br />\nThat way I can keep the number of samples I need for a note but start it further in than the first data point.  In order to allow for the shift my plan is to duplicate the wave so that it can be clipped to the right number of samples and still preserve the integrity of the wave itself. <br />\n",
+    "PostedDate": "2017-03-28T17:32:35.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

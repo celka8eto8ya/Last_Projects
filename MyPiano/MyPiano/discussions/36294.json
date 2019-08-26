@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "120444",
+    "ThreadId": "36294",
+    "Html": "The Size of the wave files I'm recording are quite large, even though I'm using WaveFormat(8000, 8, 1) - 8kHz, 8bit 1 channel.&nbsp; Is there some way to compress them or use a more efficient format for recording them?<br>\r\n<br>\r\nThanks,<br>\r\nAdrian<br>\r\n",
+    "PostedDate": "2008-09-23T12:05:24.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "120565",
+    "ThreadId": "36294",
+    "Html": "hi Adrian,<br>\r\n<br>\r\nAt the moment, the only strategy would be to use an ACM codec to compress the data first. Ideally I would like to add WMA, MP3 and OGG encoding to NAudio, but it is not there at the moment. If you got hold of LAME.exe you could perhaps stream the audio data to it to make an mp3 file.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-09-24T01:34:16.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

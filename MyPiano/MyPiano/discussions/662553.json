@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1495495",
+    "ThreadId": "662553",
+    "Html": "Hi! i'm just starting with naudio, I trying to modify the demo of midi interface, for display diferents messages  for each midi note so in the code I only modify this<br />\n<pre><code>  void midiIn_MessageReceived(object sender, MidiInMessageEventArgs e)\n        {\n            if (checkBoxFilterAutoSensing.Checked &amp;&amp; e.MidiEvent != null &amp;&amp; e.MidiEvent.CommandCode == MidiCommandCode.AutoSensing)\n            {\n                return;\n            } \n\n            if(e.MidiEvent.CommandCode == MidiCommandCode.NoteOn)\n            {\n                    NoteOnEvent note = (NoteOnEvent)e.MidiEvent;\n\n                progressLog1.LogMessage(Color.Blue, string.Format(&quot;Time {0} Message 0x{1:X8} Event {2}&quot;,\n               e.Timestamp, e.RawMessage, note.NoteNumber.ToString()));\n            }\n            \n\n        }\n</code></pre>\n\nTo get the NoteNumber, before i write the if or whatever. But, the program display the message and immediately after, exit with code -1073741819 (0xc0000005) 'Access violation'.<br />\n",
+    "PostedDate": "2017-04-15T03:40:57.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

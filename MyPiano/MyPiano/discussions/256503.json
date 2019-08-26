@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "607821",
+    "ThreadId": "256503",
+    "Html": "\r\n<p>Hello<br>\r\nPlease can you give me the code that allows me to read a file.wav (&quot;alarme.wav&quot;) stored in a database, I tried the following code:<br>\r\n<code><br>\r\nprivate void button1_Click (object sender, EventArgs e)<br>\r\n{<br>\r\n&nbsp;<br>\r\nOdbcConnection cn = new OdbcConnection (&quot;DSN = cp1&quot;);<br>\r\ncn.Open ();<br>\r\nOdbcCommand cmd1 = new OdbcCommand (&quot;select path from WHERE Code Alarm alarm = 32 &quot;, cn);<br>\r\ncmd1.Connection = cn;<br>\r\nfileName = cmd1.ToString ();<br>\r\nWaveOut wave = new ();<br>\r\nwave.DeviceNumber = 0;<br>\r\nplaySound (0);<br>\r\n</code><br>\r\nBut he gave me the following error:<br>\r\n&quot;Could not find file 'C: \\ Users \\ wafa \\ Documents \\ Visual Studio 2010 \\ Projects \\ ALARMED \\ ALARMED \\ bin \\ Debug \\ System.Data.Odbc.OdbcCommand'.&quot;<br>\r\nAt the line:<br>\r\n&quot;waveReader = new NAudio.Wave.WaveFileReader (fileName);&quot; in my &quot;playSound&quot; function:<br>\r\n<code><br>\r\npublic void PlaySound (int deviceNumber)<br>\r\n{<br>\r\ndisposeWave ();// stop previous sounds Before Starting<br>\r\nwaveReader = new NAudio.Wave.WaveFileReader (fileName);<br>\r\nvar waveOut NAudio.Wave.WaveOut = new ();<br>\r\nwaveOut.DeviceNumber = deviceNumber;<br>\r\nvar output = waveOut;<br>\r\noutput.Init (waveReader);<br>\r\noutput.Play ();<br>\r\n}<br>\r\n</code><br>\r\nThank you in advance.<br>\r\nGood day<img src=\"http://www.codeproject.com/script/Forums/Images/smiley_smile.gif\" alt=\"Smile | :)\" align=\"top\"></p>\r\n",
+    "PostedDate": "2011-05-05T07:39:00.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

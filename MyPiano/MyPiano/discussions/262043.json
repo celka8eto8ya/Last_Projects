@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "630148",
+    "ThreadId": "262043",
+    "Html": "\r\n<p>Hi everybody,</p>\r\n<p>I get the&nbsp;AcmNotPossible error on NAudio, calling&nbsp;acmStreamConvert in AcmStreamHeader.cs::Convert. This exception raises only for mp3 files with no waveform inside, file that contains only silence.</p>\r\n<p>If you want i can give you two sample mp3, with the same audio format, one full of silence and one with voice.</p>\r\n<p>I'm sorry for the poor information that I can give you.</p>\r\n<p>Bye, D.</p>\r\n",
+    "PostedDate": "2011-06-20T09:43:16.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630971",
+    "ThreadId": "262043",
+    "Html": "<p>if you make the MP3 file available for me to download somewhere I can run it through my test harness and see what's going wrong</p>",
+    "PostedDate": "2011-06-22T01:13:12.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633444",
+    "ThreadId": "262043",
+    "Html": "<p>Here <a href=\"https://skydrive.live.com/redir.aspx?cid=8c2fddf285604633&amp;resid=8C2FDDF285604633!2600\">https://skydrive.live.com/redir.aspx?cid=8c2fddf285604633&amp;resid=8C2FDDF285604633!2600</a>&nbsp;you can find 2 mp3 files, with speaking name.</p>\r\n<p>The file with no waveform is named <span class=\"filename\" title=\"20110620162955 - DoesNotWork.mp3 Shared with: Everyone (public) Date modified: A moment ago Type: MP3 File Size: 514 KB\" dir=\"ltr\">20110620162955 - DoesNotWork.mp3</span></p>\r\n<p><span class=\"filename\" title=\"20110620162955 - DoesNotWork.mp3 Shared with: Everyone (public) Date modified: A moment ago Type: MP3 File Size: 514 KB\" dir=\"ltr\">Thank you for the support.</span></p>\r\n<p><span class=\"filename\" title=\"20110620162955 - DoesNotWork.mp3 Shared with: Everyone (public) Date modified: A moment ago Type: MP3 File Size: 514 KB\" dir=\"ltr\">Bye, D.</span></p>",
+    "PostedDate": "2011-06-27T03:50:31.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637382",
+    "ThreadId": "262043",
+    "Html": "<p>there is a corrupt/wierd frame at the beginning that has a different  sample rate to all the others which is tripping NAudio over.</p>",
+    "PostedDate": "2011-07-05T03:03:31.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637387",
+    "ThreadId": "262043",
+    "Html": "<p>Thank you for your reply, the file is generated with lame.exe with param -V 2, and the source file is a wav PCM 16bit, 8khz Mono.</p>\r\n<p>Do you think that is a bug in lame mp3 generation?</p>\r\n<p>Bye, D.</p>",
+    "PostedDate": "2011-07-05T03:18:01.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637389",
+    "ThreadId": "262043",
+    "Html": "<p>looks like LAME is putting some kind of header on the file that NAudio is interpreting as an MP3 frame. Never seen this before. What version of LAME are&nbsp; you using?</p>",
+    "PostedDate": "2011-07-05T03:20:28.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637446",
+    "ThreadId": "262043",
+    "Html": "<p>version 3.98.4</p>",
+    "PostedDate": "2011-07-05T05:39:41.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637459",
+    "ThreadId": "262043",
+    "Html": "<p>probably need to make NAudio more fault tolerant, but this example is a real pain. The sample rate we read from the first frame is the one we use to open the soundcard with. If subsequent ones are from a different sample rate we either need to close and reopen the soundcard or implement on the fly SRC. Neither is a nice solution.</p>",
+    "PostedDate": "2011-07-05T05:55:46.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637464",
+    "ThreadId": "262043",
+    "Html": "<p>I understand it clearly. No problems, this is a strange condition also for us, cause a file with no waveform as the one i posted is not useful. I write here only to improve you project, which is very complete and&nbsp;really appreciated.</p>\n<p>Thank you another time for your work. Bye, D.</p>",
+    "PostedDate": "2011-07-05T06:01:12.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

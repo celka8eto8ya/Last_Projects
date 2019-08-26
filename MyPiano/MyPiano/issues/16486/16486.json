@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When I use a WaveOut device, I get a nice property called Channels, which tell me the number of output channels. Presumably, I don't need such one for AsioOut, as they all are mono (right?). But DirectSoundOut could have a different number of channels - and I see no way of figuring this out.",
+    "LastUpdatedDate": "2015-11-11T21:42:29.73-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-11-11T21:42:29.73-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Get number of channels for DirectSoundOut",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16486
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

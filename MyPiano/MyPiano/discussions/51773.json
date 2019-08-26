@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "173680",
+    "ThreadId": "51773",
+    "Html": "Hello,<br>\r\n<br>\r\nI am VERY new to any audio programming, but I have just started playing around with NAudio and I think it may be just what I'm looking for.&nbsp; What I would like to do is create an application for tuning an instrument -- I have figured out how to monitor the buffer of the WaveInStream in fairly real-time, but I am wondering is there any way that I could calculate the frequency of the stream?&nbsp; Basically I want to monitor the default input device and constantly show the frequency (like the low E note on a guitar's frequency is 41.20).&nbsp; I then of course want to build a GUI and make it user-friendly, etc, but I need to figure out the guts first.<br>\r\n<br>\r\nIs this possible using NAudio?&nbsp; I'm not afraid to get in the source and start writing some code but I need a little bit of guidance.<br>\r\n<br>\r\n<br>\r\nThanks,<br>\r\nLydon<br>\r\n",
+    "PostedDate": "2009-03-30T16:50:59.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

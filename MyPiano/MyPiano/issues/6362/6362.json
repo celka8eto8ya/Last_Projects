@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudioDemo",
+      "DisplayName": "NAudioDemo"
+    },
+    "ClosedComment": "eventually got it working after some pain working out how to marshal inherited WaveFormats",
+    "ClosedDate": "2008-06-16T14:49:27.883-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "NAudioDemo should have a form that demonstrates how to:\nShow details of installed ACM Codecs\nEncode a Wave File to a compressed format using an ACM codec\nDecode a Wave File from a compressed format using an ACM codec",
+    "LastUpdatedDate": "2008-06-16T14:49:27.883-07:00",
+    "PlannedForRelease": "1.2 Beta",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-06-14T14:47:41.893-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudioDemo ACM Demonstration",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 6362
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

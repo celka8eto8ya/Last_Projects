@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1125968",
+    "ThreadId": "470298",
+    "Html": "I was reading about your library and I would like to know the differences between recording using those two classes? Is there any benefits using one of them?<br />\n",
+    "PostedDate": "2013-11-18T04:20:31.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126512",
+    "ThreadId": "470298",
+    "Html": "Loopback capture means recording the sound that is being played by your computer. So WasapiLoopbackCapture would record what (say) Windows Media Player was playing, while WasapiCapture records from your microphone. Both use WASAPI, a new audio API introduced with Windows Vista so they can't be used on Windows XP. They also do not offer built-in resampling - you must record at the samplerate the soundcard is using (which you can control to a certain extent if you record in exclusive mode)\r<br />\n<br />\nWaveIn uses the older Windows audio APIs, which work right back on Windows XP and earlier. They have a nice feature of automatically resampling what you record to any sample rate you choose. But they are effectively obsolete now, and you can't use them in Windows Store applications for example.\r<br />\n<br />\nMy NAudio pluralsight course goes into a lot more depth on this:\r<br />\n<a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio</a><br />\n",
+    "PostedDate": "2013-11-19T05:37:53.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

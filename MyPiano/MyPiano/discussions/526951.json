@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1198384",
+    "ThreadId": "526951",
+    "Html": "Dear Sir,\r<br />\n<br />\nI am getting mad :( .\r<br />\nI am getting sound over serial port , and I use WaveFilewriter class to write data to it at the  DataReceived Event . It works great . Thanks,\r<br />\n<br />\nBut ,at a certain time , I need to add a byte array to the WaveFileWriter. I fist save this byte array to the WaveFileWriter by  Mywriter.Write(fileByte, 0, fileByte.Length - 1) . then I continue to add data received from the serial port normally. NB. this byte Array I add is amplified (by converting to float , then multiply , then convert to byte again)\r<br />\n<br />\nProblem , \r<br />\nWhen I run the recorded file , it works great for the audio coming from the serial port , and for the sound that is added manually , but after this any sound coming from the serial port is recorded in a very very high volume. I do not know why.\r<br />\n<br />\nAny Idea ?\r<br />\n<br />\nThanks for the great control and for the Excellent support. \r<br />\nWaleed<br />\n",
+    "PostedDate": "2014-01-26T14:55:13.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198439",
+    "ThreadId": "526951",
+    "Html": "Can you show us the code? It is difficult to see the problem otherwise.<br />\n",
+    "PostedDate": "2014-01-26T16:10:58.45-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201605",
+    "ThreadId": "526951",
+    "Html": "dear K24A3 , \r<br />\n<br />\nThanks for support , I really appreciate it so much &amp; sorry for delay . I was in a trip without internet access.\r<br />\n<br />\nFor the bug I face , I will try to save both data into 2 separate channels . This will make it easier for me.\r<br />\n<br />\nThanks for support. \r<br />\nWaleed<br />\n",
+    "PostedDate": "2014-02-01T04:40:57.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1327090",
+    "ThreadId": "573463",
+    "Html": "Hi all,\r<br />\n<br />\nI want to know how to concatenate two Wave files in memory to play. I don't want to save a result wave file. I just only one to reproduce the two files as one.\r<br />\n<br />\nIs it possible?\r<br />\n<br />\nThank you very much in advance,\r<br />\nFran<br />\n",
+    "PostedDate": "2014-11-28T09:51:46.447-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327101",
+    "ThreadId": "573463",
+    "Html": "I'd make my own IWaveProvider (or WaveStream if you need to reposition within the concatenated file) that took the two WaveFileReaders as inputs. In the Read method, read out of the first one, and if you get less than count, start reading out of the second one. Both files must have the same waveformat.<br />\n",
+    "PostedDate": "2014-11-28T10:51:38.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-12-01T05:01:31.687-08:00"
+  },
+  {
+    "Id": "1327671",
+    "ThreadId": "573463",
+    "Html": "Thank you very much for your help markheath. I have concatenate more than one file in memory using a new provider. :)<br />\n",
+    "PostedDate": "2014-12-01T05:01:23.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356471",
+    "ThreadId": "573463",
+    "Html": "Hello all\r<br />\n<br />\nplease read below if you care about the big picture. The specific thing we're looking for is how to build such an IWaveProvider that can concatenate two (or more) WAV files in memory. Here's our take on it:\r<br />\n<br />\n<a href=\"https://gist.github.com/BrainCrumbz/091de69fbbec6ad5fcd6\" rel=\"nofollow\">https://gist.github.com/BrainCrumbz/091de69fbbec6ad5fcd6</a>\r<br />\n<br />\nbut we're facing an unhandled COMException when we try to encode starting from such a provider.\r<br />\n<br />\nCould you please help us understanding what's wrong, or point us to a working provider that can join WAV files?\r<br />\n<br />\nThanks all for your time!\r<br />\n<br />\n<br />\nBIG PICTURE:\r<br />\nwe're working with NAudio in order to read some WAV files, combine (aka join or concatenate) them together in memory and then saving the result as WMA file.\r<br />\n<br />\nWe had hard times trying to even convert a single file from WAV to WMA using NAudio.WMA Nuget, that is NAudio.WindowsMediaFormat namespace. When using WmaWriter.Write we faced the &quot;scary&quot; <em>Object contains non-primitive or non-blittable data</em> exception from deep down in GCHandle.Alloc in WmaWriter c'tor and we decided to pull back for the moment.\r<br />\n<br />\nSo we switched to NAudio.MediaFoundation, as in several places it has been suggested as a simpler way to achieve WMA encoding. That has proved to be true: we could easily convert a single WAV file to a WMA file quite soon.\r<br />\n<br />\nNow the trouble we have is how to combine two (or more) WAV files into an IWaveProvider, which can then be fed into MediaFoundationEncoder.EncodeToWma.<br />\n",
+    "PostedDate": "2015-02-27T11:47:29.42-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1357195",
+    "ThreadId": "573463",
+    "Html": "what is the WaveFormat of the WAV files? The error you are getting seems to be that the encoder cannot find a suitable WMA encoding to convert to. <br />\n",
+    "PostedDate": "2015-03-01T00:00:56.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358714",
+    "ThreadId": "573463",
+    "Html": "Thanks for your time (and for this great library)<br />\n<br />\nThe WaveFormat of WAV files is {16 bit PCM: 44kHz 1 channels}. Although, for the records, I'd like to tell that:<br />\n<ol>\n<li>We were able to concatenate both WAV files into a new WAV file, checking that the sources had the same format</li>\n<li>We were able to convert a single WAV file into a new WMA file, using the same MediaType that we're trying to use now</li>\n<li>\nWe were able to join WAV files into a new WMA file, using a MixingSampleProvider, but this resulted somehow in &quot;cutting&quot; the end of both files before joining them (that's why we're trying with a custom provider as suggested in this thread)<br />\n</li>\n</ol>\nFinally, after posting our question, we went on with tests. We tried both using an &quot;implicit&quot; encoder with the single line:<br />\n<pre><code>MediaFoundationEncoder.EncodeToWma(waveProvider, outputFile, 16000);</code></pre>\n\nas well as with an &quot;explicit&quot; encoder:<br />\n<pre><code>                MediaType wmaMediaType = MediaFoundationEncoder.SelectMediaType(\n                    AudioSubtypes.MFAudioFormat_WMAudioV8,\n                    new WaveFormat(16000, 1),\n                    16000);\n\n                using (MediaFoundationEncoder wmaEncoder = new MediaFoundationEncoder(wmaMediaType))\n                {\n                    wmaEncoder.Encode(outputFile, waveProvider);\n                }</code></pre>\n\nThe <strong>strange</strong> result is that - whether explicit or implicit, whether with mixing provider or custom one - if we start the test application and try with a join right away, we get that exception. Instead, if we first try with converting a single file, and then go with the join, no exception is thrown. <br />\n<br />\nBoth operations - joining two files and saving a single WAV file - share much of the same code.<br />\n",
+    "PostedDate": "2015-03-02T03:46:17.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358720",
+    "ThreadId": "573463",
+    "Html": "Here's a link to the sample solution: <br />\n<br />\n<a href=\"https://drive.google.com/open?id=0B1icYE0oSducVzY5TGFyRThOT2M&amp;authuser=0\" rel=\"nofollow\">https://drive.google.com/open?id=0B1icYE0oSducVzY5TGFyRThOT2M&authuser=0</a><br />\n<br />\nThe code we're talking about is the one in <em>MediaFoundation</em> directory. Code-behind (no MVVM in this test, sorry) almost directly invokes that, and does basically nothing regarding audio manipulation.<br />\n<br />\nIn order to test, just run the app and click on the various buttons. <br />\n<br />\n<strong>EDIT</strong><br />\n<br />\nThe link to sample solution on Google Drive is not valid anymore. If anyone is interested, we uploaded a <a href=\"https://github.com/BrainCrumbz/NAudio-WavToWma\" rel=\"nofollow\">Proof-of-Concept solution on GitHub</a> with a <em>working</em> technique as well.<br />\n",
+    "PostedDate": "2015-03-02T04:06:55.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358774",
+    "ThreadId": "573463",
+    "Html": "Oops, sorry about that, I thought I had shared the link with enough permission! Now I accepted your request from Google Drive.<br />\n",
+    "PostedDate": "2015-03-02T06:33:31.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358783",
+    "ThreadId": "573463",
+    "Html": "Double checking the source code, one difference we can see is the following:<br />\n<ol>\n<li>Code for converting a single WAV file into WMA accesses the source WAV through <em>MediaFoundationReader</em>, which is then fed as IWaveProvider into encoding operation</li>\n<li>\nCode for joining WAV files into a single WMA accesses the source WAV files through <em>WaveFileReader</em>, which are then used to build the IWaveProvider and in turn this is fed into encoding operation<br />\n</li>\n</ol>\nCould this be the root cause? We're going to test this right now.<br />\n<br />\n<strong>EDIT:</strong><br />\n<br />\nThat was it. We substitued every occurence of WavFileReader with MediaFoundationReader when working with MediaFoundation, and now our custom WaveProvider works great.<br />\n<br />\nThanks again for your attention<br />\n<br />\nRegards<br />\n",
+    "PostedDate": "2015-03-02T06:51:34.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358840",
+    "ThreadId": "573463",
+    "Html": "hi, have just had a look at your project. It's because you're not calling MediaFoundationApi.Startup() before using Media Foundation APIs. I think there are some places where I do this automatically for you, but obviously its not in there everywhere at the moment. <br />\n",
+    "PostedDate": "2015-03-02T08:39:44.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1359213",
+    "ThreadId": "573463",
+    "Html": "Ok, I see. Thanks for the suggestion: we'll make sure we run that at least once.\r<br />\nKind regards\r<br />\n<br />\nThe BrainCrumbz team<br />\n",
+    "PostedDate": "2015-03-03T01:10:45.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1359854",
+    "ThreadId": "573463",
+    "Html": "Apart from all this (preliminary problems?) we still have issues with the core of the thing: the IWaveProvider that joins WAV files in memory. Initially it seemed to work ok, but now we're trying with 5 or 6 short clips (a start tone, some spoken letters or numbers from an alphanumeric code, an ending tone) and we can hear that the final clips are somehow cut, or not played to the end anyway.<br />\n<br />\nAs from the initial gist linked before, the core is represented by the following code blocks:<br />\n<pre><code>// Code invoking the provider and saving WMA\nprivate static int JoinToWmaFile(string outputPathName, MediaType wmaMediaType, IEnumerable&lt;MediaFoundationReader&gt; waveReaders)\n{\n    // ...\n    IWaveProvider joiningWaveProvider  = new JoiningWaveProvider(waveReaders);\n\n    using (MediaFoundationEncoder wmaEncoder = new MediaFoundationEncoder(wmaMediaType))\n    {\n        wmaEncoder.Encode(outputPathName, joiningWaveProvider);\n    }\n\n}\n// The actual provider\npublic JoiningWaveProvider(IEnumerable&lt;MediaFoundationReader&gt; inputFileReaders)\n{\n    // ...\n    private int _readIndex = 0;\n    // ...\n        public int Read(byte[] buffer, int offset, int count)\n        {\n            int startIndex = _readIndex;\n            int currentOffset = offset;\n            int totalRead = 0;\n            int remaining = count;\n\n            // there should be a 'plus plus' operator here\n            for (_readIndex = startIndex; _readIndex &lt; _inputFileReaders.Count &amp;&amp; remaining &gt; 0; _readIndex++)\n            {\n                MediaFoundationReader currentReader = _inputFileReaders[_readIndex];\n\n                int readNow = currentReader.Read(buffer, currentOffset, remaining);\n\n                // there should be a 'plus equal' operator here\n                currentOffset += readNow;   \n                totalRead += readNow;\n                remaining -= readNow;\n            }\n\n            return totalRead;\n        }\n}</code></pre>\n\nWe put some Debug logs (not shown in code) and here are some info about the read invocations, although they're not very clear to us:<br />\n<pre><code>Common format: 16 bit PCM: 44kHz 1 channels\nSaving to WMA with explicit encoder\nRead, offset: 0, count: 352800\n  - readIndex: 0, currentOffset: 0, remaining: 352800\n  - readIndex: 1, currentOffset: 117340, remaining: 235460\n  - readIndex: 2, currentOffset: 147132, remaining: 205668\n  - readIndex: 3, currentOffset: 172316, remaining: 180484\n  - readIndex: 4, currentOffset: 232060, remaining: 120740\n  - readIndex: 5, currentOffset: 261852, remaining: 90948\n  - totalRead: 352800\nRead, offset: 0, count: 352800\n  - readIndex: 6, currentOffset: 0, remaining: 352800\n  - totalRead: 133468\nRead, offset: 0, count: 352800\n  - totalRead: 0</code></pre>\n\n",
+    "PostedDate": "2015-03-04T09:59:43.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

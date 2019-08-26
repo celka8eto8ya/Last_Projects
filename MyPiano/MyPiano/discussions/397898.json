@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "921295",
+    "ThreadId": "397898",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm trying to use NAudio to export samples from a SoundFont file. Here is the code I used :</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>WaveFormat format = <span style=\"color:blue\">new</span> WaveFormat((<span style=\"color:blue\">int</span>)sampleRate, 16, 1);\r\nWaveFileWriter fileWriter = <span style=\"color:blue\">new</span> WaveFileWriter(path &#43; <span style=\"color:#a31515\">&quot;/&quot;</span> &#43; sampleName &#43; <span style=\"color:#a31515\">&quot;.wav&quot;</span>, format);\r\nfileWriter.Write(soundFont.SampleData, generator.SampleHeader.start, (<span style=\"color:blue\">int</span>)(generator.SampleHeader.end - generator.SampleHeader.start));\r\nfileWriter.Flush();\r\nfileWriter.Close();\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>The generator object is a SampleID generator from the Soundfont object.</p>\r\n<p>The wave file is generated but when I play it in VLC, the sound is not correct. It's too short and sounds awfull. Maybe my mistake come from the format configuration, but I have no idea how to solve this.<br>\r\n<br>\r\nIt would help me a lot if someone could help me with this...<br>\r\n<br>\r\nThanks</p>\r\n",
+    "PostedDate": "2012-10-03T08:05:57.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "921451",
+    "ThreadId": "397898",
+    "Html": "<p>Hi,<br /><br />It seems like I found the answer to my problem. After looking at the file contents with an hexadecimal editor, I realized that the file was 50% too short. Seems like the Start, End, LoopStart and LoopEnd value of a Sample Header are devided by 2... I have no idea why, and I would be glad if someone could explain me.<br /><br />Anyway, this code is working :</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">uint</span> len = offsetEnd - offsetStart;\r\nWaveFormat format = <span style=\"color: blue;\">new</span> WaveFormat((<span style=\"color: blue;\">int</span>)sampleRate, 16, 1);\r\nWaveFileWriter fileWriter = <span style=\"color: blue;\">new</span> WaveFileWriter(path, format);\r\nfileWriter.Write(soundFont.SampleData, <span style=\"color: blue;\">checked</span>((<span style=\"color: blue;\">int</span>)offsetStart)*2, <span style=\"color: blue;\">checked</span>((<span style=\"color: blue;\">int</span>) len)*2);\r\nfileWriter.Flush();\r\nfileWriter.Close();\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-10-03T12:23:56.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "922972",
+    "ThreadId": "397898",
+    "Html": "<p>It is because the sample data is a byte array, whilst the offsets are measured in samples, which are 16 bits, so take two bytes each.</p>",
+    "PostedDate": "2012-10-06T23:51:31.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

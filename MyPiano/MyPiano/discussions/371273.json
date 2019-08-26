@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "870628",
+    "ThreadId": "371273",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I've just started using NAudio for my project and thanks to all who contribute to this project.</p>\r\n<p>My problem is that I need to be very specific about the number of buffers and length of the buffers. So, in order to set WaveOut to use 4 buffers that are all 20 msec long, I need to initialize it as:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>waveOut = <span style=\"color:blue\">new</span> WaveOut() \n{ \n  NumberOfBuffers = 4,\n  DesiredLatency = <span style=\"color:#008000\"><strong>77</strong></span>\n};\nwaveProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(waveFormat)\n{\n  BufferDuration = TimeSpan.FromMilliseconds(<span style=\"color:#008000\"><strong>80</strong></span>) \n};\nwaveOut.Init(waveProvider);</pre>\r\n</div>\r\n<p>It's all fine except when I want to set the DesiredLatency, I need to reverse the formula that is used to calculate the buffer size, and work it out to get a value, which happens to produce the buffer length I need.</p>\r\n<p>I am going to use it in my code as above, but I think it would be better if I don't have to refer to the WaveOut.cs file whenever I want to initialize a WaveOut in code, or write a function which takes the actual &quot;DesiredLatency&quot; value and converts it into\r\n NAudio units.</p>\r\n",
+    "PostedDate": "2012-07-17T01:46:11.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893049",
+    "ThreadId": "371273",
+    "Html": "<p>yes, I agree that the DesiredLatency property isn't ideal for those who want exact control over buffer sizes. I don't want to break existing code, but I will have a think about how I can make it easier to do this.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-07-30T07:00:40.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

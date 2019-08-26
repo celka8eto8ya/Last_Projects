@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1491489",
+    "ThreadId": "660869",
+    "Html": "to check the data arrival from auiod usb device (for example tascam us-600, zoom h2n) I subscribe to event AudioAvailable of AsioOut<br />\nbut sometimes data not recived long time only helps to reconnect device to usb<br />\n<br />\nanybody help me?<br />\n<br />\nPS: I am using Windows 8.1<br />\n",
+    "PostedDate": "2017-01-22T23:39:11.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

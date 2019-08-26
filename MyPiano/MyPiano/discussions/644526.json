@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1442949",
+    "ThreadId": "644526",
+    "Html": "Hello,\r<br />\n<br />\nI was trying out the Graphic Equalizer WPF Demo, and I've found that when modifying the slider for Frequency 4800 i could here no more sound. The other sliders were handling correctly. The .wav file was 8 kHz sampling rate, 32 bits per sample and 1 channel. \r<br />\n<br />\nWhat can be the problem?<br />\n",
+    "PostedDate": "2015-09-03T02:14:46.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442950",
+    "ThreadId": "644526",
+    "Html": "that demo assumes you are working with sample rates of 44.1kHz or higher. 4800 is above the Nyquist frequency for an 8kHz sample rate file, so its not surprising that it behaves strangely.<br />\n",
+    "PostedDate": "2015-09-03T02:20:00.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443170",
+    "ThreadId": "644526",
+    "Html": "Max  frequency is half Samplerate (Nyquist criteria).<br />\n<br />\nE.g.:<br />\nSamplerate 8000Hz -&gt; FFT -&gt; Frequency range: 0-4000Hz -&gt; Max frequency: 4000Hz<br />\nSamplerate 44100Hz -&gt; FFT -&gt; Frequency range: 0-22050Hz -&gt; Max frequency: 22050Hz<br />\nSamplerate 48000Hz -&gt; FFT -&gt; Frequency range: 0-24000Hz -&gt; Max frequency: 24000Hz<br />\n<br />\nand so on.<br />\n<br />\nNote, that in reality (my own experience) Min frequency is not exactly at 0Hz, but near to it with ~20-40Hz.<br />\n",
+    "PostedDate": "2015-09-04T04:29:16.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

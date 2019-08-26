@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.4",
+    "ClosedDate": "2011-05-27T13:32:12.62-07:00",
+    "CommentCount": 3,
+    "Custom": "",
+    "Description": "Hello..\nI have a problem.\nI play a song displaying subtitles. Everything is ok when I dont use rewind and fast forward but when I use them the CurrentTime is not the same as it was at the begining.\nThe time difference is bigger at the end of mp3.\nSubtitles are late more then few seconds.\nWhat can I do if I want to have precision CurrentTime after use FF and Revind.",
+    "LastUpdatedDate": "2011-05-27T13:32:12.62-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-02-20T03:42:43.547-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "mainOutputStream.CurrentTime problem",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 9297
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "hi there, I imagine that CurrentTime won't work very well with MP3s, particularly if they are VBR MP3s. This is something I would like to fix in a future version",
+      "PostedDate": "2009-02-24T03:04:38.697-08:00",
+      "Id": 41697
+    },
+    {
+      "Message": "i will look forward for new version.\r\nthanks.",
+      "PostedDate": "2009-02-25T00:39:26.597-08:00",
+      "Id": 41698
+    },
+    {
+      "Message": "MP3 current time and Length should be accurate now",
+      "PostedDate": "2010-11-07T13:56:22.91-08:00",
+      "Id": 41699
+    }
+  ]
+}

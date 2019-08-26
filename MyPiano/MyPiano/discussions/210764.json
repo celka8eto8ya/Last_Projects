@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "436193",
+    "ThreadId": "210764",
+    "Html": "<p>Hi,</p>\r\n<p>&nbsp;</p>\r\n<p>I'm trying to code my own Audio Mixer. Can I do that with NAudio? I believe I need the ISimpleAudioVolume Interface for that. Is that correct?</p>\r\n<p>&nbsp;</p>\r\n<p>Best wishes,</p>\r\n<p>Schneider</p>",
+    "PostedDate": "2010-04-27T15:20:59.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439828",
+    "ThreadId": "210764",
+    "Html": "<p>what are you trying to mix exactly? the WaveMixer32 class allows you to mix wavestreams.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-05-06T05:56:12.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439901",
+    "ThreadId": "210764",
+    "Html": "<p>Hi Mark,</p>\r\n<p>You know the VolumeMixer from Windows 7 and Vista? You can adjust the volume for each application. Thats really cool, but I would like to have it with shortcuts. So Im trying to code my own mixer application. That is what I want.</p>\r\n<p>Greetings,</p>\r\n<p>Schneider</p>",
+    "PostedDate": "2010-05-06T08:19:29.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439905",
+    "ThreadId": "210764",
+    "Html": "I see. I'm not sure whether this is possible as I don't think Win 7 & Vista let you enumerate the mixer inputs for each application. I wanted to build the same thing myself a few years back in Vista, but was not able to do so. I have however heard of people managing to write similar things, so maybe it is possible now.\r\n\r\nMark",
+    "PostedDate": "2010-05-06T08:22:40.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439939",
+    "ThreadId": "210764",
+    "Html": "Look at this commercial software: \r\n\r\nhttp://www.actualsolution.com/power_mixer/\r\n\r\nSo, it works. But, my software shouldn't be so overloaded like that one.\r\n\r\n",
+    "PostedDate": "2010-05-06T09:02:50.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "441947",
+    "ThreadId": "210764",
+    "Html": "<p>sure, but unfortunately I'm not actively looking into this area of NAudio at the moment, so unless someone else contributes the necessary code, it will have to wait</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-05-12T03:01:02.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

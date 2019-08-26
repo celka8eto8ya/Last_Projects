@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1425537",
+    "ThreadId": "638024",
+    "Html": "Hi there,\r<br />\n<br />\nI have a question about NAUDIO. Is it possible to catch events / signals from my external midi keyboard connected to PC via USB cable? I am trying to write my own piano software for my usb midi keyboard but i stuck just at the beggining - don't know how to detect, catch signals from connected keyboard.\r<br />\n<br />\nPlease, any advise or help? Or do you know any existing sources / tutorials? Maybe someone did that before?\r<br />\n<br />\nGreetings.<br />\n",
+    "PostedDate": "2015-05-15T04:12:51.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449042",
+    "ThreadId": "638024",
+    "Html": "Yes, NAudio has basic support for MIDI in, and if you run the NAudio demo app included in the code (at GitHub), you can see an example of this working<br />\n",
+    "PostedDate": "2015-10-19T08:42:25.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

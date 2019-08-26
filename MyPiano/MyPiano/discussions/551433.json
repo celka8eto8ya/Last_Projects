@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1265276",
+    "ThreadId": "551433",
+    "Html": "I used a WasapiLoopbackCapture and on data available wrote to a MemoryStream (I tried a WaveStream but it seems its an abstract class). Should I be using the RawSourceWaveStream ?\r<br />\n<br />\nAfter finishing the recording, I want to do two things:<br />\n<ol>\n<li>Play the MemoryStream\r<br />\nIf the MemoryStream sounds okay:</li>\n<li>\nSave the MemoryStream to a WAVE file.<br />\n</li>\n</ol>\nI've managed to figure out how to play the MemoryStream, though I've no idea if it's the proper way to do it: (waveStream is the Memory Stream, and waveOut is NAudio Wave Out)<br />\n<pre><code>waveStream.Position = 0;\nusing (RawSourceWaveStream NewReader = new RawSourceWaveStream(waveStream, captureDevice.WaveFormat))\n{\n    waveOut.Init(NewReader);\n    waveOut.Play();\n    NewReader.Close();\n}</code></pre>\n\nThat seems to work for playing. \r<br />\n<br />\nI'm also using WaveFileWriter with a raw stream again and I just read from it and write to the wave file. I just want to make sure that these are both &quot;best practice&quot; when using NAudio.\r<br />\n<br />\nI'd also love to be able to trim/clip seconds off the front or end of the wave stream (before writing to a file) but I don't think NAudio can do this out of the box.\r<br />\n<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2014-07-13T08:59:24.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273561",
+    "ThreadId": "551433",
+    "Html": "well if you have a memory stream, then trimming is trivial. Just position to where you want to start the WAV file from, then copy the bytes for the duration you want directly into a WaveFileWriter's Write method. Just be sure to only position to a multiple of BlockAlign.<br />\n",
+    "PostedDate": "2014-07-17T07:31:36.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

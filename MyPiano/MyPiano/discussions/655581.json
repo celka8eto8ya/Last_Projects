@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1476306",
+    "ThreadId": "655581",
+    "Html": "Hi,\r<br />\n<br />\nI'm having trouble using the component for the simple purpose I need.\r<br />\nI would like to have the DATA stream only inside my buffer (array) and then offset it for 20ms (and playing those segments in real-time.\r<br />\n<br />\nI've tried using this:\r<br />\n<br />\n WaveFileReader reader = new WaveFileReader(fullFileName);<br />\n<pre><code>             byte[] buffer = new byte[reader.Length];\n            int read = reader.Read(buffer, 0, buffer.Length);\n            short[] sampleBuffer = new short[read / 2];\n            Buffer.BlockCopy(buffer, 0, sampleBuffer, 0, read);\n</code></pre>\n\nI can see that <strong>sampleBuffer</strong> contains the data (real pos-neg values, which I don't get if I'm using <em>byte[] sampleBuffer = File.ReadAllBytes(fullFileName);</em> ).\r<br />\n<br />\nI'm using the following WAV file:<br />\n<ul>\n<li>Pcm 8000Hz 1 channels 16 bits per sample</li>\n<li>Extra Size: 0 Block Align: 2 Average Bytes Per Second: 16000</li>\n<li>WaveFormat: 16 bit PCM: 8kHz 1 channels</li>\n<li>Length: 351360 bytes: 00:00:21.9600000 </li>\n</ul>\n",
+    "PostedDate": "2016-06-15T02:31:23.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1477272",
+    "ThreadId": "655581",
+    "Html": "WaveFileReader.Read only returns data from the data chunk of the WAV file. You can use OffsetSampleProvider to achieve delays / skipping over portions of the file depending on your needs.<br />\n",
+    "PostedDate": "2016-06-25T08:59:00.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

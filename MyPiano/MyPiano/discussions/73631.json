@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "251716",
+    "ThreadId": "73631",
+    "Html": "<p>I get an exception when I try to read an &quot;bext&quot; wave header file. I fixed it using the following code:</p>\r\n<p>I thought you may want to change it in the source code too.</p>\r\n<p>public static void ReadWaveHeader(Stream stream, out WaveFormat format, out long dataChunkPosition, out int dataChunkLength, List&lt;RiffChunk&gt; chunks)</p>\r\n<p>{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataChunkPosition = -1;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BinaryReader br = new BinaryReader(stream);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int fmt = br.ReadInt32();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (fmt != WaveInterop.mmioStringToFOURCC(&quot;RIFF&quot;, 0))<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;throw new FormatException(&quot;Not a WAVE file - no RIFF header&quot;);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint fileSize = br.ReadUInt32(); // read the file size (minus 8 bytes)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fmt = br.ReadInt32();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (fmt != WaveInterop.mmioStringToFOURCC(&quot;WAVE&quot;, 0))<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw new FormatException(&quot;Not a WAVE file - no WAVE header&quot;);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p><span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fmt = br.ReadInt32();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (fmt == WaveInterop.mmioStringToFOURCC(&quot;bext&quot;, 0))<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { &nbsp; // support &quot;bext&quot; wave files&nbsp;RBo. 10/29/09<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int dumpSize = br.ReadInt32();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; br.ReadBytes(dumpSize);&nbsp;// skip over the &quot;bext&quot; block<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fmt = br.ReadInt32();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // now we expect the format chunk<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (fmt != WaveInterop.mmioStringToFOURCC(&quot;fmt &quot;, 0))<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw new FormatException(&quot;Not a WAVE file - no fmt header&quot;);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format = new WaveFormatExtraData(br);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Int32 dataChunkID = WaveInterop.mmioStringToFOURCC(&quot;data&quot;, 0);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataChunkLength = 0;</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// sometimes a file has more data than is specified after the RIFF header<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long stopPosition = Math.Min(fileSize + 8, stream.Length);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// this -8 is so we can be sure that there are at least 8 bytes for a chunk id and length<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (stream.Position &lt; stopPosition - 8)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Int32 chunkIdentifier = br.ReadInt32();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Int32 chunkLength = br.ReadInt32();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (chunkIdentifier == dataChunkID)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataChunkPosition = stream.Position;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataChunkLength = chunkLength;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; if (chunks != null)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chunks.Add(new RiffChunk(chunkIdentifier, chunkLength, stream.Position));<br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stream.Position += chunkLength;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</p>",
+    "PostedDate": "2009-10-30T11:54:31.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "252008",
+    "ThreadId": "73631",
+    "Html": "<p>thanks for reporting this. I think I will try to get some arbitrary chunk reading code in there, so it can support anything before the fmt chunk</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-31T12:27:37.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "252573",
+    "ThreadId": "73631",
+    "Html": "<div>You're welcome. Letme know when you have an update please. Thanks. <br><br>Sent from my iPhone</div><div><br>On Oct 31, 2009, at 12:27 PM, markheath &lt;<a href=\"mailto:notifications@codeplex.com\">notifications@codeplex.com</a>&gt; wrote:<br><br></div><div></div><blockquote><div> <p>From: markheath</p> <div id=ThreadNotificationPostBody><p>thanks for reporting this. I think I will try to get some arbitrary chunk reading code in there, so it can support anything before the fmt chunk</p>\r\n<p>Mark</p>\r\n<p> </p></div>   </div></blockquote>",
+    "PostedDate": "2009-11-02T14:20:05.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "252587",
+    "ThreadId": "73631",
+    "Html": "<p>can you try your file with the latest checkin, it should allow the bext chunk through now</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-11-02T14:55:58.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "252958",
+    "ThreadId": "73631",
+    "Html": "<div>Hi Mark,</div>\r\n<div> </div>\r\n<div>Where is the latest checkin?</div>\r\n<div> </div>\r\n<div>Russell B.<br><br></div>\r\n<div>On Mon, Nov 2, 2009 at 2:56 PM, markheath <span dir=ltr>&lt;<a href=\"mailto:notifications@codeplex.com\">notifications@codeplex.com</a>&gt;</span> wrote:<br>\r\n<blockquote style=\"border-left:#ccc 1px solid;margin:0px 0px 0px 0.8ex;padding-left:1ex\">\r\n<div>\r\n<p>From: markheath</p>\r\n<div>\r\n<p>can you try your file with the latest checkin, it should allow the bext chunk through now</p>\r\n<p>Mark</p></div>\r\n<div>\r\n<div>\r\n<p>Read the <a href=\"http://naudio.codeplex.com/Thread/View.aspx?ThreadId=73631&ANCHOR#Post252587\">full discussion online</a>.</p>\r\n<p>To add a post to this discussion, reply to this email (<a href=\"mailto:naudio@discussions.codeplex.com?subject=[naudio:73631]\">naudio@discussions.codeplex.com</a>)</p>\r\n<p>To start a new discussion for this project, email <a href=\"mailto:naudio@discussions.codeplex.com\">naudio@discussions.codeplex.com</a></p>\r\n<p>You are receiving this email because you subscribed to this discussion on CodePlex. You can <a href=\"http://www.codeplex.com/site/discussions/thread/unsubscribe/73631\">unsubscribe</a> on codePlex.com.</p>\r\n\r\n<p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at <a href=\"http://codeplex.com/\">codeplex.com</a></p></div></div></div></blockquote>\r\n</div><br>",
+    "PostedDate": "2009-11-03T12:06:35.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "252962",
+    "ThreadId": "73631",
+    "Html": "<p>Russell</p>\r\n<p>Assuming you are able to build it yourself, you can get the code from: http://naudio.codeplex.com/SourceControl/ListDownloadableCommits.aspx</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-11-03T12:26:01.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "252976",
+    "ThreadId": "73631",
+    "Html": "<div>Mark,</div>\r\n<div>Yes I am able to build. everything works fine now. my &quot;bext&quot; file reads fine now too. looks like you nailed it :)</div>\r\n<div>thanks,<br>russell b.<br></div>\r\n<div>On Tue, Nov 3, 2009 at 12:26 PM, markheath <span dir=ltr>&lt;<a href=\"mailto:notifications@codeplex.com\">notifications@codeplex.com</a>&gt;</span> wrote:<br>\r\n<blockquote style=\"border-left:#ccc 1px solid;margin:0px 0px 0px 0.8ex;padding-left:1ex\">\r\n<div>\r\n<p>From: markheath</p>\r\n<div>\r\n<p>Russell</p>\r\n<p>Assuming you are able to build it yourself, you can get the code from: <a href=\"http://naudio.codeplex.com/SourceControl/ListDownloadableCommits.aspx\">http://naudio.codeplex.com/SourceControl/ListDownloadableCommits.aspx</a></p>\r\n\r\n<p>Mark</p></div>\r\n<div>\r\n<div>\r\n<p>Read the <a href=\"http://naudio.codeplex.com/Thread/View.aspx?ThreadId=73631&ANCHOR#Post252962\">full discussion online</a>.</p>\r\n<p>To add a post to this discussion, reply to this email (<a href=\"mailto:naudio@discussions.codeplex.com?subject=[naudio:73631]\">naudio@discussions.codeplex.com</a>)</p>\r\n<p>To start a new discussion for this project, email <a href=\"mailto:naudio@discussions.codeplex.com\">naudio@discussions.codeplex.com</a></p>\r\n<p>You are receiving this email because you subscribed to this discussion on CodePlex. You can <a href=\"http://www.codeplex.com/site/discussions/thread/unsubscribe/73631\">unsubscribe</a> on codePlex.com.</p>\r\n\r\n<p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at <a href=\"http://codeplex.com/\">codeplex.com</a></p></div></div></div></blockquote>\r\n</div><br>",
+    "PostedDate": "2009-11-03T13:04:59.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

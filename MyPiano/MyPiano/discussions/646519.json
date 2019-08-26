@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1449400",
+    "ThreadId": "646519",
+    "Html": "I have a setup where i have a FM/DAB radio board that is connected to Line-In. I want to be able to play this in my speakers using NAudio, so i can manipulate the stream via an equalizer etc..\r<br />\n<br />\nWhat is the best way of doing this with the best quality and minimum latency? \r<br />\n<br />\nIs it to just create a WaveInEvent and record from that and create a WaveOutEvent with the provider from the WaveIn and my speaker DeviceId?<br />\n",
+    "PostedDate": "2015-10-22T08:32:18.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449993",
+    "ThreadId": "646519",
+    "Html": "Yes, you can capture with WaveInEvent, write the audio to a BufferedWaveProvider, pass that through any effects you have, and play it out of a WaveOutEvent<br />\n",
+    "PostedDate": "2015-10-28T05:41:25.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

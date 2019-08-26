@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "718371",
+    "ThreadId": "284491",
+    "Html": "\r\n<p>I am currently working on my own implementation of the waveout api because i want to understand how naudio works and so on... :)</p>\r\n<p>So I've reached a point now where everything with waveout works really fine. But I have a little problem that I can't fix. So I had a look on the naudio source. The source naudio is very different (may a bit better) but there is also the same problem. So\r\n I've written a little example where the bug occours.<br>\r\nThe Problem ist you can't dispose and create a new WaveOut device in a small time.</p>\r\n<p>Try out this code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>WaveOut waveOut;\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> button1_Click(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n        {\r\n            OpenFileDialog ofn = <span style=\"color:blue\">new</span> OpenFileDialog();\r\n            ofn.ShowDialog();\r\n            <span style=\"color:blue\">if</span> (waveOut != <span style=\"color:blue\">null</span>)\r\n            {\r\n                waveOut.Stop();\r\n                waveOut.Dispose();\r\n            }\r\n\r\n            waveOut = <span style=\"color:blue\">new</span> WaveOut(<span style=\"color:blue\">this</span>.Handle);\r\n            Mp3FileReader reader = <span style=\"color:blue\">new</span> Mp3FileReader(ofn.FileName);\r\n            waveOut.Init(reader);\r\n            waveOut.Play();\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>If you try out this code you will get a object is null exception. I fixed that but after that there will be other problems like you are opening a new waveout while closing the old one...</p>\r\n<p>So is there a way to fix that problem. I had a look on that for now more than 2 hours but I found no solution.</p>\r\n<p>btw. it is very very interesting what is behind this greate libary.^^</p>\r\n",
+    "PostedDate": "2011-12-29T09:46:50.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "718375",
+    "ThreadId": "284491",
+    "Html": "<p>this situation is what the NewWindow callback was created for. Essentially if you use the same window handle, you end up processing callbacks for the wrong instance of WaveOut.</p>\r\n<p>BTW, what version of NAudio are you using?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-29T09:52:30.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "718430",
+    "ThreadId": "284491",
+    "Html": "<p>hmm i don t know exactly what version i am using but it is between 2 and 4 days old.</p>\r\n<p>By the way thank you for the quick and great answer :)</p>",
+    "PostedDate": "2011-12-29T13:18:30.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

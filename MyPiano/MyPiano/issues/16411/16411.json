@@ -1,0 +1,126 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 15,
+    "Custom": null,
+    "Description": "I have Windows 8 KN (N versions are without Media Player and its components).\r\n\r\nThis doesn't have any ACM decoders installed, so I installed LAME MP3 ACM. (both 32 and 64 bit)\r\n\r\nI checked it though NAudio demo app, and it is there.\r\n\r\nBut if I try to play an MP3 (even trough the demo app) it crashes with \"AcmNotPossible calling AcmStreamOpen\".\r\n\r\nIs it possible to play audio with NAudio without installing the media pack for these versions of windows?\r\nDoes NAudio rely on the ACM codec only or some of these windows components?\r\n\r\nIf it relies on these windows components then it is pretty much unusable for developers targeting Europe. The N versions (Win 7 and 8) were developed for the EU audience because of regulations of the EU, and there are a lot of installations with these versions of windows.\r\n\r\nAttaching screenshots (3 in one file).\r\n\r\nEDIT: After installing Windows6.2-KB2703761-x64 (Media Feature Pack for N and KN versions of Windows 8) NAudio works.",
+    "LastUpdatedDate": "2013-10-12T11:06:50.723-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-10-08T04:27:52.203-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Windows 8 N edition",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16411
+  },
+  "FileAttachments": [
+    {
+      "FileId": 741544,
+      "FileName": "crash.png",
+      "DownloadUrl": ".\\741544"
+    },
+    {
+      "FileId": 742868,
+      "FileName": "LAME_formats.txt",
+      "DownloadUrl": ".\\742868"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "ACM codecs work by you passing in a WAVEFORMATEX structure that __exactly__ matches what the codec wants. So in all likelihood, the ACM MP3 codec doesn't recognise NAudio's Mp3WaveFormat class. You can use the NAudioDemo application to examine the valid input formats for any codec. ",
+      "PostedDate": "2013-10-08T07:18:40.86-07:00",
+      "Id": 117780
+    },
+    {
+      "Message": "> So in all likelihood, the ACM MP3 codec doesn't recognise NAudio's Mp3WaveFormat class.\n\nWhy does it recognize Naudio fter I install \"Media Feature Pack for N and KN versions of Windows 8\" ?\n\nDoesn't make much sense to me, tbh.\n\nAnyway installing that fixes Mp3WaveFormat and uses the already before installed Lame codec.",
+      "PostedDate": "2013-10-09T17:05:34.99-07:00",
+      "Id": 118003
+    },
+    {
+      "Message": "But as I said we cannot force installs of Windows optional updates to make the app work.",
+      "PostedDate": "2013-10-09T17:06:23.21-07:00",
+      "Id": 118004
+    },
+    {
+      "Message": "Clearly the LAME ACM codec uses different WAVEFORMATEX structures to the Fraunhofer ACM codec that comes with Windows. NAudio has no idea whatsoever what that format ought to be, so until someone looks at the output from the LAME ACM codec in a hex editor and creates a custom WaveFormat derived class specifically for use with the LAME ACM code then it can't make use of it. I know it's frustrating that it doesn't just magically work, but unfortunately that is the reality of using ACM codecs.",
+      "PostedDate": "2013-10-10T03:39:35.867-07:00",
+      "Id": 118024
+    },
+    {
+      "Message": "Mark:\n\n> LAME ACM codec uses different WAVEFORMATEX structures to the Fraunhofer ACM codec that comes with Windows\n\nThats wrong. Windows N version do not come with installed codecs at all.\n\nRead about those versions and you will understand.\n\nThere is no Fraunhofer on Windows 7 (K)N or WIndows 8 (K)N.",
+      "PostedDate": "2013-10-11T22:37:13.143-07:00",
+      "Id": 118223
+    },
+    {
+      "Message": "The problem is that installing the codecs by yourself still doesnt make NAudio work with them.\n\nYou need to install \"Media Feature Pack for N and KN\" before any ACM codec is recognized.",
+      "PostedDate": "2013-10-11T22:40:09.58-07:00",
+      "Id": 118224
+    },
+    {
+      "Message": "Actually I do know which versions of Windows include the ACM codecs come on. They also aren't installed by default on Windows Server 2008 and above unless you install the \"Desktop Experience\", and they aren't on Windows Azure. Also you can't use ACM codecs in Windows 8 store apps or Windows.\n\nWhat I am trying to say is that NAudio has implemented support for the Fraunhofer ACM codec. It has not implemented support for the LAME ACM codec. They are not equivalent. Just because they can both decode MP3 doesn't mean that you can write one piece of code to work with them both. I wish it was easier, but if you want LAME ACM support, you need to create a WaveFormat structure to match the LAME ACM codec's expectation.\n\n",
+      "PostedDate": "2013-10-12T00:03:38.05-07:00",
+      "Id": 118227
+    },
+    {
+      "Message": "Ah, if I understand correctly, you want to say that it is not LAME that was used after I installed Media Feature Pack but some other coded that came with it ?",
+      "PostedDate": "2013-10-12T04:27:58.39-07:00",
+      "Id": 118236
+    },
+    {
+      "Message": "After further research I have two scenarios:\r\n\r\n1) No Media Feature pack and no LAME:\r\n\r\n\"NoDriver calling acmFormatSuggest\"\r\n\r\n2) No Media Feature Pack WITH LAME:\r\n\r\n\"AcmNotPossible calling acmStreamOpen\"\r\n\r\nSeems installing LAME does something, and perhaps it is now in the situation where I need to give the correct WaveFormat. However I don't know what Format to feed to what.\r\n\r\nCan you shed some light about it please?\r\n\r\nSorry to bother you so much, and thanks in advance.\r\n\r\nFollows how all my MP3 are encoded (and in attachment LAME format listing from NAudioDemo):\r\n\r\n_______________________\r\nFormat                           : MPEG Audio\r\nFormat version                   : Version 1\r\nFormat profile                   : Layer 3\r\nMode                             : Joint stereo\r\nMode extension                   : MS Stereo\r\nBit rate mode                    : Constant\r\nBit rate                         : 192 Kbps\r\nChannel(s)                       : 2 channels\r\nSampling rate                    : 44.1 KHz\r\nCompression mode                 : Lossy\r\nWriting library                  : LAME3.99r\r\nEncoding settings                : -m j -V 4 -q 3 -lowpass 18.6 -b 192\r\n\r\n",
+      "PostedDate": "2013-10-12T05:30:55.673-07:00",
+      "Id": 118237
+    },
+    {
+      "Message": "Attachment went on first post :-?",
+      "PostedDate": "2013-10-12T05:31:56.577-07:00",
+      "Id": 118238
+    },
+    {
+      "Message": "I am just guessing that this LAME format would match, but I don't know how to use it:\n\n===========================================\n   Format 41: 44100 Hz, 192 kbps CBR, Stereo\n      FormatTag: MpegLayer3, Support Flags: Codec\n      WaveFormat: MpegLayer3 44100Hz Channels: 2 Bits: 0 Block Align: 1, AverageBytesPerSecond: 24000 (192,0 kbps), Extra Size: 12\n      Extra Bytes:\n      01 00 04 00 00 00 72 02 01 00 00 00 \n   ===========================================",
+      "PostedDate": "2013-10-12T05:39:27.467-07:00",
+      "Id": 118239
+    },
+    {
+      "Message": "__My lack of knowledge is the following:__\n\n\n1. First of all I don't know where to pass the Waveformat... FramedecompressorBuilder and pass into the constructor of AcmMp3FrameDecompressor?\n\n2. I don't know how to construct this format. Would something similar to this work? But with what bytes?\n\n```\nvar formatBytes = new byte[] { /* fill the bytes? */ };\nvar wf = new WaveFormat(new BinaryReader(new MemoryStream(formatBytes)));\n```",
+      "PostedDate": "2013-10-12T05:51:41.687-07:00",
+      "Id": 118240
+    },
+    {
+      "Message": "You need to find out the waveformat by enumerating the formats supported by the LAME ACM codec. NAudioDemo can help you do this. Also read the section on enumerating ACM formats in this article:\nhttp://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET",
+      "PostedDate": "2013-10-12T06:04:15.377-07:00",
+      "Id": 118241
+    },
+    {
+      "Message": "I tried converting an MP3 to wav using NAudio demo and using the LAME codec.\n\nI get the same \"AcmNotPossible calling acmStreamOpen\" :(\n\nPerhaps its lame that doesn't want to decode MP3s?",
+      "PostedDate": "2013-10-12T06:08:46.09-07:00",
+      "Id": 118242
+    },
+    {
+      "Message": "__Nevermind I solved all my problems by using csvorbis with NAudio.__\n\nConverted all the MP3 to OGG, and works like a charm, even without any codecs installed.",
+      "PostedDate": "2013-10-12T11:06:50.723-07:00",
+      "Id": 118255
+    }
+  ]
+}

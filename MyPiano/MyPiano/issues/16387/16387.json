@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "I have written an application that uses nAudio to play wav files when 'events' happen, and records audio from the microphone.\r\n\r\nI am occasionally getting a NAudio.MmException from NAudio.Wave.WaveOutBuffer.WriteToWaveOut()\r\nI am using nAudio 1.5.4. \r\n\r\nAny thoughts on what causes it, and how I can resolve it?\r\n\r\n",
+    "LastUpdatedDate": "2013-02-25T08:43:13.117-08:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-01-18T01:26:04.837-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudio.MmException - WaveStillPlaying calling waveOutWrite",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16387
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I have moved to nAudio 1.6 and have not been able to recreate the issue since.\nI think the better handling of exceptions/Stopped event in the Playback thread has solved this?\n\n",
+      "PostedDate": "2013-02-25T07:55:05.543-08:00",
+      "Id": 91429
+    },
+    {
+      "Message": "Yes, 1.6 handles exceptions in the callbacks better",
+      "PostedDate": "2013-02-25T08:43:03.88-08:00",
+      "Id": 91433
+    }
+  ]
+}

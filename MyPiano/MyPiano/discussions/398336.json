@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "922924",
+    "ThreadId": "398336",
+    "Html": "\r\n<p>How to use NAudio library to normalize mp3 file.<br>\r\n<br>\r\nIn&nbsp;ImpulseResponseConvolution there is normalize method, but how to normalize an mp3 file?</p>\r\n<p>By normalizing I mean to set whole audio level to normalized audio level. <br>\r\nso all songs will have same audio level.</p>\r\n",
+    "PostedDate": "2012-10-06T14:41:52.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "922985",
+    "ThreadId": "398336",
+    "Html": "<p>To normalize an MP3 file, you would first need to convert it to WAV (using the Mp3FileReader class). Then you perform normalisation on the samples (NAudio does not have a class that does this). Then you convert back to MP3 (using something like LAME.exe).</p>\r\n<p>On the vast majority of MP3 files, normalizing would be a complete waste of time because they are already normalized. Even with quiet files, normalizing often does not have the desired effect because a single sample at maximum value anywhere in the file would mean that normalization has no effect. If you recorded the sound yourself, you should normalize before converting to MP3.</p>\r\n<p>What most people who ask for normalization really want is a <a href=\"http://en.wikipedia.org/wiki/Dynamic_range_compression\">limiter</a> (or a dynamic range compressor). This works by making the loudest parts of a song quieter, enabling the volume of the whole thing to be raised without clipping. But any commercial MP3s you have will already likely have been heavily limited anyway (sometimes this is called the <a href=\"http://en.wikipedia.org/wiki/Loudness_war\">loudness wars</a>)</p>",
+    "PostedDate": "2012-10-07T00:45:35.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

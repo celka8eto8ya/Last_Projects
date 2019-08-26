@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1461564",
+    "ThreadId": "650764",
+    "Html": "Where can I find an example how to work with WaveFileWriter for the WinRT?\r<br />\nHow to use this method? Can I save a stream from Mixer?<br />\n",
+    "PostedDate": "2016-01-31T22:33:07.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1461942",
+    "ThreadId": "650764",
+    "Html": "Someone has kindly contributed a WaveFileWriterRT class, but unfortunately there are no code samples written for this yet. It ought to be similar to using the regular WaveFileWriter class though<br />\n",
+    "PostedDate": "2016-02-04T06:25:46.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

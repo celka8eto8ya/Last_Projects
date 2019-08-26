@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "499856",
+    "ThreadId": "228982",
+    "Html": "<p>Hello.&nbsp;</p>\r\n<p>I have some problems with trying to use AsioOut. It won't stop on the en of stream is ended and continue to play last sound. Looped! &nbsp;it's sounds terrible! :( &nbsp;</p>\r\n<p>Can i do something with it?&nbsp;</p>\r\n<p>Thanks for help</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-09-29T03:16:33.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "499858",
+    "ThreadId": "228982",
+    "Html": "<p>I'm afraid ASIO support is very much in alpha state at the moment. It only works on a few soundcards. If you load the source of NAudio into VisualStudio you might be able to debug it and find out what is going wrong.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-29T03:19:16.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

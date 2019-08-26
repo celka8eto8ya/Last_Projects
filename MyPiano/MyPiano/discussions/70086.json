@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "238724",
+    "ThreadId": "70086",
+    "Html": "<p>Is it possible to convert a wavestream using IeeeFloat encoding to use pcm or mpeglayer 3, using NAudio?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2009-09-25T03:46:28.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "239227",
+    "ThreadId": "70086",
+    "Html": "<p>Have a look at the Wave32To16Stream, which will convert from IeeeFloat to 16 bit PCM.</p>\r\n<p>NAudio cannot encode MP3. I recommend using LAME to do that.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-09-27T00:19:45.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

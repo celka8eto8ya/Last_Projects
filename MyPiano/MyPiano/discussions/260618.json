@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "624701",
+    "ThreadId": "260618",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I have a server/client setup that uses aSynchronous sockets. Now i also want to stream a mp3 thats saved local on the server to the client. I've searched the forum but havent found a solution yet. Could someone push me in the right direction?<br>\r\nI already can convert my mp3 into a PCMStream and send this back to the client using a byte[].</p>\r\n<p>If someone has a better option then the above feel free to comment :)</p>\r\n<p>Thanks in advance!</p>\r\n",
+    "PostedDate": "2011-06-08T06:10:00.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "624713",
+    "ThreadId": "260618",
+    "Html": "<p>Not entirely sure what you are trying to achieve, but if you look in the latest NAudio source code there is an example in the NAudioDemo app of playing streaming MP3 radio which may point you in the right direction</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-08T06:35:42.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "624762",
+    "ThreadId": "260618",
+    "Html": "<p>Thanks for the reply</p>\r\n<p>I've seen the demo but i cant figure out how to play a mp3 thats on a local server. The concept is almost the same as spotify or grooveshark. Multiple clients login on my server and stream the audio.<br /><br />Hopefully this clears things up.</p>",
+    "PostedDate": "2011-06-08T07:40:40.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "624885",
+    "ThreadId": "260618",
+    "Html": "<p>ok, NAudio doesn't really have anything for broadcasting audio. You'd be best off asking on somewhere like stackoverflow.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-08T11:27:15.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

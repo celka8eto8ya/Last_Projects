@@ -1,0 +1,56 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "If the WaveFormat of the wave provider used as the parameter for Init is of type WaveFormatExtraData\r\nThe call within InitializeDirectSound to GCHandle.Alloc fails with an ArgumentException complaining that the “Object contains non-primitive or non-blittable data.”. \r\n\r\nThis is due to the extraData array of bytes field. Although it is a fixed size, alloc is still unable to pin the array because the array type itself is non-primitive and so cannot be pinned.\r\n\r\n\r\n   public TestPlay(Stream in)\r\n   {\r\n            var waveStream = new WaveFileReader(in);\r\n            var player = new DirectSoundOut(DirectSoundOut.DSDEVID_DefaultPlayback);\r\n            player.Init(waveStream);\r\n            player.Play();\r\n            //Waiting for play to stop removed for brevity.\r\n   }",
+    "LastUpdatedDate": "2016-01-26T21:10:43.843-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-12-23T14:59:50.457-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "DirectSoundOut fails if WaveFormat is WaveFormatExtraData",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16487
+  },
+  "FileAttachments": [
+    {
+      "FileId": 1532083,
+      "FileName": "BEEPPURE.WAV",
+      "DownloadUrl": ".\\1532083"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "\nI think the simple solution here is to replace the GCHandle.Alloc with a pair of Marshal.AllocHGlobal and Marshal.StructureToPtr calls.\n\n                    bufferDesc2.lpwfxFormat = Marshal.AllocHGlobal(Marshal.SizeOf(waveFormat));\n                    try\n                    {\n                        Marshal.StructureToPtr(waveFormat, bufferDesc2.lpwfxFormat, false);\n                        bufferDesc2.guidAlgo = Guid.Empty;\n\n                        // Create SecondaryBuffer\n                        directSound.CreateSoundBuffer(bufferDesc2, out soundBufferObj, IntPtr.Zero);\n                        secondaryBuffer = (IDirectSoundBuffer)soundBufferObj;\n                    }\n                    finally\n                    {\n                        Marshal.DestroyStructure(bufferDesc2.lpwfxFormat, waveFormat.GetType());\n                        Marshal.FreeHGlobal(bufferDesc2.lpwfxFormat);\n                    }\n\n\nI found a similar problem in WmaWriter, but I am not using it so I have not tested the problem or fix. But I think something like this would work.\n\n                    mt.pbFormat = Marshal.AllocHGlobal(Marshal.SizeOf(inputFormat));\n                    try\n                    {\n                        Marshal.StructureToPtr(inputFormat, mt.pbFormat, false);\n                        InpProps.SetMediaType(ref mt);\n                    }\n                    finally\n                    {\n                        Marshal.DestroyStructure(mt.pbFormat, inputFormat.GetType());\n                        Marshal.FreeHGlobal(mt.pbFormat);\n                    }",
+      "PostedDate": "2015-12-23T15:00:13.52-08:00",
+      "Id": 194857
+    },
+    {
+      "Message": "There appears to have been some work done on this. \nhttps://naudio.codeplex.com/SourceControl/network/forks/JosephEoff/ExtraDataFix/contribution/7886\n",
+      "PostedDate": "2016-01-26T21:10:43.843-08:00",
+      "Id": 195855
+    }
+  ]
+}

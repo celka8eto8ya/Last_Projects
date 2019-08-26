@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "511177",
+    "ThreadId": "231984",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>My goal is to be able to read the audio data being sent to the 6 analog speakers by a video player (to&nbsp;a Realtek HD chipset) and to&nbsp;redirect two channels toward one SPDIF output and two other channels towards a second SPDIF output. The player can\r\n use Wasapi output.</p>\r\n<p>Is-it possible to do&nbsp;that with the WASAPI loopback feature and Naudio&nbsp;? Is that a big job ?</p>\r\n<p>I apologies for my poor english.</p>\r\n",
+    "PostedDate": "2010-10-22T09:20:18.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "517250",
+    "ThreadId": "231984",
+    "Html": "\r\n<p>I'm afraid I have no idea if this will work or not. You'll just have to give it a try.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-04T12:12:06.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

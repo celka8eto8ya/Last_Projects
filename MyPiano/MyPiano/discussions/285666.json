@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "723249",
+    "ThreadId": "285666",
+    "Html": "\r\n<p>Hello - I'm using WaveOut with all the defaults. I get a .wav file to play fine when I have no headphones plugged in, but when I have them plugged in I get nothing. I'm sure it's something simple I'm missing...</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-01-10T10:21:11.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723274",
+    "ThreadId": "285666",
+    "Html": "<p>Update - so there's more to the story.</p>\r\n<p>If I start the program with the headphones plugged in, then unplug them before I tell it to play, I get the sound coming through the speakers (but never the headphones).</p>\r\n<p>If I start the program with the headphones unplugged, then plug them in before I tell it to play, the sound comes through the headphones (but never the speakers).<br /><br />Is there something that I need to set manually so it uses the correct audio device???</p>",
+    "PostedDate": "2012-01-10T11:07:12.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723603",
+    "ThreadId": "285666",
+    "Html": "<p>Your laptop probably has the automatic headphone detection, which is causing problems. You might try to manually select the device before playing the file with using the&nbsp;.DeviceNumber property of your&nbsp;waveOut device corresponding to your desired output.</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">Dim</span> waveOutDevice <span style=\"color: blue;\">As</span> WaveOut\r\nwaveOutDevice.DeviceNumber = 0\r\n</pre>\r\n</div>\r\n0 is dafault audio device. 1 is secondary etc. You have to do that before the Init() though.</p>",
+    "PostedDate": "2012-01-11T04:10:11.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723697",
+    "ThreadId": "285666",
+    "Html": "<p>Thanks for the reply.</p>\r\n<p>I have done as you suggested, but the effect is the same. I've tried setting it to 0, 1, &amp; -1 but I get nothing through headphones or speakers.</p>\r\n<p>It was done immediately after I created the device and before Init() .... any other ideas?</p>",
+    "PostedDate": "2012-01-11T07:51:52.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723699",
+    "ThreadId": "285666",
+    "Html": "<p>are they USB headphones, in which case Windows could be treating it as a new audio device</p>",
+    "PostedDate": "2012-01-11T07:54:16.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723718",
+    "ThreadId": "285666",
+    "Html": "<p>I have actually tested with both USB and regular and have the same result.</p>",
+    "PostedDate": "2012-01-11T08:13:02.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723720",
+    "ThreadId": "285666",
+    "Html": "<p>what OS are you using? Win 7 is supposed to do clever stuff under the scenes so this type of thing ought to just work.</p>",
+    "PostedDate": "2012-01-11T08:14:58.797-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723751",
+    "ThreadId": "285666",
+    "Html": "<p>Yeah, it's really confusing me..I hope I'm not missing something really simple here.</p>\r\n<p>I am using 7 (Ultimate). I just don't understand why it would work in the speakers only AFTER I unplug the headphones...</p>\r\n<p>Just to be clear, this is the order I am doing everything:<br /><br />1. &nbsp;Create Device (using all defaults)</p>\r\n<p>2. &nbsp;Set DeviceNumber (tried 0,1,-1), or just leave at default</p>\r\n<p>3. &nbsp;Create WaveStream with WaveChannel32 (or just WaveStream), using WaveFileReader and set appropriate WaveFormat</p>\r\n<p>4. &nbsp;Init WaveOut with the WaveStream</p>\r\n<p>5. &nbsp;call Play()</p>\r\n<p>If I want to get sound through the speakers, I have to have the headphones plugged in until before I call Init and Play.</p>\r\n<p>If I want to get sound through headphones, I have to have the headphones unplugged until before I call Init and Play...</p>\r\n<p>It's really bizarre...and I have been using a different sound API which works just fine, so it doesn't seem to be something weird with my PC.</p>",
+    "PostedDate": "2012-01-11T08:51:17.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723753",
+    "ThreadId": "285666",
+    "Html": "<p>does it do the right thing when say Windows Media Player or a web page are playing sound and you change the device?</p>\r\n<p>Also, have you tried with DirectSoundOut and see if that works?</p>",
+    "PostedDate": "2012-01-11T08:52:52.41-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723756",
+    "ThreadId": "285666",
+    "Html": "<p>Yeah it works correctly with WMP.</p>\r\n<p>I haven't tried DirectSoundOut, I'll give that a shot.</p>",
+    "PostedDate": "2012-01-11T08:58:15.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723760",
+    "ThreadId": "285666",
+    "Html": "<p>Yeah the DirectSoundOut works fine...weird.</p>\r\n<p>You mentioned in your blog that it's pretty widely supported so I'm sure this will work just fine.</p>\r\n<p>Alright, well thanks!&nbsp;</p>",
+    "PostedDate": "2012-01-11T09:04:39.197-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730360",
+    "ThreadId": "285666",
+    "Html": "<p>I am having the similar problem if switching audio devices. You have to detect if any audio device (endpoint from now on) is added (enabled) or removed (disabled) and redirect the audio to the new default device.&nbsp;Unfortunately&nbsp;NAudio seems not to do it automatically at this time as your case proves.</p>\r\n<p>The Windows 7 audio subsystem (default audio endpoint selection) were rewritten. This means that an audio endpoints has priority over the other. For example if you plug-in a bluetooth headphones they will be set as the default audio endpoint. Even if you have other wired pair headset connected.</p>\r\n<p>The point is that Windows's audio system developers want to prohibit audio applications to set default endpoint. So Windows user could control the default device directly from the control panel. Anyway this is a bit of off-topic now.</p>\r\n<p>\r\n<hr />\r\n</p>\r\n<p>Windows 7 determines a default audio endpoint for any specific role:</p>\r\n<ul>\r\n<li>The audio subsystem loops through all the ACTIVE endpoints with a matching device role to find the endpoint with the most recent timestamp property. The timestamp property indicates the last time an endpoint was set as the default audio endpoint.</li>\r\n<li>If such an audio endpoint is found, it is returned as the default audio endpoint.</li>\r\n<li>Otherwise, the audio subsystem resorts to the system default audio endpoint heuristic algorithm to determine the default audio endpoint.</li>\r\n</ul>\r\n<p class=\"BodyTextLink\">The Windows 7 Default Audio Endpoint Heuristic:</p>\r\n<ul>\r\n<li>When the heuristic selects the default communications endpoint, it assigns higher priority to Bluetooth headphone endpoints than to onboard HD Audio headphones.</li>\r\n<li>When it selects the default speaker endpoint, it assigns higher priority to speaker endpoints that have jack detection capability than to static speaker endpoints.</li>\r\n<li>When it selects the default capture device, it assigns higher priority to front microphone endpoints than to microphones in the rear of a computer.</li>\r\n<li>When it selects the default console render endpoint, it assigns higher priority to S/PDIF endpoints than to handset endpoints. When it selects the default communications render endpoint, it assigns higher priority to handset endpoints than to S/PDIF endpoints.</li>\r\n<li>The heuristic can designate an endpoint that has specific characteristics to be the top priority or the lowest priority. For example, it can make a jack detection capable HD Audio headphone endpoint on the right of a computer be the highest priority default communication render device.</li>\r\n</ul>\r\n<p>These were taken from \"Default Audio Endpoint Selection in Windows 7\" DOCX at&nbsp;<a href=\"http://msdn.microsoft.com/en-us/windows/hardware/gg463052.aspx\">http://msdn.microsoft.com/en-us/windows/hardware/gg463052.aspx</a>&nbsp;where you could find some additional information that might interest you.</p>\r\n<ul>\r\n</ul>",
+    "PostedDate": "2012-01-25T01:15:26-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481057",
+    "ThreadId": "285666",
+    "Html": "Hi,\r<br />\n<br />\nis there yet a solution for switching the &quot;default audio device&quot; in Windows?\r<br />\nI'm now having the same problem.\r<br />\n<br />\nOnce I have created a naudio WaveOut object and the users switches the windows audio device, the sound still is played on the old device.\r<br />\n<br />\nRegards\r<br />\nDer_Knob<br />\n",
+    "PostedDate": "2016-08-13T09:33:02.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

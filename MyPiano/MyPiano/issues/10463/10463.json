@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2011-05-27T13:59:25.29-07:00",
+    "CommentCount": 1,
+    "Custom": "",
+    "Description": "NADIO has a feature to examine each Event in a Midi file. It contains the \"time\" of the Event. In Midifiles, the time of the Event is based on the number of deltatime values since the previous Event.\nIt appears that the code is not adjusting the time when there are changes in the Tempo.\n\nFor example, here are the outputs from two midi files. Each one contains two notes, but in the 2nd example, a Tempo change occurs after the first note. \nHowever, the 2nd note appears(according to NAUDIO) to occur at the same time (at around 6 seconds), whereas the reduced Tempo should play the note later (at around 7 seconds).\n\nEXAMPLE 1\n0 SequenceTrackName 1\n0 SetTempo 120bpm (500000)\n0 TimeSignature 4/4 TicksInClick:24 32ndsInQuarterNote:8\n0 EndTrack\n0 SequenceTrackName MIDI 01\n962 NoteOn Ch: 1 C6 Vel:100 Len: 298\n1260 NoteOff Ch: 1 C6 Vel:64\n5760 NoteOn Ch: 1 C6 Vel:100 Len: 298\n6058 NoteOff Ch: 1 C6 Vel:64\n6058 EndTrack\n\n\nEXAMPLE 2\n0 SequenceTrackName 2\n0 TimeSignature 4/4 TicksInClick:24 32ndsInQuarterNote:8\n0 SetTempo 120bpm (500000)\n3912 SetTempo 73bpm (821917)\n3912 EndTrack\n0 SequenceTrackName MIDI 01\n962 NoteOn Ch: 1 C6 Vel:100 Len: 298\n1260 NoteOff Ch: 1 C6 Vel:64\n5760 NoteOn Ch: 1 C6 Vel:100 Len: 298\n6058 NoteOff Ch: 1 C6 Vel:64\n6058 EndTrack",
+    "LastUpdatedDate": "2011-05-27T13:59:25.29-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-08-17T11:01:16.897-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Midi Events. NAUDIO may be calculating an incorrect TIME",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 10463
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "NAudio does not adjust any values or try to tell you when a note should play. It simply reports the cumulative delta offset. It is up to the user to interpret the meaning of the delta offset correctly.",
+      "PostedDate": "2011-05-27T13:59:12.437-07:00",
+      "Id": 41708
+    }
+  ]
+}

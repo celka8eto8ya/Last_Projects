@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "803722",
+    "ThreadId": "346856",
+    "Html": "\r\n<p>Hi all.</p>\r\n<p>We are doing a stream audio application and using&nbsp;<span style=\"color:#008080\"><strong>BufferedWaveProvider</strong>&nbsp;</span>to try to provide a smooth audio sensation. Although we have a thread trying to track the buffer filling level to avoid it\r\n to be run out, very occasionally this circumstance seems to happen; in this case, a very stron noise appears until we restart the player.</p>\r\n<p>Does anybody know about a way to avoid this noise to appear?</p>\r\n<p>Thanks for your help and kind regards.</p>\r\n<p>MHU</p>\r\n",
+    "PostedDate": "2012-03-01T04:51:08.353-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "803723",
+    "ThreadId": "346856",
+    "Html": "<p>BufferedWaveProvider should just be returning zeros if there is no data in the buffer, so you should hear silence. Are you using NAudio 1.5?</p>",
+    "PostedDate": "2012-03-01T04:54:17.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "803731",
+    "ThreadId": "346856",
+    "Html": "<p>I think so. The .dll files are created at 2011 - 12 -118 21:03. To give more information, it seems that NAudio arises an exception prior to the noise to appear (I don't kow what, because it doesn't progess to the application).</p>",
+    "PostedDate": "2012-03-01T05:04:00.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "803735",
+    "ThreadId": "346856",
+    "Html": "<p>if you can debug with break on all exceptions set in Visual Studio, it would help to know the details of the exception being thrown</p>",
+    "PostedDate": "2012-03-01T05:10:34.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

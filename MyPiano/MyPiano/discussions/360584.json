@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "852536",
+    "ThreadId": "360584",
+    "Html": "\r\n<p>Mark Is possibe setup multiple MIDI IN OUT DEVICES? HOW?<br>\r\n<br>\r\nThe example in the cde only show how select one device in or out.<br>\r\nHow can select multile devices in and out?</p>\r\n<p>&nbsp;</p>\r\n<p>And how can set in and out to null device?<br>\r\n<br>\r\nAlso one more questions, when i chose device if i change the device have to close and open the software oterwise changes not taked in realtime.<br>\r\nWhy?</p>\r\n<p>&nbsp;If can post some code examples for all this i apreciate! : )</p>\r\n<p>Thanks for your help!</p>\r\n",
+    "PostedDate": "2012-06-22T03:58:27.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "853304",
+    "ThreadId": "360584",
+    "Html": "<p>You must open each input and output device separately. There is no concept of a null device. To change devices you would create a new MidiIn or MidiOut object. Your code needs to be able to cope with that. I'm afraid I have no code samples at the moment but I will bear it in mind for future tutorials.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-06-25T12:18:04.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "853447",
+    "ThreadId": "360584",
+    "Html": "\r\n<p>About NULL device i make reference to set MIDI to no any midi device, something like not connected to any&nbsp;MIDI device, that no exist?</p>\r\n<p>About send or reciv midi to multiple or form multiple devices, this is very bad, have to duplicate the code in everyplace.<br>\r\nNot really good way to do.<br>\r\nWhy this way dear Mark?</p>\r\n<p>If ca in some moment publsih some ecxample about this: &quot;To change devices you would create a new MidiIn or MidiOut object&quot;<br>\r\nI really apreciate a lot.</p>\r\n<p>Thanks for your repply and help like always.</p>\r\n",
+    "PostedDate": "2012-06-25T15:30:55.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "853670",
+    "ThreadId": "360584",
+    "Html": "<p>You need an extra layer of abstraction to do this. Create your own MidiRouter class that when it is asked to send a MIDI message it either sends it nowhere (Null device), or to one or more existing devices. All NAudio provides is wrappers for the Windows MIDI I/O functions, which write to one device at a time.</p>\r\n<p>So your send message function would look like this (pseudo code). Devices is a list of output ports you want to send messages to. If it is empty, then it is like having a NULL device</p>\r\n<p>public void SendMessage(MidiEvent event)<br />{</p>\r\n<p>&nbsp;&nbsp;&nbsp; foreach (var midiDevice in devices)</p>\r\n<p>&nbsp;&nbsp;&nbsp; {</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; device.Send(event.GetAsShortMessage());</p>\r\n<p>&nbsp;&nbsp;&nbsp; }</p>\r\n<p>}</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-06-26T02:36:32.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

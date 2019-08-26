@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "1223758",
+    "ThreadId": "539307",
+    "Html": "I am using nAudio for wasapi loopback capture in a c# application (my first!), so a big thank you for Naudio!\r<br />\n<br />\nI have handed the application to a few friends, to test and it seems to run fine for them all - everyone is win 7 .net4.5, one however is getting the following error and I am unable to recreate it and since he is in another country I don't have access to the comp directly to debug easily. \r<br />\n<br />\nHas anyone seen this issue before/have an idea what the cause could be off hand, or can give me a pointer as to how to get a better idea of what's causing it?<br />\n<pre><code>System.ArgumentException: Unsupported Wave Format\n   at NAudio.CoreAudioApi.WasapiCapture.InitializeCaptureDevice()\n   at NAudio.CoreAudioApi.WasapiCapture.StartRecording()</code></pre>\n\nI am initialising similar to the demo:<br />\n<pre><code>waveIn = new WasapiLoopbackCapture();\nwriter = new WaveFileWriter(Path.Combine(outputFolder, outputFilename), waveIn.WaveFormat);</code></pre>\n\nMany Thanks in advance,<br />\n",
+    "PostedDate": "2014-03-17T20:00:39.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223827",
+    "ThreadId": "539307",
+    "Html": "do you get the error recording, or trying to replay the file?<br />\n",
+    "PostedDate": "2014-03-18T01:21:36.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223858",
+    "ThreadId": "539307",
+    "Html": "Thanks for the reply, the error comes when trying to record, interestingly the only difference in setup I have found so far is that he is running win 7 professional.<br />\n",
+    "PostedDate": "2014-03-18T03:25:02.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223888",
+    "ThreadId": "539307",
+    "Html": "I've experienced this when the format listed on the advanced tab of the microphone properties doesn't match the wave format in the code<br />\n",
+    "PostedDate": "2014-03-18T04:22:29.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223889",
+    "ThreadId": "539307",
+    "Html": "WasapiLoopbackCapture will usually be 44.1kHz or 48kHz, stereo, and 32 bit floating point. What might be catching you out is that WASAPI likes to use WAVEFORMATEXTENSIBLE in preference to a regular PCM/IEEE float WAVEFORMATEX\r<br />\n<br />\nWhat actually is the contents of waveIn.WaveFormat?<br />\n",
+    "PostedDate": "2014-03-18T04:28:20.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223964",
+    "ThreadId": "539307",
+    "Html": "@erminh Will double check that when I can tonight, thank you.<br />\n<br />\n@Mark  I am not actually setting it directly, would make sense that this is the issue -  am curious as to why it would work for others in this case though. Checking the contents on my machine it is: IeeeFloat, so looks as though I do need to change that to WAVEFORMATEXTENSIBLE. Sorry for my super noobieness, how and when should I set that in the above code?<br />\n",
+    "PostedDate": "2014-03-18T07:09:17.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223966",
+    "ThreadId": "539307",
+    "Html": "normally you should not be setting it at all, which is why I am interested in finding out what it actually is<br />\n",
+    "PostedDate": "2014-03-18T07:11:26.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223991",
+    "ThreadId": "539307",
+    "Html": "Sorry edited before I had refreshed to check answers, <br />\n<br />\nChecking the contents on my machine it is: IeeeFloat, so looks as though I do need to change that to WAVEFORMATEXTENSIBLE. Will try and find out from my friend what it contains on his machine and post back.<br />\n",
+    "PostedDate": "2014-03-18T07:41:35.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1224428",
+    "ThreadId": "539307",
+    "Html": "Just to update, in case anyone else has this problem. The issue was an out dated Realtek Audio Driver. Updating it has fixed the issue.\r<br />\n<br />\nBig thanks for the help though!<br />\n",
+    "PostedDate": "2014-03-19T07:17:25.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1224429",
+    "ThreadId": "539307",
+    "Html": "great, thanks for sharing what the problem is. I've had issues with Realtek drivers in the past<br />\n",
+    "PostedDate": "2014-03-19T07:19:32.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1339465",
+    "ThreadId": "539307",
+    "Html": "i have to resume this post, because i have the same problem in the object only when using the latest version of naudio 1.7.2 in my application.<br />\n<br />\nif i use an old version that i used to use in my application all works fine: old version of naudio is the 1.6.0.0.<br />\nif i use the version 1.7.0 i obtain the &quot;Unsupported wave format&quot; error. <br />\n<br />\ni use win 7 x64 with a sound blaster Z with the latest drivers available (1.00.28).<br />\n<br />\nfor the moment i stick to the old version, but i would like to upgrade to the latest.<br />\n<br />\nThank you very much<br />\n<br />\nbye<br />\n",
+    "PostedDate": "2015-01-06T10:35:45.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340524",
+    "ThreadId": "539307",
+    "Html": "Hi, I think this is an unfortunate side-effect of a change I made to fix another issue. In WasapiCapture's constructor, I convert the device's MixFormat to a &quot;standard waveformat&quot;. In other words, I prefer a WAVEFORMATEX to a WAVEFORMATEXTENSIBLE. THis is so that anyone who is creating a WAV file can just use WasapiCapture.WaveFormat directly and not get a weird wave format that not all players can play. However, it appears some soundcard drivers require WAVEFORMATEXTENSIBLE. You can fix this either by modifying your own copy of WasapiCapture to not include the offending lines below, or by resetting the WaveFormat property to a WaveFormatExtensible again before you start recording.<br />\n<pre><code>        /// &lt;summary&gt;\n        /// Initialises a new instance of the WASAPI capture class\n        /// &lt;/summary&gt;\n        /// &lt;param name=&quot;captureDevice&quot;&gt;Capture device to use&lt;/param&gt;\n        public WasapiCapture(MMDevice captureDevice)\n        {\n            syncContext = SynchronizationContext.Current;\n            audioClient = captureDevice.AudioClient;\n            ShareMode = AudioClientShareMode.Shared;\n\n            waveFormat = audioClient.MixFormat;\n            var wfe = waveFormat as WaveFormatExtensible;\n            if (wfe != null)\n            {\n                try\n                {\n                    waveFormat = wfe.ToStandardWaveFormat();\n                }\n                catch (InvalidOperationException)\n                {\n                    // couldn't convert to a standard format\n                }\n            }\n        }</code></pre>\n\nHope this makes sense, and it's definitely on my list of things to sort out for the future.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2015-01-09T14:20:14.16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340566",
+    "ThreadId": "539307",
+    "Html": "<blockquote>\n<blockquote>\nby resetting the WaveFormat property to a WaveFormatExtensible again before you start recording<br />\n</blockquote>\n</blockquote>\nthis sounds interestings. \r<br />\n<br />\nmy application is a sound visualizer\r<br />\n<br />\nthis is the simple code<br />\n<pre><code>            wasapi = new NAudio.Wave.WasapiLoopbackCapture();\n            wasapi.DataAvailable += new EventHandler&lt;WaveInEventArgs&gt;(OnDataAvailable);\n            wasapi.StartRecording();\n</code></pre>\n\nthen in OnDataAvailable i pass the bytes to the visualizer.\r<br />\n<br />\nif it's possible to convert my wasapi to a standard format or resetting as you say would be awesome.\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2015-01-09T17:02:53.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1497510",
+    "ThreadId": "663480",
+    "Html": "Is there a write up on choosing the best reader?\r<br />\n<br />\nI'm currently using MediaFoundationReader because it supports http sourced files. But I could not find any write up on AudioFileReader. Whether it supports more or different formats than MediaFoundationReader or has some other advantages.<br />\n",
+    "PostedDate": "2017-07-25T12:15:58.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497511",
+    "ThreadId": "663480",
+    "Html": "Ok, after looking at the AudioFileReader source code, it appears that it opens audio files based with a specific Reader based on filetype (for WAV, MP3 and AIFF), then defaults to MediaFoundationReader for other filetypes. \r<br />\n<br />\nSo unless someone has other details of interest, that pretty much answers my question.<br />\n",
+    "PostedDate": "2017-07-25T14:19:20.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

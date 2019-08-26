@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1469162",
+    "ThreadId": "653268",
+    "Html": "Is it possible to get the device which caused the OnVolumeNotification-Event?\r<br />\nOr is it a global handler for all devices?<br />\n",
+    "PostedDate": "2016-04-06T02:52:35.173-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469163",
+    "ThreadId": "653268",
+    "Html": "Sorry for that.\r<br />\nI see that the handle is part of the device itself.<br />\n",
+    "PostedDate": "2016-04-06T02:58:30.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-06T02:58:33.787-07:00"
+  }
+]

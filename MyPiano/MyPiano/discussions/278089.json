@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "692899",
+    "ThreadId": "278089",
+    "Html": "\r\n<p>Hi evreryone....</p>\r\n<p>I'm writing a playlist manager for one of my media player... and i've a questione: How can i have and set the information of an audio file?</p>\r\n<p>Example (examplesong.mp3):</p>\r\n<p>The title is: examplesong</p>\r\n<p>The autor is: Me</p>\r\n<p>how can i have this information.... how can i change it if i want?</p>\r\n<p>Please help me! thanks in advance!</p>\r\n",
+    "PostedDate": "2011-11-02T12:10:02.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015325",
+    "ThreadId": "278089",
+    "Html": "I was trying to do the same...but apparently nobody answers this.<br />\n",
+    "PostedDate": "2013-03-14T08:19:05.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015347",
+    "ThreadId": "278089",
+    "Html": "this isn't really something NAudio has much support for. For MP3 files, taglibsharp is supposed to be very good. You can also often get information from the IShellDispatch4 from Shell32.<br />\n",
+    "PostedDate": "2013-03-14T08:37:47.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "746878",
+    "ThreadId": "298583",
+    "Html": "\r\n<p>Hi all!</p>\r\n<p>Im pretty fresh at this, but I cant get DSebJs tutorial to work (<a href=\"http://opensebj.blogspot.com/2009/02/introduction-to-using-naudio.html\">http://opensebj.blogspot.com/2009/02/introduction-to-using-naudio.html</a>) in other then ASIO4ALL and with\r\n 16-bit wave-files.</p>\r\n<p>If I use ASIO4ALL and 16-bit files, the program code below works. But the target audiointerface (MOTU UltraLite) crashes and the reason stated is:</p>\r\n<p>&quot;vshost32.exe has stopped working&quot;</p>\r\n<p>Problem signature:</p>\r\n<p>Problem Event Name:&nbsp;BEX<br>\r\nApplication Name:&nbsp;AudioViaASIO.vshost.exe<br>\r\nApplication Version:&nbsp;11.0.40825.2<br>\r\nApplication Timestamp:&nbsp;4e55ba46<br>\r\nFault Module Name:&nbsp;StackHash_3ce7<br>\r\nFault Module Version:&nbsp;0.0.0.0<br>\r\nFault Module Timestamp:&nbsp;00000000<br>\r\nException Offset:&nbsp;05aaec0c<br>\r\nException Code:&nbsp;c0000005<br>\r\nException Data:&nbsp;00000008<br>\r\nOS Version:&nbsp;6.1.7601.2.1.0.256.48<br>\r\nLocale ID:&nbsp;1053<br>\r\nAdditional Information 1:&nbsp;3ce7<br>\r\nAdditional Information 2: 3ce712e06389c7274746ad5f0c1dc1c9<br>\r\nAdditional Information 3:&nbsp;1835<br>\r\nAdditional Information 4:&nbsp;1835a9d5b62f304ea03f41ed661569d9</p>\r\n<p>Am I missing something basic here? Please help me!!</p>\r\n<p>&nbsp;Regards / soundBerg</p>\r\n<hr>\r\n<p>&nbsp;</p>\r\n<p>The tutorialbased code I have tried:</p>\r\n<p>using System;<br>\r\nusing&nbsp;System.Windows.Forms;<br>\r\nusing NAudio.Wave;<br>\r\nusing NAudio.CoreAudioApi;</p>\r\n<p>namespace WindowsFormsApplication1</p>\r\n<p>{</p>\r\n<p><span style=\"white-space:pre\"></span>public partial class Form1 : Form<br>\r\n<span style=\"white-space:pre\"></span>{</p>\r\n<p><span style=\"white-space:pre\"></span>public Form1()<br>\r\n&nbsp; &nbsp; <span style=\"white-space:pre\"></span>{<br>\r\n<span style=\"white-space:pre\"></span>InitializeComponent();<br>\r\n<span style=\"white-space:pre\"></span>IWavePlayer waveOutDevice;<br>\r\n<span style=\"white-space:pre\"></span>WaveStream mainOutputStream = null;<br>\r\n<span style=\"white-space:pre\"></span>string fileName = &quot;C:\\\\sinus16bit.wav&quot;;</p>\r\n<p><span style=\"white-space:pre\"></span>try<br>\r\n<span style=\"white-space:pre\"></span>&nbsp; &nbsp; &nbsp; &nbsp;<span style=\"white-space:pre\">\r\n</span>&nbsp; &nbsp; &nbsp; &nbsp; {<br>\r\n<span style=\"white-space:pre\"></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style=\"white-space:pre\">\r\n</span>waveOutDevice = new AsioOut();*</p>\r\n<p><span style=\"white-space:pre\"></span>&nbsp;}<br>\r\n<span style=\"white-space:pre\"></span>catch (Exception driverCreateException)<br>\r\n<span style=\"white-space:pre\"></span>{<br>\r\n<span style=\"white-space:pre\"></span>MessageBox.Show(String.Format(&quot;{0}&quot;, driverCreateException.Message));<br>\r\n<span style=\"white-space:pre\"></span>return;<br>\r\n&nbsp; &nbsp; &nbsp; &nbsp;<span style=\"white-space:pre\"> </span><span style=\"white-space:pre\"></span>}</p>\r\n<p><span style=\"white-space:pre\"></span>&nbsp; &nbsp; &nbsp; &nbsp; if (fileName != null)<br>\r\n<span style=\"white-space:pre\"></span>{<br>\r\n&nbsp; &nbsp; &nbsp; &nbsp;<span style=\"white-space:pre\"> </span>&nbsp; &nbsp; &nbsp; &nbsp;\r\n<span style=\"white-space:pre\"></span>try<br>\r\n<span style=\"white-space:pre\"></span>{<br>\r\n<span style=\"white-space:pre\"></span>mainOutputStream = CreateInputStream(fileName);<br>\r\n<span style=\"white-space:pre\"></span>}<br>\r\n<span style=\"white-space:pre\"></span>catch (Exception initException)<br>\r\n<span style=\"white-space:pre\"></span>{<br>\r\n<span style=\"white-space:pre\"></span>MessageBox.Show(String.Format(&quot;{0}&quot;, initException.Message), &quot;Error Initializing Output&quot;);<br>\r\n<span style=\"white-space:pre\"></span>&nbsp;<span style=\"white-space:pre\"> </span>\r\n&nbsp; &nbsp;&nbsp;<span style=\"white-space:pre\"> </span>return;<br>\r\n<span style=\"white-space:pre\"></span>}<span style=\"white-space:pre\"><br>\r\n</span>waveOutDevice.Init(mainOutputStream);<br>\r\n<span style=\"white-space:pre\"></span>waveOutDevice.Play();<br>\r\n<span style=\"white-space:pre\"></span>}<br>\r\n<span style=\"white-space:pre\"></span>}</p>\r\n<p><span style=\"white-space:pre\"></span>private WaveStream CreateInputStream(string fileName)<br>\r\n<span style=\"white-space:pre\"></span>{<br>\r\n<span style=\"white-space:pre\"></span>WaveChannel32 inputStream;<br>\r\n<span style=\"white-space:pre\"></span>if (fileName.EndsWith(&quot;.wav&quot;))<br>\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {<br>\r\n<span style=\"white-space:pre\"></span>WaveStream readerStream = new WaveFileReader(fileName);<br>\r\n<span style=\"white-space:pre\"></span>if (readerStream.WaveFormat.Encoding != WaveFormatEncoding.Pcm)<br>\r\n<span style=\"white-space:pre\"></span>{<br>\r\n<span style=\"white-space:pre\"></span>readerStream = WaveFormatConversionStream.CreatePcmStream(readerStream);<br>\r\n<span style=\"white-space:pre\"></span>readerStream = new BlockAlignReductionStream(readerStream);<br>\r\n<span style=\"white-space:pre\"></span>}<br>\r\n<span style=\"white-space:pre\"></span>if (readerStream.WaveFormat.BitsPerSample != 16)<br>\r\n<span style=\"white-space:pre\"></span>{<br>\r\n<span style=\"white-space:pre\"></span>var format = new WaveFormat(readerStream.WaveFormat.SampleRate,16, readerStream.WaveFormat.Channels);<br>\r\n<span style=\"white-space:pre\"></span>readerStream = new WaveFormatConversionStream(format, readerStream);<br>\r\n<span style=\"white-space:pre\"></span>}<br>\r\n<span style=\"white-space:pre\"></span>inputStream = new WaveChannel32(readerStream);<br>\r\n<span style=\"white-space:pre\"></span>}<br>\r\n<span style=\"white-space:pre\"></span>else<br>\r\n<span style=\"white-space:pre\"></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {<br>\r\n<span style=\"white-space:pre\"></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throw new InvalidOperationException(&quot;Unsupported extension&quot;);<br>\r\n<span style=\"white-space:pre\"></span>}<br>\r\n<span style=\"white-space:pre\"></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return inputStream;<br>\r\n<span style=\"white-space:pre\"></span>}</p>\r\n<p><span style=\"white-space:pre\"></span>}</p>\r\n<p>}</p>\r\n",
+    "PostedDate": "2012-02-08T02:44:26.84-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "746896",
+    "ThreadId": "298583",
+    "Html": "<p>What version of NAudio are you using? The ASIO support in NAudio is working much better than it used to, but it wouldn't surprise me if there are still some interfaces it has problems with. ASIO has many different ways of presenting the samples to the interface, so it might be that your interface uses one that hasn't been well tested yet.</p>\r\n<p>Do you need to be using AsioOut, or would WaveOut or DirectSoundOut work for you instead?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-02-08T03:00:10.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "747010",
+    "ThreadId": "298583",
+    "Html": "<p>Yes, I think I need to use ASIO since I must be able to set a fixed latency. The software im developing has to timestamp exactly when the sound occurs and stops, and I dont I can rely on WaveOut or DirectSoundOut for this, please correct me if im wrong?!</p>\r\n<p>I use NAudio 1.5 (lastest) and latest MOTU ASIO-driver. Here my latest strange findings.</p>\r\n<p>1) If I run NAudio demoapps I can play both 16/24-bits PCM waves though MOTU ASIO driver. This means that im missing out something in \"my\" code, compared to how NAudio-demo handles the 24-bit files.</p>\r\n<p>2) I can now get \"my\" program to run, if I via ASIO4ALL play through the MOTU audio interface. But I much rather use the \"native\" ASIO drivers since ASIO2ALL stutters sometimes and I dont want that to happen on 4 month old infants ;-) (the software is a prototype of a hearing threshold test for infants).</p>",
+    "PostedDate": "2012-02-08T04:28:24.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "747021",
+    "ThreadId": "298583",
+    "Html": "<p>what WaveFormat are you giving to AsioOut? The demo/apps have a direct mode that will send 16/24 bit as-is to the ASIO out, but you can also go to IEEE float and give that directly to it. If you can build and debug the NAudio source code, you can see what sampleconverter is being selected</p>",
+    "PostedDate": "2012-02-08T04:39:08.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "747046",
+    "ThreadId": "298583",
+    "Html": "<p>Im using the NAudio.dll, I have not built the NAudio source code myself, get too many errors I dont understand.</p>\n<p>If the question is what wave-file-format im using it's Wave(Microsoft), Uncompressed PCM, 16 or 24-bits 44.1 kHz Mono.</p>\n<p>Sorry for my lack of knowledge in this area :(</p>",
+    "PostedDate": "2012-02-08T04:56:36.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "747048",
+    "ThreadId": "298583",
+    "Html": "&nbsp;",
+    "PostedDate": "2012-02-08T04:57:20.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "758784",
+    "ThreadId": "298583",
+    "Html": "<p>I would suggest that you try opening the ASIO driver in stereo.</p>",
+    "PostedDate": "2012-02-12T07:04:36.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1320552",
+    "ThreadId": "571686",
+    "Html": "Hi,<br />\n<pre><code>i am developing one media project using N-audio Technology. If i change the sound card device id When the track is playing, the track not changes automatically at the same time. Track Changes after enter into new instance. If Possible to changes the track automatically then please give me the solution to solve it. Thank you in advance..</code></pre>\n\n",
+    "PostedDate": "2014-11-10T05:16:25.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1320966",
+    "ThreadId": "571686",
+    "Html": "You cannot change the device Id dynamically during playback. You'd need to stop playing on one device, then call Init again on a new WaveOut for the new device and start Playing on that<br />\n",
+    "PostedDate": "2014-11-11T09:03:11.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

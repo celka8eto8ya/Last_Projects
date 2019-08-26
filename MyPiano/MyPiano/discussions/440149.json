@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1029897",
+    "ThreadId": "440149",
+    "Html": "Hello, I am new to NAudio and am playing with the NAudioWpfDemo FFT code and I am trying to understand the FFT results.  I am using the demo's SampleAggregator.cs and AudioPlayback.cs with an _fftlength of 16.<br />\n<pre><code>public AudioPlayback()\n{\n     _fftLength = 16;\n     aggregator = new SampleAggregator(_fftLength);\n     aggregator.NotificationCount = 882;\n     aggregator.PerformFFT = true;\n}</code></pre>\n\nHere's my form's callback method which is being called:<br />\n<pre><code>void audioGraph_FftCalculated(object sender, FftEventArgs e)\n{\n    int qtyBins = audioPlayback.FFTLength / 2; // This equals 8\n    for (int j = 0; j &lt; qtyBins; j++)\n    {\n        // audioPlayback.SampleRate = 44100\n        double freq = j * (audioPlayback.SampleRate / audioPlayback.FFTLength);\n        double dx = e.Result[j].X; double dy = e.Result[j].Y;\n        Debug.WriteLine(j + &quot; &quot; + freq/1000 + &quot;kHz = &quot; + dx + &quot; &quot; + dy);\n    }\n}</code></pre>\n\nAnd here's some of the callback's output:<br />\n<pre><code>bin freq     result.X                     result.Y\n0    0kHz = 0.0895436406135559 0\n1    2.756kHz = -0.0815449208021164 -0.072540670633316\n2    5.512kHz = 0.0273693520575762 0.0248471423983574\n3    8.268kHz = 0.000522108399309218 -0.00102939654607326\n4   11.024kHz = -0.00428497046232224 -0.00206405459903181\n5   13.78kHz = -0.0028145220130682 0.00431088916957378\n6   16.536kHz = 0.00255107693374157 -0.00238887779414654\n7   19.292kHz = 0.000449806451797485 1.36718153953552E-05</code></pre>\n\nSo, as I understand these results, I have 8 bins, and each bin relates to a (average?) frequency. But what are the X and Y components?  I am assuming the X component is the average amplitude (energy?) of the frequency, but I have no idea what the Y represents?\r<br />\n<br />\nWhat I would like to do is display a bar graph, one for each frequency bin, showing the amplitude of each.  But those numbers don't seem to be inline with my expectations.\r<br />\n<br />\nCan some explain how I can take these values and display a reasonable graph?  Or, are these values even the expected results from a musical song?\r<br />\n<br />\nOh, and what does the aggregator.NotificationCount = 882 mean?  What is a NotificationCount?\r<br />\n<br />\nAny insight would be greatly appreciated!\r<br />\nThank you,\r<br />\nDan<br />\n",
+    "PostedDate": "2013-04-12T21:56:40.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1032507",
+    "ThreadId": "440149",
+    "Html": "The WPF demo shows one way of visualising the output of an FFT. To understand what the output of an FFT means, I recommend you visit some maths/dsp sites. It can take a while to get your head round the subject, so it's worth spending some time on.\r<br />\n<br />\nThe aggregator returns maximum values after every 882 samples. This helps you draw a waveform with the desired number of points per second.<br />\n",
+    "PostedDate": "2013-04-18T08:09:03.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

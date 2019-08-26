@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "271772",
+    "ThreadId": "79390",
+    "Html": "<p>Hello,</p>\r\n<p>I'm trying to use NAudio to capture streaming voice dialog via Skype, stuff it in a WaveStream, and process it. So far, it seems to be working really nicely, but I'd like to do some processing before the conversation ends, like after the caller stops speaking for approximately 1-2 seconds, but I'm not sure how to detect silence with a WaveStream. Anyone have any advice to offer?</p>",
+    "PostedDate": "2009-12-30T10:51:57.557-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "271860",
+    "ThreadId": "79390",
+    "Html": "<p>One idea: Take a look at the MeteringStream in the demo app. It periodically raises an event with the maximum volume over a period of time. If the volume exceeds a threshold, you could assume speech, if not then you can assume silence. It only works on floating point samples though, so you will need to convert the stream beforehand.</p>",
+    "PostedDate": "2009-12-30T14:57:59.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "271901",
+    "ThreadId": "79390",
+    "Html": "<p>I tried implementing a solution like that, but I never got it to work properly. The volumeMeter control I placed on my form remained blank. I replaced it with a text field that printed the float values returned via the volume notifications, but it just printed out &quot;NaN&quot;. Turns out the values being determined via the method used in the MeteringStream are garbage (like 9.18383E-41). I think this solution might not work so well with my streaming implementation.</p>",
+    "PostedDate": "2009-12-30T22:29:36.573-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "271949",
+    "ThreadId": "79390",
+    "Html": "<p>Sounds like you may not be converting the samples to floating point correctly. Can you post your code?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-12-31T04:00:33.457-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272037",
+    "ThreadId": "79390",
+    "Html": "<p>My code's on my home computer and I'm at work at the moment, but I had a duh moment this morning after saving the recorded wave and then feeding it back into the MeteringStream, I realized that Skype outputs 16 bit audio, and the MeteringStream is expecting 32 bit. Any advice on how to extract volume information from a 16 bit audio stream? I don't suppose it would be as simple as pulling out two bytes from the buffer into a 4 byte array and padding it with leading or trailing zeros before converting it to a float?</p>",
+    "PostedDate": "2009-12-31T11:12:51.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272221",
+    "ThreadId": "79390",
+    "Html": "<p>I tinkered around with this a bit, and padding a 4 byte array with zeros didn't help at all. The best way I've found so far to get fairly decent values out of a 16 bit audio stream was to use the BitConverter.ToInt16 method, cast it as a float and divide by 1000 to get the values to come out similar to the 32 bit stream. This is how my ProcessData method looks. I'd be happy to hear if anyone has a cleaner solution.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>        <span style=\"color:Blue\">private</span> <span style=\"color:Blue\">void</span> ProcessData(<span style=\"color:Blue\">byte</span>[] buffer, <span style=\"color:Blue\">int</span> offset, <span style=\"color:Blue\">int</span> count)\r\n        {\r\n            <span style=\"color:Blue\">int</span> index = 0;\r\n            <span style=\"color:Blue\">while</span> (index &lt; count)\r\n            {\r\n                <span style=\"color:Blue\">for</span> (<span style=\"color:Blue\">int</span> channel = 0; channel &lt; maxSamples.Length; channel++)\r\n                {\r\n                    <span style=\"color:Blue\">float</span> sampleValue = (<span style=\"color:Blue\">float</span>)(Math.Abs(BitConverter.ToInt16(buffer, offset + index)) / 1000.0);\r\n                    maxSamples[channel] = (<span style=\"color:Blue\">float</span>.IsNaN(sampleValue)) ? maxSamples[channel] : Math.Max(maxSamples[channel], sampleValue);\r\n                    index += 2;\r\n                }\r\n                sampleCount++;\r\n                <span style=\"color:Blue\">if</span>(sampleCount &gt;= SamplesPerNotification)\r\n                {\r\n                    RaiseStreamVolumeNotification();\r\n                    sampleCount = 0;\r\n                    Array.Clear(maxSamples, 0, maxSamples.Length);\r\n                }\r\n                \r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-01T11:29:01.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272835",
+    "ThreadId": "79390",
+    "Html": "<p>use the WaveChannel32 stream to convert from 16 bit to 32 bit floating point (1.0 represents full volume in an IEEE floating point stream)</p>",
+    "PostedDate": "2010-01-04T03:21:50.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

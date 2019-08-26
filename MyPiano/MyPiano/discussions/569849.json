@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1313569",
+    "ThreadId": "569849",
+    "Html": "How to play list of wave files <br />\n<br />\nI have multiple audio voice I want to play it one after another. How I can play files in queue. I want to do it using c#. <br />\n<br />\n<br />\nRegards,<br />\n",
+    "PostedDate": "2014-10-15T06:33:44.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1314233",
+    "ThreadId": "569849",
+    "Html": "Hi,\r<br />\n<br />\nyou could do the following:<br />\n<ul>\n<li>create a WaveOut, </li>\n<li>create a WaveFileReader for the first file, </li>\n<li>call the WaveOut's Init function with the WaveFileReader</li>\n<li>\ncall WaveOut's Play() function<br />\n</li>\n</ul>\nWhen the event PlaybackStopped is called close the WaveFileReader and start from step 2. for the second file.\r<br />\n<br />\nRegards,\r<br />\nIsti<br />\n",
+    "PostedDate": "2014-10-17T01:24:20.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 6,
+    "Custom": null,
+    "Description": "I've been writing an app that records chunks of input audio to multiple files, with gaps between, but I discovered that if I try a call sequence which essentially boils down to this:\r\n\r\nWasapiCapture client = new WasapiCapture();\r\n// set up output processor for file 1\r\nclient.StartRecording();\r\n// wait for end of content for file 1\r\nclient.StopRecording();\r\n// set up output processor for file 2\r\nclient.StartRecording();\r\n\r\n\r\n\r\n\r\n\r\nthen the second StartRecording() fails inside InitializeCaptureDevice() at the call to audioClient.Initialize()\r\n\r\nI was able to work around this by disposing of my WasapiCapture client and constructing a new one each time, because my system load was low enough that I didn't care about the needless thread destroy/create and whatever the overhead of fetching a new IAudioClient\r\n might be. In other circumstances all that unnecessary work might be a problem though.\r\n\r\nI see the MS documentation for IAudioClient states that \"the client must successfully call\r\nInitialize once and only once to initialize the audio stream between the client and the device\" (italics mine), so I'm thinking some strategy where NAudio remembers the WaveFormat it uses in a call to audioClient.Initialize() and on\r\n subsequent calls to InitializeCaptureDevice(), throws if a recording is active, does nothing if the WaveFormat has not changed, or disposes the old audioClient and initializes a new one if the WaveFormat has changed. Doing something like that would probably\r\n also need some modification to CaptureThread so that it didn't exit until the WasapiCapture object is disposed.",
+    "LastUpdatedDate": "2013-05-03T08:32:30.487-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-03-02T06:06:01.093-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WasapiCapture not reusable",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16341
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I've been thinking about this a bit, and there's a couple of potential gotchas with garbage collection if one isn't very careful with CaptureThread.\n\nI have some ideas I might try out tonight, so I'll be reading the patch submission guidelines ;)",
+      "PostedDate": "2012-03-02T08:11:03.803-08:00",
+      "Id": 56981
+    },
+    {
+      "Message": "I'd better update them now we've moved to mercurial",
+      "PostedDate": "2012-03-02T08:32:54.283-08:00",
+      "Id": 56984
+    },
+    {
+      "Message": "Just committed on the ReuseableWasapiCapture fork. I did add a simple NUnit test, can't say I'm ready to say it's trustworthy yet, but it's good enough to go home on a Friday night.",
+      "PostedDate": "2012-03-02T17:34:28.707-08:00",
+      "Id": 57036
+    },
+    {
+      "Message": "Modded the app that ran into this issue in the first place to use my fork and reuse the same capture object, and it worked fine; was able to plough through a dozen different recordings. Was running in the VS debugger so I was able to confirm from the output that it was using the same recording thread all through, and that the thread exited correctly at the end when the capture object was destroyed.",
+      "PostedDate": "2012-03-03T17:25:33.083-08:00",
+      "Id": 57068
+    },
+    {
+      "Message": "I've checked in a small change that should make this reusable. Needs further testing",
+      "PostedDate": "2012-10-06T03:42:30.607-07:00",
+      "Id": 78793
+    },
+    {
+      "Message": "I've checked in a small change that should make this reusable. Still needs proper testing, and currently does not support changes to WaveFormat",
+      "PostedDate": "2012-10-06T11:57:28.673-07:00",
+      "Id": 78839
+    }
+  ]
+}

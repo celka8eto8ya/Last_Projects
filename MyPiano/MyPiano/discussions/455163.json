@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1087276",
+    "ThreadId": "455163",
+    "Html": "Hi,\r<br />\n<br />\nthis might be a stupid question, but I've been stuck on it for the past few days : I need to get midi synth output on a separate input for stream post processing. Right now I've got my midi out connected to the built in windows midi synth and can get any midi sound I want. \r<br />\n<br />\nBut is there a way through naudio to get the output stream of midi out to say, plug it in a wave in? I know I can listen to a WasapiLoopbackCapture, but I need a stream containing exclusively midi output. Is it possible?\r<br />\n<br />\nI was also thinking of passing through a midi server like Timidity and routing my wave outputs through it, but it'd be a real pain to go through that, and I'd really enjoy doing it through naudio directly.\r<br />\n<br />\nIf you have any input on that :)<br />\n",
+    "PostedDate": "2013-09-02T02:33:05.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1087361",
+    "ThreadId": "455163",
+    "Html": "It depends. Is it a software synth? In which case loopback capture is all that is possible. If hardware synth, you'd need to connect back into your soundcard.<br />\n",
+    "PostedDate": "2013-09-02T07:49:02.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1087365",
+    "ThreadId": "455163",
+    "Html": "Yeah, it's a software synth, so I'll go through loopback capture. I'll go for rerouting then. Thanks<br />\n",
+    "PostedDate": "2013-09-02T07:57:19.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

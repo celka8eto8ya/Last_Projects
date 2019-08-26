@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1491007",
+    "ThreadId": "660644",
+    "Html": "I'm trying to sample playing audio in order to chart it. When I play the file I hear the audio well but the float array that is coming out is, I think, wrong. The values are all tiny. Any ideas what I am doing wrong?<br />\n<pre><code> private void WavOutChartTimeInterrupt(object waveReader)\n        {\n            lock (AudioLock) //todo add skipto code, use audio lock to do it.\n            {\n                try\n                {\n                    var curPos = _waveOut.GetPositionTimeSpan(); //get currentPos\n                    if (curPos &lt;= AudioCurrentPosition)\n                    {\n                        AudioCurrentPosition = curPos;\n                        return;\n                    }\n                    var bufferLength = (curPos - AudioCurrentPosition);\n                    var blockAlign = _waveOutSampleProvider.WaveFormat.BlockAlign;\n                    var samplesSec = _waveOutSampleProvider.WaveFormat.SampleRate;\n                    var channels = _waveOut.OutputWaveFormat.Channels;\n                    var length = (int)(bufferLength.TotalSeconds * samplesSec * channels) % (samplesSec * channels);//(samplesSec * channels);\n                    length -= length % (blockAlign / channels);\n                    var wavOutBuffer = new float[length];\n                    _waveOutSampleProvider.Read(wavOutBuffer, 0, length);\n                    _audioCharter.ProcessBuffer(wavOutBuffer);\n                    AudioCurrentPosition = curPos; //update for vCNC with where we are\n                }\n                catch (Exception e)\n                {\n                    throw new ArgumentException(@&quot;Wave out buffer crashed&quot; + e + e.StackTrace);\n                }\n            }\n        }</code></pre>\n\n<img src=\"https://goo.gl/photos/pek68FmvYmSgaaSg9\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2017-01-11T17:04:39.56-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491010",
+    "ThreadId": "660644",
+    "Html": "Nope I think this is all bollocks, but I'll leave it here in case it's usefull:<br />\n<br />\nI think I might have solved this, not sure, seems a little off. I know the float array is based on the original wave stream which is a stream of bytes.<br />\n<br />\nFrom the waveIn stream I normally get values of up to about 20 000. <br />\n<br />\n20 000 in binary is 01001110 00100000, <br />\n<br />\nNow expand that out to 32 bits and you get 00000000 00000000 01001110 00100000<br />\n<br />\nand that is 0.00238... which is the sort of numbers that I am seeing. &lt;- This is actually the Mantissa or something value<br />\n<br />\nIs that what's happening? I'll do a bit more digging and see if it adds up.<br />\n",
+    "PostedDate": "2017-01-11T18:45:19.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1478134",
+    "ThreadId": "656133",
+    "Html": "I am trying to use NAudio in Unity to read in different audio file formats and convert them to wav. I had no trouble reading in an mp3 file using Mp3FileReader or aif using AiffFileReader, but if I try to read in an m4a file using MediaFoundationReader or AudioFileReader, I get this SIGILL error. I'm not sure if this is Unity causing the error or if I'm just not using the correct reader to read in the m4a file.<br />\n<br />\nThe stack trace I get is:<br />\nSystem.Runtime.InteropServices.Marshal.QueryInterface (IntPtr pUnk, System.Guid&amp; iid, System.IntPtr&amp; ppv) (at /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Runtime.InteropServices/Marshal.cs:716)<br />\nMono.Interop.ComInteropProxy.GetProxy (IntPtr pItf, System.Type t) (at /Users/builduser/buildslave/mono/build/mcs/class/corlib/Mono.Interop/ComInteropProxy.cs:89)<br />\n(wrapper cominterop-invoke) NAudio.MediaFoundation.IMFSourceReader:SetStreamSelection (int,bool)<br />\nNAudio.Wave.MediaFoundationReader.CreateReader (NAudio.Wave.MediaFoundationReaderSettings settings)<br />\nNAudio.Wave.MediaFoundationReader..ctor (System.String file, NAudio.Wave.MediaFoundationReaderSettings settings)<br />\nNAudio.Wave.MediaFoundationReader..ctor (System.String file)<br />\n(wrapper remoting-invoke-with-check) NAudio.Wave.MediaFoundationReader:.ctor (string)<br />\nNAudio.Wave.AudioFileReader.CreateReaderStream (System.String fileName)<br />\nNAudio.Wave.AudioFileReader..ctor (System.String fileName)<br />\n(wrapper remoting-invoke-with-check) NAudio.Wave.AudioFileReader:.ctor (string)<br />\n",
+    "PostedDate": "2016-07-05T17:07:44.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479529",
+    "ThreadId": "656133",
+    "Html": "sorry, afraid I can't help you with that. Not sure mono and NAudio are a great combination. as NAudio relies heavily on interop to operating system functions<br />\n",
+    "PostedDate": "2016-07-21T12:27:44.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

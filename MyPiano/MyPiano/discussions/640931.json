@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1433076",
+    "ThreadId": "640931",
+    "Html": "<pre><code>       using (var reader = new WaveFileReader(wavFile))\n                    {\n\n                       var converter = WaveFormatConversionStream.CreatePcmStream(reader);\n                        var newFormat = new WaveFormat(44100, 16, 2);\n\n                        using (var conversionStream = new WaveFormatConversionStream(newFormat, converter))\n                        using (var wtr = new LameMP3FileWriter(mp3FileName, conversionStream.WaveFormat, LAMEPreset.VBR_90))\n                        {\n                            conversionStream.CopyTo(wtr);\n                        }\n                        reader.Close();</code></pre>\n\n",
+    "PostedDate": "2015-07-03T18:46:07.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433541",
+    "ThreadId": "640931",
+    "Html": "Probably best to ask this in the NAudio.Lame project.\r<br />\nI tend to either use lame.exe, or if you are on Win 8 or above you can use MediaFoundationEncoder.ConvertToMp3 to use the built in MP3 encoder in Windows (although it offers limited bitrate options)<br />\n",
+    "PostedDate": "2015-07-08T04:22:07.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433572",
+    "ThreadId": "640931",
+    "Html": "I am on a WIN2008 server so Win 8 is not an option.\r<br />\nWhat is the link to post this question to &quot;NAudio.Lame project&quot; ?\r<br />\nThanks for your suggestion.\r<br />\nThomas<br />\n",
+    "PostedDate": "2015-07-08T07:35:21.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437193",
+    "ThreadId": "640931",
+    "Html": "<a href=\"https://github.com/Corey-M/NAudio.Lame\" rel=\"nofollow\">https://github.com/Corey-M/NAudio.Lame</a><br />\n",
+    "PostedDate": "2015-08-04T06:57:52.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437208",
+    "ThreadId": "640931",
+    "Html": "Additional information: Unable to load DLL 'libmp3lame.32.dll': The specified module could not be found. (Exception from HRESULT: 0x8007007E)\r<br />\n<br />\n<img src=\"https://Robotalker.com/bug.gif\" alt=\"Image\" />\r<br />\n<br />\nI have the lasted release of the LIB installed and checked it again with NuGet&gt;\r<br />\nStill creates a mp3 file that is zero size and corrupt. \r<br />\nThomas<br />\n",
+    "PostedDate": "2015-08-04T08:20:28.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437209",
+    "ThreadId": "640931",
+    "Html": "I'm afraid I cannot help you with this problem as it relates to a separate library. The Dll not found exception should be a clue though. If you don't have that DLL in your path, you won;t be able to use LameMp3FileWriter.<br />\n",
+    "PostedDate": "2015-08-04T08:22:56.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

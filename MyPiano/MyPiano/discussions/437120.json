@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1017356",
+    "ThreadId": "437120",
+    "Html": "Hello,<br />\n<br />\nI've got a WaveStream object whose Read method populates buffers for sinewave signal in one instance and static sample array in the other instance. Now I'd like to mix together and output via DirectSoundOut. Since I only need mono for each buffer, I thought perhaps to populate L/R channels with respective samples, but that seems ugly. Any applicable examples for which I could leverage MixingSampleProvider? Just not sure how it interfaces with DirectSoundOut. Would we even require WaveStream?<br />\n<br />\nThanks much...<br />\n",
+    "PostedDate": "2013-03-18T15:28:36.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1017560",
+    "ThreadId": "437120",
+    "Html": "There are various SampleToWaveProvider classes in NAudio to allow you to pass your sample provider into DirectSoundOut. In the next version of NAudio, I intend for all WaveOut devices to accept a SampleProvider directly to make this a bit less confusiing<br />\n",
+    "PostedDate": "2013-03-19T03:13:53.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1017821",
+    "ThreadId": "437120",
+    "Html": "Ok that being stated, I'm trying to get a proof of concept before I expend much more time on development. Trying to write to Left and Right channels of DirectSoundOut stream, however, only one frequency (that of double sine) comes out both channels. Any way I can write two separate sinewaves to buffer? <br />\n<pre><code>       public override int Read(byte[] buffer, int offset, int count)\n        {\n            int samples = count / 2;\n            int samplesPerWave = (int)(44100 / this.frequency * 2);\n            int counter = 0;\n            if (toneOutput == 0)//for sine wave tone generation\n            {\n\n                for (int i = 0; i &lt; samples; i+=2)\n                {\n                    //sine wave\n                    double sine = amplitude * Math.Sin(Math.PI * 2 * frequency * time);\n                    double sine2 = amplitude * Math.Sin(Math.PI * 2 * (frequency*2) * time);\n                    time += 1.0 / 44100;\n                    short truncated = (short)Math.Round(sine * (Math.Pow(2, 15) - 1));\n                    short truncated2 = (short)Math.Round(sine2 * (Math.Pow(2, 15) - 1));\n\n                    buffer[i * 2] = (byte)(truncated &amp; 0x00ff);\n                    buffer[i * 2 + 1] = (byte)((truncated &amp; 0xff00) &gt;&gt; 8);\n\n                    buffer[(i+1) * 2] = (byte)(truncated2 &amp; 0x00ff);\n                    buffer[(i+1) * 2 + 1] = (byte)((truncated2 &amp; 0xff00) &gt;&gt; 8);</code></pre>\n\n",
+    "PostedDate": "2013-03-19T10:39:16.873-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1017946",
+    "ThreadId": "437120",
+    "Html": "Pretty sure I found my answer in the WaveStream class. Simply override<br />\n<br />\n public override WaveFormat WaveFormat<br />\n<pre><code>        {\n            get { return new WaveFormat(44100, 16, __2__); }\n        }</code></pre>\n\nsetting channels arg to 2<br />\n",
+    "PostedDate": "2013-03-19T15:40:57.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,234 @@
+[
+  {
+    "Id": "946351",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>hello,</p>\r\n<p>For a while, I try to play wma files or other formats of the same kind with a driver or ASIO CoreAPI and I am still facing the same error.</p>\r\n<p>I even included a MediaFoundation procedure (similar to that published in the new version of NAudio, a lot of work, and congratulations to the author) but it's still the same problem.</p>\r\n<p><br>\r\nI end up with this error ::<br>\r\n&quot;NAudio.MediaFoundation.IMFSourceReader ..... This interface is not supported (Exception from HRESULT 0x80004002 (E_NOINTERFACE)</p>\r\n<p><br>\r\nHowever, the procedure works with audio driver WavOut () standart (without Thread).<br>\r\n<br>\r\nSo if someone find the trick to read files type. &quot;Wma&quot; with ASIO or driverAudio CoreAPI</p>\r\n<p><br>\r\nMark: I know I've raised the issue .. (see http://naudio.codeplex.com/workitem/16370) but hey, a call for commonality from time to time :-)</p>\r\n<p><br>\r\nSincerely, manun</p>\r\n",
+    "PostedDate": "2012-11-24T00:59:28.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "946428",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>the issue here is almost certainly threading. You're creating and initialising the COM object on one thread and accessing it from another. That's why WaveOut works, while the other models which use background threads don't. You could try marking your app\r\n as being MTAThread instead of STAThread. Alternatively, you could create a wrapper around your IWaveProvider that doesn't perform any initialisation until the first call to Read comes in, which will be on the correct thread.</p>\r\n<p>I've only just committed the IMFSourceReader yesterday and it's by no means finished. I need to add in some locking for positioning while you are playing and I will be trying it out with various threading options and models over the coming weeks.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-24T07:59:15.557-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "946429",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>read this thread if you are unfamiliar with MTAThread:</p>\r\n<p><a href=\"http://stackoverflow.com/questions/127188/could-you-explain-sta-and-mta\">http://stackoverflow.com/questions/127188/could-you-explain-sta-and-mta</a></p>\r\n",
+    "PostedDate": "2012-11-24T08:01:09.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "946779",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>I've just checked in a proof of concept for how WASAPI out could use the GUI thread exclusively, allowing you to use it with MediaFoundationReader (or the WmaFileReader) and bypass the issues of marshalling across thread boundaries. For ASIO the problem\r\n is much harder. I think you will not be able to avoid the need to create the Media Foundation COM objects on MTA Threads as the callbacks will be on threads outside of the control of NAudio.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-25T15:00:00.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "946822",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>hello,</p>\r\n<p>Thank you for your interest in this particular case.</p>\r\n<p>I had the seared troubleshooting, and your link on STA MTA to confirm my poor knowledge.</p>\r\n<p><br>\r\nI tested your WasAPIGuiThread it works.</p>\r\n<p><br>\r\nI am part of this model to change WaveOutEvent and DirectSound.</p>\r\n<p>The audio works (it is already not!). But (always a but) the application (WinForms or WPF) does not respond during playback.</p>\r\n<p><br>\r\nI'm afraid I can not help you (I think the thread, STA, MTA and me. We are not friends).</p>\r\n<p>&nbsp;</p>\r\n<p>Manu</p>\r\n",
+    "PostedDate": "2012-11-25T20:36:24.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "946856",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>There is no point trying to change WaveOutEvent as you cannot wait on an event in the GUI thread without blocking everything. I don't see any benefit to modifying DirectSound for this.</p>\r\n<p>There are only two options if you want to use these COM objects:</p>\r\n<p>1. Do everything on the GUI thread (i.e. use WaveOut or WasapiOutGuiThread)<br>\r\n2. Do everything on MTAThreads. This would require you to invent your own messaging system if you were using a GUI app. I might prototype this at some point in the future to show how it would be done from a WinForms or WPF app. I'm hoping to find out if the\r\n same problems exist for Windows Store apps (the async model may help by forcing creation of the COM objects onto a background thread).</p>\r\n<p>hopefully option 1 is good enough for now to allow you to proceed</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-25T23:31:43.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947525",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I have a good start solution without any change.<br>\r\nJust MediaFoundation initialized in the procedure Read and everyone is under the same background processes.<br>\r\nIt works with all drivers.<br>\r\nWell, it is not very elegant as a method but it is a start.</p>\r\n",
+    "PostedDate": "2012-11-27T03:18:23.663-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947529",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>OK that's interesting. You could put the MF initialization into the ThreadProc on WasapiOut and maybe that will do it. ASIO would be a more difficult solution, since we don't creat the threads, but you could do a one-time initialization, with the hope that\r\n the callback always comes back on the same thread.</p>\r\n",
+    "PostedDate": "2012-11-27T03:21:06.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947541",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>I tested this solution in the driver but without success.<br>\r\nIn idea I rotated the routine WaveStream MediaFoundationReader Read<br>\r\nAdding a Flag (MfStart) and initialized the mediaFoundation once.<br>\r\nThus procésus MF is valid for all drivers (even ASIO)<br>\r\nI suspect that your choice is a more elegant solution.<br>\r\nI just downloaded the new version to make an example.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-27T03:33:38.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947545",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>I'd be interested to see the code you are using. I was thinking of having some kind of class in NAudio that ensured it was only called once, but maybe it should be called once per thread.</p>\r\n",
+    "PostedDate": "2012-11-27T03:44:51.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947549",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>I think I'm having problems (position, stop, ...)</p>\r\n",
+    "PostedDate": "2012-11-27T03:47:08.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947558",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>this is a example.</p>\r\n<p>Only Procedure modified</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">string</span> _file = <span style=\"color:#a31515\">&quot;&quot;</span>;\r\n<span style=\"color:blue\">private</span> IMFSourceReader pReaderTh;\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">bool</span> MFStart = <span style=\"color:blue\">false</span>;\r\n\r\n       // Change pReader = Init()\r\n        <span style=\"color:blue\">public</span> MediaFoundationReader(<span style=\"color:blue\">string</span> file)\r\n        {\r\n\t\t\t_file = file;\r\n\t\t\tpReader = Init();\r\n\t\t\tlength = GetLength();\r\n        }\r\n\r\n\t\t<span style=\"color:green\">// Init MediaFoundation </span>\r\n\t\t<span style=\"color:blue\">private</span> IMFSourceReader Init()\r\n\t\t{\r\n\t\t\tIMFSourceReader retReader;\r\n\r\n\t\t\t<span style=\"color:green\">//if (!initialized)</span>\r\n\t\t\t<span style=\"color:green\">//{</span>\r\n\t\t\t\t<span style=\"color:green\">// once only per app - TODO, maybe move this elsewhere</span>\r\n\t\t\t\tMediaFoundationInterop.MFStartup(MediaFoundationInterop.MF_VERSION);\r\n\t\t\t<span style=\"color:green\">//\tinitialized = true;</span>\r\n\t\t\t<span style=\"color:green\">//}</span>\r\n\t\t\t<span style=\"color:blue\">var</span> uri = <span style=\"color:blue\">new</span> Uri(_file);\r\n\t\t\tMediaFoundationInterop.MFCreateSourceReaderFromURL(uri.AbsoluteUri, IntPtr.Zero, <span style=\"color:blue\">out</span> retReader);\r\n\t\t\tretReader.SetStreamSelection(MediaFoundationInterop.MF_SOURCE_READER_ALL_STREAMS, <span style=\"color:blue\">false</span>);\r\n\t\t\tretReader.SetStreamSelection(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, <span style=\"color:blue\">true</span>);\r\n\r\n\t\t\t<span style=\"color:green\">/*IMFMediaType currentMediaType;\r\n\t\t\tpReader.GetCurrentMediaType(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, out currentMediaType);\r\n\t\t\tGuid currentMajorType;\r\n\t\t\tcurrentMediaType.GetMajorType(out currentMajorType);\r\n\t\t\tIMFMediaType nativeMediaType;\r\n\t\t\tpReader.GetNativeMediaType(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, 0, out nativeMediaType);*/</span>\r\n\r\n\t\t\t<span style=\"color:green\">// Create a partial media type indicating that we want uncompressed PCM audio</span>\r\n\t\t\tIMFMediaType partialMediaType = <span style=\"color:blue\">null</span>;\r\n\t\t\tMediaFoundationInterop.MFCreateMediaType(<span style=\"color:blue\">ref</span> partialMediaType);\r\n\t\t\tpartialMediaType.SetGUID(MediaFoundationInterop.MF_MT_MAJOR_TYPE, MediaFoundationInterop.MFMediaType_Audio);\r\n\t\t\tpartialMediaType.SetGUID(MediaFoundationInterop.MF_MT_SUBTYPE, MediaFoundationInterop.MFAudioFormat_PCM);\r\n\r\n\t\t\t<span style=\"color:green\">// set the media type</span>\r\n\t\t\tretReader.SetCurrentMediaType(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, IntPtr.Zero, partialMediaType);\r\n\t\t\tMarshal.ReleaseComObject(partialMediaType);\r\n\r\n\t\t\t<span style=\"color:green\">// now let's find out what we actually got</span>\r\n\t\t\tIMFMediaType uncompressedMediaType;\r\n\t\t\tretReader.GetCurrentMediaType(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, <span style=\"color:blue\">out</span> uncompressedMediaType);\r\n\r\n\t\t\t<span style=\"color:green\">// Two ways to query it, first is to ask for properties (section is to convet into WaveFormatEx using MFCreateWaveFormatExFromMFMediaType)</span>\r\n\t\t\tGuid actualMajorType;\r\n\t\t\tuncompressedMediaType.GetGUID(MediaFoundationInterop.MF_MT_MAJOR_TYPE, <span style=\"color:blue\">out</span> actualMajorType);\r\n\t\t\tDebug.Assert(actualMajorType == MediaFoundationInterop.MFMediaType_Audio);\r\n\t\t\tGuid audioSubType;\r\n\t\t\tuncompressedMediaType.GetGUID(MediaFoundationInterop.MF_MT_SUBTYPE, <span style=\"color:blue\">out</span> audioSubType);\r\n\t\t\tDebug.Assert(audioSubType == MediaFoundationInterop.MFAudioFormat_PCM);\r\n\t\t\t<span style=\"color:blue\">int</span> channels;\r\n\t\t\tuncompressedMediaType.GetUINT32(MediaFoundationInterop.MF_MT_AUDIO_NUM_CHANNELS, <span style=\"color:blue\">out</span> channels);\r\n\t\t\t<span style=\"color:blue\">int</span> bits;\r\n\t\t\tuncompressedMediaType.GetUINT32(MediaFoundationInterop.MF_MT_AUDIO_BITS_PER_SAMPLE, <span style=\"color:blue\">out</span> bits);\r\n\t\t\t<span style=\"color:blue\">int</span> sampleRate;\r\n\t\t\tuncompressedMediaType.GetUINT32(MediaFoundationInterop.MF_MT_AUDIO_SAMPLES_PER_SECOND, <span style=\"color:blue\">out</span> sampleRate);\r\n\r\n\t\t\twaveFormat = <span style=\"color:blue\">new</span> WaveFormat(sampleRate, bits, channels);\r\n\r\n\t\t\tretReader.SetStreamSelection(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, <span style=\"color:blue\">true</span>);\r\n\t\t\t\r\n\r\n\t\t\t<span style=\"color:blue\">return</span> retReader;\r\n\t\t}\r\n\r\n\t\t<span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n\t\t<span style=\"color:gray\">///</span><span style=\"color:green\"> Reads from this wave stream</span>\r\n\t\t<span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n\t\t<span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;buffer&quot;&gt;</span><span style=\"color:green\">Buffer to read into&lt;/param&gt;</span>\r\n\t\t<span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;offset&quot;&gt;</span><span style=\"color:green\">Offset in buffer&lt;/param&gt;</span>\r\n\t\t<span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;count&quot;&gt;</span><span style=\"color:green\">Bytes required&lt;/param&gt;</span>\r\n\t\t<span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;returns&gt;</span><span style=\"color:green\">Number of bytes read; 0 indicates end of stream&lt;/returns&gt;</span>\r\n\t\t<span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\r\n\t\t{\r\n// Here Init MF \r\n\t\t\t<span style=\"color:blue\">if</span> (MFStart == <span style=\"color:blue\">false</span>)\r\n\t\t\t{\r\n\t\t\t\tpReaderTh = Init();\r\n\t\t\t\t<span style=\"color:blue\">var</span> pv = PropVariant.FromLong(position);\r\n\t\t\t\tpReaderTh.SetCurrentPosition(Guid.Empty, <span style=\"color:blue\">ref</span> pv);\r\n\t\t\t\tMFStart = <span style=\"color:blue\">true</span>;\r\n\t\t\t}\r\n\r\n\t\t\t<span style=\"color:blue\">int</span> bytesWritten = 0;\r\n\t\t\t<span style=\"color:green\">// read in any leftovers from last time</span>\r\n\t\t\t<span style=\"color:blue\">if</span> (decoderOutputCount &gt; 0)\r\n\t\t\t{\r\n\t\t\t\tbytesWritten += ReadFromDecoderBuffer(buffer, offset, count - bytesWritten);\r\n\t\t\t}\r\n\r\n\t\t\t<span style=\"color:blue\">while</span> (bytesWritten &lt; count)\r\n\t\t\t{\r\n\t\t\t\tIMFSample pSample;\r\n\t\t\t\t<span style=\"color:blue\">int</span> dwFlags;\r\n\t\t\t\t<span style=\"color:blue\">ulong</span> timestamp;\r\n\t\t\t\t<span style=\"color:blue\">int</span> actualStreamIndex;\r\n\t\t\t\tpReaderTh.ReadSample(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, 0, <span style=\"color:blue\">out</span> actualStreamIndex, <span style=\"color:blue\">out</span> dwFlags, <span style=\"color:blue\">out</span> timestamp, <span style=\"color:blue\">out</span> pSample);\r\n\t\t\t\t<span style=\"color:blue\">if</span> (dwFlags != 0)\r\n\t\t\t\t{\r\n\t\t\t\t\t<span style=\"color:green\">// reached the end of the stream or media type changed</span>\r\n\t\t\t\t\t<span style=\"color:blue\">break</span>;\r\n\t\t\t\t}<span style=\"color:green\">/*\r\n                if (dwFlags & MF_SOURCE_READERF_CURRENTMEDIATYPECHANGED)\r\n                {\r\n                    printf(&quot;Type change - not supported by WAVE file format.\\n&quot;);\r\n                    break;\r\n                }\r\n                if (dwFlags & MF_SOURCE_READERF_ENDOFSTREAM)\r\n                {\r\n                    printf(&quot;End of input file.\\n&quot;);\r\n                    break;\r\n                }*/</span>\r\n\r\n\t\t\t\tIMFMediaBuffer pBuffer;\r\n\t\t\t\tpSample.ConvertToContiguousBuffer(<span style=\"color:blue\">out</span> pBuffer);\r\n\t\t\t\tIntPtr pAudioData = IntPtr.Zero;\r\n\t\t\t\t<span style=\"color:blue\">int</span> cbBuffer;\r\n\t\t\t\t<span style=\"color:blue\">int</span> pcbMaxLength;\r\n\t\t\t\tpBuffer.Lock(<span style=\"color:blue\">out</span> pAudioData, <span style=\"color:blue\">out</span> pcbMaxLength, <span style=\"color:blue\">out</span> cbBuffer);\r\n\t\t\t\tEnsureBuffer(cbBuffer);\r\n\t\t\t\tMarshal.Copy(pAudioData, decoderOutputBuffer, 0, cbBuffer);\r\n\t\t\t\tdecoderOutputOffset = 0;\r\n\t\t\t\tdecoderOutputCount = cbBuffer;\r\n\r\n\t\t\t\tbytesWritten += ReadFromDecoderBuffer(buffer, offset + bytesWritten, count - bytesWritten);\r\n\r\n\r\n\t\t\t\tpBuffer.Unlock();\r\n\t\t\t\tMarshal.ReleaseComObject(pBuffer);\r\n\t\t\t\tMarshal.ReleaseComObject(pSample);\r\n\t\t\t}\r\n\t\t\tposition += bytesWritten;\r\n\t\t\t<span style=\"color:blue\">return</span> bytesWritten;\r\n\t\t}\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-11-27T03:57:14.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947560",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>oupsss only add & change </p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>\r\n<span style=\"color:green\">// Add Var</span>\r\n\t<span style=\"color:blue\">private</span> <span style=\"color:blue\">string</span> _file = <span style=\"color:#a31515\">&quot;&quot;</span>;\r\n\t<span style=\"color:blue\">private</span> IMFSourceReader pReaderTh;\r\n\t<span style=\"color:blue\">private</span> <span style=\"color:blue\">bool</span> MFStart = <span style=\"color:blue\">false</span>;\r\n\r\n<span style=\"color:green\">// change this</span>\r\n\r\n        <span style=\"color:blue\">public</span> MediaFoundationReader(<span style=\"color:blue\">string</span> file)\r\n        {\r\n\t\t\t_file = file;\r\n\t\t\tpReader = Init();\r\n\t\t\tlength = GetLength();\r\n        }\r\n\r\n<span style=\"color:green\">// Add Init procedure</span>\r\n\r\n\t<span style=\"color:blue\">private</span> IMFSourceReader Init()\r\n\t{\r\n\t\tIMFSourceReader retReader;\r\n.... \r\n}\r\n\r\n\r\n<span style=\"color:green\">// Add in Read</span>\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\r\n{\r\n\r\n\t<span style=\"color:blue\">if</span> (MFStart == <span style=\"color:blue\">false</span>)\r\n\t{\r\n\t\tpReaderTh = Init();\r\n\t\t<span style=\"color:blue\">var</span> pv = PropVariant.FromLong(position);\r\n\t\tpReaderTh.SetCurrentPosition(Guid.Empty, <span style=\"color:blue\">ref</span> pv);\r\n\t\tMFStart = <span style=\"color:blue\">true</span>;\r\n\t}\r\n\r\n........ same \r\n\r\n}\r\n\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-11-27T04:01:42.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947564",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>OK, so you are creating a completely different stream for reading to the one you created in the constructor which was used to get the file duration. You might run into problems with reposition, because those will come in from the GUI thread.</p>\r\n",
+    "PostedDate": "2012-11-27T04:05:46.493-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947566",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>Modified &nbsp;for Position</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n        <span style=\"color:gray\">///</span><span style=\"color:green\"> Current position within this stream</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">long</span> Position\r\n        {\r\n            <span style=\"color:blue\">get</span> { <span style=\"color:blue\">return</span> position; }\r\n            <span style=\"color:blue\">set</span>\r\n            {\r\n                <span style=\"color:green\">// should pass in a variant of type VT_I8 which is a long containing time in 100nanosecond units</span>\r\n                <span style=\"color:blue\">long</span> nsPosition = (10000000L * value) / waveFormat.AverageBytesPerSecond;\r\n                <span style=\"color:blue\">var</span> pv = PropVariant.FromLong(nsPosition);\r\n                pReader.SetCurrentPosition(Guid.Empty, <span style=\"color:blue\">ref</span> pv);\r\n                position = value;\r\n\r\n\r\n<span style=\"color:green\">// ADD THIS</span>\r\n\t\t<span style=\"color:blue\">if</span> (pReaderTh != <span style=\"color:blue\">null</span>)\r\n\t\t{\r\n\t\t\tpReaderTh.SetCurrentPosition(Guid.Empty, <span style=\"color:blue\">ref</span> pv);\r\n\t\t}\r\n\r\n<span style=\"color:green\">// END ADD</span>\r\n                decoderOutputCount = 0;\r\n                decoderOutputOffset = 0;\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-11-27T04:09:27.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947571",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>there's no point keeping two instances open. You might as well dispose the one created in the constructor after you've got the length from it. Also, you will need some kind of locking as the Position setter and Read could run at the same time, meaning that\r\n decoderOutputCount and decoderOutputOffset could run at the same time. I'm surprised it lets you access pReaderTh from the GUI thread, but maybe the fact it was created on an MTAThread makes it safe to call from an STAThread.</p>\r\n",
+    "PostedDate": "2012-11-27T04:14:40.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947573",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>Position actually I have problems.</p>\r\n<p>Well it was a good idea :-) No :-(</p>\r\n",
+    "PostedDate": "2012-11-27T04:16:23.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947583",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">Position :: SOLVED (for the moment)<br></span></pre>\r\n<pre><span style=\"color:green\"><br></span></pre>\r\n<pre><span style=\"color:green\">// Modified</span>\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">long</span> Position\n        {\n            <span style=\"color:blue\">get</span> { <span style=\"color:blue\">return</span> position; }\n            <span style=\"color:blue\">set</span>\n            {\n\t\t\n                position = value;\n\t        IsChangePosition = <span style=\"color:blue\">true</span>;\n\t\t\t\n            }\n        }\n\n<span style=\"color:green\">// Read Changed</span>\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\n{\n\n\t<span style=\"color:blue\">if</span> (MFStart == <span style=\"color:blue\">false</span>)\n\t{\n\t\tpReaderTh = Init();\n\t\tdecoderOutputCount = 0;\n\t\tdecoderOutputOffset = 0;\n\t\tMFStart = <span style=\"color:blue\">true</span>;\n\t}\n\n\t<span style=\"color:blue\">if</span> (IsChangePosition)\n\t{\n\t\t<span style=\"color:blue\">long</span> nsPosition = (10000000L * position) / waveFormat.AverageBytesPerSecond;\n\t\t<span style=\"color:blue\">var</span> pv = PropVariant.FromLong(nsPosition);\n\t\tpReaderTh.SetCurrentPosition(Guid.Empty, <span style=\"color:blue\">ref</span> pv);\n\t\tIsChangePosition = <span style=\"color:blue\">false</span>;\n\t\t\t\t\n\t}\n\n......\n}\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>I deleted the pReader</p>\r\n",
+    "PostedDate": "2012-11-27T04:28:03.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947594",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>yes, this is one of the best ways to do repositioning with multithreaded code. You basically just set a reposition flag (still needs to be threadsafe). The only disadvantage is that when you reposition while paused, it looks as if nothing has happened. You\r\n also must move these lines into the Read method:</p>\r\n<pre>                decoderOutputCount = 0;\r\n                decoderOutputOffset = 0;</pre>\r\n",
+    "PostedDate": "2012-11-27T04:36:24.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947599",
+    "ThreadId": "404427",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<span>The only disadvantage is that when you reposition while paused, it looks as if nothing has happened. You also must move these lines into the Read method:</span><br>\r\n</blockquote>\r\n<p>&nbsp;</p>\r\n<p>??</p>\r\n<p>the latest version (read) works even during the Pause !</p>\r\n<p>&nbsp;</p>\r\n<p>For information</p>\r\n<p>Test with your Demo (AudioPlaybackDemo) (just add WmaInputFilePlugin.cs)</p>\r\n",
+    "PostedDate": "2012-11-27T04:44:29.503-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947606",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>The issue is that you either have to &quot;pretend&quot; the reposition has happened, by setting position to the supplied value, or leave position as it was and change it when the reposition is actually performed. The former is probably preferable. You really do need\r\n to move those decoder variables being set to 0 into the Read function though, or you could get corruption in the playback thread if you were repositioning while a Read was in progress.</p>\r\n",
+    "PostedDate": "2012-11-27T04:54:00.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947622",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>I'm afraid, I do not quite understand your comment</p>\r\n<p>To clarify the situation:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\n{\n\n\t<span style=\"color:blue\">if</span> (MFStart == <span style=\"color:blue\">false</span>)\n\t{\n\t\tpReaderTh = Init();\n\t\t//SetPosition();\n\t\tMFStart = <span style=\"color:blue\">true</span>;\n\t}\n\n\tSetPosition();\n\n..................\n}\n\n\t\t\t\n<span style=\"color:green\">// Position pReaderTh</span>\n\t<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> SetPosition()\n\t{\n\t\t\t\n\t\t<span style=\"color:blue\">if</span> (IsChangePosition)\n\t\t{\n\t\t\t<span style=\"color:blue\">long</span> nsPosition = (10000000L * position) / waveFormat.AverageBytesPerSecond;\n\t\t\t<span style=\"color:blue\">var</span> pv = PropVariant.FromLong(nsPosition);\n\t\t\tpReaderTh.SetCurrentPosition(Guid.Empty, <span style=\"color:blue\">ref</span> pv);\n\t\t\tIsChangePosition = <span style=\"color:blue\">false</span>;\n\t\t\tdecoderOutputCount = 0;\n\t\t\tdecoderOutputOffset = 0;\n\t\t}\n\t}\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-11-27T05:13:25.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947652",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>that's fine. You just need to add thread safety as position could get changed by Read after you call set_Position if you happened to be on a Read while position was being set from the GUI thread.</p>\r\n",
+    "PostedDate": "2012-11-27T05:51:42.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947668",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>I have a little trouble following you (ok my neurons are not getting any younger)</p>\r\n<p>Normally everything is under the procedure Read.therefore any change of position is taken into account in the next passage Read. I have a little trouble seeing why should protect against a Thread.<br>\r\nIs a Lock (...) is the case?</p>\r\n",
+    "PostedDate": "2012-11-27T06:11:22.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947677",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>OK, here's an example:</p>\r\n<p>1) Playback thread starts calling Read(). Position = 100000, asking for 100 bytes, but Read doesn't finish before...</p>\r\n<p>2) User sets the Position on the GUI thread to set the position to 200000</p>\r\n<p>3) back on the Playback thread, Read returns 100 bytes and increments position to 200100 (even though actual position is 100100)</p>\r\n<p>4) now on the next call to read, we do the reposition, but not to the point that was asked for. We reposition to 200100.</p>\r\n<p>It's not particularly serious.There is a nastier race condition where you reposition right in the middle of where position is being updated, which would cause the reposition to be ignored.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-27T06:17:35.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947728",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>Thank you for your patience.</p>\r\n<p>I understood, but I look at the procedure Read more I am told that this case is not possible, since it uses temporary buffers.</p>\r\n<p>- If changing the Property Position: all buffers are cleared.</p>\r\n<p>I renamed the variable &quot;position&quot; in &quot;_varPosition&quot; & &quot;IsChangePosition&quot; in &quot;PropertiesPositionChanged&quot; to avoid confusion with the Position property.</p>\r\n<p>&nbsp;</p>\r\n<p>I placed the file on WeTransfert &nbsp; http://wtrns.fr/dOpzZ5h833N1j9Y</p>\r\n<p>But you're probably right.</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">long</span> Position\r\n{\r\n\t<span style=\"color:blue\">get</span> { <span style=\"color:blue\">return</span> _varPosition; }\r\n\t<span style=\"color:blue\">set</span>\r\n\t{\r\n\t\t_varPosition = value;\r\n\t\tPropertiesPositionChanged= <span style=\"color:blue\">true</span>;\r\n\t}\r\n}\r\n\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\r\n{\r\n\t\t\r\n<span style=\"color:blue\"><span style=\"white-space:pre\">\t</span>if</span> (MFStart == <span style=\"color:blue\">false</span>)\r\n\t{\r\n\t\tpReaderTh = Init();\r\n\t\tPropertiesPositionChanged= <span style=\"color:blue\">true</span>; <span style=\"color:green\">// Force Change Position to start</span>\r\n\t\t\t\t\t\r\n\t\tMFStart = <span style=\"color:blue\">true</span>;\r\n<span style=\"white-space:pre\">\t</span>}\r\n\r\n\r\n\t<span style=\"color:blue\">if</span> (PropertiesPositionChanged)\r\n\t{\r\n\t\t<span style=\"color:blue\">long</span> nsPosition = (10000000L * _varPosition) / waveFormat.AverageBytesPerSecond;\r\n\t\t<span style=\"color:blue\">var</span> pv = PropVariant.FromLong(nsPosition);\r\n\t\tpReaderTh.SetCurrentPosition(Guid.Empty, <span style=\"color:blue\">ref</span> pv);\r\n\t\tPropertiesPositionChanged= <span style=\"color:blue\">false</span>;\r\n\t\tdecoderOutputCount = 0;\r\n\t\tdecoderOutputOffset = 0;\r\n\t}\r\n\r\n\t<span style=\"color:blue\">int</span> bytesWritten = 0;\r\n\t\t\t\t\r\n\t<span style=\"color:blue\">if</span> (decoderOutputCount &gt; 0)\r\n\t{\r\n\t\tbytesWritten += ReadFromDecoderBuffer(buffer, offset, count - bytesWritten);\r\n\t}\r\n\r\n\t<span style=\"color:blue\">while</span> (bytesWritten &lt; count)\r\n\t{\r\n\t\tIMFSample pSample;\r\n\t\t<span style=\"color:blue\">int</span> dwFlags;\r\n\t\t<span style=\"color:blue\">ulong</span> timestamp;\r\n\t\t<span style=\"color:blue\">int</span> actualStreamIndex;\r\n\t\tpReaderTh.ReadSample(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, 0, <span style=\"color:blue\">out</span> actualStreamIndex, <span style=\"color:blue\">out</span> dwFlags, <span style=\"color:blue\">out</span> timestamp, <span style=\"color:blue\">out</span> pSample);\r\n\t\t<span style=\"color:blue\">if</span> (dwFlags != 0)\r\n\t\t{\r\n\t\t\t<span style=\"color:blue\">break</span>;\r\n\t\t}\r\n\r\n\t\tIMFMediaBuffer pBuffer;\r\n\t\tpSample.ConvertToContiguousBuffer(<span style=\"color:blue\">out</span> pBuffer);\r\n\t\tIntPtr pAudioData = IntPtr.Zero;\r\n\t\t<span style=\"color:blue\">int</span> cbBuffer;\r\n\t\t<span style=\"color:blue\">int</span> pcbMaxLength;\r\n\t\tpBuffer.Lock(<span style=\"color:blue\">out</span> pAudioData, <span style=\"color:blue\">out</span> pcbMaxLength, <span style=\"color:blue\">out</span> cbBuffer);\r\n\t\tEnsureBuffer(cbBuffer);\r\n\t\tMarshal.Copy(pAudioData, decoderOutputBuffer, 0, cbBuffer);\r\n\t\tdecoderOutputOffset = 0;\r\n\t\tdecoderOutputCount = cbBuffer;\r\n\r\n\t\tbytesWritten += ReadFromDecoderBuffer(buffer, offset + bytesWritten, count - bytesWritten);\r\n\r\n\r\n\t\tpBuffer.Unlock();\r\n\t\tMarshal.ReleaseComObject(pBuffer);\r\n\t\tMarshal.ReleaseComObject(pSample);\r\n\t}\r\n\t_varPosition += bytesWritten;\r\n\t<span style=\"color:blue\">return</span> bytesWritten;\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-11-27T07:33:44.743-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947730",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>cool, when I do the multi-threading work on MediaFoundationReader I might make use of this. There is still a vast amount of interop to be written to support creatign files, live streaming, and applying Media Foundation Transforms, so it will be a while before\r\n NAudio is ready to properly announce MF support.</p>\r\n",
+    "PostedDate": "2012-11-27T07:37:03.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947741",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>I have a large part of interfaces, enum and structure.</p>\r\n<p>I can be you advance :-))</p>\r\n<p>Let me just a little time to make clean in this library.</p>\r\n<p>If you are interested?</p>\r\n",
+    "PostedDate": "2012-11-27T07:50:28.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947745",
+    "ThreadId": "404427",
+    "Html": "\r\n<p>sure, thanks. I have a couple of partial convertions I can rely on in places, but another could speed up the process. With .NET interop, there are often several ways of wrapping the same functions, and it can be hard to decide which one is the best approach.</p>\r\n",
+    "PostedDate": "2012-11-27T07:53:24.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

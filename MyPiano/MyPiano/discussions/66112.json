@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "224460",
+    "ThreadId": "66112",
+    "Html": "<p>So I'm making a small game and looking for a sound library, NAudio looks pretty good, but I haven't been able to get it to work very well with multiple sounds playing over and over or different sounds playing at the same time.&nbsp;<br>I don't really understand how it's supposed to be used in a situation like mine, should I use a WaveMixerStream and add each sound as an InputStream, or should I just do Init and Play on my out IWavePlayer multiple times, or am I missing something?</p>",
+    "PostedDate": "2009-08-17T07:35:55.4-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "224657",
+    "ThreadId": "66112",
+    "Html": "<p>Hi Myris,</p>\r\n<p>NAudio certainly would be a good choice.</p>\r\n<p>Have you reviewed the NAudio tutorials? Playing multiple sounds together in real time is covered in tutorial 2 <a href=\"http://opensebj.blogspot.com/2009/02/naudio-tutorial-2-mixing-multiple-wave.html\">http://opensebj.blogspot.com/2009/02/naudio-tutorial-2-mixing-multiple-wave.html</a></p>\r\n<p>Cheers,</p>\r\n<p>Sebastian</p>",
+    "PostedDate": "2009-08-17T14:24:55.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "224848",
+    "ThreadId": "66112",
+    "Html": "<p>Thanks for you reply,</p>\r\n<p>Yes, I did read that tutorial, but I did not get it to work, it's just silent.</p>\r\n<p>I initialize with:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>IWavePlayer outDevice = <span style=\"color:Blue\">new</span> WaveOut(0, 300, <span style=\"color:Blue\">null</span>);\r\nWaveMixerStream32 mixer = <span style=\"color:Blue\">new</span> WaveMixerStream32();\r\nmixer.AutoStop = <span style=\"color:Blue\">false</span>;\r\n\r\noutDevice.Init(mixer);\r\noutDevice.Play();\r\n</pre>\r\n</div>\r\n<p>and then when I do:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>mixer.AddInputStream(SoundStream);\r\n</pre>\r\n</div>\r\n<p>nothing happends.</p>\r\n<p>&nbsp;</p>\r\n<p>If I instead do:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>outDevice.Init(SoundStream);\r\noutDevice.Play();\r\n</pre>\r\n</div>\r\n<p>the sounds play, so the sound stream seems to be correct.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-08-18T03:18:40.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "225319",
+    "ThreadId": "66112",
+    "Html": "<p>Hi Myris,</p>\r\n<p>Assuming that SoundStream is a <span style=\"color:#2b91af;font-family:'Courier New';font-size:100%\" lang=-none->WaveChannel32</span> instance, which has been setup correctly and  a .wav file that you have specified earlier in your code, has been loaded then I would suggest you try adding this:</p>\r\n<pre><pre>SoundStream.Position = 0;<br></pre>\r\n</pre>\r\n<p>When you want the sample to start playing.</p>\r\n<p>If that doesn't work, please post up a full copy of the example code that your having difficulty with. It sounds like one of the setup items has been missed.</p>\r\n<p>Cheers,</p>\r\n<p>Sebastian</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-08-19T01:22:00.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1054976",
+    "ThreadId": "66112",
+    "Html": "Hi all,\r<br />\n<br />\nI am attempting to use NAudio for the same purpose and I seem to be experiencing the same problem.\r<br />\n<br />\nHere is my current implementation (VB):<br />\n<pre><code>Private waveOutDevice As IWavePlayer\nPrivate mixer As WaveMixerStream32\n\nmixer = New WaveMixerStream32()\nmixer.AutoStop = False\nwaveOutDevice = New DirectSoundOut\nwaveOutDevice.Init(mixer)\nwaveOutDevice.Play()\n\nDim mainOutputStream As WaveStream = CreateStream(theFile)\nmainOutputStream.Position = 0\nmixer.AddInputStream(mainOutputStream)</code></pre>\n\nFrom my understanding of the mixer tutorial, this code should work and result on the audio file being played. Unfortunately it does not. I know the sound stream is &quot;correct&quot; because if I feed it directly to the waveOutDevice directly it plays OK.\r<br />\n<br />\nCan anyone suggest a correction?\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2013-06-10T10:16:30.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1055280",
+    "ThreadId": "66112",
+    "Html": "I'd try with MixingSampleProvider instead of WaveMixerStream32 which was not really designed for adding inputs on the fly.<br />\n",
+    "PostedDate": "2013-06-11T03:00:07.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1055785",
+    "ThreadId": "66112",
+    "Html": "Thank you. I will try to implement it this way.<br />\n",
+    "PostedDate": "2013-06-12T04:47:38.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

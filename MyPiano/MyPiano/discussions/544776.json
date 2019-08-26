@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1243362",
+    "ThreadId": "544776",
+    "Html": "how do i make an isochronic tone?<br />\n<br />\nis it like this?<br />\n<pre><code>   public override int Read(float[] buffer, int offset, int sampleCount)\n    {\n        int sampleRate = WaveFormat.SampleRate;\n    \n        for (int n = 0; n &lt; sampleCount;)\n        {\n            if( counter == Beat)\n            {\n              buffer[n + offset] = 0;\n              buffer[n + offset + 1 ] = 0;\n              buffer[n + offset + 2] = 0;\n              n = n + 3;\n                sample = sample +3;\n            }\n            else\n            {\n            buffer[n + offset] = (float)(Amplitude * Math.Sin((2 * Math.PI * sample * Frequency) / sampleRate));\n            sample++;\n            n++;\n            if (sample &gt;= sampleRate) sample = 0;\n               \n                counter =0;\n            }\n        }\n        return sampleCount;\n    }</code></pre>\n\n",
+    "PostedDate": "2014-05-08T22:08:56.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244543",
+    "ThreadId": "544776",
+    "Html": "does anyone know about this?<br />\n",
+    "PostedDate": "2014-05-12T13:16:40.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

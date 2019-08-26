@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "558149",
+    "ThreadId": "244001",
+    "Html": "\r\n<p>Hi All</p>\r\n<p>I have a project that uses NAudio to record the incoming audio form a microphone and compress it to G711 and the send it Via RTP to a external device</p>\r\n<p>I am having some problem with the audio recording on windows XP where i am getting choppy audio and it clicks i think at the end of a audio packet</p>\r\n<p>I have played around with changing the BufferMilliseconds and BufferNumers but it still doesn&rsquo;t make any difference I have also tried different sound card and still the same</p>\r\n<p>If i use the code on my Windows 7 PC it all works perfectly but the Test pc is windows XP and i always happens on this pc</p>\r\n<p>Any suggestions would be gratefully received</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2011-01-31T08:11:34.897-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "560217",
+    "ThreadId": "244001",
+    "Html": "\r\n<p>what is the external device? is that running NAudio too?</p>\r\n",
+    "PostedDate": "2011-02-03T08:32:12.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "563322",
+    "ThreadId": "244001",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I sorted the problem thanks it was to do with the buffering with NAudio</p>\r\n<p>Is there a way to limit the input volume on a wave stream whrn recording?</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2011-02-09T06:40:54.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569497",
+    "ThreadId": "244001",
+    "Html": "<p>when recording, the user should adjust the microphone gain using the windows mixer controls or you will get distortion. Once NAudio receives the sample values, it can reduce them, but its too late to avoid clipping.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-21T02:07:28.237-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

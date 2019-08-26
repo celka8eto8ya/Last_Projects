@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "747169",
+    "ThreadId": "298825",
+    "Html": "\r\n<p>I have understand that asio is a driver, but why i must install asio driver ? <br>\r\nAsio driver is default driver for NAudio ?<br>\r\nCan i use other driver audio ? can i select ?</p>\r\n",
+    "PostedDate": "2012-02-08T06:25:21.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "747260",
+    "ThreadId": "298825",
+    "Html": "<p>you don't need to use ASIO at all. I suggest using WaveOut or DirectSound out.</p>",
+    "PostedDate": "2012-02-08T07:22:30.58-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

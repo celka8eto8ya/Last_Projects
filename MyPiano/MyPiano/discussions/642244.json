@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1436931",
+    "ThreadId": "642244",
+    "Html": "I've been using WasapiOut in a VB.NET program on Windows 7, 8 and 8.1 without any problems but since Windows 10, as soon as the stream starts playing, CPU usage goes quite high. Usually it's around 15% but i've seen 30% and 100% also.\r<br />\n<br />\nThis is more or less the code i'm using (I created a test program to make sure it wasn't something else in my main program causing the issue)<br />\n<pre><code>Imports NAudio.CoreAudioApi\nImports NAudio.Wave\n\nPublic Class Form1\n    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load\n        Dim WavePlayer As WasapiOut\n        Dim DefaultAudioDevice As New MMDeviceEnumerator\n        WavePlayer = New WasapiOut(DefaultAudioDevice.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia), AudioClientShareMode.Shared, True, 0)\n        WavePlayer.Init(New WaveChannel32(New WaveFileReader(&quot;C:\\Users\\Marc\\Documents\\Visual Studio 2015\\Projects\\Wasapi Test\\test.wav&quot;)))\n        WavePlayer.Play()\n    End Sub\nEnd Class\n</code></pre>\n\nIs there a way I can change the implementation of the code, or is there an issue with WasapiOut in Windows 10?\r<br />\n<br />\nThanks in advance\r<br />\n<br />\nMarc<br />\n",
+    "PostedDate": "2015-08-02T14:38:17.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437071",
+    "ThreadId": "642244",
+    "Html": "I noticed that in Win 10, get stream latency returns 0, which means that the waits for events will instantly return. Try running it without event based sync, and seeing if that improves performance.<br />\n",
+    "PostedDate": "2015-08-03T10:28:10.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437091",
+    "ThreadId": "642244",
+    "Html": "Thanks Mark, setting that to False and setting the Latency to 2 stops it from using excessive CPU :)<br />\n",
+    "PostedDate": "2015-08-03T13:58:10.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437178",
+    "ThreadId": "642244",
+    "Html": "Great. I've checked in a fix at GitHub that hopefully will resolve the high CPU issue in event mode<br />\n",
+    "PostedDate": "2015-08-04T06:13:33.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

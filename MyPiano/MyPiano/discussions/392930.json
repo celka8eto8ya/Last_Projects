@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "903517",
+    "ThreadId": "392930",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>NAudio supports G.729? if not, how can i add this codec to the project? anyone have it?</p>\r\n",
+    "PostedDate": "2012-08-24T04:03:20.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "904763",
+    "ThreadId": "392930",
+    "Html": "<p>NAudio can use whatever ACM codecs are on your system, if you use the correct WaveFormat header in conjunction with WaveFormatConversionStream. You can use the NaudioDemo application to look at what codecs are installed.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-08-27T13:55:31.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

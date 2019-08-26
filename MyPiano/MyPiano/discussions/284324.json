@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "717752",
+    "ThreadId": "284324",
+    "Html": "\r\n<p>Okay, I know this sounds like a very easy question to some but I am really stuck here. Indeed, I am building an audio player using Naudio and I have realized that in many tutorials people always show easy ways to get you started. However, in my opinion,\r\n they always forget to show how things are actually done in a real application. For example, when playing music with Naudio, I would do something like:&nbsp;</p>\r\n<p>Void PlayAudioMusic(string FilePath)</p>\r\n<p>{</p>\r\n<pre><code><span> using </span><span>(</span><span>var</span><span> ms </span><span>=</span><span> </span><span>File</span><span>.</span><span>OpenRead</span><span>(FilePath</span><span>))</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; using </span><span>(</span><span>var</span><span> rdr </span><span>=</span><span> </span><span>new</span><span> </span><span>Mp3FileReader</span><span>(</span><span>ms</span><span>))</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; using </span><span>(</span><span>var</span><span> wavStream </span><span>=</span><span> </span><span>WaveFormatConversionStream</span><span>.</span><span>CreatePcmStream</span><span>(</span><span>rdr</span><span>))</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; using </span><span>(</span><span>var</span><span> baStream </span><span>=</span><span> </span><span>new</span><span> </span><span>BlockAlignReductionStream</span><span>(</span><span>wavStream</span><span>))</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; using </span><span>(</span><span>var</span><span> waveOut </span><span>=</span><span> </span><span>new</span><span> </span><span>WaveOut</span><span>(</span><span>WaveCallbackInfo</span><span>.</span><span>FunctionCallback</span><span>()))</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span>{</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; waveOut</span><span>.</span><span>Init</span><span>(</span><span>baStream</span><span>);</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; waveOut</span><span>.</span><span>Play</span><span>();</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span>}</span></code></pre>\r\n<p>}</p>\r\n<p>This is great for testing in a simple console application. This however isn't useful if you're actually building a serious application. For example, what many tutorials never say is for example how to handle the most critical things such as:</p>\r\n<ol>\r\n<li>Disposing resource and when to do it </li><li>The best ways to handle different exceptions </li><li>What to do before you pause, stop, rewind or even exit the application </li><li>Other stuffs I don't even know exist. </li></ol>\r\n<p>Since I am going through this process and have notice that my application has way too many exceptions thrown, can someone please share like a wrapper class around Naudio that he used to handle this. I am sure this will answer many of the trouble some of\r\n us have been going through when trying to use Naudio.</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2011-12-28T00:10:50.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717753",
+    "ThreadId": "284324",
+    "Html": "<p>First, I don't know where you got the code sample you show above, but it is not a good way to use NAudio. waveOut.Play just starts playback, and waveOut will get disposed before playback is complete.</p>\r\n<p>The best place to see how to use NAudio in a real application is the NAudioDemo application source code that is part of NAudio. It has lots of examples of how to use NAudio for playback.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-28T00:16:20.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717762",
+    "ThreadId": "284324",
+    "Html": "<p>Thanks for your quick reply. I got this sample code from a stackoverflow thread.</p>\r\n<p>(<a href=\"http://stackoverflow.com/questions/2488426/how-to-play-a-mp3-file-using-naudio\">http://stackoverflow.com/questions/2488426/how-to-play-a-mp3-file-using-naudio</a>)</p>\r\n<p>Anyways, I have downloaded the Naudio sample code and honestly, I do not understand how it works. It contains way to many different files that I was unable to figure out which one does the audio playing.&nbsp;</p>",
+    "PostedDate": "2011-12-28T00:26:40.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717775",
+    "ThreadId": "284324",
+    "Html": "<p>OK, the code at SO includes a Thread.Sleep in a loop, without which it won't work.</p>\r\n<p>Have a look at AudioPlaybackPanel.cs in the NAudioDemo project.</p>",
+    "PostedDate": "2011-12-28T00:44:21.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717780",
+    "ThreadId": "284324",
+    "Html": "<p>Thanks a lot. I'm gonna take a look at it.</p>",
+    "PostedDate": "2011-12-28T00:47:59.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

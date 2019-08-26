@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "836848",
+    "ThreadId": "355902",
+    "Html": "\r\n<p>Hi Mark, <br>\r\nI have a problem with start/stop playing recording.<br>\r\nI have to play a sample which have to be recorded to disk every time it is played because it could be set with different volume level. I do the following:<br>\r\nPlay recording:<br>\r\n</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>recorder = <span style=\"color:blue\">new</span> WaveRecorder(file, recordingFileName);\r\nplaybackDevice.Init(recorder);\r\nplaybackDevice.Play();\r\n</pre>\r\n</div>\r\n<br>\r\nStop playing:<br>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>playbackDevice.Stop();\r\n</pre>\r\n</div>\r\n<br>\r\nThe problem is that if the user press start/stop several times in a hurry. the following error occurred:<br>\r\nNAudio.MmException: AlreadyAllocated calling waveOutOpen<br>\r\n<br>\r\nI know that I must avoid Init() waveOut every time I play but I have to do the recording every time because I need it for later use.<br>\r\nHow can I properly release these objects when stop playing?\r\n<p></p>\r\n",
+    "PostedDate": "2012-05-15T12:17:31.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "837080",
+    "ThreadId": "355902",
+    "Html": "<p>call Dispose when you have finished with any input or output devises</p>",
+    "PostedDate": "2012-05-16T01:54:26.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "837412",
+    "ThreadId": "355902",
+    "Html": "<p>I call Dispose only for recorder object. For the playbackDevice I only use 1 instance and just call Play/Stop on every request. I thought it is not a good idea to create new WaveOut instance every time i want to play the recording and then every time call Dispose.</p>",
+    "PostedDate": "2012-05-16T13:53:40.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "845137",
+    "ThreadId": "355902",
+    "Html": "<p>Because of my karaoke scenario I need to Init my playback device every time with a new recorder stream because I need this recording with a particular level of volume to be mixed later. The exception occurs if I make play/stop iterations several times. If I invoke Init just once then there is no problem with play/stop iterations.</p>",
+    "PostedDate": "2012-06-05T12:14:32.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847363",
+    "ThreadId": "355902",
+    "Html": "<p>you can only call Init once on a playback device. The best approach for you might be to create an IWaveProvider that reads from a source that you can swap out. Remember though that you can't change the WaveFormat after calling Init.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-06-11T03:01:25.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847586",
+    "ThreadId": "355902",
+    "Html": "<p>I made custom WaveRecorder with BeginRecording and EndRecording methods, so I can control when the stream is written to the disk. Thus I call Init just once with one instance of my custom WaveRecorder. I call BeginRecording when start to play the sample and EndRecording when stop playing the sample. I think this solution works for now.</p>\r\n<p>Yavor</p>",
+    "PostedDate": "2012-06-11T11:38:55.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

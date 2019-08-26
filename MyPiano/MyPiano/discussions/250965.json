@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "585499",
+    "ThreadId": "250965",
+    "Html": "\r\n<p>That's really wonderful library. I just started using this lib and really confused to know that is there any option available to know the frequency and amplitude of the loaded wave file ultimately to modify it???</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-03-23T23:34:34.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588706",
+    "ThreadId": "250965",
+    "Html": "<p>well a WAV file can contain more than just one frequency and amplitude. The basic approach to find frequencies is to use an FFT. Have a look at my article on coding4fun about using FFT with NAudio.</p>\r\n<p>http://channel9.msdn.com/coding4fun/articles/AutotuneNET</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-30T03:10:48.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

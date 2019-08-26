@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1011227",
+    "ThreadId": "435595",
+    "Html": "I am trying to figure out how to stream a WAV file. There are examples on streaming MP3 files but nothing for a WAV file. <br />\n<br />\nI have managed to create a WaveStream and play it back. However, when I try to break it up the first set of bytes plays but after that I get noise. In my queue I can select any one set of byte[] and it plays. It can't play two or more set of byte[].<br />\n<br />\nIn the example below the ConcurrentQueue will simulate what I want to stream:<br />\n<pre><code>// Class member variables:\nConcurrentQueue&lt;byte[]&gt; _cq1 = new ConcurrentQueue&lt;byte[]&gt;();\nprivate static WaveFormat _waveFormat = new WaveFormat(16000, 16, 2);\nprivate static WaveOut _waveOut1 = new WaveOut();\nprivate static BufferedWaveProvider _waveProvider1 =\n             new BufferedWaveProvider(_waveFormat);\n\n// Class constructor\npublic MainWindow()\n{\n    _waveOut1.Init(_waveProvider1);\n    _waveOut1.Play();\n\n    _worker1.RunWorkerAsync();\n    _worker2.RunWorkerAsync();\n}\n\nprivate void worker1_DoWork(object sender, DoWorkEventArgs e)\n{\n    // These methods are executed on a seperate thread.\n    WaveStream convertedStream = GetAudio(&quot;MyFile.Wav&quot;);\n    AddAudio(convertedStream);\n}\n\n\nprivate void worker2_DoWork(object sender, DoWorkEventArgs e)\n{\n    // This method is executed on a seperate thread.\n    PlayAudio();\n}\n\n\n \n\n        private WaveStream GetAudio(string wavFile)\n        {\n            WaveFileReader reader = new WaveFileReader(wavFile);\n            WaveStream convertedStream =\n                new WaveFormatConversionStream(_waveFormat, reader);\n\n            return convertedStream;\n        }\n\n        private void AddAudio(WaveStream convertedStream)\n        {\n            int bufferSize = (int)convertedStream.Length / _audioSamples;\n\n            int count = bufferSize;\n            convertedStream.Position = 0;\n            int offset = 0;\n            for (; ; )\n            {\n                byte[] bytes = new byte[bufferSize];\n                count = convertedStream.Read(bytes, offset, bufferSize);\n                _cq1.Enqueue(bytes);\n                if (count == 0)\n                {\n                    break;\n                }\n            }\n         }\n\n        private void PlayAudio()\n        {\n            byte[] buffer;\n            for (; ; )\n            {\n                if (_cq1.TryDequeue(out buffer))\n                {\n                    _waveProvider1.AddSamples(buffer, 0, buffer.Length);\n                }\n\n                Thread.Sleep(_sleepMilliSeconds);\n            }\n        }\n</code></pre>\n\n",
+    "PostedDate": "2013-03-06T07:36:05.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1011427",
+    "ThreadId": "435595",
+    "Html": "Bump!<br />\n",
+    "PostedDate": "2013-03-06T14:02:40.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1011429",
+    "ThreadId": "435595",
+    "Html": "I'm not sure what you are trying to do here. Why not just play directly from a WaveFileReader? If you are receiving WAV over the network, then just stick it into the BufferedWaveProvider (and increase the buffer size or block when it gets full). The concurrent queue seems unnecessary.<br />\n",
+    "PostedDate": "2013-03-06T14:08:24.94-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1011451",
+    "ThreadId": "435595",
+    "Html": "I am trying to simulate my network traffic before I go off and code that part. I should be able to read bytes from a queue and add them to my WaveProvider continuously.<br />\n",
+    "PostedDate": "2013-03-06T15:15:46.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1011760",
+    "ThreadId": "435595",
+    "Html": "I figured it out. The problem was in the AddAudio method. If I use this method it works:<br />\n<pre><code>        private void AddAudio(WaveStream convertedStream)\n        {\n            int sampleRate = convertedStream.WaveFormat.SampleRate;\n\n            int bytesRead = 0;\n            while (convertedStream.Position &lt; convertedStream.Length)\n            {\n                byte[] bytes = new byte[sampleRate];\n                bytesRead = convertedStream.Read(bytes, 0, sampleRate);\n                _cq1.Enqueue(bytes);\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2013-03-07T05:55:07.267-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

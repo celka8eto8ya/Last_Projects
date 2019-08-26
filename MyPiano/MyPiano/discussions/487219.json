@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1154975",
+    "ThreadId": "487219",
+    "Html": "Dear Sir, \r<br />\n<br />\nI am playing an MP3 file  using &quot;Simple Playback&quot; , and using timer to get the current time against the total time. I noticed that the both totalTime &amp; CurrentTime is double of the actual time.\r<br />\nI used your WinForm DEMO &amp; got the same results. MP3 file length is 28 sec , while the Simple Playback demo shows that 59 sec.\r<br />\nNB. I used your Demo &quot;Media Foundation Demo&quot; with the same file , and shows the correct time, which is 28 sec. Unfortunately, I plan to use the application in WinXP , so the media Foundation will not be used.\r<br />\n<br />\nTo get sample mp3 I used , please check the below 4Shared link:\r<br />\n<a href=\"http://www.4shared.com/mp3/xgrK0h78ba/sample.html\" rel=\"nofollow\">http://www.4shared.com/mp3/xgrK0h78ba/sample.html</a>\r<br />\n<br />\nThanks,\r<br />\nWaleed<br />\n",
+    "PostedDate": "2014-01-11T12:50:17.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1160729",
+    "ThreadId": "487219",
+    "Html": "hi, I think that is a bug with AudioFileReader that was fixed just after the release of NAudio 1.7\r<br />\nBTW I am not downloading your MP3 file as I don't want to install their software or give them any access to my social networks.<br />\n",
+    "PostedDate": "2014-01-13T03:25:52.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1162297",
+    "ThreadId": "487219",
+    "Html": "Great , works fine... you are the man. !!!!\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2014-01-13T12:43:16.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

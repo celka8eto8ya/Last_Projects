@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "845349",
+    "ThreadId": "358525",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>thank you for this library - it is awesome.</p>\r\n<p>I'm going to create an application that will play internet radio streams. I have several URLs of the radio streams to test - BASS library supports all of them but i dont want to use unmanaged code in my application with managed wrappers. And i want to know\r\n - what stream types does NAudio support? Does it support streaming MP3, WMA, AAC, or OGG?</p>\r\n<p>Thanks in advance.</p>\r\n",
+    "PostedDate": "2012-06-05T22:56:57.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847360",
+    "ThreadId": "358525",
+    "Html": "<p>NAudio has support for decoding MP3 frames using ACM or DMO codecs, and there are some WMA classes that might be usable for streaming. There is unfortunately no AAC support. For OGG, there are some other open source .NET wrappers that you could use in conjunction with NAudio.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-06-11T02:58:54.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1340769",
+    "ThreadId": "577388",
+    "Html": "Hello,<br />\n<br />\nIs that possible with NAudio to visualize the audio just like in the samples, but instead of choosing the audio file, visualizing <strong>everything</strong> &quot;what you hear&quot; without a significant delay?<br />\nJust like the sample is showing the PolygonWave visualization, is that possible for all audio in realtime, so even if I have a music playing, someone speaks on chat and I'm watching a youtube video it's visualizing.<br />\n<br />\nIf yes, on what systems would that work and what would I possibly have to use to achieve that? (I'm new to c#)<br />\nI'm using Windows 8.1.<br />\n<br />\nRegards<br />\n",
+    "PostedDate": "2015-01-11T00:58:51.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340770",
+    "ThreadId": "577388",
+    "Html": "yes, WasapiLoopbackCapture will capture everything being played on a specific sound device<br />\n",
+    "PostedDate": "2015-01-11T01:02:51.197-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340771",
+    "ThreadId": "577388",
+    "Html": "Oh, ok.\r<br />\nThank you :)<br />\n",
+    "PostedDate": "2015-01-11T01:05:01.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1341080",
+    "ThreadId": "577388",
+    "Html": "I created a device with <br />\n<pre><code>WasapiLoopbackCapture.GetDefaultLoopbackCaptureDevice()</code></pre>\n\nand a waveStream with new<br />\n<pre><code>WasapiLoopbackCapture(device).</code></pre>\n\nIt's recording everything being played through my speakers (I tried saving it to a file and it works), but I'm lost, and I can't find how do I add the visualizer to the project, so it reads from the stream, not from the file.<br />\nIn the demo you are using<br />\n<pre><code>var inputStream = new AudioFileReader(fileName);</code></pre>\n\nto start playback and visualization from the file using FftCalculated &amp; MaximumCalculated and other methods, right?<br />\nCan't I read from the stream, not from the file?<br />\nDo I have to save stream to a file, playback and visualize it with AudioFileReader(), remove, and save again continously?<br />\n<br />\n//edit:<br />\nAfter some digging I found out there's BufferedWaveProvider. I'll try my luck with that.<br />\n",
+    "PostedDate": "2015-01-12T07:12:43.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354432",
+    "ThreadId": "577388",
+    "Html": "yes, bufferedwaveprovider is good for putting recorded audio into a pipeline to be played<br />\n",
+    "PostedDate": "2015-02-20T11:18:03.31-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

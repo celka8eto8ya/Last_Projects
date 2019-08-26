@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "can I increase my sound buffer size?\r\n\r\nright now I am getting \r\n\r\n17640 bytes  coming in at a time.\r\n\r\nthen\r\n\r\ni do this code: \r\n\r\n int bytesRecorded = e.BytesRecorded;\r\n            buffer1 = new double[(8192)];\r\n            //  WriteToFile(buffer, bytesRecorded);\r\n            int tempint = 0;\r\n            for (int index = 0; index < 16384; index += 2)\r\n            {\r\n               \r\n                short sample = (short)((buffer[index + 1] << 8) |\r\n                                        buffer[index + 0]);\r\n              \r\n                float sample32 = sample / 32768f;\r\n                buffer1[tempint] = (double)sample32;\r\n                tempint++;\r\nand then I send it to my FFT\r\n\r\nmy FFT only works at 2^(number) samples at a time\r\n\r\nso I can only do 8192 samples at a time\r\n\r\nI wanted to do more samples at a time, so I can get an higher accuracy ",
+    "LastUpdatedDate": "2014-01-17T23:47:11.913-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-01-17T23:47:11.913-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "sound buffer size",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16427
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

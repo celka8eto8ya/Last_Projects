@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "228199",
+    "ThreadId": "67124",
+    "Html": "<p>Hi Jbarciauskas,</p>\r\n<p>I'm not sure if you read this but I hope you do; you submitted a patch to remove the x86 targeting but haven't updated any of the other source code to support a 64 bit platform. This would actually cause NAudio to fail on the 64 bit platform rather than making it a compatible 64 bit dll. This addition has been added specifically so that NAudio can be used on a 64 bit version of windows through the WOW compatibility layer.</p>\r\n<p>Cheers,<br>Sebastian</p>",
+    "PostedDate": "2009-08-26T18:55:24.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

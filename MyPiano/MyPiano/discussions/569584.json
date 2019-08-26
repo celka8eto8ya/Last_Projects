@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1312501",
+    "ThreadId": "569584",
+    "Html": "First, I would to thank you Mark of this library. \r<br />\nIt is really good and very helpful. :-)\r<br />\n<br />\nSecondly, while looking at your Spectrum Analyser I saw the following thing:<br />\n<pre><code>private double GetYPosLog(Complex c)\n        {\n            // not entirely sure whether the multiplier should be 10 or 20 in this case.\n            // going with 10 from here http://stackoverflow.com/a/10636698/7532\n            double intensityDB = 10 * Math.Log10(Math.Sqrt(c.X * c.X + c.Y * c.Y));\n            double minDB = -90;\n            if (intensityDB &lt; minDB) intensityDB = minDB;\n            double percent = intensityDB / minDB;\n            // we want 0dB to be at the top (i.e. yPos = 0)\n            double yPos = percent * this.ActualHeight;\n            return yPos;\n        }</code></pre>\n\nThe definition of DB is  DB = 20*log_10(number), so the the variable &quot;intesityDB&quot; should\r<br />\nbe: <br />\n<pre><code>double intensityDB = 20 * Math.Log10(Math.Sqrt(c.X * c.X + c.Y * c.Y));</code></pre>\n\nor:<br />\n<pre><code>double intensityDB = 10 * Math.Log10(c.X * c.X + c.Y * c.Y);</code></pre>\n\n",
+    "PostedDate": "2014-10-11T15:35:34.543-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

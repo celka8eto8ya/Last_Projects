@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1134161",
+    "ThreadId": "472828",
+    "Html": "I have developed an Application which convert an audio file to text file  but my problem is that it only converts files which are in US accent.<br />\nusing system.speech.recognition in c#<br />\nI am a Pakistani and i want to convert files which are in Pakistani accent<br />\nCan I change the accent???<br />\nIs there any help???<br />\n",
+    "PostedDate": "2013-12-10T23:20:17.403-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1134205",
+    "ThreadId": "472828",
+    "Html": "system.speech.recognition is not part of NAudio, so I'm afraid I have no knowledge of whether the Microsoft speech recognition supports different accents.<br />\n",
+    "PostedDate": "2013-12-11T01:45:19.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

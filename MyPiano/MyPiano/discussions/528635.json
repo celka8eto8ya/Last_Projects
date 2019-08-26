@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1201682",
+    "ThreadId": "528635",
+    "Html": "how can i measure the sound signal in MHz?... it's possible? <br />\n",
+    "PostedDate": "2014-02-01T13:17:21.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201721",
+    "ThreadId": "528635",
+    "Html": "what exactly are you trying to achieve? do you want to know the sample rate? Or are you wanting to do something like a spectrum analyser\r<br />\nAlso, you do know the top range of human hearing is about 20kHz? Audio in the MHz range would be inaudible to humans and can't be played by your soundcard.<br />\n",
+    "PostedDate": "2014-02-02T00:13:06.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

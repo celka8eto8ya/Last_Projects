@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "270881",
+    "ThreadId": "79104",
+    "Html": "<p>Hello!</p>\r\n<p>First of all, I wish to tell, that NAudio is very useful library. It simplifies an application programming and gives possibilities, sufficient for the majority of tasks. Now this library helps me with my work on the diploma.</p>\r\n<p>In the diploma I use NAudio library in a combination with WPF. As is known, force in WPF consists in possibility to use bindings to data everywhere . But, working with NAudio, I could use this advantage not everywhere. For example, I would like that the Maximum property of the System.Windows.Controls.Slider control has the binds with TotalTime property of NAudio.Wave.WaveStream class and Slider.Value property has the binds with WaveStream.CurrentTime property... As I know, it is necessary that class has a INotifyPropertyChanged interface implementation for correctly work of bindings (correct me if I am mistaken). But in a NAudio source code I have not seen any implementation of this interface.</p>\r\n<p>Questions: NAudio have not the INotifyPropertyChanged interface implementation specially? Probably it will be made in future NAudio versions? How to realise rewind of audio file with current version of NAudio library on WPF?</p>\r\n<hr>\r\n<p>\r\n<p>&nbsp;</p>\r\n</p>\r\n<p>Origin text for russian visitors =)</p>\r\n<p>Здравствуйте.</p>\r\n<p>Прежде всего, хочу сказать, что NAudio очень полезная библиотека. Она упрощает разработку приложения и предоставляет возможности, достаточные для большинства задач. В настоящее время, данная библиотека помогает мне в моей работе над дипломом.</p>\r\n<p>В своем дипломе я использую библиотеку NAudio&nbsp; в сочетании с WPF. Как известно, сила в WPF заключается в возможности повсеместно использовать привязки к данным. Но, при работе с NAudio, не везде я смог этим воспользоваться. Например, я хотел бы, что бы у элемента System.Windows.Controls.Slider свойство Maximum имело привязку со свойством TotalTime класса NAudio.Wave.WaveStream, а свойство Slider.Value было связано со свойством WaveStream.CurrentTime... На сколько мне известно, что бы такие связки правильно работали, как минимум необходима реализация интерфейса INotifyPropertyChanged (поправьте меня, если я ошибаюсь). Но в исходном коде я не увидел никакой реализации данного интерфейса.</p>\r\n<p>Вопрос: Специально ли не реализован интерфейс INotifyPropertyChanged? Возможно это будет сделано в будущих версиях NAudio? Как реализовать перемотку аудио файла с помощью данной версии библиотеки NAudio&nbsp;в WPF?</p>",
+    "PostedDate": "2009-12-26T13:48:38.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272926",
+    "ThreadId": "79104",
+    "Html": "<p>hi there</p>\r\n<p>the reason there is not INotifyPropertyChanged on CurrentTime is because of performance issues. It changes very rapidly. It is better to poll at regular intervals. The good news is you can abstract this away using a ViewModel that does implement INotifyPropertyChanged, which underneath polls the WaveStream.</p>\r\n<p>hope this helps</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-04T07:59:39.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

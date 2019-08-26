@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1494744",
+    "ThreadId": "662245",
+    "Html": "I want to detect percentage of silent phases in audio using NAudio in c#.\r<br />\nAlgorithm that i can think of is that to look for consecutive samples having an absolute value less than a &quot;threshold&quot; amount. 0.00006 is -84.437 dB. If my approach is right then please tell me how can i do it using NAudio in c#. If my approach is wrong then help me out in tackling this problem<br />\n",
+    "PostedDate": "2017-03-27T14:04:32.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

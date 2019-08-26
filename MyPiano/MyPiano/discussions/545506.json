@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1245966",
+    "ThreadId": "545506",
+    "Html": "what does int does?<br />\n",
+    "PostedDate": "2014-05-15T19:18:01.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248905",
+    "ThreadId": "545506",
+    "Html": "Initialises the waveout device for the audio stream you want to play.\r<br />\n<br />\nIf you have access to Pluralsight, I recommend watching my <a href=\"http://pluralsight.com/training/Courses/TableOfContents/digital-audio-fundamentals\" rel=\"nofollow\">Digital Audio Fundamentals</a> and <a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">Audio programming with NAudio</a> courses as they will answer many of the questions you have been asking.<br />\n",
+    "PostedDate": "2014-05-23T07:17:13.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

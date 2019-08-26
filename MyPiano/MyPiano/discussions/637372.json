@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1423995",
+    "ThreadId": "637372",
+    "Html": "Hi,\r<br />\n<br />\nI need an dummy IWavePlayer that can be replaced with WaveOut. It should act as a dummy for WaveOut, it should not send data to its output device, but it shall raise the playbackstopped event when the playback stops (after the duration of the sound file).\r<br />\n<br />\nDoes this already exist, or anyone has any idea where to start?<br />\n",
+    "PostedDate": "2015-05-07T10:57:05.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1424000",
+    "ThreadId": "637372",
+    "Html": "sorry, doesn't exist, but I'd kick of a thread when playback starts that every 100ms reads 100ms of audio data from the source provider passed to Init. Then it can raisePlaybackStopped when Read returns 0, or when the user calls Stop.<br />\n",
+    "PostedDate": "2015-05-07T11:01:42.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-05-07T13:41:33.837-07:00"
+  },
+  {
+    "Id": "1424031",
+    "ThreadId": "637372",
+    "Html": "Yeah, i went that way, works like a charm<br />\n",
+    "PostedDate": "2015-05-07T13:41:26.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

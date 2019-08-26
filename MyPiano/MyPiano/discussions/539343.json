@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1223913",
+    "ThreadId": "539343",
+    "Html": "Hi,<br />\n<br />\nI've recently been trying to detect the insertion and removal of USB headsets, and after reading the Microsoft documentation on IMMDeviceEnumerator, IMMNotificationClient and IMMDevice I've tweaked the MMDeviceEnumerator class in the NAudio class to include the Register and Unregister endpoint notification callback methods and created a MMNotificationClient.<br />\n<br />\nI'm successfully received OnDevicestateChanged events in my MMNotificationClient, however I keep getting two callbacks everytime a USB headset is inserted or removed with different device IDs, For example:<br />\n<br />\n1st event) {0.0.0.00000000}.{8d7fb07d-40e8-49d9-81a8-749f5abd25db}<br />\n2nd event) {0.0.1.00000000}.{8213efcc-fe5d-42f8-ae6e-0c3053be5141}<br />\n<br />\nNow I am aware that the CoreAudioApi code was written by Ray Molenkamp, but I'm not sure how to contact him and was hoping that maybe someone would have an idea about unmanaged code, and why I could possibly keep getting 2 callbacks rather than 1.<br />\n",
+    "PostedDate": "2014-03-18T05:23:27.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

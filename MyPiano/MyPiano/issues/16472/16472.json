@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "\r\n\r\nHello,\r\n\r\nI use NAudio for professional project to communicate with radios. Randomly, the DLL crashes at start of the Micro capture.\r\nSomeone would have an idea?\r\nThank you in advance.\r\n\r\nHere is my code:\r\n\r\nImports NAudio.Wave\r\nImports System.Runtime.InteropServices\r\nPublic Class NaudioMicro\r\n    Implements IDisposable\r\n    Protected Disposed As Boolean = False\r\n#Region \"Déclarations\"\r\n    'Autorisation d'exporter le flux Audio\r\n    Private Transmit As Integer = 0\r\n    'Indique que le recorder est en mode capture\r\n    Private IsCapturing As Integer = 0\r\n    'Recorder Naudio\r\n    Private WithEvents _WaveInDevice As WaveIn\r\n#End Region\r\n#Region \"Constructor\"\r\n    ''' <summary>\r\n    ''' Simple New without Data\r\n    ''' </summary>\r\n    ''' <remarks>The selection of Peiker Microphone is automatic !</remarks>\r\n    Public Sub New()\r\n        Dim DeviceInfoI As WaveInCapabilities\r\n        Try\r\n            '1. Détection automatique du Micro Peiker\r\n            Dim DeviceNumber As Integer = -1\r\n            For I As Integer = 0 To WaveIn.DeviceCount - 1\r\n                DeviceInfoI = WaveIn.GetCapabilities(I)\r\n                If Val(\"&H\" & Strings.Left(DeviceInfoI.ProductGuid.ToString, 2)) > 0 Then\r\n                    If InStr(DeviceInfoI.ProductName, \"PTC USB\", CompareMethod.Text) > 0 Then\r\n                        DeviceNumber = I\r\n                        Exit For\r\n                    End If\r\n                End If\r\n            Next\r\n            '2. Configuration du Recorder avec Micro Peiker\r\n            If DeviceNumber >= 0 Then\r\n                _WaveInDevice = New WaveIn()\r\n                _WaveInDevice.DeviceNumber = DeviceNumber\r\n                _WaveInDevice.WaveFormat = New NAudio.Wave.WaveFormat(8000, 16, 1)\r\n                _WaveInDevice.BufferMilliseconds = 60\r\n            End If\r\n        Catch Ex As Exception\r\n        Finally\r\n            IsCapturing = 0\r\n        End Try\r\n    End Sub\r\n#End Region\r\n#Region \"Event\"\r\n    Friend Event OnDeliverySpeechData(ByVal SpeechData() As Byte)\r\n#End Region\r\n#Region \"Commandes\"\r\n    ''' <summary>\r\n    ''' Start Recording\r\n    ''' </summary>\r\n    ''' <remarks></remarks>\r\n    Private Sub CaptureStart()\r\n        If _WaveInDevice Is Nothing Then\r\n            Return\r\n        End If\r\n        If IsCapturing = 0 Then\r\n            IsCapturing = 1\r\n            _WaveInDevice.StartRecording()\r\n        End If\r\n    End Sub\r\n    ''' <summary>\r\n    ''' Stop Recording\r\n    ''' </summary>\r\n    ''' <remarks></remarks>\r\n    Private Sub CaptureStop()\r\n        If _WaveInDevice Is Nothing Then\r\n            Return\r\n        End If\r\n        If IsCapturing = 1 Then\r\n            IsCapturing = 0\r\n            _WaveInDevice.StopRecording()\r\n            Transmit = 0\r\n        End If\r\n    End Sub\r\n    ''' <summary>\r\n    ''' Start transmission of audio stream\r\n    ''' </summary>\r\n    ''' <remarks></remarks>\r\n    Friend Sub StartCapture()\r\n        Transmit = 1\r\n        If IsCapturing = 0 Then\r\n            CaptureStart()\r\n        End If\r\n    End Sub\r\n    ''' <summary>\r\n    ''' Stop transmission of audio stream\r\n    ''' </summary>\r\n    ''' <remarks></remarks>\r\n    Friend Sub StopCapture()\r\n        Transmit = 0\r\n        If IsCapturing = 1 Then\r\n            CaptureStop()\r\n        End If\r\n    End Sub\r\n#End Region\r\n#Region \"Processus_internes\"\r\n    ''' <summary>\r\n    ''' Fonction CallBack de l'enregistreur\r\n    ''' </summary>\r\n    ''' <param name=\"sender\"></param>\r\n    ''' <param name=\"e\"></param>\r\n    ''' <remarks></remarks>\r\n    Private Sub _WaveInDevice_DataAvailable(ByVal sender As Object, ByVal e As NAudio.Wave.WaveInEventArgs) Handles _WaveInDevice.DataAvailable\r\n        If Transmit = 1 Then\r\n            If e.BytesRecorded > 0 Then\r\n                If My.Settings.SendSpeechDirect = 1 Then\r\n                    Dim AIOPCMFrame As New _D25AIOPCMFRAME\r\n                    AIOPCMFrame.sz = e.Buffer.Length\r\n                    AIOPCMFrame.m_aFrame = Marshal.AllocHGlobal(e.Buffer.Length)\r\n                    Marshal.Copy(e.Buffer, 0, AIOPCMFrame.m_aFrame, e.Buffer.Length)\r\n                    Call Appels.DiffusionMicro(AIOPCMFrame)\r\n                    If LoopBack = 1 Then\r\n                        If IHM.PlayBackJingleInProgress = 0 Then\r\n                            If My.Settings.AudioEmbeded = 0 Then\r\n                                Players.Player(0).PlayPacket(e.Buffer)\r\n                            Else\r\n                                LocalPlayer.PlayPacket(e.Buffer)\r\n                            End If\r\n                        End If\r\n                    End If\r\n                Else\r\n                    RaiseEvent OnDeliverySpeechData(e.Buffer)\r\n                End If\r\n            End If\r\n        End If\r\n    End Sub\r\n#End Region\r\n#Region \"IDisposable Support\"\r\n    Protected Overridable Overloads Sub Dispose(ByVal disposing As Boolean)\r\n        If Not Me.Disposed Then\r\n            If disposing Then\r\n                If _WaveInDevice IsNot Nothing Then\r\n                    _WaveInDevice.StopRecording()\r\n                    _WaveInDevice.Dispose()\r\n                    _WaveInDevice = Nothing\r\n                End If\r\n            End If\r\n        End If\r\n        Me.Disposed = True\r\n    End Sub\r\n    ' Do not change or add Overridable to thse methods.\r\n    ' Put cleanup code in Dispose(Byval disposing as boolean).\r\n    Public Overloads Sub Dispose() Implements IDisposable.Dispose\r\n        Dispose(True)\r\n        GC.SuppressFinalize(Me)\r\n    End Sub\r\n    Protected Overrides Sub Finalize()\r\n        Dispose(False)\r\n        MyBase.Finalize()\r\n    End Sub\r\n#End Region\r\nEnd Class\r\n\r\n\r\n",
+    "LastUpdatedDate": "2015-03-17T10:05:38.057-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-03-09T15:51:44.01-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "MemoryAllocationError calling waveInOpen",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16472
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "sounds like an out of memory issue",
+      "PostedDate": "2015-03-17T10:05:38.057-07:00",
+      "Id": 179399
+    }
+  ]
+}

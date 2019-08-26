@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "560415",
+    "ThreadId": "244571",
+    "Html": "\r\n<p>Hello, I was wondering if it was possible to convert an array of raw 16-bit PCM bytes to some form of compressed data, like MP3, to be transferred over a network, and then decompressed on the other end.</p>\r\n<p>Any elegant way of doing this in NAudio?</p>\r\n",
+    "PostedDate": "2011-02-03T14:31:29.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "560856",
+    "ThreadId": "244571",
+    "Html": "\r\n<p>i would like to know the same.</p>\r\n",
+    "PostedDate": "2011-02-04T09:00:34.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561038",
+    "ThreadId": "244571",
+    "Html": "\r\n<p>You changed your reply there, didn't you?</p>\r\n<p>Anyway, the only compression streams I've seen in NAudio are for decompressing, not compressing.</p>\r\n",
+    "PostedDate": "2011-02-04T15:07:09.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561174",
+    "ThreadId": "244571",
+    "Html": "\r\n<p>I already posted about GSM compression on the fly, but it seems like i'm not getting anywhere. The question is similar to this topic. How can i convert ON THE FLY the input from a microphone to a format such as GSM, which is a speech codec. Please, could\r\n i get an example. I have the codec and I already know that the conversion function will not change it from pcm.</p>\r\n",
+    "PostedDate": "2011-02-05T04:00:00.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561336",
+    "ThreadId": "244571",
+    "Html": "\r\n<p>What format is the codec? Is it just a specification? In that case, you can write a WaveStream that converts the PCM into GSM compressed data.</p>\r\n<p>I am unable to use GSM, unfortunately, since I need to stream music.</p>\r\n",
+    "PostedDate": "2011-02-05T15:01:34.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561554",
+    "ThreadId": "244571",
+    "Html": "\r\n<p>the waveformatstream can work on the fly, it takes a WaveStream as an input which could be implemented by anything. You can encode using any ACM codecs present on your system (Windows does not provide many encoding options by default though)</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-06T11:55:19.23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561600",
+    "ThreadId": "244571",
+    "Html": "\r\n<p>Could you supply an example? I am even having issues trying to use it to convert IeeeFloat to PCM16. Just gives me an MmException when I initialize it.</p>\r\n",
+    "PostedDate": "2011-02-06T13:42:40.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561922",
+    "ThreadId": "244571",
+    "Html": "\r\n<p>use Wave32to16ConversionStream instead for converting ieee float to PCM16</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-07T06:24:38.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "668104",
+    "ThreadId": "271630",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Is there any way to use the resampler dmo to resample audio during recording with wasapi capture? If not, is there any other solution?</p>\r\n<p>I know about using the WaveIn provider with its built-in resampling, but my project doesn&rsquo;t need to support XP and I want to use wasapi instead.</p>\r\n<p>Thanks,</p>\r\n<p>Eric</p>\r\n",
+    "PostedDate": "2011-09-06T07:23:02.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "668997",
+    "ThreadId": "271630",
+    "Html": "<p>I was able to get it working. First set up the wasapi capture and dmo resampler objects:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>capture = <span style=\"color: blue;\">new</span> WasapiCapture(device);\r\ninputFormat = capture.WaveFormat;\r\nresampler = <span style=\"color: blue;\">new</span> Resampler();\r\nresampler.MediaObject.SetInputWaveFormat(0, inputFormat);\r\nresampler.MediaObject.SetOutputWaveFormat(0,outputFormat);\r\nresampler.MediaObject.AllocateStreamingResources();\r\nwriter = <span style=\"color: blue;\">new</span> WaveFileWriter(<span style=\"color: #a31515;\">@\"e:\\temp\\test.wav\"</span>, outputFormat);\r\ncapture.DataAvailable += <span style=\"color: blue;\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveIn_DataAvailable);\r\ncapture.RecordingStopped += <span style=\"color: blue;\">new</span> EventHandler(waveIn_RecordingStopped);\r\n            capture.StartRecording();\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Then on DataAvailable:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>            <span style=\"color: green;\">//should this be on ui thread?</span>\r\n           <span style=\"color: blue;\">if</span> (<span style=\"color: blue;\">this</span>.Dispatcher.Thread == Thread.CurrentThread)\r\n            {\r\n                MediaBuffer b=<span style=\"color: blue;\">new</span> MediaBuffer(e.Buffer.Length);\r\n                b.LoadData(e.Buffer,e.BytesRecorded);\r\n                resampler.MediaObject.ProcessInput(0,b,DmoInputDataBufferFlags.None,0,0);\r\n                <span style=\"color: blue;\">using</span> (DmoOutputDataBuffer outputBuffer = <span style=\"color: blue;\">new</span> DmoOutputDataBuffer(outputFormat.AverageBytesPerSecond))\r\n                {\r\n                    resampler.MediaObject.ProcessOutput(DmoProcessOutputFlags.None,1, <span style=\"color: blue;\">new</span> DmoOutputDataBuffer[]{outputBuffer});\r\n                    <span style=\"color: blue;\">byte</span>[] oBytes=<span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[outputBuffer.Length];\r\n                    outputBuffer.RetrieveData(oBytes, 0);\r\n                    writer.Write(oBytes,0,oBytes.Length);\r\n                }\r\n\r\n            }\r\n            <span style=\"color: blue;\">else</span>\r\n            {\r\n                <span style=\"color: blue;\">this</span>.Dispatcher.BeginInvoke(DispatcherPriority.Normal, <span style=\"color: blue;\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveIn_DataAvailable), sender,\r\n                                            <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">object</span>[] { e });\r\n            }\r\n\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-09-08T01:49:20.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

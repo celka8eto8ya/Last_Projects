@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "255892",
+    "ThreadId": "74764",
+    "Html": "<p>I'm having a problem recording multiple times (first time record to file x.wav, stop the recording and start recording again to file y.wav) without having to quit the application.&nbsp; Using the RecordingForm app on the demo project, you can't do:</p>\r\n<p>1. Start Recording (using WASAPI)<br>2. Stop Recording<br>3. Start Recording again &lt;--- &quot;null pointer exception&quot;</p>\r\n<p>I tried various tricks like not calling Dispose() and set to null on the &quot;waveIn&quot; variable (inside waveIn_RecordingStopped).&nbsp; It seems like the variable &quot;<span style=\"font-size:x-small\">audioClientInterface&quot; of the AudioClient instance is null after the first successful recording.</span></p>\r\n<p><span style=\"font-size:x-small\">Any idea on how to record the 2nd/3rd/4th/... times without restarting the app?&nbsp; TIA.</span></p>",
+    "PostedDate": "2009-11-11T01:42:23.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "518123",
+    "ThreadId": "74764",
+    "Html": "\r\n<p>finally checked in a fix for this. better late than never!</p>\r\n",
+    "PostedDate": "2010-11-06T04:52:42.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

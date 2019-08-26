@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "877715",
+    "ThreadId": "377324",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>Is it possible to play a wave file out of the left or right channels only, aka a balance control?</p>\r\n<p>What method returns the total length of a wave file?</p>\r\n<p>Thanks,</p>\r\n<p>kingneb</p>\r\n",
+    "PostedDate": "2012-07-19T13:52:49.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "879754",
+    "ThreadId": "377324",
+    "Html": "<p>Anyone?</p>",
+    "PostedDate": "2012-07-20T05:26:00.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "882408",
+    "ThreadId": "377324",
+    "Html": "<p>Yes, it is possible. I would use Multiplexing wave provider (Mark posted a tutorial on his blog:&nbsp;<a href=\"http://mark-dot-net.blogspot.com/\">http://mark-dot-net.blogspot.com/</a>).</p>\r\n<p>WaveStream class has Length property which will tell you the length in samples of the wave file.</p>",
+    "PostedDate": "2012-07-21T01:39:04.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "882559",
+    "ThreadId": "377324",
+    "Html": "<p>Legoless is right if you want to simply route signals to different outputs rather than mix the levels.</p>\r\n<p>I have a feeling that WaveChannel32 has a balance/pan implementation. It would also be easy to create your own panning logic if you are using the new ISampleProvider interface</p>",
+    "PostedDate": "2012-07-21T02:54:40.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

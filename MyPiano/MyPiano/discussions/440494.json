@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1031286",
+    "ThreadId": "440494",
+    "Html": "hello<br />\n<br />\ni'm trying to do a visualizer using Naudio wasapi loop back capture feature, but i have a problem using samples.<br />\n<br />\nNAudio.Wave.WasapiLoopbackCapture wasapi = new NAudio.Wave.WasapiLoopbackCapture();<br />\nwasapi.StartRecording();<br />\n wasapi.DataAvailable += InputBufferToFileCallback;<br />\n<br />\nNow i use the event InputBufferToFileCallback to get the e.buffer and then extracting from the byte array the samples<br />\n<pre><code>        byte[] buffer = e.Buffer;\n        int bytesRecorded = e.BytesRecorded;\n        int bufferIncrement = (int)(wasapi.WaveFormat.BlockAlign / wasapi.WaveFormat.Channels);\n        int bitsPerSample = wasapi.WaveFormat.BitsPerSample;\n\n        for (int index = 0; index &lt; e.BytesRecorded; index += bufferIncrement)\n        {\n            float sample32left = 0;\n            float sample32right = 0;\n            sample32right = BitConverter.ToSingle(buffer, index);\n            sample32left = BitConverter.ToSingle(buffer, index + 4);\n            sampleAggregator.Add(sample32left, sample32right);\n        }\n</code></pre>\n\nMy question is if the samples for the right and left channels are right or if is it possible to use the wavechannel32 class to get the left and right samples in relation to the wasapiloopbackCapture.<br />\n<br />\nthanks<br />\n<br />\nEDIT:  resolved, the problem was the bufferIncrement that is equal to wasapi.WaveFormat.BlockAlign , no division.<br />\n",
+    "PostedDate": "2013-04-16T10:27:53.78-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

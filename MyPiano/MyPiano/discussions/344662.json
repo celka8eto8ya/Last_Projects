@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "799295",
+    "ThreadId": "344662",
+    "Html": "<p>I am attempting to decode the data in a class derived from&nbsp;WaveStream via the Read() function.&nbsp;WaveFormat indicates that the data is&nbsp;IeeeFloat, 32 bits per channel. i am having real trouble decoding this into left and right channels in such a way that it &nbsp;makes any sense (currently what i get via&nbsp;BitConverter.ToInt16 is very noise and not balanced between channels).&nbsp;</p>\n<p>further i don't understand what IeeeFloat means, as presumably there is 16 bits per channel per sample. meaning a float from two bytes. is that a short float? is there even such a thing?</p>",
+    "PostedDate": "2012-02-24T02:58:21.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799299",
+    "ThreadId": "344662",
+    "Html": "<p>It is 32 bits per sample - that means four bytes for left, four bytes for right. use BitConverter.ToFloat() to convert bytes into floats.</p>",
+    "PostedDate": "2012-02-24T02:59:57.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799309",
+    "ThreadId": "344662",
+    "Html": "<p>ok, thanks. i was assuming a sample contains both left and right channels. this makes much more sense.</p>",
+    "PostedDate": "2012-02-24T03:05:39.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799315",
+    "ThreadId": "344662",
+    "Html": "<p>\"<span>use BitConverter.ToFloat() to convert bytes into floats.</span>\"</p>\n<p>just for other peoples benefit. this is actually called&nbsp;BitConverter.ToSingle() for some strange reason</p>",
+    "PostedDate": "2012-02-24T03:09:48.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799334",
+    "ThreadId": "344662",
+    "Html": "<p>oh yeah, I forgot they called it ToSingle(),</p>",
+    "PostedDate": "2012-02-24T03:38:56.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "802892",
+    "ThreadId": "344662",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>drmo wrote:</strong><br />\r\n<p><span></span>just for other peoples benefit. this is actually called&nbsp;BitConverter.ToSingle() for some strange reason</p>\r\n</blockquote>\r\n<p>The C# <em>float</em> keyword is really just a compiler alias for the BCL type <em>System.Single</em>, so having a BCL class refer to it as ToSingle isn't the strange part. I believe it's called Single because IEEE 754-1985 called it single, although VB programmers probably think it's because VB called it Single all along.</p>",
+    "PostedDate": "2012-02-28T15:28:33.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

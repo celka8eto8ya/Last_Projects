@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "629416",
+    "ThreadId": "261822",
+    "Html": "\r\n<p>Hello<br>\r\n&nbsp;<br>\r\nI have a record function wich let me to record a vaocal message and to save it in my pc then it gives us the possibility to hear the recorded message,the problem is that when I instal an external sound card the function stops recording sound from my default\r\n sound card and it recorded it from the other audio card,so can you give me an idea to oblige the record function to use only the default sound card.this is the record code:<br>\r\n<code><br>\r\n</code></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">partial</span> <span style=\"color:blue\">class</span> RecordingForm : Form\r\n{\r\nIWaveIn waveIn;\r\nWaveFileWriter writer;\r\n<span style=\"color:blue\">string</span> outputFilename;\r\n<span style=\"color:blue\">public</span> RecordingForm()\r\n{\r\nInitializeComponent();\r\n<span style=\"color:green\">//LoadWasapiDevicesCombo();</span>\r\n}\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> LoadWasapiDevicesCombo()\r\n{\r\nMMDeviceEnumerator deviceEnum = <span style=\"color:blue\">new</span> MMDeviceEnumerator();\r\nMMDeviceCollection deviceCol = deviceEnum.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active);\r\nCollection&lt;MMDevice&gt; devices = <span style=\"color:blue\">new</span> Collection&lt;MMDevice&gt;();\r\n<span style=\"color:blue\">foreach</span> (MMDevice device <span style=\"color:blue\">in</span> deviceCol)\r\n{\r\ndevices.Add(device);\r\n}\r\n<span style=\"color:blue\">this</span>.comboDevices.DataSource = devices;\r\n<span style=\"color:blue\">this</span>.comboDevices.DisplayMember = <span style=\"color:#a31515\">&quot;FriendlyName&quot;</span>;\r\n}\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> buttonStartRecording_Click(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n{\r\n<span style=\"color:blue\">if</span> (waveIn == <span style=\"color:blue\">null</span>)\r\n{\r\n<span style=\"color:blue\">if</span> (outputFilename == <span style=\"color:blue\">null</span>)\r\n{\r\nbuttonSelectOutputFile_Click(sender, e);\r\n}\r\n<span style=\"color:blue\">if</span> (outputFilename == <span style=\"color:blue\">null</span>)\r\n{\r\n<span style=\"color:blue\">return</span>;\r\n}\r\nwaveIn = <span style=\"color:blue\">new</span> WaveIn();\r\nwaveIn.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat(8000, 1);\r\nwriter = <span style=\"color:blue\">new</span> WaveFileWriter(outputFilename, waveIn.WaveFormat);\r\nwaveIn.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveIn_DataAvailable);\r\nwaveIn.RecordingStopped &#43;= <span style=\"color:blue\">new</span> EventHandler(waveIn_RecordingStopped);\r\nwaveIn.StartRecording();\r\nbuttonStartRecording.Enabled = <span style=\"color:blue\">false</span>;\r\n}\r\n}\r\n<span style=\"color:blue\">void</span> waveIn_RecordingStopped(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n{\r\n<span style=\"color:blue\">if</span> (<span style=\"color:blue\">this</span>.InvokeRequired)\r\n{\r\n<span style=\"color:blue\">this</span>.BeginInvoke(<span style=\"color:blue\">new</span> EventHandler(waveIn_RecordingStopped), sender, e);\r\n}\r\n<span style=\"color:blue\">else</span>\r\n{\r\nwaveIn.Dispose();\r\nwaveIn = <span style=\"color:blue\">null</span>;\r\nwriter.Close();\r\nwriter = <span style=\"color:blue\">null</span>;\r\nbuttonStartRecording.Enabled = <span style=\"color:blue\">true</span>;\r\nprogressBar1.Value = 0;\r\n<span style=\"color:blue\">if</span> (checkBoxAutoPlay.Checked)\r\n{\r\nProcess.Start(outputFilename);\r\n}\r\n}\r\n}\r\n<span style=\"color:blue\">void</span> waveIn_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n{\r\n<span style=\"color:blue\">if</span> (<span style=\"color:blue\">this</span>.InvokeRequired)\r\n{\r\n<span style=\"color:blue\">this</span>.BeginInvoke(<span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveIn_DataAvailable), sender, e);\r\n}\r\n<span style=\"color:blue\">else</span>\r\n{\r\nwriter.WriteData(e.Buffer, 0, e.BytesRecorded);\r\n<span style=\"color:blue\">int</span> secondsRecorded = (<span style=\"color:blue\">int</span>)(writer.Length / writer.WaveFormat.AverageBytesPerSecond);\r\n<span style=\"color:blue\">if</span> (secondsRecorded &gt;= 30)\r\n{\r\nStopRecording();\r\n}\r\n<span style=\"color:blue\">else</span>\r\n{\r\nprogressBar1.Value = secondsRecorded;\r\n}\r\n}\r\n}\r\n<span style=\"color:blue\">void</span> StopRecording()\r\n{\r\nDebug.WriteLine(<span style=\"color:#a31515\">&quot;StopRecording&quot;</span>);\r\nwaveIn.StopRecording();\r\n}\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> buttonStopRecording_Click(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n{\r\n<span style=\"color:blue\">if</span> (waveIn != <span style=\"color:blue\">null</span>)\r\n{\r\nStopRecording();\r\n}\r\n}\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> buttonSelectOutputFile_Click(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n{\r\nSaveFileDialog saveFileDialog = <span style=\"color:blue\">new</span> SaveFileDialog();\r\nsaveFileDialog.Title = <span style=\"color:#a31515\">&quot;Select output file:&quot;</span>;\r\nsaveFileDialog.Filter = <span style=\"color:#a31515\">&quot;WAV Files (*.wav)|*.wav&quot;</span>;\r\nsaveFileDialog.FileName = outputFilename;\r\n<span style=\"color:blue\">if</span> (saveFileDialog.ShowDialog() == DialogResult.OK)\r\n{\r\noutputFilename = saveFileDialog.FileName;\r\n}\r\n} \r\n}\r\n}\r\n\r\n \r\n\r\n</pre>\r\n</div>\r\n<br>\r\n&nbsp;<br>\r\nThank you in advance and good day\r\n<p></p>\r\n",
+    "PostedDate": "2011-06-17T14:41:16.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629676",
+    "ThreadId": "261822",
+    "Html": "<p>it is already using the default soundcard - that's what opening WaveIn with device number = 0 does. Your trouble is that when you plug a USB soundcard into Windows, Windows makes that soundcard the default device.</p>",
+    "PostedDate": "2011-06-19T00:06:43.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "640161",
+    "ThreadId": "261822",
+    "Html": "<p>How does one get the DeviceNumber from an MMDevice?</p>\r\n<p>Cheers!</p>\r\n<p>Luke</p>",
+    "PostedDate": "2011-07-10T14:49:21.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "640305",
+    "ThreadId": "261822",
+    "Html": "<p>to explore WaveIn devices, use the WaveIn.DeviceCount static member to find out how many there are, and then pass in an index WaveIn.GetCapabilities to find out device name etc.</p>\r\n<p>Same concept for WaveOut too.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-11T01:58:03.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683514",
+    "ThreadId": "261822",
+    "Html": "<p>so it is still not clear what do I do with device name... do I need then to find the recording default device (I recently found some COM code that does that) and compare the names? if the names match use the waveIn.DeviceNumber with appropriate index that corresponds to the matching name?</p>",
+    "PostedDate": "2011-10-12T22:48:25.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685106",
+    "ThreadId": "261822",
+    "Html": "<p>No, just use device 0 and that is the default recording device</p>",
+    "PostedDate": "2011-10-17T02:39:08.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

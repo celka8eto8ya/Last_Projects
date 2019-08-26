@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1020044",
+    "ThreadId": "437743",
+    "Html": "hi;\r<br />\ni took a brief look at the api , but i'm wondering what are supported audio formats for reading and writing in this library ?\r<br />\nthank you for the job done .<br />\n",
+    "PostedDate": "2013-03-23T10:20:56.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1020359",
+    "ThreadId": "437743",
+    "Html": "It uses whatever codecs are on your system. Read <a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">this article</a> for a full explanation.<br />\n",
+    "PostedDate": "2013-03-24T12:43:01.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

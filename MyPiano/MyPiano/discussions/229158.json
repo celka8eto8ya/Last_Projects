@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "500518",
+    "ThreadId": "229158",
+    "Html": "<p>Hi there, and congratulations for this great library.</p>\r\n<p>I'm making a sw that has to recognize some patterns from some mp3s;</p>\r\n<p>I extract 2 samples (at 2 seconds distance) from a 1hour long mp3 (32kbs, 32kHz, single channel CBR) and then search for those &quot;patterns&quot; in other mp3s. If i have two patterns at exactly 2 seconds distance, I have found the pattern.</p>\r\n<p>My first idea was, since mp3 frames are compressed, to convert those samples to wav; I'm doing this as:</p>\r\n<p>&nbsp;</p>\r\n<p>public static byte[] convertMP3toPCM(byte[] frames)&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"> </span>using (Stream mp3Stream = new MemoryStream(frames))&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"> </span>using (Mp3FileReader reader = new Mp3FileReader(mp3Stream))&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"> </span>using (WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(reader))&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"> </span>byte[] buffer = new byte[pcmStream.GetReadSize((int)pcmStream.TotalTime.TotalMilliseconds)];&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"> </span>int bytesread = pcmStream.Read(buffer, 0, buffer.Length);&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"> </span>return buffer;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"> </span>}&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"> </span>}&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"> </span>&nbsp;}&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>}</p>\r\n<p>&nbsp;</p>\r\n<p>Then, I search for those samples on the mp3s with a L2 Norm. I've used the same approach in video recognition with good results.</p>\r\n<p>However, right now I can only find the pattern in the file from which I'm taking the samples, not in others. Any suggestion? Do you think my idea is correct?</p>",
+    "PostedDate": "2010-09-30T07:07:23.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "506180",
+    "ThreadId": "229158",
+    "Html": "<p>hi there,</p>\r\n<p>this is a very difficult signal processing problem. IIRC there is a question about this on StackOverflow which has links to a technical paper.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-12T11:21:18.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1014452",
+    "ThreadId": "436428",
+    "Html": "Here is some C# source code that can be used to generate random 32-bit unsigned integers.\r<br />\n<br />\n<a href=\"http://pastebin.com/vmhGzKP7\" rel=\"nofollow\">http://pastebin.com/vmhGzKP7</a>\r<br />\n<br />\nIt could form the basis for an official NAudio method - assuming that such a method does not already exist.\r<br />\n<br />\n~~ \r<br />\nClive Tooth<br />\n",
+    "PostedDate": "2013-03-13T02:47:50.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1014655",
+    "ThreadId": "436428",
+    "Html": "hi, that's certainly an interesting approach to creating random numbers. I would be worried that a soundcard with a noise gate would end up creating a sequence of all 0 values. It's not really the type of feature that I would include in NAudio, as NAudio is focused on audio tasks rather than general programming utilities, but thanks for sharing your code.\r<br />\n<br />\nbest regards\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-03-13T08:37:28.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1014706",
+    "ThreadId": "436428",
+    "Html": "Hi Mark,\r<br />\n<br />\nI take your point about NAudio not being focused on general programming utilities.\r<br />\n<br />\nAs regards creating a sequence of all zeros, the program guards against this as follows:\r<br />\n<br />\nThe program considers successive pairs of 16-bit samples from the audio buffer. It looks at the least significant bit from each sample. If the bits are the same the program discards this data and moves on to the next pair of samples. However, if the two bits are different, the program appends the second bit to the growing stream of random bits - and then moves on to the next pair of samples. [This is the line &quot;if (b1 != b2)&quot; in HandleNextBuffer.] This process is called a John von Neumann randomness extractor. Here is an example from running the code on my computer. The first two columns are the pairs of 16-bit samples and the sequence of 0's and 1's on the right hand side is the sequence of random bits. If every sample was 0000 the program would get stuck and never produce a single random bit.\r<br />\n<br />\n0002 0002: least significant bits: 00 discard\r<br />\nfffe 0001: least significant bits: 01 generate 1\r<br />\nfffd fffe: least significant bits: 10 generate 0\r<br />\nffff fffd: least significant bits: 11 discard\r<br />\n0001 fffe: least significant bits: 10 generate 0\r<br />\n0002 0001: least significant bits: 01 generate 1\r<br />\n0001 0000: least significant bits: 10 generate 0\r<br />\nfffe fffd: least significant bits: 01 generate 1\r<br />\nfffc fff9: least significant bits: 01 generate 1\r<br />\nfffc fff8: least significant bits: 00 discard\r<br />\n0001 fffa: least significant bits: 10 generate 0\r<br />\n0002 fffd: least significant bits: 01 generate 1\r<br />\n0002 fffe: least significant bits: 00 discard\r<br />\n0000 fffd: least significant bits: 01 generate 1\r<br />\nffff fffc: least significant bits: 10 generate 0\r<br />\n0001 fffc: least significant bits: 10 generate 0\r<br />\n0001 fffd: least significant bits: 11 discard\r<br />\n0000 fffe: least significant bits: 00 discard\r<br />\nfffe fffe: least significant bits: 00 discard\r<br />\nfffd fffe: least significant bits: 10 generate 0\r<br />\nffff fffe: least significant bits: 10 generate 0\r<br />\n0004 0000: least significant bits: 00 discard\r<br />\n0006 fffe: least significant bits: 00 discard\r<br />\n0005 fffd: least significant bits: 11 discard\r<br />\n0002 fffe: least significant bits: 00 discard\r<br />\n0003 0001: least significant bits: 11 discard\r<br />\n0005 0003: least significant bits: 11 discard\r<br />\n0005 0001: least significant bits: 11 discard\r<br />\n0001 ffff: least significant bits: 11 discard\r<br />\nfffd fffc: least significant bits: 10 generate 0\r<br />\nfffd fffd: least significant bits: 11 discard\r<br />\n0001 fffe: least significant bits: 10 generate 0\r<br />\n<br />\n... and so on.\r<br />\n<br />\nClive<br />\n",
+    "PostedDate": "2013-03-13T10:20:45.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

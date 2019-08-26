@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "I have problems with StartRecording(), error: BadDeviceId calling waveInOpen. My project is in .net and I am using NAudio dll. Can someone help me?",
+    "LastUpdatedDate": "2016-02-08T10:15:19.22-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-02-08T06:34:49.46-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "StartRecording NAudio",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16490
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "it means you've either specified an invalid sound card id (0 for the default device) or maybe you don't have any sound cards at all",
+      "PostedDate": "2016-02-08T07:14:54.573-08:00",
+      "Id": 196330
+    },
+    {
+      "Message": "I'm using 0 for the default device, but  the problem continues. Or does problem it's with the server because my project it's client-server?",
+      "PostedDate": "2016-02-08T07:44:02.39-08:00",
+      "Id": 196335
+    },
+    {
+      "Message": "\nObs: the project in Localhost it works but when I publish in ISS8 give me the error \" BadDeviceId calling waveInOpen\", I don't understand what is happening...",
+      "PostedDate": "2016-02-08T09:28:33.367-08:00",
+      "Id": 196348
+    },
+    {
+      "Message": "there is no soundcard on your webserver. NAudio runs on the webserver, not on the person's computer who is viewing a webpage. You can't use it to record their audio/",
+      "PostedDate": "2016-02-08T10:15:19.22-08:00",
+      "Id": 196351
+    }
+  ]
+}

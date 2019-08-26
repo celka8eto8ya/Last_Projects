@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "575253",
+    "ThreadId": "248364",
+    "Html": "\r\n<p>I'm working on a project that makes use of <a href=\"http://msdn.microsoft.com/en-us/library/system.speech.recognition.speechrecognitionengine.aspx\">\r\nSystem.Speech.Recognition.SpeechRecognitionEngine</a> and <a href=\"http://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer.aspx\">\r\nSystem.Speech.Synthesis.SpeechSynthesizer</a>, and want to use NAudio to grab the available microphones and speakers via WASAPI.&nbsp; I can grab the appropriate MMDevice that I want to use for the speaker or microphone, but the issue I'm running into is retrieving\r\n a stream (or piping the data to an appropriate stream) to to pass along to the <a href=\"http://msdn.microsoft.com/en-us/library/system.speech.recognition.speechrecognitionengine.setinputtoaudiostream.aspx\">\r\nSpeechRecognitionEngine.SetAudioInputStream()</a> or <a href=\"http://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer.setoutputtowavestream.aspx\">\r\nSpeechSynthesizer.SetOutputToWaveStream()</a>.&nbsp; I've tried a few different approaches but nothing seems to get piped along.</p>\r\n<p>Any pointers (or semi-full solution, if somebody's already tackled this...) are greatly appreciated.</p>\r\n",
+    "PostedDate": "2011-03-03T13:14:17.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "576720",
+    "ThreadId": "248364",
+    "Html": "<p>I'm afraid this is something I haven't tried yet. Would be interested in hearing if you ever get this working though.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-07T09:17:51.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497081",
+    "ThreadId": "248364",
+    "Html": "Hi, i'm facing the same problem, have you find any solution?<br />\n<br />\n<strong>Agent_9191 wrote:</strong><br />\n<blockquote>\nI'm working on a project that makes use of  System.Speech.Recognition.SpeechRecognitionEngine and  System.Speech.Synthesis.SpeechSynthesizer, and want to use NAudio to grab the available microphones and speakers via WASAPI.&nbsp; I can grab the appropriate MMDevice that I want to use for the speaker or microphone, but the issue I'm running into is retrieving a stream (or piping the data to an appropriate stream) to to pass along to the  SpeechRecognitionEngine.SetAudioInputStream() or  SpeechSynthesizer.SetOutputToWaveStream().&nbsp; I've tried a few different approaches but nothing seems to get piped along. Any pointers (or semi-full solution, if somebody's already tackled this...) are greatly appreciated.<br />\n</blockquote>\n",
+    "PostedDate": "2017-06-15T09:48:04.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

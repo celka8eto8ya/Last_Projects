@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "__UPDATE: I found the problem. In my Play() function, when playback is started, it causes a NullReferenceException which is sent in the PlaybackStopped event. However, the file continues playing fine.__ \r\n\r\nI'm trying to make an application which plays files on a playlist. Whenever the user clicks \"next\", it will start playing the next song, and immediately move to the next one before it ends. This seems to be caused by the PlaybackStopped event.\r\nHere is the code: (I removed some irrelevant stuff)\r\n```\r\npublic class BackgroundPlayer\r\n    {\r\n        private IWavePlayer myWaveOut;\r\n        private WaveStream myAudioFileReader;\r\n        public PlaybackStatus Status { get; private set; }\r\n        private int nowPlayingID;\r\n        public int NowPlayingID \r\n        {\r\n            get { return nowPlayingID; }\r\n            private set \r\n            { \r\n                nowPlayingID = value;\r\n                if (Status == PlaybackStatus.Playing)\r\n                    Play();\r\n                else\r\n                {\r\n                    Unload();\r\n                    Load();\r\n                }\r\n            }\r\n        }\r\n\r\n        public void Next()\r\n        {\r\n            if (NowPlayingID < Playlist.Count - 1)\r\n                ++NowPlayingID;\r\n            else\r\n            {\r\n                Status = PlaybackStatus.Stopped;\r\n                NowPlayingID = 0;\r\n            }\r\n        }\r\n\r\n        public void Previous()\r\n        {\r\n            if (NowPlayingID > 0)\r\n                --NowPlayingID;\r\n            else\r\n            {\r\n                Status = PlaybackStatus.Stopped;\r\n                NowPlayingID = Playlist.Count - 1;\r\n            }\r\n        }\r\n\r\n        public void Play()\r\n        {\r\n            Unload();\r\n            Load();\r\n            myWaveOut.Play();\r\n            Status = PlaybackStatus.Playing;\r\n        }\r\n\r\n        public void Stop()\r\n        {\r\n            if (myWaveOut != null)\r\n                myWaveOut.Stop();\r\n            Status = PlaybackStatus.Stopped;\r\n        }\r\n\r\n        public void Load()\r\n        {\r\n            myWaveOut = new DirectSoundOut();\r\n            myAudioFileReader = new AudioFileReader(NowPlaying.FilePath);\r\n            myWaveOut.PlaybackStopped += myWaveOut_PlaybackStopped;\r\n            myWaveOut.Init(myAudioFileReader);\r\n        }\r\n\r\n        public void Unload()\r\n        {\r\n            if (myWaveOut != null)\r\n                myWaveOut.Stop();\r\n            if (myAudioFileReader != null)\r\n            {\r\n                myAudioFileReader.Dispose();\r\n                myAudioFileReader = null;\r\n            }\r\n            if (myWaveOut != null)\r\n            {\r\n                myWaveOut.Dispose();\r\n                myWaveOut = null;\r\n            }\r\n            Status = PlaybackStatus.Stopped;\r\n        }\r\n\r\n        private void myWaveOut_PlaybackStopped(object sender, StoppedEventArgs e)\r\n        {\r\n            Next();\r\n        }\r\n    }\r\n```\r\n\r\nShould I be using something other than DirectSoundOut?\r\nThis code had worked, until I changed something with the Play, Load, and Unload functions.\r\n\r\nThanks in advance for the help!",
+    "LastUpdatedDate": "2014-05-29T08:29:05.27-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-05-12T02:13:48.93-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "PlaybackStopped event fires at start of playback with NullReferenceException [UPDATED]",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16441
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "OronDF343,\nI had a similar issue with WaveOutEvent  when running in an ASP.NET thread. Is your program running in a Windows Form? or something else?\nJake\n",
+      "PostedDate": "2014-05-29T07:54:37.747-07:00",
+      "Id": 148260
+    },
+    {
+      "Message": "My program is a windows form, but it seems that the code above is in a separate thread.",
+      "PostedDate": "2014-05-29T08:29:05.27-07:00",
+      "Id": 148267
+    }
+  ]
+}

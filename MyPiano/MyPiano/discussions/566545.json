@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1301946",
+    "ThreadId": "566545",
+    "Html": "Hi,\r<br />\n<br />\nI have a problem ...\r<br />\n \r<br />\nI keep getting an audio stream with the format (8000,16,1), each packet contains 0.5 seconds of speech, I would like to play it with NAudio continuously. \r<br />\nHow can I convert my binary source (8000,16,1), which represents an array of shorts in Wave stream with NAudio?\r<br />\n<br />\nExcuse my English, I use google translator ...\r<br />\n<br />\nThank you<br />\n",
+    "PostedDate": "2014-09-07T03:29:39.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "277915",
+    "ThreadId": "81028",
+    "Html": "<p>Hi,</p>\r\n<p>I'm trying to write a WaveMixerStream32 to a file using&nbsp; &quot;WaveFileWriter.CreateWaveFile&quot;, but there is a conversion problem from IeeeFloat to PCM. But let me first explain some steps I did:</p>\r\n<p>As I have set WaveMixerStream32.AutoStop to &quot;false&quot;,&nbsp; this stream would never stop returning data, so&nbsp; I created a wrapper class &quot;MixerEndPosStream32 : WaveStream&quot;&nbsp; taking a WaveMixerStream32 in the ctor&nbsp; and having the &quot;Length&quot; Property overridden, which will return a value manually set.&nbsp;</p>\r\n<p>Then I had to modify the CreateWaveFile-Method a bit (should only read/write until &quot;Length&quot; bytes are read):</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">using</span> (WaveFileWriter writer = <span style=\"color:Blue\">new</span> WaveFileWriter(filename, stream.WaveFormat))\r\n{\r\n                <span style=\"color:Blue\">byte</span>[] buffer = <span style=\"color:Blue\">new</span> <span style=\"color:Blue\">byte</span>[stream.GetReadSize(4000)];\r\n                <span style=\"color:Blue\">long</span> bytesReadTotal = 0;\r\n                <span style=\"color:Blue\">while</span> (<span style=\"color:Blue\">true</span>)\r\n                {\r\n                    <span style=\"color:Blue\">int</span> bytesRequired = (<span style=\"color:Blue\">int</span>) Math.Min(stream.Length - bytesReadTotal, buffer.Length);\r\n                    \r\n                    <span style=\"color:Blue\">if</span> (bytesRequired &lt;= 0)\r\n                        <span style=\"color:Blue\">break</span>;\r\n                    \r\n\r\n                    <span style=\"color:Blue\">int</span> bytesRead = stream.Read(buffer, 0, bytesRequired);\r\n                    <span style=\"color:Blue\">if</span> (bytesRead == 0)\r\n                        <span style=\"color:Blue\">break</span>;\r\n                    \r\n                    writer.WriteData(buffer, 0, bytesRead);\r\n                    bytesReadTotal += bytesRead;\r\n                    \r\n                }\r\n            }\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>But now the problem :&nbsp;&nbsp; As the format of the input stream is IeeeFloat ,&nbsp; it has to be converted into PCM. So I tried using</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>WaveFormatConversionStream.CreatePcmStream(mixerEndPosStream32)\r\n</pre>\r\n</div>\r\n<p>But this results in an MmException:&nbsp; &quot;NoDriver calling acmFormatSuggest&quot;&nbsp; when calling&nbsp; &quot;AcmStream.SuggestPcmFormat&quot;&nbsp; (I'm using DirectSound).</p>\r\n<p>Inside this function it suggests&nbsp; {16 bit PCM: 44kHz 2 channels} and then throws the MmExcpetion at</p>\r\n<p>MmException.Try(AcmInterop.acmFormatSuggest(IntPtr.Zero, compressedFormat, suggestedFormat, Marshal.SizeOf(suggestedFormat), AcmFormatSuggestFlags.FormatTag), &quot;acmFormatSuggest&quot;);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br></p>\r\n<p>An idea ?&nbsp;&nbsp;</p>\r\n<p>henrik</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-16T05:22:53.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423664",
+    "ThreadId": "81028",
+    "Html": "<p>have you tried the Wave32To16ConversionStream?</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-25T09:39:50.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

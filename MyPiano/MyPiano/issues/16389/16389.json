@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Occasionally my application crashes....\r\nI have captured the crash using WinDbg, and the Exception trace is:\r\n\r\nException object: 026c18ac\r\nException type:   System.InvalidOperationException\r\nMessage:          Handle is not initialized.\r\nInnerException:   <none>\r\nStackTrace (generated):\r\n    SP       IP       Function\r\n    00E5FAE8 66D30A4E mscorlib_ni!System.Runtime.InteropServices.GCHandle.Free()+0x93679e\r\n    00E5FAFC 075EC9C4 UNKNOWN!NAudio.Wave.Compression.AcmStreamHeader.Dispose(Boolean)+0x24\r\n    00E5FB08 075FBCE8 UNKNOWN!NAudio.Wave.Compression.AcmStreamHeader.Finalize()+0x18\r\n\r\nObviously one or more of the GCHandles has already been freed, but I have looked over the code for AcmStreamHeader and cannot see how this can occur - the Dispose() methods appear to handle being called twice, and attempt to prevent this happening. I'm not sure why the GC.SuppressFinalize(this), and Dispose(true); are ordered as they are (in Dispose()) - as this is not the normal recommendation.\r\n\r\nMy only thought is that the Garbage collector has some kind of parallelism that is allow the Finalizer to run despite the fact that Dispose() is active too? ",
+    "LastUpdatedDate": "2013-02-25T08:45:51.977-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-02-25T08:02:06.82-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Occasional System.InvalidOperationException (Handle is not initialized) in AcmStreamHeader.Dispose",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16389
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "strange. You could make a custom build and run it with the ordering differently. Are you sure that you Disposing every single WaveFormatCompressionStream you create?",
+      "PostedDate": "2013-02-25T08:45:51.977-08:00",
+      "Id": 91434
+    }
+  ]
+}

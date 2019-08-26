@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "717711",
+    "ThreadId": "284309",
+    "Html": "\r\n<p>First off, I am still learning how to use NAudio and don't know all the tricks yet.&nbsp; I am recording from the microphone to a wav file.&nbsp; Is there a way to display volume level as it is being recorded? Thank you for your help.</p>\r\n",
+    "PostedDate": "2011-12-27T20:41:15.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717743",
+    "ThreadId": "284309",
+    "Html": "<p>an example of doing this can be found in the voicerecorder.codeplex.com application.</p>\r\n<p>The basic trick is to examine the values of the samples you get in the record buffer. if you are recording in 16 bit, every two bytes is one sample (can convert to Int16 with the BitConverter class). Then, for each recorded buffer, use the loudest sample to show the volume meter. Meters work best logarithmic, so you might want to convert to decibels first as well.</p>",
+    "PostedDate": "2011-12-27T23:47:28.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717918",
+    "ThreadId": "284309",
+    "Html": "<p>Thank you for your help.&nbsp;</p>",
+    "PostedDate": "2011-12-28T09:05:03.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

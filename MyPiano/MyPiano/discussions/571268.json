@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1319002",
+    "ThreadId": "571268",
+    "Html": "I'm able to get the station metadata through the headers in the response, but is it possible to read the metadata in the continuous stream with NAudio? \r<br />\n<br />\nMark submitted this link:\r<br />\n<a href=\"https://gist.github.com/markheath/3301840#file-mp3streamingpanelplugin-cs\" rel=\"nofollow\">https://gist.github.com/markheath/3301840#file-mp3streamingpanelplugin-cs</a>\r<br />\n<br />\nWhere someone supposedly inherit from ReadFullyStream to get the song name, but the code is not to be found.\r<br />\n<br />\nDoes anybody know how to do it, or has an example?.. what about you mark? <br />\n",
+    "PostedDate": "2014-11-04T06:55:34.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1320947",
+    "ThreadId": "571268",
+    "Html": "this was a code sample by Stephen Cole, which I posted in a Github gist as a simple way to share it. But I've never tried to use it myself.<br />\n",
+    "PostedDate": "2014-11-11T08:33:13.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1325512",
+    "ThreadId": "571268",
+    "Html": "So how do i get to see this? Where can i find Stephen Cole, or the code?<br />\n",
+    "PostedDate": "2014-11-24T05:02:56.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

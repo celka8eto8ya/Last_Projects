@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1312973",
+    "ThreadId": "569714",
+    "Html": "Hello and thank you in advance for your time.<br />\n<br />\nWe want to be able to record RTP audio into memory buffer of a certain length with the oldest audio be deleted once the buffer is full.<br />\n<br />\nLets say we want to hold 180 seconds of buffer, the rtp audio is not continuous, in any 180 second period there may only be 60 seconds of audio spread over the 180 seconds. Like listening to a two way radio.<br />\n<br />\nAt the moment if we have 20 seconds of audio, 20 seconds of silence, 20 seconds of audio. We have a buffer of 40 seconds of audio. <br />\n<br />\nHow would I go about inserting silence between the received audio?<br />\n<br />\nThanks again.<br />\n",
+    "PostedDate": "2014-10-13T18:59:34.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1314224",
+    "ThreadId": "569714",
+    "Html": "Hi,\r<br />\n<br />\nto add 20 seconds of silence I would add X number of zeros to the buffer, where\r<br />\n<br />\nint X= 20 * (BitsPerSample / 8) * SampleRate;\r<br />\n<br />\nRegards,\r<br />\nIsti<br />\n",
+    "PostedDate": "2014-10-17T01:04:47.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "939327",
+    "ThreadId": "402613",
+    "Html": "\r\n<p>Is Mark Heath the only person who knows a thing about NAudio?</p>\r\n<p>I am fed up with waiting forever for a solution when I am running into a problem because nobody replies here or on stackoverflow. And if there is an answer it is short and most of the times produces new questions. Answering those questions again takes days,\r\n just to get a short answer that produces again more questions. There is no documentation, you cannot learn everything from some outdated tutorials. Is there a NAudio alternative that has more supporters so I can expect help within an hour or less plus a decent\r\n documentation?</p>\r\n",
+    "PostedDate": "2012-11-09T12:24:16.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939349",
+    "ThreadId": "402613",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>TruthfulStatement wrote:</strong><br />\r\n<p>Is Mark Heath the only person who knows a thing about NAudio?</p>\r\n<p>I am fed up with waiting forever for a solution when I am running into a problem because nobody replies here or on stackoverflow. And if there is an answer it is short and most of the times produces new questions. Answering those questions again takes days,  just to get a short answer that produces again more questions. There is no documentation, you cannot learn everything from some outdated tutorials. Is there a NAudio alternative that has more supporters so I can expect help within an hour or less plus a decent  documentation?</p>\r\n</blockquote>\r\n<p>hello again TruthfulStatement. I have tried to help you as much as I can, but NAudio is just a spare time project for me and so I cannot always immediately answer every question I receive. I get several queries about NAudio every day, so it is hard to keep on top of it all. If you had bothered to try what I suggested my <a href=\"http://naudio.codeplex.com/discussions/401874\">last answer </a>you would have discovered that it does in fact answer the question you asked. I find the tone with which you have conducted yourself on this forum to be rude and disrespectful. If you expect help \"within an hour\" then you will need to look for a commercial product (e.g. <a href=\"http://www.un4seen.com/\">bass.net</a>), or discuss paid technical support, which I am sometimes able to offer.</p>\r\n<p>best regards</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-11-09T12:55:51.433-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939353",
+    "ThreadId": "402613",
+    "Html": "<p>Mark is the creator of NAudio, it is an awesome&nbsp;library&nbsp;and community resource.&nbsp;Mark's been working on this for years,&nbsp;largely by himself.</p>\r\n<p>People often only view this board when they have a problem and many who do, seem to be looking for free support to complete their own programming or development goals. I've seen this manifest in many ways, from those who don't understand the complexities of the problems they are facing - they ask for a function to do what ever it is they want; to those who are just starting to learn C# and may be trying to write one of their first programs, asking for very generic C# help.</p>\r\n<p>Unfortunately, it means that there are a lot of people who just want free support and don't give anything back to the community. Instead of trying to improve on tutorials which may be out of date, they are only ever inwardly focused on their goals. If you look over the posts on this board, Mark replies to nearly every one, by himself; there's over 800 topics in this board since it was created and that represents a massive investment of Mark's time and passion.</p>\r\n<p>If you expect \"<span>help within an hour or less plus a decent documentation?\" - I suggest that you put a bounty on your stack overflow questions, hire some one from a freelance website or pay for a commercial product that will charge you for this support.</span></p>\r\n<p><span>This is an Open Source project that Mark has freely given to the community - it is not a ball and chain that is attached to his leg requiring him to work for nothing and fix every one else's problems. </span></p>\r\n<p>He has been overly generous and amazingly supportive for hundreds of people over the years, please show him some respect.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-11-09T12:57:04.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939414",
+    "ThreadId": "402613",
+    "Html": "\r\n<p>On Stackoverflow for other kinds of questions you get answers within minutes. Just when it comes to naudio nobody seems to use these dlls but a selected few.</p>\r\n<p>I contribute if I can only. A lot of times I can on stackoverflow. But without a decent documentation or in general mechanisms(&quot;When do you use a waveprovider, which mixer to use when, etc.&quot;) this won't change.</p>\r\n<p>Mark, you created this software. If you want less questions and more spread you need to create a good documentation.</p>\r\n<p>I contribute for free on stackoverflow, as everyone else there. So don't give me that hire-someone rap.</p>\r\n<p>PS: I am neither rude nor&nbsp;disrespectful but straightforward.</p>\r\n",
+    "PostedDate": "2012-11-09T15:28:09.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939422",
+    "ThreadId": "402613",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>TruthfulStatement wrote:</strong>\r\n<p>I contribute for free on stackoverflow, as everyone else there. So don't give me that hire-someone rap.</p>\r\n</blockquote>\r\n<p>What username do you use on StackOverflow?</p>\r\n<p>&nbsp;</p>\r\n<p>As Mark suggested, I think you should look at <a href=\"http://www.un4seen.com/\">Bass.Net</a></p>",
+    "PostedDate": "2012-11-09T15:44:16.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939423",
+    "ThreadId": "402613",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><em>What username do you use on StackOverflow?</em><br /></blockquote>\r\n<p>Peter Fren</p>\r\n<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><em>As Mark suggested, I think you should look at <a href=\"http://www.un4seen.com/\"> Bass.Net</a>&nbsp;</em><br /></blockquote>\r\n<p>That is avoiding the question especially as I have already done a lot using naudio. Restarting from the ground is no good idea now. But I came to a point I cannot continue without proper documentation. Anyways if that continues I'll have to look into Bass.net.</p>",
+    "PostedDate": "2012-11-09T15:49:55.883-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939426",
+    "ThreadId": "402613",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>TruthfulStatement wrote:</strong><br />\r\n<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><em>What username do you use on StackOverflow?</em><br /></blockquote>\r\n<p>Peter Fren</p>\r\n<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><em>As Mark suggested, I think you should look at <a href=\"http://www.un4seen.com/\"> Bass.Net</a>&nbsp;</em><br /></blockquote>\r\n<p>That is avoiding the question especially as I have already done a lot using naudio. Restarting from the ground is no good idea now. But I came to a point I cannot continue without proper documentation. Anyways if that continues I'll have to look into Bass.net.</p>\r\n</blockquote>\r\n<p>You've been a member on StackOverflow for 12 days. I'm not sure what you are comparing NAudio to with your experience of this limitless supply of&nbsp;free support, within an hour response but if your comparing it to a whole language, like a question on a standard C# function then it's unlikely that your&nbsp;expectations&nbsp;will be met.</p>\r\n<p>NAudio is the best open source C# Audio&nbsp;library&nbsp;- In my&nbsp;opinion, there is nothing that comes close - if there was, you would see it on StackOverflow.</p>\r\n<p>If NAudio doesn't meet your expectations please use the alternative suggested or look at another language such a C and then use a&nbsp;library&nbsp;like what is provided by SDL or write an interface for ASIO.&nbsp;</p>",
+    "PostedDate": "2012-11-09T16:07:57.557-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939427",
+    "ThreadId": "402613",
+    "Html": "\r\n<p>You see I expected this. You were not asking for my name there out of interest but to find reason to prove me wrong. You have this childish expectation that contributing is somehow related to the time you are registered on some portal.</p>\r\n<p>NAudio is not the best open source C# Audio library without a decent documentation.</p>\r\n<p>But I notice two things: First, this thread is unusually active and your replies are longer than mine, meaning you are capable of writing longer replies. Second, you managed to understand it as you claim. How come? Are there sources not being linked to here\r\n that help you understand NAudio? How did you write your tutorials? Are you the same person as markheath?</p>\r\n",
+    "PostedDate": "2012-11-09T16:15:59.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939429",
+    "ThreadId": "402613",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>TruthfulStatement wrote:</strong><br />\r\n<p>You see I expected this. You were not asking for my name there out of interest but to find reason to prove me wrong.&nbsp;</p>\r\n</blockquote>\r\n<p>I don't think I actually proved you wrong but as I said I was trying to understand what you were comparing this to. I still think your expectations about support are excessive.&nbsp;</p>\r\n<p>I wrote the tutorials you&nbsp;refereed&nbsp;to as being out of date. I wrote them by learning about NAudio myself and with the assistance Mark and others provided on the forum, on StackOverflow, on IRC etc. I was patient and respectful of the time that other people provided to me. I had to do a lot of reading about Audio development in general. A few white papers that made my eyes gloss over and I even bought a few books about basic audio theory to help me understand the domain I was working in. DSP is an extensive and complicated field and it took me a long time to build up my general knowledge. Once I had a basic understanding, translating that to a working knowledge of NAudio was a matter of just understanding conventions and the architecture, a bit of tearing apart the demo program and a nice amount of tinkering.</p>\r\n<p>This topic is certainly more active than most - I subscribe to ever message in the NAudio forums and read each one. It's been a while since I personally used NAudio because of the different work I am doing now and as such I'm not really in a position to answer most of the questions these days; however when I see something like this, I do feel&nbsp;compelled&nbsp;to respond.</p>\r\n<p>I'm not the same person as Mark. I just respect him a lot.</p>",
+    "PostedDate": "2012-11-09T16:29:39.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

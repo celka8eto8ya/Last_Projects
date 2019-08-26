@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1133689",
+    "ThreadId": "472487",
+    "Html": "Hi,\r<br />\n<br />\nI have a need to find out what type of audio device it is. For eg. bluetooth or not. Is there an NAudio API that would tell this?\r<br />\n<br />\nI tried to rely on the device name but each model has its own convention. Some devices have &quot;Bluetoo&quot; in the name and some have BT&lt;Model No&gt; etc.\r<br />\n<br />\nIs there a way to determine device(from list of connected audio devices) is Bluetooth device or not?\r<br />\n<br />\nThanks for the help.<br />\n",
+    "PostedDate": "2013-12-10T09:41:19.03-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1136124",
+    "ThreadId": "472487",
+    "Html": "You can only get all devices list and if name contains BT or Bluetooth you can use text comparation function, like if text.contains...\r<br />\n<br />\nor you can enumerate audio card at power on and if Bluetooth is connected you can get last added.\r<br />\n<br />\nI suggest to enumerate all fixed sound cards and create separate thread for checking available sound card and if number of cards changed raise event for new sound card<br />\n",
+    "PostedDate": "2013-12-15T07:53:01.113-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140900",
+    "ThreadId": "472487",
+    "Html": "Thanks fabcal for the reply.\r<br />\n<br />\nI could rely on 'BT' or 'Bluetooth' substring but not sure if there are other models that may use different conventions so trying to find a generic solution.\r<br />\n<br />\nAlso, my recording device are constant i.e. my requirement is to find if the recording device is bluetooth or not when its actually connecte/paired. I need not worry about changes in the recording devices.\r<br />\n<br />\nMeanwhile, I tried to rely on the recording devices property 'Enumerator' which most of the time seem to be set to &quot;BTHENUM&quot; and I thought I solved the problem. But just today I found in one plantronics BT device, the property is actually set to 'USB'. So my trial was in vain.\r<br />\n<br />\nAppreciate if you have any other thoughts.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2013-12-23T09:00:45.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

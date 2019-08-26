@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "640546",
+    "ThreadId": "264701",
+    "Html": "\r\n<p>Hi, I had a few questions&nbsp;regarding&nbsp;Naudio and it's legal aspects, and I would appreciate if you could clarify them for me.</p>\r\n<p>1) Does Naudio contain an mp3 decoder? Or does it use/call one built into the operating system?</p>\r\n<p>2) If I want to distribute my application (with NAudio), will I have to pay mp3 licensing fees (<a href=\"http://mp3licensing.com/royalty/\">http://mp3licensing.com/royalty/</a>)?</p>\r\n<p>Thanks for any help in&nbsp;advance!</p>\r\n",
+    "PostedDate": "2011-07-11T10:29:19.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "640550",
+    "ThreadId": "264701",
+    "Html": "<p>1) No, it can use either ACM or DMO MP3 decoders provided with Windows</p>\r\n<p>2) no license fees are required</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-11T10:35:38.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

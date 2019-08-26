@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1226397",
+    "ThreadId": "540068",
+    "Html": "Hi,\r<br />\n<br />\nI am trying to send the bytes of the mixer(WaveMixer32) output from the ethernet port and \r<br />\ni have to change format while sending of the mixer output:\r<br />\n<br />\nI have written a code like this:\r<br />\n<br />\nWave32to16Stream w3216 = new Wave32To16Stream(mixer)\r<br />\nWaveFormatConversionStream wfc = new WaveFormatConversionStream(wFormatOutput,w3216);\r<br />\nwfc.Read(data,0,blockCount)\r<br />\n....\r<br />\n.... sending data at the end!\r<br />\n<br />\nIt is working succesfully if my wFormatOutput is 8kHz,16 bit, stereo\r<br />\n<br />\nBut if my my wFormatOutput is 8Khz, 8 bit, stereo, the problem begins.\r<br />\n<br />\nIf I mix more than 3 inputs with my mixer, all data read is becoming 255, I think it is a conversion problem.\r<br />\n<br />\nMy question is :\r<br />\nIs WaveFormatConversionStream capable of converting samples from 16 bit to 8 bit ?\r<br />\n<br />\nAnd if not, what will I do to convert a 16 bit stream to 8 bit stream?<br />\n",
+    "PostedDate": "2014-03-25T04:49:39.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1231152",
+    "ThreadId": "540068",
+    "Html": "I wouldn't recommend using 8 bit audio - it has very poor dynamic range. There are much better ways to compress audio. If you must use 8 bit samples, then consider using G.711 (mu law or a law) compression.<br />\n",
+    "PostedDate": "2014-04-07T00:19:15.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

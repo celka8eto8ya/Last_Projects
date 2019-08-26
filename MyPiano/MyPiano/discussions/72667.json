@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "248138",
+    "ThreadId": "72667",
+    "Html": "<p>Hi folks,&nbsp;</p>\r\n<p>I am new to this API and have been struggling to use the mixer to mix down two wav files. &nbsp;I think I am close, but I have hit an issue.</p>\r\n<p>I open both files using a WaveFileReader and right away I see that the WaveFormat is not correct. &nbsp;Regardless of the input file, the WaveFormat on the WaveFileReader object has a sample rate of 44.1kHz and 2 channels. &nbsp;One of the wav files I am using is sampled at 16kHz and only mono (1 channel).</p>\r\n<p>I thought I could set the WaveFormat somewhere but this seems to be a read only property.&nbsp;</p>\r\n<p>Any thoughts?</p>\r\n<p>Joe</p>",
+    "PostedDate": "2009-10-21T07:48:00.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "248544",
+    "ThreadId": "72667",
+    "Html": "<p>Hi Joe,</p>\r\n<p>The WaveFileReader reads the wave format out of the WAV file itself. You need to set the wave format correctly when you create the file with WaveFileWriter (assuming you created it yourself)<br><br>Mark</p>",
+    "PostedDate": "2009-10-22T06:09:34.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "248569",
+    "ThreadId": "72667",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Thanks for the answer. &nbsp;I do not create the wav, so I can't change the format it is in. &nbsp;However I did solve my problem by converting the wav to the proper format using code I found here. &nbsp;<a href=\"http://mark-dot-net.blogspot.com/2008/11/using-naudio-to-replace-babysmash-audio.html\">http://mark-dot-net.blogspot.com/2008/11/using-naudio-to-replace-babysmash-audio.html</a>&nbsp;&nbsp;</p>\r\n<p>Joe</p>",
+    "PostedDate": "2009-10-22T07:03:44.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

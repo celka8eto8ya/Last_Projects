@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "647995",
+    "ThreadId": "266654",
+    "Html": "\r\n<p>I can't find an example that shows how to get a WaveStream from a microphone, only a WaveStream from a file using a WaveFileReader. I need to&nbsp;have volume meters that display the volume of your voice while recording so I need to stream directly from\r\n the microphone. Any ideas on how to do this?</p>\r\n",
+    "PostedDate": "2011-07-26T15:00:55.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648113",
+    "ThreadId": "266654",
+    "Html": "<p>I'm not expert here, but I built a volume meter by a code like this:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>  WaveIn waveIn = <span style=\"color: blue;\">new</span> WaveIn();            \r\n  waveIn.BufferMilliseconds = 50;\r\n  waveIn.DeviceNumber = 0;\r\n  waveIn.WaveFormat = <span style=\"color: blue;\">new</span> WaveFormat(8000, 16, 1);\r\n  waveIn.DataAvailable += waveIn_DataAvailable;\r\n  waveIn.StartRecording();\r\n\r\n  <span style=\"color: blue;\">void</span> waveIn_DataAvailable(<span style=\"color: blue;\">object</span> sender, WaveInEventArgs e)\r\n  {\r\n       <span style=\"color: green;\">//you can use e.Buffer , It has the stream data of WaveIn device</span>\r\n  }  \r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2011-07-27T00:34:52.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

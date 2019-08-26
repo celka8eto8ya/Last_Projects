@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "926005",
+    "ThreadId": "399177",
+    "Html": "\r\n<p>Hi Guys,</p>\r\n<p>Maybe you can help me out here, I have added the naudio.dll as a reference to a new C# project using Visual Studio 2012 express for desktop.</p>\r\n<p>But the visual Components do not show up in my toolbox.</p>\r\n<p>Screenshot</p>\r\n<p><img src=\"http://janpeter.net/naudio.jpg\" alt=\"\"></p>\r\n<p>&nbsp;</p>\r\n<p><a href=\"http://janpeter.net/naudio.jpg\">http://janpeter.net/naudio.jpg</a></p>\r\n<p>What am I missing to get the visual components to work?</p>\r\n<p>(Yes, I am new to C#, this is only my second project and the first time I am trying to use third party components - so it might be totally easy to fix, and no naudio problem at all.)</p>\r\n<p>Any help is very much appreciated.</p>\r\n<p>Good night,</p>\r\n<p>JP</p>\r\n",
+    "PostedDate": "2012-10-12T14:02:16.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "926851",
+    "ThreadId": "399177",
+    "Html": "<p>Ok, so it was indeed a newbie c# problem. - Just incase someone googles this thread, here is how&nbsp;to get the components into the toolbox:</p>\r\n<p>1) right click into the toolbox</p>\r\n<p>2) click \"Choose items\"</p>\r\n<p>3) in the now visible \"Choose Toolbox Items\"-dialog click on \"browse\"</p>\r\n<p>4) navigate to the naudio.dll and select it</p>\r\n<p>et viol&agrave; the controls are now available.</p>",
+    "PostedDate": "2012-10-15T10:17:21.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "937111",
+    "ThreadId": "399177",
+    "Html": "<p>Hi I am a C# beginner too. I followed the steps&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<hr />\r\n</p>\r\n<p>1) right click into the toolbox</p>\r\n<p>2) click \"Choose items\"</p>\r\n<p>3) in the now visible \"Choose Toolbox Items\"-dialog click on \"browse\"</p>\r\n<p>\r\n<hr />\r\n</p>\r\n<p>But I can't find the &nbsp;<strong>naudio.dll </strong>Here. But I added Reference \"NAudio.dll\".</p>\r\n<p>What the problem I have created ?</p>",
+    "PostedDate": "2012-11-06T00:36:57.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "937173",
+    "ThreadId": "399177",
+    "Html": "<p>you have to find where you put naudio.dll on your PC and browse to that.</p>",
+    "PostedDate": "2012-11-06T03:20:53.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

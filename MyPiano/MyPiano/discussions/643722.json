@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1440603",
+    "ThreadId": "643722",
+    "Html": "Hi,\r<br />\nI am newbie in NAudio library. I want to add simplecompressor and other DSP plugins to WaveStream. After that with WaveOut i want to play the WaveStream.\r<br />\nSo far i just was able to apply an eq.\r<br />\nHope some one will help me and provide me a code for my problem.\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2015-08-14T09:31:10.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443172",
+    "ThreadId": "643722",
+    "Html": "I have done some sth. similar here:\r<br />\n<br />\n<a href=\"http://www.codeproject.com/Articles/990040/MultiWave-a-portable-multi-device-NET-audio-player\" rel=\"nofollow\">http://www.codeproject.com/Articles/990040/MultiWave-a-portable-multi-device-NET-audio-player</a><br />\n",
+    "PostedDate": "2015-09-04T04:34:18.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

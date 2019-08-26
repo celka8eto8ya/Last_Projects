@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:30:33.437-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "If you have sound that's already IeeeFloat but you use ASIO, it seems to me it must be deinterleaved as I found of no way to just pass the interleaved floats through it.\r\n\r\nSo I've added these to NAudio\\Wave\\Asio\\ASIOSampleConvertor.cs:\r\n\r\n          case ASIOSampleType.ASIOSTFloat32LSB:\r\n                    switch (waveFormat.BitsPerSample)\r\n                    {\r\n                        case 32:\r\n                            convertor = (SampleConvertor)ConvertorFloatToFloat2Channels;\r\n                            break;\r\n                    }\r\n                    break;\r\n\r\n// IeeeFloat to ASIOSTFloat32LSB (deinterleave)\r\n        public static void ConvertorFloatToFloat2Channels(IntPtr inputInterleavedBuffer, IntPtr[] asioOutputBuffers, int nbChannels, int nbSamples)\r\n        {\r\n            unsafe\r\n            {\r\n                float* inputSamples = (float*)inputInterleavedBuffer;\r\n                float* leftSamples = (float*)asioOutputBuffers[0];\r\n                float* rightSamples = (float*)asioOutputBuffers[1];\r\n\r\n                for (int i = 0; i < nbSamples; i++)\r\n                {\r\n                    *leftSamples++ = inputSamples[0];\r\n                    *rightSamples++ = inputSamples[1];\r\n                    inputSamples += 2;\r\n                }\r\n            }\r\n        }",
+    "LastUpdatedDate": "2012-10-27T00:30:33.437-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-11-06T22:20:32.643-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "IeeeFloat to ASIOSTFloat32LSB converter",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7979
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "a converter for ASIOSTFloat32LSB is now in there (sorry its been so long!)",
+      "PostedDate": "2011-06-14T15:11:16.123-07:00",
+      "Id": 41682
+    }
+  ]
+}

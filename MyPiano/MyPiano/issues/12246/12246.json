@@ -1,0 +1,71 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "The supplied wav file now reads correctly in the latest NAudio",
+    "ClosedDate": "2011-05-27T14:09:39.86-07:00",
+    "CommentCount": 3,
+    "Custom": "",
+    "Description": "I used the WaveFileReader to load a Wavefile, but that gives me an exception - unsupported, no fmt header.\nI dived into it and use a Hex-Editor to check the Wave Header.\nI found additional headers after the WAVE chunkID, so I modified the WaveFileReader code to properly search for the headers.\n\nThere is also a Bug in finding the first chunklengh.\nI need to go back 4 bytes to get the correct chunk-length.\n\nAttached is the modified file and a screenshot of the WaveHeader.\n\nGreets - Helmut Obertanner",
+    "LastUpdatedDate": "2011-05-27T14:09:39.86-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-03-24T12:34:55.413-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Problems with WaveFileReader",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12246
+  },
+  "FileAttachments": [
+    {
+      "FileId": 266443,
+      "FileName": "WaveHeader.png",
+      "DownloadUrl": ".\\266443"
+    },
+    {
+      "FileId": 266444,
+      "FileName": "WaveFileReader.cs",
+      "DownloadUrl": ".\\266444"
+    },
+    {
+      "FileId": 266445,
+      "FileName": "Audio 1_02.wav",
+      "DownloadUrl": ".\\266445"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Here is the modified code....\r\n\r\n        /// \r\n        /// Reads the header part of a WAV file from a stream\r\n        /// \r\n        /// \r\nThe stream, positioned at the start of audio data\r\n\r\n        /// \r\nThe format found\r\n\r\n        /// \r\nThe position of the data chunk\r\n\r\n        /// \r\nThe length of the data chunk\r\n\r\n        /// \r\nAdditional chunks found\r\n\r\n        public static void ReadWaveHeader(Stream stream, out WaveFormat format, out long dataChunkPosition, out int dataChunkLength, List chunks)        \r\n        {\r\n            dataChunkPosition = -1;\r\n            BinaryReader br = new BinaryReader(stream);\r\n            if (br.ReadInt32() != WaveInterop.mmioStringToFOURCC(\"RIFF\", 0))\r\n            {\r\n                throw new FormatException(\"Not a WAVE file - no RIFF header\");\r\n            }\r\n            uint fileSize = br.ReadUInt32(); // read the file size (minus 8 bytes)\r\n            if (br.ReadInt32() != WaveInterop.mmioStringToFOURCC(\"WAVE\", 0))\r\n            {\r\n                throw new FormatException(\"Not a WAVE file - no WAVE header\");\r\n            }\r\n\r\n            // now we expect the format chunk\r\n            // but some wavefiles have additional header information and so we need to search for the fmt chunk\r\n            if (FindHeader(\"fmt \", br) == 0){            \r\n                throw new FormatException(\"Not a WAVE file - no fmt header\");\r\n            }\r\n            format = new WaveFormatExtraData(br);\r\n            \r\n            Int32 dataChunkID = FindHeader(\"data\", br);\r\n            if (dataChunkID == 0) {\r\n                throw new FormatException(\"Not a WAVE file - no data header\");\r\n            }\r\n            dataChunkLength = 0;\r\n\r\n            // we already advaned the stream by reading the dataChunkID ???\r\n            // so I move back 4 bytes \r\n            stream.Seek(-4,SeekOrigin.Current  );\r\n\r\n            // sometimes a file has more data than is specified after the RIFF header\r\n            long stopPosition = Math.Min(fileSize + 8, stream.Length);\r\n            \r\n            // this -8 is so we can be sure that there are at least 8 bytes for a chunk id and length\r\n            while (stream.Position < stopPosition - 8)\r\n            {\r\n                Int32 chunkIdentifier = br.ReadInt32();                \r\n                Int32 chunkLength = br.ReadInt32();\r\n                if (chunkIdentifier == dataChunkID)\r\n                {\r\n                    dataChunkPosition = stream.Position;\r\n                    dataChunkLength = chunkLength;\r\n                }\r\n                else\r\n                {\r\n                    if (chunks != null)\r\n                    {\r\n                        chunks.Add(new RiffChunk(chunkIdentifier, chunkLength, stream.Position));\r\n                    }\r\n                }\r\n                stream.Position += chunkLength;\r\n            }\r\n            \r\n        }\r\n\r\n        private static int FindHeader(string headerText, BinaryReader reader) {\r\n            int header = 0;\r\n            Int32 dataToFind = WaveInterop.mmioStringToFOURCC(headerText , 0);\r\n            bool continueScanning = true;\r\n\r\n            while (continueScanning) {\r\n                try {\r\n                    while (reader.PeekChar() != headerText[0]) {\r\n                        // Advance stream\r\n                        reader.ReadByte();\r\n                    }\r\n\r\n                    if (reader.ReadInt32() == dataToFind) {\r\n                        return dataToFind;\r\n                    }\r\n                } catch (EndOfStreamException eof) {\r\n                    continueScanning = false;\r\n                }\r\n            }\r\n            return header;\r\n        }",
+      "PostedDate": "2010-03-24T12:37:19.01-07:00",
+      "Id": 41723
+    },
+    {
+      "Message": "Here is a smaller file that still give me the error message:\r\nAcmNotPossible calling acmStreamOpen\r\nI hope this makes it.",
+      "PostedDate": "2010-06-16T11:15:04.633-07:00",
+      "Id": 41724
+    },
+    {
+      "Message": "thanks for this, although repositioning backwards in the input stream is not always possible (e.g. if it is a NetworkStream), so we might not be able to do it this way",
+      "PostedDate": "2010-06-22T06:35:13.457-07:00",
+      "Id": 41725
+    }
+  ]
+}

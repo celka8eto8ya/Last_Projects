@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1486306",
+    "ThreadId": "658774",
+    "Html": "How could i make the Network chat demo use chat rooms or group chat? I know how to handle room assignment on my end and everything, but how would I tell naudio demo to only send voice to that particular room?<br />\n",
+    "PostedDate": "2016-10-17T15:45:12.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486452",
+    "ThreadId": "658774",
+    "Html": "well NAudio's focus is purely on capturing and playing audio. It's up to you how you transmit it over the network and it depends how your system is architected, Either you'd send UDP packets containing audio to different ports or IP addresses depending on the group, or you'd create a payload that includes the target group id and the audio data<br />\n",
+    "PostedDate": "2016-10-20T01:43:37.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

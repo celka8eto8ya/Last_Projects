@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "458850",
+    "ThreadId": "216997",
+    "Html": "<p>Hello,</p>\r\n<p>Im currently working on a small app for a friend that needs to be able to play up to 2 ambient tracks together, with about 5-6 sound effects firing off randomly, in winforms.</p>\r\n<p>Now ive done a small amount of audio work with XNA and DirectSound back when Direct2D was the norm, however i havent done much recently. I remember that there used to be a distinction between playing music and sounds, so you could only play a few music tracks (normally you would only need one) however you could play unlimited sounds. So lets say you have a game with an ambient water running music, and ambient wind music, then you had a random wolf howl or cracking twig sounds then finally any player or monster interactions would have sound effects, such as hitting sounds and moving sounds etc.</p>\r\n<p>Now from what ive looked over with NAudio everything just seems to be music data, so be it a 3 minute ambient track i want repeated or a 2 second sound effect i want to play once then not play again for another 20 seconds, they seem to all load the same, which appears to be great but im a bit unsure as to the limitations of this, as im sure there is a maximum amount of channels available to play music on with a system.</p>\r\n<p>Again i dont know too much in this area so am walking in the dark at the moment, am i able to do what i need to with NAudio? if so do i need to play things differently from the simple creating a waveout and playing it?</p>",
+    "PostedDate": "2010-06-23T01:24:15.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

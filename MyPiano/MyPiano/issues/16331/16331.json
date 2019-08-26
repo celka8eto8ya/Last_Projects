@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "This exception happens every time with a specific mp3 I am playing back, at a specific time in the mp3. The exception is on the line:\r\nArray.Copy(conversionStream.DestBuffer, 0, dest, destOffset, converted);\r\n\r\nconverted has a value of: 23040\r\ndest is a: {byte[9216]}\r\n\r\nHence the not long enough message. I couldn't tell you what's going on under the hood to explain why there's this mismatch. I've only seen it with this one mp3 so far, but it happens consistently.",
+    "LastUpdatedDate": "2011-10-24T00:16:52.773-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-08-15T08:56:06.33-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "ArgumentException in DecompressFrame (Destination array was not long enough)",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 16331
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "can you upload an example MP3 somewhere?",
+      "PostedDate": "2011-09-05T06:32:30.627-07:00",
+      "Id": 43900
+    },
+    {
+      "Message": "There are 3 sample mp3 files on Windows 7 systems (C:\\Users\\Public\\Music\\Sample Music\\), none of them can be converted with NAudio. I think that problem has the same cause.",
+      "PostedDate": "2011-10-24T00:16:52.773-07:00",
+      "Id": 47595
+    }
+  ]
+}

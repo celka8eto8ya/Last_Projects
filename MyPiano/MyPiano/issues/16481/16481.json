@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-10-18T00:03:12.6-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "hi i am new in naudio \r\nand don't know more about the code.\r\nI implement some functionality to my project\r\nbut actual result i am not getting\r\n\r\nI need running audio wave in gui.\r\nbut unable to find and implement the code\r\nplease help me and show the path how to do this. :)    ",
+    "LastUpdatedDate": "2015-10-18T00:03:12.6-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-08-19T04:52:20.32-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Not getting running audio wave in gui.",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16481
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "please check the source code for the NAudio demo projects for examples of how to achieve this",
+      "PostedDate": "2015-10-18T00:02:56.57-07:00",
+      "Id": 191741
+    }
+  ]
+}

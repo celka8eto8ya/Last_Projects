@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1492339",
+    "ThreadId": "661205",
+    "Html": "(First of it all, congrats to this project, not just the code, also the support for all the years i found)\r<br />\n<br />\nNow, here is my question:\r<br />\nI create a simple audio chat application and want setup the end-audio-volume (on the headphones) for the user.  This means setup the volume for the incoming mic wave data from the remote side(not changing the mic himself on the other side). I use Waveout and BufferedWaveProvider to get incoming buffers and make it hearable.\r<br />\n<br />\nI failed to use the SampleChannel class(based on the examples), no effect here.\r<br />\nNow i use IWavePlayer.Volume but i got depricated warnings to use the volume on the WaveProvider. The problem is: I can not find any property to do that in the BufferedWaveProvider(IWaveProvider) i use. \r<br />\n<br />\nAny advise whats the strategy now?\r<br />\n<br />\n*Sebastian<br />\n",
+    "PostedDate": "2017-02-07T19:29:45.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

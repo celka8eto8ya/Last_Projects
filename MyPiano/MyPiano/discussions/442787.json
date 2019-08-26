@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1040312",
+    "ThreadId": "442787",
+    "Html": "I'm doing some QA tools for audio and it happended, that i started to use NAudio. So far, so nice, but i've one issue.\r<br />\n<br />\nI'm displaying list of files in DataGridView with button for each of them to play it out. Button handler looks like this (right now, it's about to change i hope).<br />\n<pre><code>private void showFilesGrid_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)\n        {\n            if( showFilesGrid.Columns[e.ColumnIndex].Name == &quot;fileAction&quot;)\n            {\n                string fullFileName = showFilesGrid.Rows[e.RowIndex].Cells[&quot;fullPathDataGridView&quot;].Value.ToString();\n                WaveStream outputStream = new WaveFileReader(fullFileName);\n                WaveChannel32 volumeStream = new WaveChannel32(outputStream);\n                WaveOutEvent player = new WaveOutEvent();\n                player.Init(volumeStream);\n                player.Play();\n\n            }\n        } </code></pre>\n\nWhat i need is to somehow stop playback of current file when user chooses to play another one. I'm pretty novice in c#, visual studio and this stuff, but good kick should help me to solve this problem :)<br />\n",
+    "PostedDate": "2013-05-07T03:12:14.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1040470",
+    "ThreadId": "442787",
+    "Html": "keep hold of your reference to WaveOutEvent as a member of your class, so you can stop it.  It is usually best to then Dispose it, and create another one for playback.<br />\n",
+    "PostedDate": "2013-05-07T09:21:07.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

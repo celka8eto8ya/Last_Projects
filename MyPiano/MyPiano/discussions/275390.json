@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "682413",
+    "ThreadId": "275390",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>If any one can provide the sample how to change Speed/Tempo for MP3 audio files normally as well as On fly (while audio is playing).</p>\r\n<p>Need <span style=\"font-size:11pt\">algorithm&nbsp;for the same, please I am facing this issue from long back and didn't find solution. I have checked the PracticeCSharp code but my requirements will not match that.</span></p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-10-10T22:08:57.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685114",
+    "ThreadId": "275390",
+    "Html": "<p>NAudio does not include a pitch shifting algorithm, so you would need to ask on an audio DSP site. I think Practice sharp is probably the best example you will find of how to do this at the moment.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-10-17T02:57:32.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

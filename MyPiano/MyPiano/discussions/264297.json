@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "638913",
+    "ThreadId": "264297",
+    "Html": "\r\n<p>Mark , please really sorry for request the same.<br>\r\nIs possible recompile again, i need some fixes, and cant compile Naudio.<br>\r\nPlease can recompile current version as RC2 ?</p>\r\n",
+    "PostedDate": "2011-07-07T11:12:41.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "638960",
+    "ThreadId": "264297",
+    "Html": "<p>OK, your persistence paid off. This is a build of the latest code (essentially an early build of 1.5)</p>\r\n<p>http://dl.dropbox.com/u/13598541/NAudio.dll</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-07T12:04:08.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "642224",
+    "ThreadId": "264297",
+    "Html": "<p>Thankyou!<br />Really apreciated!</p>",
+    "PostedDate": "2011-07-14T03:05:54.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

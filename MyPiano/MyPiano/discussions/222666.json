@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "477210",
+    "ThreadId": "222666",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Forgive me if this is not the place to discuss the current development branch... but I noticed after downloading the latest source that the WaveFileWriter class doesn't seem to write the length of the Wave data correctly. In v1.3, the WaveFileWriter.WriteData methods all increment the dataChunkSize member as data is written. However, under the current development version, only the WriteData() overload that accepts byte[] data correcltly updates the dataChunkSize member. The WriteData() overloads that accept short[] and float[][] and the new WriteSample() method do not update the dataChunkSize - as far as I can tell, this results in an incorrect header being written to the file, with the resulting wave file indicating a length of 0 sec.</p>\r\n<p>Is this an oversight? or have a misunderstood the intention of the recent changes to WaveFileWriter?</p>\r\n<p>&nbsp;</p>\r\n<p>Cheers,</p>\r\n<p>Greg</p>",
+    "PostedDate": "2010-08-05T20:49:31.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "478009",
+    "ThreadId": "222666",
+    "Html": "<p>thanks for reporting. I'll have a look into it. I can't remember off the top of my head what changes were made to WaveFileWriter since the last release</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-08-09T03:10:19.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "490589",
+    "ThreadId": "222666",
+    "Html": "<p>sorry was really slow to fix this. I think it got introduced in a patch. I've checked in a fix today</p>",
+    "PostedDate": "2010-09-08T03:43:08.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

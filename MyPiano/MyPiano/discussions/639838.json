@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1430082",
+    "ThreadId": "639838",
+    "Html": "Hey, i have a problem with TCP-Server.<br />\nI can send the input from microphone with a TCP-Client but the TCP-Server cannot play, because fast cames the error: &quot;buffer full&quot;.<br />\nI have searched but i didn't found a solution and i have asked in two forums, one user recommended me to ask here.<br />\n<br />\nCode:<br />\n<br />\nTCP-Server:<br />\n<pre><code>Private Sub MainServer()\n    TCP_Server.Start()  \n    Dim bytes(1024) As Byte\n    Dim Received_Message As String = Nothing\n    While True\n        Dim client As TcpClient = TCP_Server.AcceptTcpClient()\n        Dim MicrosoftADPCM_Codec As INetworkChatCodec = New MicrosoftADPCM()\n        Dim stream As NetworkStream = client.GetStream\n\n        waveOut = New WaveOut()\n        waveProvider = New BufferedWaveProvider(MicrosoftADPCM_Codec.RecordFormat)\n        waveOut.Init(waveProvider)\n        waveOut.Play()\n\n        Dim i As Int32 = stream.Read(bytes, 0, bytes.Length)\n        While (i &lt;&gt; 0)\n\n            Dim decoded As Byte() = MicrosoftADPCM_Codec.Decode(bytes, 0, i)\n            waveProvider.AddSamples(decoded, 0, decoded.Length)\n\n        End While\n    End While\n    TCP_Server.Stop()\nEnd Sub</code></pre>\n\nTCP-Client:<br />\n<pre><code>    Dim TCP_Client As New TcpClient(&quot;IP&quot;, &quot;PORT&quot;)\n    Dim stream As Stream = TCP_Client.GetStream\n\n    Call_Stream = stream\n    Dim MicrosoftADPCM_Codec As INetworkChatCodec = New MicrosoftADPCM()\n    selectedCodec = MicrosoftADPCM_Codec\n    waveIn = New WaveIn()\n    waveIn.BufferMilliseconds = 50\n    waveIn.DeviceNumber = comboBoxInputDevices.SelectedIndex\n    waveIn.WaveFormat = MicrosoftADPCM_Codec.RecordFormat\n\n    AddHandler waveIn.DataAvailable, AddressOf waveIn_DataAvailable\n    waveIn.StartRecording()</code></pre>\n\nwaveIn_DataAvailable:<br />\n<pre><code>Private Sub waveIn_DataAvailable(sender As Object, e As WaveInEventArgs)\n    Dim encoded As Byte() = selectedCodec.Encode(e.Buffer, 0, e.BytesRecorded)\n    Call_Stream.Write(encoded, 0, encoded.Length)\nEnd Sub</code></pre>\n\nThank your for any replies.<br />\n",
+    "PostedDate": "2015-06-11T06:25:27.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430270",
+    "ThreadId": "639838",
+    "Html": "are you playing from the BufferedWaveprovider? If not it will just fill up and you'll get an exception as you are seeing here<br />\n",
+    "PostedDate": "2015-06-12T09:54:33.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430586",
+    "ThreadId": "639838",
+    "Html": "Hmm, that is all.\r<br />\nI think that:<br />\n<pre><code>waveOut.Play()</code></pre>\n\nrefresh the bytes and playing.\r<br />\n<br />\nWhat should I do? How i play right?<br />\n",
+    "PostedDate": "2015-06-16T08:29:31.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430764",
+    "ThreadId": "639838",
+    "Html": "you can still over-fill the buffer if you are receiving data too fast, or maybe if you have got your recording formats wrong. To see a working example of what you are trying to do, take a look at the code for the network chat demo in the NAudio demo application<br />\n",
+    "PostedDate": "2015-06-17T13:06:00.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430888",
+    "ThreadId": "639838",
+    "Html": "This code is from NAudio Network Chat, only in VB.NET and as TCP.\r<br />\nTherefore i asked.<br />\n",
+    "PostedDate": "2015-06-18T06:52:46.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430897",
+    "ThreadId": "639838",
+    "Html": "well for the buffer to fill up you are receiving audio faster than you are playing it, which is odd. \r<br />\nSo main ways you can fix that are<br />\n<ol>\n<li>increase the buffer size, maybe it's just a transient issue</li>\n<li>throw away received audio when the buffer is looking full</li>\n</ol>\n",
+    "PostedDate": "2015-06-18T08:14:51.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1431553",
+    "ThreadId": "639838",
+    "Html": "Thank you very much for your patience.\r<br />\nIt was a problem in the while loop, but now works.<br />\n",
+    "PostedDate": "2015-06-23T08:23:06.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1431555",
+    "ThreadId": "639838",
+    "Html": "great, glad you have it working now<br />\n",
+    "PostedDate": "2015-06-23T08:26:55.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

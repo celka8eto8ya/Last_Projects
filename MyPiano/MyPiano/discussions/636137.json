@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1421858",
+    "ThreadId": "636137",
+    "Html": "Hi,\r<br />\n<br />\nI face the Problem, that I Need to resample a Wavestream für applying effects to it. I Carefully read this post: <a href=\"http://mark-dot-net.blogspot.de/2014/05/how-to-resample-audio-with-naudio.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.de/2014/05/how-to-resample-audio-with-naudio.html</a>, and to be sure that it is running on all Systems I Need the full managed way.\r<br />\n<br />\nUnfortunately, WdlResamplingSampleProvider resamples to sampleprovider. Any ideas? I can post a short snippet to demonstrate if you want.\r<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2015-04-30T10:40:27.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1421889",
+    "ThreadId": "636137",
+    "Html": "why do you need a WaveStream? Try putting the resampler later in your signal chain<br />\n",
+    "PostedDate": "2015-04-30T13:16:17.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1421975",
+    "ThreadId": "636137",
+    "Html": "I Need a Wavestream for my Effectstream that I borrowed from your Skype voice changer source. Putting it later, would be useless, as I couldn´t apply effects then.<br />\n",
+    "PostedDate": "2015-05-01T03:58:21.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

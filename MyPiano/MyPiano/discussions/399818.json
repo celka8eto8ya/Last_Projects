@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "928385",
+    "ThreadId": "399818",
+    "Html": "\r\n<p>I'm having trouble with WaveOutEvent. I'm not sure if it is a bug or just my code, so for now I'm just raising a Discussion, not an Issue.</p>\r\n<p>I'm using WaveOutEvent in an ASP.Net web application. It's a simple application that plays a list of songs. When one song ends, WaveOutEvent throws a PlayBackStopped event. I catch that, dispose the WaveOutEvent object; then create a new WaveOutEvent object,\r\n filereader, etc. It usually works, but about 1 time in 5, I get a NullReferenceException in WaveOutEvent.cs. See the offending statement (in yellow hightlight) on the attached screen shot. NB - I can make it happen at will, just by putting a breakpoint in\r\n RaisePlaybackStoppedEvent(). So, just by hitting the breakpoint and continuing, I get the error; or about 1 time in 5, without the breakpoint, I get the error. I can't figure out which variable is triggering the null reference, and I will concede that I don't\r\n understand the lambda operator, but my hypothesis is that 'this' is from another thread, which sometimes goes null depending on which thread runs first.</p>\r\n<p>Also, this all arose because I am trying to Dispose of the object and create a new one, for each song. When I keep the same object, the problem does not occur (but as Mark pointed out, it will leak memory).</p>\r\n<p>If anyone can help me sort this out, I'd be grateful.</p>\r\n<p>Jake</p>\r\n<p>Class usage: </p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>    <span style=\"color:blue\">Public</span> <span style=\"color:blue\">Sub</span> PlayFile(<span style=\"color:blue\">ByRef</span> fileName <span style=\"color:blue\">As</span> <span style=\"color:blue\">String</span>)       <span style=\"color:green\">' play one file</span>\r\n        <span style=\"color:blue\">Dim</span> fileExt <span style=\"color:blue\">As</span> <span style=\"color:blue\">String</span>\r\n        waveOutDevice = <span style=\"color:blue\">New</span> WaveOutEvent()\r\n        fileExt = fileName.Substring(fileName.LastIndexOf(<span style=\"color:#a31515\">&quot;.&quot;</span>c))\r\n        <span style=\"color:blue\">Select</span> <span style=\"color:blue\">Case</span> fileExt.ToLower                     <span style=\"color:green\">' pick the appropriate file reader</span>\r\n            <span style=\"color:blue\">Case</span> <span style=\"color:#a31515\">&quot;.aif&quot;</span>, <span style=\"color:#a31515\">&quot;.aiff&quot;</span>\r\n                fReader = <span style=\"color:blue\">New</span> AiffFileReader(fileName)\r\n            <span style=\"color:blue\">Case</span> <span style=\"color:#a31515\">&quot;.mp3&quot;</span>\r\n                fReader = <span style=\"color:blue\">New</span> Mp3FileReader(fileName)\r\n            <span style=\"color:blue\">Case</span> <span style=\"color:#a31515\">&quot;.wma&quot;</span>\r\n                fReader = <span style=\"color:blue\">New</span> WMAFileReader(fileName)\r\n            <span style=\"color:blue\">Case</span> <span style=\"color:blue\">Else</span>\r\n                Debug.WriteLine(<span style=\"color:#a31515\">&quot;WebAudio: Invalid File Extension: &quot;</span> &#43; fileExt)\r\n                <span style=\"color:blue\">Return</span>\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">Select</span>\r\n        mainOutputStream = <span style=\"color:blue\">New</span> WaveChannel32(fReader)       <span style=\"color:green\">' tie the file reader to the output stream</span>\r\n        mainOutputStream.PadWithZeroes = <span style=\"color:blue\">False</span>              <span style=\"color:green\">' need this to detect eof</span>\r\n        waveOutDevice.Init(mainOutputStream)                <span style=\"color:green\">' tie output stream to output device</span>\r\n        waveOutDevice.Play()\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Sub</span>\r\n<hr>Exception Detail:</pre>\r\n</div>\r\n<p></p>\r\n<p></p>\r\n<pre>System.NullReferenceException was unhandled\r\n  Message=Object reference not set to an instance of an object.\r\n  Source=System.Web\r\n  StackTrace:\r\n       at System.Web.HttpApplication.ThreadContext.Enter(Boolean setImpersonationContext)\r\n       at System.Web.HttpApplication.OnThreadEnterPrivate(Boolean setImpersonationContext)\r\n       at System.Web.AspNetSynchronizationContext.CallCallbackPossiblyUnderLock(SendOrPostCallback callback, Object state)\r\n       at System.Web.AspNetSynchronizationContext.CallCallback(SendOrPostCallback callback, Object state)\r\n       at System.Web.AspNetSynchronizationContext.Post(SendOrPostCallback callback, Object state)\r\n       at NAudio.Wave.WaveOutEvent.RaisePlaybackStoppedEvent() in C:\\Users\\Gavin\\Documents\\Visual Studio Projects\\NAudio\\NAudio\\Wave\\WaveOutputs\\WaveOutEvent.cs:line 280\r\n       at NAudio.Wave.WaveOutEvent.PlaybackThread() in C:\\Users\\Gavin\\Documents\\Visual Studio Projects\\NAudio\\NAudio\\Wave\\WaveOutputs\\WaveOutEvent.cs:line 130\r\n       at NAudio.Wave.WaveOutEvent.b__0(Object state) in C:\\Users\\Gavin\\Documents\\Visual Studio Projects\\NAudio\\NAudio\\Wave\\WaveOutputs\\WaveOutEvent.cs:line 94\r\n       at System.Threading.QueueUserWorkItemCallback.WaitCallback_Context(Object state)\r\n       at System.Threading.ExecutionContext.runTryCode(Object userData)\r\n       at System.Runtime.CompilerServices.RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(TryCode code, CleanupCode backoutCode, Object userData)\r\n       at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)\r\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean ignoreSyncCtx)\r\n       at System.Threading.QueueUserWorkItemCallback.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem()\r\n       at System.Threading.ThreadPoolWorkQueue.Dispatch()\r\n       at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback()\r\n  InnerException: \r\n</pre>\r\n<p></p>\r\n<p></p>\r\n<hr>\r\nScreen shot:\r\n<p></p>\r\n<p>Ooops - can't do attachments in Discussion.</p>\r\n<p>Offending statement is line #280 in WaveOutEvent.cs</p>\r\n<p>Breakpoint at line #271 in WaveOutEvent.cs</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-10-17T14:24:43.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929435",
+    "ThreadId": "399818",
+    "Html": "<p>can you copy the offending line, as I think the line numbers may not match my copy WaveOutEvent. What version of NAudio are you using?</p>",
+    "PostedDate": "2012-10-19T07:40:23.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929499",
+    "ThreadId": "399818",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>can you copy the offending line, as I think the line numbers may not match my copy WaveOutEvent. What version of NAudio are you using?</p>\r\n</blockquote>\r\n<p>I have NAudio 1.5 from 12/18/2011.</p>\r\n<p>As mentioned in another thread, I am still trying to work out how to get the latest sources; in one swoop. What is the recommended procedure?</p>\r\n<p>Thanks,</p>\r\n<p>Jake</p>\r\n<p>Here is the code, from WaveOutEvent.cs, with the line #'s added. Line 271 is where I put a breakpoint, and 280 is the statement that crashes.</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> RaisePlaybackStoppedEvent()\r\n        {\r\n271         EventHandler handler = PlaybackStopped;\r\n            <span style=\"color: blue;\">if</span> (handler != <span style=\"color: blue;\">null</span>)\r\n            {\r\n                <span style=\"color: blue;\">if</span> (<span style=\"color: blue;\">this</span>.syncContext == <span style=\"color: blue;\">null</span>)\r\n                {\r\n                    handler(<span style=\"color: blue;\">this</span>, EventArgs.Empty);\r\n                }\r\n                <span style=\"color: blue;\">else</span>\r\n                {\r\n280                 <span style=\"color: blue;\">this</span>.syncContext.Post(state =&gt; handler(<span style=\"color: blue;\">this</span>, EventArgs.Empty), <span style=\"color: blue;\">null</span>);\r\n                }\r\n            }\r\n        }\r\n<br /></pre>\r\n</div>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-10-19T09:24:51.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929502",
+    "ThreadId": "399818",
+    "Html": "<p>Hmmm, I was expecting SyncContext to be null in your case. Not really much of a web developer, so it might be a question for StackOverflow. To download the latest source code, click \"Source Code\" above, and then \"Download\".</p>",
+    "PostedDate": "2012-10-19T09:30:44.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929527",
+    "ThreadId": "399818",
+    "Html": "<p>I now have \\naudio_d26bc035efa6\\ which is slightly different. Now it is somewhat improved, but I can still cause a failure by inserting the break point, and I still get a 1 in 20 failure rate.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-10-19T10:11:24.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929532",
+    "ThreadId": "399818",
+    "Html": "<p>can you try with a small modification to the code to not use the sync context at all (just do the code in the sync context == null branch of the if statement)</p>",
+    "PostedDate": "2012-10-19T10:22:41.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929547",
+    "ThreadId": "399818",
+    "Html": "<p>That appears to work, viz:\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> RaisePlaybackStoppedEvent(Exception e)\r\n        {\r\n            <span style=\"color: blue;\">var</span> handler = PlaybackStopped;\r\n            <span style=\"color: blue;\">if</span> (handler != <span style=\"color: blue;\">null</span>)\r\n            {\r\n<span style=\"color: green;\">//                if (this.syncContext == null)</span>\r\n<span style=\"color: green;\">//                {</span>\r\n                    handler(<span style=\"color: blue;\">this</span>, <span style=\"color: blue;\">new</span> StoppedEventArgs(e));\r\n<span style=\"color: green;\">//                }</span>\r\n<span style=\"color: green;\">//                else</span>\r\n<span style=\"color: green;\">//                {</span>\r\n<span style=\"color: green;\">//                    this.syncContext.Post(state =&gt; handler(this, new StoppedEventArgs(e)), null);</span>\r\n<span style=\"color: green;\">//                }</span>\r\n            }\r\n        }\r\n\r\n</pre>\r\n</div>\r\n</p>\r\n<p>I've tried it over 30 passes with no errors. I'll leave it run all afternoon, but it looks good!</p>",
+    "PostedDate": "2012-10-19T11:05:55.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929551",
+    "ThreadId": "399818",
+    "Html": "<p>good stuff. I had assumed syncContext would be null on web servers. It was just added as a convenient way to make WinForms and WPF work.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-10-19T11:08:55.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249766",
+    "ThreadId": "399818",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\ngood stuff. I had assumed syncContext would be null on web servers. It was just added as a convenient way to make WinForms and WPF work. Mark<br />\n</blockquote>\nSorry to resurrect an old thread, but I had this problem come back when I updated to NAudio 1.7. \r<br />\nAt first I put in the same fix that was mentioned in the previous post - but then I realized that was only going to work for my ASP application and probably wouldn't work for WinForms. So, here is the code I am using now:<br />\n<pre><code>        private void RaisePlaybackStoppedEvent(Exception e)\n        {\n            var handler = PlaybackStopped;\n            if (handler != null)                                    // anyone to notify?\n            {\n                if ((this.syncContext == null) || (this.syncContext.GetType() != typeof(System.Windows.Forms.WindowsFormsSynchronizationContext)))\n                {\n                    handler(this, new StoppedEventArgs(e));\n                }\n                else\n                {\n                    this.syncContext.Post(state =&gt; handler(this, new StoppedEventArgs(e)), null);\n                }\n            }\n        }\n    }</code></pre>\n\nIt works for the case where syncContext is null, and when it is an ASP context, and should work same as previous for a Winforms context. \r<br />\n<br />\nPlease comment if you would like this moved to the Issues section.\r<br />\n<br />\nJake<br />\n",
+    "PostedDate": "2014-05-26T12:48:44.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

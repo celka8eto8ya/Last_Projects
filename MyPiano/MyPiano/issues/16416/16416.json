@@ -1,0 +1,51 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I'm working on a project that will change the color of lights based on the position in a song. I decided to use WaveStream.Position to do all of the timing and triggering for these color changes. First I used a timer to watch WaveStream.Position and that ended up being \"too slow\" and the timer would miss the point at which to change the color even set at 1 millisecond tick. So ended up creating a separate thread dedicated to watching the position but the problem still persisted. (all of my 'points' were at the correct position and multiples of the WaveStream's .BlockAlign)\r\nIs there a way to get the wavestream's position at a much faster rate?\r\nor is WaveStream.Position the wrong thing to be used in a situation like mine, if so, can you please recommend an alternative.\r\n\r\nI apologize for any miss communication, as English is my second language \r\n\r\nThank you, \r\nJustin",
+    "LastUpdatedDate": "2013-11-15T03:17:52.43-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-11-14T21:17:07.133-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "High resolution timing with WaveStream.Position",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16416
+  },
+  "FileAttachments": [
+    {
+      "FileId": 758206,
+      "FileName": "MC.jpg",
+      "DownloadUrl": ".\\758206"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "you can use the new IWavePosition.GetPosition method on the IWavePlayer device you are using for more accurate resolution. The position of the WaveStream is just where we have read up to when preparing buffers for the soundcard, whereas GetPosition is reported by the soundcard itself and should be more accurate. Note that this is in terms of number of bytes played - so you must convert to a timespan yourself. Also, it is the number of bytes played since starting playback, which is relative to the starting position of your input file",
+      "PostedDate": "2013-11-15T03:17:52.43-08:00",
+      "Id": 123120
+    }
+  ]
+}

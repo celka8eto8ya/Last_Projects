@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1108698",
+    "ThreadId": "462569",
+    "Html": "Hi, I am trying to obtain the intensity of the audio in a specific window which I assume FFT is done to audio samples.\r<br />\n<br />\nThe question is do these samples need to be bytes or floats? And how would I synchronize the outputted intensities with the audio in time: e.g. 2 minute audio track, every 10ms should have a new intensity.\r<br />\n<br />\nI looked at the auto-tune article but that didn't seem to have any code that showed intensity...<br />\n",
+    "PostedDate": "2013-10-17T03:40:09.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1108773",
+    "ThreadId": "462569",
+    "Html": "the intensity of each bin in the FFT output is calculated as the square root of the sum of the squares of the real and imaginary parts. Remember the that first bin is DC, and that only the first half of the bins are of interest. An FFT length of 512 at a sample rate of 44100 should give you close to the 10ms chunks you are after. You may also want to apply a windowing function to the audio before applying the FFT.<br />\n",
+    "PostedDate": "2013-10-17T06:55:36.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1108787",
+    "ThreadId": "462569",
+    "Html": "Could I get intensity if I just RMS floating point samples obtained from an audiofilereader? Or is that not a good idea? Some other guys on the internet seem to have been doing that.\r<br />\n<br />\nI'm trying to make a game with the &quot;loudness&quot; of the sounds as a core mechanic but I was taught in school (yes I am a high school student) that amplitude is loudness? And found out that samples are electronic equivalents of amplitude at a specific moment in time. \r<br />\n<br />\nRight now I have a samplechannel for the samples (floats) and a waveoutdevice for the music to be played. I'm struggling to sync both as they are separate objects.\r<br />\n<br />\nSorry, not exactly an audio specialist here...<br />\n",
+    "PostedDate": "2013-10-17T07:26:19.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1109263",
+    "ThreadId": "462569",
+    "Html": "Here's what I have so far, however, I do not know if the FFT is done correctly...\r<br />\n<br />\ntest.cs (The main application class + method): <a href=\"http://pastebin.com/zKrpnsL6\" rel=\"nofollow\">http://pastebin.com/zKrpnsL6</a>\r<br />\nFFT.cs (FFT class found on the net): <a href=\"http://pastebin.com/L3Na4Xuy\" rel=\"nofollow\">http://pastebin.com/L3Na4Xuy</a><br />\n",
+    "PostedDate": "2013-10-18T09:05:49.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1111953",
+    "ThreadId": "462569",
+    "Html": "I'm unclear what you are actually trying to do. The FFT is for getting frequency information. If you just want to see how loud the signal is, then examine the sample values coming from AudioFileReader. Find the maximum absolute sample value over a period of say 10ms, and convert it to decibels if you want by taking log base 10 and multiplying by 20.<br />\n",
+    "PostedDate": "2013-10-24T23:54:06.343-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

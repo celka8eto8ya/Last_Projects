@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "244377",
+    "ThreadId": "71645",
+    "Html": "<p>Hi,</p>\r\n<p>playing around with the Wasapi I noticed that it is not possible to use all WaveFormats. For example the 8kHz, 16bit, 1 Channel gives me the &quot;format not supported exception&quot;. After looking at the code I saw this is due to the initialization of the AudioClient with the shard mode:</p>\r\n<p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>audioClient.Initialize(AudioClientShareMode.Shared,\r\n</pre>\r\n</div>\r\n</p>\r\n<p>So my question is if there is a workaround&nbsp; so that I can use whatever format I need beside the ones allowed in the shared mode?</p>\r\n<p>thanks,</p>\r\n<p>Chris</p>",
+    "PostedDate": "2009-10-11T09:25:09.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244650",
+    "ThreadId": "71645",
+    "Html": "<p>Hi Chris,</p>\r\n<p>I'm afraid this is a limitation of WASAPI, and a real shame that MS didn't put in their own sample rate conversion. You end up being forced to use your own sample rate conversion, or more simply use WaveOut or DirectSoundOut, which handle this for you.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-12T06:30:14.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "478251",
+    "ThreadId": "71645",
+    "Html": "<p>Hi there,</p>\r\n<p>First of all, NAudio is a fine piece of software, thanks for it :-)</p>\r\n<p>Having the same problem (in windows 7), want to capture audio via wasapi in exclusive mode, because&nbsp;I need to override the default 1 channel 44100 16bit capture mode win7 uses for shared mode capture when plugging in a usb audio device.</p>\r\n<p>Is there a specific reason why shared mode is hardcoded in wasapicapture, while in wasapiout&nbsp;I can specify the desired mode in the constructor?</p>\r\n<p>Thanks in advance for your help,</p>\r\n<p>Florian</p>",
+    "PostedDate": "2010-08-09T12:27:28.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "489738",
+    "ThreadId": "71645",
+    "Html": "<p>hi, I didn't write the WASAPI capture myself, so I can't say for sure. Why not make a modification to the NAudio code and see if it works in exclusive mode. If so, we can put an option on the constructor</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-06T07:12:23.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

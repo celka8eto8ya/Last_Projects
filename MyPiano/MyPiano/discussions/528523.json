@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1201334",
+    "ThreadId": "528523",
+    "Html": "Hi,\r<br />\nI was trying to convert mp3 file to wav without saving file.\r<br />\nMy code looks like this:<br />\n<pre><code>MemoryStream ms2 = new MemoryStream();\n                        using (WaveStream waveStream = WaveFormatConversionStream.CreatePcmStream(new Mp3FileReader(filePath)))\n                        using (WaveFileWriter waveFileWriter = new WaveFileWriter(ms2, waveStream.WaveFormat))\n                        {\n                            byte[] bytes3 = new byte[waveStream.Length];\n                            waveStream.Position = 0;\n                            waveStream.Read(bytes3, 0, (int)waveStream.Length);\n                            waveFileWriter.Write(bytes3, 0, bytes3.Length);\n                            ms2.Position = 0;\n                            return ms2.ToArray();\n                        } </code></pre>\n\nI'm returning byte array with converted file. \r<br />\nAfter that I save file from stream.\r<br />\nBut converted wav file is not working in Media Player (Media Player encountered a problem while playing the file).\r<br />\nI tested converted file also in Media Player Classic and for my surprise file was working fine. Where could be error?<br />\n",
+    "PostedDate": "2014-01-31T06:58:39.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201339",
+    "ThreadId": "528523",
+    "Html": "you must Dispose WaveFileWriter before converting memorystream to array,\r<br />\nAlso, no need for CreatePcmStream - Mp3FileReader already converts to PCM<br />\n",
+    "PostedDate": "2014-01-31T07:02:25.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1072055",
+    "ThreadId": "451000",
+    "Html": "From what i understand, Wavein will run on the main thread, and WaveinEvent will run on a separate thread.<br />\n<br />\nBut i noticed, that if i use Waveinevent, i need to increase the buffer from 4-5ms to 11-12ms.<br />\nWhich increases the latency alot in the total buffer (got a waveprovider also).<br />\n<br />\nAnd i don´t see the reason for it, if Waveinevent is run on a separate thread, shouldn´t it be able to do the same as Wavein, or perhaps even better as it´s not limited by the GUI thread?<br />\n<br />\nThanks<br />\n<pre><code>  void Sending(object sender, NAudio.Wave.WaveInEventArgs e)\n       {\n           if (connect == true &amp;&amp; MuteMic.Checked == false)\n           {\n               udpClient.Send(e.Buffer, e.BytesRecorded, otherPartyIP.Address.ToString(), 1500);\n              // waveWriterRam.Write(e.Buffer, 0, e.BytesRecorded);\n           }\n       }\n\n                SendStream = new WaveInEvent();\n                SendStream.BufferMilliseconds = 4;\n                SendStream.WaveFormat = new WaveFormat(48000, 16, 2);\n                SendStream.DeviceNumber = waveInDevice;\n                SendStream.StartRecording();\n                SendStream.DataAvailable += Sending;</code></pre>\n\nRuns vey bad (need to set 11ms).<br />\n<pre><code>                sourceStream.DataAvailable -= new EventHandler&lt;NAudio.Wave.WaveInEventArgs&gt;(sourceStream_DataAvailable);\n                sourceStream.StopRecording();\n                sourceStream = new WaveIn();\n                sourceStream.BufferMilliseconds = 4;\n                sourceStream.WaveFormat = new NAudio.Wave.WaveFormat(48000, 16, 2);\n                sourceStream.DeviceNumber = waveInDevice;\nSendStream.StartRecording();\n\n\n         void sourceStream_DataAvailable(object sender, NAudio.Wave.WaveInEventArgs e)\n        {\n\n\n              if (connect == true &amp;&amp; MuteMic.Checked == false)\n            {\n                udpClient.Send(e.Buffer, e.BytesRecorded, otherPartyIP.Address.ToString(), 1500);\n                 \n            }\n        }</code></pre>\n\nThis runs much much better.<br />\n<br />\nOnly thing is that if i move the GUI(Windows Form) it will stop for a while, then continue, as it runs on the GUI Thrad.<br />\n",
+    "PostedDate": "2013-07-23T19:45:21.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072149",
+    "ThreadId": "451000",
+    "Html": "I'm surprised you managed to get the latency that low at all with either type of WaveIn. It's not really a low latency audio API. The issue might be that when the event is set, perhaps the thread context switch isn't happening in time. I suppose you could always try your own WaveInEvent with a thread set to high priority.<br />\n",
+    "PostedDate": "2013-07-24T01:29:48.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072155",
+    "ThreadId": "451000",
+    "Html": "Oh, well whatt am i supposed to use then, i only know, Wavein, Wasapi and ASIO, and ASIO is of course the fastest, but i can´t use it.?\r<br />\n<br />\nThough, i wonder, is it possible to use 2 ASIO drivers at the same time?\r<br />\nMy built in for audio playback, and ASIO4ALL for my microphone?\r<br />\n<br />\ni guess it could be possible, but not really sure. Would be awesome if it is.\r<br />\n<br />\nSady i am not that good at programming, so i have no idea how to change that event to high priority.\r<br />\n<br />\nBut is the GUI stop thing, caused by wavein being run on the main Thread?<br />\n",
+    "PostedDate": "2013-07-24T01:37:13.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072248",
+    "ThreadId": "451000",
+    "Html": "Not sure. It might be that the message queue is not getting serviced, or it might be that the garbage collector is running<br />\n",
+    "PostedDate": "2013-07-24T05:54:22.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072254",
+    "ThreadId": "451000",
+    "Html": "What can be done about that?\r<br />\nAs it goes away with WaveinEvent, but that causes a big latency change weird enough.\r<br />\n<br />\nMy program is probably very unoptimized though, but i really have not clue here.\r<br />\n<br />\nIs it possible to just put Wavein on a separate thread?<br />\n",
+    "PostedDate": "2013-07-24T05:58:57.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1073435",
+    "ThreadId": "451000",
+    "Html": "that's what WaveInEvent is. <br />\n",
+    "PostedDate": "2013-07-26T05:23:53.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1073551",
+    "ThreadId": "451000",
+    "Html": "well i know, but, is it possible to set the priority to high or something, as you mentioned earlier?<br />\nas perhaps that will solve the problem i am having.<br />\n<br />\nAlso what does number of buffer do?<br />\nhow does it affect latency?<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-07-26T08:54:51.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

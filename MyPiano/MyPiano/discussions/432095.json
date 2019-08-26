@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "996900",
+    "ThreadId": "432095",
+    "Html": "Hi Mark, et al,\r<br />\n<br />\nI'm having trouble getting the correct DeviceNumber when iterating devices with MMDeviceCollection.\r<br />\n<br />\nMMDeviceCollection does not expose the device's DeviceNumber. And using the collection item's index does not establish the correct DeviceNumber (as in the code snippet below).\r<br />\n<br />\nAny thoughts on how to get a correct device number from a MMDeviceCollection? And I want to use MMDeviceCollection rather than WaveOut.GetCapabilities(deviceId) because I can get the device full name (not truncated) and the device GUID from the MMDeviceCollection.<br />\n<pre><code>int deviceCount = WaveOut.DeviceCount;\n                MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();\n                MMDeviceCollection devEnum = DevEnum.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);\n\n                string[] devName = new string[deviceCount];\n\n                int[] deviceNumber = new int[deviceCount];\n                int j = 0;\n                foreach (var item in devEnum)\n                {\n                    devName[j] = item.FriendlyName;\n                    deviceNumber[j] = j;\n                    j++;\n                }\n\n                WaveOut outputDeviceWaveOut = new WaveOut();\n                outputDeviceWaveOut.DeviceNumber = deviceNumber[2];</code></pre>\n\n",
+    "PostedDate": "2013-02-05T13:06:01.27-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996973",
+    "ThreadId": "432095",
+    "Html": "WaveOut and MMDeviceEnumerator use completely different audio APIs. I wouldn't expect the device numbers to match at all.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-05T15:20:00.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996985",
+    "ThreadId": "432095",
+    "Html": "Ok, thanks Mark.\r<br />\nIt looks like the only api to associate a device name to the DeviceNumber is the WaveOut.GetCapabilities(deviceId). As you have been telling me. :-)\r<br />\n<br />\nI looked thru the WAVEOUTCAPS structure. Microsoft doesn't give you much to work with there.<br />\n\r<br />\nI'll have to cross my fingers that the first 32 chars of the device name are unique for all sound cards -- although that gets  iffy when the user has multiple, identical usb soundcard adapters.<br />\n",
+    "PostedDate": "2013-02-05T15:58:06.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

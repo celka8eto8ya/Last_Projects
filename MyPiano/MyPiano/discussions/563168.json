@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1295603",
+    "ThreadId": "563168",
+    "Html": "hi , \r<br />\nanyone please tell me how i can merge multiple mp3 files into one file such that all the mp3 songs mix with each other ( not merge at the end ).\r<br />\nI have tried to write the following code and getting error as noise so much in the ewquired file . i also tried to convert that file to wav format and did the same things but it made the resultant song as noise unable to hear voice.\r<br />\nFollowing is the code <br />\n<pre><code> var sound1 = new Mp3FileReader(file1);\n            var sound2 = new Mp3FileReader(file2);\n            Stream outputStream = new FileStream(@&quot;D:\\Shan\\SoundMixer\\song.wav&quot;, FileMode.OpenOrCreate, FileAccess.Write);\n            WaveFileWriter waveWriter = new WaveFileWriter(outputStream, WaveFormat.CreateALawFormat(32000,8));\n            if ((outputStream.Position == 0) &amp;&amp; (sound1.Id3v2Tag != null)&amp;&amp; (sound2.Id3v2Tag!=null))\n            {\n               // outputStream.Write(sound1.Id3v2Tag.RawData, 0, sound1.Id3v2Tag.RawData.Length);\n                //outputStream.Write(sound2.Id3v2Tag.RawData, 0, sound2.Id3v2Tag.RawData.Length);\n            }\n            Mp3Frame frame;\n            Mp3Frame frame2=null;\n            //waveWriter.Position = 0;\n            \n            while ((frame = sound1.ReadNextFrame()) != null &amp;&amp; (frame2 = sound2.ReadNextFrame())!=null)\n            {\n                \n                if (frame2!=null)\n                {\n                    //outputStream.Write(frame2.RawData, 0, frame2.RawData.Length);\n                    waveWriter.Write(frame2.RawData, 0, frame2.RawData.Length);\n                }\n                if (frame!=null)\n                {\n                    //outputStream.Write(frame.RawData, 0, frame.RawData.Length);\n                    waveWriter.Write(frame.RawData, 0, frame.RawData.Length);\n                }\n            }\n            //outputStream.Flush();\n            //outputStream.Close();\n            waveWriter.Flush();\n            waveWriter.Close();\n            </code></pre>\n\n",
+    "PostedDate": "2014-08-30T02:06:08.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1298024",
+    "ThreadId": "563168",
+    "Html": "hm, not quite sure what your actual goal is...having never worked with MP3, however, looking at your code and wikipedia (for MP3) it looks like you MUX frames in time, that is 26ms of one song, then 26ms of the other and so forth....is that what you want? I dont know but I could imagine that might lead to strange output (-:  do you want to play those songs parallel? Then you have to setu a sample/wave provider chain (two input, one output) and write the output of that one into a file<br />\n",
+    "PostedDate": "2014-09-02T01:04:45.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

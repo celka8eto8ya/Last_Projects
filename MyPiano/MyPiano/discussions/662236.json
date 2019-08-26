@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1494723",
+    "ThreadId": "662236",
+    "Html": "Hello,\r<br />\n<br />\nI’m completely new to naudio so please bear with me…\r<br />\n<br />\nI trying to play many short (about 500 milliseconds) sounds (wav files) in quick succession with little to no time between them and no overlap.\r<br />\n<br />\n<br />\nLet us say, for example, I have 5 different sounds, each exactly 400 ms long. Ideally I would like to play them all in a row, getting a 2000 ms long output.\r<br />\n<br />\nI accomplished that using the OffsetSampleProvider-class, where I simply give each sound a fitting DelayBy-value and then call the play-functions of all corresponding IWavePlayer simultaneously. This way, I get very good results (only a little time gap between sounds, about 5 ms).\r<br />\n<br />\nSo far so good.\r<br />\n<br />\nHowever, the situation becomes slightly more complicated:\r<br />\n<br />\nWhat if I want to change a sound while the one before is already playing? \r<br />\n<br />\nLet us say, I play a row of 5 Sounds like in the previous example. But while the 3.th one is playing I want to change the 4.th one.\r<br />\n<br />\nI tried to accomplish that again by using the OffsetSampleProvider-class, initializing each sound individually while the previous one is playing and giving an offset (DelayBy-value) based on the CurrentTime-value of the AudioFileReader of the currently playing sound.\r<br />\nThis works in principle, but I get huge (about 30 ms) time gaps and overlaps between the sounds. <br />\n\r<br />\nAnny Ideas?\r<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2017-03-27T07:47:33.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

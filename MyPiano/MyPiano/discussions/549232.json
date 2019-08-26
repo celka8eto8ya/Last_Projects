@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1258286",
+    "ThreadId": "549232",
+    "Html": "I have an EffectStream class that takes in a  WaveStream and then multiply the values in the file by a giving number... so sample = sample * 0.5 ;\r<br />\n<br />\nSo this works for wave files. however not for mp3 file.  When a file is upload it , I check and see if the file is a wave file or a MP3 file. if it is an MP3 file I convert it into a  wave stream and then I do the effect.\r<br />\n<br />\nhowever when I play it back, I get white noise out one earphone and the song out the other earphone. Again this process works for a wave file. so I think something might be wrong with the wave conversion.\r<br />\n<br />\nI checked and  the sampling rate, bits per sample, and the channel   are set to the  right values:\r<br />\n44100, 16, 2\r<br />\n so I am not sure where to go from here.\r<br />\nbelow is my code :\r<br />\nthis is my read function from the effect class.\r<br />\nthe EffectStream class inherit from  WaveStream class<br />\n<pre><code> public override int Read(byte[] buffer, int offset, int count)\n        {\n            Console.WriteLine(&quot;DirectSoundOut requested {0} bytes&quot;, count);\n\n            int read = SourceStream.Read(buffer, offset, count);\n\n            for (int i = 0; i &lt; read / 4; i++)\n            {\n                float sample = BitConverter.ToSingle(buffer, i * 4);\n                sample = sample * number;\n\n                byte[] bytes = BitConverter.GetBytes(sample);\n                buffer[i * 4 + 0] = bytes[0];\n                buffer[i * 4 + 1] = bytes[1];\n                buffer[i * 4 + 2] = bytes[2];\n                buffer[i * 4 + 3] = bytes[3];\n            }\n\n            return read;\n        }</code></pre>\n\nhere is the main<br />\n<pre><code> else if (Stemp == &quot;mp3&quot;)\n            {\n               pcm = WaveFormatConversionStream.CreatePcmStream(new Mp3FileReader(Filelist.Text));\n               effect = new EffectStream(pcm);\n                stream = new BlockAlignReductionStream(effect);  \n                effect.number = (float)Convert.ToDouble(textBox1.Text);\n                if (waveout == null)\n                {\n                    waveout = new WaveOut();\n                    waveout.PlaybackStopped += onPlaybackStopped;\n                }\n                waveout.Init(stream);\n                waveout.Play();\n                playToolStripMenuItem.Enabled = false;\n                stopToolStripMenuItem.Enabled = true;\n                puaseToolStripMenuItem.Enabled = true;\n            \n            }</code></pre>\n\nthanks for the help<br />\n",
+    "PostedDate": "2014-06-20T07:35:31.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260967",
+    "ThreadId": "549232",
+    "Html": "well if it's 16 bit audio, don't use BitConverter.ToSingle - its a Short (Int16) not a float<br />\n",
+    "PostedDate": "2014-06-29T15:40:22.873-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

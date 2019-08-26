@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1349292",
+    "ThreadId": "579550",
+    "Html": "hi..<br />\ni am recording from my sound device.<br />\niam using the WaveFileWriter to record the incoming data to a wav file.<br />\nit should be saved as pcm format<br />\nnow i am doing the following <br />\n<pre><code>WaveFileWriter writer;\nthis.writer = new WaveFileWriter(this.outputFilePath, this.waveIn.WaveFormat);\nthis.bufferedWaveProvider = new BufferedWaveProvider(this.waveIn.WaveFormat);\n// should be enough to buffer 1 minute in front\nthis.bufferedWaveProvider.BufferDuration = new TimeSpan(0, 1, 0);\nthis.bufferedWaveProvider.DiscardOnBufferOverflow = true;\nthis.waveIn.ShareMode = WaveInShareMode;\nthis.waveIn.StartRecording();</code></pre>\n\n...<br />\n<pre><code>private void OnDataAvailable(object sender, WaveInEventArgs e)\n        {\n            try\n            {\n                if (saveToFile)\n                {\n                    this.writer.Write(e.Buffer, 0, e.BytesRecorded);\n                }\n            }\n\n            catch (Exception ex)\n            {\n                throw new Exception(ex.Message, ex.InnerException);\n            }\n        }</code></pre>\n\nwhereas the waveIn.WaveFormat looks like this:<br />\n<br />\nthis.waveIn.WaveFormat = {32 bit PCM: 48kHz 2 channels wBitsPerSample:32 dwChannelMask:3 subFormat:00000003-0000-0010-8000-00aa00389b71 extraSize:22}<br />\nAverageBytesPerSecond = 384000<br />\nBitsPerSample = 32<br />\nBlockAlign = 8<br />\nChannels = 2<br />\nEncoding = Extensible<br />\nExtraSize = 22<br />\nSampleRate = 48000<br />\n<br />\nnow when i try to play the recorded wav file on my playback sound device, which has the following properties<br />\n<br />\nMixFormat = {32 bit PCM: 48kHz 2 channels wBitsPerSample:32 dwChannelMask:3 subFormat:00000003-0000-0010-8000-00aa00389b71 extraSize:22}<br />\n<br />\ni tried using the AudioFileReader but it gives an exception no driver calling acmformatsuggest<br />\n<br />\nand if i try the MediaFoundationReader i get <br />\nAn unhandled exception of type 'System.Runtime.InteropServices.COMException' occurred in NAudio.dll<br />\n<br />\nAdditional information: Exception from HRESULT: 0xC00D5212<br />\n   at NAudio.MediaFoundation.IMFSourceReader.SetCurrentMediaType(Int32 dwStreamIndex, IntPtr pdwReserved, IMFMediaType pMediaType)<br />\n   at NAudio.Wave.MediaFoundationReader.CreateReader(MediaFoundationReaderSettings settings)<br />\n<br />\nand the wave file i recorded has the following properties:<br />\nStereo, 48kHz 32-bit float<br />\n<a href=\"http://wikisend.com/download/736628/myTestWavSave.wav\" rel=\"nofollow\">Can be downloaded here</a><br />\n<br />\nif i use audacity to change the float to pcm, then it works.<br />\n<br />\nso my question is<br />\ncan i tell the writer to write directly to a pcm format?<br />\nI mean int and not floating format? or do i have to convert the file before using it?<br />\n<br />\niam setting the writer waveformat as you can see above, but still it is not working probably.<br />\n<br />\nAny help is really appreciated<br />\n<br />\nthanks in advance<br />\n",
+    "PostedDate": "2015-02-05T04:52:17.267-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1349893",
+    "ThreadId": "579550",
+    "Html": "WASAPI uses the WAVEFORMATEXTENSIBLE wave format structure, which is not typically used in a WAV file. Instead, I would suggest creating a regular PCM / IEEE float wave format with WaveFormat.CreateIEEEWaveFormat() for example. There is a &quot;ToStandardWaveFormat&quot; method on the WaveFormatExtensible class in NAudio that will perform this conversion for you.\r<br />\n<br />\nI should probably try to fix the AudioFileReader though for the future, as it doesn't actually need to do any conversion if it gets one of these files.<br />\n",
+    "PostedDate": "2015-02-07T00:25:23.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1350193",
+    "ThreadId": "579550",
+    "Html": "Mark, thank you sooo much... that did the trick...<br />\ni think this auto convserion is not requiered as long as you provide the format you want to read/write your file with.<br />\n<br />\np.s.: just for anyone having the same problem, the function mark meant is CreateIeeeFloatWaveFormat();<br />\n",
+    "PostedDate": "2015-02-09T01:06:07.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

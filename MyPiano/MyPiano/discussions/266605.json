@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "647760",
+    "ThreadId": "266605",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I'm working up a small example similar to what is done in the .NET Voice Recorder.&nbsp; Just looking to record audio to a wav file at this point.&nbsp; The program is structured very similar to the voice recorder.&nbsp; Right now, I launch the application,\r\n begin monitoring (capturing samples but not writing to disk), begin recording after a user button press, then stop recording and close the file after a stop button press.&nbsp; This works well, but after clicking stop I can't record again without relaunching.&nbsp;\r\n I would like to go back into 'monitoring' mode after writing the wav file.&nbsp; After the stop button press, the recording state goes to stop requested, the last of the samples are captured, then an event fires to set the recording state to stopped.&nbsp;\r\n I need to call StopRecording() on the WaveIn, or else that event will never fire and I'll be stuck in the Requested Stop state.&nbsp; When I try to BeginMonitoring() again, a NullReference occurs at the WaveIn callback.&nbsp; Some code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">//Recorder.Stop()</span>\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Stop()\r\n{\r\n     <span style=\"color:blue\">if</span>(RecordingState == RecordingState.Recording)\r\n     {\r\n          RecordingState = RecordingState.RequestedStop;\r\n          waveIn.StopRecording();\r\n     }\r\n}\r\n\r\n<span style=\"color:green\">//which eventually fires:</span>\r\n<span style=\"color:blue\">void</span> waveIn_RecordingStopped(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n{\r\n     RecordingState = RecordingState.Stopped;\r\n     waveWriter.Dispose() <span style=\"color:green\">//recreated on record button press</span>\r\n     BeginMonitoring(0);\r\n}\r\n\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> BeginMonitoring(<span style=\"color:blue\">int</span> device)\r\n{\r\n     <span style=\"color:blue\">if</span>(RecordingState != RecordingState.Stopped)<span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> InvalidOperation...();\r\n     waveIn.StartRecording();\r\n     RecordingState = RecordingState.Monitoring;\r\n}\r\n\r\n\r\n</pre>\r\n</div>\r\nThe recording state does change to monitoring, and then the exception is thrown.\r\n<p></p>\r\n<p>Stack trace:</p>\r\n<p>&nbsp;&nbsp; at NAudio.Wave.WaveIn.Callback(IntPtr waveInHandle, WaveMessage message, IntPtr userData, WaveHeader waveHeader, IntPtr reserved)<br>\r\n&nbsp;&nbsp; at NAudio.Wave.WaveWindow.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)<br>\r\n&nbsp;&nbsp; at MS.Win32.UnsafeNativeMethods.DispatchMessage(MSG&amp; msg)<br>\r\n&nbsp;&nbsp; at System.Windows.Threading.Dispatcher.PushFrameImpl(DispatcherFrame frame)<br>\r\n&nbsp;&nbsp; at System.Windows.Threading.Dispatcher.PushFrame(DispatcherFrame frame)<br>\r\n&nbsp;&nbsp; at System.Windows.Threading.Dispatcher.Run()<br>\r\n&nbsp;&nbsp; at System.Windows.Application.RunDispatcher(Object ignore)</p>\r\n<p>&nbsp;</p>\r\n<p>One option would be to move the WaveIn creation and initialization down into BeginMonitoring() so that&nbsp; new object is created after each successful recording, but I think it should be possible to keep one WaveIn object open.&nbsp; Is there some part\r\n of WaveIn that doesn't persist between StartRecording() and StopRecording() calls?</p>\r\n",
+    "PostedDate": "2011-07-26T07:38:39.06-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648908",
+    "ThreadId": "266605",
+    "Html": "<p>Possibly this is due to starting too soon after stopping. I've seen issues before with WaveOut where the callback messages for the old playback get muddled with the ones for the next. What callback model are you using? Is it NewWindow?</p>",
+    "PostedDate": "2011-07-28T05:36:29.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648917",
+    "ThreadId": "266605",
+    "Html": "<p>Yes, NewWindow.&nbsp; I tried sticking a Thread.Sleep() in the RecordingStopped handler before the call to BeginMonitoring() ...as soon as it tries to start monitoring again I get the exception, so it seems like something elsewhere is getting disposed of after waveIn.StoppedRecording().&nbsp; Do you think a different callback model would work better?&nbsp; I went with NewWindow hoping to avoid managing locking issues between threads.</p>",
+    "PostedDate": "2011-07-28T05:52:38.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648918",
+    "ThreadId": "266605",
+    "Html": "<p>are you able to debug into NAudio source code and see where the null reference is?</p>",
+    "PostedDate": "2011-07-28T05:53:56.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648931",
+    "ThreadId": "266605",
+    "Html": "<p>I don't have the NAudio source, only the .dll.&nbsp; I'm pretty new to .NET, how should I go about getting into the source?&nbsp; Would I just add the NAudio project to the solution and replace the reference to the .dll with one to the project?&nbsp; Thanks.</p>",
+    "PostedDate": "2011-07-28T06:11:07.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648933",
+    "ThreadId": "266605",
+    "Html": "<p>latest code can be got by clicking Source Code tab above, and clicking Download</p>\r\n<p>http://naudio.codeplex.com/SourceControl/list/changesets</p>\r\n<p>It requires VS2010 to build</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-28T06:12:27.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "649102",
+    "ThreadId": "266605",
+    "Html": "<p>Mark, I was able to dig down into the source.&nbsp; The error is in WaveIn.c.&nbsp; Does this help?</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> Callback(IntPtr waveInhandle, WaveInterop.WaveMessage message, IntPtr userData, WaveHeader waveHeader, IntPtr reserved)\r\n{\r\n     <span style=\"color: blue;\">if</span>(message==WaveInterop.WaveMessage.WaveInData)\r\n     {\r\n          GCHandle hBuffer = (GCHandle)waveHeader.userData;\r\n          WaveInBuffer buffer = (WaveInBuffer)hBuffer.Target;\r\n          <span style=\"color: green;\">//the problem occurs here ^ ...buffer comes back as null</span>\r\n          <span style=\"color: green;\">//so trying to execute the following fails</span>\r\n          <span style=\"color: blue;\">if</span>(DataAvailable != <span style=\"color: blue;\">null</span>)\r\n          {\r\n               DavaAvailable(<span style=\"color: blue;\">this</span>, <span style=\"color: blue;\">new</span> WaveInEventArgs(buffer.Data, buffer.BytesRecorded)); \r\n          }\r\n     }\r\n          ....\r\n\r\n}<br /><br /> <br /></pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2011-07-28T11:28:11.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "649156",
+    "ThreadId": "266605",
+    "Html": "<p>hmm, a strange one. I guess a null check could be put in to avoid the crash, but that would be fixing the symptoms rather than the cause. I'll put it on my list of bugs to try to recreate, but with some holidays coming up I'm afraid it might be a while before I get round to it.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-28T13:08:17.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "649201",
+    "ThreadId": "266605",
+    "Html": "<p>If you'd like, I can zip up my project as it is right now and shoot you an email..at least you'll be able to look into it when you have the time.&nbsp; In the meantime, would simply returning from Callback() if buffer is null have any adverse effects?</p>",
+    "PostedDate": "2011-07-28T14:15:12.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "649208",
+    "ThreadId": "266605",
+    "Html": "<p>have you tried simply making a new WaveIn in your StartMonitoring function? Would be worth a try</p>",
+    "PostedDate": "2011-07-28T14:20:23.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "691553",
+    "ThreadId": "266605",
+    "Html": "<p>Hello,</p>\r\n<p>I've had exactly the same problem like zmb99. Debugging took me to the same Line. If it's too hard to find out the cause, it's probably a good idea to fix the symtoms ;)&nbsp;&nbsp; With the new line I'm able to call waveInStream.StartRecording and waveInStream.StopRecording as often as I like, and everything works fine.</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>        <span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span>\r\n        <span style=\"color: gray;\">///</span><span style=\"color: green;\"> Called when we get a new buffer of recorded data</span>\r\n        <span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;/summary&gt;</span>\r\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> Callback(IntPtr waveInHandle, WaveInterop.WaveMessage message, IntPtr userData, WaveHeader waveHeader, IntPtr reserved)\r\n        {\r\n            <span style=\"color: blue;\">if</span> (message == WaveInterop.WaveMessage.WaveInData)\r\n            {\r\n                GCHandle hBuffer = (GCHandle)waveHeader.userData;\r\n                WaveInBuffer buffer = (WaveInBuffer)hBuffer.Target;\r\n\r\n                <strong><span style=\"color: blue;\">if</span> (buffer == <span style=\"color: blue;\">null</span>)  <span style=\"color: blue;\">return</span>;</strong> <span style=\"color: green;\"></span><span style=\"color: #008000;\">// with this new line, everything works fine</span>\r\n\r\n                <span style=\"color: blue;\">if</span> (DataAvailable != <span style=\"color: blue;\">null</span>)\r\n                {\r\n                    DataAvailable(<span style=\"color: blue;\">this</span>, <span style=\"color: blue;\">new</span> WaveInEventArgs(buffer.Data, buffer.BytesRecorded));\r\n                }\r\n                <span style=\"color: blue;\">if</span> (recording)\r\n                {...<br />&nbsp;</pre>\r\n</div>\r\n</p>\r\n<p><span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br /></span></p>",
+    "PostedDate": "2011-10-31T03:55:23.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

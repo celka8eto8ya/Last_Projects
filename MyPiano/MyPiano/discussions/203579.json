@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "413280",
+    "ThreadId": "203579",
+    "Html": "<p>Hello all!</p>\r\n<p>I'm wondering - is it possible to set the WaveFormat of the WaveIn object as MuLawFormat?</p>\r\n<p>In case of</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; waveIn.WaveFormat = new WaveFormat(8000, 16, 1);</p>\r\n<p>there is an exception:</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NAudio.MmException: WaveBadFormat calling waveInOpen<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;at NAudio.MmException.Try(MmResult result, String function)<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;at NAudio.Wave.WaveIn.OpenWaveInDevice()<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;at NAudio.Wave.WaveIn.StartRecording()</p>\r\n<p>Thanks in advance!</p>",
+    "PostedDate": "2010-03-02T10:09:17.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413356",
+    "ThreadId": "203579",
+    "Html": "<p>Hi there, I don't think you can record directly in mu-law (by the way, that isn't a mu-law wave format anyway - it is 8 bit PCM, you need to explicitly set the format tag). But you can use NAudio to convert to mu-law using the ACM codecs (see the WaveFormatConversionStream).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-02T12:54:04.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413612",
+    "ThreadId": "203579",
+    "Html": "<p>Hi, Mark!</p>\r\n<p>Thanks for the answer!</p>\r\n<p>I'm sorry, I miscopied the line, my bad...</p>\r\n<p>This method is throwing exception:</p>\r\n<p>waveIn.WaveFormat = WaveFormat.CreateMuLawFormat(8000, 1);</p>\r\n<p>And this works fine:</p>\r\n<p>&nbsp;waveIn.WaveFormat = new WaveFormat(8000, 16, 1);</p>\r\n<p>If I understand you right, I have to create WaveFormat (like &quot;new WaveFormat(8000, 16, 1)&quot;), and then, when I get all the needed audio data from DataAvailable event handler, I can convert received simple PCM stream to mu-law using WaveFormatConversionStream. Is that right?</p>",
+    "PostedDate": "2010-03-03T03:27:39.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413613",
+    "ThreadId": "203579",
+    "Html": "<p>Yes, record with 16 bit PCM, then run the audio data you have created through a WaveFormatConversionStream afterwards.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-03T03:29:32.237-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413760",
+    "ThreadId": "203579",
+    "Html": "<p>The theory is good, but the practice is always worse :)... Mark, I have a problem, could you please help me :)...</p>\r\n<p>Here is my code:</p>\r\n<p>using (MemoryStream audioMemoryStream = new MemoryStream(audio)) &nbsp;//audio - array of bytes, raw PCM data<br> {<br>&nbsp; &nbsp; using (PCMStream tempPCMstream = new PCMStream(audioMemoryStream, new WaveFormat(8000, 16, 1))) //PCMStream - my class, I'm using if for playin raw PCM files and it's seemed to be working ok<br>&nbsp; &nbsp; {<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;using (WaveStream convertedStream = new WaveFormatConversionStream(WaveFormat.CreateMuLawFormat(8000, 1), PCMstream)) //here, as I'm thinkin, I'm conveting stream from one format to another<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//finalStream.Write(audio, 0, audio.Length); //if I uncomment that string, and write to stream still unconverted data, then I can play it, using&nbsp;WaveFormat(8000, 1). But I need 8-bit mu-law format<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;convertedStream.Read(audio, 0, audio.Length);//here I'm thinking that I get the converted data - in mu-law format, 8000KHz, 1 channel and 8-bit&nbsp;<br>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;finalStream.Write(audio, 0, audio.Length); &nbsp; //but, if I try to play that stream, I'll only hear the terrible noise. I tried all formats: 8-bit, 16-bit, of course mu-law, even tried play it with the CoolEdit, using all its compression formats - no luck<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br>&nbsp; &nbsp; }<br> }</p>\r\n<p>Also I have to mention, that when reading bytes from convertedStream, convertedStream.Position is double less than audio.Length. If audio.Length is 160 bytes, then position of convertedStream after reading will move only to 80 bytes. But I think that's because of audio data from microphone is 16-bit, so it takes 2 bytes to store it, but after conversion to mu-law format only 1 byte is required (maybe I'm mistaken)...</p>\r\n<p>Please, can you tell me what I'm missing here, what I'm doing wrong?</p>",
+    "PostedDate": "2010-03-03T10:23:28.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "415403",
+    "ThreadId": "203579",
+    "Html": "<p>O Mark, where art thou? :)</p>",
+    "PostedDate": "2010-03-08T04:00:49.68-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "416982",
+    "ThreadId": "203579",
+    "Html": "<p>hi AT1, sorry, been very busy. I would suggest you first try to save your memory stream to a PCM WAV file and then check that that plays correctly. If your PCM stream is wrong, your converted stream will be too.</p>\r\n<p>Then write some code to convert the PCM WAV stream to a mu law WAV file and see if that plays correctly.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-11T07:08:06.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "426056",
+    "ThreadId": "203579",
+    "Html": "<p>This is in VB but it may help&nbsp;Tested as working when the Wav File specified in Filename is 16bit, 8KHz sample rate, mono and PCM. This is the source file&nbsp;(&nbsp;Dim RecordingFormat As New WaveFormat(8000, 16, 1) &nbsp;for the source file when I grab it)</p>\r\n<p>&nbsp;</p>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">Dim stream As WaveStream = New WaveFileReader(OutputFilename)</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;Dim TargetFormat As WaveFormat</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;TargetFormat = WaveFormat.CreateMuLawFormat(8000, 1)</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">Dim</span> FileName <span style=\"color:Blue\">as</span> <span style=\"color:Blue\">String</span>=<span style=\"color:#A31515\">&quot;c:\\some_path\\some_wav_file_to_convert.wav&quot;</span>\r\n\r\n<span style=\"color:Blue\">Dim</span> stream <span style=\"color:Blue\">As</span> WaveStream = <span style=\"color:Blue\">New</span> WaveFileReader(Filename)\r\n\r\n&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<span style=\"color:Blue\">Dim</span> TargetFormat <span style=\"color:Blue\">As</span> WaveFormat\r\n\r\n&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;TargetFormat = WaveFormat.CreateMuLawFormat(8000, 1)\r\n\r\n\t<span style=\"color:Blue\">Using</span> ConvertedStream <span style=\"color:Blue\">As</span> WaveStream = <span style=\"color:Blue\">New</span> WaveFormatConversionStream(TargetFormat, stream)\r\n            WaveFileWriter.CreateWaveFile(<span style=\"color:#A31515\">&quot;C:\\Some_path\\MuLawfile.wav&quot;</span>, ConvertedStream)\r\n        <span style=\"color:Blue\">End</span> <span style=\"color:Blue\">Using</span>\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"white-space:pre\"><br></span></p>",
+    "PostedDate": "2010-03-31T08:33:40.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "426058",
+    "ThreadId": "203579",
+    "Html": "<p>thanks for the code sample thepfy, that's exactly how to do it</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-31T08:36:28.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

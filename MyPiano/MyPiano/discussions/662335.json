@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1494966",
+    "ThreadId": "662335",
+    "Html": "My question is related to the subject line. In this module there is the function &quot;GetAsInterleavedSamples&quot;. There is a note, &quot;Better performance if you use the overload that takes an array, and reuse the same one&quot;.   Is there already this overload function somewhere buried in the NAudio source?  Or do I have write this myself.  My experience with C# has been good but still in a very steep learning curve.  Any Advice???\r<br />\nRegards,   Karin <br />\n",
+    "PostedDate": "2017-03-31T09:57:16.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

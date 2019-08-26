@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1432720",
+    "ThreadId": "640816",
+    "Html": "Hi, Mark!\r<br />\n<br />\nFirst off, thanks for providing such a great audio library, it's absolutely superb!\r<br />\n<br />\nI'm building a windows phone app that will need to do some serious audio handling. If I recall correctly, the current full version of NAudio can't be used in a windows phone app due to the no-ACM restrictions on windows store apps. Is there a new version under way that I might be able to use when it's released?\r<br />\n<br />\nAgain, thanks for all your hard work on this!\r<br />\n<br />\nFrauke<br />\n",
+    "PostedDate": "2015-07-01T02:55:18.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433176",
+    "ThreadId": "640816",
+    "Html": "hey Frauke,\r<br />\nI would love to bring NAudio to WCM at some point in the future. I'm hoping that with the arrival of Windows 10, that should get easier to do. We already have some support for Windows 10, and in theory most of the same code should be reusable on the phone. There are also some new audio APIs coming with Win 10.<br />\n",
+    "PostedDate": "2015-07-06T00:09:36.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1355605",
+    "ThreadId": "581814",
+    "Html": "I use this code but it send too fast sample to the listener, I want send to listener sample how is comming when I recording<br />\n<pre><code>\n      using (WaveFileReader reader = new WaveFileReader(fileName))\n      {\n        try\n        {\n          int sampleRate = reader.WaveFormat.SampleRate;\n          while (reader.Position &lt; reader.Length)\n          {\n            byte[] bytes = new byte[sampleRate];\n            int bytesRead = reader.Read(bytes, 0, sampleRate);\n            audiosocket.Send(bytes, 0, bytesRead, SocketFlags.None);\n            \n          }\n        }\n        catch (Exception ex)\n        {\n          \n   \n        }  \n      }</code></pre>\n\n",
+    "PostedDate": "2015-02-25T06:21:07.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356243",
+    "ThreadId": "581814",
+    "Html": "create a timer that ticks say 10 times a second and then send just 100ms seconds of the audio when the timer ticks<br />\n",
+    "PostedDate": "2015-02-26T23:40:40.697-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

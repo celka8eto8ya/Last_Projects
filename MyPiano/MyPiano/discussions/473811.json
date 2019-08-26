@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1136054",
+    "ThreadId": "473811",
+    "Html": "How can i override only some parts of a class within Naudio?\r<br />\n<br />\nFor example:<br />\n<pre><code>  public void getBufferSize(out int minSize, out int maxSize, out int preferredSize, out int granularity)\n        {\n            handleException(asioDriverVTable.getBufferSize(pASIOComObject, out minSize, out maxSize, out preferredSize, out granularity), &quot;getBufferSize&quot;);\n        }\n</code></pre>\n\nThat in ASIODriver.cs\r<br />\n<br />\nIf i only want to change that one, do i still have to add all the class files from the source needed?\r<br />\n<br />\nOr can i override just that part form within my own code?<br />\n",
+    "PostedDate": "2013-12-15T01:33:23.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1136113",
+    "ThreadId": "473811",
+    "Html": "I don't see source code, but if original method is overridable you can. If not you can change in source code of naudio method directly, but for license type you need to notify your changes. Also you can try to modify original method like overridable but also notification of changes is needed\r<br />\n<br />\nsorry for my bad english<br />\n",
+    "PostedDate": "2013-12-15T07:39:56.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1136145",
+    "ThreadId": "473811",
+    "Html": "Ah okay so there is only at occasions when its allowed.\r<br />\nAnd i get about the Licenses also.\r<br />\n<br />\nSeems to be more complex than i thought.\r<br />\n<br />\nWrote an issue instead as it seems to be a ASIO &quot;bug&quot; i am trying to fix, hopefully it can be solved, but as ASIO was implemented not by Mark but another, i am a bit skeptical what will happen, as my own skills regarding this are next to nothing.<br />\n",
+    "PostedDate": "2013-12-15T08:18:47.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1136165",
+    "ThreadId": "473811",
+    "Html": "for fixing a bug, I'd recommend making your own copy of NAudio, fixing the bug, and then you can submit your fix as a patch afterwards.\r<br />\nI do try to make NAudio extensible, but this particular class just has the task of calling directly into the asio driver, so I don't see an obvious reason to change what it does.<br />\n",
+    "PostedDate": "2013-12-15T08:44:57.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1136264",
+    "ThreadId": "473811",
+    "Html": "Well it was just me trying to do something i noticed i wasn´t able to do (and probably at the wrong place too).\r<br />\n<br />\nSo you can just ignore this thread, hence why i started the issue, better that i try to explain the Issue itself than try to repair what i can´t even figure out how it´s working;P<br />\n",
+    "PostedDate": "2013-12-15T11:01:08.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

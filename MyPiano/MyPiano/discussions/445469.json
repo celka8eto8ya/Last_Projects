@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1050659",
+    "ThreadId": "445469",
+    "Html": "Hi, I have the following code to play aac format:<br />\n<pre><code>            var reader = new MediaFoundationReader(&quot;d:\\\\Projects\\\\Samples\\\\aac.aac&quot;);\n\n            var waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback());\n            var outDevice = CmbDevices.SelectedItem as OutDevice;\n            if (outDevice != null)\n                waveOut.DeviceNumber = outDevice.DeviceId;\n            _waveOut = waveOut;\n            _waveOut.Init(reader);\n            _waveOut.PlaybackStopped += WaveOutOnPlaybackStopped;\n            _waveOut.Play();</code></pre>\n\nBut song playing only 1 second and after this StopPlayBack event is raised with Excaption. There no such problem with mp3 and Mp3FileReader. Also with <strong>WaveCallbackInfo.NewWindows()</strong> also everything works fine. \r<br />\n<br />\nThe exception is <br />\n<blockquote>\nException = {&quot;Unable to cast COM object of type 'System.__ComObject' to interface type 'NAudio.MediaFoundation.IMFSourceReader'. This operation failed because the QueryInterface call on the COM component for the interface with IID '{70AE66F2-C809-4E4F-8915-BDCB406B7993...<br />\n</blockquote>\nI found this post in StackOverflow: \r<br />\n<a href=\"http://stackoverflow.com/questions/1233468/unable-to-cast-com-object-of-type-exception\" rel=\"nofollow\">http://stackoverflow.com/questions/1233468/unable-to-cast-com-object-of-type-exception</a>\r<br />\nbut seems to me that it isn't the case because IMFSourceReader has ComImport with correct Guid. \r<br />\nPlease help me to figure out with this issue. \r<br />\nThanks, Roman<br />\n",
+    "PostedDate": "2013-05-30T08:01:24.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1050682",
+    "ThreadId": "445469",
+    "Html": "I'd stay away from function callbacks if at all possible. Use WaveOutEvent if you want a background thread for audio playback.<br />\n",
+    "PostedDate": "2013-05-30T08:38:07.06-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1051037",
+    "ThreadId": "445469",
+    "Html": "Thanks Mark, <br />\n<br />\nSo, if I understand you correct I need to do the following:<br />\n<br />\nUse this:<br />\n<pre><code>var waveOut = new WaveOutEvent();</code></pre>\n\nInstead of this:<br />\n<pre><code>var waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback());</code></pre>\n\nfor background thread audio playback, right?<br />\n",
+    "PostedDate": "2013-05-31T00:21:41.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1052176",
+    "ThreadId": "445469",
+    "Html": "yes<br />\n",
+    "PostedDate": "2013-06-03T08:05:47.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

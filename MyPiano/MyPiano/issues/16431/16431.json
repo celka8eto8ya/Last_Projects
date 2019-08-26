@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi,\r\n\r\nIs there a plan for NAudio to support WP?\r\n\r\nCheers,\r\nLD",
+    "LastUpdatedDate": "2014-02-24T00:11:54.903-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-02-23T14:39:39.443-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Is there a plan for NAudio to support WP?",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16431
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "hi I would love to do so, but due to limited time, this is not something being actively worked on",
+      "PostedDate": "2014-02-24T00:11:54.903-08:00",
+      "Id": 134544
+    }
+  ]
+}

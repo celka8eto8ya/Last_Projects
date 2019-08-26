@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "225590",
+    "ThreadId": "66405",
+    "Html": "<p>Would it be possible to stream a sound file from the internet / server into my application?<br>I've tried to use a http URL as a string to feed the player, but Visual Studio says the following:</p>\r\n<p>Argument exception was unhandeled. Does not support URL-format<br>on this line:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">Dim</span> mp3Reader <span style=\"color:Blue\">As</span> WaveStream = <span style=\"color:Blue\">New</span> Mp3FileReader(fileName)\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>How can I make this work?<br>The purpose for this is that I'm trying to create an small Spotify-like application which acts as a client, connecting to a database where sound files are stored as string values. Those values are then passed into the sound player.<br>And the values are the path of the sound files's location.</p>\r\n<p>How should I approach this? Would I need to create a buffer of some sort? What about playing the sound file as soon as possible? Would that mean having the streaming and sound playback running in separate threads?<br>This sounds a bit more advanced that I've tried previously but I'm really keen on trying to get this to work :)</p>\r\n<p>A different thing would be uploading sound files to the path as I've downloaded from. But that would probably be a different story I guess.</p>\r\n<p>Any help would really be appreciated! :)</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-08-19T13:17:17.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "225618",
+    "ThreadId": "66405",
+    "Html": "<p>Hi Kenny,</p>\r\n<p>I've replied to your question on Stack Overflow as well but for any one else looking for an answer to this see this question and answer:</p>\r\n<p>http://stackoverflow.com/questions/184683/play-audio-from-a-stream-using-c/225260</p>\r\n<p>Cheers,<br>Sebastian</p>",
+    "PostedDate": "2009-08-19T15:07:12.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "227006",
+    "ThreadId": "66405",
+    "Html": "<p>Hi again :)</p>\r\n<p>Could you please revisit the thread on StackOverflow? The example shown is in C# and I cannot manage to convert it properly to VB.NET.<br>Actually, it looks like that solution provided there is a mix of the function from the nAudio Examples and the HttpWebStream function. But the code isn't converted correctly, So I get an error message saying that:</p>\r\n<p>&quot;Value of type 'System.IO.MemoryStream' cannot be converted to 'String'&quot;  <br>This is at line &quot;New BlockAlignReductionStream(WaveFormatConversionStream.CreatePcmStream(New Mp3FileReader(ms)))&quot;</p>",
+    "PostedDate": "2009-08-24T05:20:21.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "227054",
+    "ThreadId": "66405",
+    "Html": "<p>are you working with the latest source code? the constructor for Mp3FileReader that takes a stream was added in Dec 2008</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-08-24T07:35:59.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "227172",
+    "ThreadId": "66405",
+    "Html": "<p>Clearly I was not. But the code has changed a bit and I get alot of errors after trying to convert the code. E.g the Mp3FileReader was way smaller before and I actually put the functions etc inside the main window form (which I know is a terrible no-no), but now I thought I'd scatter the code a bit into separate Classes.vb files and  I keep getting these errors, like &quot;Property 'AvarageBytesPerSecond' is 'ReadOnly'&quot; and &quot;Property 'BitsPerSample' is ReadOnly&quot;</p>\r\n<p>I don't know if the conversion tool messes up some things or if it's just me, but there are alot of these similiar errors. You don't be any chance have a codebase for vb.net, Mark?<br>Before, it all worked atleast. With my crappy code converted directly by http://www.developerfusion.com/tools/convert/csharp-to-vb/</p>\r\n<p>But I guess taking time to implement the newest source code is worth the time.</p>",
+    "PostedDate": "2009-08-24T11:41:46.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "227765",
+    "ThreadId": "66405",
+    "Html": "<p>Wait, let me get this straight? Is it possible for me to create a VB.NET project and just import the .cs files you've created and use the classes from that? I don't have to convert the code to VB? That would be awesome indeed</p>",
+    "PostedDate": "2009-08-25T22:05:15.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "228202",
+    "ThreadId": "66405",
+    "Html": "<p>Hi Kenny,</p>\r\n<p>Not sure what happened to my post but it seems to have gone astray. You can't just add the .cs file to a VB.Net project - what you can do is build a small C# project which will export a single .dll that you can then reference in your VB.Net project instead. Once a .Net library is built it can be consumed by any .Net language.</p>\r\n<p>Cheers,<br>OpenSebJ</p>",
+    "PostedDate": "2009-08-26T18:57:24.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "228734",
+    "ThreadId": "66405",
+    "Html": "<p>Edit: I think I'll just try to do this with C# instead :)</p>\r\n<p>Ok, so I downloaded the latest nAudio project file, which is in C#. And i built this, which produced a dll, which was probably produced from before anyway.<br>Then I deleted my existing reference dll in the vb.net project and added the newly build dll.</p>\r\n<p>What happens is that I can type e.g &quot;naudio.wave&quot; and then see all of the classes within the dll, such as &quot;Mp3FileReader&quot; and such. <br>But if I press punctuation, all I get is this:</p>\r\n<p>Equals<br>Null<br>ReferenceEquals<br>Synchronized<br><br>This is the same no matter what class I try to access. <br>So the code fails at certain points, like accessing the &quot;NAudio.Wave.MeteringStream.StreamVolumeEventArgs&quot;</p>\r\n<p>In the demo, this class is not in the Wave section, but I moved it there and changed the namespace to Naudio.Wave to make it easier to access. <br>And this seems to work just as good as the other classes in the nAudio.Wave namespace. <br>But the code fails with the following error message: &quot;Type 'MeteringStream.StreamVolumeEventArgs' is not defined&quot;</p>\r\n<p>Even though I know it's there. Is this normal? I can also type &quot;Naudio.Wave.MeteringStream&quot; and intellisense says it's a class and all. But pressing punctiation gives the same options as stated above. I also tried to convert the c# code from the MeteringStream.cs into VB and make it it's own vb class. <br>Which worked well. I can access the StreamVolumeEventArgs, no error message in Visual Studio. But building the project and trying to play something returned an error saying &quot;Reference object is null&quot; or something.</p>",
+    "PostedDate": "2009-08-28T08:24:14.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

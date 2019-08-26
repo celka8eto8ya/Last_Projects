@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "871184",
+    "ThreadId": "371522",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I sucessfully am playing the same wav file over two sound cards. This is not the issue however as the same problem ocurrs with a single sound card.</p>\r\n<p>I am playing back a wav file. When I close the program, an error message is thrown that says the WavOut device was not closed. Also, the file crackles after it finished playing.</p>\r\n<p>There probably is a method lurking around in NAudio that I am not calling. I have a feeling I need to dispose of the WaveOut object after the files are done. I called the dispose method, but the program does not wait for the wav file finished playing.</p>\r\n<p>How do you rectify this situation?</p>\r\n<p>Thanks,</p>\r\n<p>Ben (kingneb)&nbsp;</p>\r\n",
+    "PostedDate": "2012-07-17T13:52:45.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "877900",
+    "ThreadId": "371522",
+    "Html": "<p>OK, I placed my dispose code in the Visual Basic form close event. That took care of it. As far as the crackling was concerned, that was due to the sound cards being USB and run through a hub. Those USB hubs are not a great thing for audio.</p>\r\n<p>&nbsp;</p>\r\n<p>Anyway Thanks</p>",
+    "PostedDate": "2012-07-19T15:12:56.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "879500",
+    "ThreadId": "371522",
+    "Html": "<p>glad you found the cause in the end</p>",
+    "PostedDate": "2012-07-20T03:33:53.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

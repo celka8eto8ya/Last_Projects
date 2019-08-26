@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1069257",
+    "ThreadId": "450260",
+    "Html": "Can someone help me out on this:\r<br />\n<br />\nI am trying to playback the microphone, just to learn something easy, but i can´t get it to work with Wasapi.<br />\n<pre><code>  NAudio.CoreAudioApi.WasapiCapture sourceStream = null;\n        NAudio.Wave.WaveIn sourceStream1 = null;\n        NAudio.Wave.WasapiOut waveOut = null;\n\n        private void button2_Click(object sender, EventArgs e)\n        {\n            if (sourceList.SelectedItems.Count == 0) return;\n\n            int deviceNumber = sourceList.SelectedItems[0].Index;\n\n            sourceStream = new NAudio.CoreAudioApi.WasapiCapture();\n            //sourceStream1.DeviceNumber = deviceNumber;\n            sourceStream.WaveFormat = new NAudio.Wave.WaveFormat(48000, 16, 1) ;\n\n            NAudio.Wave.WaveInProvider waveIn = new NAudio.Wave.WaveInProvider(sourceStream);\n            \n\n            waveOut = new NAudio.Wave.WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 100);\n          // waveOut.Init(waveIn);\n          \n            sourceStream.StartRecording();\n            waveOut.Play();</code></pre>\n\n",
+    "PostedDate": "2013-07-16T15:43:14.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1069549",
+    "ThreadId": "450260",
+    "Html": "Okay i noticed that i could use Directsound with low latency with\r<br />\n BufferMilliseconds, very neat!\r<br />\n<br />\nBut i still have a problem, but will create another topic as it´s not about Wasapi at all.<br />\n",
+    "PostedDate": "2013-07-17T07:44:18.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

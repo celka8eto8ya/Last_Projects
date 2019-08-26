@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1314824",
+    "ThreadId": "570203",
+    "Html": "I have a few questions about using NAudio.\r<br />\n<br />\nBasically I was using Bass.net to play Sounds and BGM's and I'm wondering how that would transfer over to NAudio. I got most of it working but I'm having a few issues. \r<br />\n<br />\nI noticed the Sample (Fire &amp; forget) on the Wiki with CachedSound and for the most part that was fine except how do I know when a SoundEffect or BGM has finished playing because for some SoundEffects/Songs I need to manage when they end as they are supposed to loop until a event triggers them not to.\r<br />\n<br />\nAlso I have a collection of 3,864 songs and sounds and they all have different sample rates and MixingSampleProvider does not like that. Will I have to manually convert each mp3 to match?\r<br />\n<br />\nOther then that implementing NAudio has been pretty easy and pain free.<br />\n",
+    "PostedDate": "2014-10-19T16:01:39.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1315945",
+    "ThreadId": "570203",
+    "Html": "A sound has reached its end when the Read method returns 0. I usually implement a simple wrapper (decorator pattern) around my SampleProviders if I need to raise an event or do something special when the end is reached. A WaveStream based example of this is available on my blog <a href=\"http://mark-dot-net.blogspot.co.uk/2009/10/looped-playback-in-net-with-naudio.html\" rel=\"nofollow\">here</a>. \r<br />\n<br />\nNAudio has a few resamplers that you can make use of. Read my blog post <a href=\"http://mark-dot-net.blogspot.co.uk/2014/05/how-to-resample-audio-with-naudio.html\" rel=\"nofollow\">here</a> for details.<br />\n",
+    "PostedDate": "2014-10-23T02:00:23.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

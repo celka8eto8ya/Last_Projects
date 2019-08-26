@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1302570",
+    "ThreadId": "566818",
+    "Html": "Hello there.  Love the library, but am going through some growing pains with it.  Already resolved the <strong>play</strong>/<strong>stop</strong>/<strong>play</strong> issue (see ISSUES section) but have another thing that I am not quite sure about.<br />\n\r<br />\nWhile streaming data through <strong>WasapiOut</strong> via a <strong>BufferedWaveProvider</strong> (<strong>BWP</strong>) that is wrapped by a <strong>VolumeWaveProvider</strong>, we are occasionally seeing situations where <strong>FillBuffer(...)</strong> gets a read size of zero, causing the playback state to transition to Stopped, which causes the playback thread to exit. \r<br />\n<br />\nThis seems like normal behavior for situations where, for example, you hit the end of a WAVE file, but we are streaming in data and the underlying <strong>BWP</strong> still has data in its buffer.  The code ends up inside <strong>ResamplerDmoStream.Read(...)</strong> and the <strong>count</strong> value provided causes the call to <strong>OutputToInputPosition(...)</strong> to return zero, causing a <em>successful read of zero bytes</em>, and a zero read-byte-count to be returned from the method.\r<br />\n<br />\nThis eventually causes playback to stop once the zero value finds it way back to <strong>FillBuffer(...)</strong>.  What I cannot figure out is, why is such a small number  getting into this method such that a zero-byte read is the result?\r<br />\n<br />\nIs there anything off the top of your head that I should be looking at/into?\r<br />\n<br />\nThanks much!\r<br />\n<br />\n-=- James.<br />\n",
+    "PostedDate": "2014-09-08T12:29:59.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

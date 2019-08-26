@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "526598",
+    "ThreadId": "235919",
+    "Html": "\r\n<p>float[][] buffer &lt;= several channels buffer, value from -1.0~1.0</p>\r\n<p>public static void toWavFile(string fileName, float[][] buffer)&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</p>\r\n<p><span style=\"white-space:pre\"></span>WaveFileWriter writer = new WaveFileWriter(fileName, AdpcmWaveFormat.CreateALawFormat(44100,2));</p>\r\n<p>//<span style=\"white-space:pre\"> WaveFileWriter writer = new WaveFileWriter(fileName,&nbsp;WaveFormat.CreateALawFormat(44100,2));\r\n</span>also doesn't work</p>\r\n<p><span style=\"white-space:pre\">writer.WriteData16(<span>buffer</span>, 0, </span>\r\n2<span style=\"white-space:pre\">);</span></p>\r\n<p><span style=\"white-space:pre\">writer.Flush();</span></p>\r\n<p><span style=\"white-space:pre\"></span>writer<span style=\"white-space:pre\">.Close();</span></p>\r\n<p><span style=\"white-space:pre\">writer.Dispose();</span></p>\r\n<p><span style=\"white-space:pre\">}</span></p>\r\n<p><span style=\"white-space:pre\">t</span>he resulting file can't be played by foobar2000, and looks very strange in CoolEdit. (very strong noise in left channel, very weak noise in right channel, looks chopped at &#43;-0.2).</p>\r\n<p>How to write a generated sound into a wave file? Thanks.</p>\r\n",
+    "PostedDate": "2010-11-24T12:03:50.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "527074",
+    "ThreadId": "235919",
+    "Html": "\r\n<p>you almost certainly don't want to use ALaw. Just a normal new WaveFormat(44100,16,2) would be better</p>\r\n<p>Also, that overload of WriteData16 is obsolete and doesn't exist in the latest NAudio. I'm not sure how reliable it is. The latest WaveFileWriter has a WriteSample method which should be used in preference if you are able to use the latest code.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-25T11:23:13.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "527646",
+    "ThreadId": "235919",
+    "Html": "\r\n<p>Problem solved, thank you very much!</p>\r\n<p>I'm the first time using NA, so it was a kinda stupid question ^ ^</p>\r\n<p>Kangol</p>\r\n",
+    "PostedDate": "2010-11-27T05:01:12.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1445135",
+    "ThreadId": "645245",
+    "Html": "I installed the latest Nuget package 1.7.3 for Universal windows app project but can't find a lot of classes. WaveFileReader and WaveFileWriter classes seem to be missing. Anyone got NAudio working with Win10 Universal app?<br />\n",
+    "PostedDate": "2015-09-20T22:05:49.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1445311",
+    "ThreadId": "645245",
+    "Html": "The WInRT assembly in NAudio 1.7.3 only contains the subset of NAudio classes that were compatible with WinRT. Unfortunately, this meant a lot of things were excluded, including WaveFileWriter. The good news is that someone has contributed a WaveFileWriterRT which will be part of any future releases, or you can get the source (from GitHub) and build it yourself<br />\n",
+    "PostedDate": "2015-09-21T23:27:11.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

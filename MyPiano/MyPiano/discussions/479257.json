@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1144499",
+    "ThreadId": "479257",
+    "Html": "I'm following the example in <a href=\"http://mark-dot-net.blogspot.com/2012/01/handling-multi-channel-audio-in-naudio.html\" rel=\"nofollow\">Mark's blog post</a> to try to send 2 mp3 files each to their own device output (a 2 channel sound card). It seems this should work but does not.<br />\n<pre><code>var input1 = new Mp3FileReader(@&quot;path to mp3 file #1&quot;);\nvar input2 = new Mp3FileReader(@&quot;path to mp3 file #1);\n\nMultiplexingWaveProvider waveProvider = new MultiplexingWaveProvider(new IWaveProvider[] { input1, input2 }, 4);\n\nwaveProvider.ConnectInputToOutput(2, 0);\nwaveProvider.ConnectInputToOutput(3, 1);\nwaveProvider.ConnectInputToOutput(1, 2);\nwaveProvider.ConnectInputToOutput(1, 3);\n\nWaveOut wave = new WaveOut();\nwave.Init(waveProvider);\nwave.Play();</code></pre>\n\nI get an exception thrown (System.Windows.Markup.XamlParseException) on wave.init(waveProvider).\r<br />\n<br />\nI suspect I'm missing something rather obvious here?<br />\n",
+    "PostedDate": "2014-01-01T21:06:17.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1145283",
+    "ThreadId": "479257",
+    "Html": "Your soundcard would need to support 4 channel audio for this to work. It may be that the drivers do not support this (or present your outputs to windows as separate stereo pairs).<br />\n",
+    "PostedDate": "2014-01-03T11:14:11.247-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

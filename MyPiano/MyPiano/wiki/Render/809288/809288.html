@@ -1,0 +1,41 @@
+<div class="wikidoc">
+<h1>MP3</h1>
+<h2>Playing an MP3</h2>
+<p>1) <span style="font-size:small">Add the following using statements to your project:</span></p>
+<pre class="csharpcode"><span class="kwrd">using</span> NAudio;
+<span class="kwrd">using</span> NAudio.Wave;</pre>
+<p><span style="font-size:small">2) Create the declarations in your class: <br>
+</span></p>
+<pre class="csharpcode"><span class="rem">//Declarations required for audio out and the MP3 stream</span>
+<span style="color:#0000ff">IWavePlayer</span> waveOutDevice;
+<span style="color:#0000ff">AudioFileReader</span> audioFileReader;<br><br></pre>
+<p><span style="font-family:calibri; font-size:small">3) In a method &ndash; that only needs to be called once, setup the waveOutDevice. In this example we will use WaveOut, since it is the most universally available. If you are not playing audio from within
+ a WinForms or WPF application, then WaveOutEvent may be a better choice.</span><span style="font-family:calibri; font-size:small"><br>
+</span></p>
+<pre class="csharpcode">waveOutDevice = <span class="kwrd">new</span> WaveOut();</pre>
+<p><span style="font-family:calibri; font-size:small">4) Load the MP3 file in the same method</span></p>
+<pre class="csharpcode">audioFileReader = new AudioFileReader(<span class="str">&quot;Horrorshow - Thoughtcrime (Doin' My Think).mp3&quot;</span>);</pre>
+<p>&nbsp;</p>
+<p>5)&nbsp; Init the device and call play &ndash; again this also only needs to be called once.</p>
+<pre class="csharpcode">waveOutDevice.Init(audioFileReader);
+waveOutDevice.Play();</pre>
+<p>6) That&rsquo;s all there is to it. A MP3 playing from your application. <br>
+To clean up the code remove the references etc.</p>
+<pre class="csharpcode"><span class="kwrd">private</span> <span class="kwrd">void</span> CloseWaveOut()
+{
+    <span class="kwrd">if</span> (waveOutDevice != <span class="kwrd">null</span>)
+    {
+        waveOutDevice.Stop();
+    }
+    <span class="kwrd">if</span> (mainOutputStream != <span class="kwrd">null</span>)
+    {
+        audioFileReader.Dispose();
+        audioFileReader = <span class="kwrd">null</span>;
+    }
+    <span class="kwrd">if</span> (waveOutDevice != <span class="kwrd">null</span>)
+    {
+        waveOutDevice.Dispose();
+        waveOutDevice = <span class="kwrd">null</span>;
+    }
+}</pre>
+</div><div class="ClearBoth"></div>

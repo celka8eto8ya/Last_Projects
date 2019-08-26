@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "939228",
+    "ThreadId": "402585",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I use this code to generate a wav stream. it works fine but how do i generate wav for example with 5 seconds length? this is my first time i'm using this dll.</p>\r\n<p>Slinger</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> DirectSoundOut output = <span style=\"color:blue\">null</span>;\n        <span style=\"color:blue\">private</span> BlockAlignReductionStream stream = <span style=\"color:blue\">null</span>;\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> button3_Click(<span style=\"color:blue\">object</span> sender, EventArgs e) <span style=\"color:green\">// start tone</span>\n        {\n            WaveTone tone = <span style=\"color:blue\">new</span> WaveTone(2000, 0.5); <span style=\"color:green\">// �������, ���������</span>\n            stream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(tone);\n            \n            output = <span style=\"color:blue\">new</span> DirectSoundOut();\n            output.Init(stream);\n            output.Play();\n        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> button4_Click(<span style=\"color:blue\">object</span> sender, EventArgs e) <span style=\"color:green\">// stop tone</span>\n        {\n            <span style=\"color:blue\">if</span> (output != <span style=\"color:blue\">null</span>) output.Stop();\n        }\n\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">class</span> WaveTone : WaveStream\n        {\n            <span style=\"color:blue\">private</span> <span style=\"color:blue\">double</span> frequency;\n            <span style=\"color:blue\">private</span> <span style=\"color:blue\">double</span> amplitude;\n            <span style=\"color:blue\">private</span> <span style=\"color:blue\">double</span> time;\n            \n            <span style=\"color:blue\">public</span> WaveTone(<span style=\"color:blue\">double</span> f, <span style=\"color:blue\">double</span> a)\n            {\n                <span style=\"color:blue\">this</span>.time = 0;\n                <span style=\"color:blue\">this</span>.frequency = f;\n                <span style=\"color:blue\">this</span>.amplitude = a;\n            }\n\n            <span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">long</span> Position\n            {\n                <span style=\"color:blue\">get</span>;\n                <span style=\"color:blue\">set</span>;\n            }\n\n            <span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">long</span> Length\n            {\n\t            <span style=\"color:blue\">get</span> { <span style=\"color:blue\">return</span> <span style=\"color:blue\">long</span>.MaxValue;}\n            }\n\n            <span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> WaveFormat WaveFormat\n            {\n\t        <span style=\"color:blue\">get</span> { <span style=\"color:blue\">return</span> <span style=\"color:blue\">new</span> WaveFormat(44100, 16, 1); }\n            }\n\n            <span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\n            {\n                \n                <span style=\"color:blue\">int</span> samples = count / 2;\n                <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> i = 0; i &lt; samples; i&#43;&#43;)\n                {\n                    <span style=\"color:blue\">double</span> sine = amplitude * Math.Sin(Math.PI * 2 * frequency * time);\n                    time &#43;= 1.0 / 44100;\n                    <span style=\"color:blue\">short</span> truncated = (<span style=\"color:blue\">short</span>)Math.Round(sine * (Math.Pow(2,15) - 1));\n                    buffer[i * 2] = (<span style=\"color:blue\">byte</span>)(truncated &amp; 0x00ff);\n                    buffer[i * 2 &#43; 1] = (<span style=\"color:blue\">byte</span>)((truncated &amp; 0xff00) &gt;&gt; 8);\n                }\n\n                <span style=\"color:blue\">return</span> count;\n            }\n\n\n\n\n\n         } <span style=\"color:green\">// public class WaveTone : WaveStream</span>\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-11-09T09:18:05.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939500",
+    "ThreadId": "402585",
+    "Html": "<p>There are several ways you can do this, but one is for WaveTone to stop returning audio after five seconds. Since you are already tracking a \"time\" variable, which is the total number of samples, you can use this:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; samples &amp;&amp; time &lt; (44100 * 5); i++)\r\n</pre>\r\n</div>\r\n</p>\r\n<p>however, make sure that the Read function returns 0 after you've reached the end, or it will carry on playing indefinitely.</p>",
+    "PostedDate": "2012-11-09T23:50:57.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939530",
+    "ThreadId": "402585",
+    "Html": "<p>Hi markheath</p>\r\n<p>I've modified the code. Buy i dont understand how to stop Read function. It's continuing calling and the sound is keep playing. What should i do?</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>  <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">override</span> <span style=\"color: blue;\">int</span> Read(<span style=\"color: blue;\">byte</span>[] buffer, <span style=\"color: blue;\">int</span> offset, <span style=\"color: blue;\">int</span> count)\r\n            {\r\n                \r\n                <span style=\"color: blue;\">int</span> samples = count / 2;\r\n                <span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; samples &amp;&amp; time &lt; (44100 * 3); i++)\r\n                {\r\n                    <span style=\"color: blue;\">double</span> sine = amplitude * Math.Sin(Math.PI * 2 * frequency * time);\r\n                    time += 1.0 / 44100;\r\n                    <span style=\"color: blue;\">short</span> truncated = (<span style=\"color: blue;\">short</span>)Math.Round(sine * (Math.Pow(2,15) - 1));\r\n                    buffer[i * 2] = (<span style=\"color: blue;\">byte</span>)(truncated &amp; 0x00ff);\r\n                    buffer[i * 2 + 1] = (<span style=\"color: blue;\">byte</span>)((truncated &amp; 0xff00) &gt;&gt; 8);\r\n                }\r\n                <span style=\"color: blue;\">return</span> count;\r\n            }\r\n</pre>\r\n<pre><br /></pre>\r\n<pre>slinger</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-11-10T02:51:13.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939531",
+    "ThreadId": "402585",
+    "Html": "<p>as I said above, Read must return 0 not count when you reach the end. e.g.:</p>\r\n<p>&nbsp;</p>\r\n<pre>return (time &lt; (44100 * 3)) ? count : 0;</pre>",
+    "PostedDate": "2012-11-10T03:01:53.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939537",
+    "ThreadId": "402585",
+    "Html": "<p>Sorry for asking dummy questions but nothing has changed:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>   <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">override</span> <span style=\"color: blue;\">int</span> Read(<span style=\"color: blue;\">byte</span>[] buffer, <span style=\"color: blue;\">int</span> offset, <span style=\"color: blue;\">int</span> count)\r\n            {\r\n                \r\n                <span style=\"color: blue;\">int</span> samples = count / 2;\r\n                <span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; samples &amp;&amp; time &lt; (44100 * 3); i++)\r\n                {\r\n                    <span style=\"color: blue;\">double</span> sine = amplitude * Math.Sin(Math.PI * 2 * frequency * time);\r\n                    time += 1.0 / 44100;\r\n                    <span style=\"color: blue;\">short</span> truncated = (<span style=\"color: blue;\">short</span>)Math.Round(sine * (Math.Pow(2,15) - 1));\r\n                    buffer[i * 2] = (<span style=\"color: blue;\">byte</span>)(truncated &amp; 0x00ff);\r\n                    buffer[i * 2 + 1] = (<span style=\"color: blue;\">byte</span>)((truncated &amp; 0xff00) &gt;&gt; 8);\r\n                }\r\n                <span style=\"color: green;\">//return count;</span>\r\n                <span style=\"color: blue;\">return</span> (time &lt; (44100 * 3)) ? count : 0;\r\n                \r\n            }\r\n</pre>\r\n</div>\r\nslinger</p>",
+    "PostedDate": "2012-11-10T03:46:02.96-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939539",
+    "ThreadId": "402585",
+    "Html": "<p>oh, sorry, I see that time is not in samples. replace both instances of (44100 * 3) with 3. Also, you don't need to be using BlockAlignReduction stream.</p>",
+    "PostedDate": "2012-11-10T03:48:28.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939541",
+    "ThreadId": "402585",
+    "Html": "<p>Holy Lord! it works properly^) thx. But what should i use instead of&nbsp;BlockAlignReductionStream?</p>",
+    "PostedDate": "2012-11-10T04:11:58.42-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939543",
+    "ThreadId": "402585",
+    "Html": "<p>nothing. just pass tone directly into Init</p>",
+    "PostedDate": "2012-11-10T04:20:05.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940171",
+    "ThreadId": "402585",
+    "Html": "<p>ok. thank you so much)</p>\r\n<p>slinger</p>",
+    "PostedDate": "2012-11-12T00:50:45.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

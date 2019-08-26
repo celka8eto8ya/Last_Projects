@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1225978",
+    "ThreadId": "539958",
+    "Html": "Is this api available for app?<br />\n",
+    "PostedDate": "2014-03-24T06:02:03.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1226381",
+    "ThreadId": "539958",
+    "Html": "if you download from NuGet, there is an experimental DLL for Windows RT store apps, but I'm afraid no support for Win Phone 8 currently<br />\n",
+    "PostedDate": "2014-03-25T03:31:26.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1291968",
+    "ThreadId": "561747",
+    "Html": "Hi,\r<br />\n<br />\nI'm having trouble with playback unexpectedly stopping when using WASAPI. We are producing single-channel audio at 44100 Hz; the system is configured for stereo at 48000 Hz. It's quite sensitive to timing; easiest way to trigger it seems to be to allow the program to run and set a breakpoint which affects the timing enough to trigger the behaviour described below.\r<br />\n<br />\nWhat's happening is WASAPI is asking for 960 frames in WasapiOut.FillBuffer. In ResamplerDmoStream.OutputToInputPosition this should return 882, but due to the rounding error in the division and the fact that it is truncated instead of rounded, it returns 881. In the next iteration AudioClient.CurrentPadding comes back as 959, meaning FillBuffer is called asking for a single frame. Once again this goes back into OutputToInputPosition which now returns zero. This causes ResamplerDmoStream.Read to return zero, which causes WasapiOut.FillBuffer to stop playback.\r<br />\n<br />\nRounding the division in ResamplerDmoStream.OutputToInputPosition seems to resolve the issue, but I fear this could cause the resampler to produce too many samples in some edge cases, which would cause it to fall over when outputBuffer.RetrieveData is called because buffer would be too small.<br />\n",
+    "PostedDate": "2014-08-21T02:18:45.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

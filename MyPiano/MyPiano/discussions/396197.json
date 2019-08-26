@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "915022",
+    "ThreadId": "396197",
+    "Html": "\r\n<p>Hello everyone,</p>\r\n<p>Now I'm working on an audioplayer project, that requires playing multiple audio files one by one, just like some kind of playlist. For playing it uses DirectSoundOut.</p>\r\n<p>Well, at this point I don't know how to implement this. Should I use event like playbackStopped (when current song has ended) and recreate output stream? Or there is simplier way to do this?</p>\r\n<p>Please, help.</p>\r\n",
+    "PostedDate": "2012-09-20T01:53:49.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917034",
+    "ThreadId": "396197",
+    "Html": "<p>hi, I've written a bit about how to do this <a href=\"http://stackoverflow.com/questions/12568717/playing-the-same-mp3-file-again-using-naudio/12573416#12573416\">here</a>. Probably for your use I would keep the soundcard open, and use a custom IWaveProvider whose Read method moves onto the next file in the playlist after reaching the end of one.</p>",
+    "PostedDate": "2012-09-24T23:31:54.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

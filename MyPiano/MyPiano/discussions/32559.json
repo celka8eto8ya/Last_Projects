@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "107956",
+    "ThreadId": "32559",
+    "Html": "Hello. Is it possible to create a anti-noise from a recorded sound with this library?<br>\r\ne.g.:&nbsp;record a sound by microphone. process the Phase-shifting and play it through the speakers?<br>\r\nthx. mb1701<br>\r\n<br>\r\n",
+    "PostedDate": "2008-07-30T06:36:50.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "108183",
+    "ThreadId": "32559",
+    "Html": "Hi there,<br>\r\nI'm not exactly sure what you are trying to achieve. You will not likely be able to remove noise very effectively by phase-shifting. That works better for hum removal. A filter is probably what you need.<br>\r\n",
+    "PostedDate": "2008-07-31T02:03:14.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "108482",
+    "ThreadId": "32559",
+    "Html": "thx for your reply. what I want to achieve is to eliminate sounds in an office environment by headphones attached to the PC-Out. So I want record the incoming sounds (by microphone) and create REALTIME the phase-shifted anti-noise to the headphones. what I learned from the noise-cancelling headphones, they only reduce the lower-frequencies. so I thought maybe I could use the library to success :-)\r\n",
+    "PostedDate": "2008-08-01T05:18:29.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

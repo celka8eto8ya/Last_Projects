@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1454145",
+    "ThreadId": "648227",
+    "Html": "Is it possible to get <strong>Jack Information</strong> of Audio Device using NAudio?<br />\n<br />\nI see that NAdio has reference to PKEY_AudioEndpoint_JackSubType property buy how to get it?<br />\n<br />\n <br />\nThank you! <br />\n",
+    "PostedDate": "2015-12-01T09:01:59.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457805",
+    "ThreadId": "648227",
+    "Html": "NAudio has wrappers for many parts of the WASAPI Core audio interfaces. The best place to learn about them is actually MSDN.\r<br />\ne.g here: <a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/dd756607%28v=vs.85%29.aspx?f=255&amp;MSPPError=-2147217396\" rel=\"nofollow\">https://msdn.microsoft.com/en-us/library/windows/desktop/dd756607%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396</a><br />\n",
+    "PostedDate": "2016-01-03T08:42:49.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

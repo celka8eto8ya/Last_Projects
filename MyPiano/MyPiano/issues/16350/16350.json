@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "not an issue with NAudio.",
+    "ClosedDate": "2012-10-06T12:41:14.173-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I'm resampling wav file for my web app using ResamplerDmoStream.  This works fine running locally, but I'm getting a registration error when deployed to Azure:\r\n\r\n Exception thrown = System.Runtime.InteropServices.COMException (0x80040154): Retrieving the COM class factory for component with CLSID {F447B69E-1884-4A7E-8055-346F74D6EDB3} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).\r\n   at NAudio.Dmo.Resampler..ctor()\r\n   at NAudio.Wave.ResamplerDmoStream..ctor(IWaveProvider inputProvider, WaveFormat outputFormat)\r\n\r\nI'm using version 1.5.4 of NAudio.dll.  Thanks!",
+    "LastUpdatedDate": "2012-10-06T12:41:14.173-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-05-14T11:56:35.283-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudio resampler exception when deployed to Azure",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16350
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "this is because the DMO resampler COM object does not exist on Azure. You could try using the WaveFormatConversionStream instead",
+      "PostedDate": "2012-05-18T02:01:02.763-07:00",
+      "Id": 66140
+    }
+  ]
+}

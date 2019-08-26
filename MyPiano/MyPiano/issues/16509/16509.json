@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I would really be happy, if NAudio was a signed DLL. It is used by many, and a signed DLL cannot use an unsigned one, so you're forcing people to not sign their DLLs, or to download the source code.\r\n\r\nIt should give no problems to the existing users, as an unsigned DLL can use a signed DLL. Pretty please?",
+    "LastUpdatedDate": "2017-01-24T02:08:10.183-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-01-24T02:08:10.183-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Please sign NAudio",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16509
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

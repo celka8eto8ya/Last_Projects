@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "closed, not a bug",
+    "ClosedDate": "2012-09-26T06:24:58.843-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hello,\r\nwhat is the most efficient way to persist the audio captured from the microphone guaranteeing the constant wave format (PCM, 1 channel, 16bit and 16000Hz) regardeless of the microphone configuration?\r\n\r\nThanks,\r\nPedro",
+    "LastUpdatedDate": "2012-09-26T06:24:58.843-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-05-04T18:12:13.687-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Save on file system with costant format",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16349
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "you would use the WaveFormatConversionStream for resampling. For stereo to mono you could either mix or throw one channel away. But the best approach is always to record at the sample rate you want",
+      "PostedDate": "2012-05-08T01:43:11.87-07:00",
+      "Id": 65160
+    }
+  ]
+}

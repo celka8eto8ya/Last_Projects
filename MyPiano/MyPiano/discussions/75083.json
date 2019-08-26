@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "256964",
+    "ThreadId": "75083",
+    "Html": "<p>Hello,</p>\r\n<p>is there already support for beat detection or is this feature planned for future releases? Any example project available?</p>\r\n<p>Thanks</p>\r\n<p>Frank</p>",
+    "PostedDate": "2009-11-13T14:10:21.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "257435",
+    "ThreadId": "75083",
+    "Html": "<p>hi, I'm afraid NAudio doesn't support beat detection. You would need to write your own algorithm to do that.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-11-16T02:33:27.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

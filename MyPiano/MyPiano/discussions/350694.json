@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "817963",
+    "ThreadId": "350694",
+    "Html": "\r\n<p>I have a WAV file at 8000 samples/sec and 8 bits per sample.&nbsp; It's stored as a C# byte array in memory.</p>\r\n<p>It needs to be converted to a 16000 samples/sec, 16 bits/sample WAV.&nbsp; The converted WAV can be either a byte array or a MemoryStream.</p>\r\n<p>I've tried using WaveFileWriter.WriteData with the new format (the output is high pitched and garbled), WaveFileWriter.WriteSamples (confusing; apparently it needs floats but I have bytes), WaveFormatConversionStream (this doesn't seem to produce a valid\r\n WAV - there's no &quot;RIFF&quot; in the header).</p>\r\n<p>If this possible?&nbsp; Is there an easy to follow sample somewhere?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-03-30T14:46:27.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "818654",
+    "ThreadId": "350694",
+    "Html": "<p>You can use WaveFormatConversionStream to upsample, or convert from one bit depth to another. It seem likely that your original audio was a-law or u-law, so your conversion to 16kHz 16 bit would need to be done in two stages.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-04-02T01:44:46.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "WaveViewer.OnPaint has the following line of code\r\n\r\ne.Graphics.DrawLine(Pens.Black, i, base.Height * num7, i, base.Height * num8);\r\n\r\nCould it perhaps make use of the ForeColor and BackColor?  Otherwise I am confined to drawing black lines, and this doesn't look very good in my app :)\r\n",
+    "LastUpdatedDate": "2012-03-22T04:24:15.727-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-03-22T03:23:13.333-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveViewer ignores Fore/Back colours",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16343
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "\t\tprotected override void OnPaint(PaintEventArgs e)\n\t\t{\n\t\t\te.Graphics.FillRectangle(new SolidBrush(BackColor), e.ClipRectangle);\n\t\t\tif (waveStream != null)\n\t\t\t{\n\t\t\t\twaveStream.Position = 0;\n\t\t\t\tint bytesRead;\n\t\t\t\tbyte[] waveData = new byte[samplesPerPixel * bytesPerSample];\n\t\t\t\twaveStream.Position = startPosition + (e.ClipRectangle.Left * bytesPerSample * samplesPerPixel);\n\n\t\t\t\tfor (float x = e.ClipRectangle.X; x < e.ClipRectangle.Right; x += 1)\n\t\t\t\t{\n\t\t\t\t\tshort low = 0;\n\t\t\t\t\tshort high = 0;\n\t\t\t\t\tbytesRead = waveStream.Read(waveData, 0, samplesPerPixel * bytesPerSample);\n\t\t\t\t\tif (bytesRead == 0)\n\t\t\t\t\t\tbreak;\n\t\t\t\t\tfor (int n = 0; n < bytesRead; n += 2)\n\t\t\t\t\t{\n\t\t\t\t\t\tshort sample = BitConverter.ToInt16(waveData, n);\n\t\t\t\t\t\tif (sample < low) low = sample;\n\t\t\t\t\t\tif (sample > high) high = sample;\n\t\t\t\t\t}\n\t\t\t\t\tfloat lowPercent = ((((float)low) - short.MinValue) / ushort.MaxValue);\n\t\t\t\t\tfloat highPercent = ((((float)high) - short.MinValue) / ushort.MaxValue);\n\t\t\t\t\te.Graphics.DrawLine(new Pen(ForeColor), x, this.Height * lowPercent, x, this.Height * highPercent);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n",
+      "PostedDate": "2012-03-22T04:24:15.727-07:00",
+      "Id": 58700
+    }
+  ]
+}

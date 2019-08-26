@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1261973",
+    "ThreadId": "550359",
+    "Html": "Hello Mark\r<br />\nI would like to use NAudio for ASIO support in WEBRTC\r<br />\nI have no idea if this is possible or not. Can you advise?\r<br />\n<br />\nNOTE I have also emailed you as well.\r<br />\n<br />\nBest regards\r<br />\n<br />\nMark Jarvis<br />\n",
+    "PostedDate": "2014-07-02T07:16:24.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273596",
+    "ThreadId": "550359",
+    "Html": "\r\n<div dir=\"ltr\">hi Mark,\r\n<div>sorry getting a bit behind replying to emails. I'm not an expert in WEBRTC, but as I understand it runs in the browser, so NAudio could not be used with it.</div>\r\n</div>\r\n<div><br>\r\n<br>\r\n<div></div>\r\n</div>\r\n",
+    "PostedDate": "2014-07-17T08:36:09.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

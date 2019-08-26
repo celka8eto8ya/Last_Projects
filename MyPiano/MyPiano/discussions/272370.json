@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "670941",
+    "ThreadId": "272370",
+    "Html": "\r\n<p>If I had an array with information for a series of notes (frequency, amplitude, and duration), how could I save that data to a .wav file?</p>\r\n",
+    "PostedDate": "2011-09-12T22:11:38.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "675359",
+    "ThreadId": "272370",
+    "Html": "<p>WAV files contain audio. You would need to convert that information into audio somehow. The simplest solution would be to create sine waves, but it wouldn't sound great to listen to. An alternative would be to create a MIDI file, and then play it back through a software synthesizer.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-09-22T08:50:51.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "675577",
+    "ThreadId": "272370",
+    "Html": "<p>Yeah, the program currently just plays sine waves (I didn't want to do anything more complex until I got the whole saving bit working. How exactly would I save to a MIDI file? That seems to be what I'm looking for. Thanks!</p>",
+    "PostedDate": "2011-09-22T17:07:33.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

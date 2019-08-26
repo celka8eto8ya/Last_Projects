@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1256768",
+    "ThreadId": "548816",
+    "Html": "ok this is my code: <br />\n<pre><code>\n            if (mixer2 == null)\n            {\n                MessageBox.Show(&quot;there is no information to generate a file&quot;);\n                return;\n            }\n            SaveFileDialog save = new SaveFileDialog();\n            save.Filter = &quot;WAV file (*.wav)|*.wav;&quot;;\n            if (save.ShowDialog() != DialogResult.OK)\n            {\n                MessageBox.Show(&quot;File not written&quot;);\n                return;\n\n            }\n             WaveFileWriter.CreateWaveFile( save.FileName, mixer2);\n\n          MessageBox.Show(&quot;file saved&quot;);</code></pre>\n\nhowever once it is done, and I try to open the file in another program, the file is empty.<br />\nI know mixer2 have the data in it, because I can play it from the program I am writing.  <br />\n",
+    "PostedDate": "2014-06-16T11:46:14.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1257227",
+    "ThreadId": "548816",
+    "Html": "does anyone know how I can troubleshoot this ? or what might be wrong with my code<br />\n",
+    "PostedDate": "2014-06-17T13:26:57.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1257264",
+    "ThreadId": "548816",
+    "Html": "markheath do you know?\r<br />\nI am really lost on this<br />\n",
+    "PostedDate": "2014-06-17T15:51:24.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260970",
+    "ThreadId": "548816",
+    "Html": "First thing is to check you have inputs to your mixer. Can you create  WaveFile from one of the inputs?<br />\n",
+    "PostedDate": "2014-06-29T15:44:35.873-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260988",
+    "ThreadId": "548816",
+    "Html": "sorry, I should have closed this.\r<br />\nI got it to work\r<br />\nthanks<br />\n",
+    "PostedDate": "2014-06-29T19:05:11.11-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

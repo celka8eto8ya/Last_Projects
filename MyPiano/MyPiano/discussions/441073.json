@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1033637",
+    "ThreadId": "441073",
+    "Html": "Hi, I would like to play mp3 file using NAudio. I have tried to use MP3FileReader to open MP3 file stream. But after opening the file, it gave me the error of &quot;AcmNotPossible calling acmStreamOpen&quot;. \r<br />\n<br />\nThis is my code to open the stream of MP3. <br />\n<pre><code>private WaveStream CreateInputStream(string fileName)\n        {\n            WaveChannel32 inputStream;\n            if (fileName.EndsWith(&quot;.mp3&quot;))\n            {\n                WaveStream mp3Reader = new Mp3FileReader(fileName);\n                inputStream = new WaveChannel32(mp3Reader);\n            }\n            else\n            {\n                throw new InvalidOperationException(&quot;Unsupported extension&quot;);\n            }\n            volumeStream = inputStream;\n            return volumeStream;\n        }</code></pre>\n\n",
+    "PostedDate": "2013-04-21T12:49:14.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1033910",
+    "ThreadId": "441073",
+    "Html": "What OS are you using? There needs to be an ACM MP3 codec installed for this to work<br />\n",
+    "PostedDate": "2013-04-22T05:13:47.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

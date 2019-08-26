@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "114789",
+    "ThreadId": "34575",
+    "Html": "I'm looking to create a small dictation recorder in C# using NAudio. I'd liek to have the normal operations you'd expect in a dictation recorder - Play, Record, Pause, Rewind, Fast Forward.<br>\r\n<br>\r\nMy first question is - Is this something someone else has already done?&nbsp; If it is, I don't want to reinvent the wheel, however has some searching, I have not found anything (opensource).<br>\r\n<br>\r\nMy Second Question is - The NAudio.Wave.WaveInStream is obviously for Recording, and the NAudio.Wave.WaveOut is for playback, but is there anything that can do both? Record and Play? <br>\r\n<br>\r\nNAudio.Wave.WaveInStream is not repositionable - which means that calls toWaveInStream.Seek will fail - So no Rewind/Fast Forward on that stream.<br>\r\n<br>\r\nThanks,<br>\r\nAdrian<br>\r\n<br>\r\n<br>\r\n<br>\r\n",
+    "PostedDate": "2008-08-29T13:05:16.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "115028",
+    "ThreadId": "34575",
+    "Html": "Hi there,<br>\r\n<br>\r\nthe way I would go about implementing this would be to write all the audio that is captured to a wave file. Then a completely separate wave stream should play back from that file (and needs to cope with the fact that it is growing in length). This way you could arbitrarily pause and reposition playback as you require.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-08-31T13:27:03.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "115345",
+    "ThreadId": "34575",
+    "Html": "Mark,<br>\r\n<br>\r\nUsing the two streams, one for input and one for output makes sense. That's pretty much what I figured I'd have to do. What I'm stuck on is how would I go about repositioning the input stream when the back button is pressed. eg: You have recorded 60 seconds, and you want to skip back and record over the last 15 seconds of the recording. From what I know, you can't just reposition the input wave.<br>\r\n<br>\r\nThanks,<br>\r\nAdrian<br>\r\n",
+    "PostedDate": "2008-09-02T06:05:33.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "115834",
+    "ThreadId": "34575",
+    "Html": "Your recording stream should be writing to a WaveFileWriter. What you want is to be able to reposition the WaveFileWriter backwards so it can overwrite what has already been written. I would need to have a look at the code to see what happens in this scenario, as it would need to keep correct track of the Wave File length and position.<br>\r\n",
+    "PostedDate": "2008-09-03T15:28:43.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

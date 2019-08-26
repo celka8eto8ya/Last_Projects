@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "850154",
+    "ThreadId": "359946",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Is there any way to hide an application, which uses wasapi loopback capture, from windows volume mixer. A more detailed description of the problem is given in the following link:</p>\r\n<p><a href=\"https://www.dropbox.com/s/2olse8lc6qdwekk/naudiowasapi.PNG\">https://www.dropbox.com/s/2olse8lc6qdwekk/naudiowasapi.PNG</a></p>\r\n<p>I will be glad to hear possible solutions.</p>\r\n",
+    "PostedDate": "2012-06-17T18:44:09.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850229",
+    "ThreadId": "359946",
+    "Html": "<p>I'm afraid I don't know how to do this, and it may not even be possible. You could try asking a WASAPI related question on StackOverflow</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-06-18T02:38:32.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "854141",
+    "ThreadId": "359946",
+    "Html": "<p>thanks for the reply.</p>",
+    "PostedDate": "2012-06-26T19:58:28.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "889777",
+    "ThreadId": "359946",
+    "Html": "<p>I don't know how to hide the application panel on the mixer, but if you just want to lock the setting, add an endpoint.AudioEndpointVolume.OnVolumeNotification callback, and change the setting back the way you want. It's not a perfect lock, but it might be good enough.</p>",
+    "PostedDate": "2012-07-24T09:16:47.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "890513",
+    "ThreadId": "359946",
+    "Html": "<p>Thank you for your reply. I somehow did what you explained but it was still visible and I said \"whatever\". I am completely over it now :)</p>\r\n<p>You can imagine how much I tried from my words above I guess.</p>",
+    "PostedDate": "2012-07-24T17:21:28.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "891030",
+    "ThreadId": "359946",
+    "Html": "\r\n<p>It is a bit tricky but not impossible. Assuming you are not writing any malicious code or something to spy on people by turning on the mic or anything, here is how it could be accomplished:</p>\r\n<p>1. Load a dll into explorer.exe and hook into either ShellExecute or CreateProcess. Not sure which, but one of them should work</p>\r\n<p>2. Intercept when sndvol.exe is being started</p>\r\n<p>3. When sndvol process is loaded and starts to accept window events, find it's window handle</p>\r\n<p><a href=\"http://s10.postimage.org/nd8xgzk3t/Capture1.png\">http://s10.postimage.org/nd8xgzk3t/Capture1.png</a></p>\r\n<p>4. Find a child window of type TileListView</p>\r\n<p>5. Find a child window of type&nbsp;TileSled</p>\r\n<p>6. Enumerate child windows</p>\r\n<p>7. Find the window handle of the volume mixer tile of your &quot;invisible&quot; app</p>\r\n<p><a href=\"http://s10.postimage.org/6e4kfgya1/Capture2.png\">http://s10.postimage.org/6e4kfgya1/Capture2.png</a></p>\r\n<p>8. Set it's Visible property to false, Width to 0</p>\r\n<p><a href=\"http://s10.postimage.org/ct3lc54zt/Capture3.png\">http://s10.postimage.org/ct3lc54zt/Capture3.png</a></p>\r\n<p>9. Slide the remaining tiles to the left to fill the gap</p>\r\n<p>10. Resize &amp; relocate the main sndvol window</p>\r\n<p>11. ???</p>\r\n<p>12. Profit</p>\r\n",
+    "PostedDate": "2012-07-25T03:53:43.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "891083",
+    "ThreadId": "359946",
+    "Html": "<p>on a second thought, I'd probably hijack mmdevapi.dll, and hide my process from the results.</p>\r\n<p><a href=\"http://source.winehq.org/source/dlls/mmdevapi/mmdevapi.h\">http://source.winehq.org/source/dlls/mmdevapi/mmdevapi.h</a></p>",
+    "PostedDate": "2012-07-25T04:40:21.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "891418",
+    "ThreadId": "359946",
+    "Html": "<p>I think this file is what should be altered</p>\r\n<p><a href=\"http://source.winehq.org/source/dlls/mmdevapi/audiovolume.c\">http://source.winehq.org/source/dlls/mmdevapi/audiovolume.c</a></p>\r\n<p>Anyway, thank you for the suggestions but again application of these methods require more keyboard crunching then what I was actually doing. Besides there are a wide variety of audio applications that are visible in sound mixer popup, so why bother to be invisible.</p>",
+    "PostedDate": "2012-07-25T18:18:16.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "891538",
+    "ThreadId": "359946",
+    "Html": "\r\n<p>I think I didn't explain it clear enough. I posted the wine library as a starting point, however modifying mmdevapi code and replacing the entire dll would take longer to complete. I will explain it a bit later, but after a little googleing, here is what\r\n I found about how sndvol acquires a list of apps that are using sound hardware.</p>\r\n<p>I think the legitimate way of getting the audio apps would be something like this (which I believe it's what sndvol.exe does. Just do a google search for IAudioSessionControl and sndvol. need to attach a debugger to see what it really does):</p>\r\n<p>1. Instantiate&nbsp;IMMDeviceEnumerator (CoCreateInstance, declared in mmdeviceapi.h in Windows SDK)</p>\r\n<p>2. Call IMMDeviceEnumerator::EnumAudioEndpoints to get a collection of&nbsp;IMMDevice</p>\r\n<p>3. Call&nbsp;IMMDevice::Activate to get an instance of&nbsp;IAudioSessionManager2 (declared in audiopolicy.h)</p>\r\n<p>4. Call&nbsp;IAudioSessionManager2::GetSessionEnumerator&nbsp;and get an&nbsp;IAudioSessionEnumerator</p>\r\n<p>5. Call&nbsp;IAudioSessionEnumerator::GetCount and</p>\r\n<p>6. Iterate from 0 to count and call IAudioSessionEnumerator::GetSession to get&nbsp;IAudioSessionControl for each session (The apps that appear in sndvol)</p>\r\n<p>What we want to do is, somehow modify&nbsp;IAudioSessionEnumerator::GetCount so it returns (the correct value - 1) if our app is running, and modify&nbsp;IAudioSessionEnumerator::GetSession to not return the session of our app.</p>\r\n<p><strong>Method 1:</strong></p>\r\n<p>Like you said, you could modify Wine code to create a proxy dll which does the audio session filtering. But then you'd need to create proxy classes for the chain I mentioned above, and detour LoadLibrary method in sndvol process in order to load your own\r\n mmdevapi.dll when it starts up.</p>\r\n<p><strong>Method 2:</strong></p>\r\n<p>Alternatively, you can find the offsets of the two methods I mentioned in 5 and 6, and detour them in sndvol. Which I believe wouldn't take more than a couple hours to code using IdaPro/ollydbg &amp; EasyHook/detours/whatevs</p>\r\n",
+    "PostedDate": "2012-07-26T01:55:29.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

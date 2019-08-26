@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I am trying to track down a memory leak when I play lots of mp3 files. If I don't play files, the memory usage is flat, but when I play files, the memory usage slowly climbs.\r\n\r\nOS = Windows XP SP3\r\nApplication = ASP.NET\r\nNAudio = 1.7\r\n\r\nFor each file, here is what I use to start the playback:\r\n```\r\n    Public Sub PlayFile(ByRef fileName As String)           ' play one file\r\n        waveOutDevice = New WaveOutEvent()\r\n        fReader = New AudioFileReader(fileName)\r\n        mainOutputStream = New WaveChannel32(fReader)       ' tie the file reader to the output stream\r\n        mainOutputStream.PadWithZeroes = False              ' need this to detect eof\r\n        waveOutDevice.Init(mainOutputStream)                ' tie output stream to output device\r\n        waveOutDevice.Play()\r\n    End Sub\r\n```\r\n\r\nand here is the code that I call once the file has finished:\r\n```\r\n    Public Sub Cleanup()\r\n        If (waveOutDevice IsNot Nothing) Then\r\n            If waveOutDevice.PlaybackState <> PlaybackState.Stopped Then\r\n                waveOutDevice.Stop()                    ' stop playing around\r\n            End If\r\n        End If\r\n\r\n        If (mainOutputStream IsNot Nothing) Then        ' clean up output streams\r\n            mainOutputStream.Close()\r\n            mainOutputStream.Dispose()                  ' also disposes the file reader\r\n            mainOutputStream = Nothing\r\n        End If\r\n        If (waveOutDevice IsNot Nothing) Then           ' clean up waveout device\r\n            waveOutDevice.Dispose()\r\n            waveOutDevice = Nothing\r\n        End If\r\n    End Sub\r\n```\r\nAny advice or directions appreciated.\r\nJake\r\n\r\n",
+    "LastUpdatedDate": "2014-12-13T03:15:22.75-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-12-12T10:17:50.863-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Memory leak on playback",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16462
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This is not a memory leak. You can GC.Collect() to free memory by force, or it should be freed anyway automatically in some time.",
+      "PostedDate": "2014-12-13T03:15:22.75-08:00",
+      "Id": 167966
+    }
+  ]
+}

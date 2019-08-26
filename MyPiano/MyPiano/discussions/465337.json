@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "1117387",
+    "ThreadId": "465337",
+    "Html": "I'd like to be able to get the output of the WaveFormatConversionStream as a byte array so I can write it to a database. In the code below, I'm writing it to disk, then reading it back from the disk and it works, but when I try to read it to a byte array, the array is all zeros.<br />\n<pre><code>var wfr = new WaveFileReader(file.InputStream);\nWaveStream pcmStream = new WaveFormatConversionStream(new WaveFormat(44100, 16, 1), wfr);\nWaveFileWriter.CreateWaveFile(@&quot;C:\\some\\path\\output.wav&quot;, pcmStream);\nvar fileBytes = System.IO.File.ReadAllBytes(@&quot;C:\\some\\path\\output.wav&quot;);</code></pre>\n\n",
+    "PostedDate": "2013-11-04T12:49:46.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117396",
+    "ThreadId": "465337",
+    "Html": "what happens if you try to play the WAV file? at the very least there should be a RIFF header, even if there is complete silence in the audio.<br />\n",
+    "PostedDate": "2013-11-04T13:04:29.077-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117400",
+    "ThreadId": "465337",
+    "Html": "The code above works and the WAV file is valid, but I'd like to skip the last two lines (writing it to disk and then reading it back in) and instead write it from the WaveFormatConversionStream to a byte array which I can use to put into the database.<br />\n",
+    "PostedDate": "2013-11-04T13:07:51.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117412",
+    "ThreadId": "465337",
+    "Html": "...in other words, I'm trying to tweak the above working code that relies on write access to the file system to something like the following code which does NOT currently work but wouldn't need to use the file system:<br />\n<pre><code>byte[] fileBytes;\nusing (var wfr = new WaveFileReader(file.InputStream))\n{\n    using (var pcmStream = new WaveFormatConversionStream(new WaveFormat(44100, 16, 1), wfr))\n    {\n        fileBytes = new byte[pcmStream.Length];\n        pcmStream.Read(fileBytes, 0, Convert.ToInt32(pcmStream.Length));\n    }\n}</code></pre>\n\nThis code produces an array of all zeros.<br />\n",
+    "PostedDate": "2013-11-04T13:39:16.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117419",
+    "ThreadId": "465337",
+    "Html": "first of all, I wouldn't recommend trying to read the entire file in one go. You're passing it through a codec, so I'd read a buffer of size pcmStream.WaveFormat.AverageBytesPerSecond. Then each buffer, write into a MemoryStream (paying attention to the return value of pcmStream.Read which tells you how many bytes it wrote into the buffer.<br />\n",
+    "PostedDate": "2013-11-04T13:54:30.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117428",
+    "ThreadId": "465337",
+    "Html": "Thanks for the advice. It's going to be really cool to have the ability to resample WAVs built in to my application when I'm done. Right now, it seem like I'm still doing something wrong or running into an issue of some kind. I updated my code to what (I think) you described and the buffer is still getting filled with all zeros. Here's how the code looks now:<br />\n<pre><code>byte[] fileBytes;\nusing (var wfr = new WaveFileReader(file.InputStream))\n{\n    using (var pcmStream = new WaveFormatConversionStream(new WaveFormat(44100, 16, 1), wfr))\n    {\n        fileBytes = new byte[pcmStream.Length];\n        using (var ms = new MemoryStream(fileBytes))\n        {\n            var bytesRead = -1;\n            while (bytesRead != 0)\n            {\n                var buffer = new byte[pcmStream.WaveFormat.AverageBytesPerSecond];\n                bytesRead = pcmStream.Read(buffer, 0, pcmStream.WaveFormat.AverageBytesPerSecond);\n                ms.Write(buffer, 0, bytesRead);\n            }\n        }\n    }\n}</code></pre>\n\npcmStream.Read() returns different lengths, as you would expect, including 88200 until it gets to the end of the stream and then starts returning 0, but buffer is always full of zeros, so in the end, the memory stream is too. I also thought you might like to know that pcmStream.CanRead always returns true even when the stream reaches the end.\r<br />\n<br />\nThanks again for the info!<br />\n",
+    "PostedDate": "2013-11-04T14:31:18.003-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117433",
+    "ThreadId": "465337",
+    "Html": "CanRead just mean that the stream supports reading. It is always true. \r<br />\nThere doesn't look anything obviously wrong with your code. What is wfr.WaveFormat?<br />\n",
+    "PostedDate": "2013-11-04T14:45:32.893-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117436",
+    "ThreadId": "465337",
+    "Html": "Thanks. You're right about CanRead. I guess I was thinking of the DataReader, not streams.\r<br />\n<br />\nHere's a very simple Visual Studio project with the issue reproduced:\r<br />\n<a href=\"http://bit.ly/1aAB75q\" rel=\"nofollow\">http://bit.ly/1aAB75q</a>\r<br />\n<br />\nTo answer your question, wfr.WaveFormat is:<br />\n<pre><code>{16 bit PCM: 48kHz 2 channels}\n    [NAudio.Wave.WaveFormatExtraData]: {16 bit PCM: 48kHz 2 channels}\n    AverageBytesPerSecond: 192000\n    BitsPerSample: 16\n    BlockAlign: 4\n    Channels: 2\n    Encoding: Pcm\n    ExtraSize: 0\n    SampleRate: 48000</code></pre>\n\n",
+    "PostedDate": "2013-11-04T14:55:05.677-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117438",
+    "ThreadId": "465337",
+    "Html": "OK, I'm surprised WaveFormatConversionStream didn't throw an exception. Normally you can't change channel count and sample rate at the same time. Start off just trying to resample (go to stereo 44.1kHz). If that works, go to mono in the next step (easiest way is throw away every other pair of bytes). <br />\n",
+    "PostedDate": "2013-11-04T14:59:30.86-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117441",
+    "ThreadId": "465337",
+    "Html": "Mark, \r<br />\n<br />\nI tried changing only the sample rate kHz. It still results in a buffer with only zeros\r<br />\n<a href=\"http://bit.ly/HD0s2J\" rel=\"nofollow\">http://bit.ly/HD0s2J</a><br />\n<pre><code>using (var pcmStream = new WaveFormatConversionStream(new WaveFormat(44100, wfr.WaveFormat.BitsPerSample, wfr.WaveFormat.Channels), wfr))\n. . .</code></pre>\n\n",
+    "PostedDate": "2013-11-04T15:14:28.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117505",
+    "ThreadId": "465337",
+    "Html": "the code you sent me isn't writing anything into fileBytes which is why the\r<br />\nalso, your input file starts with a section of silence, which is why it seems like the conversion is just returning silence, but if you wait for the second buffer, you'll see data.\r<br />\nfinally, don't trust the Length property on pcmStream. It calls into acmStreamSize which isn't always reliable. Just keep reading until you get 0.<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">var</span> baseDir = AppDomain.CurrentDomain.BaseDirectory;\n\n<span style=\"color:Green;\">//simulating a file being posted to an MVC application</span>\n<span style=\"color:Blue;\">var</span> file = <span style=\"color:Blue;\">new</span> { InputStream = File.Open(Path.Combine(baseDir, <span style=\"color:#A31515;\">&quot;input.wav&quot;</span>), FileMode.Open, FileAccess.Read) };\n\n<span style=\"color:Blue;\">using</span> (<span style=\"color:Blue;\">var</span> wfr = <span style=\"color:Blue;\">new</span> WaveFileReader(file.InputStream))\n{\n    <span style=\"color:Blue;\">var</span> outputFormat = <span style=\"color:Blue;\">new</span> WaveFormat(44100, wfr.WaveFormat.BitsPerSample, wfr.WaveFormat.Channels);\n    <span style=\"color:Blue;\">using</span> (<span style=\"color:Blue;\">var</span> pcmStream = <span style=\"color:Blue;\">new</span> WaveFormatConversionStream(outputFormat, wfr))\n    {\n        <span style=\"color:Blue;\">using</span> (<span style=\"color:Blue;\">var</span> ms = <span style=\"color:Blue;\">new</span> MemoryStream())\n        {\n            <span style=\"color:Blue;\">var</span> bytesRead = -1;\n            <span style=\"color:Blue;\">while</span> (bytesRead != 0)\n            {\n                <span style=\"color:Blue;\">var</span> buffer = <span style=\"color:Blue;\">new</span> <span style=\"color:Blue;\">byte</span>[pcmStream.WaveFormat.AverageBytesPerSecond];\n                bytesRead = pcmStream.Read(buffer, 0, pcmStream.WaveFormat.AverageBytesPerSecond);\n\n                <span style=\"color:Green;\">// !!! BUFFER IS ALWAYS FULL OF ZEROS !!!</span>\n\n                ms.Write(buffer, 0, bytesRead);\n            }\n            File.WriteAllBytes(Path.Combine(baseDir, <span style=\"color:#A31515;\">&quot;output.wav&quot;</span>), ms.GetBuffer());\n            <span style=\"color:Green;\">// to make a real wav file...</span>\n            <span style=\"color:Green;\">//ms.Position = 0;</span>\n            <span style=\"color:Green;\">//WaveFileWriter.CreateWaveFile(Path.Combine(baseDir, &quot;output.wav&quot;), new RawSourceWaveStream(ms, outputFormat));</span>\n        }\n    }\n}\r\n</pre></div>",
+    "PostedDate": "2013-11-04T23:35:01.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1211079",
+    "ThreadId": "465337",
+    "Html": "Hi,\r<br />\n<br />\nThanks you for code. It helped a lot  but I when i writeAllbytes Buffer the sound doesn't play?\r<br />\nWhy? i want to have it in a byte array not a file.wav<br />\n",
+    "PostedDate": "2014-02-20T04:09:30.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215869",
+    "ThreadId": "465337",
+    "Html": "see my commented out code to make a real WAV file<br />\n",
+    "PostedDate": "2014-02-27T14:26:44.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1360336",
+    "ThreadId": "584734",
+    "Html": "Hello!\r<br />\nI have the next question. \r<br />\nI have a multichannel soundcard. It about 10 output lines. \r<br />\nHow can i send sound in selected output line? Is it possible using NAudio? What i must use (it maybe ASIO)?\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2015-03-06T00:30:55.457-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

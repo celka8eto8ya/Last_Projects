@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1053020",
+    "ThreadId": "446051",
+    "Html": "I want to get frequency and amplitude from wave file using c#. I tried NAudio and FFT, but result is nothing. I am newbie in the programmer, can you help me please.<br />\n<pre><code>  private void wavToolStripMenuItem_Click(object sender, EventArgs e)\n        {\n            OpenFileDialog open = new OpenFileDialog();\n            open.Filter = &quot;Wave File (*.wav)|*.wav;&quot;;\n            if (open.ShowDialog() != DialogResult.OK) return;\n\n            chart1.Series.Add(&quot;wave&quot;);\n            chart1.Series[&quot;wave&quot;].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;\n            chart1.Series[&quot;wave&quot;].ChartArea = &quot;ChartArea1&quot;;\n\n            NAudio.Wave.WaveChannel32 wave = new NAudio.Wave.WaveChannel32(new NAudio.Wave.WaveFileReader(open.FileName));\n\n            byte[] buffer = new byte[8192];\n            int read = 0;\n            while (wave.Position &lt; wave.Length)\n            {\n                read = wave.Read(buffer, 0, 8192);\n\n                for (int i = 0; i &lt; read / 4; i++)\n                {\n                    chart1.Series[&quot;wave&quot;].Points.Add(BitConverter.ToSingle(buffer, i * 4));\n\n                }\n\n            }\n\n        }</code></pre>\n\nhow advanced code above to get the frequency?<br />\n<br />\nas the example below:<br />\n<br />\n<a href=\"http://naudio.codeplex.com/discussions/440149\" rel=\"nofollow\">http://naudio.codeplex.com/discussions/440149</a><br />\n<br />\noutput:<br />\n<pre><code>bin freq     result.X                     result.Y\n0    0kHz = 0.0895436406135559 0\n1    2.756kHz = -0.0815449208021164 -0.072540670633316\n2    5.512kHz = 0.0273693520575762 0.0248471423983574\n3    8.268kHz = 0.000522108399309218 -0.00102939654607326\n4   11.024kHz = -0.00428497046232224 -0.00206405459903181\n5   13.78kHz = -0.0028145220130682 0.00431088916957378\n6   16.536kHz = 0.00255107693374157 -0.00238887779414654\n7   19.292kHz = 0.000449806451797485 1.36718153953552E-05</code></pre>\n\n",
+    "PostedDate": "2013-06-05T03:01:13.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1053946",
+    "ThreadId": "446051",
+    "Html": "Have a look at this article I wrote which explains how to use FFT with NAudio.\r<br />\n<br />\n<a href=\"http://channel9.msdn.com/coding4fun/articles/AutotuneNET\" rel=\"nofollow\">http://channel9.msdn.com/coding4fun/articles/AutotuneNET</a>\r<br />\n<br />\nYou will need to be aware that FFT is one of the hardest concepts for a newbie to audio programming to grasp, so expect to spend a while learning about it.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-06-07T02:56:19.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

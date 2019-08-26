@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1438122",
+    "ThreadId": "642565",
+    "Html": "1:1:0 0 NoteOn Ch: 1 C6 Vel:87 Len: 167\r<br />\n1:1:240 240 NoteOn Ch: 1 C6 Vel:69 Len: 199\r<br />\n<br />\nI was able to read the above raw MIDI using nAudio in my C# program. I don't understand what &quot;Len&quot; means however. If that is the NoteLength property, does that mean the first note is played for 167 microseconds? Does that mean it is some tempo value divided by 167? Does it mean that it is played for 240 microseconds since the next note has a &quot;240&quot; as its marker?\r<br />\n<br />\nI am trying to understand how to calculate NoteLength so I can feed data to another program that works in quarter notes, with other note lengths being a multiple or divisor of a quarter. \r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2015-08-11T05:10:55.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

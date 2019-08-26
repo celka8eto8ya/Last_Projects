@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hey folks, \r\n\r\nI am working on a project where I need to join several WAV files. My Code works totally fine, \r\nbut you hear clearly a clicking noise between two joined WAV files. That is an huge issue.\r\n\r\nI am an audio engineer. When I work, with e.g. consecutive samples in a DAW (Digital Audio Workstation) and I want to prevent this clicking noise between two WAV samples then I have to create a crossover fade (basically this is a fadeout on the first sample and a fade in on the next sample). \r\n\r\nTherefore my question would be if I can create such a crossover fade while concatenating two WAV files. \r\n\r\nI provide my C# code below how I concatenate WAV files. This works for WAV files which are in the same \"format\". I found this piece of Code on (http://stackoverflow.com/questions/6777340/how-to-join-2-or-more-wav-files-together-programatically). \r\n\r\nThank you for advice and a solution. \r\n\r\nBest regards, \r\nAlex\r\n\r\n```\r\npublic static void Concatenate(string outputFile, IEnumerable<string> sourceFiles)\r\n{\r\n    byte[] buffer = new byte[1024];\r\n    WaveFileWriter waveFileWriter = null;\r\n\r\n    try\r\n    {\r\n        foreach (string sourceFile in sourceFiles)\r\n        {\r\n            using (WaveFileReader reader = new WaveFileReader(sourceFile))\r\n            {\r\n                if (waveFileWriter == null)\r\n                {\r\n                    // first time in create new Writer\r\n                    waveFileWriter = new WaveFileWriter(outputFile, reader.WaveFormat);\r\n                }\r\n                else\r\n                {\r\n                    if (!reader.WaveFormat.Equals(waveFileWriter.WaveFormat))\r\n                    {\r\n                        throw new InvalidOperationException(\"Can't concatenate WAV Files that don't share the same format\");\r\n                    }\r\n                }\r\n\r\n                int read;\r\n                while ((read = reader.Read(buffer, 0, buffer.Length)) > 0)\r\n                {\r\n                    waveFileWriter.WriteData(buffer, 0, read);\r\n                }\r\n            }\r\n        }\r\n    }\r\n    finally\r\n    {\r\n        if (waveFileWriter != null)\r\n        {\r\n            waveFileWriter.Dispose();\r\n        }\r\n    }\r\n\r\n}\r\n```",
+    "LastUpdatedDate": "2016-10-12T08:05:57.827-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-04-19T22:10:40.223-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Clicking noise when concatenating/joining two or more WAV files",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16492
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "There isn't an easy way to do this at the moment, but the `FadeInOutSampleProvider` could help here, or at least point you in the right direction",
+      "PostedDate": "2016-10-12T08:05:57.827-07:00",
+      "Id": 204648
+    }
+  ]
+}

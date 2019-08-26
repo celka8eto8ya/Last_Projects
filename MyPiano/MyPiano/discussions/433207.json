@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1001510",
+    "ThreadId": "433207",
+    "Html": "Can I create sinewaves that are modulated with﻿ slider UI control and output in real time? I've written single sine wave data into wave file but never output dynamically.\r<br />\n<br />\nThank you<br />\n",
+    "PostedDate": "2013-02-14T14:44:14.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1001749",
+    "ThreadId": "433207",
+    "Html": "You can just put the sine wave provider into WaveOut, and it will play in real-time. (latency won't be particularly great though - probably 200ms or so).\r<br />\n<br />\nFor smooth frequency transitions, you need to implement a glide/portamento algorithm, or there will be jumps in the sine wave. If you do a google search, you should find some discussion of algorithms. In the future I hope to write a blog-post on how to do this, as I have done something similar using wavetables in the past.<br />\n",
+    "PostedDate": "2013-02-15T03:42:55.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1001816",
+    "ThreadId": "433207",
+    "Html": "I see. For now latency should not be an issue. I will try utilizing WaveOut - thank you!<br />\n",
+    "PostedDate": "2013-02-15T06:20:13.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

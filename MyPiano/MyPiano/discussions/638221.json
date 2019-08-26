@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1426255",
+    "ThreadId": "638221",
+    "Html": "I get this error often when first pausing a file playing and then resuming using WaveOutEvent.\r<br />\n<br />\nI also get these messages in my output folder when paused:\r<br />\n<br />\nWARNING: WaveOutEvent callback event timeout\r<br />\nWARNING: WaveOutEvent callback event timeout\r<br />\nWARNING: WaveOutEvent callback event timeout\r<br />\nWARNING: WaveOutEvent callback event timeout\r<br />\nWARNING: WaveOutEvent callback event timeout\r<br />\nWARNING: WaveOutEvent callback event timeout\r<br />\n<br />\nEvert 300 ms (Do to DesiredLatency) WaveOutEvent.cs line 152\r<br />\n<br />\n<br />\nAny ideas?<br />\n",
+    "PostedDate": "2015-05-19T04:19:54.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1428673",
+    "ThreadId": "638221",
+    "Html": "you can safely ignore these. They should really be removed if playback is paused<br />\n",
+    "PostedDate": "2015-06-03T13:45:42.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

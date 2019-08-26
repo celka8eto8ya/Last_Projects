@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "938014",
+    "ThreadId": "402281",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>I'm using your NAudio library to generate acoustical stimulations in a psychophysic experiment.</p>\r\n<p>By the way, Great work !!!</p>\r\n<p>I need to generate a white noise filtered between 800Hz-1200Hz.</p>\r\n<p>Generating a white noise is quite simple.</p>\r\n<p>But how can I filter it to the requested frequency band?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks in advance,</p>\r\n<p>Ron</p>\r\n",
+    "PostedDate": "2012-11-07T08:44:10.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938015",
+    "ThreadId": "402281",
+    "Html": "<p>I'm afraid NAudio doesn't come with a bandpass filter (I'd like to include some filters in the future). What I normally do in cases like this is find some C code that does the filtering (there are good sites out there that will work out filter coefficients and even generate the code), and then port it to C#. If you are using the ISampleProvider interface, this should be quite straightforward, as you'll just be processing samples as 32 bit IEEE floats as they come through your Read method.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-11-07T08:47:24.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938030",
+    "ThreadId": "402281",
+    "Html": "<p>Hello,</p>\r\n<p>If I can afford ,&nbsp;</p>\r\n<p>you can use the example in BiQuadFilter.</p>\r\n<p>It just takes a little change for use with iSample.</p>\r\n<p>I use it for multiple parametric Equalisers.</p>\r\n<p>I tested LowPass and HiPass and they functioned properly.</p>",
+    "PostedDate": "2012-11-07T09:06:46.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938032",
+    "ThreadId": "402281",
+    "Html": "<p>ah yes, I forgot that was still in there :) I want to get this converted to ISampleProvider for the next NAudio</p>",
+    "PostedDate": "2012-11-07T09:08:43.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938045",
+    "ThreadId": "402281",
+    "Html": "<p>&nbsp;</p>\r\n<p>This is an example of using the class Biquad Filter</p>\r\n<p>I do not use the primary function \"Transform\" the class BiQuadFilter</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>\r\n<span style=\"color: blue;\">using</span> NAudio.Dsp;\r\n<span style=\"color: blue;\">using</span> System;\r\n\r\n\r\n<span style=\"color: blue;\">namespace</span> NAudio.Effects\r\n{\r\n\r\n\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">class</span> EqFilterX\r\n\t{\r\n\r\n\r\n\t\tBiQuadFilter2 bqf;\r\n\r\n\t\t<span style=\"color: blue;\">float</span>[] sIn = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[0];    <span style=\"color: green;\">// Sample In [n]</span>\r\n\t\t<span style=\"color: blue;\">float</span>[] sIn1 = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[0];   <span style=\"color: green;\">// Sample In [n-1]</span>\r\n\t\t<span style=\"color: blue;\">float</span>[] sIn2 = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[0];   <span style=\"color: green;\">// Sample In [n-2]</span>\r\n\t\t<span style=\"color: blue;\">float</span>[] sOut = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[0];   <span style=\"color: green;\">// Sample Out [n] </span>\r\n\t\t<span style=\"color: blue;\">float</span>[] sOut1 = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[0];  <span style=\"color: green;\">// Sample Out [n-1]</span>\r\n\t\t<span style=\"color: blue;\">float</span>[] sOut2 = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[0];  <span style=\"color: green;\">// Sample Out [n-2]</span>\r\n\r\n\t\t<span style=\"color: blue;\">public</span> EqFilterX()\r\n\t\t\t: <span style=\"color: blue;\">this</span>(BiQuadFilterType.LowPassFilter, 100.0f, 1.0f, 1.0f, <span style=\"color: blue;\">false</span>)\r\n\t\t{\r\n\t\t}\r\n\r\n\t\t<span style=\"color: blue;\">public</span> EqFilterX(BiQuadFilterType filtertype, <span style=\"color: blue;\">float</span> frequency, <span style=\"color: blue;\">float</span> q, <span style=\"color: blue;\">float</span> gain, <span style=\"color: blue;\">bool</span> bypass)\r\n\t\t{\r\n\t\t\tBypass = bypass;\r\n\t\t\tFilterType = filtertype;\r\n\t\t\tFrequency = frequency;\r\n\t\t\tQ = q;\r\n\t\t\tdBGain = gain;\r\n\r\n\t\t\tOnParamChanges();\r\n\r\n\r\n\t\t}\r\n\r\n\t\t<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span>\r\n\t\t<span style=\"color: gray;\">///</span><span style=\"color: green;\"> Type de Filter</span>\r\n\t\t<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;/summary&gt;</span>\r\n\t\t<span style=\"color: blue;\">public</span> BiQuadFilterType FilterType { <span style=\"color: blue;\">get</span>; <span style=\"color: blue;\">set</span>; }\r\n\r\n\t\t<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span>\r\n\t\t<span style=\"color: gray;\">///</span><span style=\"color: green;\"> CenterFrequence or Frequence </span>\r\n\t\t<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;/summary&gt;</span>\r\n\t\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">float</span> Frequency { <span style=\"color: blue;\">get</span>; <span style=\"color: blue;\">set</span>; }\r\n\r\n\t\t<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span>\r\n\t\t<span style=\"color: gray;\">///</span><span style=\"color: green;\"> Q or Shelf Slope or BandWidth</span>\r\n\t\t<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;/summary&gt;</span>\r\n\t\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">float</span> Q { <span style=\"color: blue;\">get</span>; <span style=\"color: blue;\">set</span>; }\r\n\r\n\t\t<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span>\r\n\t\t<span style=\"color: gray;\">///</span><span style=\"color: green;\"> Gain</span>\r\n\t\t<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;/summary&gt;</span>\r\n\t\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">float</span> dBGain { <span style=\"color: blue;\">get</span>; <span style=\"color: blue;\">set</span>; }\r\n\r\n\t\t<span style=\"color: gray;\">///</span><span style=\"color: green;\">// &lt;summary&gt;</span>\r\n\t\t<span style=\"color: gray;\">///</span><span style=\"color: green;\">// Numbre of channel</span>\r\n\t\t<span style=\"color: gray;\">///</span><span style=\"color: green;\">// &lt;/summary&gt;</span>\r\n\t\t<span style=\"color: green;\">//public int ChannelMax { get; set; }</span>\r\n\r\n\r\n\t\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">override</span> <span style=\"color: blue;\">void</span> OnParamChanges()\r\n\t\t{\r\n\t\t\tsIn = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[ChannelMax];    <span style=\"color: green;\">// Sample In [n]</span>\r\n\t\t\tsIn1 = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[ChannelMax];   <span style=\"color: green;\">// Sample In [n-1]</span>\r\n\t\t\tsIn2 = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[ChannelMax];   <span style=\"color: green;\">// Sample In [n-2]</span>\r\n\t\t\tsOut = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[ChannelMax];   <span style=\"color: green;\">// Sample Out [n] </span>\r\n\t\t\tsOut1 = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[ChannelMax];  <span style=\"color: green;\">// Sample Out [n-1]</span>\r\n\t\t\tsOut2 = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">float</span>[ChannelMax];\r\n\r\n\t\t\t<span style=\"color: blue;\">switch</span> (FilterType)\r\n\t\t\t{\r\n\t\t\t\t<span style=\"color: blue;\">case</span> BiQuadFilterType.AllPassFilter:\r\n\t\t\t\t\tbqf = BiQuadFilter2.AllPassFilter(SampleRate, Frequency, Q);\r\n\t\t\t\t\t<span style=\"color: blue;\">break</span>;\r\n\r\n\t\t\t\t<span style=\"color: blue;\">case</span> BiQuadFilterType.BandPassFilterConstantPeakGain:\r\n\t\t\t\t\tbqf = BiQuadFilter2.BandPassFilterConstantPeakGain(SampleRate, Frequency, Q);\r\n\t\t\t\t\t<span style=\"color: blue;\">break</span>;\r\n\r\n\t\t\t\t<span style=\"color: blue;\">case</span> BiQuadFilterType.BandPassFilterConstantSkirtGain:\r\n\t\t\t\t\tbqf = BiQuadFilter2.BandPassFilterConstantSkirtGain(SampleRate, Frequency, Q);\r\n\t\t\t\t\t<span style=\"color: blue;\">break</span>;\r\n\r\n\t\t\t\t<span style=\"color: blue;\">case</span> BiQuadFilterType.HighPassFilter:\r\n\t\t\t\t\tbqf = BiQuadFilter2.HighPassFilter(SampleRate, Frequency, Q);\r\n\t\t\t\t\t<span style=\"color: blue;\">break</span>;\r\n\r\n\t\t\t\t<span style=\"color: blue;\">case</span> BiQuadFilterType.HighShelf:\r\n\t\t\t\t\t<span style=\"color: green;\">// Q = Shelf slope</span>\r\n\t\t\t\t\tbqf = BiQuadFilter2.HighShelf(SampleRate, Frequency, Q, dBGain);\r\n\t\t\t\t\t<span style=\"color: blue;\">break</span>;\r\n\r\n\t\t\t\t<span style=\"color: blue;\">case</span> BiQuadFilterType.LowPassFilter:\r\n\t\t\t\t\tbqf = BiQuadFilter2.LowPassFilter(SampleRate, Frequency, Q);\r\n\t\t\t\t\t<span style=\"color: blue;\">break</span>;\r\n\r\n\t\t\t\t<span style=\"color: blue;\">case</span> BiQuadFilterType.LowShelf:\r\n\t\t\t\t\t<span style=\"color: green;\">// Q = Shelf slope</span>\r\n\t\t\t\t\tbqf = BiQuadFilter2.LowShelf(SampleRate, Frequency, Q, dBGain);\r\n\t\t\t\t\t<span style=\"color: blue;\">break</span>;\r\n\r\n\t\t\t\t<span style=\"color: blue;\">case</span> BiQuadFilterType.NotchFilter:\r\n\t\t\t\t\tbqf = BiQuadFilter2.NotchFilter(SampleRate, Frequency, Q);\r\n\t\t\t\t\t<span style=\"color: blue;\">break</span>;\r\n\r\n\t\t\t\t<span style=\"color: blue;\">case</span> BiQuadFilterType.PeakingEQ:\r\n\t\t\t\t\tbqf = BiQuadFilter2.PeakingEQ(SampleRate, Frequency, Q, dBGain);\r\n\t\t\t\t\t<span style=\"color: blue;\">break</span>;\r\n\r\n\t\t\t\t<span style=\"color: blue;\">default</span>:\r\n\t\t\t\t\t<span style=\"color: blue;\">break</span>;\r\n\t\t\t}\r\n\t\t}\r\n\r\n\r\n\t\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">override</span> <span style=\"color: blue;\">void</span> Sample(<span style=\"color: blue;\">ref</span> <span style=\"color: blue;\">float</span> sample, <span style=\"color: blue;\">ref</span> <span style=\"color: blue;\">int</span> channel)\r\n\t\t{\r\n\r\n\t\t\t\r\n\r\n\t\t\tsIn[channel] = sample;\r\n\r\n\t\t\tsOut[channel] = (<span style=\"color: blue;\">float</span>)((bqf.b0 / bqf.a0) * sIn[channel] + (bqf.b1 / bqf.a0) * sIn1[channel] + (bqf.b2 / bqf.a0) * sIn2[channel]\r\n\t\t\t\t\t\t\t- (bqf.a1 / bqf.a0) * sOut1[channel] - (bqf.a2 / bqf.a0) * sOut2[channel]);\r\n\t\t\tsIn2[channel] = sIn1[channel];\r\n\t\t\tsIn1[channel] = sIn[channel];\r\n\r\n\t\t\tsOut2[channel] = sOut1[channel];\r\n\t\t\tsOut1[channel] = sOut[channel];\r\n\r\n\t\t\t<span style=\"color: blue;\">if</span> (Bypass == <span style=\"color: blue;\">false</span>)\r\n\t\t\t\tsample = sOut[channel];\r\n\r\n\r\n\r\n\t\t}\r\n\r\n</pre>\r\n<pre><br /></pre>\r\n</div>\r\n</p>\r\n<p>simply declare the class.</p>\r\n<p>Initialize filters (Frequency, SampleRate, Gain, Q, Type, ...) and call the function \"OnParamChanges\"</p>\r\n<p>Then in a loop passes each sample in the function \"Sample\"</p>\r\n<p>This example is an excerpt from one of my class \"Effects\".</p>\r\n<p>it is possible to use Eq's different for channels.</p>\r\n<p>Of course you need to adapt this example.</p>",
+    "PostedDate": "2012-11-07T09:29:40.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938055",
+    "ThreadId": "402281",
+    "Html": "<p>&nbsp;</p>\r\n<p>I have a PDF that explains a little Biquad Filter</p>\r\n<p>available here</p>\r\n<p><span style=\"font-size: 7.5pt; color: #909090;\"><a href=\"https://www.wetransfer.com/dl/s9Et8Myb/ec56b1d2e10f2794263250e77244db9e0ade4a4d56833bbbb27bb1d3ee8a028171c9dc4463234c8\" target=\"_blank\"><span style=\"color: #7ca3d6;\">WeTranfert.</span></a></span></p>",
+    "PostedDate": "2012-11-07T09:39:18.277-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938427",
+    "ThreadId": "402281",
+    "Html": "<p>Hi,</p>\r\n<p>Thanks for the quick response.</p>\r\n<p>Unfortunately, I don't have much knowledge in sound programming, filters and all the fourier stuff (pardon).</p>\r\n<p>I need to generate a white noise filtered between 800-1200Hz for a 1 sec period.</p>\r\n<p>What would be the easiest way to do it?</p>\r\n<p>How can I use the EqFilterX class? How do I need to set the parameters? Can you attach a sample code?</p>\r\n<p>By the way, where can I find the BiQuadFilter2 class? and what is the difference from the NAudio BiQuadFilter class?</p>\r\n<p>Thanks again,</p>\r\n<p>Ron</p>",
+    "PostedDate": "2012-11-08T03:04:39.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938437",
+    "ThreadId": "402281",
+    "Html": "<p>Hello,</p>\r\n<p>gloupsss BiQuadFilter2 is exactly the same as BiQuadFilter</p>\r\n<p><br />&nbsp; BiQuadFilter is located in the DSP library NAudio</p>\r\n<p><br />If it's urgent I can make an example of you (depending on my available time), or you can just wait to be the complement of Mark.</p>",
+    "PostedDate": "2012-11-08T03:18:40.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938439",
+    "ThreadId": "402281",
+    "Html": "<p>Actually, it's quite urgent.</p>\r\n<p>A simple example would be great !!!</p>\r\n<p>Thanks a lot :-)</p>",
+    "PostedDate": "2012-11-08T03:30:32.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938498",
+    "ThreadId": "402281",
+    "Html": "<p>Here I have an example.</p>\r\n<p>Well I took an existing generator and add LowPassFilter &amp; HighPassFilter for Pink Noise &amp; WhiteNoise and duration</p>\r\n<p>I did some test with an analyzer (SmaartLive). this example seems correct</p>\r\n<p>I use as a reference the dll NAudio 1.6.</p>\r\n<p><br />If you want a more powerful filter, you will have to use FFT.</p>\r\n<p>And not enough time to make an example.</p>\r\n<p><br />example is available in WeTranfert here ::<br /><br />https://www.wetransfer.com/dl/N7a9W05a/dede49dd367271447614f812590cb0b1eb5b5db0d9fb2020662074973bd5768975ff26506369f74</p>\r\n<p><br />Publisher Visual Studio Express 2012</p>",
+    "PostedDate": "2012-11-08T05:25:02.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939060",
+    "ThreadId": "402281",
+    "Html": "<p>Thanks ManuN I will check it out ...</p>",
+    "PostedDate": "2012-11-09T03:46:24.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

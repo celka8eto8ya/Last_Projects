@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "593548",
+    "ThreadId": "252963",
+    "Html": "\r\n<p>Hey,</p>\r\n<p>I'm trying to create a file programatically, and I'm using this code:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>     MidiEventCollection collection = <span style=\"color:blue\">new</span> MidiEventCollection(0, 120) ;\r\n\r\n            collection.AddEvent(<span style=\"color:blue\">new</span> TextEvent(<span style=\"color:#a31515\">&quot;Test&quot;</span>, MetaEventType.TextEvent, 0), 0);\r\n            NoteOnEvent evento = <span style=\"color:blue\">new</span> NoteOnEvent(2,1,40,100,15);\r\n            collection.AddEvent(evento, 1);\r\n            collection.PrepareForExport();\r\n            MidiFile.Export(<span style=\"color:#a31515\">&quot;test.mid&quot;</span>, collection);\r\n\r\n</pre>\r\n</div>\r\n<p>However, the test.mid file doesn't play any sound. I tried opening the file using your library and it says it's missing a noteOff event. What am I doing wrong?</p>\r\n",
+    "PostedDate": "2011-04-07T07:45:51.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "594513",
+    "ThreadId": "252963",
+    "Html": "<p>Yes, for every NoteOn MIDI message there must be a NoteOff event.</p>\r\n<p>Try something like this:<br /> MidiEventCollection collection = new MidiEventCollection(0, 120); <br /> collection.AddEvent(new NoteEvent(1, 1, MidiCommandCode.NoteOn, 60, 100), 0);<br /> collection.AddEvent(new NoteEvent(300, 1, MidiCommandCode.NoteOff, 60, 0), 0);<br /> collection.PrepareForExport();<br /> <br /> MidiFile.Export(txtFile.Text, collection);</p>",
+    "PostedDate": "2011-04-09T00:26:16.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "594557",
+    "ThreadId": "252963",
+    "Html": "Ok, ok, then. What is the duartion (100, in this example) useful for? Shouldn't it create the NoteOff event automatically?<br>\r\n<br>\r\nThanks again<br>\r\n<br>\r\n<hr id=\"x_x_stopSpelling\">\r\nFrom: [email removed]<br>\r\nTo: [email removed]<br>\r\nDate: Sat, 9 Apr 2011 00:26:18 -0700<br>\r\nSubject: Re: MIDI file creation [naudio:252963]<br>\r\n<br>\r\nFrom: markheath<br>\r\n<div id=\"x_x_ecxThreadNotificationPostBody\">Yes, for every NoteOn MIDI message there must be a NoteOff event.<br>\r\nTry something like this:<br>\r\nMidiEventCollection collection = new MidiEventCollection(0, 120); <br>\r\ncollection.AddEvent(new NoteEvent(1, 1, MidiCommandCode.NoteOn, 60, 100), 0);<br>\r\ncollection.AddEvent(new NoteEvent(300, 1, MidiCommandCode.NoteOff, 60, 0), 0);<br>\r\ncollection.PrepareForExport();<br>\r\n<br>\r\nMidiFile.Export(txtFile.Text, collection);<br>\r\n</div>\r\n<div id=\"x_x_ecxThreadNotificationFooter\">Read the <a target=\"_blank\">full discussion online</a>.<br>\r\nTo add a post to this discussion, reply to this email (<a target=\"_blank\">naudio@discussions.codeplex.com</a>)<br>\r\nTo start a new discussion for this project, email <a target=\"_blank\">naudio@discussions.codeplex.com</a><br>\r\nYou are receiving this email because you subscribed to this discussion on CodePlex. You can\r\n<a target=\"_blank\">unsubscribe</a> on CodePlex.com.<br>\r\nPlease note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at CodePlex.com<br>\r\n</div>\r\n",
+    "PostedDate": "2011-04-09T03:57:58.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "594818",
+    "ThreadId": "252963",
+    "Html": "<p>This code was developed for <a href=\"http://midifilemapper.codeplex.com/\">MIDI File Mapper</a> and <a href=\"http://midifilesplitter.codeplex.com/\">MIDI File Splitter</a>, for which the API works well (loading in existing MIDI files and modifying them). I agree though that it is not intuitive for people wanting to create MIDI from scratch. Perhaps this could be addressed in a future version.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-10T01:03:43.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "605802",
+    "ThreadId": "252963",
+    "Html": "<p>It all worked.</p>\r\n<p>I&nbsp;have one more question: given a BPM, how do I calculate the deltaTicksperquarternote and the absolute duration ( the one I should use in NoteOn and NoteOff events)?</p>\r\n<p>Thanks</p>",
+    "PostedDate": "2011-05-02T05:09:12.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "605942",
+    "ThreadId": "252963",
+    "Html": "<p>delta ticks per quarter note is your choice. people usually go with numbers that are multiples of 2 and 3, allowing for subdivisions into triplets etc. Common values are 96, 240, 480. So if you have 120 BPM and 240 ticks per beat there are 28800 ticks per minute, or 480 ticks per second (so you have an effective time resolution of 2ms.</p>",
+    "PostedDate": "2011-05-02T09:14:27.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "605970",
+    "ThreadId": "252963",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-size:11.0pt; font-family:\">But if, for example, I’m given 120 BPM and someone asks me for a\r\n<b>quarter</b> note C4, how long should the duration of that note be?</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Thank you</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<div style=\"border:none; border-top:solid #B5C4DF 1.0pt; padding:3.0pt 0in 0in 0in\">\r\n<p><b><span style=\"font-size:10.0pt; font-family:\">From:</span></b><span style=\"font-size:10.0pt; font-family:\"> markheath [email removed]\r\n<br>\r\n<b>Sent:</b> Monday, May 02, 2011 5:15 PM<br>\r\n<b>To:</b> bernardocaldas@hotmail.com<br>\r\n<b>Subject:</b> Re: MIDI file creation [naudio:252963]</span></p>\r\n</div>\r\n</div>\r\n<p></p>\r\n<p><span style=\"font-size:9.0pt; font-family:\">From: markheath</span></p>\r\n<div id=\"x_x_ThreadNotificationPostBody\" style=\"margin-bottom:24.0pt\">\r\n<p><span style=\"font-size:9.0pt; font-family:\">delta ticks per quarter note is your choice. people usually go with numbers that are multiples of 2 and 3, allowing for subdivisions into triplets etc. Common values are 96, 240, 480. So if you have 120 BPM and\r\n 240 ticks per beat there are 28800 ticks per minute, or 480 ticks per second (so you have an effective time resolution of 2ms.</span></p>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2011-05-02T10:24:48.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "606081",
+    "ThreadId": "252963",
+    "Html": "<p>the BPM doesn't matter. If you selected 240 delta ticks per quarter note, then a quarter note on C4 has a duration of 240.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-02T13:11:35.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

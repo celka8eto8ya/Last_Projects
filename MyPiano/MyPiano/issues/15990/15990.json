@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:16:09.91-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "When nAudio is set to AnyCPU and compiled, the WaveBuffer class throws an exception: 'Could not load type 'WaveBuffer' from assembly because it contains an object field at offset 4 that is incorrectly aligned or overlapped by a non-object field.'\r\n\r\nThe problem is that .NET reference types must always be aligned on pointer size boundaries. Your union works in x86 since the field offset is 4 bytes which is the pointer size for a 32 bit system but fails on x64 since there it must be offset a multiple of 8. \r\n\r\nA simple fix would be having two WaveBuffer classes, WaveBuffer32 and WaveBuffer64 and using the IWaveBuffer interface to seamlessly switch between the two classes.\r\n\r\nE.G:\r\nIWaveBuffer sourceWaveBuffer = IntPtr.Size == 4 ? new WaveBuffer32(sourceBuffer) : new WaveBuffer64(sourceBuffer);\r\n\r\nNote: Use a helper funtion to check IntPtr.Size == 4 (32bit) or IntPtr.Size == 8 and cache the resulting bool for performance.\r\n\r\nHere is an example WaveBuffer class that also fixes this exception on 64bit (I'll note that this is the only problem I found using nAudio on 64bit): \r\n\r\npublic class WaveBuffer64 : IWaveBuffer\r\n    {\r\n        /// <summary>\r\n        /// Number of Bytes\r\n        /// </summary>\r\n        [FieldOffset(0)]\r\n        public int numberOfBytes;\r\n        [FieldOffset(8)]\r\n        private byte[] byteBuffer;\r\n        [FieldOffset(8)]\r\n        private float[] floatBuffer;\r\n        [FieldOffset(8)]\r\n        private short[] shortBuffer;\r\n        [FieldOffset(8)]\r\n        private int[] intBuffer;\r\n\r\n\r\nThanks for a great library!\r\ndmex",
+    "LastUpdatedDate": "2012-10-27T00:16:09.91-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-06-06T08:14:27.523-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveBuffer 64bit issue",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 15990
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Create a WaveBuffer32 class using [FieldOffset(4)] and a WaveBuffer64 class using [FieldOffset(8)] and use this helper class.\r\n\r\nThen simply fix up the object initializations, instead of WaveBuffer destWaveBuffer = new WaveBuffer(destBuffer); use the following: IWaveBuffer destWaveBuffer = WaveBuffer.Create(destBuffer);\r\n\r\npublic static class WaveBuffer\r\n    {\r\n        private static bool Is32bit;\r\n\r\n        static WaveBuffer()\r\n        {\r\n            Is32bit = IntPtr.Size == 4;\r\n        }\r\n\r\n        public static IWaveBuffer Create(byte[] b)\r\n        {\r\n            if (Is32bit)        \r\n                return new WaveBuffer32(b);\r\n            \r\n            return new WaveBuffer64(b);\r\n        }\r\n\r\n        public static IWaveBuffer Create(int sizeToAllocateInBytes)\r\n        {\r\n            if (Is32bit)\r\n                return new WaveBuffer32(sizeToAllocateInBytes);\r\n\r\n            return new WaveBuffer64(sizeToAllocateInBytes);\r\n        }\r\n    }",
+      "PostedDate": "2011-06-06T08:50:45.03-07:00",
+      "Id": 41812
+    },
+    {
+      "Message": "Either that or simply just move the offset to 8 to save breaking the public API. I doubt the 4 extra bytes will really matter. Will consider this for the next NAudio. Thanks for reporting.",
+      "PostedDate": "2011-06-06T08:57:29.23-07:00",
+      "Id": 41813
+    },
+    {
+      "Message": "have checked in a fix, thanks again for reporting",
+      "PostedDate": "2011-06-14T13:55:45.253-07:00",
+      "Id": 41814
+    }
+  ]
+}

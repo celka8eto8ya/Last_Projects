@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "855773",
+    "ThreadId": "361485",
+    "Html": "\r\n<p>Hey</p>\r\n<p>I know how to play a wav file but now I want to play an internet stream (internet radio). How can i do this?</p>\r\n<p>Sorry for my terrible english - I'm from Germany...</p>\r\n<p>Greetings Crosaider</p>\r\n",
+    "PostedDate": "2012-06-30T05:53:59.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "855906",
+    "ThreadId": "361485",
+    "Html": "<p>If you look at the NAudioDemo code, you will see an MP3 streaming demo which gives an idea of how to accomplish this. Basically you would use a BufferedWaveProvider to play from, and decode audio and put it into that BufferedWaveProvider as it arrives. You also need to do some kind of buffer management to ensure that playback doesn't stutter too much.</p>",
+    "PostedDate": "2012-07-01T00:55:05.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

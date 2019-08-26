@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "859222",
+    "ThreadId": "362545",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>similar to this(<a href=\"http://naudio.codeplex.com/discussions/356641\">http://naudio.codeplex.com/discussions/356641</a>) problem, I'm looking for a clever solution to mixdown n files (mono) to a single file (stereo or mono doesn't matter).&nbsp;</p>\r\n<p>I run into&nbsp;WaveMixerStream32 but I don't know how to handle it correctly.</p>\r\n<p>Also I'm looking for a way to amplify/normalize the mixdown. Do some of you have any ideas how to do that in NAudio?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-07-09T08:26:53.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "861640",
+    "ThreadId": "362545",
+    "Html": "<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre> <span style=\"color: blue;\">private</span> WaveFileWriter writer;\r\n <span style=\"color: blue;\">private</span> List&lt;WaveFileReader&gt; inputs = <span style=\"color: blue;\">new</span> List&lt;WaveFileReader&gt;();\r\n...\r\n...\r\n\r\n    <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> button1_Click(<span style=\"color: blue;\">object</span> sender, RoutedEventArgs e)\r\n        {\r\n        \r\n            <span style=\"color: blue;\">foreach</span> (<span style=\"color: blue;\">string</span> s <span style=\"color: blue;\">in</span> blah.audiofilenames)\r\n                inputs.Add(<span style=\"color: blue;\">new</span> WaveFileReader(s));\r\n\r\n            <span style=\"color: blue;\">var</span> waveProvider = <span style=\"color: blue;\">new</span> MultiplexingWaveProvider(inputs, inputs.Count);\r\n            writer = <span style=\"color: blue;\">new</span> WaveFileWriter(@\"D:\\temp\\mixdown.wav\", waveProvider.WaveFormat);\r\n\r\n            <span style=\"color: blue;\">int</span> bytesRead = 0;\r\n            <span style=\"color: blue;\">int</span> buffer_size = 4096;\r\n\r\n            <span style=\"color: blue;\">while</span> (<span style=\"color: blue;\">true</span>)\r\n            {\r\n                <span style=\"color: blue;\">byte</span>[] bytes = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[buffer_size];\r\n                <span style=\"color: blue;\">try</span>\r\n                {\r\n                    bytesRead = waveProvider.Read(bytes, 0, buffer_size);\r\n                }\r\n                <span style=\"color: blue;\">catch</span> (Exception ec)\r\n                {\r\n                    <span style=\"color: green;\">//  throw ec;</span>\r\n                }\r\n\r\n                <span style=\"color: blue;\">if</span> (bytesRead == 0)\r\n                {\r\n                    Console.WriteLine(<span style=\"color: #a31515;\">\"end\"</span>);\r\n\r\n                    <span style=\"color: blue;\">if</span> (writer != <span style=\"color: blue;\">null</span>)\r\n                    {\r\n                        writer.Flush();\r\n                        writer.Close();\r\n                        writer.Dispose();\r\n                    }\r\n\r\n                    <span style=\"color: blue;\">break</span>;\r\n                }\r\n                writer.Write(bytes, 0, buffer_size);\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n</p>\r\n<p>&nbsp;</p>\r\n<p>This is the code that solved my first problem. It is generating a multitrack wave file (8+ tracks in one file in my case). Of course you could put this in its own thread.</p>",
+    "PostedDate": "2012-07-12T09:57:15.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1032664",
+    "ThreadId": "362545",
+    "Html": "Hi i used this code works fine but after mixdown two wav files i cant delete them i have IO error file is in use. I mean source files.<br />\n",
+    "PostedDate": "2013-04-18T12:37:06.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1032678",
+    "ThreadId": "362545",
+    "Html": "Solved :)<br />\n<pre><code>            foreach (WaveFileReader wave in inputs)\n            {\n                wave.Close();\n            }</code></pre>\n\n",
+    "PostedDate": "2013-04-18T13:05:10.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

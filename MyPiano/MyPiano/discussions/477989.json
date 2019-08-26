@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1142218",
+    "ThreadId": "477989",
+    "Html": "I was able to successfully record from the  Microphone but now I need to record audio coming in from line in. <br />\n",
+    "PostedDate": "2013-12-25T12:56:43.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1144223",
+    "ThreadId": "477989",
+    "Html": "it very much depends on your soundcard, whether the line in is represented as separate inputs, or whether you need to select line in in some way. It can actually be very hard to do this programatically, as each soundcard can have a different way of setting this up. The old Windows mixer APIs could do this, but it can be very tricky to get right.<br />\n",
+    "PostedDate": "2013-12-31T06:20:18.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1325474",
+    "ThreadId": "572974",
+    "Html": "Hi, i need to play multiple wav sounds at the same time. Is it possible? I don't find any easy sample of NAudio. I need something like Play(wav name) method. Play method must check, when any other sound is played and then mix it. I must play both sounds. Can anybody help me?<br />\n",
+    "PostedDate": "2014-11-24T03:04:39.583-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1325518",
+    "ThreadId": "572974",
+    "Html": "Look at this:\r<br />\n<br />\n<a href=\"https://naudio.codeplex.com/discussions/572685\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/572685</a><br />\n",
+    "PostedDate": "2014-11-24T05:12:32.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

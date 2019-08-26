@@ -1,0 +1,1058 @@
+[
+  {
+    "Id": 2278,
+    "Title": "Midi Interop with MIDIHDR is wrong?"
+  },
+  {
+    "Id": 6339,
+    "Title": "WASAPI Out with Resampler DMO to work in STAThread"
+  },
+  {
+    "Id": 6340,
+    "Title": "Implement WASAPI Event-Driven Model"
+  },
+  {
+    "Id": 6341,
+    "Title": "WMA Reader and WMA Writer Classes"
+  },
+  {
+    "Id": 6342,
+    "Title": "WASAPI Audio Capture"
+  },
+  {
+    "Id": 6351,
+    "Title": "WASAPI Exclusive Mode"
+  },
+  {
+    "Id": 6362,
+    "Title": "NAudioDemo ACM Demonstration"
+  },
+  {
+    "Id": 6374,
+    "Title": "Native DirectSound to work in STAThread"
+  },
+  {
+    "Id": 7249,
+    "Title": "BlueScreen when using ASIO with BCD3000"
+  },
+  {
+    "Id": 7257,
+    "Title": "WaveOut playback fails in a remote desktop session"
+  },
+  {
+    "Id": 7259,
+    "Title": "WaveStillPlaying calling waveUnprepareHeader Exception"
+  },
+  {
+    "Id": 7439,
+    "Title": "Bug in the WaveFileWriter.WriteData16 overloads"
+  },
+  {
+    "Id": 7474,
+    "Title": "small fix for ASIO crashes"
+  },
+  {
+    "Id": 7475,
+    "Title": "race condition in wav stream read"
+  },
+  {
+    "Id": 7958,
+    "Title": "WaveChannel32 Read should return bytes read instead of bytes requested"
+  },
+  {
+    "Id": 7979,
+    "Title": "IeeeFloat to ASIOSTFloat32LSB converter"
+  },
+  {
+    "Id": 7980,
+    "Title": "WaveBuffer goals/api concerns"
+  },
+  {
+    "Id": 8072,
+    "Title": "Position set .. lock (this) { }"
+  },
+  {
+    "Id": 9067,
+    "Title": "[MMException] WaveStillPlaying"
+  },
+  {
+    "Id": 9071,
+    "Title": "Error if mp3 frame not at the begining"
+  },
+  {
+    "Id": 9297,
+    "Title": "mainOutputStream.CurrentTime problem"
+  },
+  {
+    "Id": 9732,
+    "Title": "WaveChannel32.WaveFormat.BitsPerSample does not reflect what's in my wav file."
+  },
+  {
+    "Id": 9864,
+    "Title": "Support for System Exclusive events (SysEx)"
+  },
+  {
+    "Id": 10105,
+    "Title": "Format header read for some wav files are incorrect"
+  },
+  {
+    "Id": 10206,
+    "Title": "MidiMessage.ChangePatch channel off by one"
+  },
+  {
+    "Id": 10342,
+    "Title": "NAudio can't read some broadcast wave files"
+  },
+  {
+    "Id": 10463,
+    "Title": "Midi Events. NAUDIO may be calculating an incorrect TIME"
+  },
+  {
+    "Id": 10548,
+    "Title": "(bug changeset 28539) Blockalign in WaveFormatConversionStream"
+  },
+  {
+    "Id": 10726,
+    "Title": "PlaybackStopped event not raised when playing mp3 is finished"
+  },
+  {
+    "Id": 10968,
+    "Title": "Misspelling in WaveIn: BufferMillisconds"
+  },
+  {
+    "Id": 11032,
+    "Title": "BlockAlignReductionStream . Read() returns 0 for the first read"
+  },
+  {
+    "Id": 11377,
+    "Title": "WaveChannel32 gives me an exception: Offset and length were out of bounds"
+  },
+  {
+    "Id": 11398,
+    "Title": "NullReferenceException recording in WPF demo app"
+  },
+  {
+    "Id": 11429,
+    "Title": "Assembly with strong name"
+  },
+  {
+    "Id": 11624,
+    "Title": "Silverlight support"
+  },
+  {
+    "Id": 11648,
+    "Title": "BooleanMixerControl doesn't update the value"
+  },
+  {
+    "Id": 11736,
+    "Title": "Error Starting WPF Demo"
+  },
+  {
+    "Id": 12061,
+    "Title": "DirectSoundOut Device Selection"
+  },
+  {
+    "Id": 12246,
+    "Title": "Problems with WaveFileReader"
+  },
+  {
+    "Id": 12565,
+    "Title": "(I)MMDevice.ID throws MarshalDirectiveException"
+  },
+  {
+    "Id": 12988,
+    "Title": "Problems running the Naudio Demo and WPF Demo"
+  },
+  {
+    "Id": 13757,
+    "Title": "CoreAudioAPI PropertyStore Incorrectly Assuming Guid Only Used Once Per Property"
+  },
+  {
+    "Id": 13902,
+    "Title": "Estimating the bitrate for VBR MP3 files"
+  },
+  {
+    "Id": 13920,
+    "Title": "Provide an option to WaveFileWriter to not close the output stream"
+  },
+  {
+    "Id": 14397,
+    "Title": "Error while call to acmStreamPrepareHeader"
+  },
+  {
+    "Id": 14607,
+    "Title": "Fixed MixerInterop for x64 mode"
+  },
+  {
+    "Id": 14714,
+    "Title": "InvalidOperationException and \"CallbackOnCollectedDelegate was detected\" while playing"
+  },
+  {
+    "Id": 14798,
+    "Title": "WaveFileReader.TryReadFloat does not consider channel count"
+  },
+  {
+    "Id": 14812,
+    "Title": "WavFileWriter - wrong fact chunk"
+  },
+  {
+    "Id": 14882,
+    "Title": "Crash when changing windows mixer volume"
+  },
+  {
+    "Id": 14883,
+    "Title": "IWavePlayer Memory Leak"
+  },
+  {
+    "Id": 14954,
+    "Title": "Crash when trying to record a second time from a same WASAPI input"
+  },
+  {
+    "Id": 15267,
+    "Title": "Setting anything to BooleanMixerControl.Value yields in false"
+  },
+  {
+    "Id": 15274,
+    "Title": "Gui.WaveformPainter crashes/errors when window minimized"
+  },
+  {
+    "Id": 15275,
+    "Title": "Gui.WaveformPainter crashes/errors when window minimized"
+  },
+  {
+    "Id": 15617,
+    "Title": "WaveIn.StartRecording throws WaveBadFormatException after playback finished at end of audio"
+  },
+  {
+    "Id": 15679,
+    "Title": "You guys should pay more attention to avoid memory leaking, Close() and Dispose()"
+  },
+  {
+    "Id": 15702,
+    "Title": "crashes at playing high sampling rate wave files, chrashes in rapid playback repeat"
+  },
+  {
+    "Id": 15715,
+    "Title": "MMDevice.FriendlyName returns DeviceDescription instead"
+  },
+  {
+    "Id": 15916,
+    "Title": "Single instance of WaveOut class cannot be used to play several streams"
+  },
+  {
+    "Id": 15958,
+    "Title": "64/32 bit issue?"
+  },
+  {
+    "Id": 15990,
+    "Title": "WaveBuffer 64bit issue"
+  },
+  {
+    "Id": 16025,
+    "Title": "DirectSoundOut 64bit issue"
+  },
+  {
+    "Id": 16029,
+    "Title": "PlaybackStopped event not resetting correctly."
+  },
+  {
+    "Id": 16108,
+    "Title": "Naudio  InnerException MIDI"
+  },
+  {
+    "Id": 16128,
+    "Title": "WasapiCapture class - deadlock in StopRecording()"
+  },
+  {
+    "Id": 16129,
+    "Title": "too many \"using\" references, that are not used"
+  },
+  {
+    "Id": 16130,
+    "Title": "too many \"using\" references, that are not used"
+  },
+  {
+    "Id": 16131,
+    "Title": "WaveIn class - DataAvailable is not raised when class is used in Console Application"
+  },
+  {
+    "Id": 16165,
+    "Title": "InvalidParameter calling acmStreamClose in AcmStream.Dispose(bool disposing)"
+  },
+  {
+    "Id": 16186,
+    "Title": "MP3 Stream is not playing"
+  },
+  {
+    "Id": 16223,
+    "Title": "How to Change Playback Speed using NAudio like (2x or 4x)"
+  },
+  {
+    "Id": 16240,
+    "Title": "Don't assume Streams are fixed-length"
+  },
+  {
+    "Id": 16284,
+    "Title": "NAudio.MmException: UnspecifiedError calling waveOutOpen"
+  },
+  {
+    "Id": 16300,
+    "Title": "Compiling - strong name signing"
+  },
+  {
+    "Id": 16322,
+    "Title": "Streaming MP3-files, error decompressing last frame"
+  },
+  {
+    "Id": 16328,
+    "Title": "Streaming MP3, wrong bitrate. creates incorrect sound"
+  },
+  {
+    "Id": 16329,
+    "Title": "ComException when unplugged playback device"
+  },
+  {
+    "Id": 16330,
+    "Title": "Thread safety"
+  },
+  {
+    "Id": 16331,
+    "Title": "ArgumentException in DecompressFrame (Destination array was not long enough)"
+  },
+  {
+    "Id": 16332,
+    "Title": "Change Speed & pitch on Fly for MP3 files."
+  },
+  {
+    "Id": 16333,
+    "Title": "WPF Demo Visualisation Lags"
+  },
+  {
+    "Id": 16334,
+    "Title": "Strong Signed NAudio"
+  },
+  {
+    "Id": 16335,
+    "Title": "Download doesn't work on x64"
+  },
+  {
+    "Id": 16336,
+    "Title": "AddTrack"
+  },
+  {
+    "Id": 16337,
+    "Title": "Does NAudio can play multiple music to multiple channels of sound card"
+  },
+  {
+    "Id": 16338,
+    "Title": "sf2 samples 4 bytes too early?"
+  },
+  {
+    "Id": 16339,
+    "Title": "MidiFileConverter missing in NAudio-Source.zip"
+  },
+  {
+    "Id": 16340,
+    "Title": "WaveOutBuffer.OnDone - set header.bufferLength = bytes?"
+  },
+  {
+    "Id": 16341,
+    "Title": "WasapiCapture not reusable"
+  },
+  {
+    "Id": 16342,
+    "Title": "WaveOut Resume function does not work properly"
+  },
+  {
+    "Id": 16343,
+    "Title": "WaveViewer ignores Fore/Back colours"
+  },
+  {
+    "Id": 16344,
+    "Title": "1.5.9 build from source naudiodemo crash on launch"
+  },
+  {
+    "Id": 16345,
+    "Title": "Destination array was not long anough when reading mp3 file whit NAudio"
+  },
+  {
+    "Id": 16346,
+    "Title": "support for Windows 8 / Metro"
+  },
+  {
+    "Id": 16347,
+    "Title": "WaveInEvent - Buffer is null"
+  },
+  {
+    "Id": 16348,
+    "Title": "Wave.IWavePlayer.Play() - Crashing or says its playing but stays at position 0"
+  },
+  {
+    "Id": 16349,
+    "Title": "Save on file system with costant format"
+  },
+  {
+    "Id": 16350,
+    "Title": "NAudio resampler exception when deployed to Azure"
+  },
+  {
+    "Id": 16351,
+    "Title": "Multiple issues in WaveMixerStream32"
+  },
+  {
+    "Id": 16352,
+    "Title": "WaveIn.CreateBuffers() Calculating bufferSize returns odd length for 16 bit samples"
+  },
+  {
+    "Id": 16353,
+    "Title": "Need to record all sounds from sound card."
+  },
+  {
+    "Id": 16354,
+    "Title": "WaveFileChunkReader.ReadWaveHeader assumes that the stream supports position/seek"
+  },
+  {
+    "Id": 16355,
+    "Title": "Bug in the NotifyingSampleProvider class"
+  },
+  {
+    "Id": 16356,
+    "Title": "Mp3FileReader.Length property calculated as int instead of as long"
+  },
+  {
+    "Id": 16359,
+    "Title": "MP3FileReader.Length property is not correct"
+  },
+  {
+    "Id": 16360,
+    "Title": "AudioEndpointVolumeCallback causes AccessViolation"
+  },
+  {
+    "Id": 16361,
+    "Title": "ASIOSampleConvertor bug"
+  },
+  {
+    "Id": 16362,
+    "Title": "drumsamplepatternprovider array clear"
+  },
+  {
+    "Id": 16363,
+    "Title": "sound does not play because of double to integer truncation, caused by low numFramesAvailable value"
+  },
+  {
+    "Id": 16364,
+    "Title": "aiffFileReader crashes on padded files"
+  },
+  {
+    "Id": 16365,
+    "Title": "ASIO number of channels"
+  },
+  {
+    "Id": 16366,
+    "Title": "AutoCue"
+  },
+  {
+    "Id": 16367,
+    "Title": "Generator"
+  },
+  {
+    "Id": 16368,
+    "Title": "wrong speed for the different rate"
+  },
+  {
+    "Id": 16369,
+    "Title": "AccessViolationException when disposing WaveOut in a 64-bit application"
+  },
+  {
+    "Id": 16370,
+    "Title": "WMA"
+  },
+  {
+    "Id": 16371,
+    "Title": "the Mp3FileReader should not set stream position"
+  },
+  {
+    "Id": 16372,
+    "Title": "Can't close app in Unity3D"
+  },
+  {
+    "Id": 16373,
+    "Title": "NullReference exception with CueList"
+  },
+  {
+    "Id": 16374,
+    "Title": "Exception on Resampling"
+  },
+  {
+    "Id": 16375,
+    "Title": "MediaFoundation Output Format Float"
+  },
+  {
+    "Id": 16376,
+    "Title": "windows phone 8 project support"
+  },
+  {
+    "Id": 16377,
+    "Title": "Playing Short Audio Files"
+  },
+  {
+    "Id": 16378,
+    "Title": "BlockAlignReductionStream.Read cannot read large chunks."
+  },
+  {
+    "Id": 16379,
+    "Title": "NAudio.WindowsMediaFormat.NSSBuffer IntPtr.ToInt32() OverflowException"
+  },
+  {
+    "Id": 16380,
+    "Title": "Conversion to Float is wrong"
+  },
+  {
+    "Id": 16381,
+    "Title": "Envelope Follower and other very usefull DSP class are private"
+  },
+  {
+    "Id": 16382,
+    "Title": "Whole MF Encoder does not work"
+  },
+  {
+    "Id": 16383,
+    "Title": "WasapiLoopbackCapture doesn't capture silence"
+  },
+  {
+    "Id": 16384,
+    "Title": "What could cause a \"InvalidParameter calling acmStreamClose\" MmException?"
+  },
+  {
+    "Id": 16385,
+    "Title": "WaveStillPlaying calling waveUnprepareHeader"
+  },
+  {
+    "Id": 16386,
+    "Title": "System.NullReferenceException in NAudio.Wave.WaveOutEvent.PlaybackThread()"
+  },
+  {
+    "Id": 16387,
+    "Title": "NAudio.MmException - WaveStillPlaying calling waveOutWrite"
+  },
+  {
+    "Id": 16388,
+    "Title": "Two Common Controller Constants Missing From MidiController Enum"
+  },
+  {
+    "Id": 16389,
+    "Title": "Occasional System.InvalidOperationException (Handle is not initialized) in AcmStreamHeader.Dispose"
+  },
+  {
+    "Id": 16390,
+    "Title": "heap corruption for MixerControl.GetControlDetails when MIXERCONTROL_CONTROLF_MULTIPLE flag is set."
+  },
+  {
+    "Id": 16391,
+    "Title": "Buffer not dispose"
+  },
+  {
+    "Id": 16392,
+    "Title": "PlaybackStopped"
+  },
+  {
+    "Id": 16393,
+    "Title": "Problem with WavOut.Eventhandler"
+  },
+  {
+    "Id": 16394,
+    "Title": "read mp3 to URL"
+  },
+  {
+    "Id": 16395,
+    "Title": "Trying to change volume"
+  },
+  {
+    "Id": 16396,
+    "Title": "Occasional AccessViolation in WDMAUD.DRV"
+  },
+  {
+    "Id": 16397,
+    "Title": "32bit PCM into 16bit PCM"
+  },
+  {
+    "Id": 16398,
+    "Title": "Deadlock in Callback with WaveOut.GetPosition"
+  },
+  {
+    "Id": 16399,
+    "Title": "Low FFT Precision"
+  },
+  {
+    "Id": 16400,
+    "Title": "Memory leak in MixerControl.GetMixerControls"
+  },
+  {
+    "Id": 16401,
+    "Title": "Wrong BitsPerSample with WasapiLoopbackCapture"
+  },
+  {
+    "Id": 16402,
+    "Title": "crashing with acm"
+  },
+  {
+    "Id": 16403,
+    "Title": "NAudio does not check the .CanSeek Property of Stream"
+  },
+  {
+    "Id": 16404,
+    "Title": "Make SampleProviderConverters public"
+  },
+  {
+    "Id": 16405,
+    "Title": "WasapiLoopbackCapture - Dataavailable not working as intended."
+  },
+  {
+    "Id": 16406,
+    "Title": "Exception When Calling MediaFoundationEncoder.EncodeToWma"
+  },
+  {
+    "Id": 16407,
+    "Title": "Mp3FileReader - ArgumentOutOfRangeException - Non-negative number required"
+  },
+  {
+    "Id": 16408,
+    "Title": "audioClient.IsFormatSupported: Problem with 24 bit"
+  },
+  {
+    "Id": 16409,
+    "Title": "audioClient.Initialize: Problem with 24 bit"
+  },
+  {
+    "Id": 16410,
+    "Title": "WASAPI:  GetDeviceFormat, SetDeviceFormat"
+  },
+  {
+    "Id": 16411,
+    "Title": "Windows 8 N edition"
+  },
+  {
+    "Id": 16412,
+    "Title": "Clearing a BufferedWaveProvider that hasn't had samples added raises an exception"
+  },
+  {
+    "Id": 16413,
+    "Title": "Exception When Calling MediaFoundationEncoder.EncodeToMp3"
+  },
+  {
+    "Id": 16414,
+    "Title": "Incorrect Time Reported On AudioFileReader.CurrentTime Property"
+  },
+  {
+    "Id": 16415,
+    "Title": "Microphone Data to FFT "
+  },
+  {
+    "Id": 16416,
+    "Title": "High resolution timing with WaveStream.Position"
+  },
+  {
+    "Id": 16417,
+    "Title": "Time Signature Problems"
+  },
+  {
+    "Id": 16418,
+    "Title": "ogg support in NAudio 1.7"
+  },
+  {
+    "Id": 16419,
+    "Title": "Aiff to mp3 using NAudio MFT Reader"
+  },
+  {
+    "Id": 16420,
+    "Title": "ogg to mp3 using NAudio MFT"
+  },
+  {
+    "Id": 16421,
+    "Title": "amr to wma using NAudio MFT"
+  },
+  {
+    "Id": 16422,
+    "Title": "au to mp3 using NAudio MFT"
+  },
+  {
+    "Id": 16423,
+    "Title": "Can't Find MIDI File Converter Download"
+  },
+  {
+    "Id": 16424,
+    "Title": "ASIO issues GetBuffer"
+  },
+  {
+    "Id": 16425,
+    "Title": "raw file play very fast using NAudio Library"
+  },
+  {
+    "Id": 16426,
+    "Title": "WaveFileReader & MediaFoundationReader Error"
+  },
+  {
+    "Id": 16427,
+    "Title": "sound buffer size"
+  },
+  {
+    "Id": 16428,
+    "Title": "BPM detection"
+  },
+  {
+    "Id": 16429,
+    "Title": "PlaybackStopped event is not fired in Windows Embedded Standard 8"
+  },
+  {
+    "Id": 16430,
+    "Title": "WaveFormatConversionStream class attempting to reference a null pointer..."
+  },
+  {
+    "Id": 16431,
+    "Title": "Is there a plan for NAudio to support WP?"
+  },
+  {
+    "Id": 16432,
+    "Title": "BufferedWaveProvider \"Clear when Empty\""
+  },
+  {
+    "Id": 16433,
+    "Title": "Remove metadata from MP3 and WAV"
+  },
+  {
+    "Id": 16434,
+    "Title": "Changes to channel count?"
+  },
+  {
+    "Id": 16435,
+    "Title": "Header WAVE file problem"
+  },
+  {
+    "Id": 16436,
+    "Title": "Longer ProductName"
+  },
+  {
+    "Id": 16437,
+    "Title": "initiating 4 different waveout for 4 difference output device"
+  },
+  {
+    "Id": 16438,
+    "Title": "WaveViewer and 24bit wavs"
+  },
+  {
+    "Id": 16439,
+    "Title": "NAudio.Wave.MediaFoundationEncoder.PerformEncode throws MF_E_SINK_NO_SAMPLES_PROCESSED (0xC00D4A44)"
+  },
+  {
+    "Id": 16440,
+    "Title": "need pitch , frequency , noise , amplitude"
+  },
+  {
+    "Id": 16441,
+    "Title": "PlaybackStopped event fires at start of playback with NullReferenceException [UPDATED]"
+  },
+  {
+    "Id": 16442,
+    "Title": "UnspecifiedError calling waveOutOpen when using Channel Phantoming or Speaker Fill"
+  },
+  {
+    "Id": 16443,
+    "Title": "Incorrect handling of wave riff pad byte"
+  },
+  {
+    "Id": 16444,
+    "Title": "Not available for Windows Phone 8 projects?"
+  },
+  {
+    "Id": 16445,
+    "Title": "WASAPI interface implementation"
+  },
+  {
+    "Id": 16446,
+    "Title": "Audio path permanently lost to instance of an application"
+  },
+  {
+    "Id": 16447,
+    "Title": "access to microphone properties/enhancement programmatically"
+  },
+  {
+    "Id": 16448,
+    "Title": "Bug in WaveFileReader if opening invalid RIFF file by filename"
+  },
+  {
+    "Id": 16449,
+    "Title": "Playing Microsoft TTS with WASAPI "
+  },
+  {
+    "Id": 16450,
+    "Title": "multiple wave normalization"
+  },
+  {
+    "Id": 16451,
+    "Title": "Null Ref Crash With Multiple Play/Stop Calls Back-To-Back"
+  },
+  {
+    "Id": 16452,
+    "Title": "Issues with recording TAPI devices"
+  },
+  {
+    "Id": 16453,
+    "Title": "MediaFoundationReader reads less data on Windows 7 (on Windows 8.1 - OK)"
+  },
+  {
+    "Id": 16454,
+    "Title": "WaveFormatConversionStream disposes sourceStream"
+  },
+  {
+    "Id": 16455,
+    "Title": "WaveOut.Stop() pauses playback instead of stopping"
+  },
+  {
+    "Id": 16456,
+    "Title": "WaveOut.PlaybackStopped is raised when calling WaveOut.Stop()"
+  },
+  {
+    "Id": 16457,
+    "Title": "[SOLVED] WaveFileReader reads data to ExtraChunks only"
+  },
+  {
+    "Id": 16458,
+    "Title": "Unsopported WaveFormat WasapiLoopbackCapture"
+  },
+  {
+    "Id": 16459,
+    "Title": "issue with Mp3FileReader"
+  },
+  {
+    "Id": 16460,
+    "Title": "Set channel"
+  },
+  {
+    "Id": 16461,
+    "Title": "Wrong DirectSound device GUID"
+  },
+  {
+    "Id": 16462,
+    "Title": "Memory leak on playback"
+  },
+  {
+    "Id": 16463,
+    "Title": "Exception when initializing device under WASAPI Exclusive mode"
+  },
+  {
+    "Id": 16464,
+    "Title": "Readme.txt not contains list of bugfix/new implementation"
+  },
+  {
+    "Id": 16465,
+    "Title": "NAudio WasapiOut in exclusive mode keeps repeating the buffer when paused."
+  },
+  {
+    "Id": 16466,
+    "Title": "Error Handling for Corrupt Files"
+  },
+  {
+    "Id": 16467,
+    "Title": "media foundation dsp support"
+  },
+  {
+    "Id": 16468,
+    "Title": "Audio sessions from CoreAudioAPI are not implemented"
+  },
+  {
+    "Id": 16469,
+    "Title": "MidiFile.Tracks sometimes returns 1 when it contains more than 1 track."
+  },
+  {
+    "Id": 16470,
+    "Title": "Expose IAudioStreamVolume from WasapiOut"
+  },
+  {
+    "Id": 16471,
+    "Title": "[Window Store Apps] Construct MediaFoundationReader from StorageFile"
+  },
+  {
+    "Id": 16472,
+    "Title": "MemoryAllocationError calling waveInOpen"
+  },
+  {
+    "Id": 16473,
+    "Title": "performance degradation at WaveFileWriter.Write () "
+  },
+  {
+    "Id": 16474,
+    "Title": "Midi In Octaves in NoteEvents"
+  },
+  {
+    "Id": 16475,
+    "Title": "Unable to open m4a/aac/wma files in Unity"
+  },
+  {
+    "Id": 16476,
+    "Title": "NAudio.SoundFont.InfoChunk exception"
+  },
+  {
+    "Id": 16477,
+    "Title": "Audible Glitch when Clicking on Certain GUI Elements"
+  },
+  {
+    "Id": 16478,
+    "Title": "StereoWaveformPainter winforms control"
+  },
+  {
+    "Id": 16479,
+    "Title": "Unsupported Wave Format issues"
+  },
+  {
+    "Id": 16480,
+    "Title": "Stop monitoring?"
+  },
+  {
+    "Id": 16481,
+    "Title": "Not getting running audio wave in gui."
+  },
+  {
+    "Id": 16482,
+    "Title": "Mp3FileReader ReadNextFrame supposed to increment position?"
+  },
+  {
+    "Id": 16483,
+    "Title": "pause before play"
+  },
+  {
+    "Id": 16484,
+    "Title": "MixingSampleProvider+Waveout does not work"
+  },
+  {
+    "Id": 16485,
+    "Title": "Range for PitchWheelChangeEvent.Pitch should be 0-16383"
+  },
+  {
+    "Id": 16486,
+    "Title": "Get number of channels for DirectSoundOut"
+  },
+  {
+    "Id": 16487,
+    "Title": "DirectSoundOut fails if WaveFormat is WaveFormatExtraData"
+  },
+  {
+    "Id": 16488,
+    "Title": "WaveIn and BufferedWaveProvider ! "
+  },
+  {
+    "Id": 16489,
+    "Title": "WaveInEvent"
+  },
+  {
+    "Id": 16490,
+    "Title": "StartRecording NAudio"
+  },
+  {
+    "Id": 16491,
+    "Title": "Error with Stoprecording"
+  },
+  {
+    "Id": 16492,
+    "Title": "Clicking noise when concatenating/joining two or more WAV files"
+  },
+  {
+    "Id": 16493,
+    "Title": "Waveinputs missing from Visual Studio 2015 NuGet??"
+  },
+  {
+    "Id": 16494,
+    "Title": "Naudio and Unity for looping section"
+  },
+  {
+    "Id": 16495,
+    "Title": "Bug...pin the reference to the callback delegate"
+  },
+  {
+    "Id": 16496,
+    "Title": "Audio device channel count query returns incorrect value"
+  },
+  {
+    "Id": 16497,
+    "Title": "DirectSoundOut.Devices.Count() returns wrong value"
+  },
+  {
+    "Id": 16498,
+    "Title": "Noise reduction"
+  },
+  {
+    "Id": 16499,
+    "Title": "COM Exception & UnRegisterEventClient"
+  },
+  {
+    "Id": 16500,
+    "Title": "AsioOut dispose() - keep signal"
+  },
+  {
+    "Id": 16501,
+    "Title": "Dictation recorder hangs on waveInClose"
+  },
+  {
+    "Id": 16502,
+    "Title": "Play 4 different wav files over ASIO on 4 stereo channels"
+  },
+  {
+    "Id": 16503,
+    "Title": "Create WAV stream in memory"
+  },
+  {
+    "Id": 16504,
+    "Title": "Audiodg.exe crash"
+  },
+  {
+    "Id": 16505,
+    "Title": "naudio doesn't support Logitech audio drivers?"
+  },
+  {
+    "Id": 16506,
+    "Title": "Audiobook length > 24 hours Playing issue"
+  },
+  {
+    "Id": 16507,
+    "Title": "support for CD-Audio in AudioFileReader"
+  },
+  {
+    "Id": 16508,
+    "Title": "IWavePlayer not CLS compliant"
+  },
+  {
+    "Id": 16509,
+    "Title": "Please sign NAudio"
+  },
+  {
+    "Id": 16510,
+    "Title": "Mp3FileReader not in NAudio.Wave namespace"
+  },
+  {
+    "Id": 16511,
+    "Title": "Change MaxProductNameLength from 32 to 64"
+  },
+  {
+    "Id": 16512,
+    "Title": "Convert 6-channel .WAV file to .OGG issue."
+  },
+  {
+    "Id": 16513,
+    "Title": "NAudio freezes on one specific mp3 file"
+  },
+  {
+    "Id": 16514,
+    "Title": "Lag playback when using Icy-MetaData header"
+  },
+  {
+    "Id": 16515,
+    "Title": "In Visual Studio C# : How to play 2 wav file at certain dB values simultaneously"
+  },
+  {
+    "Id": 16516,
+    "Title": "How to integrate StreamMediaFoundationReader into a project?"
+  },
+  {
+    "Id": 16517,
+    "Title": "Getting UnhandledException in WPF application using NAUDIO 1.6 DLL"
+  }
+]

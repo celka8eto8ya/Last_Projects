@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "896547",
+    "ThreadId": "390588",
+    "Html": "\r\n<p>As a part of a bigger program I am including a wave player. I have used Naudio for this. Where&nbsp;I define a WaveFileReader and a WaveOut object. I use a simple button that toggles between pause and play. When the usb headset is removed I am able to use\r\n try and catch to handle the MmException. As&nbsp;the waveout reaches the end of the wavefile I use the playbackStopped event to reset the player. However, if the headset is removed during the playback I get &quot;MmException was unhandled&quot; &quot;NoDriver calling WaveOutWrite&quot;.<br>\r\n<br>\r\nI don't know how to catch that exception, I would really appreciate all the help I can get! :)</p>\r\n",
+    "PostedDate": "2012-08-07T07:34:42.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896550",
+    "ThreadId": "390588",
+    "Html": "<p>I've addressed this problem in the latest version of the code. Now you get an exception in the PlaybackStopped event that tells you that playback stopped because of a problem. You can either download the code and build it yourself, or if you know how to use NuGet with pre-release packages, you can download one of those</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-08-07T07:37:05.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896787",
+    "ThreadId": "390588",
+    "Html": "<p>I tried downloading the latest sourcecode. After a bit of experimenting with the new playbackStopped event i got it working.<br />Thank you so much for your quick response and the amazing tool that is naudio!<br /><br />Kristian</p>",
+    "PostedDate": "2012-08-08T00:01:12.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

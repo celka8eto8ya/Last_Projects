@@ -1,0 +1,51 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Have got strange result of using MediaFoundationReader to extract audio on Windows 7 64-bit.\r\n\r\nActually, I use MediaFoundationReader for extracting WAVE data to temp file like this:\r\n\r\n```\r\n            using (var reader = new MediaFoundationReader(sourceFilename))\r\n            {\r\n                WaveFileWriter.CreateWaveFile(copyFilename, reader);\r\n            }\r\n```\r\n\r\nAfter that I read WAVE data with WaveFileReader:\r\n\r\n```\r\n            using (var sourceFileReader = new WaveFileReader(sourceFilename))\r\n            {\r\n                Console.WriteLine(\"Length:\\t\\t{0}\", sourceFileReader.Length);\r\n            }\r\n\r\n            using (var copyFileReader = new WaveFileReader(copyFilename))\r\n            {\r\n                Console.WriteLine(\"Length of copy:\\t{0}\", copyFileReader.Length);\r\n            }\r\n```\r\n\r\nOn Windows 8.1 I get the same data lengths, but on Windows 7 copy has end-trimmed data.\r\n\r\nIs there a bug in NAudio or Media Foundation on Windows 7?\r\n\r\nTest project in attachment.\r\n\r\n![Image](http://auxmic.com/sites/default/files/pictures/naudio_test_win7_x64.png)\r\n![Image](http://auxmic.com/sites/default/files/pictures/naudio_test_win8.1_x64.png)",
+    "LastUpdatedDate": "2015-03-01T00:32:27.66-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-10-08T05:19:35.697-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "MediaFoundationReader reads less data on Windows 7 (on Windows 8.1 - OK)",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16453
+  },
+  "FileAttachments": [
+    {
+      "FileId": 919110,
+      "FileName": "wav_save_test.zip",
+      "DownloadUrl": ".\\919110"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "is your source file a WAV? I'm not really sure what you're trying to do here",
+      "PostedDate": "2015-03-01T00:32:27.66-08:00",
+      "Id": 175735
+    }
+  ]
+}

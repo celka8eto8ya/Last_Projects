@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1049311",
+    "ThreadId": "445132",
+    "Html": "I need to find a pattern inside the wave stream/file<br />\n<br />\nScenario:<br />\n<br />\nI have a wave file #1 with N sentences, I need to find based on another wave file #2 if there is a match.<br />\n<br />\nExample:<br />\n<br />\nFile #1:<br />\nHi every body, I would like to kill everyone in this room.<br />\n<br />\nFile #2:<br />\nkill<br />\n<br />\nSo when I process the file I will check in there is a &quot;kill&quot; on the File#1<br />\n<br />\nDoes anybody have an idea to aproach this process?<br />\n",
+    "PostedDate": "2013-05-27T15:21:38.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1052196",
+    "ThreadId": "445132",
+    "Html": "this is an extremely hard problem to solve. You could try using Microsoft's speech recognition API.<br />\n",
+    "PostedDate": "2013-06-03T08:27:35.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

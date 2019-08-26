@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1326815",
+    "ThreadId": "573374",
+    "Html": "Hi<br />\n<br />\nI am trying to convert my previous project that was using NAudio to run on winRT<br />\n<br />\nfor WaveOut I simply converted output to use NAudio.Win8.Wave.WaveOutputs.WasapiOutRT and the rest of it was almost the same. <br />\n<br />\nPreviously I had:<br />\n<pre><code>WaveIn waveIn = new WaveIn();\nwaveIn.BufferMillisecond = 60;\nwaveIn.DeviceNumber = 0;\nwaveIn.WaveFormat = new WaveFormat(8000, 16, 1);\nwaveIn.DataAvalible += waveIn_DataAvalible;\nwaveIn.StartRecording();</code></pre>\n\nAny suggestions how to do this in Win RT ?<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2014-11-27T08:18:39.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

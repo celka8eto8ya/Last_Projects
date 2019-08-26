@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1483341",
+    "ThreadId": "657857",
+    "Html": "Hi ,\r<br />\n<br />\nAm using NAudio in my application. In that i want to record from soundcard (Mulitple Inputs,Multiple outputs) at same time.\r<br />\n<br />\nEX:\r<br />\nMic1 \r<br />\nMic2\r<br />\nsoundcardout1\r<br />\nsoundcardout2.\r<br />\n<br />\nThanks in Advance.<br />\n",
+    "PostedDate": "2016-09-10T06:08:43.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483941",
+    "ThreadId": "657857",
+    "Html": "You can record from soundcard inputs with <code>WaveIn</code> or <code>WasapiIn</code> To record soundcard outputs you must use <code>WasapiOut</code>. So you'd need to open one for each soundcard you need to record from.<br />\n",
+    "PostedDate": "2016-09-17T07:15:33.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

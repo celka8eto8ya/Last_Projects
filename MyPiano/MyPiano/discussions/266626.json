@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "647850",
+    "ThreadId": "266626",
+    "Html": "\r\n<p>Hi,<br>\r\n<br>\r\nI want to do a Vu metre.<br>\r\nFor that I need the value of each point of the MP3 stream.<br>\r\n<br>\r\nMy problem is, I don't find how I can get these value. When I read my stream it always the WAV value.<br>\r\n<br>\r\nDo you know how I have to do to get the MP3 values ?<br>\r\n<br>\r\nThanks,<br>\r\nGolvet.</p>\r\n",
+    "PostedDate": "2011-07-26T10:34:27.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648132",
+    "ThreadId": "266626",
+    "Html": "<p>To add more details :</p>\n<p>At work, people used SoundForge to see if the conversion WAV =&gt; MP3 have been done correctly.</p>\n<p>If the gain of the MP3 file is upper than -6dB the file is bad.<br /> <br /> The problem is the WAV file have data between 0 and 255. thats not the case of the MP3 file. (the curve don't have an amplitude of 1).<br /> When I read the MP3 file I obtain the WAV stream and not the MP3 one.<br /> <br /> I need to analyse directly the MP3 data, can I get it ?</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>Sorry to insist... I'm on this code since more than one week... (and I haven't do anything useful...)</p>",
+    "PostedDate": "2011-07-27T01:36:41.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648138",
+    "ThreadId": "266626",
+    "Html": "<p>MP3 is a compressed format. You need to convert to 16 bit PCM samples to measure the amplitude</p>",
+    "PostedDate": "2011-07-27T01:48:59.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648157",
+    "ThreadId": "266626",
+    "Html": "<p>the problem is,<br />when I read the stream, the value are between 0 and 255. And so the gain is from -Inf to 0dB.<br />The stream don't care about the gain written in the tag of MP3 file.</p>\r\n<p>&nbsp;</p>\r\n<p>A part of my code :</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>            NAudio.Wave.WaveStream pcm = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(<span style=\"color: blue;\">new</span> NAudio.Wave.Mp3FileReader(namefile));\r\n            stream = <span style=\"color: blue;\">new</span> NAudio.Wave.BlockAlignReductionStream(pcm);\r\n            \r\n\r\n            ifin = (<span style=\"color: blue;\">int</span>)stream.Length;\r\n\r\n            Array.Resize(<span style=\"color: blue;\">ref</span> musique, 256);\r\n\r\n            <span style=\"color: blue;\">while</span> (stream.Position &lt;= stream.Length)\r\n            {\r\n                i = stream.Position;\r\n                musique[stream.ReadByte()+1]++;\r\n\r\n            }\r\n\r\n            <span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; 260; i++)\r\n                Console.WriteLine(<span style=\"color: #a31515;\">\"{0} \\t {1}\"</span>, (i-1), musique[i]);\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2011-07-27T02:10:59.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648158",
+    "ThreadId": "266626",
+    "Html": "<p>You cannot get the gain by looking at individual bytes. This is simply not how digital audio works.</p>",
+    "PostedDate": "2011-07-27T02:12:40.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648162",
+    "ThreadId": "266626",
+    "Html": "<p>Oops... :s</p>\r\n<p><br />How can I have It ?<br />(I try to have the amplitude of each point because when I open soundforge the gain is upper than -6 dB when the curve have a big amplitude)<br /><br />I have seen a Vu metre on one of Naudio sample. (but I don't find where he is in the source code)</p>\r\n<p>Thanks for the answer.</p>",
+    "PostedDate": "2011-07-27T02:21:04.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648832",
+    "ThreadId": "266626",
+    "Html": "<p>The way the volume meter works is by examining the value of each sample. Look in the NAudio sample code for the SampleAggregator class to see how it works.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-28T02:16:36.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

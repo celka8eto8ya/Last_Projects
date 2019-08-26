@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1015468",
+    "ThreadId": "436675",
+    "Html": "I found a Volume quirk with Waveout and am wondering if there is a work around.\r<br />\n<br />\nI start a WaveOut playing with 100% volume. Pause it, then set volume to 0%. Then click Resume. I would expect the MP3 to continue playing with no sound. But instead, I get a quick burst of sound (maybe less than a tenth of a second worth), then play continues as expected at volume=0.\r<br />\n<br />\nSo I'm assuming that when I click Resume button, there is a small buffer of audio left in the Waveout buffer. Is that true? Is yes, is there a way to flush that buffer before continuing the play?<br />\n<pre><code>\nIWavePlayer waveOutDevice = null;\nstring fileName = &quot;myaudio.mp3&quot;;\n           \nWaveStream  mediaFileReader = new Mp3FileReader(fileName);\nWaveChannel32   volumeStream = new WaveChannel32(mediaFileReader);\nWaveChannel32 volumeStream =  new WaveChannel32(mediaFileReader);\nWaveStream mainOutputStream = volumeStream;\n\n\nwaveOutDevice.Init(mainOutputStream);\nwaveOutDevice.Play();  //start play\n\nvolumeStream.Volume = 1;   //vol 100%\n\n...\nwaveOutDevice.Pause();  //pause\nvolumeStream.Volume = 0;   //vol 0%\n...\nwaveOutDevice.Play();  //resume, volume burst happens here\n\n</code></pre>\n\n",
+    "PostedDate": "2013-03-14T11:21:17.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015936",
+    "ThreadId": "436675",
+    "Html": "Well, I solved this by the steps below. If anyone knows of a more elegant solution, I'm all ears.<br />\n<br />\n1) On pause, saving  Current position and volume<br />\n<pre><code>TimeSpan positionTimeSpan =  mainOutputStream.CurrentTime ;\nfloat volumeOnPause  = currVolume;\n</code></pre>\n\n2) On resume, if volume has changed since pause, flush the out buffer and restore position<br />\n<pre><code>if (volumeOnPause != currVolume)\n                {\n                    waveOutDevice.Stop();   // flush the buffer, brute force method\n                    mainOutputStream.CurrentTime = positionTimeSpan;  // reset position\n                }\n               \n                waveOutDevice.Play();\n</code></pre>\n\n",
+    "PostedDate": "2013-03-15T07:48:15.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015939",
+    "ThreadId": "436675",
+    "Html": "yes, calling Stop flushes the buffers. Just because the API is called &quot;Stop&quot;, doesn't mean you can't use it when the user presses the &quot;Pause&quot; button. <br />\n",
+    "PostedDate": "2013-03-15T07:51:27.543-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015942",
+    "ThreadId": "436675",
+    "Html": "Ok thanks Mark. This solution seems to work fine.<br />\n",
+    "PostedDate": "2013-03-15T07:57:41.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

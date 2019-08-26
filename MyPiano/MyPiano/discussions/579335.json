@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1348531",
+    "ThreadId": "579335",
+    "Html": "Hi and thanks for this gread library.\r<br />\n<br />\nI noticed that the BytesRecorded parameter always has the same size.\r<br />\nI wanted to know when this size will be different or maybe it is a coincidence that I always get the same size.\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2015-02-03T00:56:35.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1348919",
+    "ThreadId": "579335",
+    "Html": "yeah, that will normally be the case. Soundcards tend to repeatedly produce buffers of the same size. However, it could theoretically be smaller when you stop recording.<br />\n",
+    "PostedDate": "2015-02-04T05:59:41.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1446676",
+    "ThreadId": "645684",
+    "Html": "Hello,\r<br />\n<br />\nI'm using WasapiCapture and have the following issue: during recording, it happens sometimes that my application freezes up for a few seconds. So the audio data that I receive in the DataAvailable gets stored up, and after the freeze I receive old data from the microphone. Is it possible that in case of a freeze I reset the wasapiCapture's buffer, or to drop those data packets that are far behind in time?\r<br />\n<br />\nThanks,\r<br />\nIstvan <br />\n",
+    "PostedDate": "2015-10-01T05:27:51.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446771",
+    "ThreadId": "645684",
+    "Html": "hi, not sure that will be very easy to do. It depends on what is causing the freezing.\r<br />\nYou'd need to make your own copy of the WasapiCapture code and write some custom logic to handle the case when you detect a freeze.<br />\n",
+    "PostedDate": "2015-10-01T14:08:36.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

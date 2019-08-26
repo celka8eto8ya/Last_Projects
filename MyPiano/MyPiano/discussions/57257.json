@@ -1,0 +1,122 @@
+[
+  {
+    "Id": "193491",
+    "ThreadId": "57257",
+    "Html": "<p>Hello</p>\r\n<p>I was recommended to check NAudio - http://stackoverflow.com/questions/900383/c-and-mp3-fade-in-out - and I am wondering if I can use NAudio co create small samples from larger, main file. Now I was able to do the cutting with another tool, but I am still looking for an option to fade in/out start and end.</p>\r\n<p>Could I use NAudio for that? I did not notice anything in docs..</p>",
+    "PostedDate": "2009-05-23T00:59:46.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "198915",
+    "ThreadId": "57257",
+    "Html": "<p>To fade audio in and out, you first need to convert to WAV. NAudio can convert MP3 to WAV. As for fading, it is not directly built in, but you can control the volume. I would write my own WaveStream derived class to perform fade ins and outs. Then in the Read method, you can increment your volume multiplier by the desired delta for every sample, allowing a smooth fade.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-06-08T01:39:32.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244779",
+    "ThreadId": "57257",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Can you elaborate on your described solution?&nbsp; I would like to use NAudio to set the volume level at any level at any time in the file, so i can fade up and down at will throughout.</p>\r\n<p>I am very new to audio management in c# and am not sure how to start.</p>\r\n<p>Thanks for any input.</p>\r\n<p>Jason</p>",
+    "PostedDate": "2009-10-12T11:11:14.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244782",
+    "ThreadId": "57257",
+    "Html": "<p>Hi Jason,</p>\r\n<p>in a fadeout, you move the volume from 1 to 0 over a set period of time. This means that you need to do a bit of maths. Work out how many samples are in your fade-out time. This lets you work out a &quot;delta&quot; - the amount to reduce the volume by each sample.</p>\r\n<p>I've put this on my list of things to blog about, so maybe there will be an example for you at some point.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-12T11:27:58.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244792",
+    "ThreadId": "57257",
+    "Html": "<p>Hi Mark, Thanks for your reply,</p>\r\n<p>The only question I have then, is how do I break a wave file down to iterate through the samples, and set the volume on that sample before writing out to the new wave file?&nbsp; In other words, what classes provide this functionality?</p>\r\n<p>Right now I am using the following code to open a file and then save it at a new rate:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>            <span style=\"color:Blue\">string</span> inFile = <span style=\"color:#A31515\">@&quot;path to in file&quot;</span>;\r\n            <span style=\"color:Blue\">string</span> outFile = <span style=\"color:#A31515\">@&quot;path to out file&quot;</span>;\r\n            <span style=\"color:Blue\">using</span> (WaveFileReader reader = <span style=\"color:Blue\">new</span> WaveFileReader(inFile))\r\n            {\r\n                WaveFormat of = <span style=\"color:Blue\">new</span> WaveFormat(48000, 16, 2);\r\n                <span style=\"color:Blue\">using</span> (ResamplerDmoStream rso = <span style=\"color:Blue\">new</span> ResamplerDmoStream(reader, of)){\r\n                    <span style=\"color:Blue\">using</span> (WaveFileWriter wri = <span style=\"color:Blue\">new</span> WaveFileWriter(outFile, of))\r\n                    {\r\n                        <span style=\"color:Blue\">byte</span>[] buffer = <span style=\"color:Blue\">new</span> <span style=\"color:Blue\">byte</span>[1024];\r\n                        <span style=\"color:Blue\">int</span> bytesRead; \r\n                        <span style=\"color:Blue\">do</span>{\r\n                            bytesRead = rso.Read(buffer, 0, buffer.Length);\r\n                            wri.WriteData(buffer, 0, bytesRead);\r\n                        }<span style=\"color:Blue\">while</span>(bytesRead &gt; 0);\r\n\r\n                    }\r\n                }\r\n            }\r\n</pre>\r\n</div>\r\n<p>I would assume that somewhere in that do while, I should be able to tweak the volume? Or am I way over simplifying this.</p>\r\n<p>Thanks</p>\r\n<p>jason&nbsp;</p>",
+    "PostedDate": "2009-10-12T11:54:20.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244806",
+    "ThreadId": "57257",
+    "Html": "<p>well to tweak the volume you need to turn every pair of bytes you read into an Int16, multiply by the volume, then turn it back into bytes again to write to the file.</p>\r\n<p>In NAudio, you would typically do this by creating a new WaveStream derived class that would do the volume adjustment for you, and passing it the ResamplerDmoStream as an input.</p>",
+    "PostedDate": "2009-10-12T12:41:19.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244808",
+    "ThreadId": "57257",
+    "Html": "<p>Even though this is a support forum for NAudio, I would like to present my solution. I used http://sox.sourceforge.net/ which has all the most common things already developed and tested!</p>",
+    "PostedDate": "2009-10-12T12:44:51.903-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244817",
+    "ThreadId": "57257",
+    "Html": "<p>Update :</p>\r\n<p>This code successfully re-encodes my wave file at 10% volume! Thanks for the poke in the right direction Mark.</p>\r\n<p>I am now trying to wrap my head around timing, so if I want to change the volume at the 01:10:12 mark (one minute, 10 second, 12th frame) how does that equate in this byte array? can I just divide the duration of the wave file by the total bytes then divide by 30 (for 30 fps) to get the number of bytes per frame?</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>        <span style=\"color:Blue\">static</span> <span style=\"color:Blue\">void</span> Main()\r\n        {\r\n            <span style=\"color:Blue\">string</span> inFile = <span style=\"color:#A31515\">@&quot;C:\\Users\\Jason\\Desktop\\test.wav&quot;</span>;\r\n            <span style=\"color:Blue\">string</span> outFile = <span style=\"color:#A31515\">@&quot;C:\\Users\\Jason\\Desktop\\sup.wav&quot;</span>;\r\n            <span style=\"color:Blue\">using</span> (WaveFileReader reader = <span style=\"color:Blue\">new</span> WaveFileReader(inFile))\r\n            {\r\n                WaveFormat of = <span style=\"color:Blue\">new</span> WaveFormat(48000, 16, 2);\r\n                <span style=\"color:Blue\">using</span> (ResamplerDmoStream rso = <span style=\"color:Blue\">new</span> ResamplerDmoStream(reader, of)){\r\n                    <span style=\"color:Blue\">using</span> (WaveFileWriter wri = <span style=\"color:Blue\">new</span> WaveFileWriter(outFile, of))\r\n                    {\r\n                        <span style=\"color:Blue\">byte</span>[] buffer = <span style=\"color:Blue\">new</span> <span style=\"color:Blue\">byte</span>[1024];\r\n                        <span style=\"color:Blue\">int</span> bytesRead;\r\n                        <span style=\"color:Blue\">int</span> count = 0;\r\n                        <span style=\"color:Blue\">do</span>{\r\n                            bytesRead = rso.Read(buffer, 0, buffer.Length);\r\n                            <span style=\"color:Blue\">for</span> (<span style=\"color:Blue\">int</span> j = 0; j &lt; buffer.Length; j+=2)\r\n                            {\r\n                                count++;\r\n                                <span style=\"color:Blue\">short</span> snd = ComplementToSigned(<span style=\"color:Blue\">ref</span> buffer, j);\r\n                                snd = (<span style=\"color:Blue\">short</span>)(snd * .1);\r\n                                <span style=\"color:Blue\">byte</span>[] changed = SignedToComplement(snd);\r\n                                <span style=\"color:Blue\">if</span> ((changed[0] != <span style=\"color:Blue\">null</span>) &amp;&amp; (changed[1] != <span style=\"color:Blue\">null</span>))\r\n                                {\r\n                                    buffer[j] = changed[0];\r\n                                    buffer[j + 1] = changed[1];\r\n                                }\r\n                            }\r\n                            wri.WriteData(buffer, 0, bytesRead);\r\n                        }<span style=\"color:Blue\">while</span>(bytesRead &gt; 0);\r\n                        Console.WriteLine(count.ToString());\r\n\r\n                    }\r\n                }\r\n            }\r\n        }\r\n\r\n        <span style=\"color:Blue\">private</span> <span style=\"color:Blue\">static</span> <span style=\"color:Blue\">short</span> ComplementToSigned(<span style=\"color:Blue\">ref</span> <span style=\"color:Blue\">byte</span>[] bytArr, <span style=\"color:Blue\">int</span> intPos)\r\n        {\r\n            <span style=\"color:Blue\">short</span> snd = BitConverter.ToInt16(bytArr, intPos);\r\n            <span style=\"color:Blue\">if</span> (snd != 0)\r\n                snd = Convert.ToInt16((~snd | 1));\r\n            <span style=\"color:Blue\">return</span> snd;\r\n        }\r\n        <span style=\"color:Blue\">private</span> <span style=\"color:Blue\">static</span> <span style=\"color:Blue\">byte</span>[] SignedToComplement(<span style=\"color:Blue\">short</span> shtVal) <span style=\"color:Green\">//Convert to 2's complement and return as byte array of 2 bytes</span>\r\n        {\r\n            <span style=\"color:Blue\">byte</span>[] bt = <span style=\"color:Blue\">new</span> <span style=\"color:Blue\">byte</span>[2];\r\n            shtVal = Convert.ToInt16((~shtVal | 1));\r\n            bt = BitConverter.GetBytes(shtVal);\r\n            <span style=\"color:Blue\">return</span> bt;\r\n        }\r\n</pre>\r\n</div>",
+    "PostedDate": "2009-10-12T13:41:16.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244820",
+    "ThreadId": "57257",
+    "Html": "<p>frames per second is for video. audio is samples per second, and you have 48000 samples per second in your code above. Also, you are using stereo, so you actually have 96000 samples per second (48000 pairs). From that you can work out how many samples before your target time.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-12T13:49:50.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244827",
+    "ThreadId": "57257",
+    "Html": "<p>Thank you mark for your help!</p>\r\n<p>I really appreciate it, I think I have enough to go on for now!</p>\r\n<p>Jason</p>",
+    "PostedDate": "2009-10-12T14:17:37.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424870",
+    "ThreadId": "57257",
+    "Html": "<p>this code's useful to me.</p>\r\n<p>but I'll apreciate if You help me this.</p>\r\n<p>I want to fade first 2s out.</p>\r\n<p>like this</p>\r\n<p>mp3 waveform:</p>\r\n<p>&nbsp; ------------------------</p>\r\n<p>&nbsp;- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -</p>\r\n<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -</p>\r\n<p>It'll easier for listener.</p>",
+    "PostedDate": "2010-03-29T04:34:38.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424976",
+    "ThreadId": "57257",
+    "Html": "<p>to do fades you need first to convert to PCM. Then you need to create your own algorithm for adjusting the volume of each sample (whether a linear or exponential fade). NAudio does not do this for you I'm afraid. One day I'll try to get round to blogging about how to do this.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-29T08:25:52.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425192",
+    "ThreadId": "57257",
+    "Html": "<p>Thank you for your respond, Mark.</p>\r\n<p>I'm New but I'll try.</p>",
+    "PostedDate": "2010-03-29T18:50:45.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715211",
+    "ThreadId": "57257",
+    "Html": "<p>Mark, ever get around to blogging about this? :)</p>",
+    "PostedDate": "2011-12-20T19:45:07.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715387",
+    "ThreadId": "57257",
+    "Html": "<p>hi I'm afraid not so far, but with the new ISampleProvider interface in NAudio 1.5 it will become much easier to implement as you won't have to worry about bit conversion.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-21T03:35:00.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

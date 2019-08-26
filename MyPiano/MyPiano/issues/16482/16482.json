@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "have fixed this one now in latest code on GitHub",
+    "ClosedDate": "2017-01-31T12:11:05.58-08:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I believe in 1.7.3 on nuget, ReadNextFrame results in Position and CurrentTime increasing.\r\n\r\nAfter the below commit, this looks like it's no longer the case.  Is that a bug?\r\n\r\nhttps://github.com/naudio/NAudio/commit/1dbc29cdb539cbed794f7daec803bf10f431022f",
+    "LastUpdatedDate": "2017-01-31T12:11:05.58-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-09-01T17:56:59.103-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Mp3FileReader ReadNextFrame supposed to increment position?",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 2,
+    "Id": 16482
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "`Position` (and `CurrentTime`) is intended to work in conjunction with `Read` - they are both part of the `WaveStream` interface. But `ReadNextFrame` is just a low-level way to get the next MP3 frame, and so it's not expected you are using these other properties. But I agree it would be nice to fix this up if its not too difficult.",
+      "PostedDate": "2015-10-19T08:38:36.22-07:00",
+      "Id": 191754
+    }
+  ]
+}

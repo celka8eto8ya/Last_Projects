@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "995202",
+    "ThreadId": "431679",
+    "Html": "Hi All,\r<br />\nI'm trying to get the GUID for the system audio devices. The best NAudio API I could find is...<br />\n<pre><code>\nMMDeviceEnumerator DevEnum = new MMDeviceEnumerator();\nMMDeviceCollection devEnum = DevEnum.EnumerateAudioEndPoints(DataFlow.All, DeviceState.Active);\n \n foreach (var item in devEnum)\n {\n      string devId = item.ID;\n } \n</code></pre>\n\nSo devId is in this format\r<br />\n{0.0.1.00000000}.{6864ba9c-b9a7-45cd-80d8-ee334575590c}\r<br />\nie. Two bracketed strings separated by a dot  {4-tuple-number}.{GUID}\r<br />\n<br />\nQuestions, \r<br />\n1) Can I depend on the format always being returned in this format so I can reliably parse it? On all OS versions (XP/vista/7/8)?<br />\n<h2>2) What is the meaning for the 4 digits in the 4-tuple number?</h2>\nNote: I am a newbie to NAudio.  Hats off to the developers!! You guys are Awesome!!\r<br />\nIs there an API guide for NAudio? <br />\n",
+    "PostedDate": "2013-02-01T06:44:22.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "995211",
+    "ThreadId": "431679",
+    "Html": "hi, this part of NAudio is really a fairly thin wrapper around the Windows Core Audio APIs, so the documentation you really want is MSDN. The ID property returns the value of the <a href=\"http://msdn.microsoft.com/en-gb/library/windows/desktop/dd371407%28v=vs.85%29.aspx\" rel=\"nofollow\">IMMDevice.GetId</a> method which returns an <a href=\"http://msdn.microsoft.com/en-gb/library/windows/desktop/dd370837%28v=vs.85%29.aspx\" rel=\"nofollow\">Endpoint ID string</a>.<br />\n",
+    "PostedDate": "2013-02-01T06:56:42.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "995290",
+    "ThreadId": "431679",
+    "Html": "Thanks Mark. I appreciate the reply.\r<br />\n<br />\nI looked at those MSDN API pages (pretty gorpy explanations) but thanks for the link. \r<br />\n<br />\nWhat I need to do is to determine which audio devices are &quot;Speakers&quot;. Because the MMDeviceCollection includes both speakers and microphones. The device FriendlyName prefixes with the word &quot;Speakers&quot; but I assume that is dependent on the uses language -- it might say &quot;Altavoz&quot; in Spain instead of &quot;Speakers&quot;.\r<br />\n<br />\nI wonder if the 4-Tuple indicate speakers? In my computer devices, speakers have this tuple {0.0.0.00000000} and Microphones and the Mixer have {0.0.1.00000000} \r<br />\n<br />\nI couldn't find any description of that 4-Tuple in the MSDN documentation. \r<br />\n<br />\nMMDeviceCollection  for my computer<br />\n<pre><code>Name=Speakers (Realtek High Definition Audio) DevId={0.0.0.00000000}.{73d4795c-5a20-4a6d-80ef-6b86e31ea1f1}; \n\nName=Speakers (2- C-Media USB Audio Device   ) DevId={0.0.0.00000000}.{e2e6b090-3cc4-49d2-a2fb-a5d345c68f1e}; \n\nName=Microphone (2- C-Media USB Audio Device   ) DevId={0.0.1.00000000}.{0fcb87d4-1a64-4afa-ace9-9444e61b3baf}; \n\nName=Microphone (Realtek High Definition Audio) DevId={0.0.1.00000000}.{43b789c5-e9e7-4912-8a23-79e28f66966e}; \n\nName=Stereo Mix (Realtek High Definition Audio) DevId={0.0.1.00000000}.{6864ba9c-b9a7-45cd-80d8-ee334575590c}; \n</code></pre>\n\n",
+    "PostedDate": "2013-02-01T09:02:40.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996018",
+    "ThreadId": "431679",
+    "Html": "You are enumerating all endpoints. Try just asking for Render or Capture devuces. Use DataFlow.Render or DataFlow.Capture\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-04T03:12:57.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996121",
+    "ThreadId": "431679",
+    "Html": "Thank you Mark, that helped a lot.<br />\n",
+    "PostedDate": "2013-02-04T06:45:58.573-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

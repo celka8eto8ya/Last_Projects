@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1461318",
+    "ThreadId": "650687",
+    "Html": "Hi!<br />\nHow can I detect that mp3 downloading from HttpWebResponse is over in <strong>NAudioDemo -&gt; Mp3StreamingDemo</strong> or how much bytes were downloaded at the current moment? I've tried to compare readfullystream.Position and httpwebresponse.ContentLength, but in some reason ContentLength is always bigger, than Position, although ContentLength is a length of mp3 file byte array. Manipulations with bufferedWaveProvider don't work too.<br />\n<br />\n<a href=\"http://i.imgur.com/2vAq2wM.png\" rel=\"nofollow\">Pic related</a><br />\n",
+    "PostedDate": "2016-01-29T08:37:55.18-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

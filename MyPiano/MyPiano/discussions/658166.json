@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1484376",
+    "ThreadId": "658166",
+    "Html": "Hi,\r<br />\nI have using Naudio waveoutevent. In that i want to play multiple file continuously without cap. When current file before going to stop next file start to played. \r<br />\n<br />\n<em>Current song and next songs play without cap play continuously</em> Please help me to do thsi.\r<br />\nIts very urgent requirements.<br />\n",
+    "PostedDate": "2016-09-22T00:05:53.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485252",
+    "ThreadId": "658166",
+    "Html": "To do this, you should make a custom IWaveProvider class whose Read method reads from your first file, and then when that reaches the end, starts reading from the next one and so on.\r<br />\n<br />\nThere is already a class that you could use called <code>ConcatenatingSampleProvider</code> which you could pass a bunch of <code>AudioFileReader</code> instances into. They would all need to have same <code>WaveFormat</code> for this to work<br />\n",
+    "PostedDate": "2016-10-04T06:26:00.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-10-06T05:27:21.88-07:00"
+  }
+]

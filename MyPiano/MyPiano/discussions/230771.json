@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "506713",
+    "ThreadId": "230771",
+    "Html": "<p>Quick question to help me choose an audio library. Can NAudio nest&nbsp;WaveMixerStream32 objects, so that one mixer can accept a stream from many other mixers.</p>",
+    "PostedDate": "2010-10-13T09:19:35.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "506716",
+    "ThreadId": "230771",
+    "Html": "<p>yes, there should be no problem with this</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-13T09:25:56.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "506719",
+    "ThreadId": "230771",
+    "Html": "<p>Thanks Mark.</p>",
+    "PostedDate": "2010-10-13T09:27:43.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1253011",
+    "ThreadId": "547588",
+    "Html": "Hello,\r<br />\n<br />\nIs there a way to recognize where there's silence (or minimum sound) in a WAV\\MP3 file?\r<br />\nIf so, can I get a code sample please?\r<br />\n<br />\nThank you,\r<br />\nOlga.<br />\n",
+    "PostedDate": "2014-06-04T13:21:06.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1253171",
+    "ThreadId": "547588",
+    "Html": "Use audiofilereader to read blocks of floating point samples (in the Read) method. Then examine each one and see if they fall under your specified minimum threshold.<br />\n",
+    "PostedDate": "2014-06-05T00:21:20.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

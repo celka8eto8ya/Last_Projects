@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "604341",
+    "ThreadId": "255612",
+    "Html": "\r\n<p>With this API would I have the ability to create a midi file, create and manipulate midi notes/events with only the mouse and keyboard and finally save the file?</p>\r\n<p>I would like to implement this using an interface I create within WPF/Silverlight.</p>\r\n",
+    "PostedDate": "2011-04-28T12:06:37.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604350",
+    "ThreadId": "255612",
+    "Html": "<p>You certainly can create MIDI events and save them to file. The one thing I would say is that the MIDI file API is more optimised for modifying existing MIDI files than creating new ones from scratch (need to add some better constructors on the objects as people were getting confused about what to use).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-28T12:17:19.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1237237",
+    "ThreadId": "543126",
+    "Html": "Hola,\r<br />\n<br />\nBecause MP3's must be converted to wav before NAudio (or any other app) can calculate a waveform I would like to save the waveform data. You could call it a cache if you want.\r<br />\n<br />\nBecause everytime converting a mp3 to wav file takes too much time and unnecessary disk read/writes (on an ssd). \r<br />\n<br />\nCan anybody tell me how I can do this the best way? It must stay resizable. I've already got a function for resizing that's working properly in my app<br />\n<pre><code>public void fitToScreen()\n        {\n            if( waveStream == null )\n            {\n                return;\n            }\n\n            int samples = (int)(waveStream.Length / bytesPerSample);\n\n            startPosition = 0;\n            SamplesPerPixel = samples / this.Width; \n        }</code></pre>\n\nI was thinking about just saving the wav file, but if you got a library of 1000 mp3 files that would be like 50gb just so i can draw a waveform for every mp3..\r<br />\n<br />\nThanks in advance!<br />\n",
+    "PostedDate": "2014-04-23T13:20:27.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237441",
+    "ThreadId": "543126",
+    "Html": "Mark, any idea?<br />\n",
+    "PostedDate": "2014-04-24T02:18:07.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239495",
+    "ThreadId": "543126",
+    "Html": "I'd probably calculate the peaks at various intervals and save the array of peak values to a file. Should be quite easy to do. Resizable is a bigger challenge though, as you'd need to support peaks at different numbers of samples per pixel. I've used a MipMap approach for this in the past.<br />\n",
+    "PostedDate": "2014-04-29T12:06:51.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1241213",
+    "ThreadId": "543126",
+    "Html": "Thanks I'll be looking in to that<br />\n",
+    "PostedDate": "2014-05-04T06:51:41.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

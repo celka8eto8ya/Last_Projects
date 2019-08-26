@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2012-10-26T23:54:03.037-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "when i records audio with the sample WaveIn class, it's get wrong speed, if i shoose rate different from 8000. Only in 8 kHz i've got correct speed - on the 16000 audio got two times longer and lower tone, at 44000 it almost nothing to hear, sound terrify. Please check, what i've done wrong.\r\n\r\npublic static void StartRecording(string path, int device)\r\n        {\r\n            waveInStream = new WaveIn();\r\n            \r\n            writer = new WaveFileWriter(path, waveInStream.WaveFormat);\r\n\r\n            waveInStream.DeviceNumber = device;\r\n\r\n            waveInStream.WaveFormat = new WaveFormat(8000, 32, 1);\r\n            waveInStream.BufferMilliseconds = 200;\r\n            waveInStream.NumberOfBuffers = 4;\r\n\r\n            waveInStream.DataAvailable += waveInStream_DataAvailable;\r\n            waveInStream.StartRecording();\r\n        }\r\n\r\n        static void waveInStream_DataAvailable(object sender, WaveInEventArgs e)\r\n        {\r\n            writer.Write(e.Buffer, 0, e.BytesRecorded);\r\n        }\r\n\r\n",
+    "LastUpdatedDate": "2012-10-26T23:54:03.037-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-10-25T03:58:41.153-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "wrong speed for the different rate",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16368
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "set the waveInStream format before creating the WaveFileWriter\n\nwaveInStream.WaveFormat = new WaveFormat(8000, 32, 1);\nwriter = new WaveFileWriter(path, waveInStream.WaveFormat);\n\n\n\n",
+      "PostedDate": "2012-10-25T05:37:58.92-07:00",
+      "Id": 80987
+    },
+    {
+      "Message": "oh. what an akward moment=) Thanks!",
+      "PostedDate": "2012-10-26T02:16:08.657-07:00",
+      "Id": 81060
+    }
+  ]
+}

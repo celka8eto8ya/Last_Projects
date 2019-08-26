@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "901235",
+    "ThreadId": "392213",
+    "Html": "\r\n<p>Hello</p>\r\n<p>My project is simply a karaoke program, I want to achieve this by detecting pitch and then compare the two samples in real-time, is this the way to go?</p>\r\n<p>Sample one will be from a microphone (only a voice).<br>\r\nSample two will be the full song with them vocals.</p>\r\n<p>I hope you guys can give me some advice on this.<br>\r\n<br>\r\nThank you in advance.</p>\r\n",
+    "PostedDate": "2012-08-19T00:59:07.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917043",
+    "ThreadId": "392213",
+    "Html": "<p>You'll find this extremely difficult to implement successfully, but using an FFT would be one way to detect pitch in the vocal sample. Trying that on the full song would not likely pick out the melody line though.</p>",
+    "PostedDate": "2012-09-24T23:42:23.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989599",
+    "ThreadId": "392213",
+    "Html": "\r\n<p>Hi zassadgh, did you found a solution for the comparison?</p>\r\n",
+    "PostedDate": "2013-01-21T02:34:08.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

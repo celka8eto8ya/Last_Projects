@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 7,
+    "Custom": null,
+    "Description": "I have been using the AudioFileReader to play audio files while updating a display showing the time signature at that point in time (the app is a WPF application):\r\n\r\npositionTime.Text = Math.Floor(_AudioFileReader.CurrentTime.TotalMinutes).ToString(\"00\") + \":\" + _AudioFileReader.CurrentTime.Seconds.ToString(\"00\");\r\n\r\nThe time returned seems to be double the time expected so for 1 seconds worth of playback it displays 2 seconds, for 3 it displays 6 seconds and so on.\r\n\r\nI have just upgraded to the latest version of NAudio (v1.7 29th Oct 2013) from the prerelease version and it is still showing the same problem. Your NAudioDemo (SimplePlaybackDemo) plays the file and also reports the incorrect timings. The NAudioDemo (AudioPlaybackDemo) plays the file and reports the correct timings.\r\n\r\nThe file being played is a WAV file with the format of 16 bit PCM, 48kHz, 1 channel.\r\n",
+    "LastUpdatedDate": "2017-12-11T15:05:51.43-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-11-11T09:03:58.25-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Incorrect Time Reported On AudioFileReader.CurrentTime Property",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16414
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Hmm - seems to be related to whether the file being played back is single channel or stereo.",
+      "PostedDate": "2013-11-11T09:34:18.363-08:00",
+      "Id": 122648
+    },
+    {
+      "Message": "what type of file are you playing? (WAV, MP3...)? ",
+      "PostedDate": "2013-11-11T10:57:18.297-08:00",
+      "Id": 122657
+    },
+    {
+      "Message": "OK, think I've found it. I think an older version of AudioFileReader always turned mono into stereo. Will check in a fix shortly.",
+      "PostedDate": "2013-11-11T12:04:32.967-08:00",
+      "Id": 122668
+    },
+    {
+      "Message": "somethings up with codeplex's hg servers, so I can't push at the moment, but I have a fix now",
+      "PostedDate": "2013-11-11T23:50:06.44-08:00",
+      "Id": 122728
+    },
+    {
+      "Message": "Thanks Mark. I thought it might be something like that. I'll wait for the source code to be updated then I'll grab a copy again.",
+      "PostedDate": "2013-11-12T02:07:09.133-08:00",
+      "Id": 122734
+    },
+    {
+      "Message": "That's working fine now Mark. Thank you.",
+      "PostedDate": "2013-11-13T07:50:47.36-08:00",
+      "Id": 122926
+    },
+    {
+      "Message": "great, thanks for reporting back. I might even push a minor bugfix update to NAudio 1.7 because I found another small issue while testing",
+      "PostedDate": "2013-11-13T08:14:00.97-08:00",
+      "Id": 122931
+    }
+  ]
+}

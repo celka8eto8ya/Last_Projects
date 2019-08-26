@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "There are wrong DirectSoundDeviceInfo.Guid and DirectSoundDeviceInfo.ModuleName in NAudio implementation.\r\n\r\nList of devices using NAudio (with incorrect Guids)\r\n(_Install-Package NAudio_)\r\n```\r\nforeach (var d in DirectSoundOut.Devices)\r\n{\r\n    Console.WriteLine(\"{0} {1} {2}\", d.Description, d.Guid, d.ModuleName);\r\n}\r\n```\r\n\r\nList of devices using SlimDX (with correct Guids, I've checked that the same are in Windows registry __HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\MMDevices\\Audio\\Capture__)\r\n(_Install-Package SlimDX_)\r\n```\r\nforeach(DeviceInformation d in DirectSoundCapture.GetDevices()) \r\n{\r\n    Console.WriteLine(\"{0} {1} {2}\", d.Description, d.ModuleName, d.DriverGuid);\r\n}\r\n```\r\n",
+    "LastUpdatedDate": "2014-12-10T12:08:12.587-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-12-10T12:07:14.103-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Wrong DirectSound device GUID",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16461
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

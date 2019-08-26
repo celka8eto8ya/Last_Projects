@@ -1,0 +1,56 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:00:41.12-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "I use the MP3FileReader  to open a mp3 which is in the attachments , the total time returned is 05:09. And I use the NAudio demo to play this mp3, the sound is slower than expected.\r\n\r\nBut if I use other players like foobar to open this mp3, the total time is 03:41, and sounds normal.\r\n\r\nI think there should be a bug in this class.",
+    "LastUpdatedDate": "2012-10-27T00:00:41.12-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-07-13T02:16:46.363-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "MP3FileReader.Length property is not correct",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16359
+  },
+  "FileAttachments": [
+    {
+      "FileId": 446947,
+      "FileName": "M2M.mp3",
+      "DownloadUrl": ".\\446947"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "thanks for reporting. I think the problem is that the first frame in this file is 32kHz, while the rest are 44.1kHz and NAudio does not currently support sample rate changes mid-MP3 file",
+      "PostedDate": "2012-07-17T01:47:19.667-07:00",
+      "Id": 70276
+    },
+    {
+      "Message": "NAudio now throws an exception to show that this is considered an invalid file and cannot be played. A separate issue can be raised as a feature request if needed",
+      "PostedDate": "2012-10-06T12:26:13.223-07:00",
+      "Id": 78841
+    }
+  ]
+}

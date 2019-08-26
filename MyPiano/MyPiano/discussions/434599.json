@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1007203",
+    "ThreadId": "434599",
+    "Html": "I have a C# project that can create 6 mono wav files. How to import  these 6 mono wav files to create a multi-channel (5.1) WMA audio with NAudio?\r<br />\n<br />\nMany thanks in advance. <br />\n",
+    "PostedDate": "2013-02-26T12:40:35.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007215",
+    "ThreadId": "434599",
+    "Html": "MultiplexingWaveProvider can join them all together into a single 6 channel file. Then you'd need to pass that into the WMA Encoder. I've never done 5.1 encoding though, so I have no idea whether other challenges await you after that.<br />\n",
+    "PostedDate": "2013-02-26T12:58:03.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

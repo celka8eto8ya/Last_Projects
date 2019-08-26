@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "closing as duplicate of issue 11429, please vote on that if strong naming is important for you",
+    "ClosedDate": "2012-09-26T06:00:47.94-07:00",
+    "CommentCount": 2,
+    "Custom": "",
+    "Description": "Hello,\n\nMay I propose that the NAudio project is strongly signed (using .snk-file, no password) so that it can be used as-is together with other strongly named assemblies? It'll still be usable with unsigned assemblies so backwards compatibility shouldn't be an issue.\n\nGreat library, btw!\n\nRegards,\n\nPer",
+    "LastUpdatedDate": "2012-09-26T06:00:47.94-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-07-26T14:13:45.753-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Compiling - strong name signing",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 16300
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I've never felt the need to strong name NAudio since it is open source, and didn't really fancy having to manage a secret snk file, but from this link http://stackoverflow.com/questions/839697/do-i-need-to-secure-my-strong-name-key-file-for-an-open-source-project, it seems that an option would be just to create a snk file and include it in the NAudio repository. Will try to get this done for NAudio 1.5",
+      "PostedDate": "2011-07-27T01:57:13.893-07:00",
+      "Id": 41804
+    },
+    {
+      "Message": "Great :)",
+      "PostedDate": "2011-07-28T10:56:23.243-07:00",
+      "Id": 41805
+    }
+  ]
+}

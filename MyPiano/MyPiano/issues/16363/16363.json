@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2014-04-29T13:55:46.497-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "When device format is using 48k-sampling and content format is using 44.1k-sampling, playback problems occur. We observed the following sequence of events.\r\n\r\n[WasapiOut::PlayThread]\r\n1. audio buffer is filled at first\r\n2. enter while loop and sleep for a while\r\n3. try to fill buffer again, sometimes 'numFramesAvailable' is only '1'\r\n \r\n[WasapiOut::FillBuffer]\r\n4. when argument 'frameCount'='1' and 'playbackProvider' is SRC Dmo (i.e. device format is 48k while content is 44.1k), 'playbackState' will be stopped\r\n5. no sound gets played, or you only hear a click\r\n \r\nStep 4 is caused since:\r\n[ResamplerDmoStream::Read]\r\n   int inputBytesRequired = (int)OutputToInputPosition(count - outputBytesProvided);\r\n=>\r\n[ResamplerDmoStream::OutputToInputPosition]\r\n  long inputPosition = (long)(outputPosition / ratio);\r\n=>\r\ninputPosition is 0 since double to integer truncation\r\n\r\nThus, the idea is only use FillBuffer when available frame count is 'bigger' so that inputPosition does not result in double-to-integer truncation value of 0.\r\n\r\nWe propose an easy fix by changing WasapiOut.cs, line 138, so that (numFramesAvailable > 10), instead of (numFramesAvailable > 0).\r\n\r\n138:                        if (numFramesAvailable > 10)\r\n139:                        {\r\n140:                            FillBuffer(playbackProvider, numFramesAvailable);\r\n141:                        }\r\n\r\nTen frames are safe and will not cause data loss. Of course, modifying behavior with 'OutputToInputPosition' is another way.\r\n",
+    "LastUpdatedDate": "2014-04-29T13:55:46.497-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-09-11T09:46:09.983-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "sound does not play because of double to integer truncation, caused by low numFramesAvailable value",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 16363
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for reporting this. I'll try to get it fixed for a future NAudio. ResamplerDmoStream should probably just have been an IWaveProvider for simplicity.",
+      "PostedDate": "2012-09-24T23:40:50.64-07:00",
+      "Id": 77696
+    },
+    {
+      "Message": "I have a similar issue with audio content that is played at different speeds (via SoundTouch library). The proposed work-around fixes my issue where playbackState was randomly getting set to stopped. Thank you for documenting this!",
+      "PostedDate": "2014-04-22T14:05:22.377-07:00",
+      "Id": 142676
+    },
+    {
+      "Message": "thanks, have made this fix",
+      "PostedDate": "2014-04-29T13:51:39.393-07:00",
+      "Id": 145125
+    }
+  ]
+}

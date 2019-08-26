@@ -1,0 +1,114 @@
+[
+  {
+    "Id": "1496538",
+    "ThreadId": "662994",
+    "Html": "Hi guys,\r<br />\nI've got a little problem with apllying transfer fuction. I need to take data from .wav file and make convolution with transfer function and play this sound in real time. Thank you for advices. I'm new to NAudio.<br />\n",
+    "PostedDate": "2017-05-17T08:28:20.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496540",
+    "ThreadId": "662994",
+    "Html": "Hi, this is not a trivial task. For realtime processing you can´t process the data in the time domain, which would be simple coding (using the class &quot;ImpulseResponseConvolution&quot;). The only approach is complex and demands a lot of knowledge: you need to transform the data in the frequency domain, process it and transform it back. For transformation the &quot;FastFourierTransform&quot; (FFT) or &quot;ShortTermFourierTransform&quot; (STFT) is commonly used. Unfortunately, there is no implementation available in NAudio, but good luck (and pls provide if you can deploy it).<br />\n",
+    "PostedDate": "2017-05-17T09:04:31.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496541",
+    "ThreadId": "662994",
+    "Html": "Thanks,I thought, I could just fit my input data from wav file to transfer function...<br />\n",
+    "PostedDate": "2017-05-17T09:30:41.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496548",
+    "ThreadId": "662994",
+    "Html": "I recommend to look at the FastFouriertransformation class and the sampleaggregator class for a start.<br />\n",
+    "PostedDate": "2017-05-17T11:56:36.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496698",
+    "ThreadId": "662994",
+    "Html": "Hello, so I tried to do FFT with use of SampleAggregator.cs, but I'm not shure, if I realy understand class SampleAggregator - Is that instance, witch take samples from my wave file (or any input), and apply FFT algorythm for every single sample of my wave file - this is the method Add in this class -right? And length of FFT means, how large is step between couted frequencies in spectrum? For example if is frequency of my point[n] = 100Hz, frequency of point[n+1] is my sample rate/ FFT length, so if I've got sample rate 44100 and FFT length 1024, point[n+1] = point[n]+(44100/1024), so if my point[n] is 100 my point[n+1]=  143,066.... ??? I'm right or absolutly dumb...?? :-D \r<br />\nThanks for answer.<br />\n",
+    "PostedDate": "2017-05-24T05:53:47.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496705",
+    "ThreadId": "662994",
+    "Html": "I´m not deep into the the maths, but what I know so far is:<br />\n<br />\nEach bin of the FFT result is equally spaced in the frequency spectrum.<br />\n<br />\nFor example when SampleRate is 44100 Hz and FFT Size is 1024:<br />\n<pre><code>frequency[0]=0*44100/(1024*2) // First bin is always 0 Hz, called the DC offset\nfrequency[1]=1*44100/(1024*2) //Second bin, here at 22 Hz\nfrequency[2]=2*44100/(1024*2) //Third bin, here at 44 Hz\n....\nfrequency[1024]=1024*44100/(1024*2) //Last bin is always half SampleRate, here 22050 Hz</code></pre>\n\nSo just loop over the FFT Result and calculate the frequency and amplitude.<br />\n",
+    "PostedDate": "2017-05-24T11:43:07.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496727",
+    "ThreadId": "662994",
+    "Html": "So, I tried to do FFT of my wave file and than apply my poly transfer function:\r<br />\n<br />\n void FftCalculated(object sender, FftEventArgs e)<br />\n<pre><code>         {\n         //y[n] = A*x^3[n] + B^2[n] + C*x[n] + DI; // my transfer function\n\n            for (int i = 0; i &lt; e.Result.Length; i++)\n            {\n\n               fftResultX[i] = e.Result[i].X; // result of fft for Complex.X\n               fftResultY[i] = e.Result[i].Y; // result of fft for Complex.Y\n               fftResultH[i].X = A * (e.Result[i].X) * (e.Result[i].X) * (e.Result[i].X) + B * (e.Result[i].X) * (e.Result[i].X) + C * (e.Result[i].X)+D; //distortion - fit my fft result to my transfer function\n               fftResultH[i].Y = A * (e.Result[i].Y) * (e.Result[i].Y) * (e.Result[i].Y) + B * (e.Result[i].Y) * (e.Result[i].Y) + C * (e.Result[i].Y) + D;\n            }\n        }</code></pre>\n\nwhere fftResultH is spectrum with distortion effect of my transfer function. And now I want to playing my effected sound in real time / when I open my wave fine and press my play botton I want to hear effected sound, where I can changing parameters A,B,C,D of my transfer function in realtime...  Can I do it this way?\r<br />\nI'm using SampleAggregator. <br />\n",
+    "PostedDate": "2017-05-24T23:48:16.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496737",
+    "ThreadId": "662994",
+    "Html": "Girl, you got no idea what you´re doing. Besides that and your load of spelling mistakes, as I said initially it is NOT a trivial task. I don´t even know myself exactly how to do it.<br />\n",
+    "PostedDate": "2017-05-25T07:41:13.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496851",
+    "ThreadId": "662994",
+    "Html": "No need for FFT right?, Just convolve your signal with the transfer function.<br />\n",
+    "PostedDate": "2017-06-01T06:44:46.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496898",
+    "ThreadId": "662994",
+    "Html": "My transfer function is not linear, so you can't convolve nonlinear system with signal. If you want convolve you have to do volterra series. What I have to do is FFT and the add harmonic in spectrum... So... I done it my program can add harmonic distortion to my input signal... but I've got a little trouble with latency. I've go some handling noises like popping in my output signal...  but my latency is 250... I think is becouse of counting of polynoms in worker thread... \r<br />\nPS: To Freefall... I'm sorry... I know my English is terrible, but I'm not native speaker and writer definitly not... <br />\n",
+    "PostedDate": "2017-06-03T11:49:19.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496906",
+    "ThreadId": "662994",
+    "Html": "Two tips maybe,\r<br />\n<br />\n1: Add a clipper so the signal does not go to digital 1 and -1. It could be out of bounds rather than latent. But with FFT I can see the point.\r<br />\n2: Lot's of things add harmonic distortion. Think tubes, It's not FFT level complex (nothing is ;) ), rather It's a transfer function.\r<br />\n<br />\nGood luck!<br />\n",
+    "PostedDate": "2017-06-04T02:58:47.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496907",
+    "ThreadId": "662994",
+    "Html": "Thanks but what I need is changing shape of transfer function i real time. Clipper is included in my project... <br />\n",
+    "PostedDate": "2017-06-04T03:34:12.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496923",
+    "ThreadId": "662994",
+    "Html": "Not shure what the mission was, mbe i'm wrong. But i'd say the pieces are there..<br />\n",
+    "PostedDate": "2017-06-05T05:48:01.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496928",
+    "ThreadId": "662994",
+    "Html": "What I know so far if I remember correctly:<br />\n<br />\n1) samples of realtime input -&gt; FFT -&gt; Complex output<br />\n<br />\n2) samples of convolution input -&gt; FFT -&gt; Complex output (Can be stored and re-used)<br />\n<br />\n3) Multiply  1) and 2) for convolution -&gt; IFFT (=inverse FFT) -&gt; output realtime samples<br />\n<br />\nI think this was the basic approach.<br />\n",
+    "PostedDate": "2017-06-05T14:51:22.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

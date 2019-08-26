@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:28:19.7-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "I am getting \"0\" bytes with the first call to BlockAlignReductionStream. Read(). The code roughly looks like the following:\r\n   WaveStream In = new Mp3FileReader(some file);\r\n   In = WaveFormatConversionStream.CreatePcmStream(In);\r\n   In = new BlockAlignReductionStream(In); // reduces choppiness\r\n\r\n   byte[] buffer = new byte [1920];\r\n   int N1 = In . Read(buffer, 0, buffer.Length);\r\n   int N2 = In . Read(buffer, 0, buffer.Length);\r\n\r\nN1 returns 0\r\nN2 returns 1920\r\nThe source stream (the MP3 stream) appears to have a block align of 4608",
+    "LastUpdatedDate": "2012-10-27T00:28:19.7-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-12-03T07:24:19.65-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "BlockAlignReductionStream . Read() returns 0 for the first read",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 11032
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "BlockAlignReductionStream no longer needed for MP3s",
+      "PostedDate": "2010-11-07T14:27:58.83-08:00",
+      "Id": 41711
+    },
+    {
+      "Message": "released in NAudio 1.6",
+      "PostedDate": "2012-10-27T00:27:57.09-07:00",
+      "Id": 81116
+    }
+  ]
+}

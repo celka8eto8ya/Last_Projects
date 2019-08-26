@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1012004",
+    "ThreadId": "435812",
+    "Html": "I am trying to get SteroToMonoProvider to work. So have I have there working.<br />\n<pre><code>private WaveFormat _waveFormat = new WaveFormat(44100, 16, 2);\n\n_waveProvider1 = new BufferedWaveProvider(_waveFormat);\n_waveProvider1.BufferDuration = new TimeSpan(_bufferHours,\n                                                                       _bufferMinutes,\n                                                                       _bufferSeconds);\n_waveProvider1.DiscardOnBufferOverflow = true;\n_StereoToMono1 = new StereoToMonoProvider16(_waveProvider1);\n\n_waveOut1.Init(_StereoToMono1);\n_waveOut1.play();\n\n_StereoToMono1.LeftVolume = 0;\n_StereoToMono1.RightVolume = 1;</code></pre>\n\nI am streaming Audio into the BufferedWaveProvider. The wav files I am streaming at 16bit PCM at 44kHz 2 Channel. \r<br />\n<br />\nSo when I set the StereoToMono1.LeftVolume to zero and the RightVolume to 1 the sound does not shift to the right side. \r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-03-07T13:12:34.78-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1012009",
+    "ThreadId": "435812",
+    "Html": "that's because it's mono. Mono is the same in both speakers. You want to go mono to stereo instead.<br />\n",
+    "PostedDate": "2013-03-07T13:16:31.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1012027",
+    "ThreadId": "435812",
+    "Html": "So I switched to use a MonoToStereoProvider class and get the &quot;Source must be Mono&quot;?<br />\n",
+    "PostedDate": "2013-03-07T13:36:39.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1012029",
+    "ThreadId": "435812",
+    "Html": "yes, MonoToStereo takes mono in and gives stereo out. You want stereo in and stereo out,, but with the channels swapped about a bit from the sounds of it. You'd need to make a custom provider to do that.<br />\n",
+    "PostedDate": "2013-03-07T13:38:23.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1012037",
+    "ThreadId": "435812",
+    "Html": "Yeah I want to take a stereo input and then only hear the left or the right channel. \r<br />\n<br />\nDo I need to create a provider to do that?<br />\n",
+    "PostedDate": "2013-03-07T13:50:30.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

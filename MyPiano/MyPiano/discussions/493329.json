@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1161417",
+    "ThreadId": "493329",
+    "Html": "Hi All,\r<br />\nI'm trying to accommodate stream data from Internet protocol URI links (ie <a href=\"http://\" rel=\"nofollow\">http://</a>...,  mms:// , etc).\r<br />\nI also need to set DeviceNumber property on the output (this is a hard requirement for the app)\r<br />\n<br />\nI'm currently using these classes: Mp3FileReader, WMAFileReader, WaveFileReader. \r<br />\nBut these classes do NOT accept Internet protocol URI links. (unless I'm wrong)\r<br />\n<br />\nThe basic gist of what I do now is this<br />\n<pre><code>WaveStream mediaFileReader = new Mp3FileReader(fileName);\nWaveChannel32 inputStream = new WaveChannel32(mediaFileReader);\nWaveOut outputDevice = new WaveOut()\noutputDevice.DeviceNumber = 1;\noutputDevice.Init(inputStream);</code></pre>\n\n........................\r<br />\nSo my question is, \r<br />\nis there another class (WmaStream?), that will accept Internet protocol URI links; AND allow me to set a DeviceNumber property on the output? \r<br />\nAnd if there is a way, any pointer to sample code would be appreciated.<br />\n",
+    "PostedDate": "2014-01-13T07:37:38.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1168690",
+    "ThreadId": "493329",
+    "Html": "try with MediaFoundationReader<br />\n",
+    "PostedDate": "2014-01-15T04:37:16.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170320",
+    "ThreadId": "493329",
+    "Html": "Thanks Mark. I'll look into that class.<br />\n",
+    "PostedDate": "2014-01-16T01:09:56.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

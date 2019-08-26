@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "592904",
+    "ThreadId": "252799",
+    "Html": "<p>How can I select the audio device in NAudio ? And how can I get a List of audio devices ?</p>",
+    "PostedDate": "2011-04-06T09:31:07.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592906",
+    "ThreadId": "252799",
+    "Html": "<p>are you using WaveOut? You can set the DeviceNumber property. Use WaveOut.DeviceCount to find out how many devices. Use WaveOut.GetCapabilities to get information about a particular device.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-06T09:34:07.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "593088",
+    "ThreadId": "252799",
+    "Html": "<p>Does does not really explain how I can SELECT the device I want, it just explains, how I can read the devices... (and by device I mean things like \"Front Speak\", \"Line 1\", etc...)</p>",
+    "PostedDate": "2011-04-06T13:28:11.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "593103",
+    "ThreadId": "252799",
+    "Html": "<p>Select the device by setting the DeviceNumber property.</p>",
+    "PostedDate": "2011-04-06T13:59:17.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

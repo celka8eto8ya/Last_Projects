@@ -1,0 +1,307 @@
+﻿using NAudio.CoreAudioApi.Interfaces;
+using NAudio.MediaFoundation;
+using System;
+using System.Runtime.InteropServices;
+
+/////////////////////////////////////////////////////////////////// PROTOTYPE ////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////// Compatible NAudio 569799226a61 ////////////////////////////
+
+
+// Add Constant for MediaFoundationInterop
+namespace NAudio.MediaFoundation
+{
+	public static class MediaFoundationInterop_Add
+	{
+		public static readonly Guid MFAudioFormat_Float = new Guid("00000003-0000-0010-8000-00aa00389b71");
+	}
+}
+
+
+/*
+ * Modif
+ * 
+ * Resolve MTAThread !!!
+ * Add Format IEEE
+ * 
+ */
+namespace NAudio.Wave
+{
+    /// <summary>
+    /// Class for reading any file that Media Foundation can play
+    /// Will only work in Windows Vista and above
+    /// Automatically converts to PCM
+    /// If it is a video file with multiple audio streams, it will pick out the first audio stream
+    /// </summary>
+    public class MediaFoundationReader_Th : WaveStream
+    {
+		// NAudio Var
+        private WaveFormat waveFormat;
+        private long _varPosition;
+        private long length;
+
+		// MF Var
+		private string _file = "";
+		private bool _formatFloat;
+		private IMFSourceReader pReaderTh;
+		private bool MFStart = false;
+		private bool PropertiesPositionChanged = false;
+
+		/// <summary>
+		/// Creates a new MediaFoundationReader based on the supplied file
+		/// PCM Format
+		/// </summary>
+		/// <param name="file">FileName Source</param>
+		public MediaFoundationReader_Th(string file)
+			: this(file, false)
+		{
+		}
+
+
+		/// <summary>
+		/// Creates a new MediaFoundationReader based on the supplied file
+		/// </summary>
+		/// <param name="file">FileName source</param>
+		/// <param name="FormatFloat">Force to FloatFormat, else PCMFormat</param>
+		public MediaFoundationReader_Th(string file, bool FormatFloat)
+        {
+			_file = file;
+			_formatFloat = FormatFloat;
+
+			// Check WaveFormat & Lenght
+			IMFSourceReader tempReader = Init();
+			if (tempReader != null)
+			{
+				// Clean after Check WaveFormat & lenght
+				Marshal.ReleaseComObject(tempReader);
+				tempReader = null;
+
+				MediaFoundationInterop.MFShutdown();
+			}
+			
+        }
+
+		// Init MediaFoundation 
+		private IMFSourceReader Init()
+		{
+			IMFSourceReader retReader;
+
+			// Clean Before Init
+			Clean();
+
+			// StartUp MediaFoundation
+			MediaFoundationInterop.MFStartup(MediaFoundationInterop.MF_VERSION);
+			
+			// Create SourceReader
+			var uri = new Uri(_file);
+			MediaFoundationInterop.MFCreateSourceReaderFromURL(uri.AbsoluteUri, null, out retReader);
+			retReader.SetStreamSelection(MediaFoundationInterop.MF_SOURCE_READER_ALL_STREAMS, false);
+			retReader.SetStreamSelection(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, true);
+
+			// Create a partial media type indicating that we want uncompressed PCM audio or Float Audio
+			IMFMediaType partialMediaType = null;
+			MediaFoundationInterop.MFCreateMediaType(out partialMediaType);
+			partialMediaType.SetGUID(MediaFoundationInterop.MF_MT_MAJOR_TYPE, MediaFoundationInterop.MFMediaType_Audio);
+
+	// Select Format Output (PCM or Float)
+			if (_formatFloat)
+				partialMediaType.SetGUID(MediaFoundationInterop.MF_MT_SUBTYPE, MediaFoundationInterop_Add.MFAudioFormat_Float);
+			else
+				partialMediaType.SetGUID(MediaFoundationInterop.MF_MT_SUBTYPE, MediaFoundationInterop.MFAudioFormat_PCM);
+			
+			// set the media type
+			retReader.SetCurrentMediaType(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, IntPtr.Zero, partialMediaType);
+			Marshal.ReleaseComObject(partialMediaType);
+
+			// now let's find out what we actually got
+			IMFMediaType uncompressedMediaType;
+			retReader.GetCurrentMediaType(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, out uncompressedMediaType);
+
+			// Check Channels, Bits, SampleRate
+			int channels;
+			uncompressedMediaType.GetUINT32(MediaFoundationInterop.MF_MT_AUDIO_NUM_CHANNELS, out channels);
+			int bits;
+			uncompressedMediaType.GetUINT32(MediaFoundationInterop.MF_MT_AUDIO_BITS_PER_SAMPLE, out bits);
+			int sampleRate;
+			uncompressedMediaType.GetUINT32(MediaFoundationInterop.MF_MT_AUDIO_SAMPLES_PER_SECOND, out sampleRate);
+
+	// WaveFormat for NAudio
+			if (_formatFloat)
+				waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, channels);
+			else
+				waveFormat = new WaveFormat(sampleRate, bits, channels);
+			
+			// Get Lenght
+			PropVariant variant;
+			retReader.GetPresentationAttribute(MediaFoundationInterop.MF_SOURCE_READER_MEDIASOURCE,
+											   MediaFoundationInterop.MF_PD_DURATION, 
+											   out variant);
+			length = (((long)variant.Value) * waveFormat.AverageBytesPerSecond) / 10000000L;
+			variant.Clear();
+
+			
+			return retReader;
+		}
+
+		/// <summary>
+		/// Output Format = Float
+		/// </summary>
+		public bool FormatFloat
+		{
+			get { return _formatFloat; }
+			set { _formatFloat = value; }
+		}
+
+		/// <summary>
+		/// Current position within this stream
+		/// </summary>
+		public override long Position
+		{
+			get { return _varPosition; }
+			set
+			{
+				_varPosition = value;
+				PropertiesPositionChanged = true;
+			}
+		}
+
+		/// <summary>
+		/// Reads from this wave stream
+		/// </summary>
+		/// <param name="buffer">Buffer to read into</param>
+		/// <param name="offset">Offset in buffer</param>
+		/// <param name="count">Bytes required</param>
+		/// <returns>Number of bytes read; 0 indicates end of stream</returns>
+		public override int Read(byte[] buffer, int offset, int count)
+		{
+		
+			if (MFStart == false)
+			{
+				pReaderTh = Init();					// Start MediaFoundation
+				PropertiesPositionChanged = true;	// Force Change Position to start
+				MFStart = true;
+			}
+
+
+			if (PropertiesPositionChanged)
+			{
+				// Change Position
+				long nsPosition = (10000000L * _varPosition) / waveFormat.AverageBytesPerSecond;
+				var pv = PropVariant.FromLong(nsPosition);
+				pReaderTh.SetCurrentPosition(Guid.Empty, ref pv);
+				PropertiesPositionChanged = false;
+				decoderOutputCount = 0;
+				decoderOutputOffset = 0;
+			}
+
+
+			// Buffer Source -> NAudio buffer
+			// ------------------------------
+
+			int bytesWritten = 0;
+				
+			if (decoderOutputCount > 0)
+			{
+				bytesWritten += ReadFromDecoderBuffer(buffer, offset, count - bytesWritten);
+			}
+
+			while (bytesWritten < count)
+			{
+				IMFSample pSample;
+				int dwFlags;
+				ulong timestamp;
+				int actualStreamIndex;
+				pReaderTh.ReadSample(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, 0, out actualStreamIndex, out dwFlags, out timestamp, out pSample);
+				if (dwFlags != 0)
+				{	
+					break;
+				}
+
+				IMFMediaBuffer pBuffer;
+				pSample.ConvertToContiguousBuffer(out pBuffer);
+				IntPtr pAudioData = IntPtr.Zero;
+				int cbBuffer;
+				int pcbMaxLength;
+				pBuffer.Lock(out pAudioData, out pcbMaxLength, out cbBuffer);
+				EnsureBuffer(cbBuffer);
+				Marshal.Copy(pAudioData, decoderOutputBuffer, 0, cbBuffer);
+				decoderOutputOffset = 0;
+				decoderOutputCount = cbBuffer;
+
+				bytesWritten += ReadFromDecoderBuffer(buffer, offset + bytesWritten, count - bytesWritten);
+
+
+				pBuffer.Unlock();
+				Marshal.ReleaseComObject(pBuffer);
+				Marshal.ReleaseComObject(pSample);
+			}
+			_varPosition += bytesWritten;
+			return bytesWritten;
+		}
+
+
+        private byte[] decoderOutputBuffer;
+        private int decoderOutputOffset;
+        private int decoderOutputCount;
+
+        private void EnsureBuffer(int bytesRequired)
+        {
+            if (decoderOutputBuffer == null || decoderOutputBuffer.Length < bytesRequired)
+            {
+                decoderOutputBuffer = new byte[bytesRequired];
+            }
+        }
+
+        private int ReadFromDecoderBuffer(byte[] buffer, int offset, int needed)
+        {
+            int bytesFromDecoderOutput = Math.Min(needed, decoderOutputCount);
+            Array.Copy(decoderOutputBuffer, decoderOutputOffset, buffer, offset, bytesFromDecoderOutput);
+            decoderOutputOffset += bytesFromDecoderOutput;
+            decoderOutputCount -= bytesFromDecoderOutput;
+            if (decoderOutputCount == 0)
+            {
+                decoderOutputOffset = 0;
+            }
+            return bytesFromDecoderOutput;
+        }
+
+        /// <summary>
+        /// WaveFormat of this stream (n.b. this is after converting to PCM)
+        /// </summary>
+        public override WaveFormat WaveFormat
+        {
+            get { return waveFormat; }
+        }
+
+        /// <summary>
+        /// The bytesRequired of this stream in bytes (n.b may not be accurate)
+        /// </summary>
+        public override long Length
+        {
+            get { return length; }
+        }
+
+        /// <summary>
+        /// Cleans up after finishing with this reader
+        /// </summary>
+        /// <param name="disposing">true if called from Dispose</param>
+        protected override void Dispose(bool disposing)
+        {
+			Clean();
+            base.Dispose(disposing);
+        }
+
+		// Clean pReaderTh
+		private void Clean()
+		{
+			if (pReaderTh != null)
+			{
+				Marshal.ReleaseComObject(pReaderTh);
+				pReaderTh = null;
+
+				MediaFoundationInterop.MFShutdown();
+
+				MFStart = false;
+			}
+		}
+    }
+}

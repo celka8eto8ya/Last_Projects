@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1150046",
+    "ThreadId": "483850",
+    "Html": "With speexdec I got &quot;not seems  a speex file&quot; (probabily because there isn't header). Any idea?<br />\n",
+    "PostedDate": "2014-01-06T10:25:18.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151290",
+    "ThreadId": "483850",
+    "Html": "it's not creating a speex file, just speex data, so yes, its lacking a header. I'm afraid I don't know what should be in that header.<br />\n",
+    "PostedDate": "2014-01-09T03:51:08.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151669",
+    "ThreadId": "483850",
+    "Html": "thanks for your reply.\r<br />\n<br />\nreally my goal isn't get a speex file from that data but receive that data on linux server and decompress it. Perhaps the best way is to use JSpeex on the server...<br />\n",
+    "PostedDate": "2014-01-10T01:53:18.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

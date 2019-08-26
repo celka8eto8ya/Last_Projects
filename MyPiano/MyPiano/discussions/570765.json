@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1317131",
+    "ThreadId": "570765",
+    "Html": "I'm having the same issue as the folks at the bottom of this discussion: <a href=\"https://naudio.codeplex.com/discussions/442970\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/442970</a>.\r<br />\n<br />\nIn fact, I think we're working off the same root project, <a href=\"https://sipdump.codeplex.com/\" rel=\"nofollow\">SIPDump</a>.\r<br />\n<br />\nIf I write my packets to two separate WaveFileWriters, each wav file is perfect.  I tried mixing the two, but since one side of the conversation doesn't start until they answer, I can't seem to get the two sides in sync.  In other words, when using the MixingSampleProvider, both wav files are mixed starting at the same time, when one should be delayed until they answer.\r<br />\n<br />\nIf I write both Tx and Rx to the same file, the resulting audio file is about twice as long as it should be.  It almost sounds like a a bit of silence is inserted between each sample.  I've validated that the RTP and UDP headers are precisely accounted for (I'm also parsing out each header field, and to mention again that using the same means of writing to wav works perfectly when the Tx/Rx are split into separate files).<br />\n\r<br />\nThe basic code for writing the packets:<br />\n<pre><code>short pcm = MuLawDecoder.MuLawToLinearSample(pp.Bytes[index]);\nvar pcm2 = BitConverter.GetBytes(pcm);\nar2.wave.Write(pcm2, 0, 2);</code></pre>\n\nAny ideas on why the two sides of the conversation cannot be written to the wave file in the order they are read from the packets without introducing new artifacts?  \r<br />\n",
+    "PostedDate": "2014-10-28T11:51:28.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1317146",
+    "ThreadId": "570765",
+    "Html": "I did manage to get the two files synced up by calculating the TimeSpan between the timestamp of the first packet and the timestamps of the first packets of each SSRC, and then adding those TimeSpans to the beginning of each input through the OffsetSampleProvider.  \n<br />\n<pre><code>var inputs = new List&lt;ISampleProvider&gt;();\n\nforeach (var x in audio_files)\n{ \n           var input = new WaveFileReader(x.path).ToSampleProvider();\n           var o = new OffsetSampleProvider(input);\n           o.DelayBy = (x.start_time.Value-start_time.Value);\n           inputs.Add(o);\n}\n            \nvar mixer = new MixingSampleProvider(inputs);\nWaveFileWriter.CreateWaveFile16(&quot;mixed.wav&quot;, mixer);</code></pre>\n\n",
+    "PostedDate": "2014-10-28T12:38:19.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

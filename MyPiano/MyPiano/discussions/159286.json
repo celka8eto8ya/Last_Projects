@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "367448",
+    "ThreadId": "159286",
+    "Html": "<p>Hi,</p>\r\n<p>I would like to know if there is a way to add sample rate conversion to recording using WASAPI. I have already learned that WASAPI is generally&nbsp;not SRC-friendly, but I have seen that the <strong>ResamplerDmoStream</strong> is used by the <strong>WasapiOut</strong> class to do on-the-fly conversion, and I'm wondering if something similar could be done with the <strong>WasapiCapture</strong> as well.</p>\r\n<p>Even if it's not implemented in the class itself, there should be a way to connect the ResamplerDmoStream to the WasapiCapture...?&nbsp;If the WasapiCapture was an IWaveProvider it would be easy but unfortunately it's not. I was also looking for a straightforward way to move data to the Resampler in the DataAvailable event of the Capture, but what would I construct the Resampler on then...? Some kind of a generic WaveStream I would guess, but I haven't found such a class. What I'm essentially missing is a stream that represents the WasapiCapture or to which I can write the captured audio data.</p>\r\n<p>Maybe someone has an idea if the above is possible without too much hassle...? Thanks in advance!</p>\r\n<p>&nbsp;</p>\r\n<p>Regards,</p>\r\n<p>Michael</p>",
+    "PostedDate": "2010-02-24T12:15:38.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423652",
+    "ThreadId": "159286",
+    "Html": "<p>yes, one of the most requested features for NAudio is something that turns an IWaveIn (WASAPI, WaveIn capture etc) into an IWaveProvider. Hopefully I'll get a chance to build one in the not too distant future</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-25T09:16:14.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

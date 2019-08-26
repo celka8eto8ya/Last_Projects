@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "closing as duplicate of 11429, please vote on that if strong naming is important to you",
+    "ClosedDate": "2012-09-26T06:01:19.443-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I need the NAudio.dll to be strong signed, because a project I am working.\r\nError Assembly 'NAudio.dll' must be strong signed in order to be marked as a prerequisite.\r\n",
+    "LastUpdatedDate": "2012-09-26T06:01:19.443-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-10-20T18:58:59.7-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Strong Signed NAudio",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16334
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "For now, I suggest build it yourself as strong signed. However, this is something I will try to do in a future NAudio",
+      "PostedDate": "2011-11-15T01:58:41.273-08:00",
+      "Id": 48974
+    }
+  ]
+}

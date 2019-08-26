@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1497118",
+    "ThreadId": "663273",
+    "Html": "I want to make application that like stereo mixer ,but I don't know how to input to microphone or LineIn from wave file (or buffer from other device)\r<br />\n<br />\nI  was successful that capture PC sounds with LoopBackCapture class. <br />\n",
+    "PostedDate": "2017-06-19T17:37:51.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

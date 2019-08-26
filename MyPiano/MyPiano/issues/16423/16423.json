@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi just trying to find the  [MIDI File Converter](http://naudio.codeplex.com/wikipage?title=MIDI%20File%20Converter)\r\nit says  [Download](https://naudio.codeplex.com/releases/view/114106) here, but that it just the NAudio page.\r\n\r\nThanks,\r\nBob.\r\n\r\n![Image](http://download-codeplex.sec.s-msft.com/Download?ProjectName=naudio&DownloadId=8474)",
+    "LastUpdatedDate": "2013-12-18T16:24:29.357-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-12-14T21:52:23.98-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Can't Find MIDI File Converter Download",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16423
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "it's a sample app. Download the code and build it yourself.",
+      "PostedDate": "2013-12-18T16:24:29.357-08:00",
+      "Id": 128009
+    }
+  ]
+}

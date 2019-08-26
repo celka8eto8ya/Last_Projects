@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1448634",
+    "ThreadId": "646241",
+    "Html": "Hi!\r<br />\n<br />\nI'm currently having 2 WPF applications.\r<br />\nThe first one reads data from my asio soundcard, does some adjustments (volume, mixing, ...) and in the end sends a 16bit 44.1kHz PCM stream over the network if a client is connected.\r<br />\nThe second application is this client. It gets the stream over TCP and just plays the data coming in.\r<br />\n<br />\nThis works pretty well and it's very fast.\r<br />\n<br />\nNow I want to replace my 2nd WPF application with a HTML site. What is the best way to do this?\r<br />\n<br />\nAs I don't use any protocol, do I need to wrap my PCM stream into something?\r<br />\nI know that different browsers need different audio formats to be able to play these.\r<br />\n<br />\nIt is important to keep my almost zero delay and the good audio quality I have right now.\r<br />\n<br />\nFor now this solution has to work in a LAN, so the network shouldn't be a bottleneck.\r<br />\n<br />\nKind regards,\r<br />\nStefan<br />\n",
+    "PostedDate": "2015-10-15T03:25:02.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449361",
+    "ThreadId": "646241",
+    "Html": "Hi!\r<br />\n<br />\nIn the last days I played around trying to get a working solution. My first attempt was to run an Icecast server and to send my audio data to this server, so Icecast can do all the HTTP stuff. I tested this before with an Icecast source client called butt. In Chrome I got a delay of about 4 seconds. Not very satisfying. I'm sure I didn't configure the optimal settings though.\r<br />\n<br />\nThis has to go faster, so I tried to get it working without Icecast and butt. I found this on <a href=\"http://stackoverflow.com/questions/20500796/convert-pcm-to-mp3-ogg\" rel=\"nofollow\">Stackoverflow</a> and also <a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">this article from Mark</a>. At the bottom of the second article is explained how to use external encoders.\r<br />\n<br />\nI've written my own HTTP server and used lame.exe for mp3 and oggenc2.exe for ogg.\r<br />\nMy results in regard to delay:<br />\n<ul>\n<li>Chrome ogg: ~3 seconds</li>\n<li>Chrome mp3: ~2 seconds</li>\n<li>Firefox ogg: ~1.5 seconds</li>\n<li>\nFirefox mp3: ~2 seconds<br />\n</li>\n</ul>\n(44.1kHz, 16bit, stereo)\r<br />\n<br />\nI don't know if it possible to go under this 1.5 seconds. If I can do this encoding directly in C# (with interop) it is maybe a bit faster I guess. I found this library for doing this, at least I think I can encode ogg with this library. <a href=\"http://oggvorbisinterop.codeplex.com/\" rel=\"nofollow\">Ogg Vorbis Interop</a>. I haven't tried it by now.\r<br />\n<br />\nI wanted to share my discoveries even if no one cares :P\r<br />\n<br />\nKind regards,\r<br />\nStefan<br />\n",
+    "PostedDate": "2015-10-22T01:36:15.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449995",
+    "ThreadId": "646241",
+    "Html": "Great, thanks for sharing your findings. I'm afraid I haven't done any really low latency encoding myself with those codecs. You'd probably need a lower-level library so you could encode in smaller chunks.<br />\n",
+    "PostedDate": "2015-10-28T05:43:55.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

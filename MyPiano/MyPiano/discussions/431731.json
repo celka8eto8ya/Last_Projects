@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "995457",
+    "ThreadId": "431731",
+    "Html": "I'm having a bit of a problem distinguishing device names due to the string truncation. I need to support XP users so I'm limited to WaveOut.GetCapabilities. \r<br />\n<br />\nThis might be a possible fix to the problem for the NAudio source.\r<br />\n<br />\nIt appears that the device name length is determined in the WaveOutCapabilities.cs file.\r<br />\nlocated in the source at ...\\NAudio\\Wave\\MmeInterop\\WaveOutCapabilities.cs\r<br />\nline 48        private const int MaxProductNameLength = 32;\r<br />\n<br />\nI wonder if changing that value (say triple it = 96) will eliminate most of the device name truncation issues? \r<br />\n<br />\nThen testing this simple code to see if the returned device names are longer.<br />\n<pre><code>for (int deviceId = 0; deviceId &lt; deviceCount; deviceId++)\n            {\n                var capabilities = WaveOut.GetCapabilities(deviceId);\n                string name = capabilities.ProductName;\n            }\n</code></pre>\n\nSorry that I can't test this myself or I would. The NAudio solution source code won't build for me with VS2010-- lots of missing namespaces.  \r<br />\n",
+    "PostedDate": "2013-02-01T16:50:25.547-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "995504",
+    "ThreadId": "431731",
+    "Html": "unfortunately, this is a limitation of the WaveOut APIs themselves. 32 is the value of MAXPNAMELEN as used by <a href=\"http://msdn.microsoft.com/en-gb/library/windows/desktop/dd743855%28v=vs.85%29.aspx\" rel=\"nofollow\">WAVEOUTCAPS</a>. Changing this value in NAudio will not get you a longer product name. There is only <a href=\"http://stackoverflow.com/questions/1449162/get-the-full-name-of-a-wavein-device\" rel=\"nofollow\">one workaround</a> I know of and it involves using DirectSound. I'd imagine there might be a way of searching in the registry too.<br />\n",
+    "PostedDate": "2013-02-02T00:27:38.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "995519",
+    "ThreadId": "431731",
+    "Html": "Ok, Thanks Mark.\r<br />\nThe Ghost of Bill Gates strikes again. Who knew a device name would ever exceed a massive 32 bytes of memory? ;-)\r<br />\n<br />\nI'll make do with a 32 character name. I'm trying to get away from DirectSound.<br />\n",
+    "PostedDate": "2013-02-02T02:42:54.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366061",
+    "ThreadId": "431731",
+    "Html": "Hi, I want to share my solution in c# to match waveout device and MMDevice, but for Windows 7.<br />\nUse GetWaveOutEndpointId() to get Guid of the waveout device.<br />\nUse this guid to get MMDevice<br />\nmmdevice = (new MMDeviceEnumerator()).GetDevice(guid);<br />\nRegards.<br />\n<pre><code>int DRV_QUERYFUNCTIONINSTANCEID = 0x0811;\nint DRV_QUERYFUNCTIONINSTANCEIDSIZE = 0x0812;\n\n[DllImport(&quot;winmm.dll&quot;)]\nstatic extern Int32 waveOutGetNumDevs();\n[DllImport(&quot;winmm.dll&quot;)]\nstatic extern Int32 waveOutMessage(IntPtr hWaveOut, int uMsg, out int dwParam1, IntPtr dwParam2);\n[DllImport(&quot;winmm.dll&quot;)]\nstatic extern Int32 waveOutMessage(IntPtr hWaveOut, int uMsg, IntPtr dwParam1, int dwParam2);\n\nstring GetWaveOutEndpointId(int devNumber)\n{\n    int cbEndpointId;\n    string result = string.Empty;\n    waveOutMessage((IntPtr)devNumber, DRV_QUERYFUNCTIONINSTANCEIDSIZE, out cbEndpointId, IntPtr.Zero);\n    IntPtr strPtr = Marshal.AllocHGlobal(cbEndpointId);\n    waveOutMessage((IntPtr)devNumber, DRV_QUERYFUNCTIONINSTANCEID, strPtr, cbEndpointId);\n    result = Marshal.PtrToStringAuto(strPtr);\n    Marshal.FreeHGlobal(strPtr);\n    return result;\n}\n\n\npublic List&lt;WaveOutDevice&gt; GetWaveOutDevices()\n{\n    List&lt;WaveOutDevice&gt; retVal = new List&lt;WaveOutDevice&gt;();\n    foreach (MMDevice d in (new NAudio.CoreAudioApi.MMDeviceEnumerator()).EnumerateAudioEndPoints(DataFlow.Render, DeviceState.All))\n    {\n        if (d.State != DeviceState.Active) continue;\n        WaveOutDevice di = new WaveOutDevice()\n        {\n            EndpointGuid = d.ID,\n            FullName = d.FriendlyName,\n            WaveOutDeviceId = -1\n        };\n\n        for (int waveOutIdx = 0; waveOutIdx &lt; waveOutGetNumDevs(); waveOutIdx++)\n        {\n            string guid = GetWaveOutEndpointId(waveOutIdx);\n            if (guid == di.EndpointGuid)\n            {\n                di.WaveOutDeviceId = waveOutIdx;\n                break;\n            }\n        }\n        retVal.Add(di);\n    }\n    return retVal;\n}\n</code></pre>\n\n",
+    "PostedDate": "2015-03-17T04:03:46.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366062",
+    "ThreadId": "431731",
+    "Html": "nice! thanks for sharing<br />\n",
+    "PostedDate": "2015-03-17T04:09:37.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366070",
+    "ThreadId": "431731",
+    "Html": "You are welcome Mark! It would be nice to have GetWaveOutEndpointId in WaveOut class in NAudio :) It should be also similar for WaveIn <br />\n",
+    "PostedDate": "2015-03-17T04:42:50.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366127",
+    "ThreadId": "431731",
+    "Html": "Sure, you're welcome to submit a pull request (over at Github of course) to add in GetWaveOutEndpointId. Obviously though we can't require that users have access to any MMDevice functions though, since NAudio still supports Windows XP.<br />\n",
+    "PostedDate": "2015-03-17T08:25:28.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366625",
+    "ThreadId": "431731",
+    "Html": "I solved this a different way which does not require the DllImport or Marshalling.  (maybe be more efficient, not sure)\r<br />\n<br />\nFirst You need to do a simple check that the computer is running Windows Vista Or Higher<br />\n\r<br />\nI create a collection of MMDeviceCollection objects.\r<br />\nEach object has these properties<br />\n<ul>\n<li>FriendlyName (which is the full device name, not limited to 32 characters)</li>\n<li>\nID (in this format {0.0.0.00000000}.{73d4795c-5a20-4a6d-80ef-6b86e31ea1f1} , note the GUID is included)\n<ul>\n<li>so then you can just parse out the GUID and can match it to the GUID from the WaveOut.GetCapabilities snippet above</li>\n</ul>\n</li>\n</ul>\n=======================================\r<br />\nC# Partial Code snippet<br />\n<pre><code>  MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();\n\n                MMDeviceCollection devCollection = DevEnum.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active);\n\n        string guidStr;\n                string friendName = &quot;&quot;;\n                int j = 0;\n                foreach (var item in devCollection)\n                {\n\n                    devId = item.ID;  // format {0.0.0.00000000}.{73d4795c-5a20-4a6d-80ef-6b86e31ea1f1};\n\n                    int dotFour = devId.LastIndexOf(&quot;.&quot;) + 1;\n                    guidStr = devId.Substring(dotFour);\n                    friendName = item.FriendlyName;\n                    \n                    // now you have GUID and full device name, call a method to populate your device list as needed\n\n                }\n</code></pre>\n\n",
+    "PostedDate": "2015-03-18T05:37:15.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442766",
+    "ThreadId": "431731",
+    "Html": "Hi theserus\r<br />\n<br />\nI am having the same issue with two identical USB sound cards connected the PC would have the same <strong>truncated</strong> name in NAudio.\r<br />\n<br />\nI'll be trying this workaround pretty soon. <br />\n",
+    "PostedDate": "2015-09-01T21:44:45.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442809",
+    "ThreadId": "431731",
+    "Html": "fouchette,\r<br />\nFYI, If your computer Windows OS is NOT XP (ie it is Vista or higher), you can get full names (not truncated) with this code. However, the this code will cause an error exception on XP. <br />\n<pre><code> if (IsOSWindowsVistaOrHigher)\n{\n    MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();\n    // DataFlow.All gets all devs mics, speakers and mixer\n    // DataFlow.Render is just output devices\n    MMDeviceCollection devColl = DevEnum.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);\n}\n</code></pre>\n\n",
+    "PostedDate": "2015-09-02T04:04:20.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

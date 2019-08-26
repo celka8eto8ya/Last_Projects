@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "270694",
+    "ThreadId": "79055",
+    "Html": "<p>Hi Marc,</p>\r\n<p>the&nbsp; setters of&nbsp;&nbsp; public TimeSpan EndPosition&nbsp;&nbsp; / StartPosition&nbsp;&nbsp; inside the TrimWaveStream&nbsp; class&nbsp;&nbsp; does not always&nbsp; deliver&nbsp; correct results for startBytePosition/endBytePosition:</p>\r\n<p>\r\n<pre><div style=\"color:Black;background-color:White\"><pre> <span style=\"color:Blue\">set</span>\r\n            {\r\n                endPosition = value;\r\n                endBytePosition = (<span style=\"color:Blue\">int</span>)(WaveFormat.AverageBytesPerSecond *endPosition.TotaSeconds is double) endPosition.TotalSeconds);\r\n                endBytePosition = endBytePosition - (endBytePosition % WaveFormat.BlockAlign);\r\n            }\r\n</pre>\r\n</div>\r\n<br></pre>\r\n</p>\r\n<p>e.g. the file length is 2800 milliseconds with 32 Bit, 2 Channels and samplerate of 44100 . This will calculate 987832&nbsp; for endBytePosition. The correct value would be:</p>\r\n<p>987840. This is a rounding issue (endPosition.TotalSeconds is double). So just use:</p>\r\n<p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre> <span style=\"color:Blue\">set</span>\r\n            {\r\n                endPosition = value;\r\n                endBytePosition = (<span style=\"color:Blue\">int</span>) Math.Round(WaveFormat.AverageBytesPerSecond * endPosition.TotalSeconds);\r\n                endBytePosition = endBytePosition - (endBytePosition % WaveFormat.BlockAlign);\r\n            }\r\n</pre>\r\n</div>\r\n</p>\r\n<p>regards, henrik</p>\r\n<pre><pre><br></pre>\r\n</pre>",
+    "PostedDate": "2009-12-25T01:48:18.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "274811",
+    "ThreadId": "79055",
+    "Html": "<p>TrimWaveStream isn't in NAudio yet, its in VoiceRecorder, but thanks for reporting, I'll get it fixed.</p>",
+    "PostedDate": "2010-01-08T07:58:19.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

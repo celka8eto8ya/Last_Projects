@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1099811",
+    "ThreadId": "459383",
+    "Html": "I've run into some issues while mixing audio sources (VOIP).\r<br />\n<br />\nI think it has to do with buffering, because when I created a local test, everything mixed fine. Any network and codec compression delays, and you get choppy audio when more than two providers are being mixed.\r<br />\n<br />\nMy current setup:<br />\n<ul>\n<li>Each input has their own BufferedWaveProvider</li>\n<li>I have a single MixingSampleProvider (With ReadFully = True)</li>\n<li>Wave Format: 48khz (32khz too) / 16-bit PCM / 2 channels (Tried 1 channel as well)</li>\n<li>Tried no codec, Speex, and Opus</li>\n<li>WaveIn - BufferMilliseconds: 50</li>\n<li>\nWaveIn - NumberOfBuffers = 1 (Tried 2)<br />\n</li>\n</ul>\nEverything sounds great when there is only one active audio source.\r<br />\n<br />\nSo what is the best way to mix stream audio sources together?\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2013-09-26T12:35:46.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1100520",
+    "ThreadId": "459383",
+    "Html": "Choppy audio is likely that the BufferedWaveProviders are not providing data fast enough. This type of real-time mixing is very tricky as you want the lowest latency possible. One way to debug is to write each of the mixer inputs to a WAV file as it is going into the mixing sample provider. Then you can individually listen to what each of the inputs was to see where the problem is.\r<br />\n<br />\nAs for WaveIn, it is not particularly good at low latencies, and I'm amazed it works at all with buffers = 1. You should be using 2. Otherwise its being refilled while you read out of it.<br />\n",
+    "PostedDate": "2013-09-29T00:15:47.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1100608",
+    "ThreadId": "459383",
+    "Html": "Alright, I'll give that a shot.\r<br />\n<br />\nFor WaveIn, is there any other option for recording microphone input? I'm not an audio expert, but I see WASAPI, Wave, DirecntSound, etc for output, but not input.<br />\n",
+    "PostedDate": "2013-09-29T07:29:02.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1100641",
+    "ThreadId": "459383",
+    "Html": "WaveIn is actually the easiest to use because it supports resampling, but there is WasapiCapture, and the AsioOut class can be used for recording as well.<br />\n",
+    "PostedDate": "2013-09-29T10:43:24.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

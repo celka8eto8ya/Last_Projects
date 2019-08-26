@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "948566",
+    "ThreadId": "404935",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm trying to convert a wav file to alaw.</p>\r\n<p>The Input file is 44kHz, 1 Channel, 16 bit PCM.</p>\r\n<p>The output should be 8kHz, 1 Channel 16 bit alaw. But no matter what output format I choose I always get an Exception (AcmNotPossible calling acmStreamOpen) when creating the WaveFormatConversionStream.</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>                WaveFileReader reader = <span style=\"color:blue\">new</span> NAudio.Wave.WaveFileReader(<span style=\"color:#a31515\">&quot;a.wav&quot;</span>);\r\n                WaveStream pcmStream = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(reader);\r\n                BlockAlignReductionStream blockAlignReductionStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(pcmStream);\r\n\r\n                WaveFormat outputFormat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.ALaw, blockAlignReductionStream.WaveFormat.SampleRate, blockAlignReductionStream.WaveFormat.Channels, blockAlignReductionStream.WaveFormat.AverageBytesPerSecond, blockAlignReductionStream.WaveFormat.BlockAlign, 8);\r\n                WaveFormatConversionStream converter = <span style=\"color:blue\">new</span> WaveFormatConversionStream(outputFormat, blockAlignReductionStream);<br><br><br>Any help appreciated! Thanks a lot. <br></pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-11-28T12:14:01.16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948604",
+    "ThreadId": "404935",
+    "Html": "\r\n<p>you can't do that conversion in one step. You need two WaveFormatConversionStreams - one to go from 44.1kHz to 8kHz PCM, and then another to go to a-law. Don't bother with BlockAlignReductionStream if you are just doing file conversion.</p>\r\n",
+    "PostedDate": "2012-11-28T13:32:36.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948612",
+    "ThreadId": "404935",
+    "Html": "\r\n<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveFileReader reader = new NAudio.Wave.WaveFileReader(&quot;a.wav&quot;);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveStream pcmStream = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(reader);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveFormat outputFormat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, 8000, pcmStream.WaveFormat.Channels, pcmStream.WaveFormat.AverageBytesPerSecond, pcmStream.WaveFormat.BlockAlign, pcmStream.WaveFormat.BitsPerSample);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveFormatConversionStream converter = new WaveFormatConversionStream(outputFormat, pcmStream);<br><br><br>Fails at the last line too although it should only convert 44kHz to 8kHz :-(<br></pre>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-28T13:43:41.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948618",
+    "ThreadId": "404935",
+    "Html": "\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">Your code should look something like this:<br><br>var</span> reader = <span style=\"color:blue\">new</span> WaveFileReader(<span style=\"color:#a31515\">&quot;a.wav&quot;</span>);\r\n<span style=\"color:blue\">var</span> downsampledStream = <span style=\"color:blue\">new</span> WaveFormatConversionStream(<span style=\"color:blue\"><br>    new</span> WaveFormat(8000, reader.WaveFormat.BitsPerSample, reader.WaveFormat.Channels), reader);\r\n<span style=\"color:blue\">var</span> alawStream = <span style=\"color:blue\">new</span> WaveFormatConversionStream(WaveFormat.CreateALawFormat(8000, reader.WaveFormat.Channels), downsampledStream);\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-11-28T13:49:03.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948625",
+    "ThreadId": "404935",
+    "Html": "\r\n<p>WaveStream alawStream = new WaveFormatConversionStream(WaveFormat.CreateALawFormat(8000, reader.WaveFormat.Channels), downsampledStream);</p>\r\n<p>&nbsp;</p>\r\n<p>throws MmException AcmNotPossible calling acmStreamOpen :-( going crazy. seems I can do whatever I want. It's always the same exception. Already checked if g.711 is installed at all. It is.</p>\r\n",
+    "PostedDate": "2012-11-28T14:02:53.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948629",
+    "ThreadId": "404935",
+    "Html": "\r\n<p>reader waveformat should be&nbsp; 44.1kHz, 1 Channel, 16 bit PCM.</p>\r\n<p>downsampled waveformat should be 8kHz, 1 channel, 16 bit PCM</p>\r\n<p>then that should convert just fine to 8kHz, 1 channel, a-law</p>\r\n<p>check the first two are correct. What OS are you on, and what version of NAudio are you using?</p>\r\n",
+    "PostedDate": "2012-11-28T14:07:14.563-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949090",
+    "ThreadId": "404935",
+    "Html": "\r\n<p>Here is a more detailed description:</p>\r\n<p>OS: Windows 7 Professional 64-bit</p>\r\n<p>NAudio: 1.6.0</p>\r\n<p>Current Code:</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveFileReader reader = new NAudio.Wave.WaveFileReader(&quot;a.wav&quot;);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveStream downsampledStream = new WaveFormatConversionStream(new WaveFormat(8000, reader.WaveFormat.BitsPerSample, reader.WaveFormat.Channels), reader);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveStream alawStream = new WaveFormatConversionStream(WaveFormat.CreateALawFormat(downsampledStream.WaveFormat.SampleRate, downsampledStream.WaveFormat.Channels), downsampledStream);</p>\r\n<p>&nbsp;</p>\r\n<p>Fails with exception at the last line (alawStream).</p>\r\n<p>After the last test failed I changed the input file.</p>\r\n<p>VLC says: PCM U8 (araw), Mono, 22050 Hz, Bits per Sample: 8</p>\r\n<p>&nbsp;</p>\r\n<p>When I debug step by step the three object reader, downsampledStream and alawStream contain the following information:</p>\r\n<p>reader: WaveFormat&nbsp;&nbsp;&nbsp; {8 bit PCM: 22kHz 1 channels}&nbsp;&nbsp;&nbsp; NAudio.Wave.WaveFormat {NAudio.Wave.WaveFormatExtraData}</p>\r\n<p>downsampledStream:&nbsp; WaveFormat&nbsp;&nbsp;&nbsp; {8 bit PCM: 8kHz 1 channels} , TotalTime&nbsp;&nbsp;&nbsp; {00:00:07.9250000}, CurrentTime&nbsp;&nbsp;&nbsp; {00:00:00}</p>\r\n<p>alawStream: Exception NAudio.MmResult.AcmNotPossible {&quot;AcmNotPossible calling acmStreamOpen&quot;}</p>\r\n<p>&nbsp;&nbsp; bei NAudio.MmException.Try(MmResult result, String function)<br>\r\n&nbsp;&nbsp; bei NAudio.Wave.Compression.AcmStream..ctor(WaveFormat sourceFormat, WaveFormat destFormat)<br>\r\n&nbsp;&nbsp; bei NAudio.Wave.WaveFormatConversionStream..ctor(WaveFormat targetFormat, WaveStream sourceStream)<br>\r\n&nbsp;&nbsp; bei RTPtest.Form1.Form1_Load(Object sender, EventArgs e) in C:\\Users\\joka\\documents\\visual studio 2010\\Projects\\RTPtest\\RTPtest\\Form1.cs:Zeile 50.</p>\r\n",
+    "PostedDate": "2012-11-29T08:41:54.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949091",
+    "ThreadId": "404935",
+    "Html": "\r\n<p>you should be starting with 16 bit audio, not 8 bit. The a-law encoder converts from 16 bit to 8 bit.</p>\r\n",
+    "PostedDate": "2012-11-29T08:43:41.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949111",
+    "ThreadId": "404935",
+    "Html": "\r\n<p>Thanks a lot. That works.</p>\r\n<p>Is there any overview which conversions are supported? I think it depends on the codec!?</p>\r\n",
+    "PostedDate": "2012-11-29T09:21:48.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949112",
+    "ThreadId": "404935",
+    "Html": "\r\n<p>Every codec has a list of supported input and output formats. You can look at these using the ACM demo in the NAudio Demo project.</p>\r\n",
+    "PostedDate": "2012-11-29T09:24:17.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "690157",
+    "ThreadId": "277388",
+    "Html": "\r\n<p>I have an question about interfaces in <strong>NAudio.CoreAudioApi.Interfaces</strong>.</p>\r\n<p>I noticed that all the CoreAPI interfaces and enums have no access declaration specified (<em>public</em>/<em>protected</em>/<em>private</em>). That means they are all\r\n<em>private</em>. Some are even declared as <em>Internal</em>! Is there any particular reason to avoid\r\n<em>public</em> and&nbsp;<em>partial</em> interfaces? Partial interfaces would come in handy for extended functionality.</p>\r\n<p>The reason I am asking is that I have some unit tests which are written on <strong>\r\nVannatech.CoreAudio</strong>. Now I would like to convert the tests and use <strong>\r\nNAudio.CoreAudioApi</strong> library instead. As mentioned before I am using interfaces for mocking to isolate testing target.</p>\r\n<p>Let me know if there might be an alternative way for unit testing.</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2011-10-27T03:02:11.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690158",
+    "ThreadId": "277388",
+    "Html": "<p>Yes they are internal. You could use the InternalsVisibleTo attribute to enable unit testing. Partial would be very strange, as they are interop interface definitions. They are kept internal simply to keep NAudio's public API as small and straightforward as possible - don't want people to have to unnecessarily wade through hundreds of public classes when trying to work out what they need to use in NAudio.</p>",
+    "PostedDate": "2011-10-27T03:06:05.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690204",
+    "ThreadId": "277388",
+    "Html": "<p>Thank you for the answer.</p>\r\n<p>On a second thought about the <em>partial</em> thing, I agree with you, it would not be actually needed.</p>\r\n<p>I just do not&nbsp;completely&nbsp;understand what hundreds of classes you are talking about. Making an <em>interface</em> public does not require change in its implementation. AFAIK. For addition I counted just twelve (main) interfaces that would be useful in unit testing.</p>\r\n<p>However, it is a good idea to keep API small and simple, thus I am not starting arguing here. Could you please provide me some more insight how could I make the NAudio project's interfaces visible for my unit test project? Does it still require to go over all the required interface files and add the&nbsp;<em>InternalsVisibleTo</em> attribute? Do I have to hard code the test project assembly name or is there some other neat way to keep the two project independent of each other?</p>\r\n<p>Thanks</p>",
+    "PostedDate": "2011-10-27T04:57:25.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690212",
+    "ThreadId": "277388",
+    "Html": "<p>InternalsVisibleTo just needs to be in there once (usually put in the AssemblyInfo.cs file) - just search the source code for examples.</p>\r\n<p>Alternatively, you could do a build where they are public.</p>",
+    "PostedDate": "2011-10-27T05:21:49.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

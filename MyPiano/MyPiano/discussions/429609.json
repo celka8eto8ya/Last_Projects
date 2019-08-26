@@ -1,0 +1,122 @@
+[
+  {
+    "Id": "986730",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>&nbsp;</p>\r\n<p>The last 3 months i have been working on a MP3 decoder as a hobby project. For each channel i now have a array of floats that range from -1 to 1. When i plot these points the resulting graph matches that of Audacity.</p>\r\n<p>My attempts to play the samples have resulted in sound with the correct rhythm but it sounds weird. I dont know of its my decoders fault or i dont play it in the correct way.</p>\r\n<p>So my question is: Assuming my decoder works, how should i continue with these float values?</p>\r\n<p>After 3 months of work i really want to know if it works haha</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2013-01-14T14:34:12.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987102",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>I'd recommend saving your audio into a WAV file. Use the WaveFileWriter and WaveFormat.CreateIEEEFormat to make the WaveFormat. Then you can play your audio with Windows Media Player and look at it in Audacity to see what the problem is.</p>\r\n",
+    "PostedDate": "2013-01-15T07:24:24.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987270",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>Thanks for your reply!</p>\r\n<p>&nbsp;</p>\r\n<p>I used the following code,<br>\r\nIt sounds exactly the same as described above, same rhythm but really distorted.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>WaveFormat wFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 1);\nWaveFileWriter waveWriter = <span style=\"color:blue\">new</span> WaveFileWriter(path, wFormat);\n\n<span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> i = 0; i &lt; decodedSamples.Count; i&#43;&#43;)\n{\n    waveWriter.WriteSample(decodedSamples[i]);\n}\n\nwaveWriter.Close();\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>I made some screenshots of Audacity.<br>\r\n(bottom wave is 1st channel of my decoders output)</p>\r\n<p>The following pic shows that the global shape matches:<br>\r\n<a href=\"http://reinverberne.nl/tmp/1.png\" target=\"_blank\">http://reinverberne.nl/tmp/1.png</a></p>\r\n<p>But when zoomed in, its not a &quot;nice&quot; wave:<br>\r\n<a href=\"http://reinverberne.nl/tmp/2.png\" target=\"_blank\">http://reinverberne.nl/tmp/2.png</a></p>\r\n<p>If my decoder is bad (verry probably) it could be 1001 places in my code :/<br>\r\nHow did you debug your decoder (Nlayer) when writing it?</p>\r\n<p>Regards</p>\r\n",
+    "PostedDate": "2013-01-15T12:38:22.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987278",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>shouldn't you be making a stereo file?</p>\r\n",
+    "PostedDate": "2013-01-15T12:52:31.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987286",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>I tried it but did not matter:</p>\r\n<p><a href=\"http://reinverberne.nl/tmp/3.png\" target=\"_blank\">http://reinverberne.nl/tmp/3.png</a></p>\r\n<p>I think i need a way to compare the outputs of the various decoder blocks with a working decoder<br>\r\nall the way from the huffman decoding block, then the requantize block, then reordering, etc.<br>\r\nTo see where the problem lies.</p>\r\n<p>Regards</p>\r\n",
+    "PostedDate": "2013-01-15T13:08:20.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987593",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>I just finished a flac decoder. Of course it is not a mp3 decoder but its always the same. I also got bad results. If nearly the whole wave contains mistakes you would not be able to find the bug quite easy. I thought about different things how to solve\r\n my problem but I ended up in reading line for line again and search for mistakes I made. If there is an opensource deocer(in my case there was no flac decoder) you could debug that decoder and compare results with your decoder.&nbsp;</p>\r\n<p>A very big problem is also if you just have very small &nbsp;mistakes in your wave. So you can use Audacity, zoom in and get the sample the mistake is. Now you can calculate the frame index where the error happens. Now you can debug start debugging there.&nbsp;</p>\r\n<p>But all in all. Debugging decoders is always very very hard because there is just such a huge amount of data and you have nothing more than numbers and bytes :(</p>\r\n<p>I really can feel with you... (by the way... I spent over 2 month debugging until everything worked fine :P)</p>\r\n",
+    "PostedDate": "2013-01-16T06:46:13.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987624",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>yes, debugging decoders is really hard. Check in often and regularly so you can rewind mistakes, have a good set of test files that you can check regularly. Still you'll probably need to painstakingly code review each line of your source to spot the problems.</p>\r\n",
+    "PostedDate": "2013-01-16T07:52:03.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987628",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>MrGroovy,</p>\r\n<p>You're on the right track with logging the output (though I'd also log side decode, bit reservoir calc, & scalefactor read). &nbsp;Just make sure you don't overdo it and force yourself to wade through too much data at once (i.e., only do one frame at a time).</p>\r\n<p>From 2.png and 3.png, it looks like everything through stereo decode is fine, but everything after it is questionable...</p>\r\n<p>One other thought: &nbsp;Make sure SubBandSynthesis' outer loop reads out polyphase information correctly (looping ss, read element ss from each subband in order, then inverse polyphase decode into your pcm buffer, repeat until all 18 elements have been decoded\r\n in all subbands).</p>\r\n<p><span style=\"font-size:10pt\">Layer III is a bear to get right, so good luck!</span></p>\r\n",
+    "PostedDate": "2013-01-16T08:01:23.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987827",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>Thanks for all the respones,<br>\r\ni really like that.</p>\r\n<p>So its bug killing time, i think i will use NLayer to see where it goes wrong. I dont know how yet, existing decoders are really well optimised making it harder to follow what is going on where. But i will not give up.</p>\r\n<p>Thanks again :)</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2013-01-16T14:41:57.74-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990578",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>Hi again,</p>\r\n<p>I wanted to share updates and ask some questions :)</p>\r\n<p>Bugs fixed until now:</p>\r\n<ol>\r\n<li>Small bug in sideinfo decoding </li><li>Alias reduction block was not working </li><li>IMDCT: i misunderstood how the overlapping worked </li></ol>\r\n<p>Screenshots:</p>\r\n<ul>\r\n<li><a href=\"http://reinverberne.nl/tmp/4_huff.png\" target=\"_blank\">http://reinverberne.nl/tmp/4_huff.png</a>\r\n</li><li><a href=\"http://reinverberne.nl/tmp/5_requantized.png\" target=\"_blank\">http://reinverberne.nl/tmp/5_requantized.png</a>\r\n</li><li><a href=\"http://reinverberne.nl/tmp/6_alias.png\" target=\"_blank\">http://reinverberne.nl/tmp/6_alias.png</a>\r\n</li><li><a href=\"http://reinverberne.nl/tmp/7_imdct.png\" target=\"_blank\">http://reinverberne.nl/tmp/7_imdct.png</a>\r\n</li><li><a href=\"http://reinverberne.nl/tmp/8_freq_inv.png\" target=\"_blank\">http://reinverberne.nl/tmp/8_freq_inv.png</a>\r\n</li></ul>\r\n<p>As one can see from imdct and onwards small differences are beginning to crop up. I dont know if these are errors or just the result of different implementations (uber optimised vs unoptimised). Would these differences be audible?</p>\r\n<p>I am now stuck at the synthesis filterbank, dont know what is wrong yet :/</p>\r\n<p>Debugging of reordering and MS stereo processing is not done yet because the file i am trying to decode has no short blocks and is stereo, not joint stereo. &quot;RV&quot; in the screenshots are my initials btw :)</p>\r\n",
+    "PostedDate": "2013-01-22T14:42:37.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990816",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>wow, wish I knew enough about the inner workings of MP3 to be able to offer help with this. Good luck and let us know how you get on</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2013-01-23T03:17:19.523-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "991665",
+    "ThreadId": "429609",
+    "Html": "\r\n<p><span style=\"font-size:10pt\">@MrGroovy:</span></p>\r\n<p><span>The Hybrid (IMDCT) step is really close, so you may just be using too large of a datatype (NLayer and&nbsp;MPEG dist10&nbsp;use 32-bit floats, libMAD uses 24-bit fixed point [which has about the same precision]). &nbsp;If that's not it, double-check that you are\r\n handling the overlap correctly, then make sure your IMDCT implementation is &quot;correct&quot;. &nbsp;I think it's a &quot;standard&quot; 32-point IMDCT...</span></p>\r\n<p><span>I *think* your frequency inversion is fine. &nbsp;There aren't enough data points visible in the screenshot to say for sure. &nbsp;It's a pretty simple algorithm, so I don't doubt yours is correct.</span></p>\r\n<p>The synthesis filterbank is a beast. &nbsp;See&nbsp;<a title=\"http://doru.info/projects/programming/mpeg1l1l2/\" href=\"http://doru.info/projects/programming/mpeg1l1l2/\">http://doru.info/projects/programming/mpeg1l1l2/</a>&nbsp;for some pretty high-level math describing\r\n how to do it. &nbsp;You can also search for the MPEG dist10 source code and use theirs (it's probably the slowest algorithm, but still plenty fast enough for real-time decoding).</p>\r\n<p>There are official test files for MP3 out there. &nbsp;Finding them might be a trick, though...</p>\r\n",
+    "PostedDate": "2013-01-24T09:50:42.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "991765",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>Whoohoo!!</p>\r\n<p>It works :D:D</p>\r\n<p>&nbsp;</p>\r\n<p>So what was the bug? I had found a usefull PDF that contained a formula but it has a flaw in it!<br>\r\nsee: <a href=\"http://www.reinverberne.nl/tmp/9_error.png\" target=\"_blank\">http://www.reinverberne.nl/tmp/9_error.png</a></p>\r\n<p>so small, so deadly</p>\r\n",
+    "PostedDate": "2013-01-24T13:14:59.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "991776",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>congratulations, a great achievement. what are your plans for this decoder?</p>\r\n",
+    "PostedDate": "2013-01-24T13:35:16.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "991780",
+    "ThreadId": "429609",
+    "Html": "\r\n<p>Thanks :)</p>\r\n<p>I dont really have plans for it, it is the slowest possible decoder, no optimisations so it cant decode in real time. Maybe i will try to optimise it. Once i cleaned up the source i will share the code somewhere. Maybe blog about it on my site. Right now\r\n i am just happy it finally works :))</p>\r\n",
+    "PostedDate": "2013-01-24T13:44:35.403-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

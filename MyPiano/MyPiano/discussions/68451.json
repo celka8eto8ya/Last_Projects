@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "232814",
+    "ThreadId": "68451",
+    "Html": "<p>I would like to compress the audio stream I'm recording to remove long &quot;silent&quot; sections. &nbsp;Since there will always be some level of background noise, I'm not sure how to properly detect silence. &nbsp;Does anyone know of a good algorithm that works well within the context of NAudio, or better yet example code?</p>\r\n<p>Thanks,</p>\r\n<p>Eric</p>",
+    "PostedDate": "2009-09-09T13:16:53.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "233461",
+    "ThreadId": "68451",
+    "Html": "<p>search the internet for code for a &quot;noise gate&quot;. the simplest ones just have a threshold level below which is considered silence.</p>",
+    "PostedDate": "2009-09-11T01:22:43.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "236667",
+    "ThreadId": "68451",
+    "Html": "<p>It is actually fairly simple, assuming your wave file is well behaved (not offset).</p>\r\n<p>naudio treats the wave as a 16 bit signed number, so you can set a threshold of say 0.05* int.max and 0.05 int.min. To avoid spiky recordings, clicks and pops, read several samples and average them (see the WaveViewer for example code). Then if the wave stays below the threshold you have silence.</p>",
+    "PostedDate": "2009-09-20T14:29:44.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

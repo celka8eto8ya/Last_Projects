@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "583357",
+    "ThreadId": "250432",
+    "Html": "\r\n<p>Hi all!</p>\r\n<p>Here are some minor changes that i've implemented to BufferedWaveProvider in order to obtain a better performance for my real-time audio streaming:</p>\r\n<p>1 - Add a new property called DiscardOverrunedBuffers.</p>\r\n<p><em>/// &lt;summary&gt;</em><br>\r\n<em>/// Whether we should discard the overruned buffers in order to get lower latency.</em><br>\r\n<em>/// &lt;/summary&gt;</em><br>\r\n<em>public bool DiscardOverrunedBuffers { get; set; }</em></p>\r\n<p>2 - Use this property whithin the AddBuffers method, replacing the line:</p>\r\n<p><em>throw new InvalidOperationException(&quot;Too many queued buffers&quot;);</em></p>\r\n<p>by these lines:</p>\r\n<p><em>if (DiscardOverrunedBuffers)</em><br>\r\n<em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.queue.Dequeue();</em><br>\r\n<em>else</em><br>\r\n<em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new InvalidOperationException(&quot;Too many queued buffers&quot;);</em></p>\r\n<p>That's it! Now you just need to set the&nbsp;DiscardOverrunedBuffers = true and&nbsp;adjust the property MaxQueuedBuffers&nbsp;accordingly to your needs and then&nbsp;the audio will never get&nbsp;more delayed than your&nbsp;&quot;max queued buffers&quot; (the actual\r\n time may vary&nbsp;accordingly to the&nbsp;wave format that you're using).&nbsp;Please notice&nbsp;that some&nbsp;chunks may get&nbsp;lost using this technique. Although,&nbsp;I've achieved&nbsp;VERY nice results using this modification.</p>\r\n",
+    "PostedDate": "2011-03-20T11:51:21.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "583845",
+    "ThreadId": "250432",
+    "Html": "<p>I like this idea, thanks for sharing.</p>",
+    "PostedDate": "2011-03-21T10:08:59.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "594517",
+    "ThreadId": "250432",
+    "Html": "<p>its in the latest source code</p>",
+    "PostedDate": "2011-04-09T00:37:41.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

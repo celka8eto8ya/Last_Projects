@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "923971",
+    "ThreadId": "398661",
+    "Html": "\r\n<p>Mark,</p>\r\n<p>I'm working on a position reporting patch for NAudio's wave player classes (and maybe the wave in stuff). &nbsp;Do you want that functionality split to a separate interface (IWavePosition), or added to the existing IWavePlayer (and maybe IWaveIn) interfaces?</p>\r\n<p>This API is basically so timestamps can be calculated to within a small margin of error. &nbsp;This should be useful for anyone doing &quot;sync&quot; with the audio stream. &nbsp;I'll use it for visualizations and a playback clock... :)</p>\r\n",
+    "PostedDate": "2012-10-09T05:23:37.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929436",
+    "ThreadId": "398661",
+    "Html": "<p>Hi, sorry for slow response. It would be good to have a standardised approach to reporting position, but I would want it to be implemented on most if not all of the IWavePlayers if the method is to be introduced to IWavePlayer. Also, since IWavePlayer only takes an IWaveProvider, position really is just a function of how many samples have been played and cannot necessarily be related to the position within an input file. What was your proposed method signature for this feature?</p>",
+    "PostedDate": "2012-10-19T07:43:06.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929544",
+    "ThreadId": "398661",
+    "Html": "\r\n<p>Agreed on the IWavePlayer stuff... &nbsp;I'm not convinced it shouldn't live it its own interface at this point (IWavePosition?). &nbsp;I have a fork that includes a POC implementation you can look at, but it isn't set in stone or anything.</p>\r\n<p>Maybe we can do something like this (this is after using my POC version, which is a little bit different):</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">interface</span> IWavePosition\n{\n    <span style=\"color:blue\">long</span> GetPosition();\n    WaveFormat OutputWaveFormat { <span style=\"color:blue\">get</span>; }\n}\n\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">class</span> Extensions\n{\n    <span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> TimeSpan GetPositionTimeSpan(<span style=\"color:blue\">this</span> IWavePosition @<span style=\"color:blue\">this</span>)\n    {\n        <span style=\"color:blue\">var</span> pos = @<span style=\"color:blue\">this</span>.GetPosition() / (@<span style=\"color:blue\">this</span>.OutputWaveFormat.Channcels * @<span style=\"color:blue\">this</span>.OutputWaveFormat.BitsPerSample / 8);\n        <span style=\"color:blue\">return</span> TimeSpan.FromMilliseconds(pos * 1000.0 / @<span style=\"color:blue\">this</span>.OutputWaveFormat.SampleRate);\n    }\n}\n\n</pre>\r\n</div>\r\n<p>As far as linking to the input, take the timestamp of playback before you start filling buffers and subtract that from the current value (at any given point). &nbsp;That should tell you how much of the current source has been played through the hardware.\r\n &nbsp;Likewise, after a seek, take the timestamp and adjust for the new position in the source. &nbsp;Always let the buffers completely&nbsp;drain out before taking the timestamp, though...</p>\r\n<p>I came up with all this because I have a project where decode and visualization prep is done well ahead of playback and I needed a way to sync the vis with the actual output from the hardware. &nbsp;The logic above is how I implemented the sync and it's\r\n very close to exact (and doesn't &quot;drift&quot;).</p>\r\n",
+    "PostedDate": "2012-10-19T11:00:59.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1069191",
+    "ThreadId": "398661",
+    "Html": "hi, I've finally got round to accepting this. Your fork didn't actually have the IWavePosition and Extensions files in it, so I used the code above. (I also prefer the name OutputWaveFormat to RawWaveFormat). <br />\n",
+    "PostedDate": "2013-07-16T13:35:02.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1069537",
+    "ThreadId": "398661",
+    "Html": "Works for me. :)\r<br />\n<br />\nThanks for taking the time to look at it.<br />\n",
+    "PostedDate": "2013-07-17T07:19:14.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

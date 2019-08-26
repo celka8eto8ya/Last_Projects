@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "995956",
+    "ThreadId": "431855",
+    "Html": "I'm following the AudioPlaybackPanel.cs code and convert it to VB 2010 but just can't make the Spectrum to work. I mean, the PreVolumeMeter never fires\r<br />\n<br />\nI can play, pause, stop, move the position with a slider, read the position.. just can't make the Spectrum to work\r<br />\n<br />\nThs is the code I use:<br />\n<pre><code>Dim waveOutDevice As IWavePlayer\nDim mp3Reader As Mp3FileReader\nDim inputStream As WaveChannel32\nDim WithEvents waveChannel As SampleChannel\n\nDim archivo As String\n\n' ----------\n\nwaveOutDevice = New WaveOut()\nmp3Reader = New Mp3FileReader(archivo)\ninputStream = New WaveChannel32(mp3Reader)\n\nwaveChannel = New SampleChannel(mp3Reader, True)\n\nwaveOutDevice.Init(inputStream)\nwaveOutDevice.Play()\n\n' the event\n\nPrivate Sub waveChannel_PreVolumeMeter(ByVal sender As Object, ByVal e As NAudio.Wave.SampleProviders.StreamVolumeEventArgs) Handles waveChannel.PreVolumeMeter\n        WaveformPainter1.AddMax(e.MaxSampleValues(0))\n        WaveformPainter2.AddMax(e.MaxSampleValues(1))\nEnd Sub\n</code></pre>\n\n",
+    "PostedDate": "2013-02-04T00:00:58.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996011",
+    "ThreadId": "431855",
+    "Html": "you are not using the SampleChannel at all. You are playing from the WaveChannel32. You need to pick one or the other.<br />\n",
+    "PostedDate": "2013-02-04T03:03:23.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996195",
+    "ThreadId": "431855",
+    "Html": "Thanks, works now.. <br />\n<br />\nThis line <br />\n<br />\nwaveOutDevice.Init(inputStream)<br />\n<br />\nchanges to<br />\n<br />\nwaveOutDevice.Init(New SampleToWaveProvider(waveChannel))<br />\n<br />\nand this is gone<br />\n<br />\ninputStream = New WaveChannel32(mp3Reader)<br />\n",
+    "PostedDate": "2013-02-04T08:20:44.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996485",
+    "ThreadId": "431855",
+    "Html": "Ok, the issue was solved but now I want to create the wave..\r<br />\n<br />\nI read that I need to read until the end but didn't understand. I check the codes, even the WPF one, but still. I'm working with VB 2010 and maybe I can't understand exactly<br />\n<pre><code>mp3Reader = New Mp3FileReader(archivo)\nwaveChannel = New SampleChannel(mp3Reader, True)\n\nDim frame As Mp3Frame\nDim x As Integer = 1\n\nWhile x &lt; 50 ' just 50 for test\n     frame = mp3Reader.ReadNextFrame()\n\n     WaveformPainter1.AddMax( ???? )\n\n      x = x + 1\nEnd While</code></pre>\n\n",
+    "PostedDate": "2013-02-04T20:38:33.747-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

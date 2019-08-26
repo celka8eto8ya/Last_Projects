@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1232145",
+    "ThreadId": "541680",
+    "Html": "Hi,\r<br />\n<br />\nI have two RTP streams (one for each call direction) that I want to mix in a single WAV file.\r<br />\n<br />\nThe problem is that the two streams may use different codecs (and therefore different sampling frequency, encoding, etc...).\r<br />\n<br />\nIs it possible to store the two RTP streams in a WAV file using two channels (i.e. stereo)? Asked differently, is there a way to store multiple channels with different encoding, sampling frequency, etc?\r<br />\n<br />\nIf not, what do you recommend me?\r<br />\n<br />\nThanks, Mickael<br />\n",
+    "PostedDate": "2014-04-08T23:26:23.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1232212",
+    "ThreadId": "541680",
+    "Html": "no, WAV files should contain a single encoding, and you don't store RTP packets directly in WAV.\r<br />\nIf you need a WAV file, then decompress both channels to a common PCM format and create a stereo file.<br />\n",
+    "PostedDate": "2014-04-09T02:53:39.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

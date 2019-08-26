@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1017708",
+    "ThreadId": "437199",
+    "Html": "I wrote a simple project in C# using Naudio.dll. It seems to work fine, but Visual Studio crashes very often when loading the project. Event viewer says \r<br />\n<br />\nApplication: VCSExpress.exe\r<br />\nFrameworkversion: v4.0.30319\r<br />\nBeschreibung: Der Prozess wurde aufgrund eines internen Fehlers in der .NET-Laufzeit beendet. bei IP 7922380C (79140000) mit Exitcode 80131506.\r<br />\n<br />\n(Process has been terminated due to internal error in .NET runtime at IP 7922380C). Exitcode was 80131506.\r<br />\n<br />\nTarget Runtime is 4.0. I'm using NAudio v1.6\r<br />\n<br />\nRe-opening the project and opening all source files manually solves the problem.\r<br />\n<br />\nThe exit code tells that there seems to be a sort of heap corruption. What can I do to solve this issue?\r<br />\n<br />\nGreetz\r<br />\nkmt<br />\n",
+    "PostedDate": "2013-03-19T07:46:02.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1017746",
+    "ThreadId": "437199",
+    "Html": "I have no idea what might be causing Visual Studio to crash when you load a project. Why do you think that NAudio is the cause of the problem?<br />\n",
+    "PostedDate": "2013-03-19T08:55:27.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1017881",
+    "ThreadId": "437199",
+    "Html": "Well, loading the NAudio.dll is the only (call it) &quot;unusual thing&quot; the project does at startup. And - especially thought on heap corruption in\r<br />\nconnection with managed and unmanaged code - the rest of the project is plain standard C# without any specialities. I have in mind\r<br />\nthat heap corruption might occur in connection with managed and unmanaged code?!?\r<br />\n<br />\nBTW, interesting point: when You reload the project, VS excludes several files from loading and only loads them if you need them. When You reload\r<br />\nthe project, it crashes when You try to open Form1.cs as first file. But when You've opened other files before (i.e. Program.cs or Form1.resx), it\r<br />\nwon't crash... funny behaviour... Perhaps Naudio.dll needs some time to load?!?\r<br />\n<br />\nI will give it a cross-check and delete the reference to NAudio.dll and see if VS is still crashing when loading the project.\r<br />\nI can do this tomorrow when I'm back in the office. So I'll try and post the results here.\r<br />\n<br />\nRegards\r<br />\nkmt<br />\n",
+    "PostedDate": "2013-03-19T12:55:47.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1018325",
+    "ThreadId": "437199",
+    "Html": "VS shouldn't run any NAudio code on project load, except possibly if the Designer has some NAudio components on it. Is this the case? <br />\n",
+    "PostedDate": "2013-03-20T08:47:03.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1019330",
+    "ThreadId": "437199",
+    "Html": "Hi! Sorry, took me a couple of days to test it. Mark, I guess You're right. I re-coded the whole project in VB2008 and it works like a charm. So I have to check\r<br />\nwhat's up with my VS C# installation.\r<br />\n<br />\nAnother strange thing I was wondering about is:<br />\n<ul>\n<li>i record audio stream from my sound card via ASIO</li>\n<li>ASIO buffer size is 512</li>\n<li>i use two alternating buffers (array of type Single) in the Software to cache the samples</li>\n<li>\nevery time a buffer is full i switch over to the other buffer and try to flush (async) the first buffer to disk (binarywriter with RAW data, no wave writer!)<br />\n</li>\n</ul>\nThe thing is: \r<br />\nIf i import two consecutive RAW files in Audacity, I get a gap of one sample between the two files. \r<br />\nOn the other hand, if I merge the two files together (by some external command), everything is fine. Perhaps a problem in audacity?!?\r<br />\n<br />\nRegards\r<br />\nkmt<br />\n",
+    "PostedDate": "2013-03-21T23:56:42.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

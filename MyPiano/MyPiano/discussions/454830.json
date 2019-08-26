@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1086090",
+    "ThreadId": "454830",
+    "Html": "i want to use leveler property in sound file...but i have no solution. NAudio library can do this ???\r<br />\nif not then suggest me algorithm...i'll implement it...<br />\n",
+    "PostedDate": "2013-08-29T03:21:26.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1090203",
+    "ThreadId": "454830",
+    "Html": "NAudio can let you adjust volume. But are you after some kind of automatic gain adjustment? Maybe a compressor algorithm would help (NAudio does include an example called SimpleCompressor, but will need to learn how they work to configure it).<br />\n",
+    "PostedDate": "2013-09-09T07:25:24.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

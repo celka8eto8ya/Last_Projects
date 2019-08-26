@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1253144",
+    "ThreadId": "547615",
+    "Html": "If we use NAudio to build a recording system to record 4 channels from MAudio 1010LT sound card simultaneously , the recording will be 24 a day, 7 days a week, and every hour the recorded byte will be saved in a WAV file.\r<br />\n<br />\nCould you anyone here help us about it? it is possible? and samples for us to refer to?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2014-06-04T22:00:02.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1253167",
+    "ThreadId": "547615",
+    "Html": "Yes, it is possible. You need to keep rolling over to new WAV files to prevent them from getting too long.\r<br />\nThe main challenge is to record all four input channels simultaneously. Your WaveIn driver may not let you do this, so you'd have to look at WasapiCapture or the AsioOut class which does actually also support recording.<br />\n",
+    "PostedDate": "2014-06-05T00:17:11.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1253178",
+    "ThreadId": "547615",
+    "Html": "Thanks Mark,, i will use WasapiCapture /AsioOut the ones you recomend, by the way you mentioned about rolling over ,  i am afraid that it might lose some byte. I think to rollover to a new WAV i have to call Stop to call BenginRecord again to save the current one and create a new WAV file? If i know is wrong could you show me more in detail if some line of sample codes or guides. \r<br />\nMany Thanks to you<br />\n",
+    "PostedDate": "2014-06-05T00:38:51.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1253188",
+    "ThreadId": "547615",
+    "Html": "no need to restart recording. In the DataAvaialbale handler, if the existing WaveFileWriter is too long, close it, create a new one and start writing to that.<br />\n",
+    "PostedDate": "2014-06-05T01:36:24.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

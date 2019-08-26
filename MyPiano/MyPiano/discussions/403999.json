@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "944758",
+    "ThreadId": "403999",
+    "Html": "\r\n<p>I have a bunch of audio files that are super quiet. I would like to increase the volume on these files. I was planning on using the\r\n<code>AudioFileReader.Volume</code> member to increase the volume and then save the file back. Below is what I have so far:</p>\r\n<pre><code><span>using</span><span>(</span><span>AudioFileReader</span><span> soft </span><span>=</span><span> </span><span>new</span><span> </span><span>AudioFileReader</span><span>(</span><span>softAudio</span><span>))</span><span>\r\n</span><span>{</span><span>\r\n    </span><span>Console</span><span>.</span><span>WriteLine</span><span>(</span><span class=\"str\">&quot;Current soft audio at: &quot;</span><span> </span><span>&#43;</span><span> soft</span><span>.</span><span>Volume</span><span>);</span><span>\r\n</span><span>}</span></code></pre>\r\n<p>The issue is that the files volume is already at <code>1.0f</code> which is the max.</p>\r\n<p>Am I going at this the right way for what I want to do? Is it possible to increase the volume further if NAudio already thinks it's at max?</p>\r\n",
+    "PostedDate": "2012-11-20T11:55:08.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944831",
+    "ThreadId": "403999",
+    "Html": "\r\n<p>the reader volume is not telling you how loud the audio is, 1.0 simply means that every sample will be left at an unchanged volume. If you set volume to 2.0, then every sample value will be doubled, (effectively a 3dB increase).</p>\r\n<p>The trouble comes when you come to write them back to a file, because the samples will clip if they are outside the range &#43;/- 1.0. The simplest approach is to hard-limit after boosting the volume. This will clip the very loudest parts of your audio file,\r\n but if they are very low level in the first place, you might be able to get a good boost without ever clipping.</p>\r\n<p>The proper solution is to use dynamic range compression, which can be tricky to get your head round at first, as you need to select appropriate attack/release/threshold/ratio and make-up gain parameters for your audio. However, this is one of the most effective\r\n ways of getting a good audio level. NAudio does contain a very simple compressor, but it has not yet been reworked into the ISampleProvider interface, something I hope to do for the next version.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-20T14:35:18.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

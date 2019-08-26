@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "438510",
+    "ThreadId": "211433",
+    "Html": "<p>Let me start by saying... Thanks for the greay library!</p>\r\n<p>Although, I'm having trouble figuring out how to display a waveform in my windows form app. I don't need anything special like zooming in or displaying live data while playing/recording. Just want to&nbsp;open a wave file and display a&nbsp;static waveform of it.</p>\r\n<p>I followed the first tutorial you have (which works)&nbsp;and then added a waveform control. I then replaced the waveOutDevice.Play(); (I don't need to play the audio for this)&nbsp;line with waveViewer1.WaveStream = mainOutputStream;. I see the control in my app and it appears to be trying to render something, but its malformed. I'm guessing I'm not using the control right, maybe some properties I need to set? I tried the .DrawToBitMap method but it rendered the same image.</p>\r\n<p>Thanks for any help!</p>",
+    "PostedDate": "2010-05-03T13:36:31.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439078",
+    "ThreadId": "211433",
+    "Html": "<p>You can you this on codeproject: <a href=\"http://www.codeproject.com/KB/audio-video/wavecontrol.aspx\">http://www.codeproject.com/KB/audio-video/wavecontrol.aspx</a></p>\r\n<p>I modified it to be edit waveform and play selected segment.</p>",
+    "PostedDate": "2010-05-04T19:32:18.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "433951",
+    "ThreadId": "210130",
+    "Html": "<p>I'm trying to figure out how to record audio with NAudio and I'm looking at the sample project NAudioWPF demo. I see where the WaveIn object is created to do the recording, but what if the computer you are working on has multiple soundcards, or multiple driver suchs as ASIO and WDM? Is there some way to specify the hardware and or driver you want to record from?</p>\r\n<p><br>Eric</p>",
+    "PostedDate": "2010-04-21T19:52:59.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "434224",
+    "ThreadId": "210130",
+    "Html": "<p>With WaveIn you can specify the <strong>DeviceNumber</strong>. NAudio doesn't support WDM, and its ASIO support is currently not reliable enough for general use (doesn't work with all soundcards).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-04-22T07:24:03.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "434724",
+    "ThreadId": "210130",
+    "Html": "<p>Ahh I was being stupid. I was using a <strong>IWaveIn</strong> variable not a WaveIn variable so I wasn't seeing the DeviceNumber property</p>\r\n<p>\r\n<pre><div style=\"color:black;background-color:white\"><pre>IWaveIn captureDevice; \r\ncaptureDevice = <span style=\"color:blue\">new</span> WaveIn(); \r\n</pre>\r\n</div>\r\nSo now how can I figure out what devices are installed in the current computer and what their number is?<br></pre>\r\n</p>",
+    "PostedDate": "2010-04-23T10:54:56.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "434727",
+    "ThreadId": "210130",
+    "Html": "<p>Ahh wait I think I found it.</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>WaveIn.DeviceCount;\r\nWaveIn.GetCapabilities(i).ProductName;\r\nWaveIn.GetCapabilities(i).Channels;\r\n</pre>\r\n</div>\r\n</p>\r\n<p>&nbsp;</p>\r\n<p>Is that right?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-04-23T11:01:01.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "434732",
+    "ThreadId": "210130",
+    "Html": "<p>That seems to work. I find that there is one Device on my computer with a product name &quot;SoundMAX HD Audio&quot;. However, if I try to retrieve the number of channels using WaveIn.GetCapabilities(i).Channels it returns -1.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-04-23T11:10:48.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "436472",
+    "ThreadId": "210130",
+    "Html": "<p>hmm, not sure what that means. I guess you'll just have to try to open the device and see if it works</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-04-28T04:55:36.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1479418",
+    "ThreadId": "656586",
+    "Html": "I am just starting to use NAudio for my project, I am using VS 2015. My class &quot;AudioPlayer&quot; plays a WAV file using NAudio, it seems to work well. However I am getting a notification from CodeRush that my AudioPlayer class needs to implement IDisposable.\r<br />\nMy class is not using any unmanaged resources so I am a little confused as to why I need to do this.\r<br />\nAny input would be much appreciated.\r<br />\nSid<br />\n",
+    "PostedDate": "2016-07-20T12:57:56.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479528",
+    "ThreadId": "656586",
+    "Html": "if your class has any disposable members, the class itself should be disposable, so it can clean up properly. I suspect you have something like WaveOut or WaveFileReader that CodeRush is noticing is disposable<br />\n",
+    "PostedDate": "2016-07-21T12:17:47.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479533",
+    "ThreadId": "656586",
+    "Html": "Thanks Mark, I did indeed have WaveOut and AudioFileReader in my class. I have implemented IDispose. <br />\n",
+    "PostedDate": "2016-07-21T12:39:40.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

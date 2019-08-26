@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1497191",
+    "ThreadId": "663311",
+    "Html": "I'm currently trying to understand the API and trying to find a way to filter microphone live as i listen to it <br />\n<br />\nSo far I figured (by searching for examples online) how to select a device from list and play it through the speakers like so:<br />\n<pre><code>    public Form1()\n        {\n            if (DateTime.Now &gt; DateTime.Parse(&quot;September 26, 2017&quot;))\n                Application.Exit();\n            InitializeComponent();\n            MMDeviceEnumerator enumerator = new MMDeviceEnumerator();\n            var devices = enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active).Reverse();\n            comboBox1.Items.AddRange(devices.ToArray());\n\n            _provider = new BufferedWaveProvider(new WaveFormat());\n            _player = new WaveOut();\n            _sampleObject = new object();\n            _notify = new NotifyingSampleProvider(_provider.ToSampleProvider());\n            _notify.Sample += DrawAudioWAve;\n\n        }\n        private void BufferPlay(byte[] recv)\n        {\n          \n            if (recv.Length &gt; 0)\n            {\n                _provider.AddSamples(recv, 0, recv.Length);\n            }\n        }\n       \n        private void StartAudio()\n        {\n            _audioSource.StartRecording();\n            _player.Init(_notify);\n            _player.Play();\n        }\n        private void _audioSource_DataAvailable(object sender, WaveInEventArgs e)\n        {\n\n            BufferPlay(e.Buffer);\n        }</code></pre>\n\nNow i'm curious about implementing a <strong>BiQuadFilter.BandPassFilterConstantPeakGain</strong> somewhere in there. Could someone show me how this can be done? It's basically applying an equalizer to the live microphone input - <br />\n<br />\nMic &gt;EQ&gt;Speakers<br />\n",
+    "PostedDate": "2017-06-25T21:55:33.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497203",
+    "ThreadId": "663311",
+    "Html": "BiquadFilter works on float sample level, so implement it as an ISampleProvider or parse the samples yourself and pass them in.<br />\n",
+    "PostedDate": "2017-06-26T14:23:18.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497218",
+    "ThreadId": "663311",
+    "Html": "OK I'll try to figure out how to do that<br />\n",
+    "PostedDate": "2017-06-27T18:17:57.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

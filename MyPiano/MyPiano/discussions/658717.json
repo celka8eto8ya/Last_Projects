@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1486063",
+    "ThreadId": "658717",
+    "Html": "I want to update the label with the relevant MIDI note name when the MIDI file is playing. Please give me an idea to do this using NAudio or are there any examples for it?<br />\n",
+    "PostedDate": "2016-10-14T00:47:50.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486066",
+    "ThreadId": "658717",
+    "Html": "what are you using to play the MIDI file?<br />\n",
+    "PostedDate": "2016-10-14T01:10:24.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486090",
+    "ThreadId": "658717",
+    "Html": "I'm using <a href=\"http://www.codeproject.com/Articles/6228/C-MIDI-Toolkit\" rel=\"nofollow\">MIDI toolkit</a> <br />\n<br />\nThis is what i've done so far. I know it's wrong. :(<br />\n<pre><code>for (int i = 0; i &lt; file.Events.Count(); i++) {\n     \nforeach (MidiEvent note in file.Events[i])\n \ntry{\n      if (note.CommandCode == MidiCommandCode.NoteOn){\n                  var n = (NoteOnEvent)note;\n                  var off = n.OffEvent;\n                  Debug.WriteLine(off.NoteNumber);\n                  Debug.WriteLine(off.NoteName);\n\n                  lblNote.Content = off.NoteName.ToString();                                              \n        }\n\n      }\n         catch (Exception ex) { }\n                                           \n  }</code></pre>\n\n",
+    "PostedDate": "2016-10-14T06:50:20.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486091",
+    "ThreadId": "658717",
+    "Html": "OK that's not part of NAudio. I don't know how you'd know where it was up to in the file<br />\n",
+    "PostedDate": "2016-10-14T06:53:02.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486093",
+    "ThreadId": "658717",
+    "Html": "You meant the sample i've shown above? I did like <a href=\"http://stackoverflow.com/questions/23888692/reading-notes-from-midi-file-using-naudio\" rel=\"nofollow\">this</a> which is wrong because it reads the file when the file is loaded not while playing .. <br />\n",
+    "PostedDate": "2016-10-14T07:04:59.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486150",
+    "ThreadId": "658717",
+    "Html": "What I mean is that NAudio doesn't play MIDI files, so you must be using something else to play them. So there isn't an easy way to know which note is currently playing.<br />\n",
+    "PostedDate": "2016-10-15T00:15:33.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486197",
+    "ThreadId": "658717",
+    "Html": "I fixed it thanks mark :) yes i'm using <a href=\"http://www.codeproject.com/Articles/6228/C-MIDI-Toolkit\" rel=\"nofollow\">midi toolkit</a>.  It raises an event called <strong><strong><strong>HandleMIDIChannelMessagePlayed</strong></strong></strong> through that you can get the midi note which is currently playing.  If you have more then one note played in same time, just the last note will be shown.<br />\n",
+    "PostedDate": "2016-10-16T08:32:06.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-10-16T08:32:11.513-07:00"
+  }
+]

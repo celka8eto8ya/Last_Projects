@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "508203",
+    "ThreadId": "231135",
+    "Html": "<p>My code polls the WaveStream.Position property at regular intervals to check if the currently playing track has ended, similarly to the NAudioDemo application. However, when comparing the value to WaveStream.Length, the playback often ends before the track has actually ended, resulting in a premature stop. I've compared the behavior to the demo, and it is the same, leading me to think that there is a flaw in the library. Checking the file duration in WMP shows that NAudio reports the file to be a few seconds shorter than it actually is. The files I'm testing with are MP3, I haven't tried it with WAV or anything else yet.</p>\r\n<p>EDIT: After a bit more testing, I've even had playback that ends too late; the player is just sent zeroes, and the TotalTime is longer than it actually is. This is a major flaw in the library, in my opinion.</p>\r\n<p>EDIT 2: I had a look in the issue tracker, and I believe I have found the issue: http://naudio.codeplex.com/workitem/13902</p>\r\n<p>This is the most plausible cause. I have yet to try a WAV file, but this issue fits my problem perfectly.</p>",
+    "PostedDate": "2010-10-16T06:42:50.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508497",
+    "ThreadId": "231135",
+    "Html": "<p>mp3 total time property is just guesswork. of course, you don't have to use it to determine when to stop if it is not accurate enough for your needs. I've been trying recently to improve mp3 playback in NAudio. My goal is to pass single MP3 frames to the ACM decoder, and track how many samples they decompress into, allowing a sample-accurate length calculation if necessary. However, it hasn't proved as easy to implement as I hoped.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-17T10:58:48.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508502",
+    "ThreadId": "231135",
+    "Html": "<p>Thank you for your response. I guess I'll just keep it like it is for now, and it will be fixed when it will be fixed. Wish I knew more about the MP3 format.</p>",
+    "PostedDate": "2010-10-17T11:11:22.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

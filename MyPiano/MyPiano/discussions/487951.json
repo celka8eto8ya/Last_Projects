@@ -1,0 +1,258 @@
+[
+  {
+    "Id": "1155734",
+    "ThreadId": "487951",
+    "Html": "I have some AAC files streamed from the internet, the playpack runs at half speed for all 50 or so files. Yet the play back speed is normal in WMP, Winamp, and other audio apps. <br />\n<br />\nMediaInfo shows: 47Kbps, 44.1KHz / 22.05 KHz, 2 channels, AAC (Version 2)(HE=AAC/LC)<br />\n<br />\nIn NAudio (using MediaFoundationReader via AudioFileReader) the waveformat is 22050Hz 2ch IeeeFloat 16bps. It should be 44100Hz.<br />\n<br />\n<br />\nHere is a small sample (direct 'slow' download, no sign up):<br />\n<a href=\"http://www.fileswap.com/dl/1lgYhPgX0/\" rel=\"nofollow\">http://www.fileswap.com/dl/1lgYhPgX0/</a><br />\n",
+    "PostedDate": "2014-01-11T17:41:48.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1160717",
+    "ThreadId": "487951",
+    "Html": "hi, that file seems to contain a media type change early on which NAudio is not handling correctly. I'd need to do a bit more investigation before saying what exactly the issue is.<br />\n",
+    "PostedDate": "2014-01-13T03:22:10.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1160869",
+    "ThreadId": "487951",
+    "Html": "Ok thanks.<br />\n",
+    "PostedDate": "2014-01-13T04:18:06.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170434",
+    "ThreadId": "487951",
+    "Html": "Any update regarding this issue?\r<br />\n<br />\n(no rush, just wandering)<br />\n",
+    "PostedDate": "2014-01-16T04:59:22.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170443",
+    "ThreadId": "487951",
+    "Html": "the trouble is, what do we do with files like this that change WaveFormat midway through. It is a real headache, as the output playback device will already have been initialized at the wrong sample rate/<br />\n",
+    "PostedDate": "2014-01-16T05:12:51.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170447",
+    "ThreadId": "487951",
+    "Html": "Is it possible that the headers in the frames are incorrectly reporting the wrong sample rate? <br />\n",
+    "PostedDate": "2014-01-16T05:20:20.853-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170449",
+    "ThreadId": "487951",
+    "Html": "yes, we get this with MP3 files sometimes as well, junk frames at the start reporting a different sample rate. It's a real pain to work out which one to decide is the first &quot;real&quot; frame. <br />\n",
+    "PostedDate": "2014-01-16T05:25:21.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170473",
+    "ThreadId": "487951",
+    "Html": "I know what you mean, I recall seeing a function where it ignores all previous frame changes and ends up using the last frame as a reference.\r<br />\n<br />\nI've been meaning to 'dissect' the AAC format since I need to split AAC files at a lossless frame level, I'll provide the code/class if successful.<br />\n",
+    "PostedDate": "2014-01-16T06:06:48.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170478",
+    "ThreadId": "487951",
+    "Html": "I'd be very interested in seeing what you come up with \r<br />\n<br />\nOne thing I have been contemplating is for a WaveFormatChanged event to be raised by MediaFoundationReader (i've actually added one in a recent commit). Then it would be up to the user whether they want to handle it and re-open the playback device at a new sample rate to keep playing, or even to resample the audio themselves.<br />\n",
+    "PostedDate": "2014-01-16T06:23:18.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1171941",
+    "ThreadId": "487951",
+    "Html": "I have created an AacFileReader class based on Mp3FileReader and got it working. 22050 is consistent through the whole file.<br />\n<br />\nDetect an MP4 container (looks for ftyp box). Throws Unsupported exception.<br />\nReads ID3v1 and ID3v2 tags if present<br />\nSeeks the frame start signature (0xFFF)<br />\nReads each frame header, fills AacFrame class, jumps to the next frame using the frame length<br />\nACM decompressor works.<br />\nADTS format works 100%<br />\nADIF format header done, frame parsing not done yet.<br />\n<br />\nDumping a range of frames to an aac file works, but the audio is still half speed as expected. <br />\nNAudio doesnt seem to play aac files with an ID3v2 tag (HRESULT 0xC00D36B4), but Winamp plays it fine. Perhaps it will work if the ACM decompressor is used instead of MF.<br />\n<br />\nHere are the first few frames of that aac file which plays at half speed. <br />\nFrame: Len=331,Samples=1024,BitRate=57019,SampleRate=22050,Channels=2<br />\nFrame: Len=298,Samples=1024,BitRate=51335,SampleRate=22050,Channels=2<br />\nFrame: Len=261,Samples=1024,BitRate=44961,SampleRate=22050,Channels=2<br />\nFrame: Len=289,Samples=1024,BitRate=49784,SampleRate=22050,Channels=2<br />\nFrame: Len=248,Samples=1024,BitRate=42721,SampleRate=22050,Channels=2<br />\nFrame: Len=342,Samples=1024,BitRate=58914,SampleRate=22050,Channels=2<br />\n",
+    "PostedDate": "2014-01-16T17:56:04.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1189775",
+    "ThreadId": "487951",
+    "Html": "btw I found a bug in MP3FileReader.cs, ID3v1 only reads 3 bytes instead of 128 <br />\nI tried pushing it using TortoiseHG but it wont accept my copeplex/hotmail username and password<br />\n<pre><code>        // try for an ID3v1 tag as well\n        mp3Stream.Position = mp3Stream.Length - 128;\n        byte[] tag = new byte[128];\n        mp3Stream.Read(tag, 0, 3); // &lt;- Change this to mp3Stream.Read(tag, 0, 128);\n        if (tag[0] == 'T' &amp;&amp; tag[1] == 'A' &amp;&amp; tag[2] == 'G')\n        {\n            id3v1Tag = tag;\n            this.mp3DataLength -= 128;\n        }</code></pre>\n\n",
+    "PostedDate": "2014-01-21T23:38:37.497-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1190219",
+    "ThreadId": "487951",
+    "Html": "I found out why that halfspeed.aac file was playing at half speed in NAudio, it is because the AAC file uses SBR (spectral band replication) for low quality AAC files which halves the sample rate of a 44100 to the 22050 samples as reported in the ADTS header, the encoder decodes the 22050 samples, processes the SBR and outputs at 44100hz.<br />\n<br />\nSince we are reading 22050 at the start, we are setting the wave out device to 22050 which is wrong, we need to set it to 44100 if SBR is detected, the AacFrame.cs class will contain an SBR flag and the AacWaveFormat samplerate AND samplecount will be adjusted/doubled. I figured out how to detect SBR (and Panoramic Stereo) by calculating various values in the ADTS header and doubling the WaveFormat sample rate to 44100 and Sample count x2 accordingly. I have confirmed it works using the ACM decoder, but we need to make adjustments to the MediaFoundation side. Initially parsing all AAC files through the AacADTSParser.cs class instead of MF should do the trick. The AacFileReader class defaults to ACM as like Mp3FileReader but parsing an MF decompressor should work fine in theory. I'll do some testing to be sure.<br />\n<br />\nThe ADIF AAC storage format is mostly done (The ADIF header is a complicated beast btw), the SBR information is in the ADIF header. Frame grabbing may be an issue, we may need to decompress the whole file at once and store the buffer since the frames have no header.<br />\n<br />\nOutput samples per frame are commonly 1024 but apparently they can be 960 in some situations. Something to look into, or at least be aware of. The sample rate doubles to 2048 per frame if SBR is used, so the decompressor buffer has been doubled as well.<br />\n<br />\nLATM and LAOS streaming formats seem a little trickier, I haven't gotten to those yet.<br />\n<br />\nSo far the ACM decompressor can play 100% of the 'odd' ADTS files I've collected, MF plays 70% or so. I'm using the ACM codec from <a href=\"http://www.free-codecs.com/download/AAC_ACM_Codec.htm\" rel=\"nofollow\">http://www.free-codecs.com/download/AAC_ACM_Codec.htm</a><br />\n",
+    "PostedDate": "2014-01-22T02:30:27.747-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193007",
+    "ThreadId": "487951",
+    "Html": "wow, sounds like you are making some great progress. Your pull request had no commits in it, but I'll try to get your MP3 tag fix in anyway.\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2014-01-23T02:25:58.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193041",
+    "ThreadId": "487951",
+    "Html": "I got TortoiseHG working so the MP3 fork should be up now.\r<br />\n<br />\nRegarding ACC, neither the AACACM decoder, CoreAAC DS filter, and MediaFoundation MS codec support the ADIF format so I may just leave it out. It was the original format and after some googling no one seems to care about it anyway. I'll leave the ADIF header reader in anyway just in case. LATM and LAOS doesn't seem popular either so I may just support ADTS for now, which is probably 95% of AAC files out there.\r<br />\n<br />\nMP3FileReader defaults to ACM but I think we should default to MediaFoundation for AAC since Windows 7/8/(Vista?) have an AAC codec built in. Win8 doesn't ship with an AAC ACM codec. However I'm not quite sure how to replace ACM with MF code. I'll have a look at MediaFoundationReader.cs<br />\n",
+    "PostedDate": "2014-01-23T03:08:33.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193050",
+    "ThreadId": "487951",
+    "Html": "You'd need to inherit from MediaFoundationTransform, in the same way that MediaFoundationResampler does.<br />\n",
+    "PostedDate": "2014-01-23T03:19:00.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193090",
+    "ThreadId": "487951",
+    "Html": "Ok thanks I'll look into it. <br />\n<br />\nMFTransform wants IWaveProvider and WaveFormat, which somewhat confuses things, I'll work it out..<br />\n<pre><code>    public MfAacFrameDecompressor(WaveFormat sourceFormat, IWaveProvider sourceProvider, WaveFormat outputFormat)\n        : base(sourceProvider, outputFormat)</code></pre>\n\n",
+    "PostedDate": "2014-01-23T04:16:13.643-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193126",
+    "ThreadId": "487951",
+    "Html": "EDIT... ok its not that bad after all after removing all the resampler code. <br />\n",
+    "PostedDate": "2014-01-23T05:22:50.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193149",
+    "ThreadId": "487951",
+    "Html": "yes MediaFoundation is painfully complicated. You don't need any of the stuff that is causing compile errors though. Your MFT won'thave IWMResamplerProps or resampler quality. And you replace ResamplerMediaComObject with a new COM object that is the AAC decoder MFT. So you'll need its GUID (either hard-code it, or find it by enumerating the MFTs)<br />\n",
+    "PostedDate": "2014-01-23T06:01:21.317-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193165",
+    "ThreadId": "487951",
+    "Html": "Why MS complicate COM objects like this is beyond me (I wish COM would gracefully disappear to be honest) but anyway I'll give it a try.<br />\n",
+    "PostedDate": "2014-01-23T06:21:25.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1195038",
+    "ThreadId": "487951",
+    "Html": "Is there any benefit allowing the frame decompressor to be parsed in the constructor?\r<br />\n<br />\nMp3FileReader(string mp3FileName, FrameDecompressorBuilder frameDecompressorBuilder)\r<br />\n<br />\nIt complicates things in AacFileReader since MF needs to access the SourceProvider in the WaveStream interface. I've removed it for now.<br />\n",
+    "PostedDate": "2014-01-23T23:29:18.077-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1195073",
+    "ThreadId": "487951",
+    "Html": "with MP3 file reader, it gets used in the constructor, so to enable users to override it, it had to be a constructor param. If you can avoid it with AacFileReader, that is fine.<br />\n",
+    "PostedDate": "2014-01-24T00:08:36.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1195075",
+    "ThreadId": "487951",
+    "Html": "Ok no worries. I'll try to put it back in once I get it all working to keep things consistent. I may have it attempt ACM first and then fallback to MF to simply things for the user, and perhaps add a 'bool PreferMediaFoundation' as an optional constructor.<br />\n<br />\nI found some AAC MF playback code in cpp which I'm basing my code on. Hopefully it's the correct way to do it.<br />\n<a href=\"http://stackoverflow.com/questions/16565292/imftransformprocessoutput-returns-mf-e-transform-stream-change-for-he-aac-p\" rel=\"nofollow\">http://stackoverflow.com/questions/16565292/imftransformprocessoutput-returns-mf-e-transform-stream-change-for-he-aac-p</a><br />\n",
+    "PostedDate": "2014-01-24T00:15:51.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1195355",
+    "ThreadId": "487951",
+    "Html": "Not to pick nits, but I think the &quot;PreferMediaFoundation&quot; option would be better suited to a static property...  My chi doesn't like it as a constructor parm. :-)\r<br />\n<br />\nSeriously, I can't imagine someone wanting to be able to change it on an instance-by-instance basis, so a global setting makes a lot of sense.  Just my US$0.02...<br />\n",
+    "PostedDate": "2014-01-24T05:22:23.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1195358",
+    "ThreadId": "487951",
+    "Html": "Edit.. no worries just realised MFTransform is an abstract class<br />\n",
+    "PostedDate": "2014-01-24T05:24:01.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1195362",
+    "ThreadId": "487951",
+    "Html": "<strong>ioctlLR wrote:</strong><br />\n<blockquote>\nNot to pick nits, but I think the &quot;PreferMediaFoundation&quot; option would be better suited to a static property...  My chi doesn't like it as a constructor parm. :-)<br />\n<br />\nSeriously, I can't imagine someone wanting to be able to change it on an instance-by-instance basis, so a global setting makes a lot of sense.  Just my US$0.02...<br />\n</blockquote>\nThats fine, I could do both I suppose.<br />\n.... Actually come to think of it a static Property is the best way to do it. I'll do that instead.<br />\n",
+    "PostedDate": "2014-01-24T05:26:18.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1195650",
+    "ThreadId": "487951",
+    "Html": "EDIT nevermind, MediaFoundationTransform designed too much for the resampler. Rather than modify MediaFoundationTransform I'll create a MediaFoundationDecoder class that is more in tune with the AcmStream class. This also keeps thing a lot neater/uniform in AacFileReader. <br />\n",
+    "PostedDate": "2014-01-24T08:10:53.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1197287",
+    "ThreadId": "487951",
+    "Html": "I submitted a patch to fix the half speed aac playback in MediaFoundationReader.cs, basically I check for SBR in the extra codec data within the AAC WaveFormatEx MFReader provides and double the sample rate so that should be good to go. Basically all the AAC ADTS files I have play normal now.<br />\n<br />\nI got the MF Decoder working in the same way the ACM decoder works, just need to clean everything up now.<br />\n<br />\nBasically the features AacFileReader will provide are:<br />\n<br />\nAdd ACM decoding if an AAC ACM codec is present (XP+Vista users would appreciate this feature).<br />\nAdd Lossless Frame based cutting of AAC ADTS files.<br />\nImprove MediaFoundation compatibility by removing the ID Tags before sending the stream data to MF (MF throws an exception if an ID3v2 tag is present).<br />\nA general MediaFoundationDecoder class which should come in handy if MediaFoundationReader fails and the input data needs pre-processing (rip out tags, correct inconsistencies such as stream changes, corrupt frames etc..)<br />\n",
+    "PostedDate": "2014-01-25T08:33:08.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201356",
+    "ThreadId": "487951",
+    "Html": "MediaFoundationTransform has proven to be troublesome, it plays normal AAC files fine but if it runs into an oddly formatted AAC file is throws an exception. For example a mono 16000hz file fails to transform, but MFReader plays it perfectly.<br />\n<br />\nSo obviously MediaFoundationReader (Source Reader) is doing extra work to get these files playing as they supposed to.<br />\n<br />\nI tried to init the AAC file with MediaFoundationReader and grab its MediaType, then pass it into MFTransform.SetInputType it would accept the MediaType and work as expected..... no dice. It fails (MF.SetInputType accepts it but when it decodes the data it says 'not accepting any more data'). I even tried replicating the exact bytes of the MFReader WaveFormat into my own AacWaveFormat as per the AAC WaveFormatEx specs, MFTransform still wont decode it. Even with the fail-safe WaveFormatExtraData with no byte[] array.<br />\n<br />\nMy main goal is to provide max compatibility so I have decided to dump the MFDecoder and ghost MediaFoundationReader within AacFileReader instead (Similar to what AudioFileReader.cs does).<br />\nCompatibility has improved but MediaFoundationReader intermittently crashes the whole app with certain AAC files, even with try..catches everywhere. The crash must be happening in unmanaged code. I can replicate this with the NAudio WPF Demo app (same binaries as from the CodePlex website, totally unmodified). So the bug appears to be in the NAudio library, Something to look into... EDIT: It seems to only crash when the debugger is running. On its own it is fine.<br />\n<br />\nAnyway the ACM AAC decoder works perfectly, if there is no ACM AAC codec it falls back to MFReader. I'll submit the code once I have cleaned it up.<br />\n",
+    "PostedDate": "2014-01-31T07:48:08.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201382",
+    "ThreadId": "487951",
+    "Html": "btw is there a trick to getting Property changes recognised in the Constructor without an extra Init() function?<br />\n<br />\nFor example:<br />\n<br />\nI have this property:<br />\n<pre><code>        public bool PreferMediaFoundation\n        {\n            get { return preferMediaFoundation; }\n            set { preferMediaFoundation = value; }\n        }   </code></pre>\n\nThe user calls it via:<br />\n<pre><code>_waveStream = new AacFileReader(sAudioFile) \n{ \n    PreferMediaFoundation = true \n};</code></pre>\n\n... but &quot;PreferMediaFoundation = true&quot; is processed AFTER the constructor is done.<br />\n<br />\nI need to take care ofPreferMediaFoundation in the constructor itself if possible. Otherwise I would need to add an extra constructor variable.<br />\n",
+    "PostedDate": "2014-01-31T08:36:10.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206766",
+    "ThreadId": "487951",
+    "Html": "Well I finally got reliable SBR detection working. It actually plays more oddly formatted AAC files than Winamp now, including the LTP profile.<br />\n<br />\nFor those who are trying to do the same thing and googling to no end, I ended up having to read the actual raw AAC data and parse/jump through the Syntactic Elements, and enable SBR if the sample rate is &lt;= 24000, channels = 2, and an ID_CPE element is used in the raw frame. (There are no complex table/trig lookups or anything, just a few bitstream reads)<br />\n<br />\nAssuming SBR by checking if the sample rate is &lt;= 24000 is wrong (a common occurrence in other peoples code), there are non-SBR AAC files that are lower than 24000hz.<br />\n<br />\nRetrieving the SBR info from the ADTS header is impossible, decoding a few frames using a decoder <em>should</em> work but MediaFoundation Source Reader doesn't update the GetCurrentMediaType after the first few ReadSample calls when it really should like other decoders (A recent Mozilla patch does it this way but I doubt it works properly, I tried using the exact technique, no luck). GetNativeMediaType also doesn't work, and reading the AudioSpecificConfig from GetCurrentMediaType is also useless as it returns a 2 byte config, not the expected 5 byte config with SBR info. As for ACM, I couldn't find a suitable function to retrieve the actual output samplerate.<br />\n<br />\n<br />\nAnyway one more task to go, remove the ID3v2 tag and give MF a raw ADTS stream so it doesn't reject the file...<br />\n<br />\nThere is one AAC file that fails to play, for some reason MediaFoundation thinks it is a FLAC file and uses the mfFLAC decoder then crashes miserably, but that's beyond my control. I added a subtype check to handle it. ACM plays it fine though.<br />\n",
+    "PostedDate": "2014-02-11T04:36:48.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206918",
+    "ThreadId": "487951",
+    "Html": "sounds like you are making good progress. I haven't had a lot of time for NAudio stuff recently, but hopefully get round to looking at your AacFileReader soon. I'm also very interested in what you've done with media foundation from a stream. I've been trying a couple of different approaches to that, and it is one of my most wanted features for NAudio 1.8<br />\n",
+    "PostedDate": "2014-02-11T10:40:13.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207236",
+    "ThreadId": "487951",
+    "Html": "I basically mirrored the functionality of the MediaFoundation File and kept it as simple as possible. Much cleaner than using an Abstract class over the top.\r<br />\n<br />\nI'm using the MF Stream in AacFileReader and found no problems with it at all.<br />\n",
+    "PostedDate": "2014-02-12T03:10:19.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

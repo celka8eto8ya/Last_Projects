@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "104502",
+    "ThreadId": "31445",
+    "Html": "I want to be able to change the midi instrument. When I read an existing midi file I find the follow information:<br>\r\n<br>\r\n<strong><em>AbsoluteTime: 0<br>\r\nChannel: 1<br>\r\nCommandCode: PatchChange<br>\r\nPatch: 26<br>\r\n</em></strong><br>\r\nTo set this information to a new midi file, I added the following code:<br>\r\n<br>\r\n<strong><em>myMidiEvents.AddEvent(new PatchChangeEvent((long)0, 2, 26), 1);</em></strong><br>\r\n<br>\r\nThis doesn't seem to work, because when I read this new midi file, I find this information:<br>\r\n<br>\r\n<strong><em>AbsoluteTime: 0<br>\r\nChannel: 2<br>\r\nCommandCode: PatchChange<br>\r\nPatch: 0</em></strong><br>\r\n<br>\r\nIt looks like my command is being ignored. Can please someone provide me some information how to change the midi instrument to 26 Electric Guitar(jazz).<br>\r\n<br>\r\nThanks in advance.<br>\r\n",
+    "PostedDate": "2008-07-14T04:34:14.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "104551",
+    "ThreadId": "31445",
+    "Html": "looks like you found a bug. I've checked in a fix. Sorry for the inconvenience<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-07-14T08:06:02.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "104610",
+    "ThreadId": "31445",
+    "Html": "<br>\r\n<div style=\"border-style:dotted none;border-color:rgb(170, 170, 170) -moz-use-text-color;border-width:0.1em medium;margin:1em 0em 2.5em 3em;padding:0.2em;font-style:italic\"><br>\r\nmarkheath wrote:<br>\r\nlooks like you found a bug. I've checked in a fix. Sorry for the inconvenience<br>\r\nMark<br>\r\n<br>\r\n<br>\r\n</div>\r\nThanks for the fast reply. Where can I get the new version, when I visit releases, the latest version is from 24 june?<br>\r\n",
+    "PostedDate": "2008-07-14T11:36:12.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "104636",
+    "ThreadId": "31445",
+    "Html": "just go to the Source Code tab and click download on the latest code revision. This will get you the NAudio source code. Then load the NAudio.sln into Visual Studio and build it.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-07-14T13:46:52.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "104777",
+    "ThreadId": "31445",
+    "Html": "<br>\r\n<div style=\"border-style:dotted none;border-color:rgb(170, 170, 170) -moz-use-text-color;border-width:0.1em medium;margin:1em 0em 2.5em 3em;padding:0.2em;font-style:italic\"><br>\r\nmarkheath wrote:<br>\r\njust go to the Source Code tab and click download on the latest code revision. This will get you the NAudio source code. Then load the NAudio.sln into Visual Studio and build it.<br>\r\n<br>\r\nMark<br>\r\n<br>\r\n<br>\r\n</div>\r\nThanks, it worked. This is a great tool you made, keep up the good work, the community will be gratefull. :-)<br>\r\n",
+    "PostedDate": "2008-07-15T05:51:31.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "114763",
+    "ThreadId": "31445",
+    "Html": "Say, I'm having the same problem, and updating to the latest version didn't seem to help... I think I might be doing something wrong! Incidentally I also can't get the pitch bend to work properly - it always seems to bend the pitch the exact same amount (sounds like down 2 notes or so) no matter what I put in for the third parameter for the PitchWheelChangeEvent constructor...<br>\r\n<br>\r\nThis is what I'm doing as a test to try to play a chord and bend its pitch - it does play a chord, but with a piano, not the specified instrument, and it does bend the pitch, but always by the same amount no matter what value I put in for the pitch bend amount!<br>\r\n<br>\r\nThanks for any advice you may be able to offer! :)<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var inst = new PatchChangeEvent(0, 1, 26);<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; var noteOn = new NoteOnEvent(0, 1, 64, 127, 1000);<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; var noteOn2 = new NoteOnEvent(0, 1, 67, 127, 1000);<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; var noteOn3 = new NoteOnEvent(0, 1, 71, 127, 1000);<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; var pitchBend = new PitchWheelChangeEvent(0, 1, int.MaxValue);<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; midiOut.Send(inst.GetAsShortMessage());<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; midiOut.Send(noteOn.GetAsShortMessage());<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; midiOut.Send(noteOn2.GetAsShortMessage());<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; midiOut.Send(noteOn3.GetAsShortMessage());<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; midiOut.Send(inst.GetAsShortMessage());<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Thread.Sleep(500);<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; midiOut.Send(pitchBend.GetAsShortMessage());<br>\r\n",
+    "PostedDate": "2008-08-29T11:55:57.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "115830",
+    "ThreadId": "31445",
+    "Html": "hi there ekolis,<br>\r\nwhat MIDI instrument are you sending these messages to?<br>\r\n",
+    "PostedDate": "2008-09-03T15:18:03.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "115832",
+    "ThreadId": "31445",
+    "Html": "$0Which instrument? I don't have an external MIDI instrument hooked up (Vista doesn't seem to support the old serial MIDI, and I don't have a new USB MIDI cable!) - I was just trying to play stuff on my sound card, which is the only MIDI device I have available:$0$0if (midiOut == null)    midiOut = new MidiOut(0);midiOut.Reset();$0$0is what I used to initialize midiOut before the code I posted previously.$0$0$0$0$0edit: sorry this looks so awful, I'm trying to use Google Chrome and the rich text editor is just not working!!!$0",
+    "PostedDate": "2008-09-03T15:22:06.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

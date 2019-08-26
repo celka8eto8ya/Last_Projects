@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "284943",
+    "ThreadId": "82923",
+    "Html": "<p>Hi guys,</p>\r\n<p>Im trying to implement a little VoIP software, nothing special, just UDP stream between 2 computers. I found the NAudio lib, witch was very helpful in the first place... i can easily capture, and play sound.</p>\r\n<p>BUT: now im trying to rebuild that and want to make a &quot;live&quot; stream. i think the best attempt was this:</p>\r\n<p>Capturing -&gt; OnDataAvailable : send the buffer as it is on the network. the receiver is waiting for packets and gets it. but he is not able to play it now as there is no wave-header.</p>\r\n<p>i tried this with the waveformat&nbsp;new WaveFormat(8000, 8, 1); i know its not the best, but i dont think that the format is the reason for this problem.</p>\r\n<p>i experimented with a lot of workarounds, but in the end im helpless, anybody has an idea?</p>\r\n<p>thanks in advance</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-02-02T12:56:03.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "285662",
+    "ThreadId": "82923",
+    "Html": "<p>Hey, you are not allowed to let the playback device wait for packets. If no packets are available you have to return an empty (all zeros) buffer. Keeping that in mind it is necessary to buffer the packets on the receiving side since you have to handover packets from the network thread to the playback thread.</p>\r\n<p>Chris</p>",
+    "PostedDate": "2010-02-04T00:44:32.277-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "286283",
+    "ThreadId": "82923",
+    "Html": "<p>I'm working on a similar issue, trying to play audio from VoIP RTP streams.&nbsp; I was able to play raw data by deriving a new class from WaveStream and placing the RAW data into a memory stream.&nbsp; My audio is encoded as G711u so I just used the build in decoder.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-02-05T08:13:15.467-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

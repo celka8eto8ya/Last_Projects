@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "718268",
+    "ThreadId": "284464",
+    "Html": "\r\n<p>For example,</p>\r\n<p>Can it detect the number of channels within an .ogg file?</p>\r\n<p>Bits per channel of audio data?</p>\r\n<p>Sample Rate?</p>\r\n<p>If not, can anyone recommend a free .NET solution that could?</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-12-29T05:52:50.613-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "718370",
+    "ThreadId": "284464",
+    "Html": "<p>i can t remember that naudio was able to work with ogg files. But if you only want to readout the number of channels you should be able to write something small your own. You may google how you can read out the some kind of headers of the ogg files. Shouldn't be to hard.</p>",
+    "PostedDate": "2011-12-29T09:40:40.343-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "718584",
+    "ThreadId": "284464",
+    "Html": "<p>no, NAudio has no built-in ogg file support. There are a few .NET ogg/vorbis libraries around, although I don't know which is the best one. If you ask on StackOverflow you might get a good answer.</p>",
+    "PostedDate": "2011-12-30T00:34:25.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

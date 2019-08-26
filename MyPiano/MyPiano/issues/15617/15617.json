@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 7,
+    "Custom": "",
+    "Description": "When audio has been recorded, and then playing back the recorded audio, wait until the audio has stopped playing (end of audio).\nThen when the method WaveIn.StartRecording is called again, the exception WaveBadFormat is thrown.\n\nThis problem was found when using an audio device with half duplex in Windows XP 32 bit.\nIt could not be reproduced when using an audio device with full duplex.\n\nPossible solution:\nCall WaveInterop.waveOutReset (which marks all pending playback buffers as done), when the WaveOut.Callback is called with the message WaveMessage.WaveOutDone.",
+    "LastUpdatedDate": "2012-03-28T14:30:42.29-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-03-30T07:18:08.09-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveIn.StartRecording throws WaveBadFormatException after playback finished at end of audio",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 4,
+    "Id": 15617
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I'm not entirely sure what you are trying to do here. What do you mean by half-duplex?",
+      "PostedDate": "2011-05-27T13:25:39.123-07:00",
+      "Id": 41758
+    },
+    {
+      "Message": "A half-duplex wave device is a device that can't playback and record at the same time. ",
+      "PostedDate": "2011-05-27T22:50:26.043-07:00",
+      "Id": 41759
+    },
+    {
+      "Message": "OK, I've not come across a device with that limitation. Are you calling Stop on the playback device before starting record? Stop calls waveOutReset under the hood.",
+      "PostedDate": "2011-05-28T00:36:20.48-07:00",
+      "Id": 41760
+    },
+    {
+      "Message": "Most modern audio devices don't have this limitation. Although there are some usb-devices that have, like the one we use. I the audio is stopped by calling Stop on the playback device everything works as it should. The problem can be reproduced by playing to the end of the audio-stream (a .wav file). If the end of the stream is reached, calling Stop on the playback device doesn't do a waveOutReset and therefore the problem is introduced.",
+      "PostedDate": "2011-05-28T01:24:01.02-07:00",
+      "Id": 41761
+    },
+    {
+      "Message": "what version of the code are you using? That's how WaveOut.Stop works - it calls waveOutReset",
+      "PostedDate": "2011-05-28T02:07:36.46-07:00",
+      "Id": 41762
+    },
+    {
+      "Message": "I'm using version 1.3 at the moment.\r\nThe stop methode has a check on the playbackstate (it need to be other state then Stopped) before calling waveOutReset.\r\nIn the callback method, the playbackstate is set to Stopped when the buffer OnDone is signalled. That's why the waveOutReset is never called.\r\nBy calling waveOutReset in the OnDone for the callback, this issue is solved (at least for the 1.3 version)\r\nI can see changes for the WaveOut class in 1.4, so i need to check if this issue still exists and can be solved the same way.",
+      "PostedDate": "2011-05-28T05:22:22.417-07:00",
+      "Id": 41763
+    },
+    {
+      "Message": "OK, you might want to check the very latest code in source control as I have done a bunch more bugfixing and code improvements since 1.4 came out.",
+      "PostedDate": "2011-05-28T07:03:28.84-07:00",
+      "Id": 41764
+    }
+  ]
+}

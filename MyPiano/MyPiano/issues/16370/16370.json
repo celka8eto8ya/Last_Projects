@@ -1,0 +1,90 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 10,
+    "Custom": null,
+    "Description": "Hello,\r\nthe WMA file only works with WaveOut () standard.\r\n\r\nWith other DriverOut, I receive an error message from WMAStream function Read\r\n(GetNextSample).\r\n\r\nTested with your NAudio Demo 1.6",
+    "LastUpdatedDate": "2013-05-03T08:33:41.7-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-10-29T08:58:45.387-07:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WMA",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16370
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "what is the error message?",
+      "PostedDate": "2012-10-29T10:29:33.65-07:00",
+      "Id": 81192
+    },
+    {
+      "Message": "\"Impossible d'effectuer un cast d'un objet COM de type 'System.__ComObject' en type d'interface 'NAudio.WindowsMediaFormat.IWMSyncReader'. Cette opération a échoué, car l'appel QueryInterface sur le composant COM pour l'interface avec l'IID '{9397F121-7705-4DC9-B049-98B698188414}' a échoué en raison de l'erreur suivante : Cette interface n’est pas prise en charge (Exception de HRESULT : 0x80004002 (E_NOINTERFACE)).\"",
+      "PostedDate": "2012-10-29T11:05:17.017-07:00",
+      "Id": 81197
+    },
+    {
+      "Message": "glouppps English version\n\n\"Unable to cast COM object of type 'System.__ComObject' to interface type 'NAudio.WindowsMediaFormat.IWMSyncReader.' This operation failed because the QueryInterface call on the COM component for the interface with IID '{9397F121-7705-4DC9-B049-98B698188414}' failed due to the following error: This interface is not supported (Exception from HRESULT: 0x80004002 (E_NOINTERFACE)). \"",
+      "PostedDate": "2012-10-29T11:07:24.987-07:00",
+      "Id": 81198
+    },
+    {
+      "Message": "hmmm, I can't see why that would have anything to do at all with what output driver you are using. I guess it might be a threading issue - maybe you can only use a WMAFileReader on the stream on which it was created.",
+      "PostedDate": "2012-10-29T12:17:48.587-07:00",
+      "Id": 81202
+    },
+    {
+      "Message": "The error is triggered in \"audioPlayBackPanel\" this procedure\n\n void OnPlaybackStopped(object sender, StoppedEventArgs e)\n        {\n            groupBoxDriverModel.Enabled = true;\n            if (e.Exception != null)\n            {\n                MessageBox.Show(e.Exception.Message, \"Playback Device Error\");\n            }\n        }\n\nI think this is the link with all the drivers.\n\nI think not go wrong, because I have placed several points stops and it is the only place where the debugger marks the stop",
+      "PostedDate": "2012-10-29T15:02:22.003-07:00",
+      "Id": 81219
+    },
+    {
+      "Message": "I commented concatenation delegate\n  private void CreateWaveOut ()\n         {\n             CloseWaveOut ();\n             int latency = (int) comboBoxLatency.SelectedItem;\n             this.waveOut SelectedOutputDevicePlugin.CreateDevice = (latency);\n            / / + = This.waveOut.PlaybackStopped OnPlaybackStopped;\n           \n         }\n\nI have no error message but it does not work :-(",
+      "PostedDate": "2012-10-29T15:10:12.297-07:00",
+      "Id": 81221
+    },
+    {
+      "Message": "the problem is definitely related to threading. I'll maybe try the solution here at some point:\nhttp://stackoverflow.com/questions/1233468/unable-to-cast-com-object-of-type-exception\n\n",
+      "PostedDate": "2012-10-31T07:34:21.587-07:00",
+      "Id": 81353
+    },
+    {
+      "Message": "Hello,\r\nAfter reading many pages and comments on the inter-thread management and use of COM and did some test .\r\n I have not found a solution to the problem. So if you have some time for a solution.",
+      "PostedDate": "2012-11-07T09:16:57.487-08:00",
+      "Id": 81898
+    },
+    {
+      "Message": "I'm afraid this is very low priority for me at the moment. I suggest asking on StackOverflow for any COM experts who know how you can work round cross-threading problems like this. If WMA playback is really important to you, you need to write your own thread marshalling to ensure that all accesses to the COM object happen from the same thread.",
+      "PostedDate": "2012-11-07T10:23:53.853-08:00",
+      "Id": 81905
+    },
+    {
+      "Message": "With NAudio 1.7, MediaFoundationReader can be used instead, and I have done some work to try to workaround threading issues (by recreating the object on the Read thread if necessary)",
+      "PostedDate": "2013-05-03T08:33:33.34-07:00",
+      "Id": 99306
+    }
+  ]
+}

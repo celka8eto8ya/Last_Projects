@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1330027",
+    "ThreadId": "574402",
+    "Html": "I want to create an desktop application using C#. \r<br />\nIn this application i want to make an audio player which can play mp3, wav formats and at end i want to mix both files in single file as output. \r<br />\n<br />\nIs this possible using NAudio dll?\r<br />\n<br />\n thank you for any help.<br />\n",
+    "PostedDate": "2014-12-08T23:57:02.077-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1337516",
+    "ThreadId": "574402",
+    "Html": "yes, NAudio includes some example mixer components such as MixingSampleProvider that you could use to  mix your audio. AudioFileReader can read MP3 and WAV files<br />\n",
+    "PostedDate": "2014-12-28T08:07:35.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

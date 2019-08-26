@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1105871",
+    "ThreadId": "461741",
+    "Html": "Hi\r<br />\n<br />\nI am able to detect when the file is playing but Is there a way to consume a .wav file with 2 channels (I do not want to play it) and then loop through the data to detect how many times a certain pitch occurs? <br />\n",
+    "PostedDate": "2013-10-10T01:24:26.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105921",
+    "ThreadId": "461741",
+    "Html": "You can use FFT or autocorrelation, but if you are new to Digital Signal Processing, you may find you need to spend quite a bit of time learning about how these techniques work. NAudio includes an FFT implementation in the FastFourierTransform class.<br />\n",
+    "PostedDate": "2013-10-10T03:41:16.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

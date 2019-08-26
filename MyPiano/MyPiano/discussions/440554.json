@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1031571",
+    "ThreadId": "440554",
+    "Html": "Hello,<br />\n<br />\nCould you provide a skeletton (C#) for :<br />\n<ul>\n<li>Wave In to sampleprovider chain to wave out</li>\n<li>Filereader to sampleprovider chain to waveout</li>\n<li>\nwavein to sampleprovider chain to FileWriter.<br />\n</li>\n</ul>\nYou never give a full chain : wavein to waveout is not of great help in practice. And you never explained  how to connect sampleProvider to waveOut.<br />\n<br />\nThanks,<br />\n<br />\nSeb<br />\n",
+    "PostedDate": "2013-04-17T00:39:12.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1031604",
+    "ThreadId": "440554",
+    "Html": "if you want to pipe waveIn to an output, use BufferedWaveProvider.\r<br />\n<br />\nFor your second example, AudioFileReader does exactly what you are asking. Look at the code to see how it does it\r<br />\n<br />\nTo a filewriter - you cold use WaveFileWriter.CreateWaveFile (and CreateWaveFile16 which takes a sampleprovider)\r<br />\n<br />\nThere are several classes in NAudio that go from WaveProvider to SampleProvider and vice versa. Look at Pcm16ToSampleProvider, SampleToWaveProvider, SampleToWaveProvider16. For NAudio 1.7 I am planning to include some extension methods on both IWaveProvider, ISampleProvider and WaveOut which will simplify switching between the two audio stream representations.<br />\n",
+    "PostedDate": "2013-04-17T01:43:39.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

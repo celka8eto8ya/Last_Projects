@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "546746",
+    "ThreadId": "241160",
+    "Html": "\r\n<p>Hi there,</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp; I have been using NAudio for a mixing and it has been working very well.&nbsp; NAudio tickles me to death.&nbsp; Great work!&nbsp; One of the features I need is to be able to change the BPM(beats per minute) of a mixed song.&nbsp;\r\n I looked through the code and forum and just couldn't see how this is done.&nbsp; Is this possible?&nbsp;</p>\r\n<p>Thanks.</p>\r\n<p>Huj</p>\r\n",
+    "PostedDate": "2011-01-10T07:44:49.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546774",
+    "ThreadId": "241160",
+    "Html": "\r\n<p>I'm afraid NAudio doesn't have this capability</p>\r\n",
+    "PostedDate": "2011-01-10T08:18:22.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546779",
+    "ThreadId": "241160",
+    "Html": "\r\n<p>Alas!&nbsp; Thanks anyway.</p>\r\n<p>Cheers.</p>\r\n<p>Huj</p>\r\n",
+    "PostedDate": "2011-01-10T08:19:49.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

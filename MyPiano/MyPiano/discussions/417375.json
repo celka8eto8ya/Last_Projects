@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "970005",
+    "ThreadId": "417375",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I'm working on an application that is essentially a network chat system, but I need to support multiple users talking at the same time. After some trial and error, I came up with a method that seems to be working well, but I feel like there is probably a\r\n better way, and I'm running into a small issue with different sound cards.</p>\r\n<p>Here's how I have it working now: When the client starts up, it creates a pool of WaveOut instances, each with their own BufferedWaveProvider. The client currently creates a pool of 10 of these. These 10 WaveOuts are all assigned to the same audio device.</p>\r\n<p>When sending audio, each client tags the encoded audio data with a unique client ID and sends it to the server. The server forwards this data to each other user in the chat. The client maintains a mapping of each client ID to one of the 10 BufferedWaveProviders.\r\n When the client receives audio data, it looks at the sender's client ID, looks it up in the map, and then feeds the samples to the associated BufferedWaveProvider. This way, if two remote clients are talking at once, their audio does not get intermingled.</p>\r\n<p>Now for the problem ... this has been working great on my development machine, but when I installed the client on another computer (a netbook) an exception was thrown when it tried to create the 10 WaveOuts. The exception happened when it tried to Init()\r\n the WaveOut. The error was that it was &quot;already allocated.&quot; If I reduced the number of WaveOuts to 5, the problem went away. I assume this is a sound driver limitation.</p>\r\n<p>So, I'm wondering if there's a better way to handle this situation where there are multiple streams from distinct sources that need to be fed to the sound card independently. If not, I think I would at least need a way to determine the maximum number of\r\n WaveOuts that can be assigned to a single audio device. I see that the GetCapabilities() method can tell me the number of channels, but it doesn't seem to return a maximum number of wave streams the card can mix.</p>\r\n<p>I know I could just keep constructing WaveOuts until I get the exception, but that seems rather hacky.</p>\r\n<p>Any insight or pointers would be greatly appreciated!</p>\r\n",
+    "PostedDate": "2012-12-24T21:58:51.563-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "970811",
+    "ThreadId": "417375",
+    "Html": "\r\n<p>It would be more appropriate to mix the different streams in software and have a single WaveOut. I tend to write my own mixer for these purposes. NAudio does have a bunch of mixers such as MixingSampleProvider, MixingWaveProvider32 and WaveMixerStream32.\r\n I've recently updated the MixingSampleProvider to have an option to always read fully, making it easier to work with this type of situtation.</p>\r\n<p>Basically, the idea is that you would go from your BufferedWaveProviders into 32 bit floating point audio streams. Then each input goes into the mixer and the single WaveOut device plays from the mixer. You need to make sure that the mixer is set up to never\r\n 'end' (i.e. even if there is no incoming data, it should just blank out the buffer and return it).</p>\r\n<p>Hope this points you in the right direction</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-25T11:40:29.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "970899",
+    "ThreadId": "417375",
+    "Html": "\r\n<p>Thanks Mark, I'll dig around and see if I can figure out how to do what you're suggesting.</p>\r\n",
+    "PostedDate": "2012-12-25T13:05:42.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "971297",
+    "ThreadId": "417375",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>I seem to have this working correctly ... at least it's mixing the streams using a MixingSampleProvider. However, the audio quality suffers whenever there is more than one stream being fed to the mixer. It's hard to describe how the quality suffers ... sort\r\n of sounds like there's some clipping or truncation of the samples when they're mixed. Almost a &quot;stuttering&quot; kind of sound. This only happens if I use a codec before sending the data over the wire. If I just send the raw data I get from the waveIn, then the\r\n mixing works great with no quality issues. The only codec I've tried so far is Speex, both narrow band and ultra wide band, using the classes from the Network Chat demo.</p>\r\n<p>In your reply above, you mentioned that the MixingSampleProvider has an &quot;option&quot; to always read fully. I wasn't able to find that setting, and I'm wondering if that might be the issue. How is that option turned on?</p>\r\n<p>You also mentioned that I have to make sure that the mixer is set up to never end. How is that done? (Though it seems like it might already be set up that way, since I can connect and disconnect chat clients and I never have to &quot;restart&quot; the mixer.)</p>\r\n<p>Thanks for your help and the great piece of software.</p>\r\n",
+    "PostedDate": "2012-12-25T20:18:41.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "980667",
+    "ThreadId": "417375",
+    "Html": "\r\n<p>I've only just added that new feature literally in the last few days. You'd need to get the latest code, or alternatively, make a silence producing SampleProvider to constantly feed the mixer and ensure it never ends. You can see an example in the comments\r\n on <a href=\"http://naudio.codeplex.com/workitem/16377\">this thread</a>.</p>\r\n<p>As for the distortion, it may be clipping. You could reduce the volume of the inputs to your mixer and see if that improves things (e.g. multiply every sample value by 0.5).</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-27T00:21:50.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981634",
+    "ThreadId": "417375",
+    "Html": "\r\n<p>Hrm ... I don't have the latest code, but I haven't had any problems with the playback stopping, even if the streams start and stop. Strange ...</p>\r\n<p>Regarding the distortion, I'm thinking it's probably not clipping since I can hear the &quot;stuttering&quot; sound even when the microphones are muted ... I hear just a faint hum that sounds choppy. The choppiness goes away when there is only one source stream. It's\r\n only when there are two (or presumably more than two) streams feeding the mixer, and only when I use a codec.</p>\r\n<p>Anyway, the distortion thing isn't much of a problem because it only occurs when I use a codec, and for my purposes, I can just stream the raw audio and not worry about compression. If I use an 8k sample rate, each datagram that I send over the wire is only\r\n 800 bytes, so that ought to work out fine.</p>\r\n",
+    "PostedDate": "2012-12-29T09:07:52.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

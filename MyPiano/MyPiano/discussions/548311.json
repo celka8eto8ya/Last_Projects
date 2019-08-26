@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1255200",
+    "ThreadId": "548311",
+    "Html": "Hi\r<br />\n<br />\nI want to show VolumeMeter using PCM data (comes as 16-bit PCM data).\r<br />\n<br />\nSo, how I can do that?\r<br />\n<br />\nI'm using BufferedWaveProvider as source.<br />\n<pre><code>var vuWaveFormat = new WaveFormat(SampleRate, BitsPerSample, Channels);\nvar bufferedWaveProvider = new BufferedWaveProvider(vuWaveFormat);</code></pre>\n\nNext step - WaveChannel (present in samples, can be used to change volume, not very important for me but good)<br />\n<pre><code>var waveChannel = new SampleChannel(bufferedWaveProvider, true);\nwaveChannel.Volume = GetVolumeFromPercent(100); // Db from percent</code></pre>\n\nNext - MeteringSampleProvider<br />\n<pre><code>var postVolumeMeter = new MeteringSampleProvider(waveChannel);\npostVolumeMeter.StreamVolume += OnPostVolumeMeter;</code></pre>\n\nNext - audio output to DirectSound.<br />\n<pre><code>audioOut = new DirectSoundOut();\naudioOut.Init(postVolumeMeter);\n//audioOut.Volume = 0;\n\naudioOut.Play();</code></pre>\n\nAll worked and made by sample. That's great.\r<br />\n<br />\nBut I don't need any audio output really. So, something like Null Renderer required. Or, how just to made VolumeMeter using PCM data from buffer using any other way?<br />\n",
+    "PostedDate": "2014-06-11T06:45:28.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1255537",
+    "ThreadId": "548311",
+    "Html": "you need something to pull the audio through the signal chain. Probably easiest is to call Read on your postVolumeMeter manually. \r<br />\n<br />\nset up like this:<br />\n<pre><code>var bufferedWaveProvder = new BufferedWaveProvider(vuWaveFormat)\nvar meter = new MeteringSampleProvider(bufferedWaveProvider.ToSampleProvider())</code></pre>\n\nthen when you add data to bufferedWaveProvider, call read on meter into a temporary buffer:<br />\n<pre><code>bufferedWaveProvider.AddSamples(e.Buffer, 0, e.BytesRecorded);\nmeter.Read(tempReadBuffer, 0, e.BytesRecorded / 2);</code></pre>\n\nthe number of samples to ask for must be the number of samples requested or else bufferedWaveProvider will send some extra samples. So I divide bytes by two, assuming you're starting with 16 bit audio<br />\n",
+    "PostedDate": "2014-06-12T04:36:43.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1262465",
+    "ThreadId": "548311",
+    "Html": "Thank you!<br />\n",
+    "PostedDate": "2014-07-03T10:25:18.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,130 @@
+[
+  {
+    "Id": "934250",
+    "ThreadId": "401256",
+    "Html": "\r\n<p>I keep getting an exception with the message &quot;Got a frame at sample rate 44100, in an MP3 with sample rate 48000. Mp3FileReader does not support sample rate changes.&quot; when playing some MP3 files. Is there anything else I can use to play MP3 files? Thanks\r\n in advance. I'm using version 1.6 of NAudio.</p>\r\n",
+    "PostedDate": "2012-10-30T07:50:26.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "934752",
+    "ThreadId": "401256",
+    "Html": "<p>I put that exception in to show that the MP3 is not playable by NAudio. The only options when you get a sample rate change in NAudio are to close your WaveOut device and open another at the new sample rate, or to put a resampler in your audio pipeline. I'm hoping that NAudio 1.7 will have a WaveFormatChanged event on Mp3FileReader, allowing people to disable this exception and write their own handling logic for format changes. Currently though, you'd have to create your own customised Mp3FileReader to play files like this.</p>\r\n<p>It should be very rare that MP3s contain frames of different sample rates. It is usually a sign someone has tried to concatenate parts of two completely different MP3 files/</p>",
+    "PostedDate": "2012-10-31T06:53:04.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "934851",
+    "ThreadId": "401256",
+    "Html": "<p>Oh, okay...because I'm playing the sample music in Windows 7. One of them gave me that exception.</p>",
+    "PostedDate": "2012-10-31T09:15:26.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "992307",
+    "ThreadId": "401256",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>markheath wrote:</strong>\r\n<p>It should be very rare that MP3s contain frames of different sample rates. It is usually a sign someone has tried to concatenate parts of two completely different MP3 files/</p>\r\n</blockquote>\r\n<p>I think this is not rarly as you think. &nbsp;VBR &nbsp;file is totally common in use, such as &nbsp;&quot;Sleep away.mp3&quot; in Windows 7. And i have this problem files many times</p>\r\n<p>Would u support this feature one day?</p>\r\n<p>ref:</p>\r\n<p style=\"padding-left:30px\"><em>&nbsp; When you want to read info about an MPEG file, it is usually enough to find the first frame, read its header and assume that the other frames are the same. But this may not be always the case. Variable bitrate MPEG files\r\n may use so called bitrate switching, which means that bitrate changes according to the content of each frame.&nbsp;</em></p>\r\n<p>http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html</p>\r\n<p>http://en.wikipedia.org/wiki/MP3</p>\r\n",
+    "PostedDate": "2013-01-25T21:12:27.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "992323",
+    "ThreadId": "401256",
+    "Html": "\r\n<p>You are confusing bitrate and sample rate. NAudio has no problem playing VBR MP3s that have different bitrates in every frame. The trouble is when the sample rate or the channel count changes. If that happens, the decoder will start emitting a different\r\n PCM WAV format. If you were playing out the soundcard, you would need to close and re-open the soundcard, or resample and convert the channel count to the same number as the original. Otherwise the audio would speed up or slow down.The same problem occurs\r\n if you are converting MP3 to WAV. A WAV file cannot contain sections with different PCM formats, so if different MP3 frames in the same file convert natively to different PCM sample rates or channel counts you have to do a further conversion on the decoded\r\n audio.</p>\r\n<p>I do wonder if some VBRs like the one you mention above contain just one frame at a different sample rate, and maybe NAudio could somehow detect this and skip over it.</p>\r\n",
+    "PostedDate": "2013-01-25T23:54:34.643-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "992563",
+    "ThreadId": "401256",
+    "Html": "\r\n<p>Thank you for reply</p>\r\n<p>I got something wrong with CBR VBR.</p>\r\n<p>As you say different frame may have different bit rate but has the same sample rate.</p>\r\n<p>&nbsp;Is it possible has different sample rate too?</p>\r\n<p>I have sent the strange mp3 file of Windows sample music to your email . Please check it .</p>\r\n",
+    "PostedDate": "2013-01-26T21:32:01.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993125",
+    "ThreadId": "401256",
+    "Html": "\r\n<p>Yes, that particular file has been mentioned to me before. The first two frames are 48kHz, whilst the rest is 44.1kHz. I have no idea why this might be. I thought at first they might be XING or VBRI headers, but they don't appear to be. I have no idea why\r\n MS would make a file like this. I've only seen something like it on one other occasion, where a file had one frame at 48kHz, and the rest at 44.1kHz. On that file it was actually album art being mistaken for a valid MP3 frame. A similar thing could be happening\r\n here I suppose. There could be a problem with the code that tries to jump over the ID3v2 tag.</p>\r\n",
+    "PostedDate": "2013-01-28T08:38:58.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993237",
+    "ThreadId": "401256",
+    "Html": "\r\n<p>FYI, I looked at the file in question... &nbsp;The first frame starts 528 bytes after the &quot;official&quot; end of the ID3v2 tag (when seeking from the start using the tag's length field). &nbsp;If the decoder just skips the tag and doesn't properly validate sync headers,\r\n it will sync with some spurious data that &quot;looks like&quot; a Stereo Layer I frame @ 384kbps and 48khz.</p>\r\n<p>That said, if the sync is checked against the following, the spurious data will be properly skipped:</p>\r\n<ul>\r\n<li>Frame Sync (11 set bits) </li><li>MPEG Version != reserved (01) </li><li>Layer != reserved (00) </li><li>Bitrate != invalid (1111) </li><li>Sample Rate != reserved (11) </li><li>Channel Mode Extension == 00 - or - Channel Mode == Joint Stereo </li></ul>\r\n<p>I believe the channel mode extension check is what is lacking...</p>\r\n",
+    "PostedDate": "2013-01-28T12:09:54.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993248",
+    "ThreadId": "401256",
+    "Html": "\r\n<p>thanks ioctlLR, I'll revisit the code, I know I check a few of those things, but maybe one is missing.</p>\r\n",
+    "PostedDate": "2013-01-28T12:32:11.453-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993556",
+    "ThreadId": "401256",
+    "Html": "\r\n<p>brilliant, the channel mode check fixes the &quot;Sleep Away&quot; MP3, and I've checked the fix in. Unfortunately it does not fix the other two example files I have. I wonder if there is a problem with my jumping over the ID3v2 tag not properly calculating its length.</p>\r\n",
+    "PostedDate": "2013-01-29T03:55:18.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1019511",
+    "ThreadId": "401256",
+    "Html": "Hi, I have this issue with a large number of my audio files (about 50% of them).  How would I make my program check for this issue before I try to run the sound file?<br />\n",
+    "PostedDate": "2013-03-22T06:38:23.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1019612",
+    "ThreadId": "401256",
+    "Html": "Half your files? What are you making them with? Are you able to link to an example that doesn't play in NAudio? I have a collection of problem MP3 files, but most of them are now working<br />\n",
+    "PostedDate": "2013-03-22T08:41:34.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1020618",
+    "ThreadId": "401256",
+    "Html": "Here's a couple of them:\r<br />\n<br />\n<a href=\"http://www.filesend.net/download.php?f=5c7268e7c11c8989fe2010fd83cc25f2\" rel=\"nofollow\">http://www.filesend.net/download.php?f=5c7268e7c11c8989fe2010fd83cc25f2</a>\r<br />\n<a href=\"http://www.filesend.net/download.php?f=551765518e9aa1cd1449efd17a0a7491\" rel=\"nofollow\">http://www.filesend.net/download.php?f=551765518e9aa1cd1449efd17a0a7491</a>\r<br />\n<br />\n<br />\nI unfortunately do not remember what program was used.  I got them from a friend years ago.<br />\n",
+    "PostedDate": "2013-03-25T06:18:49.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1020832",
+    "ThreadId": "401256",
+    "Html": "Thanks for these. I've seen instances where the album art can get misinterpreted as a valid mp3 header. I'm not sure how to work around this. There might be some deeper checking within the MP3 frame payload, but that would require more knowledge than NAudio currently has of the inner workings of MP3. I'll keep hold of the files in the hopes that one day I'll find a good way to deal with this issue.<br />\n",
+    "PostedDate": "2013-03-25T12:29:57.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273509",
+    "ThreadId": "401256",
+    "Html": "I have lots of downloaded mp3 files with exactly same samplerate problem. It's ok not to play those files, but my player crashes every time. How can I handle this error correctly?\r<br />\n<br />\nI have following code to load mp3 file:<br />\n<pre><code>public void LoadTrack(string file)\n{\n    if (waveOutDevice == null)\n    {\n        waveOutDevice = new WaveOutEvent()\n        {\n            DesiredLatency = 200,\n            NumberOfBuffers = 2\n        };\n\n        audioFileReader = new AudioFileReader(file);\n\n        var postVolumeMeter = new MeteringSampleProvider(audioFileReader);\n        postVolumeMeter.StreamVolume += OnPostVolumeMeter;\n\n        waveOutDevice.Init(postVolumeMeter);\n        audioFileReader.Volume = audioVolume;\n    }\n}</code></pre>\n\nError is happening while initializing audioFileReader. If I put all this code to try block, and do nothing about it in catch block, there's no crash - yet. Next error comes when I try to close that file and play new one. waveOutDevice.Dispose() generates NullReferenceException, even if code checks that it's not null before disposing.<br />\n<pre><code>public void CloseTrack()\n{\n    if (audioFileReader != null)\n    {\n        audioFileReader.Dispose();\n        audioFileReader = null;\n    }\n\n    if (waveOutDevice != null)\n    {\n        waveOutDevice.Dispose();\n        waveOutDevice = null;\n    }\n}</code></pre>\n\nHow can I keep my player stable after this samplerate error?\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2014-07-17T05:54:30.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273553",
+    "ThreadId": "401256",
+    "Html": "the null reference on dispose is a known bug with WaveOutEvent if you dispose without having successfully initialized. Will be fixed in the next release (1.7.2 coming to NuGet soon hopefully).<br />\n",
+    "PostedDate": "2014-07-17T07:25:03.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

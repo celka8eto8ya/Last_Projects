@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I'm currently making a music game in Unity which requires me to load arbitrary music files at runtime. I've used NAudio successfully to support mp3s; however, m4a files (and anything else that uses MediaFoundationReader) causes NAudio to hang inexplicably.\r\n\r\nThis line of code causes the problem:\r\n\r\nvar audioFileReader = new AudioFileReader(fileName);\r\n\r\nThe strange thing is that this works fine in the NAudio demo. I tried porting the Demo code straight up to Unity, but the same code that works perfectly in the demo causes a hang inside Unity.\r\n\r\nAfter some debugging, I tracked it down to this function:\r\n\r\nprotected virtual IMFSourceReader CreateReader(MediaFoundationReaderSettings settings)\r\n    {\r\n        IMFSourceReader reader;\r\n        MediaFoundationInterop.MFCreateSourceReaderFromURL(file, null, out reader);\r\n        __reader.SetStreamSelection(MediaFoundationInterop.MF_SOURCE_READER_ALL_STREAMS, false);__\r\n\r\nThat last line fails to execute, Unity freezes and never resumes. \r\n\r\nA quick lookup on MSDN has this to say:\r\n\r\nhttps://msdn.microsoft.com/en-us/library/windows/desktop/dd374655(v=vs.85).aspx\r\n\r\nMinimum supported client\r\nWindows 7, Windows Vista and Platform Update Supplement for Windows Vista [desktop apps | Windows Store apps]\r\n\r\nI am running Windows 8. My current fear is that Unity's Mono implementation simply doesn't support this at all and I cannot use any Media Foundation classes.\r\n\r\nAny insight would be strongly appreciated.\r\n\r\nRepro steps: \r\n\r\n1. Setup an empty Unity project (I'm using Unity 5, version shouldn't matter)\r\n2. Import NAudio\r\n3. Have a simple script that tries to load a .m4a file using NAudio\r\n4. Unity hangs and crashes.",
+    "LastUpdatedDate": "2015-04-25T21:54:12.297-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-04-25T21:54:12.297-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Unable to open m4a/aac/wma files in Unity",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16475
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

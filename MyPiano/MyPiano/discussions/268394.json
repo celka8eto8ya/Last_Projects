@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "655245",
+    "ThreadId": "268394",
+    "Html": "<p>Hi,</p>\n<p>I've used the code which can be found on this blog post:&nbsp;<a href=\"http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html\">http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html</a>&nbsp;to produce a continuous sine  wave, where the frequency is updated by the position of the mouse (as I move it up and down, so does the pitch).</p>\n<p>However, as I move the mouse, when the frequency changes there is a small pop, meaning that the output is not continuous but sounds like there are discrete levels, whereas I would like the tone to be a smooth glissando between frequencies. I have looked  through the other discussions and there doesn't appear to be anyone else using this library to do this kind of thing, but I was wondering if anyone is able to help me out? Here is the relevant code:</p>\n<p>(I have used the waveprovider classes as shown on the blog post, without editing them)</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">internal</span> <span style=\"color: blue;\">class</span> GenerateSound\n    {\n        <span style=\"color: blue;\">private</span> WaveOut _waveOut;\n       \n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> StartSineWave(SineWaveProvider sineWaveProvider)\n        {\n            sineWaveProvider.SetWaveFormat(8000, 1); <span style=\"color: green;\">// 16kHz mono</span>\n            sineWaveProvider.Frequency = 1000;\n            sineWaveProvider.Amplitude = 0.25f;\n            _waveOut = <span style=\"color: blue;\">new</span> WaveOut();\n            _waveOut.Init(sineWaveProvider);\n            _waveOut.DesiredLatency = 100;\n            _waveOut.Play();\n            \n        }\n\n        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> StopSineWave()\n        {\n            _waveOut.Stop();\n            _waveOut.Dispose();\n            _waveOut = <span style=\"color: blue;\">null</span>;\n        }                  &nbsp;</pre>\n<pre>    }</pre>\n</div>\n<p>then to play the sound, my main initialises an instance of the sinewaveProvider, then updates the frequency when the mouse is moved by setting sineWaveProvider.Frequency.</p>\n<p>I just can't figure out why, when the frequency of the instance of the sinewave is changed, playback stops momentarily before playing the next frequency</p>\n<p>&nbsp;</p>\n<p>Cheers,</p>\n<p>Matt</p>",
+    "PostedDate": "2011-08-09T08:05:18.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "655250",
+    "ThreadId": "268394",
+    "Html": "<p>the sine wave provider I wrote doesn't smoothly change frequency, and will likely fill one whole buffer at a time at the same frequency. I'd suggest asking a DSP tagged question on StackOverflow asking if anyone has an algorithm that allows a smooth changing of frequency.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-08-09T08:11:25.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "678875",
+    "ThreadId": "268394",
+    "Html": "<p>Hello Matt,</p>\r\n<p>Could you please post your code to solve this problem? I am trying to solve it now...</p>\r\n<p>Take care,<br />Dmitry</p>",
+    "PostedDate": "2011-09-30T17:10:26.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1355728",
+    "ThreadId": "581840",
+    "Html": "Hi,\r<br />\n<br />\nWhat is the most efficient way to get position/timing data for each audio sample? Any help is appreciated!\r<br />\n<br />\nBrandon<br />\n",
+    "PostedDate": "2015-02-25T11:27:04.74-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356055",
+    "ThreadId": "581840",
+    "Html": "in what context? are you playing / recording audio / examining a file?<br />\n",
+    "PostedDate": "2015-02-26T09:56:08.41-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356101",
+    "ThreadId": "581840",
+    "Html": "Apologies for being so vague. This is what I would like to do: Analyze each sample in a wav file. For each sample, I want to get its position while additionally performing an FFT or autocorrelation on it. So if the audio file is 1 minute in duration and I know there is a Middle C in there, I want to find its start or onset time (in milliseconds). Or I might like to find the onset for another primary frequency in the audio. I know this is a difficult thing...\r<br />\n<br />\nI'm not playing or recording, just analyzing. Also, I just finished both Pluralsight classes. They were very helpful.\r<br />\n<br />\nBrandon<br />\n",
+    "PostedDate": "2015-02-26T12:25:52.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356238",
+    "ThreadId": "581840",
+    "Html": "Well you know where you are in the file from the Sample Rate. If (say) there are 44100 samples per second, then  to 44100th sample is at 1.0 seconds. \r<br />\nAlso you can't perform an FFT on an individual sample - you'd do it on a block of samples (say 512). \r<br />\nGlad you found the pluralsight courses helpful :) <br />\n",
+    "PostedDate": "2015-02-26T23:36:02.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356438",
+    "ThreadId": "581840",
+    "Html": "Thanks Mark. That is very helpful. Yeah, I realized recently that I should have said I'm doing FFT on a group of samples-not one.\r<br />\nAnyway, your answer solves my issue.\r<br />\n<br />\nThanks again,\r<br />\n<br />\nBrandon Campbell<br />\n",
+    "PostedDate": "2015-02-27T09:36:57.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1219147",
+    "ThreadId": "537950",
+    "Html": "Does the current Beta version pass WACK validation for supported APIs? Naudio offers a perfect tool for a project I'm working on. If there is a way I could help to test or distribute I would love to, though I am a pretty amateur in C# terms. \r<br />\n<br />\n<br />\nI'm currently only using NAudio to capture PCM data from the Microphone, if that would change anything.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2014-03-04T11:36:34.963-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1219369",
+    "ThreadId": "537950",
+    "Html": "No, I haven't run it through WACK myself, but someone sent me a list of issues. I have addressed them all with the exception that I don't know how you are supposed to create the Resampler MFT in WinRT or if you are even allowed to.\r<br />\n<br />\nI've actually added a fully managed resampler to NAudio which I may drop in to resolve this, although I'd prefer to work out how to instantiate the MFT resampler.<br />\n",
+    "PostedDate": "2014-03-05T02:11:33.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237183",
+    "ThreadId": "537950",
+    "Html": "Sorry it took me a little while to dig it up, is this any help to you?\r<br />\n<br />\nIt is possible to write custom MFT for Windows 8 and Windows Phone 8.1. You can find a sample project here: <a href=\"http://code.msdn.microsoft.com/windowsapps/Media-extensions-sample-7b466096#content\" rel=\"nofollow\">http://code.msdn.microsoft.com/windowsapps/Media-extensions-sample-7b466096#content</a><br />\n",
+    "PostedDate": "2014-04-23T10:52:06.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239498",
+    "ThreadId": "537950",
+    "Html": "thanks for the link, that looks like an interesting demo.\r<br />\nBTW, the latest NAudio source code should pass WACK validation now. (NuGet release to follow shortly)<br />\n",
+    "PostedDate": "2014-04-29T12:14:13.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

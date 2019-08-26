@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "571000",
+    "ThreadId": "247284",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm trying to incorporate NAudio into an existing app and I have a couple of questions:</p>\r\n<ol>\r\n<li>If I've opened an audio&nbsp;file, begun playing it, then paused, is there a way I can get the current playback &quot;position&quot; in terms of milliseconds from the beginning of the file?&nbsp; I've looked at something named &quot;position&quot; in the samples, but that\r\n seems to be something like a stream position expressed in bytes. </li><li>If I've paused playback, is there a way for me to &quot;seek&quot; to a certain time in the audio (again specified in milliseconds) so that subsequent playback will start from that point?\r\n</li></ol>\r\n<p>Thanks very much!</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-02-23T11:48:38.18-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573182",
+    "ThreadId": "247284",
+    "Html": "<p>Hi!</p>\r\n<p>1. I believe that there is a function called .CurrentTime which returns a TimeSpan variable. I think you can use it to get the current time.</p>\r\n<p>2. Im not too sure but maybe you can make calculations based on the time you want to seek and convert it into Position? I think there is an example in NAudioDemo where you can seek where to play the file.</p>\r\n<p>Goodluck! Also, may I ask how you are playing the file? Do you know of any other way to play a file rather than using the IWavePlayer? Im having trouble because I need to play a file while controlling the # of bytes that are read each time.</p>\r\n<p>Thanks!</p>",
+    "PostedDate": "2011-02-28T04:16:32.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "closing historic bug. ASIO has lots of improvements and works with a much wider range of soundcards now",
+    "ClosedDate": "2012-09-26T06:02:20.71-07:00",
+    "CommentCount": 2,
+    "Custom": "",
+    "Description": "The Demoprogramm works fine with MME, DirectX, Vista - but when I want to use ASIO Playback, I get a Bluescreen of Death.\nI tried to debug the driver, all works file until the start() command.\nThen in the VS-Output Window I notice a FormatError and then I get a BlueScreen.\nMy Drivers are working fine with e.g. Samplitude - so I think this is not an Issue.\nCan anyone help? Maybe it's because it's a 4-Channel ASIO Card and the ASIO-SDK manual says as soon as you call start() the driver begins playing and sampling.",
+    "LastUpdatedDate": "2012-09-26T06:02:20.71-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-08-08T09:08:34.33-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "BlueScreen when using ASIO with BCD3000",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7249
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "at the moment only a few select ASIO devices seem to work. We will need to do a fair bit more work on the interop code to get it more rubust with other ASIO drivers.",
+      "PostedDate": "2008-08-11T13:41:50.82-07:00",
+      "Id": 41662
+    },
+    {
+      "Message": "unlike asio4all which was written in assembler and not from the sdk sample, many drivers are likely made from the sdk driver sample. So the sdk sample crashes as well. I posted a fix for this in the issue tracker.",
+      "PostedDate": "2008-09-02T04:26:50.18-07:00",
+      "Id": 41663
+    }
+  ]
+}

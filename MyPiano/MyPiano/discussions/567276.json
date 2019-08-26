@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1304123",
+    "ThreadId": "567276",
+    "Html": "I have a wav file that contains multiple sounds at same time, say few people speak different words at SAME time. I have to extract the word of person whose sound is loudest.\r<br />\nAny help<br />\n",
+    "PostedDate": "2014-09-12T09:15:02.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1304911",
+    "ThreadId": "567276",
+    "Html": "that's actually quite a complicated DSP problem. NAudio will allow you to access individual audio samples, but the DSP algorithms you need to write yourself.<br />\n",
+    "PostedDate": "2014-09-15T11:22:19.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

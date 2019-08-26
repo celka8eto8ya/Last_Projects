@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1483113",
+    "ThreadId": "657736",
+    "Html": "Hello! I'm trying to record raw data from mic and its okay, but i need to get a smaller file, so i have to reduce the frequency and switch to mono-channel.<br />\nThe only way accepted is this<br />\n<pre><code>recorder = new WasapiCaptureRT();\nrecorder.WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(48000, 2);</code></pre>\n\nAny other config threw an exception:<br />\n<pre><code>Unsupported Wave Format</code></pre>\n\nat the end i would convert my raw array to mp3 (most important step probably)<br />\nActually my raw file is like ~2mb for 10s (the records should have this duration)<br />\n<br />\nI'm using Naudio.Universal for uwa, target is raspberry.<br />\n<ol>\n<li>How i can use a different wave form?</li>\n<li>\nThere are an example how to convert raw to mp3?<br />\n</li>\n</ol>\nthanks<br />\n",
+    "PostedDate": "2016-09-07T04:02:33.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483252",
+    "ThreadId": "657736",
+    "Html": "Unfortunately, WASAPI will not let you specify any sample rate and channel count and convert for you like WaveIn can. So you have to do this yourself after capturing the audio, which is a real pain.\r<br />\n<br />\nHowever, you might want to consider using the AudioGraph API that is new to Windows 10 UWP platform, which makes it much easier to do things like this. And if you have a Pluralsight subscription (or want to sign up for a free trial), then you can watch <a href=\"https://app.pluralsight.com/library/courses/uwp-audio-fundamentals/table-of-contents\" rel=\"nofollow\">my latest course</a> which shows how to do this. So you might find that an easier option.<br />\n",
+    "PostedDate": "2016-09-08T14:20:34.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

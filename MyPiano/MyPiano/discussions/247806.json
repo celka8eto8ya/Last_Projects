@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "573008",
+    "ThreadId": "247806",
+    "Html": "\r\n<p>Wondering if anyone knows where I've gone wrong here... i'm using the CreateInputStream function from the demo in a separate class for a multisample mixer, I'm wondering about&nbsp;readerStream.WaveFormat.Encoding, as when I run my constructor to create\r\n a sample, it hits the&nbsp;inputStream = new WaveChannel32(readerStream); from the demo code, then it throws an Application Exception:&nbsp;Only PCM supported... right before it hits this line i write to console the&nbsp;readerStream.WaveFormat.Encoding property\r\n to check, and it is indeed PCM, however, in the WaveChannel32 constructor it is passed to, it apparently becomes an IEEE Float and throws this exception... any idea what i may have done wrong here?</p>\r\n",
+    "PostedDate": "2011-02-27T19:35:18.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573231",
+    "ThreadId": "247806",
+    "Html": "<p>WaveChannel32 takes PCM 16 bit input and gives IEEE output.</p>\r\n<p>What exactly is the waveformat of the input you are passing to WaveChannel32? (do a .ToString() on it)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-28T05:46:08.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "935341",
+    "ThreadId": "401572",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I'm using some very simple code to open and play a wave file, using a DirectSoundOut object. &nbsp;If I open a 44.1kHz wave file to start, then the output on WinXP is 44.1kHz to my USB sound card. &nbsp;If I open a 48kHz wave file to start, then the output\r\n on WinXP is 48kHz. &nbsp;However, once I've opened one file, the sample rate is stuck at that value until I close and re-open the application.</p>\r\n<p>I've tried disposing the DirectSoundOut object between wave files, and have run a full GC.Collect() to try to call the finalizers/etc on the objects. &nbsp;I then re-create everything from scratch, but it looks like Windows is somehow caching the previous\r\n samplerate. &nbsp;This causes samplerate conversion artifacts in my sound. &nbsp;Is there any way around this using NAudio?</p>\r\n<p>With the new Windows Core Audio functionality (Win8/7/Vista) I can create an IAudioClient and using the IAudioClockAdjustment interface to set the samplerate of the audio device, but this is a pain and most likely will not work in WinXP. &nbsp;I'd like to\r\n solve this with NAudio if possible.</p>\r\n<p>Cheers,</p>\r\n<p>Giawa</p>\r\n",
+    "PostedDate": "2012-11-01T09:33:25.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "936057",
+    "ThreadId": "401572",
+    "Html": "<p>The actual sample rate that the sound card runs at is determined by the operating system, and NAudio is not able to control it with the waveOut or DirectSound out APIs.</p>",
+    "PostedDate": "2012-11-03T07:48:31.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945889",
+    "ThreadId": "401572",
+    "Html": "\r\n<p>Hi Mark - thanks for the reply. &nbsp;In Windows Vista and later, you can use the core audio library to control the sample rate from the application. &nbsp;It's a big pain though, so I've abandoned this effort for now.</p>\r\n<p>http://msdn.microsoft.com/en-us/library/windows/desktop/dd370884(v=vs.85).aspx</p>\r\n<p>Thanks,</p>\r\n<p>Giawa</p>\r\n",
+    "PostedDate": "2012-11-22T15:06:59.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

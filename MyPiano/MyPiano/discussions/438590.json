@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1023458",
+    "ThreadId": "438590",
+    "Html": "Hi!\r<br />\nI have mp3(mpeg1 layer2) data. How to convert to wave?\r<br />\nI using Naudio, but return one file with no data return.\r<br />\nThank!<br />\n",
+    "PostedDate": "2013-03-31T09:08:04.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1025223",
+    "ThreadId": "438590",
+    "Html": "The Mp3FileReader converts MP3 to WAV. just call its Read method.<br />\n",
+    "PostedDate": "2013-04-03T23:25:57.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1027405",
+    "ThreadId": "438590",
+    "Html": "Sorry but one question,<br />\nis this method compatible to windows store app yet?<br />\n",
+    "PostedDate": "2013-04-08T11:35:24.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1027466",
+    "ThreadId": "438590",
+    "Html": "For windows store apps, the MediaFoundationReader will be the preferred option in the future. This will be able to coinvert MP3 to WAV<br />\n",
+    "PostedDate": "2013-04-08T13:10:37.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

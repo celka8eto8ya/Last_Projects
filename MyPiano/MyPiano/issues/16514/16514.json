@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello. Firstly, I want to thank you for the excellent library.\r\n\r\nI develop applications for listening to Internet radio. Faced with the problem that when you send a request with the title:\r\n\r\nwebRequest.Headers.Add ( \"Icy-MetaData\", \"1\");\r\n\r\nPlay lag at certain intervals, thus setting the parameter \"Latency\" for \"DirectSoundOut\" does not help. Play with this parameter, it does not eliminate the lag. If you remove the title, play clean and without any lag.\r\n\r\nThe code used as the basis of an example: https://naudio.codeplex.com/SourceControl/latest#NAudioDemo/Mp3StreamingDemo/MP3StreamingPanel.cs\r\n\r\nPlease help me find the problem. Maybe I'm doing something wrong. Perhaps this lag cause sent meta data? Then how to get them but will get rid of noise?",
+    "LastUpdatedDate": "2017-03-02T19:08:56.437-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-03-02T19:08:56.437-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Lag playback when using Icy-MetaData header",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16514
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

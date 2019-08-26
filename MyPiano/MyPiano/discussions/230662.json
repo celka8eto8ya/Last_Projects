@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "506347",
+    "ThreadId": "230662",
+    "Html": "<p>I want to do some audio conversion in x64 bit machine. I want the app as a true x64 version. I just wondered does NAudio have a true x64 version? Could any one help me? Thanks.</p>\r\n<p>~Jacky</p>",
+    "PostedDate": "2010-10-12T17:54:18.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "506425",
+    "ThreadId": "230662",
+    "Html": "<p>hi Jacky,</p>\r\n<p>I had a concerted effort at making all the interop signatures work in x64, but I don't think it is 100% ready yet. By all means check out the code and build for Any CPU, but you might not find everything works. Unfortunately, my own dev PC is 32 bit so progress has been slow in this area.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-12T23:13:06.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "525473",
+    "ThreadId": "230662",
+    "Html": "\r\n<p>Instead of opening a new thread:</p>\r\n<p>Question, is it mostly just the playback that might have issues in x64, or is it the file operations as well? I ask as I have a project that concatenates and layers multiple wave files (and possibly an mp3 file, if I can get it working properly)&nbsp;into\r\n one output wave file, and I don't really need the ability to play back the resultant audio.</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2010-11-22T11:52:19.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "525488",
+    "ThreadId": "230662",
+    "Html": "\r\n<p>please try with the latest code (you'll need to set NAudio.dll to AnyCPU yourself). the playback should be fine in x64. It was the mixer, ACM and other interop that wasn't 100% x64 ready, and most of that is looking quite good now.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-22T12:08:54.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "525514",
+    "ThreadId": "230662",
+    "Html": "\r\n<p>Thanks, I just haven't been able to get to my x64 pc in a while. Just needed the answer for some other folks who're working on the same project.</p>\r\n<p>Again, thanks.</p>\r\n",
+    "PostedDate": "2010-11-22T12:58:44.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

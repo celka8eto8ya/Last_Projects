@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2011-05-27T13:40:07.51-07:00",
+    "CommentCount": 2,
+    "Custom": "",
+    "Description": "Hey. I looked a bit on the latest source to see what's been added since 1.2. I'm a bit concerned on WaveBuffer as it is right now since it appears to add wrapping on a simple thing in a way that looks confusing. Then there's this \"You must not use Length on returned arrays.\" There must be some more .NET friendly way to do this and I certainly would not release 1.3 with WaveBuffer being used as it is in build 18536 from november 6 2008.\n\nI hope there's a look at extension methods and other c# language features in depth before going on to do things in ways unfamiliar to .NET developers.",
+    "LastUpdatedDate": "2011-05-27T13:40:07.51-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-11-06T23:21:36.237-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveBuffer goals/api concerns",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7980
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "hi droidi, thanks for registering your concerns. The issue we are trying to solve is the performance ramifications of not being able to cast a byte array to a short or float array. Check out my post here for more info:\r\nhttp://mark-dot-net.blogspot.com/2008/06/wavebuffer-casting-byte-arrays-to-float.html\r\n\r\nWe are of course open to alternative suggestions for how to proceed.",
+      "PostedDate": "2008-11-07T01:25:51.33-08:00",
+      "Id": 41683
+    },
+    {
+      "Message": "hi droidi, you should be pleased to note I have made WaveBuffer a much less prominent part of the design, meaning you are no longer required to use it at all for any development. ",
+      "PostedDate": "2009-11-22T12:42:56.737-08:00",
+      "Id": 41684
+    }
+  ]
+}

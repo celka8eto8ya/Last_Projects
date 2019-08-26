@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1275809",
+    "ThreadId": "552736",
+    "Html": "I'm recording audio from my logitech webcam without any problems, but when I call WaveIn.StopRecording it hangs on<br />\n<pre><code>MmException.Try(WaveInterop.waveInStop(waveInHandle), &quot;waveInStop&quot;);</code></pre>\n\nIn Debug mode this works fine and I can step on through the rest of the code.<br />\nthe StopRecording call is made using the Dispatcher :<br />\n<pre><code>Dispatcher.Invoke(new Action(() =&gt; EnableAudioRecording(false)));</code></pre>\n\n(Where EnableAudioRecording calls WaveIn.StopRecording)<br />\n<br />\nSilly thing is that the NAudio Demo works just fine starting and stopping recording, also in release mode.<br />\nAm I missing something ? Are there any stupid things I shouldn't do that could cause this behaviour ?<br />\n",
+    "PostedDate": "2014-07-23T16:01:23.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278435",
+    "ThreadId": "552736",
+    "Html": "Check that no calls to waveIn methods happen on different threads. Some audio drivers can have issues with this. \r<br />\nYou could also try WaveInEvent as an alternative if WaveIn isn;t working for you,.<br />\n",
+    "PostedDate": "2014-07-28T09:29:21.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

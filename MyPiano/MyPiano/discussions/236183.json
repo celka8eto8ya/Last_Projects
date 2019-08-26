@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "527523",
+    "ThreadId": "236183",
+    "Html": "\r\n<p>I have to read stream from microphone (PCM 8Khz 16 bit) and pass it to destination pc over udp (rtp) in a-law format.I can get bytes stream in pcm and try to encode it in a-law using an algorithm found on web.The voice at destination pc is bad (noise).I\r\n think my problem is at encoding level.I found 'waveformatconversionstrem' feature but i'm not able to use it 'on the fly'....i mean that i need to get a-law converted bytes directly from pcm stream given at 'data available' callback function of waveInStrem.Found\r\n no code examples.Is it possible to do this ? If yes is there an example code about implementing this ?</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2010-11-26T13:53:43.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "528469",
+    "ThreadId": "236183",
+    "Html": "\r\n<p>Sorry for going offtopic, but where did you find out how to implement the RTP protocol for UDP? I've been looking everywhere for a good source.</p>\r\n",
+    "PostedDate": "2010-11-29T13:04:02.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "528664",
+    "ThreadId": "236183",
+    "Html": "\r\n<p>you need to create a derived WaveStream that returns buffered bytes from the microphone in its Read method. This can then be used as an input to the WaveFormatConversionStream</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-30T00:11:56.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

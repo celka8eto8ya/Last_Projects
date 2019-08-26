@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "It seems to bee \r\nNAudio.Wave.WaveInCapabilities.MaxProductNameLength = 32;\r\nis not long enough in some situations.\r\n\r\nIf you want to display this to the user then it looks a bit strange.\r\nthanks for reading this.\r\n\r\n*Sebastian\r\n\r\n",
+    "LastUpdatedDate": "2017-02-09T21:04:03.21-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-02-09T14:22:03.397-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Change MaxProductNameLength from 32 to 64",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16511
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "It is not possible to change this value. It's part of the Windows SDK. It's a very frustrating and long-standing issue with the old waveIn APIs. There are various workarounds to try to get hold of the non-truncated device names, but nothing that always works.",
+      "PostedDate": "2017-02-09T14:56:47.99-08:00",
+      "Id": 206503
+    },
+    {
+      "Message": "Thanks for the explanation :)\n\n[closed]\n*Sebastian",
+      "PostedDate": "2017-02-09T21:04:03.21-08:00",
+      "Id": 206514
+    }
+  ]
+}

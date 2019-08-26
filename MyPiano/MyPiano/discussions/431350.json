@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "993961",
+    "ThreadId": "431350",
+    "Html": "\r\n<p>Is there a way to change the playback device of a MMDevice?</p>\r\n<p>&nbsp;</p>\r\n<p>I know there is a hacky way to change the DEFAULT playback device, but I only want to hear (for example, a input line coming from a turntable) to a specific &nbsp;audio output.</p>\r\n<p>Same way is done in this window&nbsp;</p>\r\n<p><img src=\"http://new.tinygrab.com/bd89b36468c050d704d4241d9c12bd73cd1291a579.png\" alt=\"\"></p>\r\n<p>&nbsp;</p>\r\n<p>Hope you can help me</p>\r\n<p>Regards<br>\r\nJLuis&nbsp;</p>\r\n",
+    "PostedDate": "2013-01-29T21:05:32.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994028",
+    "ThreadId": "431350",
+    "Html": "\r\n<p>to monitor an input you'd need to record sound from that input (WasapiIn) and play it to the output (WasapiOut).</p>\r\n",
+    "PostedDate": "2013-01-30T01:18:04.177-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994215",
+    "ThreadId": "431350",
+    "Html": "\r\n<p>Kind of a bit redundant :S</p>\r\n<p>And what would be the process? I hope you can help me a bit because Im sort of lost in here:</p>\r\n<p>&nbsp;</p>\r\n<p>var waveIn = new WasapiCapture(inputDevice);</p>\r\n<p>var waveOut = new WasapiOut(outputDevice, Shared, true, 150);</p>\r\n<p>//What object do I need to create to provide a IWaveProvider for it Init method of waveOut?</p>\r\n<p>&nbsp;</p>\r\n<p>Hope you can help me with this</p>\r\n<p>Regards</p>\r\n<p>JLuis</p>\r\n",
+    "PostedDate": "2013-01-30T08:38:54.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994542",
+    "ThreadId": "431350",
+    "Html": "you can use the BufferedWaveProvider for this. When you recieve audio from the capture device, write it into the BufferedWaveProvider. The player can just read continually from BufferedWaveProvider.<br />\n",
+    "PostedDate": "2013-01-30T23:39:16.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "995344",
+    "ThreadId": "431350",
+    "Html": "Hi\r<br />\n<br />\nI tested the BufferedWaveProvider and worked like a charm, but I facing a strange issue: now I hear the stream in 2 different output devices (speakers and headphones (headphones is my default playback device).\r<br />\n<br />\nAny recommendation to really switch the monitoring device rather than just duplicate it?\r<br />\n<br />\nRegards\r<br />\n<br />\nJLuis<br />\n",
+    "PostedDate": "2013-02-01T10:24:41.403-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996016",
+    "ThreadId": "431350",
+    "Html": "You'd have to ask someone who knows the CoreAudio API really well. Perhaps there is a way of getting and setting that &quot;Listen to this device&quot; property.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-04T03:10:49.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996219",
+    "ThreadId": "431350",
+    "Html": "I will search for a solution and I will post it here when I found it\r<br />\n<br />\nThanks for all<br />\n",
+    "PostedDate": "2013-02-04T08:55:50.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

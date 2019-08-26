@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "182765",
+    "ThreadId": "54244",
+    "Html": "Hi there,<div><div>I have just started writing a full-blown media player in C# and am considering NAudio as the audio playback library. Would it be recommended for this?</div><div><br></div><div>FLAC playback is fairly important to me, would this be much work to add? I don't mind working on it myself, but I am guessing this would not be a trivial task for someone with no audio history?</div><div><br></div><div>Thank you for the help!</div></div>",
+    "PostedDate": "2009-04-23T05:58:07.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "183220",
+    "ThreadId": "54244",
+    "Html": "You certainly can try using NAudio. Playback of non-WAV formats is not brilliant at the moment. MP3 works, but there is no WMA etc. To add FLAC, the main difficulty would be wrapping a FLAC decoding library with P/Invoke interop wrappers (it is possible that some of the work might already be done in the open source domain if you search around enough). If you can handle that, adding FLAC support would not be too hard.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-04-24T05:49:35.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "186477",
+    "ThreadId": "54244",
+    "Html": "Hi Mark,<div><br></div><div>Sorry it took me so long to answer, thanks for your reply.</div><div><br></div><div>Just to let you know, I'm going to focus on the other side of the media player (an MPD client) first, so I can get a working body of code to start with. Once that's done, I do hope to use NAudio for the local playback and contribute to the project.</div><div><br></div><div>One other question; as far as I can see, NAudio doesn't support reading tags from files. Is this something that could be added or is felt to be the job of a separate library?</div><div><br></div><div>Thanks for the help, I look forward to using NAudio!</div>",
+    "PostedDate": "2009-05-04T03:38:02.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "190327",
+    "ThreadId": "54244",
+    "Html": "<p>Hi there,</p>\r\n<p>NAudio doesn't have tag support. While it could be added, probably the best way would be to find a managed wrapper of a library that already does this, as there are a lot of different standards to support.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-05-14T09:46:07.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

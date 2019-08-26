@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "829495",
+    "ThreadId": "353841",
+    "Html": "\r\n<p>I'm using NAudio to record audio.</p>\r\n<p>It seems to work well on my new desktop machine, which is a 4 core i7, but on my 3 year old laptop, the recorded audio has all sorts of &quot;popping&quot; noises. I suspect what's going on here is that because the app does lots of processing, and because the system\r\n overall is under 60% CPU load, perhaps the thread that is sampling the audio is getting interrupted, etc.</p>\r\n<p>I was really hoping to release my app this weekend, and so to discover this at the last minute is really unfortunate. &nbsp;I'm hoping there is some way to set a thread priority somewhere so that the thread used by NAudio to do the recording is able to do\r\n its job without resulting in these popping noises.</p>\r\n<p>If anyone know how to help, I'd be most grateful.</p>\r\n<p>Thanks!</p>\r\n<p>Daniel</p>\r\n",
+    "PostedDate": "2012-04-27T11:36:27.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "830095",
+    "ThreadId": "353841",
+    "Html": "<p>The best way round popping is either to increase the latency (buffer sizes) or to find ways to optimise your playback code. Some of the NAudio playback models do create background threads, so you could copy the code and create one with a higher priority background thread, but I suspect the implact would be fairly limited.</p>",
+    "PostedDate": "2012-04-30T02:32:31.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "831382",
+    "ThreadId": "353841",
+    "Html": "<p>Thanks for your reply Mark. Some follow-up questions:</p>\r\n<p>- When you say \"optimise your playback code\": I'm not actually playing the audio back, just recording it. The popping I hear is right in the WAV files that I'm producing, as heard in any audio program.</p>\r\n<p>- How does one increase the buffer size for NAudio recording?</p>\r\n<p>- \"<span>Some of the NAudio playback models do create background threads\": Again, this is a recording issue. Not sure if that changes your answer at all.</span></p>",
+    "PostedDate": "2012-05-02T16:15:56.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "831520",
+    "ThreadId": "353841",
+    "Html": "<p>OK, that is very strange. I wouldn't expect there to be any pops if you are writing the recorded buffers directly to disk unless your computer is struggling so much it can't keep up at all. Do you write directly to WAV file or are you processing in any way? You can increase the size and number of record buffers that might take a bit of the strain off your machine.</p>\r\n<p>You can set the BufferMilliseconds property to 200 or 300 on WaveIn (or WaveInEvent which does use a background thread). Could also try increasing NumberOfBuffers from 2 to 3.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-05-03T02:19:28.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "833528",
+    "ThreadId": "353841",
+    "Html": "Thanks so much for your responses Mark. Wonderful that you offer people help like this.\r\n<div><br>\r\n</div>\r\n<div>I gave this a try and it seemed to help a lot. It's been a crazy week and so haven't had time to do really careful testing, so I'll try and do that and report back whether this indeed solves the issue on my test machine.</div>\r\n<div><br>\r\n</div>\r\n<div>One thing that I seem to have noticed is that when I play the WAV back along with the recorded visuals, the audio seems to be off by about 150 milliseconds when I set BufferMilliseconds to 300. Does that make any sense? The way my program works is that\r\n it records the audio and takes screenshots of the video it's recording, and then tries to play them back in sync.</div>\r\n<div><br>\r\n</div>\r\n<div>Thanks,<br>\r\nDaniel</div>\r\n<div><br>\r\n</div>\r\n<div><br>\r\n<br>\r\n<div>On Thu, May 3, 2012 at 5:19 AM, markheath <span dir=\"ltr\">&lt;<a href=\"mailto:notifications@codeplex.com\" target=\"_blank\">notifications@codeplex.com</a>&gt;</span> wrote:<br>\r\n<blockquote style=\"margin:0 0 0 .8ex; border-left:1px #ccc solid; padding-left:1ex\">\r\n<div>\r\n<p>From: markheath</p>\r\n<div>\r\n<p>OK, that is very strange. I wouldn't expect there to be any pops if you are writing the recorded buffers directly to disk unless your computer is struggling so much it can't keep up at all. Do you write directly to WAV file or are you processing in any way?\r\n You can increase the size and number of record buffers that might take a bit of the strain off your machine.</p>\r\n<p>You can set the BufferMilliseconds property to 200 or 300 on WaveIn (or WaveInEvent which does use a background thread). Could also try increasing NumberOfBuffers from 2 to 3.</p>\r\n<p>Mark</p>\r\n</div>\r\n<div>\r\n<div>\r\n<p>Read the <a href=\"http://naudio.codeplex.com/discussions/353841#post831520\" target=\"_blank\">\r\nfull discussion online</a>.</p>\r\n<p>To add a post to this discussion, reply to this email (<a href=\"mailto:naudio@discussions.codeplex.com?subject=[naudio:353841]\" target=\"_blank\">naudio@discussions.codeplex.com</a>)</p>\r\n<p>To start a new discussion for this project, email <a href=\"mailto:naudio@discussions.codeplex.com\" target=\"_blank\">\r\nnaudio@discussions.codeplex.com</a></p>\r\n<p>You are receiving this email because you subscribed to this discussion on CodePlex. You can\r\n<a href=\"https://naudio.codeplex.com/discussions/353841/unsubscribe/\" target=\"_blank\">\r\nunsubscribe</a> on CodePlex.com.</p>\r\n<p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at CodePlex.com</p>\r\n</div>\r\n</div>\r\n</div>\r\n</blockquote>\r\n</div>\r\n<br>\r\n</div>\r\n",
+    "PostedDate": "2012-05-08T09:06:29.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "843512",
+    "ThreadId": "353841",
+    "Html": "<p>Hi,</p>\r\n<p>&nbsp;&nbsp;&nbsp; Is there any way to record&nbsp;from specific channel using ASIO , please let me know if any sample code is available.</p>\r\n<p>&nbsp;&nbsp;&nbsp; My requirement is to record from Channel 1L and Channel 1R .</p>\r\n<p>Thanks in advance.&nbsp;</p>",
+    "PostedDate": "2012-06-01T05:42:28.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847374",
+    "ThreadId": "353841",
+    "Html": "<p>ASIO recording has not yet been added to NAudio. I hope to do that in the near future (it is not a particularly big change)</p>",
+    "PostedDate": "2012-06-11T03:22:03.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "857824",
+    "ThreadId": "353841",
+    "Html": "<p>Hi,</p>\r\n<p>&nbsp; &nbsp; If you don't mind sharing the code for ASIO recording from specific input channel if it is not a big change. I need for my application&nbsp;development&nbsp;activity.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks in advance.</p>",
+    "PostedDate": "2012-07-05T05:29:25.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1334369",
+    "ThreadId": "575709",
+    "Html": "So I've been working on a soundboard application for the past week, and I've pretty much gotten everything else in the application to work, except for that one error that I haven't been able to fix.\r<br />\n<br />\nThe error only occurs at runtime, and it doesn't crash the application, plus the audio file doesn't play, and I receive the error in console.\r<br />\n<br />\nThis is the part that attempts to play the file. I declared most if not all of the Naudio related things on the class level because I used them in other procedures.<br />\n<pre><code> Private waveOut As New NAudio.Wave.WaveOut\n Dim intOutputDevices = waveOut.DeviceCount\n Dim deviceInfo As NAudio.Wave.WaveOutCapabilities\n\nPrivate Sub playAudio(ByVal strFilePath As String, ByVal intDeviceNumber As Integer)\n\n        Dim waveReader As New NAudio.Wave.WaveFileReader(strFilePath)\n        waveOut.DeviceNumber = intDeviceNumber\n        waveOut.Init(New NAudio.Wave.WaveChannel32(waveReader))\n        waveOut.Play()\n\nEnd Sub\n\nPrivate Sub stopPlaying()\n     waveOut.Stop()\nEnd Sub</code></pre>\n\nThis is where I called the method. I stored the file names in a dictionary with the keys of the dictionary being the literal key that I press on my keyboard to play the audio file, and the value being the file name. GetAsyncKeyState is the function that checks for keypresses.<br />\n<pre><code> For Each pair In KeyBindings\n\n            If (GetAsyncKeyState(pair.Key)) Then\n\n                For intOutputDevice = 0 To intOutputDevices - 1\n\n                    deviceInfo = NAudio.Wave.WaveOut.GetCapabilities(intOutputDevice)\n\n                    Try\n\n                        If deviceInfo.ProductName.Contains(cboOutputDevice.SelectedItem) Then\n                            playAudio(pair.Value, intOutputDevice)\n                        End If\n\n                    Catch ex As Exception\n\n                        If cboOutputDevice.SelectedIndex = -1 Then\n                            MsgBox(&quot;Please select an output device&quot;)\n                            Return\n                        End If\n\n                        If Not IO.File.Exists(pair.Value) Then\n                            MsgBox(&quot;File does not exist.&quot;)\n                            Return\n                        End If\n\n                    End Try\n\n                Next\n\n            End If\n\n        Next</code></pre>\n\nAny help at all would be very much appreciated,\r<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2014-12-17T20:48:34.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1337508",
+    "ThreadId": "575709",
+    "Html": "can you provide the full exception.ToString, including stack trace?<br />\n",
+    "PostedDate": "2014-12-28T07:37:44.967-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

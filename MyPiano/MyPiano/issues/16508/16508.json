@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "To use `IWavePlayer` in a unit test library, it is desirable for it to be marked with `[CLSCompliant(true)]`.\r\n",
+    "LastUpdatedDate": "2017-01-28T08:09:34.353-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-01-24T02:06:00.78-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "IWavePlayer not CLS compliant",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16508
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I don't understand why this would be the case. I have a large suite of unit tests for NAudio.",
+      "PostedDate": "2017-01-28T08:09:34.353-08:00",
+      "Id": 206285
+    }
+  ]
+}

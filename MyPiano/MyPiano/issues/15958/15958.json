@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:16:43.677-07:00",
+    "CommentCount": 6,
+    "Custom": null,
+    "Description": "Downloaded NAudio-1-4-Sample-Apps.zip, unzipped into\r\n\r\n04/20/2011  10:09 PM            32,768 AudioFileInspector.exe\r\n11/08/2010  08:05 PM             4,006 audio_file_inspector.html\r\n04/20/2011  10:09 PM            41,472 MIDI File Converter.exe\r\n11/08/2010  08:05 PM             2,749 MIDI File Converter.exe.config\r\n11/08/2010  08:05 PM            19,100 midi_file_converter.html\r\n11/08/2010  08:05 PM             1,793 NamingRules.xml\r\n04/20/2011  10:09 PM           312,320 NAudio.dll\r\n04/20/2011  10:09 PM            51,200 NAudioDemo.exe\r\n11/08/2010  08:05 PM               807 NAudioDemo.exe.config\r\n04/20/2011  10:09 PM            34,816 NAudioWpfDemo.exe\r\n11/08/2010  08:05 PM           237,568 System.ComponentModel.Composition.dll\r\n\r\nNone of the sample apps work, AudioFileInspector at least explains why:\r\n\r\nSystem.BadImageFormatException: Could not load file or assembly 'NAudio, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. An attempt was made to load a program with an incorrect format.\r\nFile name: 'NAudio, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null'\r\n   at AudioFileInspector.WaveFileInspector.Describe(String fileName)\r\n   at AudioFileInspector.AudioFileInspectorForm.DescribeFile(String fileName)\r\n\r\nFusion shows the following:\r\n\r\n=== Pre-bind state information ===\r\nLOG: User = MAJUDA\\alex\r\nLOG: DisplayName = NAudio, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null\r\n (Fully-specified)\r\nLOG: Appbase = file:///C:/Users/alex.MAJUDA/Downloads/NAudio-1-4-Sample-Apps/\r\nLOG: Initial PrivatePath = NULL\r\nCalling assembly : AudioFileInspector, Version=0.1.6.0, Culture=neutral, PublicKeyToken=null.\r\n===\r\nLOG: This bind starts in default load context.\r\nLOG: No application configuration file found.\r\nLOG: Using machine configuration file from C:\\Windows\\Microsoft.NET\\Framework64\\v2.0.50727\\config\\machine.config.\r\nLOG: Policy not being applied to reference at this time (private, custom, partial, or location-based assembly bind).\r\nLOG: Attempting download of new URL file:///C:/Users/alex.MAJUDA/Downloads/NAudio-1-4-Sample-Apps/NAudio.DLL.\r\nERR: Failed to complete setup of assembly (hr = 0x8007000b). Probing terminated.\r\n\r\nThe computer runs win7 pro sp1 64 bit.\r\n\r\nThanks.",
+    "LastUpdatedDate": "2012-10-27T00:16:43.677-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-06-03T10:29:30.143-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "64/32 bit issue?",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 15958
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Addendum: fetched the sources from svn, rebuilt AudioFileInspector.exe and NAudio.dll in \"Any CPU\" configuration - works ok.  So, it is a 32/64 bit issue.\r\n",
+      "PostedDate": "2011-06-03T10:43:09.08-07:00",
+      "Id": 41776
+    },
+    {
+      "Message": "this is fixed in the latest source (AudioFileInspector.exe marked as x86). Also I have a new PC now that is 64 bit (finally) so I will be able to properly test the interop in Win 64 bit myself and hopefully not have to have that flag set. (see my post here for more info on why NAudio is set to target x86: http://mark-dot-net.blogspot.com/2011/05/naudio-and-nuget-and-x64-problem.html)",
+      "PostedDate": "2011-06-03T11:58:20.67-07:00",
+      "Id": 41777
+    },
+    {
+      "Message": "will be fixed in NAudio 1.5",
+      "PostedDate": "2011-06-14T14:58:35.09-07:00",
+      "Id": 41778
+    },
+    {
+      "Message": "Hi, when will 1.5 will be released? Or do I have to get the sources and build it myself?\r\nI have exactly the same issue reported here [windows 7 64 bits]. \r\nthank you very much\r\nfborot",
+      "PostedDate": "2011-07-20T07:02:17.28-07:00",
+      "Id": 41779
+    },
+    {
+      "Message": "I have VS2008, when try to build the sources I get a message saying:\r\n\"The selected file is a solution file, but was created by a newer version of this application and cannot be opened\"",
+      "PostedDate": "2011-07-20T07:07:51.42-07:00",
+      "Id": 41780
+    },
+    {
+      "Message": "I just found this in the download and posted a new bug (sorry, I found this one after I posted it). It might be marked as fixed, but there are no new builds on the download page since this fix.",
+      "PostedDate": "2011-10-30T17:22:12.763-07:00",
+      "Id": 48171
+    }
+  ]
+}

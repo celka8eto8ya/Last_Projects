@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-01-28T08:39:27.153-08:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I think I found a small bug in NAudio.Midi.PitchWheelChangeEvent:\r\n\r\nThe Pitch property accepts values up to (and including) 16384. \r\nIf, however, I create the event with that maximum value, the bit-shifting part in GetAsShortMessage() comes out as 0: \r\n```\r\nConsole.Write( ((16384 & 0x7f) << 8) + (((16384 >> 7) & 0x7f) << 16) ); //-> 0\r\n```\r\n\r\nI believe the maximum value should actually be 16383.\r\n\r\n(The reason I noticed this is because the Mackie Control I work with uses PitchWheel events for its faders and when I programmatically move the fader to its top position, it always goes to the bottom.)",
+    "LastUpdatedDate": "2017-01-28T08:39:27.153-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-10-16T01:36:44.8-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Range for PitchWheelChangeEvent.Pitch should be 0-16383",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16485
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "yes I think you're right. Will try to get this sorted",
+      "PostedDate": "2016-02-23T04:59:22.97-08:00",
+      "Id": 196884
+    }
+  ]
+}

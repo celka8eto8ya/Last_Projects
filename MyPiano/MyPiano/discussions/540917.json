@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1229422",
+    "ThreadId": "540917",
+    "Html": "As the audio API s change from Windows XP to other newer versions, will Naudio (playing sound simultaneously on 2 devices) work On windows XP as well ? <br />\n",
+    "PostedDate": "2014-04-02T05:16:08.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229424",
+    "ThreadId": "540917",
+    "Html": "Yes, if you use WaveOut and WaveIn, NAudio will work just fine. You can't use WASAPI though since that was introduced in Vista<br />\n",
+    "PostedDate": "2014-04-02T05:18:59.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229428",
+    "ThreadId": "540917",
+    "Html": "Great ! Thanks. Could you please also reply to the question regarding the USB soundcards.<br />\n",
+    "PostedDate": "2014-04-02T05:36:17.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

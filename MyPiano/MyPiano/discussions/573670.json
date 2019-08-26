@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1327649",
+    "ThreadId": "573670",
+    "Html": "Is there existing functionality or future plans to implement functionality to split the audio in a mp4 file into center, souround and base parts/sounds? \r<br />\n<br />\nI would like to split the audio and to distribute the parts to each 5.1 (read X.X) devices/speakers home made speakers (home made sonos/heos)?<br />\n",
+    "PostedDate": "2014-12-01T03:36:59.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340552",
+    "ThreadId": "573670",
+    "Html": "I've not tried this myself, but if the MediaFoundationReader can return 6 channel audio then you'd probably be able to do this. Might require some reading into the Media Foundation API to see what flags need to be set to persuade it to return all 6 channels.<br />\n",
+    "PostedDate": "2015-01-09T15:33:25.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,170 @@
+[
+  {
+    "Id": "636699",
+    "ThreadId": "263749",
+    "Html": "<p>Hi mark,</p>\n<p>I have a server and client that connected with tcp connection module (not the .net tcp socket)</p>\n<p>The server read pcm alaw file from the HD decode the file and send him in pieces to the client, 2048 bytes at once.</p>\n<p>(the server loop over the file do the conversion/decoding and send 2048 bytes to client every cycle).</p>\n<p>In the client I have event \"OnDataReceive\" that raise every time the has data on the connecion. till then I think everything ok but know I dont know how to continue.</p>\n<p>what I did is every time that the event raised up I created WaveStream and IwaveProvider and create WaveOut and then Init the waveout with the provider etc.</p>\n<p>of course I close and dispose everything that needed to.</p>\n<p>In the first time (first data that arrived in the connection) I play the piec of file&nbsp;successfully but then I got \"Not a wave format - RIFFnot found\" (or something like that) error.</p>\n<p>I know my way is wrong, what should I do and why I got the error?</p>\n<p>Thanks in advance!</p>\n<p>Zeev</p>",
+    "PostedDate": "2011-07-03T12:14:50.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636750",
+    "ThreadId": "263749",
+    "Html": "<p>you must be using a WaveFileReader if you got RIFF not found. You don't have a whole WAV file every time that data is received on the connection. Just have one WAV file reader if it is indeed a WAV file you are getting.</p>",
+    "PostedDate": "2011-07-03T14:52:18.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636787",
+    "ThreadId": "263749",
+    "Html": "<p>thanks</p>\r\n<p>waht about the wave out? its ok to init and dispose it every time? or just once?</p>",
+    "PostedDate": "2011-07-03T21:26:42.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636830",
+    "ThreadId": "263749",
+    "Html": "<p>I would keep one open. Have you looked at the latest NAudioDemo source code which has an example of playing streaming MP3 from the internet? It might give you some ideas.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-03T23:51:28.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636899",
+    "ThreadId": "263749",
+    "Html": "<p>I saw it know and its help but it's a pity that I can't debug it I dont get anything from the streaming radio</p>",
+    "PostedDate": "2011-07-04T02:57:06.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636904",
+    "ThreadId": "263749",
+    "Html": "<p>just point it at the URL of any MP3 file</p>",
+    "PostedDate": "2011-07-04T03:01:17.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636948",
+    "ThreadId": "263749",
+    "Html": "<p>Mark can you please check my code and tell me what wrong?</p>\n<p>This method run every time that has data in the connection.</p>\n<p>after the method reun I do waveOut.Play();</p>\n<div style=\"background-color: white; color: black;\">\n<pre><span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> Play(<span style=\"color: blue;\">byte</span>[] data)\r\n{\r\n     <span style=\"color: green;\">// Adding data to buffer</span>\r\n     <span style=\"color: blue;\">if</span> (bufferList.Count &lt; 2048 * 16)\r\n         <span style=\"color: blue;\">foreach</span> (<span style=\"color: blue;\">var</span> b <span style=\"color: blue;\">in</span> data)\r\n             bufferList.Add(b);\r\n     <span style=\"color: blue;\">else</span>{\r\n         <span style=\"color: blue;\">var</span> stream = <span style=\"color: blue;\">new</span> RawSourceWaveStream(<span style=\"color: blue;\">new</span> MemoryStream(bufferList.ToArray()), <span style=\"color: blue;\">new</span> WaveFormat(8000,8,2));\r\n         <span style=\"color: blue;\">if</span> (reader == <span style=\"color: blue;\">null</span>){\r\n             reader = <span style=\"color: blue;\">new</span> WaveFileReader(stream);\r\n             activeStream = <span style=\"color: blue;\">new</span> WaveFormatConversionStream.CreatePcmStream(reader);\r\n         }<span style=\"color: blue;\">else</span>\r\n             activeStream = <span style=\"color: blue;\">new</span> WaveFormatConversionStream.CreatePcmStream(stream);\r\n\r\n           activeStream = <span style=\"color: blue;\">new</span> BlockAlignReductionStream(activeStream);\r\n           inputStream = <span style=\"color: blue;\">new</span> WaveChannel32(activeStream);\r\n           <span style=\"color: blue;\">if</span> (waveOut == <span style=\"color: blue;\">null</span>){\r\n               waveOut = <span style=\"color: blue;\">new</span> WaveOut(){DesiredLatency = 300};\r\n               waveOut.Init(inputStream);\r\n           }</pre>\n<pre>         bufferList.Clear();\r\n     }\r\n}\r\n</pre>\n<pre>I can hear a 5 sec (the first buffer in the List) and then nothing...</pre>\n</div>",
+    "PostedDate": "2011-07-04T04:22:50.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637175",
+    "ThreadId": "263749",
+    "Html": "<p>you don't need to create a WaveFileReader at all. The way I recommend is the way that NAudioDemo does it - a BufferedWaveProvider feeding a single WaveOut, which is filled whenever data is received.</p>",
+    "PostedDate": "2011-07-04T14:09:00.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637351",
+    "ThreadId": "263749",
+    "Html": "<p>I did this and all I hear is noise...</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> Play(<span style=\"color: blue;\">byte</span>[] data)\r\n{\r\n     <span style=\"color: blue;\">if</span> (waveOut == <span style=\"color: blue;\">null</span>)\r\n     {\r\n          bufferedWaveProvider = <span style=\"color: blue;\">new</span> BufferedWaveProvider(<span style=\"color: blue;\">new</span> WaveFormat(8000,8,2){DiscardOnBufferOverFlow= <span style=\"color: blue;\">true</span>, BufferDuration = TimeSpan.FromSeconds(20)};\r\n           waveOut = <span style=\"color: blue;\">new</span> WaveOut(){DesiredLatency = 300};\r\n           waveOut.Init(bufferWaveProvider);\r\n     }\r\n     bufferWaveProvider.AddSamples(data, 0, data.Length);\r\n     <span style=\"color: blue;\">if</span> (bufferWaveProvider.BufferedDuration.Seconds &lt; 4 &amp;&amp; waveOut.PlaybackState != PlayBack.Paused)\r\n      {\r\n             waveOut.Pause();\r\n      }\r\n      <span style=\"color: blue;\">if</span> ((bufferWaveProvider.BufferedDuration.Seconds &gt;= 4 &amp;&amp; waveOut.PlaybackState != PlayBack.Play)\r\n      {\r\n            waveOut.Play();\r\n      }\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Please help me...</p>",
+    "PostedDate": "2011-07-05T01:45:47.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637360",
+    "ThreadId": "263749",
+    "Html": "<p>only create one BufferedWaveProvider, only create one WaveOut. Don't recreate them every time you get a buffer. Also, what format is the audio you are receiving. Is it really stereo 8 bit PCM (because that is very odd)</p>",
+    "PostedDate": "2011-07-05T02:13:45.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637427",
+    "ThreadId": "263749",
+    "Html": "<p>I created only one BufferWaveProvider &amp; WaveOut...</p>\r\n<p>I dont understand something, I read wav file (11000,24,1) to memory (File.OpenRead())&nbsp;and then pass it to byte array and add it to the buuferWaveProvider.</p>\r\n<p>The wave file length is 53 seconds so why in the bufferWaveProider.BufferedDuration I see 6 seconds? When Iplay it i hear 6 seconds of noise.</p>\r\n<p>If I play the file without BufferWaveProvider but WaveOutChannel32 and read the file with WaveFileReader the file playing good.</p>",
+    "PostedDate": "2011-07-05T05:02:34.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637441",
+    "ThreadId": "263749",
+    "Html": "<p>the WaveFormat of the buffered wave provider must be the <strong>exact </strong>WaveFormat of the data in your byte array. The BufferedWaveProvider also is only for playing streaming audio. If you already have the whole thing, then there is no point whatsoever in using it.</p>",
+    "PostedDate": "2011-07-05T05:34:44.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637496",
+    "ThreadId": "263749",
+    "Html": "<p>I know its only for streaming but I want first to play file before I try streaming.</p>\r\n<p>The format is same and know I can hear&nbsp;a few seconds and than nothing.</p>\r\n<p>Let me show you the code (I hope its the last time I dont want to bother you again :-))</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> Play()\r\n{\r\n      WaveStream block = <span style=\"color: blue;\">null</span>;\r\n      <span style=\"color: blue;\">var</span> blockBuffer = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[1175040];\r\n      <span style=\"color: blue;\">if</span> ()\r\n      {\r\n         <span style=\"color: blue;\">var</span> reader = <span style=\"color: blue;\">new</span> WaveFileReader(path);\r\n         <span style=\"color: blue;\">var</span> pcmStream = WaveFormatConversionStream.CreatePcmStream(reader);\r\n         block = <span style=\"color: blue;\">new</span> BlockAlignReductionStream(pcmStream);\r\n         bufferWaveProvider = <span style=\"color: blue;\">new</span> BufferWaveProvider(block.WaveFormat){BufferDuration = block.TotalTime, BufferLength = blockBuffer.Length};  \r\n         block.Read(blockBuffer, 0, blockBuffer.length);\r\n         waveOut = <span style=\"color: blue;\">new</span> WaveOut(){DesiredLatency = 300};\r\n         waveOut.Init(bufferWaveProvider);\r\n      }\r\n      bufferWaveProvider.AddSamples(blockBuffer, 0, blockBufferLength);\r\n      waveOut.Play();\r\n}\r\n</pre>\r\n<pre>All I want is to play the file, please ignore form the streaming and other thing, just why I hear just a few secomds and not all the file?</pre>\r\n</div>",
+    "PostedDate": "2011-07-05T07:06:17.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637513",
+    "ThreadId": "263749",
+    "Html": "<p>what type of app is this? WinForms / WPF?</p>",
+    "PostedDate": "2011-07-05T07:28:13.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637532",
+    "ThreadId": "263749",
+    "Html": "<p>WPF.</p>\r\n<p>maybe the bufferWaveProvider.Read() called just one even there is more buffer?</p>",
+    "PostedDate": "2011-07-05T07:58:00.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637536",
+    "ThreadId": "263749",
+    "Html": "<p>what does block.Read return? is it less than blockBuffer.length</p>",
+    "PostedDate": "2011-07-05T08:00:49.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637538",
+    "ThreadId": "263749",
+    "Html": "<p>its same length (1175040).</p>\r\n<p>now i saw that th read method called more then one with 3308 bytes everytime.</p>",
+    "PostedDate": "2011-07-05T08:04:34.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637542",
+    "ThreadId": "263749",
+    "Html": "<p>I check the Read method and I saw that it read 3308 bytes every time and in it the few first times it called it paly the audio and after thatn he keep calling but not playing anything.</p>\n<p>one more thing, in the blockBuffer array there&nbsp;are a&nbsp;big number of bytes filled with zero... its ok? the array filled from block var.(block.Read(blockBuffer, 0, blockBuffer.length);<br />)</p>\n<p>after a lot og time I get this error message \"AcmStreamHeader dispose was not called\" and then the Read method get zero</p>\n<p>&nbsp;</p>\n<p>I must say that the following code its almost the same and its work great</p>\n<div style=\"background-color: white; color: black;\">\n<pre>WaveStream wave = <span style=\"color: blue;\">new</span> RawSourceStream(<span style=\"color: blue;\">new</span> MemoryStream(buffer), <span style=\"color: blue;\">new</span> WaveFormat(11000,20,1));\r\n<span style=\"color: blue;\">var</span> reader = <span style=\"color: blue;\">new</span> WaveFileReader(wave);\r\n<span style=\"color: blue;\">var</span> pcmStream = WaveFormatConversionStream.CreatePcmStream(reader);\r\nblock = <span style=\"color: blue;\">new</span> BlockAlignReductionStream(pcmStream);\r\ninputStream = <span style=\"color: blue;\">new</span> WaveChannel32(block);\r\nwaveOut = <span style=\"color: blue;\">new</span> WaveOut(){DesiredLatency = 300};\r\nwaveOut.Init(inputStream);\r\nwaveOut.Play();\r\n</pre>\n</div>",
+    "PostedDate": "2011-07-05T08:15:09.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637546",
+    "ThreadId": "263749",
+    "Html": "<p>You shouldn't be using both a RawSourceStream and a WaveFileReader. It is one or the other. If your buffer has a WAV header then do this:</p>\r\n<pre><pre><span style=\"color: blue;\">var</span> reader = <span style=\"color: blue;\">new</span> WaveFileReader(<span style=\"color: blue;\">new</span> MemoryStream(buffer));<br /><br /><br />Also, are you absolutely sure your audio is 20 bit? That is extremely unusual.<br /><br /></pre>\r\n</pre>",
+    "PostedDate": "2011-07-05T08:24:39.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637548",
+    "ThreadId": "263749",
+    "Html": "<p>I checked the file property and that what I saw... 20kbps</p>\n<p>p.s. I edited my prev reply</p>",
+    "PostedDate": "2011-07-05T08:27:47.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637563",
+    "ThreadId": "263749",
+    "Html": "<p>Maybe the file was in the wrong format... but still how it works with WaveChannel32?</p>\n<p>I'll try another file</p>\n<p>&nbsp;</p>\n<p>Edit:</p>\n<p>thanks its working now</p>",
+    "PostedDate": "2011-07-05T08:48:04.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

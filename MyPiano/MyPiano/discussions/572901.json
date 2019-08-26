@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1325218",
+    "ThreadId": "572901",
+    "Html": "Dear Sir\r<br />\n i am wring data from WaveinEvent eventhandler to serial COM port of GSM Modem. But I am hearing distorted sound on other side. Following is my code:\r<br />\n<br />\nprivate void button1_Click(object sender, EventArgs e)<br />\n<pre><code>    {\n\n\n        Talking = new SerialPort(&quot;COM5&quot;, 9600, Parity.None, 8, StopBits.One);\n        Talking.Open();\n\n        wi = new WaveInEvent  ();\n       wi.WaveFormat = new WaveFormat(44100, 16, 1);\n        int waveInDevices = WaveIn.DeviceCount;\n        for (int waveInDevice = 0; waveInDevice &lt; waveInDevices; waveInDevice++)\n        {\n            WaveInCapabilities deviceInfo = WaveIn.GetCapabilities(waveInDevice);\n\n        }\n\n        // wi.BufferMillisconds = 05;\n\n        wi.DeviceNumber = 0;\n\n        int waveInDeviceNumber = 0;\n\n\n           wi.DataAvailable += new EventHandler&lt;WaveInEventArgs&gt;(wi_DataAvailable);\n           wi.StartRecording();\n\n    }\n\n\n</code></pre>\n\nvoid wi_DataAvailable(object sender, WaveInEventArgs e)<br />\n<pre><code>    {\n</code></pre>\n\nbyte[] source = e.Buffer;<br />\n<pre><code>        Stream  byteStream12 = new MemoryStream(source);\n      byte []  bt  = ConvertNonSeekableStreamToByteArray(byteStream12);\n      Buffer.BlockCopy(bt, 0, resampleStream.SourceBuffer, 0, bt.Length);\n\n        int sourceBytesConverted = 0;\n        var convertedBytes = resampleStream.Convert(bt.Length, out sourceBytesConverted);\n        if (sourceBytesConverted != bt.Length)\n        {\n            MessageBox.Show(&quot;We didn't convert everything {0} bytes in, {1} bytes converted&quot;);\n        }\n\n        var converted = new byte[convertedBytes];\n\n        Buffer.BlockCopy(resampleStream.DestBuffer, 0, converted, 0, convertedBytes);\n\n\n\n        MemoryStream byteStream1 = new MemoryStream(converted );\n\n        Talking.DiscardInBuffer();\n        while (byteStream1.Read(buffer2, offset, audioBufferSize) &gt; 0)\n        {\n            Talking.DiscardInBuffer();\n            Talking.Write(buffer2, offset, audioBufferSize);\n            PauseForMilliSeconds(30);\n        }\n</code></pre>\n\n}      <br />\n\r<br />\n<br />\n<br />\n<br />\n<br />\n<br />\n   static byte[] ConvertNonSeekableStreamToByteArray(Stream NonSeekableStream)<br />\n<pre><code>    {\n        MemoryStream ms = new MemoryStream();\n        byte[] buffer = new byte[1024];\n        int bytes;\n\n\n        while ((bytes = NonSeekableStream.Read(buffer, 0, buffer.Length)) &gt; 0)\n        {\n            ms.Write(buffer, 0, bytes);\n        }\n        byte[] output = ms.ToArray();\n        return output;\n    }\n\n\n</code></pre>\n\nPlease help me. I shall be thankful to you.\r<br />\n<br />\nRegards Rakesh Kumar<br />\n",
+    "PostedDate": "2014-11-23T05:00:43.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1326262",
+    "ThreadId": "572901",
+    "Html": "Please Mark help me. \r<br />\n<br />\nand this is my declaration part<br />\n<pre><code>  SerialPort Talking;\n  private BufferedWaveProvider bwp;\n    public WaveInEvent wi;\n   private WaveIn recorder;\n    private BufferedWaveProvider bufferedWaveProvider;\n    AcmStream resampleStream = new AcmStream(new WaveFormat(44100, 16, 2), new WaveFormat(8000, 8, 2));\n    private WaveOut player;\n\n\n\n</code></pre>\n\nI am looking for positive reply\r<br />\n<br />\nWith Regards\r<br />\nRakesh Kumar<br />\n",
+    "PostedDate": "2014-11-26T01:22:01.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327082",
+    "ThreadId": "572901",
+    "Html": "You can't convert from 44.1kHz 16 bit stereo to 8kHz 8bit stereo in one hit. You need to resample first, then go 16 bit to 8 bit. Also, you are recording in mono, so why is the resampler operating in stereo?<br />\n",
+    "PostedDate": "2014-11-28T09:16:35.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327151",
+    "ThreadId": "572901",
+    "Html": "Thanks for the reply Mark. I thought that 44.1kHz 16 bit stereo is produced by Microphone so i was using here. But as per your direction i changed it to<br />\n<br />\n<br />\n var resampleStream = new AcmStream(new WaveFormat(8000, 16, 1),  WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm   , 8000, 1,8000 * 1, 1, 8));<br />\n and set<br />\n   wi.BufferMilliseconds  =20;<br />\n<br />\nThere is improvement in sound quality but i cant hear clearly on the other side of phone. I tried everything, and i dont know what i have to change to hear the clear voice.<br />\n<br />\nPlease provide me solution, because i have tried everything, and according to me i have no solution for this problem. <br />\n<br />\nThanks in advance<br />\n",
+    "PostedDate": "2014-11-28T21:35:01.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327169",
+    "ThreadId": "572901",
+    "Html": "Make sure that your recording format is definitely set to 8kHz 16 bit mono. What is WaveFormat of WaveInEvent?<br />\n",
+    "PostedDate": "2014-11-29T00:31:34.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-11-30T22:34:42.7-08:00"
+  },
+  {
+    "Id": "1327173",
+    "ThreadId": "572901",
+    "Html": "wave format is<br />\nwi.WaveFormat = new WaveFormat(8000,16,1);<br />\n",
+    "PostedDate": "2014-11-29T01:26:43.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327175",
+    "ThreadId": "572901",
+    "Html": "and what input format is your modem expecting? Have you tried creating a WAV file at that WaveFormat and just sending that? <br />\n",
+    "PostedDate": "2014-11-29T01:32:39.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327178",
+    "ThreadId": "572901",
+    "Html": "input waveformat expected is 8k,16 bit, mono expected by modem and perhaps same by GSM Network.<br />\n Mu law wave format giving clear voice but with a click sound after every second.<br />\nThanks alot Mark. It works like charm. You are like life saver for me. :)<br />\n",
+    "PostedDate": "2014-11-29T01:44:24.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-11-29T03:37:03.523-08:00"
+  }
+]

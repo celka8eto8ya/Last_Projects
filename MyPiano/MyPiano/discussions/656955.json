@@ -1,0 +1,234 @@
+[
+  {
+    "Id": "1480493",
+    "ThreadId": "656955",
+    "Html": "Hi All,<br />\nI wrote a Reverb ISampleProvider. <br />\nYou can down load it here if you want to play with it or modify it for your own use. You should be able to drop this class into any NAudio project and try it out.<br />\n<br />\n<strong>Edit</strong>: the code at this link has been refactored to address any issues mentioned in the discussion below.<br />\nDownload link: <a href=\"http://breakthrusoftware.com/downloads/Utils/ReverbSampleProvider.txt\" rel=\"nofollow\">http://breakthrusoftware.com/downloads/Utils/ReverbSampleProvider.txt</a><br />\n<br />\nI'm hoping this will inspire others to write some other FX Effects for NAudio and post them here for open source use. My  pipe dream is to see a set of NAudio implementations that cover the DirectX FX effects: chorus / compressor / distortion / echo / flanger / gargle / parametric eq / reverb <br />\n<br />\nIf you try the code, let me know what you think: ways it can be improved, bugs, etc.<br />\n<br />\nHere is the sample code to run it. Just fill in an MP3 filename.<br />\n<pre><code>        string fname = @&quot;MyAudio.mp3&quot;;\n\n            WaveOut outputDeviceWaveOut = new WaveOut()\n            {\n                DesiredLatency = 300,\n                NumberOfBuffers = 2,\n            };\n            outputDeviceWaveOut.DeviceNumber = 0;\n            IWavePlayer waveOutDevice = outputDeviceWaveOut;\n            AudioFileReader afrFile = new AudioFileReader(fname);  // sampler reader           \n            ReverbSampleProvider reverbSamplr = new ReverbSampleProvider(afrFile);\n            // change these properties for different effect\n            reverbSamplr.ReverbLevel = 0.5f;  \n            reverbSamplr.ReverbDepth = 4;\n            reverbSamplr.Gain =  1.0f;\n            waveOutDevice.Init(reverbSamplr);\n            waveOutDevice.Play();\n</code></pre>\n\n",
+    "PostedDate": "2016-08-05T12:03:44.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480496",
+    "ThreadId": "656955",
+    "Html": "Cool, a delay line based reverb using several combs. I´ve also created some effects, e.g. yesterday I completed a pitch shifting sampleprovider with the c# port of stephan m. bernsee´s shifter class (<a href=\"https://sites.google.com/site/mikescoderama/pitch-shifting\" rel=\"nofollow\">SMBPitchShifter C# Port</a>):<br />\n<pre><code>'''\n''' Author: Freefall\n''' Date: 05.08.16\n''' Based on: the port of Stephan M. Bernsee´s pitch shifting class\n''' Port site: https://sites.google.com/site/mikescoderama/pitch-shifting\n'''\nImports NAudio.Wave\n\nPublic Class SMBPitchShiftingSampleProvider\n    Implements ISampleProvider\n\n    Private SourceStream As ISampleProvider = Nothing\n    Private WFormat As WaveFormat = Nothing\n    Private Pitch As Single = 1.0F\n    Private _FFTSize As Integer = Nothing\n    Private _osamp As Long = Nothing\n    Private ShifterLeft As New SMBPitchShifter()\n    Private ShifterRight As New SMBPitchShifter()\n    Private volscale As Single = 1.0F 'Recommended to scale volume down, as SMB seems to clip with pitching\n    Private PitchLock As New Object()\n\n    Sub New(ByVal SourceProvider As ISampleProvider, ByVal FFTSize As Integer, ByVal osamp As Long, Optional ByVal InitialPitch As Single = 1.0F)\n        SourceStream = SourceProvider\n        WFormat = SourceProvider.WaveFormat\n        _FFTSize = FFTSize\n        _osamp = osamp\n        PitchFactor = InitialPitch\n    End Sub\n\n    Public Function Read(ByVal buffer() As Single, ByVal offset As Integer, ByVal count As Integer) As Integer Implements NAudio.Wave.ISampleProvider.Read\n        SyncLock PitchLock\n            Dim SampRead As Integer = SourceStream.Read(buffer, offset, count)\n            If Pitch = 1.0F Then Return SampRead 'Nothing to do.\n            If WFormat.Channels = 1 Then\n                Dim Mono As Single() = New Single(SampRead - 1) {}\n                Dim index As Integer = 0\n                For sample As Integer = offset To SampRead - 1\n                    Mono(index) = buffer(sample)\n                    index += 1\n                Next\n                ShifterLeft.PitchShift(Pitch, SampRead, _FFTSize, _osamp, WFormat.SampleRate, Mono)\n                index = 0\n                For sample As Integer = offset To SampRead - 1\n                    buffer(sample) = Mono(index) * volscale * 0.707F\n                    index += 1\n                Next\n                Return SampRead\n            ElseIf WFormat.Channels = 2 Then\n                Dim Left As Single() = New Single((SampRead &gt;&gt; 1) - 1) {}\n                Dim Right As Single() = New Single((SampRead &gt;&gt; 1) - 1) {}\n                Dim index As Integer = 0\n                For sample As Integer = offset To SampRead - 1 Step 2\n                    Left(index) = buffer(sample)\n                    Right(index) = buffer(sample + 1)\n                    index += 1\n                Next\n                ShifterLeft.PitchShift(Pitch, SampRead &gt;&gt; 1, _FFTSize, _osamp, WFormat.SampleRate, Left)\n                ShifterRight.PitchShift(Pitch, SampRead &gt;&gt; 1, _FFTSize, _osamp, WFormat.SampleRate, Right)\n                index = 0\n                For sample As Integer = offset To SampRead - 1 Step 2\n                    buffer(sample) = Left(index) * volscale * 0.707F\n                    buffer(sample + 1) = Right(index) * volscale * 0.707F\n                    index += 1\n                Next\n                Return SampRead\n            Else\n                Throw New Exception(&quot;Shifting of more than 2 channels is currently not supported.&quot;)\n            End If\n        End SyncLock\n    End Function\n\n    Public ReadOnly Property WaveFormat() As NAudio.Wave.WaveFormat Implements NAudio.Wave.ISampleProvider.WaveFormat\n        Get\n            Return WFormat\n        End Get\n    End Property\n\n    Public Property PitchFactor() As Single\n        Get\n            Return Pitch\n        End Get\n        Set(ByVal value As Single)\n            SyncLock PitchLock\n                Pitch = value\n                ScaleVolume()\n            End SyncLock\n        End Set\n    End Property\n\n    Private Sub ScaleVolume()\n        If Pitch &gt; 1.0F Then\n            volscale = 1.0F / Pitch\n        Else\n            volscale = Pitch\n        End If\n    End Sub\nEnd Class</code></pre>\n\nThe PitchShifter of above link must be changed to non-static (simply remove all &quot;shared&quot;/&quot;static&quot; keywords) and I called the class &quot;SMBPitchShifter&quot; after its author.<br />\n<br />\nThe output has a bit &quot;phasy&quot; transposing, but sounds not bad and very interestingly. And, compared to soundtouch, no choppy double samples when beats are missed. As a con, sound output seems a bit compressed and overdrives with shifting distance (I try to face this with a linear volume scaling, but is not ideal).<br />\n<br />\nUsage:<br />\n<pre><code>'4096 = FFT Size recommended; 8L = Oversampling Quality; 1.5f = half octave higher shifted;\nDim SMB = New SMBPitchShiftingSampleProvider(new AudioFileReader(&quot;&lt;Path to your audio file&gt;&quot;), 4096, 8L, 1.5f)\nDim WaveOut as New WaveOut()\nWaveOut.Init(SMB);\nWaveOut.Play();</code></pre>\n\nI´ll try your Reverb, thx for posting.<br />\n<br />\n<br />\n<strong>EDIT 1: I forgot to implement, for thread safety you must Lock around the get Node of the &quot;PitchFactor&quot; property and the complete read method.</strong><br />\n<br />\n<strong>EDIT 2: I added Lock for thread safety and fixed the missing initial volume scaling.</strong><br />\n<br />\n<strong>EDIT 3: I optimzed the Read process using bit shifting for faster calculation. Also added exception handling for more than 2 channel (=stereo) inputs.</strong><br />\n<br />\n<strong>EDIT 4: I fixed the offset of the buffer allocation before shifting.</strong><br />\n<br />\n<strong>EDIT 5: I added volume scaling for mono input.</strong><br />\n<br />\n<strong>EDIT 6: I fixed the mono offset.</strong><br />\n",
+    "PostedDate": "2016-08-05T13:32:33.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480497",
+    "ThreadId": "656955",
+    "Html": "Ok, I tried your reverb. It throws an error here:<br />\n<pre><code>            while (offset &lt; count)\n            {\n                for (int ch = 0; ch &lt; numChannels; ch++)\n                {\n                    currOffset = offset++; // + sample;\n                    inValue = buffer[currOffset];\n                    modValue = Process(inValue);\n                    //modValue = FxUtils.NormalizeTo1toNeg1(modValue);\n                    buffer[currOffset] = modValue; // \n                }\n            }</code></pre>\n\nI changed it to:<br />\n<pre><code>            while (offset &lt; count - 2)\n            {\n                     ...\n            }</code></pre>\n\nto get it working. The effect itself sounds a bit too hard and overdrives, I recommend at first sight two things:<br />\n<ul>\n<li>Use prime numbers for delay lengths to avoid overlap</li>\n<li>\nUse varying dampening, don´t scale it linearly<br />\n</li>\n</ul>\nA good example is the standford NReverb class, here is a C# port: <a href=\"https://github.com/keijiro/unity-custom-reverb-filter/blob/master/Assets/Standard%20Assets/NReverb.cs\" rel=\"nofollow\">https://github.com/keijiro/unity-custom-reverb-filter/blob/master/Assets/Standard%20Assets/NReverb.cs</a><br />\n",
+    "PostedDate": "2016-08-05T13:57:35.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480498",
+    "ThreadId": "656955",
+    "Html": "Hi Freefall,\r<br />\nThanks I'll take a look at both of those links. The pitch shifter looks very interesting. I'll try that tomorrow.\r<br />\n<br />\nThanks for testing the reverb class and reporting that error.\r<br />\nI've been testing with several MP3s and never got that error. I probably should have incremented the offset AFTER the sample is processed ( currOffset = offset++) , not BEFORE.\r<br />\n<br />\nAnd thanks for the enhancement suggestions. I admit I'm a novice at effects.<br />\n",
+    "PostedDate": "2016-08-05T14:24:41.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480523",
+    "ThreadId": "656955",
+    "Html": "I´ve added thread safety and fixed the missing inital volume scaling in above code, see Edit 2.<br />\n<br />\nI also created a SampleProvider that allows to modify speed scaling without altering the pitch. I can post it here if there is an interest in this.<br />\n<br />\nFor <strong>both pitch and speed</strong> I´ve been making <strong>two versions</strong>, one using the frequency domain phase vocoder of the <strong>stephan m. bernsee (smb)</strong> implementation (see above) and one using the time domain overlap and add method of <strong>soundtouch</strong> surina.<br />\n<br />\nNote, that there is a fully managed port of soundtouch available <a href=\"https://github.com/owoudenberg/soundtouch.net\" rel=\"nofollow\">here</a>, so both are possible to include statically. Each of them has its pros and cons, which would lead too far here. The best way to decide is to try them out.<br />\n",
+    "PostedDate": "2016-08-06T10:43:05.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480770",
+    "ThreadId": "656955",
+    "Html": "this is awesome. looking forward to giving it a try. thanks for sharing<br />\n",
+    "PostedDate": "2016-08-10T06:19:37.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480855",
+    "ThreadId": "656955",
+    "Html": "Ok, I reposted the ReverbSampleProvider class to the download link above.\r<br />\n<br />\nNotes:<br />\n<ul>\n<li>I think I solved the overdrive issue noted by Freefall. It does result in volume somewhat lower than the original signal, but you can use the Gain property to increase it.  \r</li>\n<li>New mixing algo may have softened the &quot;effect too hard&quot; issue noted by Freefall. You can play with the mixing in the Process method if you want a different reverb  quality.</li>\n<li>This is not a textbook implementation of reverb sound reflection so purists may scoff, but I kinda like the sound. Your results may vary. ;-)</li>\n<li>The DirectSignalLevel property was removed for this revision.</li>\n<li>Usage notes were added to the comments at the top of the ReverbSampleProvider class code.</li>\n</ul>\n",
+    "PostedDate": "2016-08-11T07:16:38.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481063",
+    "ThreadId": "656955",
+    "Html": "Sorry for my late reply, I´m currently in the process of moving to a new city. I´ll test your Reverb revision.<br />\n<br />\nI also optimized above SMBPitchShiftingSampleProvider, see Edit 3.<br />\n<br />\nIf there is an interest in it, I´ll post the speed provider based on the smb shifter (after optimizing).<br />\n",
+    "PostedDate": "2016-08-13T12:08:48.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481069",
+    "ThreadId": "656955",
+    "Html": "Hi Freefall,\r<br />\nI confess I haven't had time to setup and test your PitchShifter.\r<br />\n<br />\nFor these two lines, where is the SMBPitchShifter class?<br />\n<pre><code>Private ShifterLeft As New SMBPitchShifter()\nPrivate ShifterRight As New SMBPitchShifter()</code></pre>\n\n",
+    "PostedDate": "2016-08-13T15:58:50.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481086",
+    "ThreadId": "656955",
+    "Html": "See post # 2, it can be found at the C# port of SMB´s shifter:<br />\n<br />\n<a href=\"https://sites.google.com/site/mikescoderama/pitch-shifting\" rel=\"nofollow\">https://sites.google.com/site/mikescoderama/pitch-shifting</a><br />\n<br />\nThe class is too big to post here (restricted to post max. 10.000 characters), that´s why I didn´t do so.<br />\n<br />\nAs written in post # 2 you need to do with the c# port:<br />\n<ul>\n<li>Change &quot;PitchShifter&quot; class name -&gt; &quot;SMBPitchShifter&quot; class name</li>\n<li>\nRemove all static attributes<br />\n</li>\n</ul>\nThen it should work - feedback is appreciated.<br />\n",
+    "PostedDate": "2016-08-14T02:42:36.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481097",
+    "ThreadId": "656955",
+    "Html": "Ok, thanks. I got the  SMBPitchShifter class to compile. So now I guess I have to make two separate class libraries because one class is in C# and one is in Basic. Is that how you got this to build? Not a VBasic programmer so this is getting 'interesting'. But that's my skills limit problem so I'll figure it out. :-)\r<br />\n<br />\nGood luck moving. That is such a blast.<br />\n",
+    "PostedDate": "2016-08-14T06:06:30.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481108",
+    "ThreadId": "656955",
+    "Html": "You can convert my vbasic code to c# using a code converter like <a href=\"http://converter.telerik.com/\" rel=\"nofollow\">this</a>.<br />\n<br />\nYeah, moving means very much work. I´ll see how much time i can invest in audio programming, today was my first free day this week.<br />\n",
+    "PostedDate": "2016-08-14T09:31:20.397-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481132",
+    "ThreadId": "656955",
+    "Html": "<strong>Here is a quick C# conversion of my shifter class:</strong><br />\n<pre><code>using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Data;\nusing System.Diagnostics;\nusing NAudio.Wave;\n\npublic class SMBPitchShiftingSampleProvider : ISampleProvider\n{\n\n    private ISampleProvider SourceStream = null;\n    private WaveFormat WFormat = null;\n    private float Pitch = 1f;\n    private int _FFTSize = null;\n    private long _osamp = null;\n    private SMBPitchShifter ShifterLeft = new SMBPitchShifter();\n    private SMBPitchShifter ShifterRight = new SMBPitchShifter();\n    private float volscale = 1f; //Recommended to scale volume down, as SMB seems to clip with pitching\n\n    private object PitchLock = new object();\n    public SMBPitchShiftingSampleProvider(ISampleProvider SourceProvider, int FFTSize, long osamp, float InitialPitch = 1f)\n    {\n        SourceStream = SourceProvider;\n        WFormat = SourceProvider.WaveFormat;\n        _FFTSize = FFTSize;\n        _osamp = osamp;\n        PitchFactor = InitialPitch;\n    }\n\n    public int Read(float[] buffer, int offset, int count)\n    {\n        lock (PitchLock) {\n            int SampRead = SourceStream.Read(buffer, offset, count);\n            if (Pitch == 1f)    \n                //Nothing to do.\n                return SampRead;\n            if (WFormat.Channels == 1) {\n                float[] Mono = new float[SampRead];\n                int index = 0;\n                for (int sample = offset; sample &lt;= SampRead - 1; sample++) {\n                    Mono[index] = buffer[sample];\n                    index += 1;\n                }\n                ShifterLeft.PitchShift(Pitch, SampRead, _FFTSize, _osamp, WFormat.SampleRate, Mono);\n                index = 0;\n                for (int sample = offset; sample &lt;= SampRead - 1; sample++) {\n                    buffer[sample] = Mono[index] * volscale * 0.707f;\n                    index += 1;\n                }\n                return SampRead;\n            } else if (WFormat.Channels == 2) {\n                float[] Left = new float[(SampRead &gt;&gt; 1)];\n                float[] Right = new float[(SampRead &gt;&gt; 1)];\n                int index = 0;\n                for (int sample = offset; sample &lt;= SampRead - 1; sample += 2) {\n                    Left[index] = buffer[sample];\n                    Right[index] = buffer[sample + 1];\n                    index += 1;\n                }\n                ShifterLeft.PitchShift(Pitch, SampRead &gt;&gt; 1, _FFTSize, _osamp, WFormat.SampleRate, Left);\n                ShifterRight.PitchShift(Pitch, SampRead &gt;&gt; 1, _FFTSize, _osamp, WFormat.SampleRate, Right);\n                index = 0;\n                for (int sample = offset; sample &lt;= SampRead - 1; sample += 2) {\n                    buffer[sample] = Left[index] * volscale * 0.707f;\n                    buffer[sample + 1] = Right[index] * volscale * 0.707f;\n                    index += 1;\n                }\n                return SampRead;\n            } else {\n                throw new Exception(&quot;Shifting of more than 2 channels is currently not supported.&quot;);\n            }\n        }\n    }\n\n    public NAudio.Wave.WaveFormat WaveFormat {\n        get { return WFormat; }\n    }\n\n    public float PitchFactor {\n        get { return Pitch; }\n        set {\n            lock (PitchLock) {\n                Pitch = value;\n                ScaleVolume();\n            }\n        }\n    }\n\n    private void ScaleVolume()\n    {\n        if (Pitch &gt; 1f) {\n            volscale = 1f / Pitch;\n        } else {\n            volscale = Pitch;\n        }\n    }\n}</code></pre>\n\nHappy testing!<br />\n<br />\nEDIT: Fixed the converter issue.<br />\n",
+    "PostedDate": "2016-08-14T15:30:46.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481154",
+    "ThreadId": "656955",
+    "Html": "Hey Freefall, I got the PitchShifter working. Thanks for all your help. \r<br />\n<br />\nTest results:\r<br />\n1) It's pretty cool sounding effect. I played a music file with PitchFactor = 1.9 and the singers voice sounds like Alvin the chipmunk. So it's working. :-)\r<br />\n2) Pitch definitely shifts when I change the PitchFactor in increments of 0.1. It can make a guitar sound like a chello.\r<br />\n3) What is the valid value range for PitchFactor?\r<br />\n4) I hear a regular click sound (like a static click). Probably as often as each Read method call. No idea what causes it. \r<br />\n<br />\nThe calculated value for L/R channels stays within the range of +1 to -1. So I assume the clicking is not from overdriven values. \r<br />\nNovice question: As a general rule, is it true that the output values should stay within this range (+1...-1) to avoid overdrive? \r<br />\n<br />\n<br />\nAnd thanks for that VBasic code converter. It works pretty good. I bookmarked the link for future use. It has a problem with converting array index parens &quot;(&quot; and &quot;)&quot; to C# syntax &quot;[&quot; and &quot;]&quot;. Easy enough to fix with a text editor after converting. I only mention that in case anyone grabs your converted code above, &quot;Left(index)&quot; and &quot;Right(index)&quot; should have the square brackets syntax.\r<br />\n<br />\nIt's clear this PitchShifter deserved it's own discussion thread. \r<br />\nPS. And don't feel rushed to reply. I know you are throttled with the move.<br />\n",
+    "PostedDate": "2016-08-15T06:14:55.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481160",
+    "ThreadId": "656955",
+    "Html": "Thanks for testing. Concerning your questions:<br />\n<br />\n3) Valid range is from between 0.5f (one octave down) and 2f (one octave up) - see the comments on the SMB port.<br />\n4) That click sound may be caused from overlapping windows. Try to increase the oversampling factor (=osamp) to 16 or 32. But note, that this will increase CPU usage heavily.<br />\n<br />\nYes, generally sound samples should stay in the -1 ... +1 range. All above or beyound this would be clipped and would result in crackling sound.<br />\n<br />\nPerhaps Mark can include this Class for the next NAudio release, I´ve seen many people struggling searching for that.<br />\n",
+    "PostedDate": "2016-08-15T07:12:27.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481173",
+    "ThreadId": "656955",
+    "Html": "Freefall, Thanks for those answers.<br />\n<br />\nI tried it with Osamp = 16L and = 32L<br />\nThe sound was strange at those values. Sounded like original samples went missing. It got worse with 32L value. The click noise was still there. The source is a 16bit stereo MP3 @44100<br />\n<br />\nI recorded CPU usage with the various Osamp values, My laptop CPU is Intel i5 @ 2.53Ghz<br />\n<br />\nOsamp =8L<br />\nCPU 30% avg, spikes to 50%<br />\n<br />\nOsamp =16L<br />\nstrange sound, like some of original sound is missing <br />\nCPU 40% avg spikes to 50%<br />\n<br />\nOsamp = 32L<br />\nworse sound, more missing sound <br />\nCPU usage about the same as 16L<br />\n",
+    "PostedDate": "2016-08-15T08:26:44.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481180",
+    "ThreadId": "656955",
+    "Html": "I think the missing sound comes from the high CPU usage, when the playback thread got too few resources.\r<br />\n<br />\nYou could try a FFT Size of 1024 or 2048 (higher size means higher precision although).<br />\n",
+    "PostedDate": "2016-08-15T09:37:40.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481181",
+    "ThreadId": "656955",
+    "Html": "Tried it with both FFT Size of 1024 or 2048.\r<br />\nI still hear a static click with both of these values, but it is a little less noticeable (lower volume click).\r<br />\n<br />\nDo you hear any static when you play it on your machine? My laptop audio card is Realtek HD audio.  \r<br />\n",
+    "PostedDate": "2016-08-15T09:52:10.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481194",
+    "ThreadId": "656955",
+    "Html": "No, I can´t find any clicking sounds after pitching. Perhaps your hardware is broken or your input file.<br />\n<br />\nAs I said before, the clicking could also be a windowing issue of the algorithm.<br />\n",
+    "PostedDate": "2016-08-15T11:03:03.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481200",
+    "ThreadId": "656955",
+    "Html": "I don't think it is 'broken' hardware, because my other ISampleProviders are not causing this click.\r<br />\nAnd the input file plays fine with my other ISampleProviders or with no ISampleProvider just playing a standard Naudio waveOut device.\r<br />\n<br />\nMost of the Pitch Shifting is done by the CPU. So with it running at 30% CPU, maybe it isn't finished processing the previous Read event when the next Read event pops. This definitely a mid-range power laptop -- not a high performance machine.\r<br />\n<br />\nNot sure what &quot;windowing issue of the algorithm&quot; means. <br />\n",
+    "PostedDate": "2016-08-15T11:43:59.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481230",
+    "ThreadId": "656955",
+    "Html": "Ok, then I´m almost sure the high CPU usage causes this problem. On my 4 core machine its also clicking (rather stuttering) when CPU usage is &gt;25%.<br />\n<br />\nWith windowing issue I mean, that in the process of overlapping sample packets maybe aliasing effects could happen. Not sure about this, I´m not the algorithm designer. But this is probably not the reason, rather the CPU.<br />\n<br />\nI´d try in your situation to decrease CPU usage to a safe performance zone, e.g. about 10% CPU. I´ve optimized the SampleProvider as much as I could and the algorithm itself won´t be much optimizeable; hence I recommend to find the best compromise between FFT Size and osamp value. In my case, it was 4096 for FFT Size and 8 for osamp. That provided a nice sound with ~ 10% CPU usage.<br />\n",
+    "PostedDate": "2016-08-15T14:07:22.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481276",
+    "ThreadId": "656955",
+    "Html": "Ok, thanks Freefall. Yeah, I've tried various combinations of values. I don't think my machine has the power for this one. The effect takes a lot of computations, no way to get around that. But it's still a really cool effect and the click is not all that noticeable. People with a fast machine will love it.<br />\n",
+    "PostedDate": "2016-08-16T05:30:38.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481300",
+    "ThreadId": "656955",
+    "Html": "Well, consider also the delay of processing. Playback will need to wait until first FFT pack has arrived, so there is a delay of:<br />\n<br />\nDelayInSeconds = FFTSize / SampleRate<br />\n<br />\nWith my chosen settings:<br />\n<br />\n <strong>DelayInSeconds</strong> = 4096 / (44100 1/s) = 0,093 s <strong>= 93 ms</strong><br />\n<br />\nIt can be heard at the start of playback and is of course an unwanted side effect caused by the algorithm. Nevertheless, it´s not a big deal for me personally.<br />\n",
+    "PostedDate": "2016-08-16T12:36:51.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481347",
+    "ThreadId": "656955",
+    "Html": "Hi Mark, just wondering if you gave the Reverb ISampleProvider a try after I made the fixes? Any thoughts?\r<br />\n<br />\n<strong>markheath wrote:</strong><br />\n<blockquote>\nthis is awesome. looking forward to giving it a try. thanks for sharing<br />\n</blockquote>\n",
+    "PostedDate": "2016-08-17T04:20:13.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481651",
+    "ThreadId": "656955",
+    "Html": "not yet, am on my holidays, but its on the list of things to do when I get back to work!<br />\n",
+    "PostedDate": "2016-08-20T09:08:48.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481659",
+    "ThreadId": "656955",
+    "Html": "Cool. Have a fun vacation.<br />\n",
+    "PostedDate": "2016-08-20T10:17:48.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481830",
+    "ThreadId": "656955",
+    "Html": "I tested my shifter today in C# and the problem also ocurred what you described as clicking. Finally I realized, that I forgot to remove the &quot;static&quot; keywords also inside the local variables. Then it´s working perfectly, like it did in VB (where I didn´t forget that).<br />\n<br />\nThe reason for clicking is, that with static buffers left and right samples are mixed together in a random way.<br />\n<br />\n<strong>EDIT: Use the release build, debug execution is too slow and might also click.</strong><br />\n<br />\nI created a new github repistory (<a href=\"https://github.com/Freefall63/NAudio-Pitchshifter\" rel=\"nofollow\">https://github.com/Freefall63/NAudio-Pitchshifter</a>), where I show the shifter working in realtime in C#.<br />\n<br />\nAnother test would be welcome.<br />\n<br />\nAnd Mark could include it in NAudio after holiday if he wants to.<br />\n",
+    "PostedDate": "2016-08-22T15:27:11.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481890",
+    "ThreadId": "656955",
+    "Html": "Freefall, I'll give this revised code a retest as soon as time permits.  Thanks for posting. <br />\n",
+    "PostedDate": "2016-08-23T05:52:38.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482025",
+    "ThreadId": "656955",
+    "Html": "Thanks. Only thing missing with the shifter is a limiter processing afterwards, I´m not happy with my obligatory linear downscaling. Actually, I use the &quot;FastAttackCompressor1175&quot; Effect for this from the SkypeFx Project by Mark (which isn´t still what I wanted, but better than linear scaling). The best Limiter that is known to me is the FL Studio &quot;Fruity Limiter&quot;, which is a genious Multiband Compressor. Too bad that it isn´t open source.\r<br />\n<br />\nDo you guys know any good open source compressor that could be ported to .NET?<br />\n",
+    "PostedDate": "2016-08-24T15:32:55.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

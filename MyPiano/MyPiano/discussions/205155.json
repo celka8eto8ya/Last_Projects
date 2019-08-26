@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "418876",
+    "ThreadId": "205155",
+    "Html": "<p>Support,</p>\r\n<p>I would like to append the audio to an existing file. Is there any possibility?</p>",
+    "PostedDate": "2010-03-16T13:56:45.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "419151",
+    "ThreadId": "205155",
+    "Html": "<p>this is easy with WAV files. See my code sample here:</p>\r\n<p>http://naudio.codeplex.com/Thread/View.aspx?ThreadId=61043</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-17T04:16:32.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

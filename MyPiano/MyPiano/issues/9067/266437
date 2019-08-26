@@ -1,0 +1,377 @@
+void audio_thread()
+        {
+            try
+            {
+                while (true)
+                {
+                    System.Threading.Thread.Sleep(100);
+
+                    int msg_count = 0;
+                    
+                    lock (audio_msg_lock)
+                    {
+                        msg_count = audio_msgs.Count;
+                    }
+
+                    if (msg_count <= 0)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                    }
+                    else
+                    {
+                        NAudio.Wave.WaveOut wout1 = null;
+                        NAudio.Wave.WaveStream mp3_reader1 = null;
+                        NAudio.Wave.WaveStream mp32wavConverter1 = null;
+                        NAudio.Wave.WaveStream wout_src1 = null;
+
+                        NAudio.Wave.WaveOut wout2 = null;
+                        NAudio.Wave.WaveStream mp3_reader2 = null;
+                        NAudio.Wave.WaveStream mp32wavConverter2 = null;
+                        NAudio.Wave.WaveStream wout_src2 = null;
+
+                        int duration = 0;
+
+                        Audio_t msg;
+                        
+                        lock(audio_msg_lock)
+                        {
+                           msg = audio_msgs.Dequeue();
+                        }
+
+                        if (msg.digital_output_buffer != null && msg.filename != "")
+                        {
+                            string filename = msg.filename;
+                            try
+                            {
+
+                                string[] files = filename.Split(new char[] { '|' }, 3);
+
+                                wout1 = new NAudio.Wave.WaveOut(0, 200, false);
+                                mp3_reader1 = new NAudio.Wave.Mp3FileReader(files[0]);
+                                mp32wavConverter1 = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(mp3_reader1);
+                                wout_src1 = new NAudio.Wave.BlockAlignReductionStream(mp32wavConverter1);
+                                wout1.Init(wout_src1);
+                                int duration1 = wout_src1.TotalTime.Seconds * 1000 + wout_src1.TotalTime.Minutes * 60 * 1000 + wout_src1.TotalTime.Milliseconds;
+                                logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [RIPRODUZIONE] file[" + files[0] + "] durata[" + duration1 + "] su scheda 1");
+                                int duration2 = 0;
+                                if (files.Length >= 2 && NAudio.Wave.WaveOut.DeviceCount >= 2)
+                                {
+                                    wout2 = new NAudio.Wave.WaveOut(1, 200, false);
+                                    mp3_reader2 = new NAudio.Wave.Mp3FileReader(files[1]);
+                                    mp32wavConverter2 = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(mp3_reader2);
+                                    wout_src2 = new NAudio.Wave.BlockAlignReductionStream(mp32wavConverter2);
+                                    wout2.Init(wout_src2);
+                                    duration2 = wout_src2.TotalTime.Seconds * 1000 + wout_src2.TotalTime.Minutes * 60 * 1000 + wout_src2.TotalTime.Milliseconds;
+                                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [RIPRODUZIONE] file[" + files[1] + "] durata[" + duration2 + "] su scheda 2");
+                                }
+                                duration = Math.Max(duration1, duration2) + 200;
+
+                                if (duration != -1)
+                                {
+                                    int result = WriteDO(this, msg.digital_output_buffer);
+                                    if (result == 0)
+                                    {
+                                        try
+                                        {
+
+                                            if (wout1 != null)
+                                                wout1.Play();
+                                            if (wout2 != null)
+                                                wout2.Play();
+                                            System.Threading.Thread.Sleep(duration);
+                                        }
+                                        catch (NAudio.MmException e)
+                                        {
+                                            logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [ERRORE] eccezione durante la riproduzione di [" + msg.filename + "] msg[" +
+                                               e.Message + "] src[" +
+                                               e.Source + "] stack[" +
+                                               e.StackTrace + "]");
+                                        }
+                                    }
+                                }
+                            }
+                            catch (NAudio.MmException e)
+                            {
+                                logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [ERRORE] eccezione durante la riproduzione di [" + filename + "] msg[" +
+                                   e.Message + "] src[" +
+                                   e.Source + "] stack[" +
+                                   e.StackTrace + "]");
+                                duration = -1;
+                            }
+                        }
+                        else
+                        {
+                            logger.Log(LOC_ENGINE_LOG_NAME, "SCHEDULER: NON Attivo outputs "
+                            /* +"[" + String.Format("0x{0:x2}", buf[0]) + " " + String.Format("0x{0:x2}", buf[1]) + "] " */
+                            +"coda{" + audio_msgs.Count + " " + audio_msgs + "}");
+                        }
+
+                        // Reset PO
+                        lock (usb4750lock)
+                        {
+                            byte[] buf = new byte[2];
+                            buf[0] = 0;
+                            buf[1] = 0;
+                            object ob = (object)buf;
+                            logger.Log(USB4750_LOG_NAME, "reset output 0x00 0x00");
+                            usb4570IOManager.WriteDoPorts(ref (ob), 0, 2);
+                        }
+                        // close audio device
+                        ResetAudioDevice(ref wout1, 
+                                         ref wout2, 
+                                         ref mp3_reader1, 
+                                         ref mp3_reader2, 
+                                         ref mp32wavConverter1, 
+                                         ref mp32wavConverter2, 
+                                         ref wout_src1, 
+                                         ref wout_src2);
+                    }
+                }
+            }
+            catch (System.Threading.ThreadAbortException)
+            {
+                logger.Log(LOC_ENGINE_LOG_NAME, "[AUDIO] Thread gestione audio chiusa (aborted)");
+            }
+        }
+		
+		private void ResetAudioDevice(ref NAudio.Wave.WaveOut wout1, 
+                                      ref NAudio.Wave.WaveOut wout2,
+                                      ref NAudio.Wave.WaveStream mp3_reader1,
+                                      ref NAudio.Wave.WaveStream mp3_reader2,
+                                      ref NAudio.Wave.WaveStream mp32wavConverter1,
+                                      ref NAudio.Wave.WaveStream mp32wavConverter2,                              
+                                      ref NAudio.Wave.WaveStream wout_src1,
+                                      ref NAudio.Wave.WaveStream wout_src2
+            )
+        {
+            #region reset audio device 1
+            if (wout1 != null)
+            {
+                logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: STOP l'oggetto wout stato[" + wout1.PlaybackState + "]");
+                try
+                {
+                    wout1.Stop();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+            }
+
+            if (wout_src1 != null)
+            {
+                try
+                {
+                    wout_src1.Close();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                try
+                {
+                    wout_src1.Dispose();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                wout_src1 = null;
+            }
+
+            if (mp32wavConverter1 != null)
+            {
+                try
+                {
+                    mp32wavConverter1.Close();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                try
+                {
+                    mp32wavConverter1.Dispose();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                mp32wavConverter1 = null;
+            }
+
+            if (mp3_reader1 != null)
+            {
+                try
+                {
+                    mp3_reader1.Close();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                try
+                {
+                    mp3_reader1.Dispose();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                mp3_reader1 = null;
+            }
+
+            if (wout1 != null)
+            {
+                logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: cancello l'oggetto wout stato[" + wout1.PlaybackState + "]");
+                try
+                {
+                    wout1.Dispose();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                wout1 = null;
+            }
+            #endregion
+            #region reset audio device 2
+            if (wout2 != null)
+            {
+                logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: STOP l'oggetto wout2 stato[" + wout2.PlaybackState + "]");
+                try
+                {
+                    wout2.Stop();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+            }
+
+            if (wout_src2 != null)
+            {
+                try
+                {
+                    wout_src2.Close();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                try
+                {
+                    wout_src2.Dispose();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                wout_src2 = null;
+            }
+
+            if (mp32wavConverter2 != null)
+            {
+                try
+                {
+                    mp32wavConverter2.Close();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                try
+                {
+                    mp32wavConverter2.Dispose();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                mp32wavConverter2 = null;
+            }
+
+            if (mp3_reader2 != null)
+            {
+                try
+                {
+                    mp3_reader2.Close();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                try
+                {
+                    mp3_reader2.Dispose();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                mp3_reader2 = null;
+            }
+
+            if (wout2 != null)
+            {
+                logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: cancello l'oggetto wout stato[" + wout2.PlaybackState + "]");
+                try
+                {
+                    wout2.Dispose();
+                }
+                catch (NAudio.MmException e)
+                {
+                    logger.Log(LOC_ENGINE_LOG_NAME, "AUDIO: [WARNING] eccezione durante la distruzione degli oggetti per la riproduzione audio msg[" +
+                        e.Message + "] src[" +
+                        e.Source + "] stack[" +
+                        e.StackTrace + "]");
+                }
+                wout2 = null;
+            }
+            #endregion
+        }

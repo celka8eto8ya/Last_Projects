@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1354586",
+    "ThreadId": "581531",
+    "Html": "I have Mp3 audio files with the <strong>same music</strong>, which are encoded at different sample rate and bit depth.\r<br />\n<br />\nFor example:<br />\n<ul>\n<li>Titanic - 96 Kbps - 44 KHz.mp3</li>\n<li>Titanic - 96 Kbps - 48 KHz.mp3</li>\n<li>Titanic - 128 Kbps - 44 KHz.mp3</li>\n<li>Titanic - 128 Kbps - 48 KHz.mp3</li>\n<li>Titanic - 192 Kbps - 44 KHz.mp3</li>\n<li>Titanic - 192 Kbps - 48 KHz.mp3</li>\n<li>Titanic - 224 Kbps - 44 KHz.mp3</li>\n<li>Titanic - 224 Kbps - 48 KHz.mp3</li>\n<li>Titanic - 320 Kbps - 44 KHz.mp3</li>\n<li>\nTitanic - 320 Kbps - 48 KHz.mp3<br />\n</li>\n</ul>\nI want to convert all these Mp3 files to Wav format (PCM IEEE float format) using NAudio.\r<br />\n<br />\nBefore converting to Wav format, I want to ensure that all Mp3 files must be converted to a standard sample rate and bit depth: <strong>192 Kbps, 48 KHz</strong>.\r<br />\n<br />\nDo I need to do re-sampling of Mp3 to the required Mp3 rate before finally converting it to Wav format? Or can it be done when converting to Wav format?\r<br />\n<br />\nAppreciate if you can provide an example code.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2015-02-21T07:06:50.447-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

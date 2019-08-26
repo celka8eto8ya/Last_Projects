@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1421896",
+    "ThreadId": "636145",
+    "Html": "Hey guys,\r<br />\n<br />\nI am mixing two WAV files, one has 32 BitsPerSample and the other one has 16 BitsPersSample. WaveMixerStream32 is giving me an error:<br />\n<pre><code>An unhandled exception of type 'System.ArgumentException' occurred in NAudio.dll\nAdditional information: All incoming channels must have the same format</code></pre>\n\nI have one 32 WAV and one MP3 which I convert to WAV. The converted MP3to WAV has 16bps.\r<br />\n<br />\nCan you help me how to ensure the same bps for both files?<br />\n",
+    "PostedDate": "2015-04-30T13:59:36.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1421977",
+    "ThreadId": "636145",
+    "Html": "You can´t mix files with different wave Format directly.\r<br />\n<br />\nEnsure the following:\r<br />\n<br />\n1) Same Samplerate -&gt; Resample with Mediafoundationresampler, WaveFormatConversionStream etc.\r<br />\n2) Same bit depth -&gt; Use a Sampleprovider for your conversion, e.g. WaveToSampleProvider etc.\r<br />\n3) Same channel Count -&gt; Use a Sampleprovider for your conversion, e.g. MonoToStereoSampleProvider etc.\r<br />\n4) Same Format tag (I think this is optional as it doesn´t affect the data directly)\r<br />\n<br />\nConclusion: Better work with sampleproviders for Mixing purpose. Hope this Points you in the right direction.<br />\n",
+    "PostedDate": "2015-05-01T04:08:32.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "643638",
+    "ThreadId": "265531",
+    "Html": "\r\n<p>I try to use WaveFileWriter in way that every buffer I got i write to file. like this:</p>\r\n<p>writer.write(buffer.data, 0, buffer.data.length);</p>\r\n<p>I the folder I see file with the correct size.</p>\r\n<p>when I try to open it I got this exception.</p>\r\n<p>What I did wrong?</p>\r\n",
+    "PostedDate": "2011-07-18T04:06:24.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "644049",
+    "ThreadId": "265531",
+    "Html": "<p><span style=\"font-size: 10pt; color: black; font-family: 'Segoe UI','sans-serif';\">You need to define the format of the file so that it can be written out at the beginning.<br />Please review this tutorial: <a href=\"http://opensebj.blogspot.com/2009/04/naudio-tutorial-5-recording-audio.html\">http://opensebj.blogspot.com/2009/04/naudio-tutorial-5-recording-audio.html</a></span></p>\r\n<p><span style=\"font-size: 10pt; color: black; font-family: 'Segoe UI','sans-serif';\">Regards,<br />Sebastian</span></p>",
+    "PostedDate": "2011-07-18T17:53:54.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "644157",
+    "ThreadId": "265531",
+    "Html": "<p>Sebastian I know. this what I did:</p>\n<div style=\"background-color: white; color: black;\">\n<pre>writer = <span style=\"color: blue;\">new</span> WaveFileWriter(fileName, format);\r\n\r\n<span style=\"color: blue;\">void</span> OnReceiveData()\r\n{\r\n    writer.Write(buffer.data, 0, buffer.data.Length)\r\n    buffer = <span style=\"color: blue;\">null</span>;\r\n}\r\n</pre>\n<pre>&nbsp;</pre>\n</div>",
+    "PostedDate": "2011-07-19T00:57:49.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "644169",
+    "ThreadId": "265531",
+    "Html": "<p>did you dispose the WaveFileWriter? This is very important as it writes some offsets into the WAV file header.</p>",
+    "PostedDate": "2011-07-19T01:12:22.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "644173",
+    "ThreadId": "265531",
+    "Html": "<p>Thanks Mark!</p>\r\n<p>Its work now.</p>",
+    "PostedDate": "2011-07-19T01:20:17.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

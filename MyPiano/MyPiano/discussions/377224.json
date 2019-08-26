@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "877598",
+    "ThreadId": "377224",
+    "Html": "\r\n<p>When I start/stop recordings, while a playback is running at the same time, NAudio&nbsp;hangs after some time. Down below you can find a small demo that shows the effect. The test-loop is expected to loop-back recorded audio to the output device forever.\r\n But after some random record sequences no recording will take place any more and the StopRecording method call hangs.</p>\r\n<p>Any idea what's wrong here? I tested with a few days old NAudio codebase, but had the same effect with the official NAudio release 1.5 too.</p>\r\n<p>Norbert</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> System;\r\n<span style=\"color:blue\">using</span> System.Threading;\r\n<span style=\"color:blue\">using</span> NAudio.Wave;\r\n\r\n<span style=\"color:blue\">namespace</span> NAudioRecTest\r\n{\r\n    <span style=\"color:blue\">class</span> Program\r\n    {\r\n        <span style=\"color:blue\">static</span> BufferedWaveProvider bufferedWaveProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(<span style=\"color:blue\">new</span> WaveFormat(8000, 16, 1));\r\n\r\n        <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> Main(<span style=\"color:blue\">string</span>[] args)\r\n        {\r\n            IWaveIn waveIn = <span style=\"color:blue\">new</span> WaveInEvent();\r\n            waveIn.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveIn_DataAvailable);\r\n\r\n            IWavePlayer waveOut = <span style=\"color:blue\">new</span> WaveOutEvent();\r\n            waveOut.Init(bufferedWaveProvider);\r\n            waveOut.Play();\r\n\r\n            <span style=\"color:blue\">while</span> (<span style=\"color:blue\">true</span>)\r\n            {\r\n                Console.Out.WriteLine(<span style=\"color:#a31515\">&quot;Start recording.&quot;</span>);\r\n                waveIn.StartRecording();\r\n\r\n                Thread.Sleep(1000);\r\n                \r\n                Console.Out.WriteLine(<span style=\"color:#a31515\">&quot;Stop recording.&quot;</span>);\r\n                waveIn.StopRecording();\r\n\r\n                Thread.Sleep(500);\r\n            }\r\n        }\r\n\r\n        <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> waveIn_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n        {\r\n            Console.Out.WriteLine(<span style=\"color:#a31515\">&quot;Data available&quot;</span>);\r\n            bufferedWaveProvider.AddSamples(e.Buffer, 0, e.BytesRecorded);\r\n        }\r\n    }\r\n}\r\n\r\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-07-19T13:01:32.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893042",
+    "ThreadId": "377224",
+    "Html": "<p>are you able to identify the line in the NAudio code that is hanging?</p>",
+    "PostedDate": "2012-07-30T06:40:28.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893190",
+    "ThreadId": "377224",
+    "Html": "<p>File: WaveInEvent.cs</p>\r\n<p>Method: StopRecording()</p>\r\n<p>Line: 188</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>MmException.Try(WaveInterop.waveInStop(waveInHandle), <span style=\"color: #a31515;\">\"waveInStop\"</span>);\r\n</pre>\r\n</div>\r\n<p>Build: naudio_b3a412ad55a8</p>",
+    "PostedDate": "2012-07-30T11:05:38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896034",
+    "ThreadId": "377224",
+    "Html": "<p>what soundcard are you using? That method should not hang with good soundcard drivers</p>",
+    "PostedDate": "2012-08-06T06:59:01.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "897104",
+    "ThreadId": "377224",
+    "Html": "<p>I have tested on a (Parallels) Windows 7 virtual machine on a MacBook Pro. I have not observed any other audio issues with this setup until now.</p>\r\n<p>In the meantime I have worked around this issue by separating recording and playback into different processes.</p>",
+    "PostedDate": "2012-08-08T10:28:25.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "897544",
+    "ThreadId": "377224",
+    "Html": "<p>OK, might be something strange going on with the emulated soundcard then. You ought to be able to do both at once.</p>",
+    "PostedDate": "2012-08-09T06:21:28.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "953231",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>I wrote a software with NAudio demo that <span>play steaming MP3 file.<span>&nbsp;I found that NAudio can play most of MP3 file, but can't work with some MP3 file. I checked the s<span>ampling rate and b<span>it rate of&nbsp;</span></span>MP3 files, and\r\n there are&nbsp;<span>not difference.</span></span></span></p>\r\n",
+    "PostedDate": "2012-12-07T20:53:26.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953324",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>what do you mean &quot;can't work&quot;? What error message do you get?</p>\r\n",
+    "PostedDate": "2012-12-08T09:14:44.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953438",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>1.can't work means there's no sound came out, but steaming was sending all the time.</p>\r\n<p>2.There's no error message. If I restart the NAudio, then NAudio can play steaming of the same MP3 file. It's strange.</p>\r\n",
+    "PostedDate": "2012-12-08T22:39:39.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953439",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>This is my code:</p>\r\n<p>&nbsp;private void PlayMP3Stream(byte[] mp3Bytes)&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>using (MemoryStream responseStream = new MemoryStream(mp3Bytes))&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>var readFullyStream = new ReadFullyStream(responseStream);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>frame = Mp3Frame.LoadFromStream(readFullyStream);<br>\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (decompressor == null)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>NAudio.Wave.WaveFormat waveFormat = new Mp3WaveFormat(frame.SampleRate, frame.ChannelMode == ChannelMode.Mono ? 1 : 2, frame.FrameLength, frame.BitRate);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>decompressor = new AcmMp3FrameDecompressor(waveFormat);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>this.bufferedWaveProvider = new BufferedWaveProvider(decompressor.OutputFormat); &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>this.bufferedWaveProvider.BufferDuration = TimeSpan.FromSeconds(20); // allow us to get well ahead of ourselves&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style=\"white-space:pre\">\r\n</span><span style=\"white-space:pre\"></span>//this.bufferedWaveProvider.BufferedDuration = 250;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style=\"white-space:pre\"></span>int decompressed = decompressor.DecompressFrame(frame, buffer, 0);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>bufferedWaveProvider.AddSamples(buffer, 0, decompressed);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>}&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>}</p>\r\n",
+    "PostedDate": "2012-12-08T22:41:46.69-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953440",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>&nbsp;private void udpReceive()&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>try&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>playMP3Server = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>playIPEP = new IPEndPoint(CQCCRI.Common.Utility.GetLocalIPV4Address(), Settings.Default.DefaultMulticastPort);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style=\"white-space:pre\">\r\n</span><span style=\"white-space:pre\"></span>playMP3Server.Bind(playIPEP);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>playMP3Server.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(playPoint.Address, CQCCRI.Common.Utility.GetLocalIPV4Address()));&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>playMP3Server.ReceiveTimeout = Settings.Default.PlayReceiveTimeout;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; playbackState = StreamingPlaybackState.Buffering;<br>\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; while (true)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>byte[] data = new byte[1024 * 10];&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>int length = this.playMP3Server.Receive(data);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>byte[] mp3Bytes = new byte[length];&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>Array.Copy(data, 0, mp3Bytes, 0, mp3Bytes.Length);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>PlayMP3Stream(mp3Bytes);<br>\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>catch (Exception) {&nbsp; &nbsp; &nbsp;}&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>}</p>\r\n",
+    "PostedDate": "2012-12-08T22:44:10.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953444",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>I debug the code step by step in VS2012, when NAudio stop playing steaming, I got NAudio mMException in VS.</p>\r\n",
+    "PostedDate": "2012-12-08T23:21:33.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953446",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>NAudio.MmException: AcmNotPossible calling acmStreamConvert</p>\r\n",
+    "PostedDate": "2012-12-08T23:33:44.027-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953453",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>I suspect you have a change of sample rate / channels within the file</p>\r\n<p>for each frame in your MP3 file, output to debug frame.SampleRate, and&nbsp; frame.ChannelMode , and see what the values for the one that fails are</p>\r\n",
+    "PostedDate": "2012-12-08T23:57:01.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954916",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>I traced the details of some mp3 file. when software playing one file streaming, the information of output is wired, look like the frame of the file is changed.</p>\r\n<p>SampleRate 44100 ChannelMode JointStereo BitRate 320000</p>\r\n<p>在 NAudio.MmException 中第一次偶然出现的“NAudio.dll”类型的异常</p>\r\n<p>SampleRate 44100 ChannelMode JointStereo BitRate 256000</p>\r\n<p>在 NAudio.MmException 中第一次偶然出现的“NAudio.dll”类型的异常</p>\r\n<p>SampleRate 44100 ChannelMode JointStereo BitRate 256000</p>\r\n<p>在 NAudio.MmException 中第一次偶然出现的“NAudio.dll”类型的异常</p>\r\n<p>SampleRate 44100 ChannelMode JointStereo BitRate 224000</p>\r\n<p>在 NAudio.MmException 中第一次偶然出现的“NAudio.dll”类型的异常</p>\r\n<p>SampleRate 44100 ChannelMode JointStereo BitRate 160000</p>\r\n",
+    "PostedDate": "2012-12-11T23:23:12.573-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954920",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>bitrate changing should not be a problem - that just means it is VBR. What is a problem is if samplerate or channelmode ever change during the file. If so you'd need to re-open your output device at the new sample rate and channel count and re-create the\r\n MP3 decoder. Alternatively you could resample to the desired output sample rate.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-11T23:27:33.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955950",
+    "ThreadId": "406041",
+    "Html": "\r\n<p>Thank you</p>\r\n",
+    "PostedDate": "2012-12-13T23:25:53.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1447420",
+    "ThreadId": "645908",
+    "Html": "Hello,\r<br />\n<br />\nWasapiCapture stops with the following error messag:\r<br />\nOffset and length were outside the range of the array or the number larger than the number of elements from index to the end of the withholding amount.\r<br />\n<br />\nWhat does this mean?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2015-10-07T03:43:36.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1447986",
+    "ThreadId": "645908",
+    "Html": "not seen that one before. Can you reproduce it?<br />\n",
+    "PostedDate": "2015-10-10T03:58:36.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448772",
+    "ThreadId": "645908",
+    "Html": "It seems that when the software freezes or I stop the software with a breakpoint I get this message. Also it seems to be coming from windows, because it is in the language of the windows.<br />\n",
+    "PostedDate": "2015-10-16T00:41:39.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

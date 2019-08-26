@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "656368",
+    "ThreadId": "268663",
+    "Html": "\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:#0000ff\">Please Help,</span></pre>\r\n<pre><span style=\"color:#0000ff\">    I'm using code below to play mp3 audio stream that get from database and p<span>lay it's continuously</span><span>.&nbsp;</span></span></pre>\r\n<pre><span style=\"color:#0000ff\"><span>It's look like good but I found the problem about memory leak, which the memory&nbsp;<span>increased</span>&nbsp;<span>steadily.</span></span></span></pre>\r\n<pre><span style=\"color:#0000ff\"><span><span>Has anyone ever</span>&nbsp;<span>encountered</span>&nbsp;<span>a problem like this and how to solve this problem?</span></span></span></pre>\r\n<pre><span style=\"color:#0000ff\"><br></span></pre>\r\n<pre style=\"color:black\"><span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> GetAudioFromByteArray(<span style=\"color:blue\">byte</span>[] AudioByteArrayTemp)\r\n{\r\n    DisposeWave();\r\n    MemoryStream ms = <span style=\"color:blue\">new</span> MemoryStream(AudioByteArrayTemp);\r\n    WaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(ms);\r\n    WaveStream pcm =    WaveFormatConversionStream.CreatePcmStream(mp3Reader);\r\n    blockAlignedStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(pcm);\r\n    SoundOut.OutputSound.Init(blockAlignedStream);\r\n    SoundOut.OutputSound.PlaybackStopped &#43;= <span style=\"color:blue\">new</span> EventHandler(waveOutDevice_PlaybackStopped);\r\n    SoundOut.OutputSound.Play();\r\n}\r\n\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> DisposeWave()\r\n{\r\n     <span style=\"color:blue\">if</span> (SoundOut.OutputSound != <span style=\"color:blue\">null</span>)\r\n     {\r\n         <span style=\"color:blue\">if</span> (SoundOut.OutputSound.PlaybackState == PlaybackState.Playing)\r\n         {\r\n             SoundOut.OutputSound.PlaybackStopped -= waveOutDevice_PlaybackStopped;\r\n         }\r\n         SoundOut.OutputSound.Stop();\r\n         SoundOut.OutputSound.Dispose();\r\n         SoundOut.OutputSound = <span style=\"color:blue\">null</span>;\r\n     }\r\n     <span style=\"color:blue\">if</span> (blockAlignedStream != <span style=\"color:blue\">null</span>)\r\n     {\r\n          blockAlignedStream.Dispose();\r\n          blockAlignedStream = <span style=\"color:blue\">null</span>;\r\n     }\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2011-08-11T01:08:57.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "656378",
+    "ThreadId": "268663",
+    "Html": "<p>There's no obvious memory leak there. It possibly depends on what your SoundOut class is doing. Also, is it really a memory leak? You know that .NET doesn't free up memory immediately, but only when the garbage collector runs, right?</p>",
+    "PostedDate": "2011-08-11T01:45:09.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "656389",
+    "ThreadId": "268663",
+    "Html": "<p>Thank you Mark for your reply.</p>\r\n<p>This is my SoundOut class it's just Singleton.</p>\r\n<pre>// Singleton\r\npublic sealed class SoundOut\r\n{\r\n    static DirectSoundOut outputSound = null;\r\n    static readonly object padlock = new object();\r\n\r\n    SoundOut() { }\r\n\r\n    public static DirectSoundOut OutputSound\r\n    {\r\n        get \r\n        {\r\n            lock (padlock)\r\n            {\r\n                if (outputSound == null) \r\n                { \r\n                    outputSound = new DirectSoundOut();\r\n                }\r\n                    return outputSound;\r\n            }\r\n        }\r\n            set { outputSound = value; }\r\n    }\r\n}</pre>\r\n<pre>I try to force Garbage Collection [GC.Collect()] for solve this problem but it's not decrease.</pre>\r\n<pre>I'm notice at \"GetAudioFromByteArray()\" it's not return memory after called.</pre>\r\n<pre>please suggest me.<br /></pre>\r\n<pre>Thank you very much</pre>\r\n<pre><br /></pre>\r\n<pre><br /></pre>\r\n<pre><br /></pre>",
+    "PostedDate": "2011-08-11T02:22:06.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "656390",
+    "ThreadId": "268663",
+    "Html": "<p>I'd suggest you use a memory profiler and see what is being held onto.</p>",
+    "PostedDate": "2011-08-11T02:23:50.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1016502",
+    "ThreadId": "436912",
+    "Html": "my C# GUI allows the user to press button stop or pause while the wave file is playing. how can I disable those buttons and view the play button when file ends playing ?<br />\n",
+    "PostedDate": "2013-03-16T21:23:55.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016689",
+    "ThreadId": "436912",
+    "Html": "well, I'd just disable Play after calling waveOut.Play().. Then subscribe to PlaybackStopped and you can re-enable Play there<br />\n",
+    "PostedDate": "2013-03-17T11:45:19.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

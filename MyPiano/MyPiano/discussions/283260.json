@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "713410",
+    "ThreadId": "283260",
+    "Html": "<p>I was having an issue with WaveformPainter throwing System.ArgumentOutOfRangeException when i resized my window (From bigger to smaller). I've been writting a VOIP server/client using naudio and nspeex and its working great, thanks for this great library!<br /> <br /> To duplicate the exception you have to resize the control from big to small, and the amount audio displayed needs to be greater than what can be shown when its resized. If that makes sense, haha...</p>\n<p>Anyway I added one line to the AddMax function...</p>\n<p>the change</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (insertPos &lt; maxSamples)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; samples[insertPos] = maxSample;</p>\n<p>the function with change</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void AddMax(float maxSample)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (maxSamples == 0)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // sometimes when you minimise, max samples can be set to 0<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (samples.Count &lt;= maxSamples)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; samples.Add(maxSample);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (insertPos &lt; maxSamples)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; samples[insertPos] = maxSample;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; insertPos++;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; insertPos %= maxSamples;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.Invalidate();<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> <br /> Now I dont get the exception and the WaveformPainter keeps painting normally after resizing the control. (From bigger to smaller)</p>",
+    "PostedDate": "2011-12-16T13:59:57.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713425",
+    "ThreadId": "283260",
+    "Html": "<p>Are you&nbsp; traing&nbsp; to make&nbsp; Volume meter to indicate Voice coming true</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-12-16T14:49:30.403-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713429",
+    "ThreadId": "283260",
+    "Html": "<p>I have both the VolumeMeter and WaveformPainter being utilized. I'm also using a BufferedWaveProvider to feed audio over the network. I'm also using WaveIn for capturing microphone audio along with showing its samples in a WaveformPainter also so you can  see your TX modulation...anyway to give you a better idea of what i'm doing here is a youtube video, the client in the video is actually outdated and it looks a lot different but you can see the waveform and volume meters in action @ about 15 seconds...<br /> <br /> <a href=\"http://www.youtube.com/watch?v=T1GMfsIAlIU\">http://www.youtube.com/watch?v=T1GMfsIAlIU</a></p>\n<p>&nbsp;</p>\n<p>NO, i'm not trying to detect voice with the volume meter.</p>",
+    "PostedDate": "2011-12-16T14:58:45.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713440",
+    "ThreadId": "283260",
+    "Html": "<p>I'm pretty sure I fixed a WaveformPainter resize bug similar to this in the latest code a while back, but I'll try to reproduce and if I can, I'll see if I can your fix in.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-16T15:24:05.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717282",
+    "ThreadId": "283260",
+    "Html": "<p>More info on what happened...(I am using your latest sources \"e43c857bbbe2\").<br /> <br /> First, I was not using the \"OnResize\" event of my main window. So I was never \"manually\" calling waveformPainter.Invalidate().&nbsp; I noticed by adding a call to waveformPainter.Invalidate(), in my OnWindowResize function, now the app will not have the crash as  mentioned above without the fix applied. But some visual weirdness happens. After applying the fix above, the visual weirdness doesn't happen.<br /> <br /> I'll try to throw a sample project together along with a video so show the problems I'm generating...will update this post in an hour or so ;)<br /> <br /> UPDATED---<br /> Sample Project showing bug, (plays a mp3 or wav file, generating waveform and volumemeter)<br /> <a href=\"http://kg6ypi.ath.cx/NAudioPlayer.zip\" target=\"_blank\">NAudioPlayer.zip</a><br /> <br /> Youtube video showing bug (unlisted)<br /> <a href=\"http://youtu.be/cc8kJ4GDTro\" target=\"_blank\">http://youtu.be/cc8kJ4GDTro</a></p>",
+    "PostedDate": "2011-12-26T16:20:56.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "719815",
+    "ThreadId": "283260",
+    "Html": "<p>thanks, I've put your fix into the latest source code. That class could do with a proper cleanup in the future, as I still don't think it is thread safe, but this should at least sort out your issue</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-01-03T06:39:21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

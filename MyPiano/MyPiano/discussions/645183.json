@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1445052",
+    "ThreadId": "645183",
+    "Html": "I'm working on a game engine that will read the audio files from a custom format. Can I load sound data from a custom sound format (preferably without having to modify the NAudio source)? Also can I load a regular sound file (like .wav, .ogg, etc.) and get the uncompressed, unmodified raw sound data (sound bytes, whatever it is called) and save it to a file (I need this in order to convert sound files to my custom format)?<br />\n",
+    "PostedDate": "2015-09-19T12:39:12.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1445308",
+    "ThreadId": "645183",
+    "Html": "NAudio lets you use the codecs that are on your system. So this usually means being able to play things like MP3, WMA etc. If you don't need Windows XP support, the MediaFoundationReader will probably be the easiest way to do this. There are also add-on libraries for NAudio such as NAudio.Vorbis which should help you out if you want to use something like ogg<br />\n",
+    "PostedDate": "2015-09-21T23:19:32.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

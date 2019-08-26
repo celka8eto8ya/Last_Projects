@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1356069",
+    "ThreadId": "581936",
+    "Html": "I am working on mp3 streaming and using WaveOut and BufferedWaveProvider to play mp3.How can I specify position of mp3?<br />\n",
+    "PostedDate": "2015-02-26T10:48:04.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356237",
+    "ThreadId": "581936",
+    "Html": "You'd need to buffer all the MP3 frames somehow (in memory or to a file), and then when a reposition occurs, move back to the frame that contains that time.<br />\n",
+    "PostedDate": "2015-02-26T23:33:20.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358906",
+    "ThreadId": "581936",
+    "Html": "I tried to do it with provider but it doesnt supports or contains setting position method. Is it necessary to buffer all frames or is it enough to buffer frames that just contains a specific time?<br />\n",
+    "PostedDate": "2015-03-02T10:06:01.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358908",
+    "ThreadId": "581936",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nYou'd need to buffer all the MP3 frames somehow (in memory or to a file), and then when a reposition occurs, move back to the frame that contains that time.<br />\n</blockquote>\nI tried to do it with provider but it doesnt supports or contains setting position method. Is it necessary to buffer all frames or is it enough to buffer frames that just contains a specific time?<br />\n",
+    "PostedDate": "2015-03-02T10:06:33.367-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1360119",
+    "ThreadId": "581936",
+    "Html": "well if you need to reposition to anywhere, you'd need to buffer it all to memory or disk. Look at the source code for Mp3FileReader and you'll see how it builds a table of contents of MP3 Frames, and uses that for repositioning<br />\n",
+    "PostedDate": "2015-03-05T07:56:02.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

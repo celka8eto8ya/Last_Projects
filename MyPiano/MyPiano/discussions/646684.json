@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1449815",
+    "ThreadId": "646684",
+    "Html": "I'm using the VolumeSampleProvider with WaveOutEvent to control my volume, but after gettting an external sound card with DAC, i doesn't work anymore as i now have to control the volume through the Wave Volume.\r<br />\n<br />\nBut the WaveOut has a volume property which controls it's volume through waveOutSetVolume, so why the difference and how should i control the volume with waveOutSetVolume through the VolumeSampleProvider?<br />\n",
+    "PostedDate": "2015-10-27T00:45:02.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449988",
+    "ThreadId": "646684",
+    "Html": "The volumesampleprovider is actually adjusting the value of the samples being sent to the soundcard, whilst waveOutSetVolume is adjusting whatever volume control your soundcard provider offers. For many pro audio soundcards, you don't adjust a volume on the device, you simply control the level of the samples you send to it/<br />\n",
+    "PostedDate": "2015-10-28T05:37:01.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

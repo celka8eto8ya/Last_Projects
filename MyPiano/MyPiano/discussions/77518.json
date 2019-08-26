@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "265086",
+    "ThreadId": "77518",
+    "Html": "<p>Hello,</p>\r\n<p>I'm working on a C# project now where I need to read audio from the line-in/mic and immediately stream it out as MP3 (assuming a user is connected); this is my first experience with audio in a project.&nbsp; In researching possible solutions I stumbled across NAudio.&nbsp; Can you tell me if NAudio would be a good fit for what I need to accomplish?</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you,</p>\r\n<p>Nick</p>",
+    "PostedDate": "2009-12-08T13:27:42.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "266315",
+    "ThreadId": "77518",
+    "Html": "<p>hi Nick,<br><br>NAudio can capture audio from a microphone. It cannot convert it to MP3, though, so you would probably need to use LAME.exe. You could use .NET to stream the converted MP3 over the network. You should be aware that latency will not be particularly good though (probably 100s of milliseconds before the converted audio will be heard). At the other end, there are ways of making NAudio play back MP3 from a network stream, but it is not built into the library yet<br> <br>Mark</p>",
+    "PostedDate": "2009-12-11T08:50:43.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

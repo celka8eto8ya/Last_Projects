@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1443562",
+    "ThreadId": "644717",
+    "Html": "Hi team,\r<br />\n<br />\nI have developed NAudio waveoutevent player. It's working good. If i play  sounds some sounds volume is too high and the another one is low . So, I want to play all sounds in same volume .  Please help to do this ..\r<br />\n<br />\n<br />\n<br />\nThanks \r<br />\nAthiVarathan.<br />\n",
+    "PostedDate": "2015-09-08T03:54:10.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443831",
+    "ThreadId": "644717",
+    "Html": "Normalize all your wavestreams and mix them together before playback<br />\n",
+    "PostedDate": "2015-09-09T16:40:11.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

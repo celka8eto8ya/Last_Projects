@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "933992",
+    "ThreadId": "401167",
+    "Html": "\r\n<p>As far as I can tell, there is not much in the way of DMO and ACM wrappers for .NET. NAudio already has a lot of the functionality necessary instantiate those creatures. How would you feel about expanding NAudio's support of DMO to determine what audio items\r\n can be encoded/decoded using DMO? From there we would move on to video decoding. I recognize that's a significant jump in scope but would love the ability to decode video frames the same way NAudio does MP3 frames currently. No visual video rendering would\r\n be needed (as I would intend to use WriteableBitmapEx, etc.) Thoughts?</p>\r\n",
+    "PostedDate": "2012-10-29T15:04:57.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "934750",
+    "ThreadId": "401167",
+    "Html": "<p>NAudio includes complete wrapping of the ACM API so you can use any ACM codec.</p>\r\n<p>As for DMOs, I've provided wrappers for two - the managed resampler and the MP3 decoder. Both of these took ages, and I struggled to find the information I wanted on how they were supposed to be used. I'd love for NAudio to be able to offer you the ability to use any DMO installed on your system (and also there is now MFT as well). However, I am not currently working on this, but I am open to contributions in this area.</p>",
+    "PostedDate": "2012-10-31T06:50:04.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

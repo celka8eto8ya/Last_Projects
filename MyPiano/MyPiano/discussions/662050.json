@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1494279",
+    "ThreadId": "662050",
+    "Html": "I'm totally new to the audio processing area so am hoping this won't be too painful.  I need to count a series of  beeps at the start of a .wav file and the end time of the last beep in the series.    Beeps are 3300Hz and150ms length with a 150ms delay in between.  I looked through the SampleAggregator class in the demo but am a bit stumped with what to do with it and what a FFT does.  File details below.\r<br />\n<br />\nOpening C:\\Video Analysis\\REC004.wav\r<br />\nPcm 16000Hz 2 channels 16 bits per sample\r<br />\nExtra Size: 0 Block Align: 4 Average Bytes Per Second: 64000\r<br />\nWaveFormat: 16 bit PCM: 16kHz 2 channels\r<br />\nLength: 43268808 bytes: 00:11:16.0750000 \r<br />\nChunk: LIST, length 26\r<br />\n49 4E 46 4F 49 53 46 54 0E 00 00 00 4C 61 76 66 35 37 2E 35 36 2E 31 30 30 00 <br />\n",
+    "PostedDate": "2017-03-18T05:38:11.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

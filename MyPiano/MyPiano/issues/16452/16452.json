@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi,\r\n\r\nI can successfully record audio coming from a TAPI device. I'm using the WaveInEvent as I'm doing it in a service but I have observed the same issue now with the Recording Demo program using WaveIn. When I shut the application down the process is still resident and can't even be killed through task manager or even the taskkill command utility. Within Visual Studio, ending the program still leaves it running. The thread debug window shows nothing when doing \"Debug -> Break All\" so there appears to be nothing running. It would appear that something is locked somewhere to the process but I can't trace it. If I record a standard audio card everything is fine. \r\n\r\nIs there anyway to trace this type of issue as I guess something in the Interop layer is playing up?",
+    "LastUpdatedDate": "2014-09-08T09:19:06.48-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-09-08T09:19:06.48-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Issues with recording TAPI devices",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16452
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

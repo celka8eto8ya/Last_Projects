@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1094335",
+    "ThreadId": "457390",
+    "Html": "Hi guys,\r<br />\n<br />\nI found a problem and cannot solve it, this code works perfectly in Windows Application, but not in Web Application, and still can't figure out why. I used source code from NAudioDemo - FadeInOutDemo, and this is the code:\r<br />\n<br />\nprivate IWavePlayer wavePlayer;\r<br />\nprivate AudioFileReader file;\r<br />\nprivate FadeInOutSampleProvider fadeInOut;\r<br />\nprivate string fileName = &quot;C:\\music\\intro.mp3&quot;;\r<br />\n<br />\nprotected void Page_Load(object sender, EventArgs e)<br />\n<pre><code>    {\n        if (!Page.IsPostBack)\n        {\n            Debug.Assert(this.wavePlayer == null);\n            this.wavePlayer = new WaveOutEvent();\n            this.file = new AudioFileReader(fileName);\n            this.fadeInOut = new FadeInOutSampleProvider(file);\n            this.wavePlayer.Init(new SampleToWaveProvider(fadeInOut));\n            this.wavePlayer.Play();\n            timer1.Enabled = true;\n        }\n    }</code></pre>\n\nprotected void timer1_Tick(object sender, EventArgs e)<br />\n<pre><code>    {\n        if (fadeInOut != null)\n        {\n            fadeInOut.BeginFadeOut(5000);\n        }\n        timer1.Interval = 150000;\n    }\n</code></pre>\n\nI am still not sure why does FadeOut only occurs in desktop app and not in web app, I appreciate your help.<br />\n",
+    "PostedDate": "2013-09-19T00:07:49.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094336",
+    "ThreadId": "457390",
+    "Html": "what sort of timer are you using? It it relies on windows messages (Windws.Forms.Timer) it will never tick in a web app<br />\n",
+    "PostedDate": "2013-09-19T00:09:47.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094340",
+    "ThreadId": "457390",
+    "Html": "Hi Mark,\r<br />\n<br />\nTimer is Ajax extension and it is ticking without problem, I just got figured out what is the true problem - PageUnloadEvent is firing even if page is not unloaded, I have to figure out why is it happening, because when PageUnload event is executed fadeInOut change it's value to null, but song is still playing without problems.<br />\n",
+    "PostedDate": "2013-09-19T00:22:27.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094344",
+    "ThreadId": "457390",
+    "Html": "Also want to say fadeOut is working when I call it from PageUnload event, so it is not a problem with NAudio, there is another problem.\r<br />\n<br />\nBest regards,\r<br />\nVlad<br />\n",
+    "PostedDate": "2013-09-19T00:25:33.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094358",
+    "ThreadId": "457390",
+    "Html": "Hi Mark,\r<br />\n<br />\nI found out that Unload event is part of the page life cycle, and it's normal that Unload event is raised after the page has been fully rendered, so I will always got fadeInOut equals null no matter what event is raised next. Do you have some aspnet example of FadeInOut?\r<br />\n<br />\nBest regards,\r<br />\nVlad<br />\n",
+    "PostedDate": "2013-09-19T00:58:46.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

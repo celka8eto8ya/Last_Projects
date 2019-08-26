@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1487953",
+    "ThreadId": "659414",
+    "Html": "Hi, \r<br />\nI am new to NAudio as well as WASAPI. I was looking for some more details about the IAudioCaptureClient, e.g. when will the GetNextPacketSize will return 0?\r<br />\nI have also posted a question on stackoverflow (<a href=\"http://stackoverflow.com/questions/40586895/when-does-wasapi-getnextpacketsize-return-0\" rel=\"nofollow\">http://stackoverflow.com/questions/40586895/when-does-wasapi-getnextpacketsize-return-0</a>).\r<br />\n<br />\nAlso why the WaveFileWriter doesnt implement the Seek method?<br />\n",
+    "PostedDate": "2016-11-15T09:59:41.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488290",
+    "ThreadId": "659414",
+    "Html": "You've got a good answer to your first question on StackOverflow\r<br />\nFor the second question, <code>WaveFileWriter</code> is intended to create new WAV files, so there is no need to seek.<br />\n",
+    "PostedDate": "2016-11-18T01:54:27.177-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488440",
+    "ThreadId": "659414",
+    "Html": "In case one is making a recording app, one use case scenario can be that the user may want to record then seek back (reverse) and overwrite a part which he wants to be corrected. This may require seek in the WaveFileWriter. <br />\n",
+    "PostedDate": "2016-11-20T21:25:27.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

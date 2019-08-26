@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "846107",
+    "ThreadId": "358739",
+    "Html": "\r\n<p>[this is my first CodePlex Message and maybe I'm ignoring something. Hope not to bother]</p>\r\n<p>I'm looking for a NAudio Reference with packages, classes an Members and so on, but can't find out.</p>\r\n<p>Does it exist?</p>\r\n",
+    "PostedDate": "2012-06-07T08:48:35.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847361",
+    "ThreadId": "358739",
+    "Html": "<p>NAudio has XML documentation on all public classes and methods, but this hasn't been compiled into a separate document unfortunately.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-06-11T02:59:58.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847483",
+    "ThreadId": "358739",
+    "Html": "<p>I see, Mark.</p>\r\n<p>So It's much better work with Source rather than compiled .dll</p>\r\n<p>I'd like to put my hands on explore and generating Sounds. An old vague quirk since I got half deaf.</p>\r\n<p>Thank you.</p>\r\n<p>dan</p>",
+    "PostedDate": "2012-06-11T07:19:47.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847486",
+    "ThreadId": "358739",
+    "Html": "<p>Visual Studio will show the help as intellisense, so long as the NAudio.XML file is in the same folder as NAudio.dll</p>",
+    "PostedDate": "2012-06-11T07:20:57.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

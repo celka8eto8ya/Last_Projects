@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "711216",
+    "ThreadId": "282726",
+    "Html": "\r\n<p>Crosspost from here:&nbsp;<a href=\"http://stackoverflow.com/questions/8461941/naudio-nullreferenceexception-when-using-a-start-stop-button\">http://stackoverflow.com/questions/8461941/naudio-nullreferenceexception-when-using-a-start-stop-button</a></p>\r\n<p>I have a GUI form with a checkbox button for Start/Stop. When the program starts, clicking Start and Stop works once. When I try and click Start again after I stop the recording, I get a NullReferenceException:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>An unhandled exception of type <span style=\"color:#a31515\">'System.NullReferenceException'</span> occurred <span style=\"color:blue\">in</span> NAudio.dll\r\n\r\nAdditional information: Object reference not <span style=\"color:blue\">set</span> to an instance of an <span style=\"color:blue\">object</span>.\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>at this line in my Program.cs file:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>Application.Run(<span style=\"color:blue\">new</span> GUI());\r\n\r\n</pre>\r\n</div>\r\n<p>Here is my Start/Stop button in my GUI form:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>    <span style=\"color:blue\">public</span> GUI()\r\n    {\r\n        InitializeComponent();\r\n        InitializeAudio();\r\n    }\r\n\r\n    <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> btnStartStop_CheckedChanged(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n    {\r\n        <span style=\"color:blue\">if</span> (btnStartStop.Checked)\r\n        {\r\n            waveInDevice.StartRecording();\r\n            waveOutDevice.Play();\r\n            btnStartStop.Text = <span style=\"color:#a31515\">&quot;Stop&quot;</span>;\r\n        }\r\n        <span style=\"color:blue\">else</span>\r\n        {\r\n            btnStartStop.Text = <span style=\"color:#a31515\">&quot;Start&quot;</span>;\r\n            waveInDevice.StopRecording();\r\n            waveOutDevice.Stop();\r\n        }\r\n    }\r\n\r\n    <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> InitializeAudio()\r\n    {\r\n        buffer = <span style=\"color:blue\">new</span> BufferedWaveProvider(waveInDevice.WaveFormat);\r\n        buffer.DiscardOnBufferOverflow = <span style=\"color:blue\">true</span>;\r\n        waveInDevice.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveInDevice_DataAvailable);\r\n        waveOutDevice.Init(buffer);\r\n    }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Could anyone have any advice as to why this is happening?</p>\r\n",
+    "PostedDate": "2011-12-12T19:34:33.467-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713221",
+    "ThreadId": "282726",
+    "Html": "<p>have you tried with the latest code from source control?</p>",
+    "PostedDate": "2011-12-16T06:48:57.223-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

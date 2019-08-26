@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "501776",
+    "ThreadId": "229477",
+    "Html": "<p>Hi,</p>\r\n<p>I have managed to get mp3 files streaming to Apple Airport Express devices using a combination of NAudio and JustePort.</p>\r\n<p>It is a small part of a much larger distributed audio project I am working on, but if anyone is interested in wanting to&nbsp;play various sound formats using their Aiport Express without iTunes, I have working code.</p>\r\n<p>Cheers</p>",
+    "PostedDate": "2010-10-03T17:36:51.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "502634",
+    "ThreadId": "229477",
+    "Html": "<p>cool, glad you got it all working</p>",
+    "PostedDate": "2010-10-05T11:09:27.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "895931",
+    "ThreadId": "229477",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>trentdevers wrote:</strong><br />\r\n<p>Hi,</p>\r\n<p>I have managed to get mp3 files streaming to Apple Airport Express devices using a combination of NAudio and JustePort.</p>\r\n<p>It is a small part of a much larger distributed audio project I am working on, but if anyone is interested in wanting to&nbsp;play various sound formats using their Aiport Express without iTunes, I have working code.</p>\r\n<p>Cheers</p>\r\n</blockquote>\r\n<p>Hi!</p>\r\n<p>I also make JustePort + NAudio )) and it work, but i search solution how decode .m4a files to stream, because MP4.cs not work.</p>",
+    "PostedDate": "2012-08-06T02:09:41.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

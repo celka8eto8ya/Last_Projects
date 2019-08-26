@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "599285",
+    "ThreadId": "254385",
+    "Html": "\r\n<p>Before I begin please let me apologise in advance if this topic has been covered elsewhere, although I have had a good look and not found exactly what I need to know.</p>\r\n<p>I've been using NAudio to create an app for browsing and previewing audio samples when composing music, mainly to exercise my programming (I've only been coding for about a year), and NAudio has proved invaluable. I've created a class to parse the ACID chunk\r\n data available in some wav samples, which so far reads and writes ACID info to any wavs which already have the chunk present. Unfortunately I haven't been able to append new chunk data to wavs which do not have an ACID chunk. I was wondering if there are any\r\n NAudio specific methods which would help with this? I've browsed the source pretty carefully, but being fairly new to this there is always a good chance I've missed something. I have found this topic http://stackoverflow.com/questions/1550819/how-to-write-cues-markers-to-a-wav-file-in-net\r\n which helped me come up with the following:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>            FileStream fs;\r\n            BinaryWriter bw;\r\n\r\n            <span style=\"color:blue\">if</span> (_chunkExists)\r\n            {\r\n                <span style=\"color:green\">//update current chunk from chunk position</span>\r\n                <span style=\"color:blue\">try</span>\r\n                {                   \r\n                    fs = <span style=\"color:blue\">new</span> FileStream(_fileName, FileMode.Open);\r\n                    fs.Position = _chunkPosition;\r\n                    bw = <span style=\"color:blue\">new</span> BinaryWriter(fs);\r\n                    bw.Write(chunkData, 0, chunkData.Length);\r\n                    bw.Close();\r\n                    fs.Dispose();\r\n               \r\n                }\r\n                <span style=\"color:blue\">catch</span> (Exception e)\r\n                {\r\n                    <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> AcidTagException(<span style=\"color:#a31515\">&quot;Failed to update ACID chunk&quot;</span>, e);\r\n                }\r\n            }\r\n            <span style=\"color:blue\">else</span>\r\n            {\r\n                <span style=\"color:green\">//append chunk to file</span>\r\n                <span style=\"color:blue\">try</span>\r\n                {\r\n                    <span style=\"color:green\">//this is writing to the file - read only files throw an exception - but the tag is not visible.</span>\r\n                    <span style=\"color:green\">//is it a formatting problem (of the chunk itself) or because it's appending the chunk at the end?</span>\r\n                    fs = <span style=\"color:blue\">new</span> FileStream(_fileName, FileMode.Append, FileAccess.Write);\r\n                    bw = <span style=\"color:blue\">new</span> BinaryWriter(fs);\r\n                    <span style=\"color:blue\">char</span>[] acid = <span style=\"color:blue\">new</span> <span style=\"color:blue\">char</span>[4] {<span style=\"color:#a31515\">'a'</span>, <span style=\"color:#a31515\">'c'</span>, <span style=\"color:#a31515\">'i'</span>, <span style=\"color:#a31515\">'d'</span> };\r\n                    bw.Write(acid, 0, 4); <span style=\"color:green\">//chunk Id</span>\r\n                    bw.Write((<span style=\"color:blue\">int</span>)24); <span style=\"color:green\">//chunk Size</span>\r\n                    bw.Write(chunkData, 0, chunkData.Length); <span style=\"color:green\">//chunk data</span>\r\n                    bw.Close();\r\n                    fs.Dispose();\r\n                    \r\n                }\r\n                <span style=\"color:blue\">catch</span> (Exception e)\r\n                {\r\n                    <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> AcidTagException(<span style=\"color:#a31515\">&quot;Failed to Write ACID chunk&quot;</span>, e);\r\n                }\r\n                _chunkExists = <span style=\"color:blue\">true</span>;\r\n            }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>it works when updating an existing chunk, but appending to a file appears not to work. I'm fairly certain it writes data to the file, as attempting to write to a read-only wav throws an exception, but reparsing the wav file states that there is no ACID data\r\n available. Any advice would be hugely appreciated. :D</p>\r\n<p>TIA</p>\r\n",
+    "PostedDate": "2011-04-18T11:33:03.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601067",
+    "ThreadId": "254385",
+    "Html": "<p>Yes, this is a feature we could do with improving in NAudio. The WaveFileWriter class shows how to write a fact chunk, but doesn't currently support adding any other chunks. I'll put it on my list for NAudio 1.5.</p>\r\n<p>I'm impressed if you've managed to parse ACID. A while ago I attempted to decipher the strc chunks and never worked it out completely (look in WaveFileInspector.cs)</p>",
+    "PostedDate": "2011-04-21T08:51:54.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601157",
+    "ThreadId": "254385",
+    "Html": "<p>Ah, well I'm glad I'm not being completely blind :)</p>\r\n<p>I had noticed the strc chunk code, which was in fact what pointed me to the BitConverter class (still learning a lot of this). As I understand it these chunks are needed to truely 'acidize' a wave file, as well as the Acid chunk, and wavs without it can have compatability problems in some software. The AcidTag class in it's current state doesn't have a problem with this as it only updates existing Acid chunks (and therefore wavs which should have existing strc chunks - which remain untouched), but when it comes to appending a new chunk I figure a new strc chunk will need to be added too. Even if you manage to fully decipher the strc I'm not sure how easy it would be to create without either a fairly complex gui or some sort of transient detection to split the file at it's peaks. I did have some half brained idea about taking the length of the file and dividing it by the number of/double the number of beats stored in the Acid chunk, but this is making some huge assumptions, least of all that the number of beats has even been filled in by the user, let alone that this would be enough information to qualify as a proper strc chunk. Seeing as the class does enough for me now (my browser app is stable enough to actually be useful - but is far from releasable) I'm happy to share it with anyone else who may have a use for it.</p>\r\n<p>It can be downloaded <a href=\"http://djfallen.com/AcidTag.zip\">here</a>.</p>\r\n<p>There are probably a few improvements to be made to error checking/handling, and of course it doesn't properly append new chunks, but it should at least help detail some of what goes on in the Acid chunk, as this information seems pretty darn hard to track down.</p>\r\n<p>Thanks for the input</p>\r\n<p>Matt</p>",
+    "PostedDate": "2011-04-21T11:17:06.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602373",
+    "ThreadId": "254385",
+    "Html": "<p>thanks for sharing, looks useful.</p>",
+    "PostedDate": "2011-04-25T05:07:34.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352709",
+    "ThreadId": "254385",
+    "Html": "Hi guys, sorry to reply on old thread but this was only information I could find on acid wavs.\r<br />\n<br />\nI wanted to ask, did you in the meantime found a way to decrypt strc or bmrk chunks?<br />\n",
+    "PostedDate": "2015-02-14T16:22:00.31-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1353097",
+    "ThreadId": "254385",
+    "Html": "I'm afraid I don't have any further information on this. Sadly it is not an open format.<br />\n",
+    "PostedDate": "2015-02-16T07:54:56.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

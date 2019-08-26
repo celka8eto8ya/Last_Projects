@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1012395",
+    "ThreadId": "435909",
+    "Html": "Does anyone know how to do a &quot;Normal&quot; Bank select in code? \r<br />\n<br />\nI can do a Controller 0 select:\r<br />\nControlChangeEvent BSelect = new ControlChangeEvent(AbsoluteTime, Channel, (MidiController)0, BankNumber);\r<br />\n<br />\nAnd a Controller 32 works the same way.\r<br />\n<br />\nBut the &quot;Normal&quot; method eludes me.  I've seen conflicting expanations of it, but the latest was &quot;send a 0 and Bank number, then a 32 and Patch number.  I tried\r<br />\n<br />\nControlChangeEvent BSelect1 = new ControlChangeEvent(AbsoluteTime, Channel, (MidiController)0, BankNumber);\r<br />\nTracks.AddEvent(BSelect1, TrackNumber);\r<br />\nControlChangeEvent BSelect2 = new ControlChangeEvent(AbsoluteTime+1, Channel, (MidiController)32, PatchNumber);\r<br />\n Tracks.AddEvent(BSelect2, TrackNumber);\r<br />\n<br />\nbut that didn't work.\r<br />\n<br />\nAny ideas?<br />\n",
+    "PostedDate": "2013-03-08T08:01:56.547-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1013558",
+    "ThreadId": "435909",
+    "Html": "If you are able to find or create a MIDI file that contains a correct bank change, then you can use NAudio to read it and see what messages it contains<br />\n",
+    "PostedDate": "2013-03-11T14:50:27.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1013608",
+    "ThreadId": "435909",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nIf you are able to find or create a MIDI file that contains a correct bank change, then you can use NAudio to read it and see what messages it contains<br />\n</blockquote>\nI'll see what I can find.  Thanks.\r<br />\n<br />\nBut I think the mistake I made is not doing an atual PatchChange event after the 0 &amp; 32.  <br />\n",
+    "PostedDate": "2013-03-11T17:06:38.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

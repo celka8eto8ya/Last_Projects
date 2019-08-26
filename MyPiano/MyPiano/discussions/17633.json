@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "57494",
+    "ThreadId": "17633",
+    "Html": "\r\nHi there! <br /><br />I need an exmple code to write a midi file. <br />I try to save a midi like this: <br /><br />Play in Channel 1 (piano) the note C for 3 seconds and stop.<br />Play in Channel 2 (bass) the note G for 4 seconds and stop.<br />Set the BPM of the midi file = 120<br />Save the midi.<br /><br />Thanks!<br />",
+    "PostedDate": "2007-11-09T06:08:45.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "57604",
+    "ThreadId": "17633",
+    "Html": "\r\nHi Sanko<br /><br />You create a MidiEventCollection and add MidiEvents to it. For example...<br /><br />MidiEventCollection collection = new MidiEventCollection(0, 120);<br />collection.AddEvent(new TextEvent(\"Test\", MetaEventType.TextEvent, 0), 0);<br />collection.AddEvent(new NoteOnEvent(0, 1, 30, 100, 15), 1);<br />collection.AddEvent(new NoteOnEvent(15, 1, 30, 100, 15), 1);<br />collection.AddEvent(new NoteOnEvent(30, 1, 30, 100, 15), 1);<br />collection.AddEvent(new NoteOnEvent(0, 10, 60, 100, 15), 10);<br />collection.AddEvent(new NoteOnEvent(15, 10, 60, 100, 15), 10);<br />collection.AddEvent(new NoteOnEvent(30, 10, 60, 100, 15), 10);<br />collection.PrepareForExport();<br /><br />then you can export them to a Midi File as follows:<br /><br />MidiFile.Export(destFileName, outputFileEvents);<br /><br />hope this helps. feel free to ask further questions<br /><br />Mark<br />",
+    "PostedDate": "2007-11-09T14:48:47.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "57669",
+    "ThreadId": "17633",
+    "Html": "\r\nThank you for your time and effort.<br />",
+    "PostedDate": "2007-11-10T07:00:03.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1015084",
+    "ThreadId": "436593",
+    "Html": "Hi,\r<br />\n<br />\nI'm beginner to NAudio. I'm working on tutorial 6 ... and made some change to test.\r<br />\n<br />\nSo, i now have sourceStream_DataAvailable handler that fire event on a microphone source stream.\r<br />\n<br />\nI implement a TestWaveStream derived from WaveStream. My sourceStream_DataAvailable handler Send his recorded buffer to TestWaveStream .... (i'll add effect here in the future)\r<br />\n<br />\nThen i have a WaveOut Stream linked to TestWaveStream. In the read function, i want to pass the data that i previously aquire in sourceStream_DataAvailable.\r<br />\n<br />\nfor both stream in and out, i 'm using WaveFormat 16000Khz, 16 bits, one channel.\r<br />\n<br />\nHere, i have a problem because in the Read function, lenght are not the same for in and out.\r<br />\nI mean : the buffer in sourceStream_DataAvailable has a 3200 bytes lenght and in the read function, the argument buffer has a 2560 bytes lenght and a 1280 offset. So i don't understand why the buffer in the read function doesn't has a lenght of 3200, then i could copy input buffer to output one directly.\r<br />\n<br />\nDid i miss something ? could someone explain me ?\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2013-03-14T02:27:03.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015285",
+    "ThreadId": "436593",
+    "Html": "The buffer sizes of record and playback may not be the same. Use a BufferedWaveProvider for an easy way round this. Add audio as you receive it into the buffered wave provider.<br />\n",
+    "PostedDate": "2013-03-14T07:25:40.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015510",
+    "ThreadId": "436593",
+    "Html": "Thank you for your quick and nice answer, it runs perfectly.\r<br />\n<br />\nI have another question : When streaming Mic to loudspekaer, the volume is really low compared with playing mp3.\r<br />\n<br />\nI implement a MixerLine to control microphone level, it works fine in certains limits\r<br />\n<br />\nI also implement &quot;waveOutSetVolume&quot; from &quot;winmm.dll&quot;, it works but not as fine as i expected. Level is not very high.\r<br />\n<br />\nSo using the solution you gave i multiplicate every samples in the buffer (converting to int16, multiplicate,reconvert to byte array) by a defined value before passing it to  BufferedWaveProvider  . It seems to give good results but i'm not really sure it is a good way.\r<br />\n<br />\nI red about WaveChannel32 here : <a href=\"http://naudio.codeplex.com/discussions/264096\" rel=\"nofollow\">http://naudio.codeplex.com/discussions/264096</a> but i didnt understand how to adjust volume using it ... and i didnt find more informations.\r<br />\n<br />\nCould you please tell me which way is the best ? or is there another one i didn't found ?\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2013-03-14T12:37:41.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016970",
+    "ThreadId": "436593",
+    "Html": "WaveChannel32 adjusts the volume of each individaul sample as it passes through. 1.0 means no change, 0.0 means silence, and 2.0 will double the amplitude of each sample, although you risk clipping.\r<br />\n<br />\nWaveChannel32 is probably a bit cumbersome. I'd use the Wave16ToSampleProvider and then a VolumeSampleProvider before finally a SampleToWaveProvider16 at the end efore playback.<br />\n",
+    "PostedDate": "2013-03-18T04:24:36.22-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

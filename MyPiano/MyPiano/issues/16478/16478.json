@@ -1,0 +1,51 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi,\r\n\r\nI made a new winform waveformpainter control, see file attached. Perhaps you want to include it Mark.\r\n\r\nKind regards\r\nFreefall",
+    "LastUpdatedDate": "2015-07-09T09:18:04.77-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-06-27T12:12:33.843-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "StereoWaveformPainter winforms control",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16478
+  },
+  "FileAttachments": [
+    {
+      "FileId": 1465567,
+      "FileName": "StereoWaveformPainter.cs",
+      "DownloadUrl": ".\\1465567"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "thanks, although am avoiding adding any new GUI components (especially WinForms) to NAudio. Probably a better idea would be to put in an extra demo page in the NAudioDemo to show off how to use it.",
+      "PostedDate": "2015-07-09T09:18:04.77-07:00",
+      "Id": 187074
+    }
+  ]
+}

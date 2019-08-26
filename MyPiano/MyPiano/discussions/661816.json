@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1493819",
+    "ThreadId": "661816",
+    "Html": "Hi Guys,\r<br />\nFirst, cudos to Mark H and the other contributors who did the MediaFoundationReader development. Nice job.  And with the addition of HTTPS support, it's making the .Net MediaPlayer look very lame by comparison.\r<br />\n<br />\n<br />\nI'm getting the error below on AIFF files. The test file plays fine with standard .Net MediaPlayer class. But  MediaFoundationReader blows up. And the same exact code path works fine with Mp3, Wma, and Wav files.<br />\n<ul>\n<li>\nHas anyone successfully tested AIFF with MediaFoundationReader ?<br />\n</li>\n</ul>\n<pre><code>error message: The byte stream type of the given URL is unsupported. (Exception from HRESULT: 0xC00D36C4) \nstack trace\n   at NAudio.MediaFoundation.MediaFoundationInterop.MFCreateSourceReaderFromURL(String pwszURL, IMFAttributes pAttributes, IMFSourceReader&amp; ppSourceReader)\n   at NAudio.Wave.MediaFoundationReader.CreateReader(MediaFoundationReaderSettings settings)\n   at NAudio.Wave.MediaFoundationReader.Init(MediaFoundationReaderSettings initialSettings)\n   at NAudio.Wave.MediaFoundationReader..ctor(String file)\n   at Breakthru.DXSound.SecondaryBufferNA.CreateInputStream(String fileName) in C:\\1-DEV\\CS2015\\SoundDX\\SoundDX\\SecondaryBufferNA.cs:line 438\n   at Breakthru.DXSound.SecondaryBufferNA.CreateAndInitializeSoundBuffer() in C:\\1-DEV\\CS2015\\SoundDX\\SoundDX\\SecondaryBufferNA.cs:line 318\n</code></pre>\n\nMy code looks essentially like this:<br />\n<pre><code>        WaveOut waveOutDevice = new WaveOut()\n                {\n                    DesiredLatency = 100,\n                    NumberOfBuffers = 2,\n                };\n        WaveChannel32 inputStream = null;\n                WaveStream mediaFileReader;\n                mediaFileReader = new MediaFoundationReader(fileName); \n                inputStream = new WaveChannel32(mediaFileReader);\n                waveOutDevice.Init(inputStream);  &lt;== program gets above exception on this call\n                </code></pre>\n\n",
+    "PostedDate": "2017-03-09T11:42:05.883-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493866",
+    "ThreadId": "661816",
+    "Html": "NAudio contains an AiffFileReader class, which you can use alternatively<br />\n",
+    "PostedDate": "2017-03-10T01:50:39.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493870",
+    "ThreadId": "661816",
+    "Html": "Hi Freefall, thanks for the reply.\r<br />\nYeah, I get the same error from the AiffFileReader. So maybe it's something weird about the Aiff file I'm testing with. Or maybe the Klite codec package configuration on my system is blocking aiffs.  \r<br />\n",
+    "PostedDate": "2017-03-10T03:51:00.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494043",
+    "ThreadId": "661816",
+    "Html": "Then I assume it´s probably some kind of corrupt or experimental aiff file<br />\n",
+    "PostedDate": "2017-03-14T09:40:51.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

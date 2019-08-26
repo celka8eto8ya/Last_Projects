@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "857786",
+    "ThreadId": "362085",
+    "Html": "\r\n<p>I am converting MP3 file to Wave file in my MVC Project, if i hard code my file name it is doing properly, but my path should be dynamic one, for example, i am using file uploader, from browser user can select a file and press upload button, in my controller\r\n i am doing the conversion, so here my path is dynamic one and also i will not get the full client path, so what is the solution to do in this manner. Code will work properly in WPF, but i need to do in MVC, what is the chance?</p>\r\n",
+    "PostedDate": "2012-07-05T04:16:45.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

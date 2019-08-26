@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "794961",
+    "ThreadId": "341115",
+    "Html": "\r\n<p>Hi, I'm using NAudio's WaveViewer control to show waveform of a file. I can play this file. But now I want to make an indicator which shows which part of wave is currently being played.</p>\r\n<p>I'll try to make myself clearer.</p>\r\n<p>Imagine that you have WaveViewer. You click PLAY button, and then the file is being played. What's more, you can see a vertical line(on waveViewer)&nbsp;that moves while the file is played. It indicates a current position. I hope you know what I mean. I\r\n just don't know how to obtain current position of played file. All the changes in WaveViewer I'm gonna do by myself. But how do I know, what sample is currently being played?</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-02-22T07:03:31.297-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "795026",
+    "ThreadId": "341115",
+    "Html": "<p>The simplest way is to have a timer that fires say 10 times a second, and uses the CurrentPosition property of the WaveFileReader/Mp3FileReader to find out where we are up to. There are more accurate ways using the waveOutGetposition API, but this is usually fine for most applications.</p>",
+    "PostedDate": "2012-02-22T07:21:33.453-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799251",
+    "ThreadId": "341115",
+    "Html": "<p>OK, I have done this, but this method is rather slow. While playing, I can hear something like ticks. This is my code.</p>\n<p>(These ticks are only when I draw the line. The line is drawn on WaveViewer. In other words WaveViewer is parent of the line).</p>\n<div style=\"background-color: white; color: black;\">\n<pre><span style=\"color: green;\">//indicatorTimer is a dispatcherTimer with interval set to 100</span>\r\n<span style=\"color: green;\">//indicator is Microsoft.VisualBasic.PowerPacks.LineShape</span>\r\n\r\n<span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> indicatorTimer_Tick(<span style=\"color: blue;\">object</span> sender, EventArgs args)\r\n{\r\n    <span style=\"color: blue;\">if</span> (indicator.Visible)\r\n    {\r\n        <span style=\"color: blue;\">int</span> ms = (waveStream.CurrentTime.Minutes * 60 * 1000) + (waveStream.CurrentTime.Seconds * 1000) + waveStream.CurrentTime.Milliseconds;\r\n        <span style=\"color: blue;\">int</span> x = (ms * (waveStream.WaveFormat.SampleRate / 1000)) / samplesPerPixel;\r\n        DrawIndicator(x);\r\n        lastX = x;\r\n    }\r\n\r\n    <span style=\"color: blue;\">if</span> (OnPlayProgress != <span style=\"color: blue;\">null</span>) OnPlayProgress(<span style=\"color: blue;\">this</span>, waveStream.CurrentTime);\r\n    <span style=\"color: blue;\">if</span> (waveStream.TotalTime == waveStream.CurrentTime) indicatorTimer.Stop();\r\n}\r\n\r\n<span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> DrawIndicator(<span style=\"color: blue;\">int</span> x)\r\n{\r\n    indicator.X1 = x;\r\n    indicator.X2 = x;\r\n}\r\n\r\n<span style=\"color: green;\">//in OnPlayProgressEvent I have only one line of code:</span>\r\ntimeLabel.Text = String.Format(<span style=\"color: #a31515;\">\"{0:00}:{1:00}\"</span>, currentTime.Minutes, currentTime.Seconds);<br /><br /><br /></pre>\n</div>",
+    "PostedDate": "2012-02-24T02:20:48.373-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799268",
+    "ThreadId": "341115",
+    "Html": "<p>how are you setting the interval? should be using TimeSpan.FromMilliseconds(100); Try 500ms as well if you are still getting perf issues</p>\r\n<p>Also what is your OnPlayProgress handler doing?</p>\r\n<p>you can optimise ms calcualtion by using</p>\r\n<pre>waveStream.CurrentTime.TotalMilliseconds<br /></pre>",
+    "PostedDate": "2012-02-24T02:35:13.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799311",
+    "ThreadId": "341115",
+    "Html": "<p>Interval is set in constructor, and timer is stopped.</p>\r\n<p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><font face=\"Consolas\" size=\"2\">\r\n<p>indicatorTimer.Interval = <span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">TimeSpan</span></span></span></p>\r\n</font></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">.FromMilliseconds(100);</span></span></span></span></span></span></span></span></p>\r\n</p>\r\n<p>With interval set to 500 performance is so much better. But now I suffer from lack of indicator smoothness ;)<br />I've changed my calculating as you said. I'm new in C# and didn't know what TotalMiliseconds actually returns.</p>\r\n<p>OnPlayProgress handler is just as I wrote:<br />timeLabel.Text = String.Format(<span style=\"color: #a31515;\">\"{0:00}:{1:00}\"</span>, currentTime.Minutes, currentTime.Seconds);<br /><br />It looks like client will have to chose: smoothnes or no ticks.</p>",
+    "PostedDate": "2012-02-24T03:06:06.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799335",
+    "ThreadId": "341115",
+    "Html": "<p>I'm surprised this is hurting performance that badly. What buffer durations are you using and what IWaveOut implementer?</p>",
+    "PostedDate": "2012-02-24T03:40:57.883-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799347",
+    "ThreadId": "341115",
+    "Html": "<p>What are buffer durations?<br />I don't use any IWaveOut. Just WaveStream(WaveFileRader) and DirectSoundOut</p>",
+    "PostedDate": "2012-02-24T04:40:55.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "800546",
+    "ThreadId": "341115",
+    "Html": "<p>you can set buffer sizes on DirectSoundOut, but I suspect you are using the default. You might need to use a profiler to find out what is taking the most time</p>",
+    "PostedDate": "2012-02-26T09:44:55.517-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808024",
+    "ThreadId": "341115",
+    "Html": "<p>Do you mean PrimarySoundBuffer or SecondaryBuffer? Or something else?</p>",
+    "PostedDate": "2012-03-09T03:53:58.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808416",
+    "ThreadId": "341115",
+    "Html": "<p>No, I mean that in DirectSoundOut, you can specify a latency in milliseconds in the constructor, which controls the buffer size. The default is 40, so try 100 or 200.</p>",
+    "PostedDate": "2012-03-10T01:44:19.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "827798",
+    "ThreadId": "341115",
+    "Html": "<p>Now, I'm using WaveOut. I noticed that it has DesiredLatency property default set to 300. So I tried higher values. Even 2000. In the beginning everything seems to hear good, although the indicator \"started\" somewhere in the half o the track and then it showed up somewhere at the end. Track length was about 4 seconds. In about half of the track, output \"cut\" some part.</p>\r\n<p>To make myself more clear, let say that my record was: \"One two three four five six seven eight nine ten\" and lasts about 4, 5 seconds.</p>\r\n<p>I can hear smething like \"One two three four five eight ten\"<br />The higher latency, the more weird output ;)<br />I didn't get rid off this tick, although they are not so frequent as they were. In latency about 2000 there is really smooth output(about 2 or 3 ticks), but there is this \"cut\". Now I'm using 400 latency. What can I do more?</p>",
+    "PostedDate": "2012-04-24T04:06:25.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828974",
+    "ThreadId": "341115",
+    "Html": "<p>If you are getting weird playback problems, use the WaveFileWriter to dump your output waveprovider to a WAV file and then check that the WAV file has the audio you expect. That will tell you whether the problem is generating the output or playing it back.</p>",
+    "PostedDate": "2012-04-26T09:01:46.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "537752",
+    "ThreadId": "238857",
+    "Html": "\r\n<p>Sorry, may be I've missed something but i didn't find anything &nbsp;about my problem....</p>\r\n<p>I'm writing a voice chat for the local network.. And i have the nessecity to allow the speaker hear his own voice</p>\r\n<p>but the latency between speaking and playing is big if I do it with WaveIn, WaveOut.</p>\r\n<p>how can i make it smaller..?</p>\r\n<p>or may be you know the other way to speak and to listen to yourself simultaneously?</p>\r\n",
+    "PostedDate": "2010-12-18T11:45:17.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "540228",
+    "ThreadId": "238857",
+    "Html": "\r\n<p>Both WaveIn and WaveOut allow adjustment of Buffer Sizes and number of buffers. This should let you reduce latency.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-24T03:18:21.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547528",
+    "ThreadId": "238857",
+    "Html": "\r\n<p>Big Thanks, Mark...&nbsp;</p>\r\n<p>Will you be so kind to answer one more question.. I'm using such parameters for &nbsp;WaveIn:</p>\r\n<p>waveIn.BufferMillisconds = 50;</p>\r\n<p>waveIn.WaveFormat =&nbsp;new WaveFormat(4000,16,1);</p>\r\n<p>&nbsp;waveIn.NumberOfBuffers = 2;</p>\r\n<p>The size of captured buffer is 400, so how can I play this buffer with WaveOut?What parameters should I set for Waveprovider?</p>\r\n<p>To Play The Sound I use this class</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> <span style=\"color:blue\">public</span> <span style=\"color:blue\">class</span> Waweprov : IWaveProvider, IDisposable\r\n    {\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">readonly</span> WaveFormat _wformat;\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">readonly</span> Queue&lt;<span style=\"color:blue\">byte</span>[]&gt; _input;\r\n\r\n        <span style=\"color:blue\">public</span> WaveFormat WaveFormat\r\n        {\r\n            <span style=\"color:blue\">get</span> { <span style=\"color:blue\">return</span> _wformat; }\r\n        }\r\n\r\n        <span style=\"color:blue\">public</span> Waweprov(WaveFormat wformat)\r\n        {\r\n            _wformat = wformat;\r\n            _input = <span style=\"color:blue\">new</span> Queue&lt;<span style=\"color:blue\">byte</span>[]&gt;();\r\n        }\r\n\r\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Write(<span style=\"color:blue\">byte</span>[] buffer)\r\n        {\r\n            <span style=\"color:blue\">lock</span> (_input)\r\n                _input.Enqueue(buffer);\r\n        }\r\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\r\n        {\r\n            <span style=\"color:blue\">byte</span>[] readbuffer = <span style=\"color:blue\">null</span>;\r\n\r\n            <span style=\"color:blue\">lock</span> (_input)\r\n            {\r\n                <span style=\"color:blue\">if</span> (0 &lt; _input.Count)\r\n                    readbuffer = _input.Dequeue();\r\n            }\r\n            <span style=\"color:blue\">if</span> (<span style=\"color:blue\">null</span> != readbuffer)\r\n            {\r\n                Buffer.BlockCopy(readbuffer, 0, buffer, 0, count);             \r\n            }\r\n            <span style=\"color:blue\">return</span> <span style=\"color:blue\">null</span> == readbuffer ? count : buffer.Length;\r\n            \r\n        }\r\n\r\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">int</span> Read(IWaveBuffer waveBuffer)\r\n        {\r\n            <span style=\"color:blue\">if</span> (_input.Count != 0)\r\n            {\r\n                <span style=\"color:#0000ff\">var </span>bu;\r\n                bu = Read(waveBuffer.ByteBuffer, 0, waveBuffer.ByteBuffer.Length);              \r\n                <span style=\"color:blue\">return</span> bu;\r\n            }\r\n            <span style=\"color:blue\">else</span>\r\n            {\r\n\r\n                <span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> ms2 = <span style=\"color:blue\">new</span> MemoryStream(waveBuffer.ByteBuffer))\r\n                {\r\n                    ms2.Write(<span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[waveBuffer.ByteBuffer.Length], 0, waveBuffer.ByteBuffer.Length);\r\n                }\r\n                <span style=\"color:blue\">return</span> 400;\r\n            }\r\n\r\n        }\r\n\r\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Dispose()\r\n        {\r\n            <span style=\"color:blue\">lock</span> (_input)\r\n                _input.Clear();\r\n        }\r\n\r\n\r\n    \r\n    }</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2011-01-11T12:29:42.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "548574",
+    "ThreadId": "238857",
+    "Html": "\r\n<p>That looks like basically the right approach. Have a look at BufferedWaveProvider (I think that's the right name) in the NAudio source code</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-13T02:37:39.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

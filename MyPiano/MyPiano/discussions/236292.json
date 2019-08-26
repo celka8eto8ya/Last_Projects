@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "527915",
+    "ThreadId": "236292",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>Could you please give me some points to let find how I can achieve the following:</p>\r\n<p>I have 3 sound cards, with 2 outputs each.</p>\r\n<p>I will have multiple &quot;players&quot;, that will read a playlist of MP3 files with standard cross fading.</p>\r\n<p>I want to be able to assign each player to:</p>\r\n<p>1. One output on a give soundcard in stereo (for example output 2 or soundcard 1)</p>\r\n<p>or</p>\r\n<p>2. Multiple outputs of given soundcard/outputs in stereo (for example output 1 &amp; 2 of soundcard 1 and output 2 of soundcard 3)</p>\r\n<p>or</p>\r\n<p>3. Play mono (from a stereo sound file) on right (or left) of a given output of a given sound card.</p>\r\n<p>Thanks a lot in advance.</p>\r\n",
+    "PostedDate": "2010-11-28T09:46:21.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "528095",
+    "ThreadId": "236292",
+    "Html": "\r\n<p>you would need to create your own waveproviders that turn stereo into mono, or take the right channel of input and pipe it to left channel of output (say). These are not too hard to write so long as you understand that left and right samples are interleaved\r\n in stereo audio.</p>\r\n<p>Your bigger challenge (depending on how exactly you intend to use this) that there is no easy way to synchronize all the soundcards accurately. It is generally easier to work with a single multi-output soundcard.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-29T01:41:03.967-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "528167",
+    "ThreadId": "236292",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>Thanks for your answer. And thanks for that great project!</p>\r\n<p>Having the soundcards synchronized is not necessary. Regarding multi-output. I wasn't able to determine how I can select an input in the samples. Could you please give me some pointers?</p>\r\n<p>Thanks a lot!</p>\r\n",
+    "PostedDate": "2010-11-29T04:26:33.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "528233",
+    "ThreadId": "236292",
+    "Html": "\r\n<p>you need to create classes that derive from WaveStream (or IWaveProvider). In the read method, to return only the left channel, you read two bytes from your source, then skip two (assuming your source is 16 bit). Then send those two bytes out twice (to copy\r\n to both channels).</p>\r\n<p>If you are asking how to open different soundcards, look at the DeviceNumber property of WaveOut</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-29T05:58:52.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "528270",
+    "ThreadId": "236292",
+    "Html": "\r\n<p>Thanks Mark,</p>\r\n<p>Sorry to abuse of your time, but could you tell me how I can select a soundcard and the output ? In the samples, it looks like they are targetting the default soundcard and default output.</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2010-11-29T07:03:09.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "528359",
+    "ThreadId": "236292",
+    "Html": "\r\n<p>create a new WaveOut object, set its DeviceNumber property (0 is default soundcard) then call init</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-29T09:03:55.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

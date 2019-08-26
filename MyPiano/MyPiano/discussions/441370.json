@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1034853",
+    "ThreadId": "441370",
+    "Html": "I'd like to get a Stream object from WaveIn, that can then be passed to stuff requiring a Stream.\r<br />\n<br />\nWaveStream seems to implement this interface, but I can't find any subclass of WaveStream actually taking data from WaveIn or a WaveProfider.\r<br />\n<br />\nHow can I get a Stream from WaveIn? Does this exist already?<br />\n",
+    "PostedDate": "2013-04-23T17:13:47.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1035666",
+    "ThreadId": "441370",
+    "Html": "you shouldn't really need a stream, just a WaveProvider, for which I suggest using BufferedWaveProvider. If you really must have a WaveStream, then I'd make an adapter class. Just make Position set do nothing, Lenght can return any value, and Position get can return the total number of bytes read so far<br />\n",
+    "PostedDate": "2013-04-25T07:40:15.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1035724",
+    "ThreadId": "441370",
+    "Html": "Well in this case I need to pass audio to another component that wants a Stream. I ended up writing my own code to fill in a stream that can be read asynchronously, but it seems like it might be a pretty common use case.<br />\n",
+    "PostedDate": "2013-04-25T09:40:14.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

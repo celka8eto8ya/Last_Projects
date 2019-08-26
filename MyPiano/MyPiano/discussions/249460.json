@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "579581",
+    "ThreadId": "249460",
+    "Html": "\r\n<p>Wow, this library has been incredibly handy in converting MP3's to WAV's.</p>\r\n<p>When I convert from MP3 to WAV, however, is there a way to set the sampling frequency (e.g 48khz or 44.1khz)?</p>\r\n",
+    "PostedDate": "2011-03-12T16:44:42.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "579949",
+    "ThreadId": "249460",
+    "Html": "<p>You would have to do additional sample rate conversion after converting to WAV. You can use either the WaveFormatConversionStream (for ACM) or the DmoResamplerStream (if available on your OS).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-14T03:59:29.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "583114",
+    "ThreadId": "249460",
+    "Html": "<p>Hmmm...sounds simple enough...so I tried:</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<pre>using (Mp3FileReader reader = new Mp3FileReader(cuePath))\r\n{\r\n   WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(reader);\r\n   if (pcmStream.WaveFormat.SampleRate != 48000)\r\n   {\r\n      var format = new WaveFormat(48000, 16, pcmStream.WaveFormat.Channels);\r\n      pcmStream = new WaveFormatConversionStream(format, pcmStream);\r\n   }\r\n   WaveFileWriter.CreateWaveFile(exportPath + \"\\\\\" + fileName, pcmStream);\r\n}</pre>\r\n</p>\r\n<p>But I get the error:</p>\r\n<p>\"A runtime error has occurred...</p>\r\n<p>Line 694</p>\r\n<p>Error: InvalidParameter calling acmStreamConvert\"</p>\r\n<p>&nbsp;</p>\r\n<p>It all seemed so simple...maybe I'm missing a step!</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks in advance for any help you can lend!</p>",
+    "PostedDate": "2011-03-19T12:41:29.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "583124",
+    "ThreadId": "249460",
+    "Html": "<p>And I also tried this:</p>\r\n<p>\r\n<pre>Mp3FileReader reader = new Mp3FileReader(cuePath))\r\nvar format = new WaveFormat(48000, 16);\r\nWaveStream pcmStream = new WaveFormatConversionStream(format, reader);\r\nWaveFileWriter.CreateWaveFile(exportPath + \"\\\\\" + fileName, pcmStream);</pre>\r\n</p>\r\n<p>&nbsp;</p>\r\n<p>But then it reports \"AcmNotPossible calling acmStreamOpen\"</p>",
+    "PostedDate": "2011-03-19T12:58:02.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "583846",
+    "ThreadId": "249460",
+    "Html": "<p>you have to convert in two stages - first to PCM, then to the sample rate you want.</p>\r\n<p>Also, get the latest code from the source code tab as Mp3FileReader now returns data already in PCM so only one additional stage is required</p>",
+    "PostedDate": "2011-03-21T10:11:02.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

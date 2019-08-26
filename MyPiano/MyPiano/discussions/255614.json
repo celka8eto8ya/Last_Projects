@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "604356",
+    "ThreadId": "255614",
+    "Html": "\r\n<p>Hi Experts!&nbsp;</p>\r\n<p>First let me say I've enjoyed using the NAudio library!&nbsp; I have a question though about getting sample values for doing an FFT.&nbsp; I've checked the sample values on a wav file by using the following method:</p>\r\n<p>double[] array = new double[512];<br>\r\nwhile (reader.HasData(array.Length) &amp;&amp; currentSampleIndex &lt; currentSamples.Length)<br>\r\n&nbsp;{<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp; reader.TryReadFloat(ref nextSample);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp; currentSamples[currentSampleIndex&#43;&#43;] = nextSample;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp; if (reader.WaveFormat.Channels &gt; 1)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reader.TryReadFloat(ref nextSample);<br>\r\n&nbsp; &nbsp; &nbsp; }</p>\r\n<p>}</p>\r\n<p>This works great and gives me the correct sample values for the wav file.&nbsp; I'm working on building a spectrum analyzer so I want to get the audio samples as the audio is playing.&nbsp; So I've modified the MeteringStream example to try and accomplish\r\n my needs by for some reason the sample values are not matching what they should be.&nbsp; Here's the code:</p>\r\n<p>public override int Read(byte[] buffer, int offset, int count)<br>\r\n{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>\r\n&nbsp;&nbsp;&nbsp; int bytesRead = SourceStream.Read(buffer, offset, count);<br>\r\n&nbsp;&nbsp;&nbsp; ProcessData(buffer, offset, bytesRead);<br>\r\n&nbsp;&nbsp;&nbsp; return bytesRead;<br>\r\n}<br>\r\n<br>\r\nprivate void ProcessData(byte[] buffer, int offset, int count)<br>\r\n{<br>\r\n&nbsp;&nbsp;&nbsp; int index = 0;<br>\r\n&nbsp;&nbsp;&nbsp; while (index &lt; count)<br>\r\n&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp; float sampleValue = Math.Abs(BitConverter.ToSingle(buffer, offset &#43; index));<br>\r\n&nbsp;&nbsp;&nbsp; currentSamples[sampleIndex] = sampleValue;<br>\r\n&nbsp;&nbsp;&nbsp; index &#43;= 4;<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp; if (SourceStream.WaveFormat.Channels == 2)<br>\r\n&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; float sampleRightValue = Math.Abs(BitConverter.ToSingle(buffer, offset &#43; index));<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; index &#43;= 4;<br>\r\n&nbsp;&nbsp;&nbsp; }<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp; sampleIndex&#43;&#43;;<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp; if (sampleIndex &gt;= currentSamples.Length)<br>\r\n&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; RaiseSampleStreamNotification();<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; sampleCount = 0;<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; sampleIndex = 0;<br>\r\n&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Array.Clear(currentSamples, 0, currentSamples.Length);<br>\r\n&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp; }<br>\r\n}</p>\r\n<p>The audio I'm using is a Tone wav file that has two channels of audio - I'm only interested in the left channel.&nbsp; The sample rate is 48K and the bits per sample is 16.&nbsp; If I haven't provided enough information please let me know.&nbsp; Any information\r\n you can give me would be much appreciated!</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-04-28T12:32:04.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604357",
+    "ThreadId": "255614",
+    "Html": "<p>have you looked at the WpfDemo that comes with NAudio - that includes an FFT being used for a spectrum analyser</p>",
+    "PostedDate": "2011-04-28T12:35:11.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604807",
+    "ThreadId": "255614",
+    "Html": "<p>Hi Mark!</p>\r\n<p>Yes I had looked at that example but had given up on using it because the WaveChannel32 input stream class I was using didn't have Sample object shown in the example.&nbsp; I gave it another try yesterday (and updated my NAudio version) and was able to get everything working!&nbsp; Thanks for your help!</p>",
+    "PostedDate": "2011-04-29T06:39:34.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

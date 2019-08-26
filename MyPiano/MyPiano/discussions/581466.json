@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1354335",
+    "ThreadId": "581466",
+    "Html": "Hi,<br />\n<br />\nI am very interested into using NAudio for Windows Store universal apps. After discovering that Nuget was refusing to install NAudio on &quot;portable+win81+wpa81&quot; I thought of digging into the code. After a little bit of entrainment with the code, I could make a Windows Phone 8.1 (Universal) app play a beep from the WasapiOutRT lib.<br />\n<br />\nHowever, somewhere into the depths of WasapiOutRt.PlayThread() I was getting <strong>A first chance exception of type 'System.InvalidOperationException' occurred in NAudio.Win8.DLL</strong> exception and the playback was stopping. The play code I used was:<br />\n<pre><code>WasapiOutRT wasapiOut = new WasapiOutRT(AudioClientShareMode.Shared, 0);\nSignalGenerator sig = new SignalGenerator(48000, 1);\nwasapiOut.Init(new SampleToWaveProvider(sig));\nwasapiOut.Play();</code></pre>\n\nThis probably relates to the changes that I had to do for the WasapiOutRT to be able to even compile :) So, what I did to fire up the WasapiOut under Windows Phone 8.1 Universal was:<br />\n<ol>\n<li>Checkout the code (obviously)</li>\n<li>Retarget NAudio.Win8 to <strong>Windows 8.1 and Windows Phone 8.1</strong> (using Visual Studio 2015 CTP 5, which otherwise refused to handle those projects).</li>\n<li>\nIn <strong>WasapiOutRt.NativeMethods</strong> I had to make code looks like:<br />\n</li>\n</ol>\n<pre><code>[DllImport(&quot;api-ms-win-core-synch-l1-2-0.dll&quot;, CharSet = CharSet.Unicode, ExactSpelling = false, PreserveSig = true, SetLastError = true)]\ninternal static extern IntPtr CreateEventExA(IntPtr lpEventAttributes, IntPtr lpName, int dwFlags, EventAccess dwDesiredAccess);\n\n[DllImport(&quot;api-ms-win-core-handle-l1-1-0.dll&quot;, ExactSpelling = true, PreserveSig = true, SetLastError = true)]\npublic static extern bool CloseHandle(IntPtr hObject);\n\n[DllImport(&quot;api-ms-win-core-synch-l1-2-0.dll&quot;, ExactSpelling = true, PreserveSig = true, SetLastError = true)]\npublic static extern int WaitForSingleObjectEx(IntPtr hEvent, int milliseconds, bool bAlertable);</code></pre>\n\nNote the <strong>api-ms-win-core-synch-l1-2-0.dll</strong> and <strong>CreateEventExW</strong> -  this was as per <a href=\"https://msdn.microsoft.com/library/windows/apps/jj662956%28v=vs.105%29.aspx?f=255&amp;MSPPError=-2147217396#BKMK_ListofsupportedWin32APIs\" rel=\"nofollow\">https://msdn.microsoft.com/library/windows/apps/jj662956%28v=vs.105%29.aspx?f=255&MSPPError=-2147217396#BKMK_ListofsupportedWin32APIs</a> and <a href=\"http://stackoverflow.com/questions/28464217/how-to-p-invoke-into-kernel32-dll-on-winrt-8-1\" rel=\"nofollow\">http://stackoverflow.com/questions/28464217/how-to-p-invoke-into-kernel32-dll-on-winrt-8-1</a><br />\n<br />\nWith those changes the code for the simple audio generation could execute and I could hear a beep for a fraction of the second. Then thread would crash and playback would stop with the described exception.<br />\n<br />\nPlacing breakpoints in the PlayThread method would make things even more funny - <strong>any pause</strong> in the execution would make the while-loop <strong>not crash</strong> and continue playing normally.<br />\n<br />\nWhat it leads me think is that there is some synch issue with the changes in the event/handle methods (that otherwise would prevent code from compilation).<br />\n<br />\nAnyone having any idea what could be wrong and how it could be fixed?<br />\n<br />\nP.S. Edited the code to take &quot;api-ms-win-core-handle-l1-1-0.dll&quot; and CreateEventExA<br />\n",
+    "PostedDate": "2015-02-20T07:02:53.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354429",
+    "ThreadId": "581466",
+    "Html": "interesting. I'm afraid I haven't tried this myself. What's the stack trace of the InvalidOperationException?<br />\n",
+    "PostedDate": "2015-02-20T11:15:44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354433",
+    "ThreadId": "581466",
+    "Html": "Not much of a stacktrace there, I'm afraid. Just that PlayThread threw the exception. Will post more if there is something I can dig out on Monday (code is in the office).<br />\n",
+    "PostedDate": "2015-02-20T11:22:09.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1355153",
+    "ThreadId": "581466",
+    "Html": "Most interesting!\r<br />\n<br />\nOn my Emulator, I kept getting the &quot;A first chance exception of type 'System.InvalidOperationException' occurred in NAudio.Win8.DLL&quot; exception. No throws, no debug stops - just this in the Debug Output console. No matter UnhandledException and Debug Native and Managed combinations, I was always getting one beep and a line in the output.\r<br />\n<br />\nMy Lumia 830, though, was completely different story - <strong>it worked</strong> :) Yes, a simple monotonous tone it was, but it was playing and for far more than a second :) It was so eager at playing, that while debugging if I brought the test app in the background, sound would pause and then continue to play from the background.\r<br />\n<br />\nSo, since I will be dealing with Windows Phone and sound in the coming 1-2 months, I will try to push a Windows Phone NAudio port test some more :)\r<br />\n<br />\nBTW, I discovered an error in my code - CloseHandle is in &quot;api-ms-win-core-handle-l1-1-0.dll&quot;.<br />\n",
+    "PostedDate": "2015-02-24T02:37:26.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356246",
+    "ThreadId": "581466",
+    "Html": "great, thanks for keeping us updated<br />\n",
+    "PostedDate": "2015-02-26T23:48:15.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

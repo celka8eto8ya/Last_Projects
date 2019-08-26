@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "555162",
+    "ThreadId": "243248",
+    "Html": "\r\n<p>I want to play multiple wav file one by one (when one play complete then another one play).&nbsp; But I can't able to do this. pls help. and how can save that mixed wav file.</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2011-01-25T11:00:02.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "558555",
+    "ThreadId": "243248",
+    "Html": "\r\n<p>the best way would be to create your own WaveStream whose Read method returns data from various input WaveStreams in succession (they all need to be in the same format).</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-01T02:18:37.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

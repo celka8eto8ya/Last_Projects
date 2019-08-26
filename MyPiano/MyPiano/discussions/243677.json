@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "556855",
+    "ThreadId": "243677",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I am new to NAudio. I have managed to fill a MemoryStream with raw audio data and play it with the IWavePlayer&nbsp;using a&nbsp;RawSourceWaveStream. This works great!<br>\r\nNow, I would like to keep filling the MemoryStream while playing. (Probably, it should be a Circular data element to prevent it from growing infinitely).</p>\r\n<p>Can you give me a clue on how to do this?</p>\r\n<p>Gr, Sander</p>\r\n",
+    "PostedDate": "2011-01-28T06:13:25.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "558511",
+    "ThreadId": "243677",
+    "Html": "\r\n<p>A circular buffer did not seem necessary. The Queue in BufferedWaveProvider did the job. However, I got a WaveBadFormat exception during WaveOutOpen when I tried to play my MuLaw encoded stream directly. I fixed this by decoding the byte[] packets before\r\n adding it to the BufferedWaveProvider.</p>\r\n<p>First, I create a BufferedWaveProvider:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> BufferedWaveProvider m_bufferedWaveProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(<span style=\"color:blue\">new</span> WaveFormat(8000,16,1));\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Then, my callback function, which gets fired every time a new packet arrives, looks like this:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">void</span> OnDataReceived(<span style=\"color:blue\">byte</span>[] audioData)\r\n{\r\n\t<span style=\"color:green\">// decode (WaveOut does not support direct MuLaw playback)</span>\r\n\tMemoryStream byteStream = <span style=\"color:blue\">new</span> MemoryStream(audioData);\r\n\tWaveFormat waveFormat = WaveFormat.CreateMuLawFormat(8000, 1);\r\n\tRawSourceWaveStream rawSourceWaveStream = <span style=\"color:blue\">new</span> RawSourceWaveStream(byteStream, waveFormat);\r\n\tWaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(rawSourceWaveStream);\r\n\t<span style=\"color:blue\">byte</span>[] decoded = ConvertNonSeekableStreamToByteArray(pcmStream);\r\n\r\n\t<span style=\"color:green\">// add decoded data to buffer</span>\r\n\tm_bufferedWaveProvider.AddSamples(decoded,0,decoded.Length);\r\n\r\n\t<span style=\"color:green\">// cleanup</span>\r\n\tbyteStream.Close();\r\n\tbyteStream.Dispose();\r\n\trawSourceWaveStream.Close();\r\n\trawSourceWaveStream.Dispose();\r\n\tpcmStream.Close();\r\n\tpcmStream.Dispose();\r\n}\r\n</pre>\r\n</div>\r\n<p>with&nbsp;ConvertNonSeekableStreamToByteArray defined <a href=\"http://naudio.codeplex.com/Thread/View.aspx?ThreadId=236951\">\r\nhere</a> by Faleij.</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">// create waveOut</span>\r\n<span style=\"color:blue\">int</span> latency = 80;\r\nWaveCallbackInfo callbackInfo = WaveCallbackInfo.NewWindow();\r\nWaveOut outputDevice = <span style=\"color:blue\">new</span> WaveOut(callbackInfo);\r\noutputDevice.DesiredLatency = latency;\r\nm_waveOut = outputDevice;\r\n\r\n<span style=\"color:green\">// init and play waveOut</span>\r\nm_waveOut.Init(m_bufferedWaveProvider);\r\nm_waveOut.Play();\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-31T23:48:58.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

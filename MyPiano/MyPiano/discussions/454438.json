@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1084536",
+    "ThreadId": "454438",
+    "Html": "i'm adding a feature to my program that will automatically do some stuff with existing midi tracks, by modifying the content of the track and then renaming it and saving it as a different track within the same midi file (just go along with it, it works for what we're doing)\r<br />\nI got everything working...except I can't figure out how to change the track name!\r<br />\n<br />\nI can see which midi event is the track name. i can read the track name. i can remove that event. I can modify the notes. but this, i'm stuck with.\r<br />\n<br />\nI'm thinking either 1) modify the existing midi event, or delete that midi event, and create a new one and replace it....but i can't seem to find where I specify what the track name would be.\r<br />\n<br />\nany one have any idea what the process is for that?\r<br />\n<br />\nthanks!<br />\n",
+    "PostedDate": "2013-08-24T15:41:59.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085200",
+    "ThreadId": "454438",
+    "Html": "Figured it out. Posting it here for anyone else with this same issue.<br />\n<pre><code>new TextEvent(&quot;track name here&quot;, MetaEventType.SequenceTrackName, 0)</code></pre>\n\n",
+    "PostedDate": "2013-08-26T21:33:58.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

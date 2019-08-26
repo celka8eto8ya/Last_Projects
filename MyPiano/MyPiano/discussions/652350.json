@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1466291",
+    "ThreadId": "652350",
+    "Html": "Hi,\r<br />\n<br />\ni am working on a project where i need to play an audiofile (mp3) and after a specific amount of time i need to trigger some kind of a signal. Therefore i wrote my own AudioFileReader.<br />\n<pre><code>    public class TimeElapsedAudioFileReader : AudioFileReader\n    {\n        public event Action&lt;TimeSpan&gt; Elapsed;\n\n        public TimeElapsedAudioFileReader(string filename):base(filename)\n        {\n            \n        }\n\n        public override int Read(byte[] buffer, int offset, int count)\n        {\n            if (Elapsed != null)\n                Elapsed(this.CurrentTime);\n            return base.Read(buffer, offset, count);\n        }\n    }</code></pre>\n\nThe Problem with that approach is that it is not precise enough. I wanna have the elapsed Signal triggered after each millisecond for example, therefore i thought i have to set the buffersize that is read but i cant find anything to set the buffersize. Maybe I am wrong with my thoughts? Hope for help!\r<br />\n<br />\nKR Manuel<br />\n",
+    "PostedDate": "2016-03-09T11:46:34.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466455",
+    "ThreadId": "652350",
+    "Html": "If you want a sample-precise approach, then I´d use NotifyingSampleProvider. There you can compare each sample with the current time of your AudioFileReader and raise an event if so.<br />\n",
+    "PostedDate": "2016-03-10T16:37:41.433-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466466",
+    "ThreadId": "652350",
+    "Html": "Can you give me maybe a short example how to use NotifyingSampleProvider with AudioFileReader?<br />\n<br />\nI guess i got it, but it's still not precise enought. I Need a precision to a hundreth of a second. Here is my Code:<br />\n<pre><code>  public class TimeElapsedAudioFileReader : AudioFileReader\n    {\n        public event Action&lt;TimeSpan&gt; Elapsed;\n        public NotifyingSampleProvider Nsp { get; set; }\n\n        public TimeElapsedAudioFileReader(string filename) : base(filename)\n        {\n            Nsp = new NotifyingSampleProvider(this.ToSampleProvider());\n            Nsp.Sample += _nsp_Sample;\n        }\n\n        private void _nsp_Sample(object sender, SampleEventArgs e)\n        {\n                if (Elapsed != null)\n                    Elapsed(this.CurrentTime);\n        }\n    }</code></pre>\n\nWhen i increase the number of buffers on the AudioFileReader Object to like 100 it's working, but i dont think that's the right way or?<br />\n",
+    "PostedDate": "2016-03-10T17:53:21.56-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466637",
+    "ThreadId": "652350",
+    "Html": "Where is the Read call? Keep in mind, that you have to read from the NotifyingSampleProvider and not from the AudioFileReader.<br />\n<br />\nYour approach is a good start, but I wouldn´t recommend you to fire an event on each sample. Better check if the time is greater or equal of the time you want to wait and only then raise the event.<br />\n<br />\nThe reason your code fails I believe, could have several reasons:<br />\n<br />\n1) you fire events with an samplerate of 44100 and stereo channel count of 2 = 88200 times per second.<br />\nNot very performant I think, the frequent event processing might be an issue.<br />\n<br />\n2) you probably have the false configuration for your WaveOut object. I recommend 150 (ms) latency and 3 buffers, what gave me the closest results for my media player so far. With this configuration the Read method of the sampleprovider requests 4410 samples, which is enough to display an fft with 4096 samples in real time.<br />\n<br />\n-&gt; So it really depends on your application. If you want a small duration for more precision the buffers would automatically have to be smaller, as the read method anyway reads a full package of samples into your buffer. But for low latency beyond 75ms you should use Asio or DirectSound, as the WaveOut crackles then (with my computer).<br />\n",
+    "PostedDate": "2016-03-12T14:15:38.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466672",
+    "ThreadId": "652350",
+    "Html": "First of all, thanks for your help!\r<br />\nHere is my full Code:<br />\n<pre><code>    public class TimeElapsedAudioFileReader : AudioFileReader\n    {\n        public event Action&lt;TimeSpan&gt; Elapsed;\n        public NotifyingSampleProvider Nsp  { get; set; }\n        public ETimeSpan SignalTime         { get; set; }\n\n        public TimeElapsedAudioFileReader(string filename) : base(filename)\n        {\n            Nsp = new NotifyingSampleProvider(this.ToSampleProvider());\n            Nsp.Sample += _nsp_Sample;\n        }\n\n        private bool _triggered = false;\n\n        private void _nsp_Sample(object sender, SampleEventArgs e)\n        {\n            if (_triggered)\n                return;\n            if (this.CurrentTime &gt;= SignalTime.BaseSpan)\n            {\n                _triggered = true;\n                if (Elapsed != null)\n                    Elapsed(this.CurrentTime);\n            }\n        }\n\n        public override int Read(byte[] buffer, int offset, int count)\n        {\n            return base.Read(buffer, offset, count);\n        }\n\n        public void Reset()\n        {\n            this.Position = 0;\n            _triggered = false;\n        }\n    }</code></pre>\n\nAnd here how i Init the WaveOutEvent Object:<br />\n<pre><code> private void InitAudioFile()\n        {\n            try {   \n                _source = new TimeElapsedAudioFileReader(_app.Settings.AudioFilePath);\n                _source.Elapsed += _audioreader_Elapsed;\n                _waveout.DesiredLatency = 150;\n                _waveout.NumberOfBuffers = 15;\n                _waveout.Init(_source.Nsp);\n                \n            }\n            catch (System.Exception ex)\n            {\n                ExceptionHandler.HandleException(ex, &quot;Error while Initializing Audiofile&quot;, this);\n            }\n        }</code></pre>\n\nDo I Need to override the Read Method as well?\r<br />\nWith this Waveout Settings i can reach a precision to 1/100 of a second but not a 1/1000<br />\n",
+    "PostedDate": "2016-03-13T17:55:52.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466781",
+    "ThreadId": "652350",
+    "Html": "This code you provided should work. To increase accuracy you may want to try a latency ~ 50ms with directsound or asio.\r<br />\n<br />\nNumber of buffers also has some influence on how many samples are read on each calling, but don´t ask me how exactly, better look at the source code then.\r<br />\n<br />\nFor an accuracy of 1/1000 s you´d have to read 44 samples (SampleRate/1000) on each calling for &quot;Read&quot;. Therefore you´d need a extremely low latency as well as small buffers.\r<br />\n<br />\nFor more details Mark could probably tell more.<br />\n",
+    "PostedDate": "2016-03-14T12:18:59.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

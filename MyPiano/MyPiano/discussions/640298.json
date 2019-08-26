@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1431368",
+    "ThreadId": "640298",
+    "Html": "I am quite new at using naudio and I am following an example provided I found on this site to trim wav files. I am using the example along with my own code to determine the lengths of wave files and trimming them to be at a length that I can use. \r<br />\n<br />\nThe program works great, it trims them perfectly everytime, exactly how I need them except for the datachunk. It is always 2 positions forward. Looking at my wav file in HxD, my original wav file datachunk is in position 37-40.\r<br />\n<br />\nAfter I trim the file the datachunk is in position 39-42. This causes a problem in the other program I an using to look at the files. I have tried opening in Audacity and exporting and the datachunk position gets corrected, not sure why but it does. I have also altered the position in HxD and that works too but I would rather not have to go through all of the extra steps if I do not have to.\r<br />\nAs I am new to naudio I am unsure if I am doing something wrong (Very possible) and I have looked for similar problems for a few days now and cannot find a single solution. \r<br />\n<br />\nHere is the code I found through this site. The rest of my code just determines the amount that I need to trim based on the lot of files I am altering. I just read a wave file, trim and store in a different folder. \r<br />\n<br />\nany help would be greatly appreciated, if you need any more information please let me know and I will provide what I am able to.<br />\n<pre><code> public static void TrimWavFile(string inPath, string outPath, TimeSpan cutFromStart, TimeSpan cutFromEnd)\n        {\n            using (WaveFileReader reader = new WaveFileReader(inPath))\n            {\n                using (WaveFileWriter writer = new WaveFileWriter(outPath, reader.WaveFormat))\n                {\n                    int bytesPerMillisecond = reader.WaveFormat.AverageBytesPerSecond / 1000;\n\n                    int startPos = (int)cutFromStart.TotalMilliseconds * bytesPerMillisecond;\n                    startPos = startPos - startPos % reader.WaveFormat.BlockAlign;\n\n                    int endBytes = (int)cutFromEnd.TotalMilliseconds * bytesPerMillisecond;\n                    endBytes = endBytes - endBytes % reader.WaveFormat.BlockAlign;\n                    int endPos = (int)reader.Length - endBytes;\n\n                    TrimWavFile(reader, writer, startPos, endPos);\n                }\n            }\n        }\n\n        private static void TrimWavFile(WaveFileReader reader, WaveFileWriter writer, int startPos, int endPos)\n        {\n            reader.Position = startPos;\n            byte[] buffer = new byte[1024];\n            while (reader.Position &lt; endPos)\n            {\n                int bytesRequired = (int)(endPos - reader.Position);\n                if (bytesRequired &gt; 0)\n                {\n                    int bytesToRead = Math.Min(bytesRequired, buffer.Length);\n                    int bytesRead = reader.Read(buffer, 0, bytesToRead);\n                    if (bytesRead &gt; 0)\n                    {\n                        writer.WriteData(buffer, 0, bytesRead);\n                    }\n                }\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2015-06-22T11:12:27.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1431371",
+    "ThreadId": "640298",
+    "Html": "this will most likely by that NAudio writes a WAVEFORMATEX structure rather than a WAVEFORMAT structure. It has two more bytes. This really shouldn't be a problem with other software.<br />\n",
+    "PostedDate": "2015-06-22T11:21:33.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1431372",
+    "ThreadId": "640298",
+    "Html": "The other program, that I did not write, is using the files for analysis, the files it reads for some reason does not like the 2 extra bytes. It just crashes. Is there a way to do a WAVEFORMAT through NAudio or a way to alter the file programmatically instead of the extra few steps? Not looking for a handout just if it is possible and possibly point me in the right direction? <br />\n",
+    "PostedDate": "2015-06-22T11:31:36.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1431381",
+    "ThreadId": "640298",
+    "Html": "the problem is that it's fairly hard-coded into WaveFormat.Serialize. However, you could create your own custom WaveFormat class that derives from WaveFormat and overrides Serialize to not write the extraSize. Something like this (not tested)<br />\n<pre><code>        public override void Serialize(BinaryWriter writer)\n        {\n            writer.Write((int)(16 + extraSize)); // wave format length\n            writer.Write((short)Encoding);\n            writer.Write((short)Channels);\n            writer.Write((int)SampleRate);\n            writer.Write((int)AverageBytesPerSecond);\n            writer.Write((short)BlockAlign);\n            writer.Write((short)BitsPerSample);\n        }</code></pre>\n\n",
+    "PostedDate": "2015-06-22T11:53:50.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1431384",
+    "ThreadId": "640298",
+    "Html": "oh boy this will be interesting lol. I really appreciate the help! Now to see if I can figure out how to do something like that :) <br />\n",
+    "PostedDate": "2015-06-22T11:58:37.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1431392",
+    "ThreadId": "640298",
+    "Html": "Thank you so much! I believe this to have worked. I have not extensively tested the solution but it has not crashed my program when trying to run a file!\r<br />\n<br />\nMuch Appreciated<br />\n",
+    "PostedDate": "2015-06-22T12:35:13.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463602",
+    "ThreadId": "640298",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nthis will most likely by that NAudio writes a WAVEFORMATEX structure rather than a WAVEFORMAT structure. It has two more bytes. This really shouldn't be a problem with other software.<br />\n</blockquote>\nFYI there are a few apps/libs that rely on WAVEFORMAT and error out on WAVEFORMATEX.<br />\nPersonally I think it may be a good idea to add WAVEFORMAT support.<br />\n<br />\nI realise the issue with Serialize() but perhaps there is a way to specify the preferred format before or during the call to Serialize?<br />\n<br />\nThe Aubio.org library is one example, I had to create my own Wav writer instead of simply using nAudio. Aubio would error out saying &quot;Not a PCM format&quot; since the 18 byte WAVEFORMATEX header was on the TODO list.<br />\nTook me hours to code it due to lack of consistent documentation, but at least I know the WAV format back to front now lol<br />\n",
+    "PostedDate": "2016-02-18T05:07:32.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

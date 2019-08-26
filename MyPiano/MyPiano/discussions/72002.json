@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "245737",
+    "ThreadId": "72002",
+    "Html": "<p>Like the discussion name is hinting,</p>\r\n<p>How do I convert a Wav file to a mp3 file.</p>\r\n<p>&nbsp;</p>\r\n<p>I know this isn't yet possible with NAUDIO, but what can I use to accomplish this task?</p>\r\n<p>&nbsp;</p>\r\n<p>gr,</p>\r\n<p>&nbsp;</p>\r\n<p>Jelle</p>",
+    "PostedDate": "2009-10-14T13:19:20.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "245780",
+    "ThreadId": "72002",
+    "Html": "<p>you should just use LAME.exe</p>\r\n<p>do a web search for it.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-14T15:01:00.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "245791",
+    "ThreadId": "72002",
+    "Html": "<p>Thanks! Lame did the trick.</p>\r\n<p>&nbsp;</p>\r\n<p>here is my code</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre> <span style=\"white-space:pre\">\t</span><span style=\"color:Blue\">Dim</span> Arguments <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">String</span> = <span style=\"color:#A31515\">&quot;-V2 -V 0 &quot;&quot;&quot;</span> &amp; tmpFile &amp; <span style=\"color:#A31515\">&quot;&quot;&quot; &quot;&quot;&quot;</span> &amp; OutputFileName &amp; <span style=\"color:#A31515\">&quot;.mp3&quot;</span> &amp; <span style=\"color:#A31515\">&quot;&quot;&quot;&quot;</span>\r\n        <span style=\"color:Blue\">Dim</span> psi <span style=\"color:Blue\">As</span> <span style=\"color:Blue\">New</span> System.Diagnostics.ProcessStartInfo()\r\n        psi.FileName = <span style=\"color:#A31515\">&quot;&quot;&quot;&quot;</span> &amp; Application.StartupPath &amp; <span style=\"color:#A31515\">&quot;\\lame.exe&quot;</span> &amp; <span style=\"color:#A31515\">&quot;&quot;&quot;&quot;</span>\r\n        psi.Arguments = Arguments\r\n        psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Minimized\r\n        <span style=\"color:Blue\">Dim</span> p <span style=\"color:Blue\">As</span> System.Diagnostics.Process = System.Diagnostics.Process.Start(psi)\r\n        p.WaitForExit()\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-14T15:23:49.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

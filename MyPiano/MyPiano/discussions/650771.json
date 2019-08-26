@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1461590",
+    "ThreadId": "650771",
+    "Html": "<strong>ReadFullyStream</strong> from <strong>mp3streaming demo</strong> can't work with <strong>FileStream</strong>, it throws <br />\n<strong>Unexpected end of stream before frame complete</strong> .<br />\n<br />\nCan someone offer me a sample code of ReadFullyStream for FileStream, not ConnectStream for network, that offered in mp3streaming demo?<br />\n",
+    "PostedDate": "2016-02-01T05:34:20.253-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1461940",
+    "ThreadId": "650771",
+    "Html": "well that just means it got to the end of the file while still expecting more data. That can happen sometimes with MP3 files. You could just catch this exception and ignore it.<br />\n",
+    "PostedDate": "2016-02-04T06:23:02.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

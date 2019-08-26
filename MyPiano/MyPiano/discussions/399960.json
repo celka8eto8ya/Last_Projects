@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "928980",
+    "ThreadId": "399960",
+    "Html": "\r\n<p>I'm trying to make a connection (IPEndPoint) where I capture the UDP stream to play on a player (Media Player).</p>\r\n<p>How can I do that?</p>\r\n<p>Thank you in advance!</p>\r\n",
+    "PostedDate": "2012-10-18T12:51:00.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929393",
+    "ThreadId": "399960",
+    "Html": "<p>If you mean running NAudio on the client side in the browser, then no, I'm afraid that is not possible</p>",
+    "PostedDate": "2012-10-19T06:40:24.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

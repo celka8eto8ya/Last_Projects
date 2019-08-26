@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "981188",
+    "ThreadId": "427892",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>First of all, thank you for creating such a great library and releasing it for free! &nbsp;Something I'm struggling to understand though, does the MP3 reader tutorial (http://naudio.codeplex.com/wikipage?title=MP3) load the whole file before playing?</p>\r\n<p>I'd prefer to stream the mp3 than load it in full so that the application is faster. &nbsp;To do this, should I use the MP3 streaming tutorial but provide it a local URL, or is there any easier way?</p>\r\n<p>Thanks in advance,</p>\r\n<p>Steve</p>\r\n",
+    "PostedDate": "2012-12-28T02:45:47.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "982678",
+    "ThreadId": "427892",
+    "Html": "\r\n<p>the MP3 reader does look through the file allowing it to create a &quot;table of contents&quot; so it can support fast and accurate repositioning. You could take a copy of the MP3 file reader code and just remove the TOC generation if you wanted. There is also a demo\r\n of streaming MP3 over the internet in NAudioDemo, which obviously by its nature, doesn't read ahead. You simply parse MP3 frames and decompress them.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2013-01-03T07:17:45.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

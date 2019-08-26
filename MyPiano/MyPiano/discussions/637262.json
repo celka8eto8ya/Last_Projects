@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1423783",
+    "ThreadId": "637262",
+    "Html": "Hi I am trying to write  data from mp3 file to serial port so that i can play this on otherside of phone call . But i can only listen some noise. Following is my code :\r<br />\n<br />\n bufferedWaveProviderout = new BufferedWaveProvider(new WaveFormat(8000, 16, 1));<br />\n<pre><code>        // try\n        {\n            //    dynamic audioBufferSize = 320;\n            //  int offset = 0;\n            //  byte[] buffer2 = new byte[320];\n\n            Mp3FileReader sf = new Mp3FileReader(&quot;d:\\\\a.mp3&quot;);\n            byte[] fileByte = new byte[sf.Length + 1];\n            sf.Read(fileByte, 0, Convert.ToInt32(sf.Length));\n\n            int max = fileByte.Length;\n            int playingyt = 0;\n            while (playingyt &lt;= max)\n            {\n\n                byte[] buf = fileByte.Skip(playingyt).Take(1600).ToArray();\n\n                byte[] source = buf;\n                Stream byteStream12 = new MemoryStream(source);\n                WaveFormat waveFormat = new WaveFormat(8000, 16, 1);\n\n                RawSourceWaveStream rawSourceWaveStream = new RawSourceWaveStream(byteStream12, waveFormat);\n                byte[] bt = ConvertNonSeekableStreamToByteArray(byteStream12);\n                bufferedWaveProviderout.AddSamples(bt, 0, bt.Length);\n\n                var resampleStream = new AcmStream(new WaveFormat(8000, 16, 1), WaveFormat.CreateCustomFormat(WaveFormatEncoding.MuLaw, 8000, 1, 8000 * 1, 1, 8));\n\n                byte[] source1 = bt;\n                Buffer.BlockCopy(source1, 0, resampleStream.SourceBuffer, 0, source1.Length);\n                int sourceBytesConverted = 0;\n                var convertedBytes = resampleStream.Convert(source1.Length, out sourceBytesConverted);\n                if (sourceBytesConverted != source1.Length)\n                {\n                    Console.WriteLine(&quot;We didn't convert everything {0} bytes in, {1} bytes converted&quot;);\n                }\n\n                var converted = new byte[convertedBytes];\n                Buffer.BlockCopy(resampleStream.DestBuffer, 0, converted, 0, convertedBytes);\n\n                MemoryStream byteStream = new MemoryStream(converted);\n\n\n                Stream byteStream122 = new MemoryStream(converted);\n\n                dynamic audioBufferSize = 320;\n                int offset = 0;\n                //  byte[] buffer = new byte[audioBufferSize - 1];// (audioBufferSize - 1) {}\n                byte[] buffer2 = new byte[320];\n\n                while (byteStream122.Read(buffer2, offset, audioBufferSize - offset) &gt; 0)\n                {\n\n                    {\n\n                        {\n                            _spManager.WriteVoice(buffer2, offset, buffer2.Length - offset);\n\n                            PauseForMilliSeconds(20);\n                        }\n\n                    }\n                }\n\n                playingyt = playingyt + 1600;\n            }\n\n\n\n\n\n        }\n</code></pre>\n\nThanks in advance<br />\n",
+    "PostedDate": "2015-05-07T00:37:01.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1424148",
+    "ThreadId": "637262",
+    "Html": "Hi mark\r<br />\n<br />\nWaiting for your reply. \r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2015-05-08T04:34:39.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1424554",
+    "ThreadId": "637262",
+    "Html": "Hi\r<br />\n<br />\nPlease Guide me where i am wrong, This code  is not working. If this is not possible with this library  or something is missing, please give me right direction. Scratching my head from last one week, still sucked at this point.\r<br />\n<br />\nRegards\r<br />\n<br />\nRakesh Kumar<br />\n",
+    "PostedDate": "2015-05-11T00:18:45.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

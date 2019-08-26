@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1342895",
+    "ThreadId": "577961",
+    "Html": "Hello,\r<br />\nI have a problem, i have written am App in C# to play Multiple Audio Files at the same Time (triggert via Midi), i creates a PLayer Class which handels the UI and the Audio File Reader, when i press play the player throws an event to the Main form where the SampleProvider from the LPayer gets added to a SampleMixingProvider. When I test this with a signal Generator everything works, but when i use an AudioFileReader my app freezes.\r<br />\n<br />\nI defined a Output Format in my Main Form which i pass to my player instances so that they can convert the AudioStream from the audioFilereder to the output Format.\r<br />\n<br />\nI dont know why my App freezes when i try to load an AudioFile because no error is thrown, can you guys tell me where i can take a look to fix this?\r<br />\n<br />\nI hope it was clear, here a picture of my signal chain:\r<br />\n<img src=\"http://niklas-aumueller.de/download/MyCuePLayer_signal_chain.png\" alt=\"Image\" />\r<br />\n<br />\nThe green Boxes are located in my Player Class the White Boxes are located at my Main Form\r<br />\n<br />\nmany thanks for this great audio Framework and sorry for my bad english<br />\n",
+    "PostedDate": "2015-01-17T07:19:24.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1343807",
+    "ThreadId": "577961",
+    "Html": "ok it now works, i think the error was that i put the audioFileReader to an Wavestreamobject, now i handle the audioFileReader as an SampleProvider and it works<br />\n",
+    "PostedDate": "2015-01-21T06:39:01.677-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-01-21T06:39:11.27-08:00"
+  },
+  {
+    "Id": "1351977",
+    "ThreadId": "577961",
+    "Html": "Great, glad you found the solution and sorry it has taken me so long to get round to responding. Nice signal chain diagram - it's a good way of visualising what's going on with your application<br />\n",
+    "PostedDate": "2015-02-12T14:39:30.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

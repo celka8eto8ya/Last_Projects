@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1090094",
+    "ThreadId": "456218",
+    "Html": "I'm creating a simple Internet Radio but are running into a few problems/challenges..\r<br />\n<br />\nI'm using BufferedWaveProvider, basically the code from the Demo with a few changes.\r<br />\n<br />\n<strong>Problem:</strong>\r<br />\nOften, the exception &quot;AcmNotPossible calling acmStreamConvert&quot; is thrown when starting the stream. I can't really figure out why, it seems pretty random. This error also occoures in the Demo!\r<br />\nMark if you want to look into this, i got a good reproduceable sourcecode you can look at :)\r<br />\n<br />\n<strong>Challenge:</strong>\r<br />\nIf you play a stream in VLC player, like this one:\r<br />\n<a href=\"http://onair.100fmlive.dk:80/100fm_live.mp3\" rel=\"nofollow\">http://onair.100fmlive.dk:80/100fm_live.mp3</a>\r<br />\nunder MediaInformation, it somehow know that the station is called Radio100, where does it get that information from?\r<br />\n<br />\n<strong>Challenge:</strong>\r<br />\nIs it possible to know what song is playing at the moment? i guess not?<br />\n",
+    "PostedDate": "2013-09-09T02:05:19.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1090158",
+    "ThreadId": "456218",
+    "Html": "I guess it sends some ID3v2 tags through. The ACM error is likely down to destination buffer not big enough. See how many input bytes are being passed into AcmStream.Convert, and what size destination buffer is being used.<br />\n",
+    "PostedDate": "2013-09-09T05:36:35.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1090160",
+    "ThreadId": "456218",
+    "Html": "How would i know if the stream contains tag info? and when? and how do i read it from the stream?<br />\n",
+    "PostedDate": "2013-09-09T05:39:48.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1090164",
+    "ThreadId": "456218",
+    "Html": "I'm not that much into the NAudio code to know what you are talking about i'm afraid :D\r<br />\n<br />\nBut this is a SS where the exception has been thrown:\r<br />\n<br />\nAcmStreamHeader.cs line 60:\r<br />\n<a href=\"http://postimg.org/image/hja2ql00b/\" rel=\"nofollow\">http://postimg.org/image/hja2ql00b/</a>\r<br />\n<br />\nDoes that give any information?<br />\n",
+    "PostedDate": "2013-09-09T05:49:24.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1090361",
+    "ThreadId": "456218",
+    "Html": "Okay figured out how to get the Stream name and tag info, if any..<br />\n<br />\nIf the server is delivering the data, it can be returned by adding a header request:<br />\n<br />\nHttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(station.Url);<br />\nwebRequest.Headers.Add(&quot;icy-metadata&quot;, &quot;1&quot;);<br />\n<br />\nAnd read like this:<br />\n<br />\nDictionary&lt;string, string&gt; Headers = new Dictionary&lt;string, string&gt;();<br />\n<br />\nforeach (string key in response.Headers.Keys)<br />\n{<br />\n<pre><code>  Headers.Add(key.ToLower(), response.Headers[key]);</code></pre>\n\n}<br />\n<br />\nThis returns name, url, description etc from the stream, if it exists. But not the artist and title, it is read from the endless stream.. See this link for more info:<br />\n<a href=\"https://github.com/icedream/restreamer/blob/master/csharp/Restreamer/LivestreamReceiver.cs\" rel=\"nofollow\">https://github.com/icedream/restreamer/blob/master/csharp/Restreamer/LivestreamReceiver.cs</a><br />\n",
+    "PostedDate": "2013-09-09T14:11:35.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

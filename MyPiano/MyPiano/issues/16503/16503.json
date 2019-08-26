@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I have a URL to MP4 audio file that I need to send to Speech-To-Text API. The API accepts only WAV stream. I am using NAudio 1.7.3 and the following code to download the file and to get the appropriate stream to be sent to API:\r\n\r\n```\r\nstring filePath = \"C:\\Windows\\Temp\\file.wav\";\r\nusing (MediaFoundationReader reader = new MediaFoundationReader(audioFileURL))\r\n{\r\n    WaveFileWriter.CreateWaveFile(filePath, reader);\r\n}\r\nSystem.IO.FileStream fs = new FileStream(filePath, FileMode.Open);\r\n```\r\n\r\nThen I send the fs stream to API and everything works correctly, although very slowly because of I/O to/from disk.\r\n\r\nI decided to rewrite this code and execute all required in memory. For this purpose I wrote the following code (that does not provide me a correct stream):\r\n\r\n```\r\nusing (MediaFoundationReader reader = new MediaFoundationReader(audioLocation)){\r\n    MemoryStream ms = new MemoryStream();\r\n    IgnoreDisposeStream ids = new IgnoreDisposeStream(ms);\r\n    WaveFileWriter writer = new WaveFileWriter(ids, reader.WaveFormat);\r\n\r\n    //Doing one of the following (both provide the same outcome):\r\n    //1. reader.CopyTo(ids);\r\n    //or \r\n    //2. this code from NAudio source:\r\n    var buffer = new byte[reader.WaveFormat.AverageBytesPerSecond * 4];\r\n    while (true)\r\n    {\r\n        int bytesRead = reader.Read(buffer, 0, buffer.Length);\r\n        if (bytesRead == 0)\r\n        {\r\n            // end of source provider\r\n            break;\r\n        }\r\n        // Write will throw exception if WAV file becomes too large\r\n        writer.Write(buffer, 0, bytesRead);\r\n    }\r\n\r\n    writer.Dispose();\r\n    Stream streamToSendToAPI = ids.SourceStream;\r\n\r\n    //Send streamToSendToAPI to Speech-To-Text API\r\n\r\n}\r\n```\r\nMy expectation is that using second code example, where I create stream with WAV header and then add the data to the stream, would provide me a valid WAV stream. However, when I send it to speech-to-text API, the API gives error that indicates that stream cannot be processed (meaning that stream is invalid).\r\n\r\nPlease advise how to fix the in-memory code example to create a valid WAV stream",
+    "LastUpdatedDate": "2016-09-20T05:30:19.733-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-09-20T03:40:49.787-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Create WAV stream in memory",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16503
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "as I said on stack overflow, you need to reset the position of your memorystream to 0",
+      "PostedDate": "2016-09-20T05:30:19.733-07:00",
+      "Id": 204176
+    }
+  ]
+}

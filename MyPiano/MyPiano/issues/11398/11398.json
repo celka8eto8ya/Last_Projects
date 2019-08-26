@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudioDemo",
+      "DisplayName": "NAudioDemo"
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hey.\r\n\r\nWhen i run the WPF demo app, the one where it 'records' the audio on the soundcard, it runs into difficulty. It will record the sound enough to fill the top visual section about 1.3 times, then it will stall and stop for some reason. Then pressing the stop button and the record button again when this happens causes the following exception to be thrown.\r\n\r\n************** Exception Text **************\r\nSystem.NullReferenceException: Object reference not set to an instance of an object.\r\n   at NAudio.Wave.WaveIn.Callback(IntPtr waveInHandle, WaveMessage message, Int32 userData, WaveHeader waveHeader, Int32 reserved) in C:\\Documents and Settings\\Admin\\Desktop\\NAudio-1.3\\NAudio-1-3\\Source Code\\NAudio\\Wave\\MmeInterop\\WaveIn.cs:line 127\r\n   at NAudio.Wave.WaveWindow.WndProc(Message& m) in C:\\Documents and Settings\\Admin\\Desktop\\NAudio-1.3\\NAudio-1-3\\Source Code\\NAudio\\Wave\\MmeInterop\\WaveWindow.cs:line 64\r\n   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\r\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\r\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)",
+    "LastUpdatedDate": "2012-10-27T00:27:43.403-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-01-05T03:47:24.507-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NullReferenceException recording in WPF demo app",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 11398
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "730528",
+    "ThreadId": "287367",
+    "Html": "\r\n<p>I'm trying to output multiple audio streams from a server at the same time, but because my WaveStream is getting the data live, it doesn't implement Position or Length which WaveMixerStream32 requires to function. Each stream also starts and stops differently\r\n than the rest of the streams since each stream is actually a person talking on a mic.</p>\r\n<p>Any suggestions on how to mix multiple streams together?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-01-25T07:43:19.22-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730548",
+    "ThreadId": "287367",
+    "Html": "<p>I usually implement my own mixer stream for things like this, probably deriving from IWaveProvider rather than WaveStream since Length and Position are not really important. You can easily make one based on WaveMixerStream32. In the future I will be encouraging use of the ISampleProvider interface which already has the MixingSampleProvider class that can be used.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-01-25T08:04:11.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730590",
+    "ThreadId": "287367",
+    "Html": "<p>Since you mentioned you usually implement your own, do you have any samples besides the ones that are there now?</p>\r\n<p>I've been trying to roll my own for a few days now, but the main issue I keep getting stuck on is how to know where to mix the streams. MixingSampleProvider looks like it would work, but it looks like it knows position/length still.</p>\r\n<p>WaveMixerStream32 is also all about position and length too. If all 10 streams are different lengths and start and stop at different times, position couldn't be the same, right?</p>\r\n<p>Thanks again,</p>\r\n<p>Tyler</p>",
+    "PostedDate": "2012-01-25T09:08:29.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730595",
+    "ThreadId": "287367",
+    "Html": "<p>You can just ignore the position and length of input streams in your mixing class. IWaveProvider doesn't have Position and Length properties - you just need to implement Read. In Read, simply read from all your source streams, and mix together whatever returns. If some of the inputs have ended already, they will just return 0 from their Read method. You could either just always return count from Read, making a never-ending stream, or return the max number of bytes read from any of your inputs.</p>",
+    "PostedDate": "2012-01-25T09:13:52.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730615",
+    "ThreadId": "287367",
+    "Html": "<p>Thanks Mark for your prompt replies,</p>\r\n<p>I think I'm starting to figure this out, but I'm looking at WaveMixerStream32 and MixingSampleProvider - Why do both require Ieee as the encoding? I'm using NSpeex and it appears to be using PCM. Speex also is 16 bit, whereas WaveMixerStream32 mixes 32 bit.</p>\r\n<p>As an audio noob, what all would I need to do to mix this?</p>\r\n<p>Thanks!</p>",
+    "PostedDate": "2012-01-25T09:54:45.447-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730988",
+    "ThreadId": "287367",
+    "Html": "<p>the reason for mixing in 32 bit instead of 16 bit is headroom. If you mix in 16 bit, then you are adding together Int16s, which could overflow, causing distortion. However, when you go to 32 bit IEEE, you make 1.0 the max scale, so if you mix together and the total goes above 1.0, you can simply scale the overall output level back down before converting back into 16 bit to send to the speakers.</p>\r\n<p>NAudio includes adapter classes to turn 16 bit audio into 32 bit (and vice versa if you need it)</p>",
+    "PostedDate": "2012-01-26T02:16:17.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731126",
+    "ThreadId": "287367",
+    "Html": "<p>Thanks Mark!</p>\r\n<p>I was able to convert the audio to 32 bit and mix it together and convert it back to 16 bit. The audio quality has improved greatly.</p>\r\n<p>There is one issue when two people talk at the same time though. When both streams mix, you hear this horrible screeching sound.</p>",
+    "PostedDate": "2012-01-26T08:14:03.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731129",
+    "ThreadId": "287367",
+    "Html": "<p>Are you able to tell if any clipping occured (i.e. did the summed audio go over 1.0 at any point)? The conversion back to 16 bit ought to clip to plus or minus 1.0 before multiplying up by 32,768 to get back to a 16 bit number.</p>\r\n<p>Also, a good way to debug this kind of problem is to save your inputs to WAV files, and then pass those WAV files through the mixer into another WAV file. Then you can look at the results in an audio editor and get a good idea of what the problem is.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-01-26T08:18:02.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731182",
+    "ThreadId": "287367",
+    "Html": "<p>It seems to be clipping correctly (I put some breakpoints in and there were numbers over 1.0, but it set them to 1.0).</p>\r\n<p>So right now I have:</p>\r\n<ul>\r\n<li>Main voice provider that has a mixer provider object.</li>\r\n<li>Mixer provider that takes all the 16 bit PCM (Speex) streams and converts them to 32 bit Ieee format (Using the Wave16ToFloatProvider code).</li>\r\n<li>A Jitter Buffer provider for each user - This decodes each user talking.</li>\r\n<li>The Main voice provider takes the 32 bit Ieee mixer Read data and converts it back to 16 bit PCM (Using WaveFloatTo16Provider).</li>\r\n<li>Then I convert my main voice provider to a IWaveProvider object.</li>\r\n</ul>\r\n<p>I based my providers off of ISampleProvider</p>",
+    "PostedDate": "2012-01-26T09:40:38.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731189",
+    "ThreadId": "287367",
+    "Html": "<p>Could it be because I'm using DirectSoundOut as my player?</p>",
+    "PostedDate": "2012-01-26T09:51:13.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731276",
+    "ThreadId": "287367",
+    "Html": "<p>OK, if it is clipping, then you will be introducing some distortion. It may be that your input streams are at a high level (perhaps using some kind of automatic gain). Try reducing the volume of the mixed stream a little (e.g. multiply every sample by 0.75) before it gets converted back to 16 bit.</p>\r\n<p>I don't think DirectSoundOut should be causing a problem, but it should be very easy to swap in WaveOut or WaveOutEvent to see if that makes a difference.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-01-26T11:47:57.777-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731310",
+    "ThreadId": "287367",
+    "Html": "<p>Okay, that didn't change the result.</p>\r\n<p>Something is obviously not right when converting to/from 16bit to 32bit as this didn't happen before.</p>\r\n<p>I've checked the wave formats, set the volume at both the conversion from 16 bit and to 16 bit, still the same result.</p>",
+    "PostedDate": "2012-01-26T12:53:55.84-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731328",
+    "ThreadId": "287367",
+    "Html": "<p>Are you able to write out to WAV file at any stage in your pipeline? I should probably add a utility waveprovider to NAudio that does this but it's not too hard. Create a class that implements IWaveProvider. In the constructor take a source stream and open a WaveFileWriter. In the Read method, read from the source, but before returning bytes read, also write to the writer. Then make sure you Dispose the when you are done to make a valid WAV file.</p>\r\n<p>You can then insert this waveprovider at different points in your pipeline to see at what stage the audio is getting corrupted.</p>\r\n<p>&nbsp;</p>\r\n<p>public int Read(byte[] buffer, int offset, int count)</p>\r\n<p>{</p>\r\n<p>&nbsp;&nbsp; int bytesRead = this.source.Read(buffer, offset, count)'</p>\r\n<p>&nbsp;&nbsp; this.writer.Write(buffer, offset, bytesRead);</p>\r\n<p>&nbsp;&nbsp; return bytesRead;</p>\r\n<p>}</p>",
+    "PostedDate": "2012-01-26T13:27:29.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

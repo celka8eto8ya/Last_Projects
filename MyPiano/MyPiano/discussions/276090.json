@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "684981",
+    "ThreadId": "276090",
+    "Html": "\r\n<p>Newbie NAudio user. &nbsp;Downloaded the sources and am trying to build the NAudioDemo projects in VS2008 on a WinXP SP3 machine. &nbsp;Got past the 'linq' not recognized problem by adding System.Core as a reference. &nbsp;However, I still have the following\r\n build error</p>\r\n<p>&nbsp;</p>\r\n<p>NSpeex.SpeexDecoder' does not contain a constructor that takes '1' arguments</p>\r\n<p>The class definition shows:</p>\r\n<p>&nbsp; &nbsp; public class SpeexDecoder&nbsp; &nbsp;</p>\r\n<p>{&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>public <span style=\"color:#ff0000\">SpeexDecoder(BandMode mode, bool enhanced);</span><br>\r\npublic int FrameSize { get; }&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>public int SampleRate { get; }<br>\r\npublic int Decode(byte[] inData, int inOffset, int inCount, short[] outData, int outOffset, bool lostFrame);&nbsp; &nbsp;</p>\r\n<p>}</p>\r\n<p>&nbsp;</p>\r\n<p>Anyone have a clue what I'm doing wrong here?</p>\r\n<p>&nbsp;</p>\r\n<p>TIA</p>\r\n<p>&nbsp;</p>\r\n<p>Frank</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>But the code shows&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; public SpeexChatCodec(BandMode bandMode, int sampleRate, string description)&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>this.decoder = <span style=\"color:#ff0000\">new SpeexDecoder(bandMode)</span>;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>this.encoder = new SpeexEncoder(bandMode);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>this.recordingFormat = new WaveFormat(sampleRate, 16, 1);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>this.description = description;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>this.encoderInputBuffer = new WaveBuffer(this.recordingFormat.AverageBytesPerSecond); // more than enough&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>}</p>\r\n",
+    "PostedDate": "2011-10-16T19:08:11.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685098",
+    "ThreadId": "276090",
+    "Html": "<p>I would recommend downloading Visual Studio 2010 express to build NAudio, which is a free product.</p>",
+    "PostedDate": "2011-10-17T02:25:26.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685175",
+    "ThreadId": "276090",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>I would recommend downloading Visual Studio 2010 express to build NAudio, which is a free product.</p>\r\n</blockquote>\r\n<p>&nbsp;</p>\r\n<div>Thanks for the quick reply. &nbsp;I got VS2010Express and now the NAudioDemo product builds successfully.</div>\r\n<div></div>\r\n<div></div>\r\n<div>While I have your ear (eye?), my application requires that I produce one of two simple tones, depending on the results of a test measurement that is taken about 5 times/second. &nbsp;Any suggestions where to start with NAudio - is there an example that is close that I can use as a starting point?</div>\r\n<div>FWIW, I do this now with the 'Beep(frequency_hz, duration_ms)' function in VS2008, but this directly accesses the PC speaker and doesn't allow control of volume or output device selection.</div>\r\n<div></div>\r\n<div>TIA,</div>\r\n<div></div>\r\n<div>Frank</div>",
+    "PostedDate": "2011-10-17T06:40:16.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685195",
+    "ThreadId": "276090",
+    "Html": "<p>I did a blog post a while back on creating sine waves with NAudio. That would be a good place to begin.</p>\r\n<p>http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-10-17T07:36:24.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685250",
+    "ThreadId": "276090",
+    "Html": "<p>Mark,</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks! &nbsp;I have that post, and I'm&nbsp;working on a project using it. &nbsp;I'm sure I'll have more questions ;-).</p>\r\n<p>&nbsp;</p>\r\n<p>Frank</p>",
+    "PostedDate": "2011-10-17T09:28:52.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

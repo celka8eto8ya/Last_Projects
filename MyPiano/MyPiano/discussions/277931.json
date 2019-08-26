@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "692321",
+    "ThreadId": "277931",
+    "Html": "\r\n<p>Forgive me if this is a basic question but...</p>\r\n<p>I have used the looping code that was posted a while ago and it works perfect. I have it so I can change the loop in realtime which is exactly what I wanted to do. Now I need some way to change the end point of the WAV file. Ideally it would be nice to adjust\r\n it in realtime but that isn't totally necessary. Here is the code I added to the LoopStream class</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n<span style=\"color:gray\">///</span><span style=\"color:green\"> loop point</span>\r\n<span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">int</span> loopPoint {<span style=\"color:blue\">get</span>; <span style=\"color:blue\">set</span>;}\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>and then</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\r\n    {\r\n        <span style=\"color:blue\">int</span> totalBytesRead = 0;\r\n \t\t\r\n        <span style=\"color:blue\">while</span> (totalBytesRead &lt; count)\r\n        {\r\n            <span style=\"color:blue\">int</span> bytesRead = sourceStream.Read(buffer, offset &#43; totalBytesRead, count - totalBytesRead);\r\n            <span style=\"color:blue\">if</span> (bytesRead == 0)\r\n            {\r\n                <span style=\"color:blue\">if</span> (sourceStream.Position == 0 || !EnableLooping)\r\n                {\r\n                    <span style=\"color:green\">// something wrong with the source stream</span>\r\n                    <span style=\"color:blue\">break</span>;\r\n                }\r\n                <span style=\"color:green\">// loop</span>\r\n                <strong>sourceStream.Position = loopPoint</strong>;\r\n            }\r\n            totalBytesRead &#43;= bytesRead;\r\n        }\r\n        <span style=\"color:blue\">return</span> totalBytesRead;\r\n    }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Then I just assigned a trackbar to control the loopPoint variable</p>\r\n<p>I would like a second control bar to control the total length. Any ideas?</p>\r\n",
+    "PostedDate": "2011-11-01T12:45:00.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "698311",
+    "ThreadId": "277931",
+    "Html": "<p>instead of (bytesRead == 0) you would test (bytesRead == 0 || sourceStream.Position &gt;= endPoint)</p>",
+    "PostedDate": "2011-11-15T02:50:26.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "698683",
+    "ThreadId": "277931",
+    "Html": "<p>well that was pretty easy! :)&nbsp; I will test it out tonight and see how it goes. Thanks.</p>",
+    "PostedDate": "2011-11-15T15:22:39.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

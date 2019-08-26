@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "649315",
+    "ThreadId": "267007",
+    "Html": "<p>I am a newbie to audio technology, you might have answer to my queries below.</p>\n<p>I have one tone(wav file)...my audio application &nbsp;settings is 44.1khz sampling rate with 16 bit rate...</p>\n<p>how can I make my tone to play at 20khz frequency that is not audible to human.</p>\n<p>Is there any formula? or conversion algorithm?</p>\n<p>anyone have a precise explanation on this differences? it might help me learn faster on this.</p>\n<p>&nbsp;</p>\n<p>thanks.</p>\n<p>kyan</p>",
+    "PostedDate": "2011-07-28T18:51:48.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "655170",
+    "ThreadId": "267007",
+    "Html": "<p>are you trying to generate a tone, or pitch shift an existing signal?</p>",
+    "PostedDate": "2011-08-09T06:26:04.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

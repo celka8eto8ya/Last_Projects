@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "984055",
+    "ThreadId": "428876",
+    "Html": "\r\n<p>I am trying to see if a pc has a mic plugged in with C#</p>\r\n<p>&nbsp;</p>\r\n<pre><div style=\"color:black; background-color:white\"><pre><span style=\"color:blue\">int</span> count = NAudio.Wave.WaveIn.DeviceCount;\n</pre>\n</div>\n</pre>\r\n<p>&nbsp;</p>\r\n<p>Normally that returns a 1 when i plug a mic in and 0 if it isn't. But when i use it on a pc with a soundmax integrated digital hd audio it always returns 2 no matter what.</p>\r\n<p>&nbsp;</p>\r\n<p>I've searched around for a solution and could not find one, so any advice would be great.</p>\r\n<p>I did see that there were 2 older discussions about issues with soundmax, but they did not offer a solution that i need. Thanks in advance</p>\r\n<p>&nbsp;</p>\r\n<p>*EDIT</p>\r\n<p>I have looked around more, its issues with the soundmax and the winmm.dll. I think i am screwed if i want to know if the mic is plugged in with soundmax...</p>\r\n",
+    "PostedDate": "2013-01-08T04:37:54.53-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

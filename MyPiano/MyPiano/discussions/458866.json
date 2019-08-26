@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1098346",
+    "ThreadId": "458866",
+    "Html": "Hello,\r<br />\n<br />\nI am trying to implement a click track (metronome) that will play simultaneously with the asio input.  The click track will be 120 beats per minute, so I need to play a certain wav file twice every second.  I'm trying to figure out the best way to go about this.\r<br />\n<br />\nWould I create a separate parallel task to run on a new thread that calls the C# Timer method?  This would fire off the BufferedWaveProvider.AddSamples twice every second to play the wav file?\r<br />\n<br />\nOr would I want both the click track &amp; Asio output to run through the MixingSampleProvider?  That way I can easily adjust the volume &amp; panning before output?<br />\n\r<br />\nAny guidance is greatly appreciated!  <br />\n",
+    "PostedDate": "2013-09-23T21:42:38.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098942",
+    "ThreadId": "458866",
+    "Html": "Probably the best place to look is in the source code for the NAudio WPF demo app which has a drum machine sample. It doesn't require any timers so you can get sample accuracy in your timing.<br />\n",
+    "PostedDate": "2013-09-25T02:43:06.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1100348",
+    "ThreadId": "458866",
+    "Html": "Great, looking into this now.  It looks like ASIO Out implements IWavePlayer.  Would I convert this to ISampleProvider in order to use inside a MixingSampleProvider?  My goal is to be able to use the ASIO output &amp; Metronome output inside a mixer.  <br />\n",
+    "PostedDate": "2013-09-27T20:56:39.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1100516",
+    "ThreadId": "458866",
+    "Html": "IWavePlayer is the base interface for everything that can play audio. In the init method it takes an IWaveProvider\r<br />\nIt's a little complicated to set up with ASIO, but you can use a BufferedWaveProvider, copy the ASIO samples into that, convert to a SampleProvider, do your mixing, and then convert back to IWaveProvider for the IWavePlayer to play from<br />\n",
+    "PostedDate": "2013-09-29T00:02:20.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1101177",
+    "ThreadId": "458866",
+    "Html": "Thanks Mark - I think I have this working now.<br />\n",
+    "PostedDate": "2013-09-30T22:34:14.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

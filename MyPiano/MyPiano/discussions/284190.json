@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "717244",
+    "ThreadId": "284190",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>i wonder if it is possible with NAudio to draw the whole Waveform after loading a file and not on the fly while the file is played. Couldnt find out how this works. Some example code would be much appreciated. (Drawing itself isnt the point here, its more\r\n about getting all the data for the whole graph in the beginning, in lists maybe)</p>\r\n",
+    "PostedDate": "2011-12-26T11:51:18.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717248",
+    "ThreadId": "284190",
+    "Html": "<p>thats quite easy. You know how to create a stream that supports creating a waveform. So just don t play the stream because the only thing the engine is doing is to read from the stream and play the read data. So simply just read from the stream into a buffer but don't play it...<br />Little example how to that.</p>\r\n<p>int read = 0;</p>\r\n<p>while(read &lt; stream.Length)<br />{</p>\r\n<p>stream.Read(somebuffer, 0, 20000);</p>\r\n<p>}</p>",
+    "PostedDate": "2011-12-26T12:05:55.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717265",
+    "ThreadId": "284190",
+    "Html": "<p>Thanks for the answear but could you get a bit more precise on the example?</p>\r\n<p>Im working with the wpfdemo but when i use your code on the inputstream it just crashes? (Sorry for my noobish questions :) )</p>",
+    "PostedDate": "2011-12-26T13:54:38.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717272",
+    "ThreadId": "284190",
+    "Html": "<p>yes, thefiloe's approach is the way to go. You should open the file twice - once for the playback engine, and once for the WaveForm renderer. The demo app is set up to draw the waveform while it plays so not really suitable for drawing up front.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-26T14:43:33.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

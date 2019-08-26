@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "696780",
+    "ThreadId": "279060",
+    "Html": "<p>I am using NAudio 1.5 in a <span style=\"color: #ff0000;\">Console application</span></p>\n<p>i use waveIn :</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre>           WaveCallbackInfo callbackInfo = WaveCallbackInfo.FunctionCallback(); \n           waveIn = <span style=\"color: blue;\">new</span> WaveIn(callbackInfo);\n</pre>\n</div>\n<p>&nbsp;</p>\n<p>to record sound from microphone ,it's work fine in windows 7. &nbsp;but not well in Windows XP.&nbsp;</p>\n<p>I checked this item:</p>\n<p><a href=\"http://naudio.codeplex.com/workitem/16131\">http://naudio.codeplex.com/workitem/16131</a></p>\n<p>u said you didn't tested it . &nbsp;</p>\n<p>Recording &nbsp;on XP is so important to me and many people,do you plan to support it ?&nbsp;</p>",
+    "PostedDate": "2011-11-10T19:32:01.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

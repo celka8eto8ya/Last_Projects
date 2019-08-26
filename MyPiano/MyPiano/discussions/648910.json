@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1456347",
+    "ThreadId": "648910",
+    "Html": "I'm reading wave files into memory, and they have a special &quot;korg&quot; chunk that contains the name of the sample and other information.  Can NAudio help me do this?  I saw there's a WaveFileChunkReader class, but it's private.  Thanks!<br />\n",
+    "PostedDate": "2015-12-17T18:40:34.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456348",
+    "ThreadId": "648910",
+    "Html": "Never mind, found it.  WaveFileChunkReader is wrapped in WaveFileReader.<br />\n",
+    "PostedDate": "2015-12-17T18:48:29.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

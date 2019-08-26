@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1126125",
+    "ThreadId": "470349",
+    "Html": "right now I am getting 17640 samples from this code<br />\n<pre><code> void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n\n            byte[] buffer = e.Buffer;\n            int bytesRecorded = e.BytesRecorded;\n            buffer1 = new float[bytesRecorded];\n            //  WriteToFile(buffer, bytesRecorded);\n\n            for (int index = 0; index &lt; e.BytesRecorded; index += 2)\n            {\n                short sample = (short)((buffer[index + 1] &lt;&lt; 8) |\n                                        buffer[index + 0]);\n                float sample32 = sample / 32768f;\n                buffer1[index] = sample32;\n            }</code></pre>\n\nI need to get 2^X samples at a time without losing any samples\r<br />\nso 2^14 is 16384... how can i get 16384 samples at a time with out losing any data?\r<br />\nI just want to take 16384 and run it in to a DSP and then move to the next 16384 samples with out losing any sound data... can this be done?<br />\n",
+    "PostedDate": "2013-11-18T09:52:46.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126509",
+    "ThreadId": "470349",
+    "Html": "If you look through the NAudio demo code, you'll see a class called SampleAggregator which is one way of batching up audio into powers of two so it can be passed into an FFT.<br />\n",
+    "PostedDate": "2013-11-19T05:34:20.827-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126896",
+    "ThreadId": "470349",
+    "Html": "Markheath\r<br />\n<br />\ndo you mean the VoiceReorder project ?\r<br />\nthis ?<br />\n<pre><code>\nnamespace VoiceRecorder.Audio\n{\n    public class SampleAggregator\n    {\n        // volume\n        public event EventHandler&lt;MaxSampleEventArgs&gt; MaximumCalculated;\n        public float maxValue;\n        public float minValue;\n        public int NotificationCount { get; set; }\n        int count;\n\n        public SampleAggregator()\n        {\n        }\n\n        private void Reset()\n        {\n            count = 0;\n            maxValue = minValue = 0;            \n        }\n\n        public void Add(float value)\n        {\n            maxValue = Math.Max(maxValue, value);\n            minValue = Math.Min(minValue, value);\n            count++;\n            if (count &gt;= NotificationCount &amp;&amp; NotificationCount &gt; 0)\n            {\n                if (MaximumCalculated != null)\n                {\n                    MaximumCalculated(this, new MaxSampleEventArgs(minValue, maxValue));\n                }\n                Reset();\n            }   \n        }\n    }\n\n    public class MaxSampleEventArgs : EventArgs\n    {\n        [DebuggerStepThrough]\n        public MaxSampleEventArgs(float minValue, float maxValue)\n        {\n            this.MaxSample = maxValue;\n            this.MinSample = minValue;\n        }\n        public float MaxSample { get; private set; }\n        public float MinSample { get; private set; }\n    }\n}\n</code></pre>\n\nHow do i use it?<br />\n",
+    "PostedDate": "2013-11-19T22:22:09.8-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127291",
+    "ThreadId": "470349",
+    "Html": "No, I mean the one in the NAudio demo code:\r<br />\n<a href=\"https://naudio.codeplex.com/SourceControl/latest#NAudioWpfDemo/AudioPlaybackDemo/SampleAggregator.cs\" rel=\"nofollow\">https://naudio.codeplex.com/SourceControl/latest#NAudioWpfDemo/AudioPlaybackDemo/SampleAggregator.cs</a><br />\n",
+    "PostedDate": "2013-11-20T14:33:25.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

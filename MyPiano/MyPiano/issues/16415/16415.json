@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I have a working FFT, I need to know how to get RAW data from my microphone  in real time.\r\n\r\nthis is the code I have so far:\r\n```\r\nprivate NAudio.Wave.WaveIn sourceStream = null;\r\n       private NAudio.Wave.DirectSoundOut waveOUT = null;\r\n       NAudio.Wave.WaveFileWriter waveWriter = null;\r\n       NAudio.Wave.WaveInProvider waveIn = null;\r\n        void Voice()\r\n       {\r\n            Byte[] buffer = new Byte[10];\r\n           // sound from the Mic\r\n           int deviceNumber = 0;\r\n           sourceStream = new NAudio.Wave.WaveIn();\r\n           sourceStream.DeviceNumber = deviceNumber;\r\n           sourceStream.WaveFormat = new NAudio.Wave.WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(deviceNumber).Channels);\r\n           NAudio.Wave.WaveInProvider waveIn = new NAudio.Wave.WaveInProvider(sourceStream);\r\n           sourceStream.DataAvailable += new EventHandler<NAudio.Wave.WaveInEventArgs>(sourceStream_DataAvailable);\r\n             waveIn.Read(buffer, 0, 10);\r\n\r\n```\r\nis the raw data store in wavein.read? \r\nhow do I know how big the  buffer is?\r\nshould I use a Tlist and not an array?\r\n should I use \r\nsourceStream.DataAvailable += new EventHandler<NAudio.Wave.WaveInEventArgs>?\r\n\r\nwhen will this be done.. or when will there be DataAvaiable ?",
+    "LastUpdatedDate": "2013-11-18T04:06:27.877-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-11-14T09:54:40.297-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Microphone Data to FFT ",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16415
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "no, the raw data comes in the DataAvailable event. You need to call StartRecording before any events will fire",
+      "PostedDate": "2013-11-18T04:06:27.877-08:00",
+      "Id": 123359
+    }
+  ]
+}

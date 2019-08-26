@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "652224",
+    "ThreadId": "267690",
+    "Html": "\r\n<p>Hi, I've an application which needs to play up to 5 different files at the same time,&nbsp;keeping them synchronized (latency is not a big problem). They could are mono, stereo, 24bit or 16bit all mixed togheter.</p>\r\n<p>So&nbsp;I create a wavestream32 for each file, with a device for each one. Note that I reuse the device so each time a file is opened I do a device.init(stream). And this is the first question. Is this correct? I've read here that this is not a good idea\r\n for old WaveOut devices this is also true for DSound?</p>\r\n<p>The problem is that if I run the application in debug mode everything works fine, but in release... after the first 2/3 files the playing fails in a very weird manner... the position will move faster or stops. it seems sometimes that NAUDIO takes out more\r\n bytes than needed or at least skips some of them.</p>\r\n<p>It's a very complex situation because I use many threads so.... you know.</p>\r\n<p>I want only know if there's some best practice when dealing with the playing of multiple files at once (whithout using the wavemixer32).</p>\r\n<p>Thank you</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<div id=\"_mcePaste\" style=\"width:1px; height:1px; overflow:hidden; top:0px; left:-10000px\">\r\n&#65279;</div>\r\n",
+    "PostedDate": "2011-08-04T01:39:58.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "654579",
+    "ThreadId": "267690",
+    "Html": "<p>by far the best way to keep things synchronized is to use a mixer stream. If you absolutely must do it another way, then you need a thread that is watching for things getting out of sync. I also recommend creating a new instance of DirectSoundOut for each playback at the moment.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-08-08T08:10:33.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "657654",
+    "ThreadId": "267690",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Thank you for your reply. Now my dev has managed to fix those behavior... In september when breezer will pop up with a refresh you'll see more in detail.</p>\r\n<p>Right now I haven't the time to reply but the solution was quite simple, just we don't call stop, we set the position to 0 and we archive the same effect. And it seems to be a rock-solid approach (even reusing dsound devices). You've done a great work!</p>\r\n<p>But we need more testing to be sure.</p>\r\n<p>Bye</p>",
+    "PostedDate": "2011-08-13T05:48:46.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

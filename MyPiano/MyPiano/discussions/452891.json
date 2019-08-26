@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1078514",
+    "ThreadId": "452891",
+    "Html": "I want to create a stereo wav out of 2 mono wavs (from a soundfont file). I can get it to combine into a waveprovider, but I need to be able to show the waveform using WaveViewer.\r<br />\n<br />\nThis is what I have now:<br />\n<pre><code>RawSourceWaveStream leftChannel = new RawSourceWaveStream(new MemoryStream(sf.SampleData, (int)sf.SampleHeaders[left].Start * 2, (int)((sf.SampleHeaders[left].End - sf.SampleHeaders[left].Start) * 2)), new WaveFormat(44100, 1));\nRawSourceWaveStream rightChannel = new RawSourceWaveStream(new MemoryStream(sf.SampleData, (int)sf.SampleHeaders[right].Start * 2, (int)((sf.SampleHeaders[right].End - sf.SampleHeaders[right].Start) * 2)), new WaveFormat(44100, 1));\nMultiplexingWaveProvider stereoWave = new MultiplexingWaveProvider(new IWaveProvider[] { leftChannel, rightChannel }, 2);\n</code></pre>\n\nI'm not even sure if this does the right thing (combine left and right channels properly), but even if it does it ends up being a WaveProvider (that does not have a length).\r<br />\n<br />\nMy WaveViewerEx control needs the total length of the wave to be able to fit the waveview in the control.\r<br />\n<br />\nOf course I can do it manually, but combining 2 mono streams into a single stereo stream seems to be such a common task that I think I must be missing something obvious.\r<br />\n<br />\nCan this be done using NAudio, or should I combine the 2 channels manually?<br />\n",
+    "PostedDate": "2013-08-08T18:30:32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083122",
+    "ThreadId": "452891",
+    "Html": "the length will be the longer of the two input streams,<br />\n",
+    "PostedDate": "2013-08-21T07:19:00.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083343",
+    "ThreadId": "452891",
+    "Html": "I've created my own implementation. I did try to use the Buffer helper functions, but am getting strange memory corruptions (due to the trick with mapping floats over bytes etc) so I ended up just using byte arrays and mixing like that. Works perfect now, just wanted to let you know that the Buffer helper classes don't work correctly in all cases. I can show you some code so you can verify I did it right if you want.<br />\n",
+    "PostedDate": "2013-08-21T15:13:15.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1090204",
+    "ThreadId": "452891",
+    "Html": "If you can provide a failing unit test with WaveBuffer, I'd be interested. It's proved itself reliable over 6 years now, so I'm fairly confident it can be trusted. You do need to make sure you don't overwrite the end of the underlying buffer though. Only the Length of the byte array can be trusted. Also, don't use it with Array.Copy as it uses reflection to find the underlying array type and therefore pays no attention to whether you passed in the float[] instead of the byte[]<br />\n",
+    "PostedDate": "2013-09-09T07:27:59.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

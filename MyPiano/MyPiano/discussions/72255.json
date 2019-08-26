@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "246660",
+    "ThreadId": "72255",
+    "Html": "<p>I don't know if this is already in the 'bank' of possible bugs, but i wanted to share this..<br>Maybe you know something more about it! :)</p>\r\n<p>Like the subject says, when i try to play the next song i use something like this:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>btnStop_Click(sender, e);\r\n<span style=\"color:Green\">//System.Threading.Thread.Sleep(500);</span>\r\nfileName = <span style=\"color:#A31515\">&quot;path_to_new_song_file&quot;</span>;\r\nbtnPlay_Click(sender, e);</pre>\r\n</div>\r\n<p>One way to get rid of that exception is to sleep the thread for particular amount of milliseconds - in the example, uncommenting the upper line (the 2nd one:)), ..,<br>but in most ways that isn't quite&nbsp;acceptable.</p>\r\n<p>Exception is raised in the&nbsp;overridden&nbsp;Read method in the MeteringStream.cs file - when program tries to read data from the source stream.&nbsp;</p>\r\n<p>The better solution, might be something like this:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">public</span> <span style=\"color:Blue\">override</span> <span style=\"color:Blue\">int</span> Read(<span style=\"color:Blue\">byte</span>[] buffer, <span style=\"color:Blue\">int</span> offset, <span style=\"color:Blue\">int</span> count)\r\n{\r\n&nbsp;&nbsp; &nbsp;<span style=\"color:Blue\">int</span> bytesRead = 0;\r\n&nbsp;&nbsp; &nbsp;<span style=\"color:Blue\">try</span>\r\n&nbsp;&nbsp; &nbsp;{\r\n&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;bytesRead = SourceStream.Read(buffer, offset, count);\r\n&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;ProcessData(buffer, offset, bytesRead);\r\n&nbsp;&nbsp; &nbsp;}\r\n&nbsp;&nbsp; &nbsp;<span style=\"color:Blue\">catch</span>\r\n&nbsp;&nbsp; &nbsp;{\r\n&nbsp;&nbsp; &nbsp;}\r\n&nbsp;&nbsp; &nbsp;<span style=\"color:Blue\">return</span> bytesRead;\r\n}</pre>\r\n</div>\r\n<p>Some other workaround? Thanks</p>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">btnStop_Click(null, null);</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//System.Threading.Thread.Sleep(500);</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fileName = dgvMusicList.CurrentRow.Cells[&quot;MusicColumn_FilePath&quot;].Value.ToString();</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;btnPlay_Click(sender, e);</div>",
+    "PostedDate": "2009-10-16T12:02:58.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "246704",
+    "ThreadId": "72255",
+    "Html": "<p>Hi there,</p>\r\n<p>what callback mechanism are you using with WaveOut? The problem you are experiencing is one I wrote a little about in my recent article on coding4fun:</p>\r\n<p>http://blogs.msdn.com/coding4fun/archive/2009/10/08/9905168.aspx (see the section on callback mechanisms)</p>\r\n<p>also, what version of NAudio are you using?</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-16T14:01:34.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "246748",
+    "ThreadId": "72255",
+    "Html": "<p>Thanks for a quick reply! :)</p>\r\n<p>I used this option: DirectSoundOut....</p>\r\n<p>If i use FunctionCallback, everything freezes on next song.<br>In the case of NewWindow, it's okay.</p>\r\n<p>WasapiOut works well too without EventSync.</p>\r\n<p>Now i see addition info on: <a href=\"http://mark-dot-net.blogspot.com/2008/11/waveoutopen-callbacks-in-naudio.html\">http://mark-dot-net.blogspot.com/2008/11/waveoutopen-callbacks-in-naudio.html</a>&nbsp;too.</p>\r\n<p>I'm currently on Windows 7.</p>\r\n<p>It's the same with NAudio 1.3, or the SVN version.</p>\r\n<p>Thanks again</p>",
+    "PostedDate": "2009-10-16T16:49:42.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

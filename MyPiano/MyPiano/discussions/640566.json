@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1432243",
+    "ThreadId": "640566",
+    "Html": "in the application that i am working on the users record audio from a thin client .. waveIn works fine for short 10 - 20 secs recordings but for anything over 40 - 50 seconds i get an error - &quot;no driver calling waveinprepareheader&quot;.\r<br />\n<br />\ni am using the standard code from the NAudio demo solution.\r<br />\n<br />\nWould really appreciate help on this. Have been racking my brains out for days now.<br />\n",
+    "PostedDate": "2015-06-28T23:05:08.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433543",
+    "ThreadId": "640566",
+    "Html": "Try a different event model perhaps? What were you using - WaveIn or WaveInEvent? Could also try Wasapi for capturing<br />\n",
+    "PostedDate": "2015-07-08T04:25:39.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "940192",
+    "ThreadId": "402830",
+    "Html": "\r\n<p>Hey,</p>\r\n<p>Thanks for your awesome work. It's been rather enjoyable using your library for development. I have a question about performance, however. My intention is to create a Digital Audio Workstation with VST support (using VST.NET) and I would like to be able\r\n to sell it as a full-featured, powerful program.&nbsp;Will NAudio support dozens of audio tracks playing simultaneously? What about with the overhead of VST processing? Am I overestimating the performance of .NET, and should I instead be writing this in C&#43;&#43;?\r\n Performance does matter. People recording instruments need very low latency between recording and playback otherwise... well, recording gets very confusing at that point. I need to accomplish a latency of no more than 20ms.</p>\r\n<p>Should I re-think my approach?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-11-12T01:28:53.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940267",
+    "ThreadId": "402830",
+    "Html": "<p>.Net is plenty fast enough to do a project like that, *IF* you correctly optimize the code (using the profilers as guides).</p>\r\n<p>That said, I would recommend only opening a single output stream; This uses less handles and allows you to mix on the fly in your own code. &nbsp;I'd also recommend that you make sure all sources use the same sample rate as the output stream (we'll assume all of them are 32-bit float internally).</p>\r\n<p>No matter which language you use, this will be a large project... &nbsp;take your time and make sure you are always using the best algorithm for each piece of the system.</p>\r\n<p>Good Luck!</p>",
+    "PostedDate": "2012-11-12T05:28:03.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941408",
+    "ThreadId": "402830",
+    "Html": "\r\n<p>the big problem with .NET for very low latency is the garbage collector. When it kicks in it stops all threads from running and that can cause audio output glitches. There are some best practices for writing audio code in a way that reuses buffers so the\r\n garbage collector has less work to do, but unfortunately you have almost no control over exactly when it will run.</p>\r\n<p>Also, only the ASIO and WASAPI output modes are able to work at low latencies. WaveOut and DirectSound won't go much below 50ms.</p>\r\n<p>NAudio hasn't been extensively optimised for very low latency, so you might also need to fine tune some classes if you are serious about doing this.</p>\r\n<p>To make a full-featured DAW that competes in an already crowded market is a very big undertaking, so I suggest you start by creating some smaller audio applications first.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-13T23:10:12.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941414",
+    "ThreadId": "402830",
+    "Html": "\r\n<p>Would you recommend temporarily setting GCSettings.LatencyMode to GCLatencyMode.LowLatency temporarily while playback is being done? I set the latency mode back to what it was previously when the audio is paused or stopped. Apparently this setting suppresses\r\n garbage collection completely except for in very low free memory situations, which sounds great as long as my code for playing audio is very clean. What's your opinion on the matter?</p>\r\n",
+    "PostedDate": "2012-11-13T23:30:43.077-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941423",
+    "ThreadId": "402830",
+    "Html": "\r\n<p>that's interesting. LowLatency mode has been on my list of things to experiment with for some time, but I haven't got round to it yet. It it does work like that, that will be excellent for audio. You could also do a collect before playback begins.</p>\r\n",
+    "PostedDate": "2012-11-13T23:47:54.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941428",
+    "ThreadId": "402830",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>markheath wrote:</strong><br>\r\n<p>that's interesting. LowLatency mode has been on my list of things to experiment with for some time, but I haven't got round to it yet. It it does work like that, that will be excellent for audio. You could also do a collect before playback begins.</p>\r\n</blockquote>\r\n<p><br>\r\nIt would actually be great to have this built into version 1.7. They recommend that you use Constrained Execution (http://msdn.microsoft.com/en-us/library/ms228973.aspx) and limit the code that runs with low latency mode enabled to a try/finally block. This\r\n could be done in the NAudio processing thread, because often Play() and Stop() are not called from the same method. I would recommend the SustainedLowLatency actually. Glad I could pique your interest on the matter.</p>\r\n",
+    "PostedDate": "2012-11-13T23:52:03.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

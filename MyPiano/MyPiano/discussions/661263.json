@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1492471",
+    "ThreadId": "661263",
+    "Html": "My Zoom R-16 interface is sampling with a bit-depth of 24 bit, but the driver is erroneously setting the AsioSampleType to Int32LSB. It works, but the audio is very low (i guess because it is treating the 24 bit as 32 bit) - how can i amplify it up? I tried both bitshifting the int 8 to the left, and using the code from the AsioSampleType.Int24LSB-case (AsioAudioAvailableEventArgs.cs), but it only creates noise.<br />\n",
+    "PostedDate": "2017-02-10T01:23:44.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

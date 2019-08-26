@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1206454",
+    "ThreadId": "531203",
+    "Html": "Hello, \r<br />\n<br />\nI am interested in adding a karaoke tool to my website, and I feel like NAudio and its community could really help me get started. I'm not a super experienced programmer, and i've never used an audio manipulating before, so I'm not sure how to get started.\r<br />\n<br />\nI'll probably upload a handful of songs that they can choose from. I would like for them to be able to play the song, and sing along (recording), and then listen to themselves singing the song, and eventually post it to the blog if they like it.\r<br />\n<br />\nI would like to write it in C# and or JS, thats why you guys seemed like the perfect fit.\r<br />\n<br />\nI'd love some input on how tough this would be, if NAudio is the right choice, and maybe a link to a doc that would give me info on how to get started.\r<br />\n<br />\nThank you! I'll be sure to link to all of you when I get up and running.<br />\n",
+    "PostedDate": "2014-02-10T10:32:30.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207526",
+    "ThreadId": "531203",
+    "Html": "Nobody has any ideas?<br />\n",
+    "PostedDate": "2014-02-12T12:54:11.453-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "600574",
+    "ThreadId": "254702",
+    "Html": "\r\n<p>I am working on a project that records sounds from the microphone and processes the buffer.&nbsp; I am using WaveIn to capture the audio.</p>\r\n<p>I have two questions.</p>\r\n<p>When I use an external connected microphone, my app response was really good. When I use the laptop microphone the response was really bad. I have to manually&nbsp;increase the volume and boost of the mic.</p>\r\n<p>1) I am trying to figure out in the code to find whether there is a external microphone connected?</p>\r\n<p>&nbsp;If there is, I want to set that as default device and set its volume and boost accordingly. If there is no external microphone, I want to set the laptop microphone to default device and set its properties. Window is not setting the default device on\r\n its own (which is wierd). I have to set manually in windows all these settings.</p>\r\n<p>I am setting the volume as follows</p>\r\n<p>&nbsp;var mixerLine = new MixerLine((IntPtr)DeviceNumber, 0, MixerFlags.WaveIn);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach (var control in mixerLine.Controls)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (control.ControlType == MixerControlType.Volume)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; volumeControl = control as UnsignedMixerControl;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (volumeControl != null)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; volumeControl.Percent = desiredVolume;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>So once I figure out the device number of the defaut device, then I can set the volume.</p>\r\n<p>how do I set the boost?</p>\r\n<p>Thanks much in advance.</p>\r\n<div id=\"x__mcePaste\" style=\"width:1px; height:1px; overflow:hidden; top:0px; left:-10000px\">\r\n&#65279;</div>\r\n",
+    "PostedDate": "2011-04-20T11:50:11.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "600900",
+    "ThreadId": "254702",
+    "Html": "<p>it is unfortunately very hard to find the volume control of the default microphone in a way that is reliable on both XP and Vista/Win 7. My best effort at this can be found in the .NET voice recorder project (voicerecorder.codeplex.com), but even that isn't quite right</p>",
+    "PostedDate": "2011-04-21T04:43:36.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601237",
+    "ThreadId": "254702",
+    "Html": "<p>Understood. Is there a way to set the microphone boost (dB). I tried the ﻿﻿﻿MixerControl.Decibal. But that didn't work.</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2011-04-21T13:13:12.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601253",
+    "ThreadId": "254702",
+    "Html": "<p>You'll be looking for a boolean control in the mixerline controls. Just an advance warning though, can't remember if setting boolean mixer controls is supported (that code is about 10 years old!)</p>",
+    "PostedDate": "2011-04-21T13:30:06.22-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

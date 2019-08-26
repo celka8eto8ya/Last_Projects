@@ -1,0 +1,145 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 21,
+    "Custom": null,
+    "Description": "Under load, I am getting an occasional AccessViolation in WDMAUD.DRV, and my application is crashing.\r\n",
+    "LastUpdatedDate": "2016-06-16T03:19:08.553-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-05-01T06:58:35.817-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Occasional AccessViolation in WDMAUD.DRV",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16396
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Please provide more information, including what you were doing with NAudio, what OS you are using, what version of NAudio you are using, and the stack trace if available when the exception occurs",
+      "PostedDate": "2013-05-01T11:14:41.447-07:00",
+      "Id": 99053
+    },
+    {
+      "Message": "\nOS: Windows XP SP3 32bit (we have seen this issue on Windows 7 too though)\nnAudio is being used to record from the sound card (to Wav file) using WaveIn (default constructor) - capture format is WaveFormat(8000, 1);\nnAudio version 1.6\n\nI don't have a stack trace at present - trying to retrieve one using Windbg.... (crash occurs under overnight load test)\n\nTest scenario is to \n* record a file (few seconds (3?))\n* stop recording\n* wait a short while (few seconds)\n* start recording\n* repeat!\n\n",
+      "PostedDate": "2013-05-02T00:56:04.463-07:00",
+      "Id": 99120
+    },
+    {
+      "Message": "Thanks for the extra info. That doesn't sound like it would load the computer heavily at all.\nAre you using the same WaveIn object for each recording, or creating a new one?\nAre any codecs involved in the process or are you writing PCM to the WAV file?\n\nOne possible cause of these errors is the garbage collector moving something that shouldn't be moved. I feel fairly confident that all such instances have been found and fixed over the years in NAudio, but I guess it is possible that something which ought to be pinned isn't being.",
+      "PostedDate": "2013-05-02T01:26:46.233-07:00",
+      "Id": 99124
+    },
+    {
+      "Message": "We are creating a new WaveIn object each time we start a recording.\n\nWhen we stop a recording we:\n* Call StopRecording()\n* Get and Write the remaining buffer to file\n* dispose the WaveIn\n* dereference the WaveIn\n\nThere are no codecs involved.",
+      "PostedDate": "2013-05-02T01:55:46.427-07:00",
+      "Id": 99128
+    },
+    {
+      "Message": "if you are able to create a short code sample that can reproduce this issue, I may try to reproduce it. ",
+      "PostedDate": "2013-05-03T08:13:35.68-07:00",
+      "Id": 99304
+    },
+    {
+      "Message": "I haven't got a 'stand alone' piece of code that reproduces this issue yet - Still working on producing a smaller test harness that produces the same result.\n\nHowever, the stack trace from exception is as follows:\n\n0:000> !pe\nException object: 00f8dbd4\nException type:   System.AccessViolationException\nMessage:          Attempted to read or write protected memory. This is often an indication that other memory is corrupt.\nInnerException:   <none>\nStackTrace (generated):\n    SP       IP       Function\n    00000000 00000000 UNKNOWN!NAudio.Wave.WaveInterop.waveInAddBuffer(IntPtr, NAudio.Wave.WaveHeader, Int32)+0x1\n    0012F048 04AC4529 UNKNOWN!NAudio.Wave.WaveInBuffer.Reuse()+0x59\n    0012F05C 04AC4796 UNKNOWN!NAudio.Wave.WaveIn.Callback(IntPtr, WaveMessage, IntPtr, NAudio.Wave.WaveHeader, IntPtr)+0x96\n    0012F09C 04AC3CDB UNKNOWN!NAudio.Wave.WaveWindow.WndProc(System.Windows.Forms.Message ByRef)+0x5b\n    0012F0B8 7B5870F3 System_Windows_Forms_ni!System.Windows.Forms.Control+ControlNativeWindow.OnMessage(System.Windows.Forms.Message ByRef)+0x13\n    0012F0C0 7B587071 System_Windows_Forms_ni!System.Windows.Forms.Control+ControlNativeWindow.WndProc(System.Windows.Forms.Message ByRef)+0x31\n    0012F0D4 7B586FB6 System_Windows_Forms_ni!System.Windows.Forms.NativeWindow.Callback(IntPtr, Int32, IntPtr, IntPtr)+0x96\n    0012F2AC 7B5971FF System_Windows_Forms_ni!System.Windows.Forms.Application+ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr, Int32, Int32)+0x287\n    0012F348 7B596E2C System_Windows_Forms_ni!System.Windows.Forms.Application+ThreadContext.RunMessageLoopInner(Int32, System.Windows.Forms.ApplicationContext)+0x16c\n    0012F3A0 7B596C81 System_Windows_Forms_ni!System.Windows.Forms.Application+ThreadContext.RunMessageLoop(Int32, System.Windows.Forms.ApplicationContext)+0x61\n    0012F3D0 7B52366D System_Windows_Forms_ni!System.Windows.Forms.Application.Run(System.Windows.Forms.Form)+0x31\n    0012F3E4 030F027A CallTouchWorkstation!Northgate.CallTouch.Rulebase.Program.Main(System.String[])+0x20a",
+      "PostedDate": "2013-05-07T02:05:27.313-07:00",
+      "Id": 99549
+    },
+    {
+      "Message": "thanks. I've code reviewed WaveInBuffer again, and I can't see any issues (the Header and Data buffer structures are both pinned appropriately). I wonder whether it can sometimes be possible for WaveInBuffer.Reuse to get called after WaveInBuffer.Dispose has been called? Although I would expect waveInUnprepareHeader to have failed in that instance.",
+      "PostedDate": "2013-05-07T02:38:29.093-07:00",
+      "Id": 99555
+    },
+    {
+      "Message": "This could be related...\n\nWe appear to sometimes get a WaveStillPlaying result when calling waveInUnprepareHeader - causing the recording to be terminated. Looks like the callback has been triggered with a buffer that is not really 'done'.\n\nHave you ever seen this before?\n\nI notice that the handler for this calls RaiseRecordingStopped after setting 'recording' to false - but what state will the sound card be in? i.e. is a call to waveInStop/Reset required when this occurs?",
+      "PostedDate": "2013-05-07T07:34:22.317-07:00",
+      "Id": 99580
+    },
+    {
+      "Message": "might be a good idea to try, although you should still call Dispose on the WaveIn which will do a waveInReset and waveInClose",
+      "PostedDate": "2013-05-07T07:50:04.053-07:00",
+      "Id": 99581
+    },
+    {
+      "Message": "I had a look at WaveInBuffer - and noticed that the header is not pinned - should it be?",
+      "PostedDate": "2013-05-08T03:16:43.86-07:00",
+      "Id": 99673
+    },
+    {
+      "Message": "Note: calling waveInStop when the callback is triggered with a Done=false buffer made no difference. I have modified the code to only .Reuse the buffer if the Buffer is not .InQueue. (I realise that I may run out of buffers!)",
+      "PostedDate": "2013-05-08T03:22:23.533-07:00",
+      "Id": 99674
+    },
+    {
+      "Message": "the header is pinned in the constructor. See the following code:\n\n```\nhHeader = GCHandle.Alloc(header, GCHandleType.Pinned);\n```",
+      "PostedDate": "2013-05-08T03:58:47.927-07:00",
+      "Id": 99677
+    },
+    {
+      "Message": "Not in the version I have (1.6)\n\nhHeader = GCHandle.Alloc(header);\n\nConstructor is  public WaveInBuffer(IntPtr waveInHandle, Int32 bufferSize)\n\n",
+      "PostedDate": "2013-05-08T04:23:08.393-07:00",
+      "Id": 99678
+    },
+    {
+      "Message": "OK, thought that had been in there for ages. Get the latest version then. It is very likely to be your issue. There's a pre-release build of 1.7 on Nuget if you want, or just build from latest sources",
+      "PostedDate": "2013-05-08T04:52:34.55-07:00",
+      "Id": 99682
+    },
+    {
+      "Message": "Still fails but I feel like we are getting closer!",
+      "PostedDate": "2013-05-08T07:30:06.777-07:00",
+      "Id": 99692
+    },
+    {
+      "Message": "fails in the same way?",
+      "PostedDate": "2013-05-08T07:48:19.963-07:00",
+      "Id": 99693
+    },
+    {
+      "Message": "No - it doesn't fail in the same way....\n\nWe modified the WaveInBuffer so that the header handle is pinned - we believe this fixed the accessViolation exception.\n\nHowever we were then getting an occasional EngineExecution exception, which appears to be in the Callback handler in WaveIn. Sometimes the Callback is being called with either a null buffer, or a corrupt one (IsQueued = true, etc). We have modified the code such that the first thing the Callback handler does is check the recording flag, and abort if it is not set i.e. :\n\n```\nprivate void Callback(IntPtr waveInHandle, WaveInterop.WaveMessage message, IntPtr userData, WaveHeader waveHeader, IntPtr reserved)\n        {\n            if (message == WaveInterop.WaveMessage.WaveInData)\n            {\n                if (recording)\n                {\n                    var hBuffer = (GCHandle)waveHeader.userData;\n                    var buffer = (WaveInBuffer)hBuffer.Target;\n\n```\n__This appears to have solved the issue__\n\n\n",
+      "PostedDate": "2013-05-10T00:22:40.767-07:00",
+      "Id": 99885
+    },
+    {
+      "Message": "Well glad you have found a solution. I'll put this on the list of things to investigate. There is already another bug someone reported here: https://naudio.codeplex.com/discussions/400962#post933371. \n\nI might try implementing an event callback model for recording at some point  as that might prove more robust.",
+      "PostedDate": "2013-05-10T01:12:40.187-07:00",
+      "Id": 99886
+    },
+    {
+      "Message": "I've checked your suggested fix in, will be released shortly",
+      "PostedDate": "2014-07-17T07:17:46.783-07:00",
+      "Id": 152695
+    },
+    {
+      "Message": "Is a fix available ?",
+      "PostedDate": "2016-06-16T03:03:33.57-07:00",
+      "Id": 200130
+    },
+    {
+      "Message": "was checked in ages ago so should be in the latest 1.7.3 release",
+      "PostedDate": "2016-06-16T03:19:08.553-07:00",
+      "Id": 200131
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Released in NAudio 1.4",
+    "ClosedDate": "2011-05-27T13:37:12.11-07:00",
+    "CommentCount": 5,
+    "Custom": "",
+    "Description": "Hello,\n\nAs a result of my experiments I've force class MixerInterop to work  when it's compiled in 64bit mode. Please include this into svn.\n\nThe first problem:\n* on x64 Mixer requires strucures aligned to 1 byte (default pack is different)\n* size MIXERLINE::dwUser is architecture depent - changing its type to IntPtr is all what should be done\n\nAfter those changes Mixer in x86 mode also works :)\n\n\n\nIndex: NAudio/Mixer/MixerInterop.cs\n===================================================================\n--- NAudio/Mixer/MixerInterop.cs\t(revision 60899)\n+++ NAudio/Mixer/MixerInterop.cs\t(working copy)\n@@ -23,7 +23,7 @@\n \n         // http://msdn.microsoft.com/en-us/library/dd757308%28VS.85%29.aspx\n         [DllImport(\"winmm.dll\", CharSet = CharSet.Ansi)]\n-        public static extern MmResult mixerOpen(out IntPtr hMixer, int uMxId, IntPtr dwCallback, IntPtr dwInstance, UInt32 dwOpenFlags);\n+        public static extern MmResult mixerOpen(out IntPtr hMixer, int uMxId, IntPtr dwCallback, IntPtr dwInstance, MixerFlags dwOpenFlags);\n \n         // http://msdn.microsoft.com/en-us/library/dd757292%28VS.85%29.aspx\n         [DllImport(\"winmm.dll\", CharSet = CharSet.Ansi)]\n@@ -58,7 +58,7 @@\n         public static extern MmResult mixerSetControlDetails(IntPtr hMixer, ref MIXERCONTROLDETAILS mixerControlDetails, MixerFlags dwDetailsFlags);\n \n         // http://msdn.microsoft.com/en-us/library/dd757294%28VS.85%29.aspx\n-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]\n+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]\n         public struct MIXERCONTROLDETAILS\n         {\n             public Int32 cbStruct; // size of the MIXERCONTROLDETAILS structure\n@@ -70,7 +70,7 @@\n         }\n \n         // http://msdn.microsoft.com/en-us/library/dd757291%28VS.85%29.aspx\n-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]\n+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]\n         public struct MIXERCAPS\n         {\n             public UInt16 wMid;\n@@ -83,7 +83,7 @@\n         }\n \n         // http://msdn.microsoft.com/en-us/library/dd757306%28VS.85%29.aspx\n-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]\n+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]\n         public struct MIXERLINECONTROLS\n         {\n             public Int32 cbStruct; // size of the MIXERLINECONTROLS structure\n@@ -121,7 +121,7 @@\n         }\n \n         // http://msdn.microsoft.com/en-us/library/dd757305%28VS.85%29.aspx\n-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]\n+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]\n         public struct MIXERLINE\n         {\n             public Int32 cbStruct;\n@@ -129,7 +129,7 @@\n             public Int32 dwSource;\n             public Int32 dwLineID;\n             public MIXERLINE_LINEF fdwLine;\n-            public UInt32 dwUser;\n+            public IntPtr dwUser;\n             public MixerLineComponentType dwComponentType;\n             public Int32 cChannels;\n             public Int32 cConnections;\n@@ -152,7 +152,7 @@\n         /// <summary>\n         /// BOUNDS structure\n         /// </summary>\n-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]\n+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]\n         public struct Bounds\n         {\n             /// <summary>\n@@ -184,7 +184,7 @@\n         /// <summary>\n         /// METRICS structure\n         /// </summary>\n-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]\n+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]\n         public struct Metrics\n         {\n             /// <summary>\n@@ -217,7 +217,7 @@\n         /// MIXERCONTROL struct\n         /// http://msdn.microsoft.com/en-us/library/dd757293%28VS.85%29.aspx\n         /// </summary>\n-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]\n+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]\n         public struct MIXERCONTROL\n         {\n             public UInt32 cbStruct;\n@@ -248,7 +248,7 @@\n         }\n \n         // http://msdn.microsoft.com/en-us/library/dd757296%28VS.85%29.aspx\n-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]\n+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]\n         public struct MIXERCONTROLDETAILS_LISTTEXT\n         {\n             public UInt32 dwParam1;",
+    "LastUpdatedDate": "2011-05-27T13:37:12.11-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-11-05T02:06:32.27-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Fixed MixerInterop for x64 mode",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 14607
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "checked in. For some reason I couldn't get your .patch file to work, so I had to do it manually, so please check if it works for you (I don't have an x64 test environment)",
+      "PostedDate": "2010-11-06T04:34:06.827-07:00",
+      "Id": 41736
+    },
+    {
+      "Message": "checked in\r\n\n\n** Closed by markheath 06/11/2010 04:52",
+      "PostedDate": "2010-11-07T23:48:48.223-08:00",
+      "Id": 41737
+    },
+    {
+      "Message": "meant to set fixed, not closed",
+      "PostedDate": "2010-11-07T23:48:48.85-08:00",
+      "Id": 41738
+    },
+    {
+      "Message": "I've updated and tested current MixerInterop.cs from naudio svn. It works properly on Vista x64.",
+      "PostedDate": "2010-11-08T02:09:00.847-08:00",
+      "Id": 41739
+    },
+    {
+      "Message": "thanks TomBe, appreciate the feedback",
+      "PostedDate": "2010-11-09T03:49:49.667-08:00",
+      "Id": 41740
+    }
+  ]
+}

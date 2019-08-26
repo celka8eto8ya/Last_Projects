@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1081797",
+    "ThreadId": "453713",
+    "Html": "Hello,\r<br />\n<br />\nI downloaded Naudio a few days ago and I already fingered out how some things work. (I made already a mediaplayer/interface with a playlist method etc :) )\r<br />\nBut like the title says, I have some questions about the LCD panel. (I found nothing on google or here)<br />\n<ul>\n<li>What is it</li>\n<li>\nHow to use it<br />\n</li>\n</ul>\nThanks,<br />\n",
+    "PostedDate": "2013-08-18T02:41:48.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082668",
+    "ThreadId": "453713",
+    "Html": "hi,\r<br />\nthe LCD panel is a very old part of NAudio that was never finished, and has been removed in the latest version,.<br />\n",
+    "PostedDate": "2013-08-20T06:26:47.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

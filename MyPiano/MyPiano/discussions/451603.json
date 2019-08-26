@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1073888",
+    "ThreadId": "451603",
+    "Html": "I cannot record by my 'Line-In' plug? I use Win 7 and this setup for my record-button:\r<br />\n<br />\n private void button2_Click(object sender, EventArgs e)<br />\n<pre><code>    {\n        if (SourceList.SelectedItems.Count == 0) return;\n\n        int deviceNumber = SourceList.SelectedItems[0].Index;\n\n        sourceStream = new NAudio.Wave.WaveIn();\n        sourceStream.DeviceNumber = deviceNumber;\n        sourceStream.WaveFormat = new NAudio.Wave.WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(deviceNumber).Channels);\n\n        NAudio.Wave.WaveInProvider waveIn = new NAudio.Wave.WaveInProvider(sourceStream);\n\n        waveOut = new NAudio.Wave.DirectSoundOut();\n        waveOut.Init(waveIn);\n\n        sourceStream.StartRecording();\n        waveOut.Play();\n    }\n</code></pre>\n\nThe setup has no trouble in recording while I am using the 'Microphone' plug???\r<br />\n<br />\nFor extra info I use a little mixer, that collects the audio from 4 small contact-surface microphones, and thereafter sends a signal that cannot be recieved by my 'Microphone' plug - still the Naudio should be able to recieve by the 'Line In' plug instead (one should think)\r<br />\n<br />\n(As a side remark I have the old audio editing software of Cool Edit on my PC, that doesn't differ between the plugs and records effortsly by both plugs)<br />\n",
+    "PostedDate": "2013-07-27T12:00:31.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1074302",
+    "ThreadId": "451603",
+    "Html": "Well it depends how your soundcard presents its inputs to Windows. Does it appear as a separate device or not? If not, then the mixer API would be needed to select the recording source. <br />\n",
+    "PostedDate": "2013-07-29T06:40:56.903-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1074733",
+    "ThreadId": "451603",
+    "Html": "Ok - both my stationary and laptop have integrated soundcards, so I need to go in the direction of the 'mixer API' I guess - where should I read up upon it? Which one of these googled links would help me the most? <br />\n<ul>\n<li><a href=\"http://social.msdn.microsoft.com/Forums/vstudio/en-US/46dfbea4-2b9a-4ef9-8491-b8ccc4703327/mixer-api-in-c-control-the-lines-of-my-soundcard\" rel=\"nofollow\">http://social.msdn.microsoft.com/Forums/vstudio/en-US/46dfbea4-2b9a-4ef9-8491-b8ccc4703327/mixer-api-in-c-control-the-lines-of-my-soundcard</a></li>\n<li><a href=\"http://www.codeguru.com/csharp/csharp/cs_graphics/sound/article.php/c10931/Windows-Mixer-Control-in-C.htm\" rel=\"nofollow\">http://www.codeguru.com/csharp/csharp/cs_graphics/sound/article.php/c10931/Windows-Mixer-Control-in-C.htm</a></li>\n<li><a href=\"http://stackoverflow.com/questions/14306048/controling-volume-mixer\" rel=\"nofollow\">http://stackoverflow.com/questions/14306048/controling-volume-mixer</a></li>\n<li><a href=\"http://www.codeproject.com/Articles/30296/Windows-Audio-Mixer-API-Wrapper-Library\" rel=\"nofollow\">http://www.codeproject.com/Articles/30296/Windows-Audio-Mixer-API-Wrapper-Library</a></li>\n</ul>\n",
+    "PostedDate": "2013-07-30T08:05:50.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1074736",
+    "ThreadId": "451603",
+    "Html": "the last one might be a good starting point, although NAudio already has a fairly comprehensive interop of the Mixer API, so you can use the code in NAudio<br />\n",
+    "PostedDate": "2013-07-30T08:08:53.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1074803",
+    "ThreadId": "451603",
+    "Html": "ok - but I can't seem to find the right entry-point towards the documentation of that particular corner of Naudio. In case <a href=\"https://naudio.codeplex.com/documentation\" rel=\"nofollow\">https://naudio.codeplex.com/documentation</a> should lead me the way, which upper level topic should I read.\r<br />\nIs there another link/site for more in depth documentation on Naudio?<br />\n",
+    "PostedDate": "2013-07-30T11:11:07.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1075896",
+    "ThreadId": "451603",
+    "Html": "The mixer API is a windows API, so the best place to read about it is MSDN. Once you know what functions you want to call, you can see how NAudio provides wrappers to those with the Mixer, and MixerSource classes.<br />\n",
+    "PostedDate": "2013-08-02T02:00:56.4-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "716079",
+    "ThreadId": "283899",
+    "Html": "\r\n<p>Hi!! recently I installed Naudio but when i go to compiler the VBS2010 send me a problem.</p>\r\n<p>http://img192.imageshack.us/img192/5528/sinttulouct.png</p>\r\n<p>I have W7 x32 and visual basic studio on x86</p>\r\n<p>Sorry for my english</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-12-22T06:00:35.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "716080",
+    "ThreadId": "283899",
+    "Html": "<p>I'm very surprised you see that on x86, are you sure you aren't running x64?</p>\r\n<p>In any case, I suggest you upgrade to NAudio 1.5 which is compiled for AnyCPU</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-22T06:02:19.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "716083",
+    "ThreadId": "283899",
+    "Html": "<p>See:</p>\r\n<p>http://img13.imageshack.us/img13/3972/sinttulofx.png</p>\r\n<p>Can you explain me how I can upgrade 1.5 Naudio please?</p>",
+    "PostedDate": "2011-12-22T06:08:53.56-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "716086",
+    "ThreadId": "283899",
+    "Html": "<p>just click <strong>Downloads </strong>above and replace your copy of NAudio.dll with the new one.</p>",
+    "PostedDate": "2011-12-22T06:11:29.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "716093",
+    "ThreadId": "283899",
+    "Html": "<p>ok, now i have another problem:</p>\r\n<p>http://img202.imageshack.us/img202/3170/sinttuloezb.png</p>\r\n<p>thanks for replay</p>",
+    "PostedDate": "2011-12-22T06:20:12.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "716095",
+    "ThreadId": "283899",
+    "Html": "<p>that is not a problem in NAudio, but in DjKinect, which is an application I don't know anything about</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-22T06:21:59.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "716097",
+    "ThreadId": "283899",
+    "Html": "<p>thanks for all</p>",
+    "PostedDate": "2011-12-22T06:25:03.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

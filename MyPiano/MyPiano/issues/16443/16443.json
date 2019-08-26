@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi,\r\n\r\none of our customers sent to us a file (attached) which causes NAudio to crash (telling that no riff fmt chunk was found) we inspect the file and found it, but only after other riff chunks with odd length.\r\n\r\nThe problem lies in an incorrect handling of RIFF size if the size value is odd and not even.\r\n\r\nTaken from Wikipedia:\r\nAll chunks have the following format:\r\n* 4 bytes: an ASCII identifier for this chunk (examples are \"fmt \" and \"data\"; note the space in \"fmt \").\r\n* 4 bytes: an unsigned, little-endian 32-bit integer with the length of this chunk (except this field itself and the chunk identifier).\r\n* variable-sized field: the chunk data itself, of the size given in the previous field.\r\n* __a pad byte, if the chunk's length is not even.__\r\n\r\nThe bug explains also why sometime NAudio was unable to decode some riff chunks that other DAW software handles correctly.\r\n\r\nThe solution was to modify the WaveFileChunkReader.ReadWaveHeader(Stream stream) method, so when it encounters a odd length it will advance the stream by just one byte just after the  stream.Position += chunkLength; line. Now it seems to work correctly.\r\n\r\nHere's the modified method:\r\n```\r\n public void ReadWaveHeader(Stream stream)\r\n        {\r\n            this.dataChunkPosition = -1;\r\n            this.waveFormat = null;\r\n            this.riffChunks = new List<RiffChunk>();\r\n            this.dataChunkLength = 0;\r\n\r\n            BinaryReader br = new BinaryReader(stream);\r\n            ReadRiffHeader(br);\r\n            this.riffSize = br.ReadUInt32(); // read the file size (minus 8 bytes)\r\n\r\n            if (br.ReadInt32() != ChunkIdentifier.ChunkIdentifierToInt32(\"WAVE\"))\r\n            {\r\n                throw new FormatException(\"Not a WAVE file - no WAVE header\");\r\n            }\r\n\r\n            if (isRf64)\r\n            {\r\n                ReadDs64Chunk(br);\r\n            }\r\n\r\n            int dataChunkID = ChunkIdentifier.ChunkIdentifierToInt32(\"data\");\r\n            int formatChunkId = ChunkIdentifier.ChunkIdentifierToInt32(\"fmt \");\r\n            \r\n            // sometimes a file has more data than is specified after the RIFF header\r\n            long stopPosition = Math.Min(riffSize + 8, stream.Length);\r\n\r\n            // this -8 is so we can be sure that there are at least 8 bytes for a chunk id and length\r\n            while (stream.Position <= stopPosition - 8)\r\n            {\r\n                Int32 chunkIdentifier = br.ReadInt32();\r\n                Int32 chunkLength = br.ReadInt32();\r\n                if (chunkIdentifier == dataChunkID)\r\n                {\r\n                    dataChunkPosition = stream.Position;\r\n                    if (!isRf64) // we already know the dataChunkLength if this is an RF64 file\r\n                    {\r\n                        dataChunkLength = chunkLength;\r\n                    }\r\n                    stream.Position += chunkLength;\r\n                }\r\n                else if (chunkIdentifier == formatChunkId)\r\n                {\r\n                    waveFormat = WaveFormat.FromFormatChunk(br, chunkLength);\r\n                }\r\n                else\r\n                {\r\n                    // check for invalid chunk length\r\n                    if (chunkLength < 0 || chunkLength > stream.Length - stream.Position)\r\n                    {\r\n                        if (strictMode)\r\n                        {\r\n                            Debug.Assert(false, String.Format(\"Invalid chunk length {0}, pos: {1}. length: {2}\",\r\n                                chunkLength, stream.Position, stream.Length));\r\n                        }\r\n                        // an exception will be thrown further down if we haven't got a format and data chunk yet,\r\n                        // otherwise we will tolerate this file despite it having corrupt data at the end\r\n                        break;\r\n                    }\r\n                    if (storeAllChunks)\r\n                    {\r\n                        riffChunks.Add(GetRiffChunk(stream, chunkIdentifier, chunkLength));\r\n                    }\r\n                    stream.Position += chunkLength;\r\n\r\n                    // REVEL SOFTWARE - UG If the data length is odd we need to pad to word boundary. Data length does not count padding bytes. \r\n                    // See https://forums.adobe.com/message/3798778 or http://www-mmsp.ece.mcgill.ca/documents/audioformats/wave/Docs/riffmci.pdf\r\n                    if (chunkLength % 2 > 0)\r\n                        stream.Position += 1;\r\n                }\r\n            }\r\n\r\n            if (waveFormat == null)\r\n            {\r\n                throw new FormatException(\"Invalid WAV file - No fmt chunk found\");\r\n            }\r\n            if (dataChunkPosition == -1)\r\n            {\r\n                throw new FormatException(\"Invalid WAV file - No data chunk found\");\r\n            }\r\n        }\r\n```",
+    "LastUpdatedDate": "2014-05-23T05:21:37.09-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-05-23T05:21:36.903-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Incorrect handling of wave riff pad byte",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16443
+  },
+  "FileAttachments": [
+    {
+      "FileId": 848611,
+      "FileName": "magnetic balls-long trill metal clicks-03.wav",
+      "DownloadUrl": ".\\848611"
+    }
+  ],
+  "Comments": []
+}

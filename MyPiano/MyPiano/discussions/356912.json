@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "840176",
+    "ThreadId": "356912",
+    "Html": "\r\n<p>I am writing a program which plays a wav file in WASAPI shared mode, using the following code:</p>\r\n<p>Dim wavplayer As NAudio.Wave.IWavePlayer<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dim wavfile As NAudio.Wave.WaveStream = New NAudio.Wave.WaveFileReader(AVRF.My.Resources.silence)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dim wavStream = New NAudio.Wave.WaveChannel32(wavfile)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wavplayer = New NAudio.Wave.WasapiOut(AudioClientShareMode.Shared, 100)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wavplayer.Init(wavStream)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wavplayer.Play()</p>\r\n<p>this works until a WASAPI exclusive mode application takes over, which causes playback of the WAV to stop, although the playbackstate stays on playing. The stopping of the WAV is actually what i want to happen so i'm happy enough with this.</p>\r\n<p>However, If i try to use wavplayer.init, wavplayer.stop or wavplayer.play while the WASAPI exclusive stream is already playing, the program throws back a com exception, sometimes even when there's a handler in place to stop it.</p>\r\n<p>What is the best way to keep retrying to play the wav file without causing an exception? i want it to start playing again as soon as the WASAPI exclusive stream ends</p>\r\n<p>thankyou</p>\r\n<p>Marc</p>\r\n",
+    "PostedDate": "2012-05-23T18:15:42.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840380",
+    "ThreadId": "356912",
+    "Html": "<p>have figured this out myself now&nbsp; :)</p>",
+    "PostedDate": "2012-05-24T05:45:42.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840817",
+    "ThreadId": "356912",
+    "Html": "<p>glad you got it working. did you need to make any modifications to WasapiOut?</p>",
+    "PostedDate": "2012-05-25T02:01:09.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840822",
+    "ThreadId": "356912",
+    "Html": "\r\n<p>You'll probably cringe, but i basically have a timer which looks at the stream.position and if the stream stops moving, it takes that to mean that an exclusive-mode stream has kicked in, so i dispose and recreate the wavplayer object and if the init command\r\n fails i try again on a timer until it doesn't fail, hence the wasapi exclusive-mode stream has ended.</p>\r\n<p>Now that i managed to get my error handling working properly, the program continues running even though technically it's erroring constantly, and it doesn't use up a lot of resources even with the timer</p>\r\n<p>if you know of a better way, using ducking for instance, i would gladly change it :)</p>\r\n",
+    "PostedDate": "2012-05-25T02:05:46.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840826",
+    "ThreadId": "356912",
+    "Html": "<p>OK, sounds hacky but if it works, who cares right? :)</p>\r\n<p>I was wondering if WASAPI has the ability to report to you somehow that exclusive mode has been activated or deactivated.</p>",
+    "PostedDate": "2012-05-25T02:09:29.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840828",
+    "ThreadId": "356912",
+    "Html": "\r\n<p>i think &quot;hacky&quot; is the perfect way to describe a lot of my programming :D</p>\r\n<p>there is functionality in the Core Audio API for stream notifications but for the life of me i couldn't work out how to use coreaudio.dll, and it seems i'm not alone in that regard judging by how little it's documented, and the msdn whitepapers are way over\r\n my head.</p>\r\n<p>There's also meant to be a way to set your stream to use &quot;ducking&quot; which means you can tell it to pause while another stream is active and resume afterwards (or its original intended use, to lower the volume of your sound when you get a skype call for instance),\r\n but i don't know if that's implemented in NAudio, or if it applies to exclusive-mode stream, but if it is in there somewhere, and does work with exclusive-modes streams it would probably solve all my problems</p>\r\n",
+    "PostedDate": "2012-05-25T02:14:35.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

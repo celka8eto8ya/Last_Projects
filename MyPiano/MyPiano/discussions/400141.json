@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "929793",
+    "ThreadId": "400141",
+    "Html": "\r\n<p>Hi, I've been using NAudio for over a month now I and get a ton of use out of it for a project i'm doing. However, I was wondering if there was a way take multiple wav files and overlap them?</p>\r\n<p>ie: place them over top of each other.&nbsp;</p>\r\n<p>I am using Visual c# express 2010</p>\r\n<p>Thank you</p>\r\n",
+    "PostedDate": "2012-10-20T07:24:49.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929797",
+    "ThreadId": "400141",
+    "Html": "<p>For some reason this uploaded 3 times. Very sorry for the accidental spamming, I cant find where to delete them :(</p>",
+    "PostedDate": "2012-10-20T07:31:45.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929798",
+    "ThreadId": "400141",
+    "Html": "<p>no problem, I can delete them. The mixer streams that NAudio provides can do this. WaveMixerStream32, or MixingSampleProvider. It is always best to go to 32 bit floating point first, mix them together, reduce the volume a bit in case of clipping, then you can go back down to 16 bit PCM, before writing to a WAV file with WaveFileWriter.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-10-20T07:33:59.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929802",
+    "ThreadId": "400141",
+    "Html": "<p>Ok so i make a WaveMixerStream32, add the streams to it, and what do I do with it from there? What is the method that mixes and writes them?</p>",
+    "PostedDate": "2012-10-20T08:13:02.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929972",
+    "ThreadId": "400141",
+    "Html": "<p>WaveFileWriter.CreateWavFile will read from a WaveStream and make a file. Make sure WaveMixerStream32.PadWithZeroes is set to false of you will fill up your hard disk</p>",
+    "PostedDate": "2012-10-21T01:16:02.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930106",
+    "ThreadId": "400141",
+    "Html": "<p>Ok i tried it with that but now it says that the streams must be in IEEE format. Ive seen the discussion on it but I have no idea where to edit this source. Is there an alternative to allow me to do this?</p>",
+    "PostedDate": "2012-10-21T11:58:32.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930829",
+    "ThreadId": "400141",
+    "Html": "<p>yes, you have to go to IEEE before going into the mixer. WaveChannel32 can do this if you are using WaveMixerStream32.</p>\r\n<p>Another option is to use AudioFileReader instances and pass them into MixingSampleProvider. Then do SampleToWaveProvider16 afterwards</p>",
+    "PostedDate": "2012-10-22T23:36:50.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "945083",
+    "ThreadId": "404081",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp;&nbsp;&nbsp; In NAudio from where you are calling</p>\r\n<p>[ImportingConstructor]<br>\r\npublic AudioPlaybackPanel([ImportMany]IEnumerable&lt;IOutputDevicePlugin&gt; outputDevicePlugins)</p>\r\n<p>{<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InitializeComponent();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LoadOutputDevicePlugins(outputDevicePlugins);<br>\r\n}</p>\r\n<p>I want to play multiple sound in same time in different sound card. how you get &quot;outputDevicePlugins&quot; value, when the constructor is called. How can I choose audio device using NAudio without User Control.</p>\r\n<p>I was trying this from last 2 month please tell the solution that you have did in NAudio.Thanks in advance.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-21T04:14:15.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945093",
+    "ThreadId": "404081",
+    "Html": "\r\n<p>To play sound in multiple soundcards, you need an output device per soundcard. So for example create two instances of WaveOut, and set the DeviceNumber property on each one.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-21T04:35:57.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945105",
+    "ThreadId": "404081",
+    "Html": "\r\n<p>hi,</p>\r\n<p>&nbsp;&nbsp; In NAudio how I get output device and set device number...</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n",
+    "PostedDate": "2012-11-21T05:28:28.143-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945109",
+    "ThreadId": "404081",
+    "Html": "\r\n<p>var outputDevice = new WaveOut()<br>\r\noutputDevice.DeviceNumber = 1;</p>\r\n",
+    "PostedDate": "2012-11-21T05:35:06.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945200",
+    "ThreadId": "404081",
+    "Html": "\r\n<p>Thankyou I got the solution.</p>\r\n",
+    "PostedDate": "2012-11-21T08:08:28.63-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945461",
+    "ThreadId": "404081",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp; &nbsp;Thanks for your quick response.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-21T21:47:36.893-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

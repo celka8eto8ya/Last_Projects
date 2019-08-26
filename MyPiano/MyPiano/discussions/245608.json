@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "564551",
+    "ThreadId": "245608",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>1. I want to use Mic Boost option of my sound card with use of NAudio, but when i create BooleanMixerControl of Mic Boost (which is only seen on XP) i can only set it's value to true.</p>\r\n<p>&nbsp;- why Mic Boost is only seen&nbsp; in XP, even if I have on my Vista Bussiness 64 option Mic Boost on my mic in Control Panel / Audio?</p>\r\n<p>2. I also check using Mute control. This doesnt work at all.</p>\r\n<p>Is there any bug about Boolean Mixer Control?</p>\r\n<p>3. Is this possible to get slider with Mic Boost values which is available in Windows 7 or Vista?</p>\r\n<p>&nbsp;</p>\r\n<p>Regards</p>\r\n",
+    "PostedDate": "2011-02-11T04:17:29.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569503",
+    "ThreadId": "245608",
+    "Html": "<p>Are you running on the latest version of the NAudio source code (i.e. go to source code tab). I seem to remember fixing one bug in this area. However, there may be others - boolean mixer controls are not a very commonly used feature.</p>\r\n<p>Getting hold of the controls you want in Win 7/Vista is very difficult. I have yet to find a reliable way, but if you explore the available controls enough you should find what you are looking for eventually.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-21T02:10:45.457-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

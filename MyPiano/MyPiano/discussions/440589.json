@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1031701",
+    "ThreadId": "440589",
+    "Html": "hi\r<br />\nI use naudio project as a reference. I want to How to get maximum DB value of a section in a mp3 song. pls help me.<br />\n",
+    "PostedDate": "2013-04-17T04:42:33.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1032515",
+    "ThreadId": "440589",
+    "Html": "NAudio allows you access to the raw samples of an MP3 file using MP3FileReader. It is then up to you to decide what period of time you are going to measure peak signal values over. Having done that you can convert the maximum signal value to DB using the standard formula.<br />\n",
+    "PostedDate": "2013-04-18T08:12:47.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

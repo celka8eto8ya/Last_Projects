@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1239742",
+    "ThreadId": "543846",
+    "Html": "Thank you very much for sharing your work public.\r<br />\n<br />\nI am trying to show wave of mp3 while playing using a timer at 300ms.<br />\n<pre><code>    private void timer1_Tick(object sender, EventArgs e)\n    {\n        label1.Text = mp3.CurrentTime.ToString();\n        this.waveViewer1.StartPosition = this.mp3.Position;\n       // waveViewer1.Refresh();\n    }</code></pre>\n\nProblem is waveViewr1.Refresh(); When is undocumented it force player to skip second or more. It have same behaviour when is only waveViewr1.Refresh(); in timer tick event. Can`t resolve what is problem.\r<br />\n<br />\nThank for your time.\r<br />\n<br />\nBest regards , Darko<br />\n",
+    "PostedDate": "2014-04-30T04:18:40.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242247",
+    "ThreadId": "543846",
+    "Html": "waveViewer isn't really a finished control. I'd like to remove it from NAudio and replace it with something a bit more robust<br />\n",
+    "PostedDate": "2014-05-06T12:52:11.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1246594",
+    "ThreadId": "543846",
+    "Html": "Thank you for sharing your work, it is nevertheless good  library.\r<br />\n<br />\nBest regard, Darko.<br />\n",
+    "PostedDate": "2014-05-18T01:49:09.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "890212",
+    "ThreadId": "388260",
+    "Html": "\r\n<p>Every once in a while when I close my application while using WaveOutEvent i get a NullReferenceException from the DoPlayback() function.&nbsp; It turns out this.buffers is null.</p>\r\n<p>Screenshot from VS2010, when Exception happens<br>\r\n<img src=\"http://kg6ypi.ath.cx/screenshots/WaveOutEvent_DoPlayback_buffer_NULL.png\" alt=\"screenshot\"></p>\r\n<p><br>\r\nA bandaid to fix the problem I now check for the null value in DoPlayback();</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> DoPlayback()\n{\n            <span style=\"color:blue\">if</span> (<span style=\"color:blue\">this</span>.buffers == <span style=\"color:blue\">null</span> || <span style=\"color:blue\">this</span>.waveStream == <span style=\"color:blue\">null</span>)\n                <span style=\"color:blue\">return</span>;\n\n            TimeSpan waitTime = TimeSpan.FromSeconds((<span style=\"color:blue\">double</span>)<span style=\"color:blue\">this</span>.buffers[0].BufferSize / (<span style=\"color:blue\">this</span>.waveStream.WaveFormat.AverageBytesPerSecond * 2));\n\n.........\n\n}\n</pre>\r\n</div>\r\n<p><br>\r\nI dont get a good stack trace back for some reason, I assume the call to DoPlayback()&nbsp; is still in the ThreadPool&nbsp; after I dispose of WaveOutEvent?<br>\r\n<br>\r\nThreadPool.QueueUserWorkItem((state) =&gt; PlaybackThread(), null);<br>\r\n<br>\r\nMaybe the cure (not bandaid) would be to &quot;un-queue&quot; the thread form the pool on disposal?&nbsp; not sure if that is possible or makes any sense...</p>\r\n<p>I hope this helps, or maybe I am just doing something wrong...<br>\r\n<br>\r\nThanks,<br>\r\nBrandon Hansen, KG6YPI<br>\r\n<br>\r\nps.. I noticed my callsign (kg6ypi) got into the readme file,&nbsp; you can attach my name to it also if you wish, thanks.</p>\r\n",
+    "PostedDate": "2012-07-24T14:57:00.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893047",
+    "ThreadId": "388260",
+    "Html": "<p>hi, thanks. It is a bit odd - almost as though you are starting to play at the exact instant you shut down? But I will add your fix and update the readme</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-07-30T06:55:31.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "902792",
+    "ThreadId": "388260",
+    "Html": "\r\n<p>Thanks for adding this into the code, its working great! Now I have changed some of my Dispose methods in my forms to clean up WaveOutEvent/WaveInEvent objects by disposing of them properly. This ends up in a new exception.<br>\r\n<br>\r\nI get an WaveHeaderUnprepared calling waveOutWrite.&nbsp; See below.</p>\r\n<p><img src=\"http://kg6ypi.ath.cx/screenshots/WaveOutEvent_UnPreparedHeader_Exception.png\" alt=\"NAudio\"></p>\r\n<p>I was able to fix this by editing WriteToWaveOut() method in WaveOutBuffer.cs to check and see if hWaveOut handle has been set to IntPtr.Zero. See below..</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> WriteToWaveOut()\n        {\n            MmResult result;\n\n            <span style=\"color:blue\">lock</span> (waveOutLock)\n            {\n                <span style=\"color:blue\">if</span> (hWaveOut == IntPtr.Zero)\n                    <span style=\"color:blue\">return</span>;\n\n                result = WaveInterop.waveOutWrite(hWaveOut, header, Marshal.SizeOf(header));\n            }\n            <span style=\"color:blue\">if</span> (result != MmResult.NoError)\n            {\n                <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> MmException(result, <span style=\"color:#a31515\">&quot;waveOutWrite&quot;</span>);\n            }\n\n            GC.KeepAlive(<span style=\"color:blue\">this</span>);\n        }\n</pre>\r\n</div>\r\n<p>It seems as if this lock is waiting for the Dispose method to Unprepare the headers, then continuing. So this null or IntPtr.Zero check, inside the lock, solved the issue. Dispose locks and unprepares headers, see below..</p>\r\n<pre><span style=\"color:blue\">protected</span> <span style=\"color:blue\">void</span> Dispose(<span style=\"color:blue\">bool</span> disposing)\n        {\n            ...\n                <span style=\"color:blue\">lock</span> (waveOutLock)\n                {\n                    WaveInterop.waveOutUnprepareHeader(hWaveOut, header, Marshal.SizeOf(header));\n                }\n                hWaveOut = IntPtr.Zero;\n            }\n        }</pre>\r\n<p>I assume that's where &quot;hWaveOut&quot; is put into the state to form the Exception.<br>\r\n<br>\r\nThanks for all your work!<br>\r\n<br>\r\nBrandon</p>\r\n",
+    "PostedDate": "2012-08-22T20:58:34.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908752",
+    "ThreadId": "388260",
+    "Html": "<p>this exception should no longer be unhandled in the latest code as we catch any exceptions thrown in buffer.OnDone</p>",
+    "PostedDate": "2012-09-05T09:21:12.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

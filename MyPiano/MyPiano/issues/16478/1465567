@@ -1,0 +1,478 @@
+
+using Microsoft.VisualBasic;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using System.ComponentModel;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Drawing.Drawing2D;
+
+/// <summary>
+/// Windows Forms control for painting stereo audio waveforms
+/// </summary>
+public class StereoWaveformPainter : Panel
+{
+
+	private Color foColor;
+	private Color grColor;
+	private SmoothingMode GfxQuality = SmoothingMode.Default;
+	private CompositingMode ComposingMode = CompositingMode.SourceOver;
+	private CompositingQuality ComposingQuality = CompositingQuality.Default;
+	private InterpolationMode InterpolMode = InterpolationMode.Default;
+	private PixelOffsetMode PixelMode = PixelOffsetMode.Default;
+	private DisplayMode DrMode;
+
+	private Plotmode PlMode;
+	private int maxSamples;
+
+	private int insertPos;
+	private List<float> LeftSamples = new List<float>();
+
+	private List<float> RightSamples = new List<float>();
+	private bool UseGradient = false;
+	private bool ShowMiddleLine = false;
+
+	private PinchMode _pinch = PinchMode.None;
+	/// <summary>
+	/// Constructs a new instance of the StereoWaveformPainter class
+	/// </summary>
+	public StereoWaveformPainter()
+	{
+		this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+		OnForeColorChanged(EventArgs.Empty);
+		OnResize(EventArgs.Empty);
+	}
+
+	/// <summary>
+	/// On ForeColor Changed
+	/// </summary>
+	/// <param name="e"></param>
+	protected override void OnForeColorChanged(EventArgs e)
+	{
+		foColor = this.ForeColor;
+		base.OnForeColorChanged(e);
+	}
+
+	/// <summary>
+	/// On Resize
+	/// </summary>
+	protected override void OnResize(EventArgs e)
+	{
+		maxSamples = this.Width;
+		LeftSamples = new List<float>(maxSamples);
+		RightSamples = new List<float>(maxSamples);
+		insertPos = 0;
+		base.OnResize(e);
+	}
+
+	/// <summary>
+	/// Add Left and Right channel values
+	/// </summary>
+	/// <param name="LeftSample"></param>
+
+	public void AddLeftRight(float LeftSample, float RightSample)
+	{
+		if (maxSamples == 0) {
+			// sometimes when you minimise, max samples can be set to 0
+			return;
+		}
+
+		if (LeftSamples.Count <= maxSamples) {
+			if (PlMode == Plotmode.LeftUpRightDown) {
+				LeftSamples.Add(Math.Abs(LeftSample));
+			} else if (PlMode == Plotmode.PlusMinus) {
+				LeftSamples.Add(LeftSample);
+			}
+		} else if (insertPos < maxSamples) {
+			if (PlMode == Plotmode.LeftUpRightDown) {
+				LeftSamples(insertPos) = Math.Abs(LeftSample);
+			} else if (PlMode == Plotmode.PlusMinus) {
+				LeftSamples(insertPos) = LeftSample;
+			}
+		}
+
+		if (RightSamples.Count <= maxSamples) {
+			if (PlMode == Plotmode.LeftUpRightDown) {
+				RightSamples.Add(Math.Abs(RightSample));
+			} else if (PlMode == Plotmode.PlusMinus) {
+				RightSamples.Add(RightSample);
+			}
+		} else if (insertPos < maxSamples) {
+			if (PlMode == Plotmode.LeftUpRightDown) {
+				RightSamples(insertPos) = Math.Abs(RightSample);
+			} else if (PlMode == Plotmode.PlusMinus) {
+				RightSamples(insertPos) = RightSample;
+			}
+		}
+
+		insertPos += 1;
+		insertPos = insertPos % maxSamples;
+
+		this.Invalidate();
+	}
+
+	/// <summary>
+	/// On Paint
+	/// </summary>
+	protected override void OnPaint(PaintEventArgs pe)
+	{
+		base.OnPaint(pe);
+
+		//Apply gfx credentials.
+		var _with1 = pe.Graphics;
+		_with1.SmoothingMode = GfxQuality;
+		_with1.CompositingMode = ComposingMode;
+		_with1.CompositingQuality = ComposingQuality;
+		_with1.InterpolationMode = InterpolMode;
+		_with1.PixelOffsetMode = PixelMode;
+
+		float middle = Math.Floor(this.Height / 2) - 1;
+
+		if (PlMode == Plotmode.LeftUpRightDown) {
+			if (DrMode == DisplayMode.Line && GfxQuality == SmoothingMode.HighSpeed) {
+				if (ShowMiddleLine) {
+					pe.Graphics.DrawLine(new Pen(foColor), 0, middle, this.Width, middle);
+				}
+				for (x = 0; x <= this.Width - 1; x++) {
+					float leftLineHeight = middle * GetLeftSample(x - this.Width + insertPos);
+					float rightLineHeight = middle * GetRightSample(x - this.Width + insertPos);
+					switch (_pinch) {
+						case PinchMode.None:
+							break; // TODO: might not be correct. Was : Exit Select
+
+							break;
+						case PinchMode.Outside:
+							leftLineHeight *= Math.Sin(x / this.Width * Math.PI);
+							rightLineHeight *= Math.Sin(x / this.Width * Math.PI);
+							break;
+						case PinchMode.Inside:
+							leftLineHeight *= Math.Cos(x / this.Width * Math.PI);
+							rightLineHeight *= Math.Cos(x / this.Width * Math.PI);
+							break;
+					}
+					pe.Graphics.DrawLine(new Pen(foColor), x, middle, x, middle - leftLineHeight);
+					pe.Graphics.DrawLine(new Pen(foColor), x, middle, x, middle + rightLineHeight);
+				}
+			} else if (DrMode == DisplayMode.Line && (GfxQuality == SmoothingMode.HighQuality || GfxQuality == SmoothingMode.AntiAlias)) {
+				GraphicsPath paLeft = new GraphicsPath();
+				GraphicsPath paRight = new GraphicsPath();
+				if (ShowMiddleLine) {
+					pe.Graphics.DrawLine(new Pen(foColor), 0, middle, this.Width, middle);
+				}
+				paLeft.AddLine(0, middle, 0, middle);
+				paRight.AddLine(0, middle, 0, middle);
+				for (x = 0; x <= this.Width - 1; x++) {
+					float leftLineHeight = middle * GetLeftSample(x - this.Width + insertPos);
+					float rightLineHeight = middle * GetRightSample(x - this.Width + insertPos);
+					switch (_pinch) {
+						case PinchMode.None:
+							break; // TODO: might not be correct. Was : Exit Select
+
+							break;
+						case PinchMode.Outside:
+							leftLineHeight *= Math.Sin(x / this.Width * Math.PI);
+							rightLineHeight *= Math.Sin(x / this.Width * Math.PI);
+							break;
+						case PinchMode.Inside:
+							leftLineHeight *= Math.Cos(x / this.Width * Math.PI);
+							rightLineHeight *= Math.Cos(x / this.Width * Math.PI);
+							break;
+					}
+					paLeft.AddLine(x, middle - leftLineHeight, x, middle - leftLineHeight);
+					paRight.AddLine(x, middle + rightLineHeight, x, middle + rightLineHeight);
+				}
+				paLeft.AddLine(this.Width - 1, middle, this.Width - 1, middle);
+				paRight.AddLine(this.Width - 1, middle, this.Width - 1, middle);
+				paLeft.CloseFigure();
+				paRight.CloseFigure();
+				paLeft.AddPath(paRight, false);
+				//pe.Graphics.DrawPath(New Pen(foColor), paLeft)
+				if (UseGradient) {
+					using (br == new LinearGradientBrush(new Rectangle(0, 0, this.Width, this.Height), grColor, foColor, LinearGradientMode.Vertical)) {
+
+						float[] relativeIntensities = {
+							0f,
+							1f,
+							0f
+						};
+						float[] relativePositions = {
+							0f,
+							0.5f,
+							1f
+						};
+
+						//Create a Blend object and assign it to Brush.
+						Blend blend = new Blend();
+						blend.Factors = relativeIntensities;
+						blend.Positions = relativePositions;
+						br.Blend = blend;
+
+						pe.Graphics.FillPath(br, paLeft);
+					}
+				} else {
+					pe.Graphics.FillPath(new SolidBrush(foColor), paLeft);
+				}
+				paLeft.Dispose();
+				paRight.Dispose();
+			} else if (DrMode == DisplayMode.Point) {
+				GraphicsPath paLeft = new GraphicsPath();
+				GraphicsPath paRight = new GraphicsPath();
+				if (ShowMiddleLine) {
+					paLeft.AddLine(0, middle, 0, middle);
+					paRight.AddLine(0, middle, 0, middle);
+				}
+				for (x = 0; x <= this.Width - 1; x++) {
+					float leftLineHeight = middle * GetLeftSample(x - this.Width + insertPos);
+					float rightLineHeight = middle * GetRightSample(x - this.Width + insertPos);
+					switch (_pinch) {
+						case PinchMode.None:
+							break; // TODO: might not be correct. Was : Exit Select
+
+							break;
+						case PinchMode.Outside:
+							leftLineHeight *= Math.Sin(x / this.Width * Math.PI);
+							rightLineHeight *= Math.Sin(x / this.Width * Math.PI);
+							break;
+						case PinchMode.Inside:
+							leftLineHeight *= Math.Cos(x / this.Width * Math.PI);
+							rightLineHeight *= Math.Cos(x / this.Width * Math.PI);
+							break;
+					}
+					paLeft.AddLine(x, middle - leftLineHeight, x, middle - leftLineHeight);
+					paRight.AddLine(x, middle + rightLineHeight, x, middle + rightLineHeight);
+				}
+				if (ShowMiddleLine) {
+					paLeft.AddLine(this.Width - 1, middle, this.Width - 1, middle);
+					paRight.AddLine(this.Width - 1, middle, this.Width - 1, middle);
+					paLeft.CloseFigure();
+					paRight.CloseFigure();
+				}
+				pe.Graphics.DrawPath(new Pen(foColor), paLeft);
+				pe.Graphics.DrawPath(new Pen(foColor), paRight);
+				paLeft.Dispose();
+				paRight.Dispose();
+			}
+		} else if (PlMode == Plotmode.PlusMinus) {
+			if (ShowMiddleLine) {
+				pe.Graphics.DrawLine(new Pen(foColor), 0, middle, this.Width, middle);
+			}
+			using (GraphicsPath path = new GraphicsPath()) {
+				for (x = 0; x <= this.Width - 1; x++) {
+					float Mixed = (GetLeftSample(x - this.Width + insertPos) + GetRightSample(x - this.Width + insertPos)) / 2;
+					switch (_pinch) {
+						case PinchMode.None:
+							break; // TODO: might not be correct. Was : Exit Select
+
+							break;
+						case PinchMode.Outside:
+							Mixed *= Math.Sin(x / this.Width * Math.PI);
+							break;
+						case PinchMode.Inside:
+							Mixed *= Math.Cos(x / this.Width * Math.PI);
+							break;
+					}
+					if (DrMode == DisplayMode.Line) {
+						path.AddLines(new Point[] {
+							new Point(x, middle),
+							new Point(x, Convert.ToInt32(middle - middle * Mixed))
+						});
+					} else if (DrMode == DisplayMode.Point) {
+						path.AddLines(new Point[] {
+							new Point(x, Convert.ToInt32(middle - middle * Mixed)),
+							new Point(x, Convert.ToInt32(middle - middle * Mixed))
+						});
+					}
+				}
+				if (DrMode == DisplayMode.Line) {
+					if (UseGradient) {
+						using (br == new LinearGradientBrush(new Rectangle(0, 0, this.Width, this.Height), grColor, foColor, LinearGradientMode.Vertical)) {
+
+							float[] relativeIntensities = {
+								0f,
+								1f,
+								0f
+							};
+							float[] relativePositions = {
+								0f,
+								0.5f,
+								1f
+							};
+
+							//Create a Blend object and assign it to Brush.
+							Blend blend = new Blend();
+							blend.Factors = relativeIntensities;
+							blend.Positions = relativePositions;
+							br.Blend = blend;
+
+							pe.Graphics.DrawPath(new Pen(br), path);
+						}
+					} else {
+						pe.Graphics.DrawPath(new Pen(foColor), path);
+					}
+				} else if (DrMode == DisplayMode.Point) {
+					pe.Graphics.DrawPath(new Pen(foColor), path);
+				}
+			}
+		}
+	}
+
+	private float GetLeftSample(int index)
+	{
+		if (index < 0) {
+			index += maxSamples;
+		}
+		if (index >= 0 & index < LeftSamples.Count) {
+			return LeftSamples(index);
+		}
+		return 0;
+	}
+
+	private float GetRightSample(int index)
+	{
+		if (index < 0) {
+			index += maxSamples;
+		}
+		if (index >= 0 & index < RightSamples.Count) {
+			return RightSamples(index);
+		}
+		return 0;
+	}
+
+	/// <summary>
+	/// Gets or sets the quality of all drawn graphics.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets the quality of all drawn graphics.")]
+	public SmoothingMode QualityMode {
+		get { return GfxQuality; }
+		set { GfxQuality = value; }
+	}
+
+	/// <summary>
+	/// Gets or sets the compositing mode of all drawn graphics.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets the compositing mode of all drawn graphics.")]
+	public CompositingMode CompositingMode {
+		get { return ComposingMode; }
+		set { ComposingMode = value; }
+	}
+
+	/// <summary>
+	/// Gets or sets the compositing quality of all drawn graphics.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets the compositing quality of all drawn graphics.")]
+	public CompositingQuality CompositingQuality {
+		get { return ComposingQuality; }
+		set { ComposingQuality = value; }
+	}
+
+	/// <summary>
+	/// Gets or sets the interpolation mode of all drawn graphics.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets the interpolation mode of all drawn graphics.")]
+	public InterpolationMode InterpolationMode {
+		get { return InterpolMode; }
+		set { InterpolMode = value; }
+	}
+
+
+	/// <summary>
+	/// Gets or sets the pixel offset mode of all drawn graphics.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets the pixel offset mode of all drawn graphics.")]
+	public PixelOffsetMode PixelOffsetMode {
+		get { return PixelMode; }
+		set { PixelMode = value; }
+	}
+
+	/// <summary>
+	/// Enumerates the display modes
+	/// </summary>
+	public enum DisplayMode
+	{
+		Line = 0,
+		Point = 1
+	}
+
+	/// <summary>
+	/// Enumerates the pinch modes
+	/// </summary>
+	public enum PinchMode
+	{
+		None = 0,
+		Outside = 1,
+		Inside = 2
+	}
+
+	/// <summary>
+	/// Enumerates the plotting modes
+	/// </summary>
+	public enum Plotmode
+	{
+		PlusMinus = 0,
+		LeftUpRightDown = 1
+	}
+
+	/// <summary>
+	/// Gets or sets the plotting method.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets the plotting method.")]
+	public Plotmode Plot {
+		get { return PlMode; }
+		set {
+			PlMode = value;
+			//Reset.
+			LeftSamples.Clear();
+			RightSamples.Clear();
+			insertPos = 0;
+		}
+	}
+
+	/// <summary>
+	/// Gets or sets the display method.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets the display method.")]
+	public DisplayMode DrawMode {
+		get { return DrMode; }
+		set { DrMode = value; }
+	}
+
+	/// <summary>
+	/// Gets or sets if the display uses gradient colors.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets if the display uses gradient colors.")]
+	public bool Gradient {
+		get { return UseGradient; }
+		set { UseGradient = value; }
+	}
+
+	/// <summary>
+	/// Gets or sets the gradient color, that is used in Line Mode.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets the gradient color, that is used in Line Mode.")]
+	public Color GradientColor {
+		get { return grColor; }
+		set { grColor = value; }
+	}
+
+	/// <summary>
+	/// Gets or sets if the middle line is displayed.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets if the middle line is displayed (Line HQ Mode must show).")]
+	public bool ShowMidLine {
+		get { return ShowMiddleLine; }
+		set { ShowMiddleLine = value; }
+	}
+
+	/// <summary>
+	/// Gets or sets the way pinch is applied to the waveform.
+	/// </summary>
+	[System.ComponentModel.Description("Gets or sets the way pinch is applied to the waveform.")]
+	public PinchMode Pinch {
+		get { return _pinch; }
+		set { _pinch = value; }
+	}
+}

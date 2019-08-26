@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1243285",
+    "ThreadId": "544760",
+    "Html": "can i make a  waveout that has one sine wave with a frequency coming out of the right speaker and one sine wave with another frequency coming out of the left speaker ?\r<br />\nit is called Binaural beats<br />\n",
+    "PostedDate": "2014-05-08T14:03:46.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1243490",
+    "ThreadId": "544760",
+    "Html": "so I can use SetWaveFormat () to use two channels. But how do I play different frequencies out the two channel ? \r<br />\n<br />\nthe buffer array do it put points from one sinewave in one index and then points from the other array into the other index? do keep doing that back and ward ?<br />\n",
+    "PostedDate": "2014-05-09T07:10:22.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244556",
+    "ThreadId": "544760",
+    "Html": "Use MultiplexingWaveProvider or MultiplexingSampleProvider to combine two mono signals into a stereo. Or alternate left and right samples.<br />\n",
+    "PostedDate": "2014-05-12T13:27:20.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-12T13:37:03.98-07:00"
+  }
+]

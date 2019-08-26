@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1278238",
+    "ThreadId": "554368",
+    "Html": "ok I see that you pass the fft a complex array of samples, but what I do not see is where is your output ?\r<br />\nit is in data array, but how do I get data array back ?\r<br />\nyou do not return it and I can't point to is...\r<br />\nso i am really do not get how this function is useful at all ...\r<br />\n<br />\nhow do i get the output of the fft out of the function?\r<br />\nand what does the bool forward do ?<br />\n",
+    "PostedDate": "2014-07-27T19:03:01.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278413",
+    "ThreadId": "554368",
+    "Html": "The FFT is performed in place - data will contain the output. \r<br />\nForward specifies whether you are doing a forward or an inverse fast fourier transform.<br />\n",
+    "PostedDate": "2014-07-28T09:04:04.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278415",
+    "ThreadId": "554368",
+    "Html": "MarkHeath,<br />\n<br />\nbut how do you get the array data ?<br />\nthere is no return for data<br />\nand it is not a pointer <br />\nso How do i get the data array back ?<br />\n<br />\nI mean how do I get it from the FFT function ?<br />\n",
+    "PostedDate": "2014-07-28T09:05:44.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278419",
+    "ThreadId": "554368",
+    "Html": "An array is a reference type. You passed it in, so you have a reference to it. Have you actually tried looking inside it?<br />\n",
+    "PostedDate": "2014-07-28T09:08:18.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278422",
+    "ThreadId": "554368",
+    "Html": "yes I looked at the source code on this site \r<br />\nI cant do \r<br />\nFastFourierTransform.FFT(false,list.Length,&amp;list );\r<br />\nand I cant do\r<br />\nFastFourierTransform.FFT(false,list.Length,*list );\r<br />\n<br />\nso how does it return list ?<br />\n",
+    "PostedDate": "2014-07-28T09:11:36.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278424",
+    "ThreadId": "554368",
+    "Html": "just call:\r<br />\nFastFourierTransform.FFT(false,list.Length,list); \r<br />\n<br />\nthen look in list, and the results will be in there.<br />\n",
+    "PostedDate": "2014-07-28T09:13:35.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278425",
+    "ThreadId": "554368",
+    "Html": "wait are you saying in can C# you pass in an array and change it and it will return the changes without pointer to it? \r<br />\nso\r<br />\nafter this \r<br />\nFastFourierTransform.FFT(false,list.Length,list );\r<br />\nlist will have the FFT output?<br />\n",
+    "PostedDate": "2014-07-28T09:13:56.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278426",
+    "ThreadId": "554368",
+    "Html": "oh ok<br />\n",
+    "PostedDate": "2014-07-28T09:14:12.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

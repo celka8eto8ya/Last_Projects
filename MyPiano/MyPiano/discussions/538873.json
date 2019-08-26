@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1222268",
+    "ThreadId": "538873",
+    "Html": "Hi,\r<br />\n<br />\nI have the following scenario I can't figure out how to do this with NAudio...\r<br />\n<br />\nI have 16 mono wave files that are read from the harddisk and streamed to channels 1-16 of a sound module. At the same time I need to mix these 16 channels together (Mono) and stream the mix to the monitor out (headphone out) of the sound module.\r<br />\n<br />\nI have suceeded in doing one OR the the other, thus either streaming to the 16 outputs OR streaming the mix, but not both...\r<br />\n<br />\nWhats the best way to do this?<br />\n",
+    "PostedDate": "2014-03-13T03:20:39.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

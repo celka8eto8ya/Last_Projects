@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "903819",
+    "ThreadId": "393010",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I'm writing a program that reads from line-in device. However, some computers only have a mic port. Moreover, if there are two ports, a person may by mistake plug into the mic port instead of line-in port. I want my program to be resilient and read wave\r\n data from the device where there is music data coming in. How can I do that ? &nbsp;I guess I need to do silence detection. How would I do that ? This is my sample code:</p>\r\n<pre>        \r\nprivate void on_data(object sender, NAudio.Wave.WaveInEventArgs e) {\r\n     if (waveWriter == null) return;\r\n     waveWriter.WriteData(e.Buffer, 0, e.BytesRecorded);\r\n     waveWriter.Flush();\r\n}\r\n</pre>\r\n<p>Somewhere in this code I have to do silence detection.</p>\r\n<p>Is there any other way to solve this, without doing silence detection? Does NAudio have some filters that I could use out of the box?</p>\r\n",
+    "PostedDate": "2012-08-24T16:19:11.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "904760",
+    "ThreadId": "393010",
+    "Html": "<p>this is a similar question to <a href=\"http://stackoverflow.com/questions/12146371/analying-speech-from-mic-with-naudio-using-c-sharp/12149383#12149383\">this one</a>. The basic answer is that you would analyse the audio in short blocks, calculating a decibel level. You probably shouldn't detect for perfect silence (which would be all samples zero), but you could check that a block of audio for say 20ms didn't go over a set threshold.</p>",
+    "PostedDate": "2012-08-27T13:50:56.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

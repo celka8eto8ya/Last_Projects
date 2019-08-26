@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Any simple way to resolve the octave number returned by NoteName with what my Midi Controller says it's doing?  My controller documentation says it's generating an E0 event, but NoteName returns an E1?\r\n\r\nDo Midi vendors number their octaves differently?\r\n\r\n",
+    "LastUpdatedDate": "2015-04-24T07:40:22.163-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-04-23T14:42:08.047-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Midi In Octaves in NoteEvents",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16474
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "yes, unfortunately there is not consistency about which exact note octave 0 starts from.",
+      "PostedDate": "2015-04-24T02:03:50.56-07:00",
+      "Id": 183327
+    },
+    {
+      "Message": "That's what I thought.  If you think it's useful you might consider adding an \"octaveBase\" method to set a device octave offset.  Default of course would be 0 offset.\n\nOverall have found integration very smooth.  Great resource!",
+      "PostedDate": "2015-04-24T07:40:22.163-07:00",
+      "Id": 183349
+    }
+  ]
+}

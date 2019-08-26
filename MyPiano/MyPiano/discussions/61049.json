@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "206986",
+    "ThreadId": "61049",
+    "Html": "<p>Can i play file by giving a url from any of the site.</p>\r\n<p>For eg,</p>\r\n<p>http://songs.mastemag.com/indian-movie-songs/L/download.php?get=2cdeb5bfb354f297e97ba6b6b3b53203&amp;file=1/love-aaj-kal/01%20~%20Twist%20(MastiMag.com).mp3</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-06-30T02:50:53.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "207018",
+    "ThreadId": "61049",
+    "Html": "<p>Hi ravik4u,</p>\r\n<p>Have you tried the Mp3FileReader passing in the URL and seeing what happens? I haven't tried this myself, but .NET does have reasonably good support for URLs as paths. If not you will need to create a downloader stream and pass in your MP3 data as a stream.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-06-30T04:28:55.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

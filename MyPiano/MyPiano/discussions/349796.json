@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "814692",
+    "ThreadId": "349796",
+    "Html": "\r\n<p>All, This may seem a very stupid question but can anyone tell me what languages NAudio currently supports. I have written my application using C# as suggested but just wanted to check what other languages are supported.</p>\r\n<p>Thanks in advance</p>\r\n<p>Mike</p>\r\n",
+    "PostedDate": "2012-03-23T08:29:25.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "815465",
+    "ThreadId": "349796",
+    "Html": "<p>you can use NAudio from any .NET language. C# and VB.NET would be the main examples, but F#, managed C++, IronRuby, IronPython etc are also possible.</p>",
+    "PostedDate": "2012-03-26T02:56:08.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

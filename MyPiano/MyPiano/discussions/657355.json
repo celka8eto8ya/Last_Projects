@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1481839",
+    "ThreadId": "657355",
+    "Html": "Hello\r<br />\n<br />\nI'm trying to create a proof of concept function for a Windows App that streams PCM data from a buffer. I've looked at some of the examples and the BufferedWaveProvider seems like the correct WaveProvider to use in this scenario. Below is my attached code. My main issue is that the tone isn't repeating itself. For some reason I can't get the tone to play longer than the latency parameter passed into WasapiOutRT. Could anyone point out where the flaw is? If you need other information, please let me know.\r<br />\n<br />\nThanks!<br />\n<pre><code>        private async void playSineWav()\n        {\n            int sampleRate = 8000;\n            int numSecs = 1;\n            byte[] soundBuf = new byte[sampleRate * 2 * numSecs]; //X seconds of sample data (16 bit)\n            //create sine wave\n            short[] sineWav = new short[sampleRate];\n            int freq = 500;\n            for (int i = 0; i &lt; sampleRate; i++)\n            {\n                double x = 32767 * Math.Sin(2 * Math.PI * freq * i / sampleRate);   //make data into a short\n                sineWav[i] = (short)x;\n            }\n            //repeat sine wave and place in buffer\n            for (int i = 0; i &lt; numSecs; i++)\n            {\n                Buffer.BlockCopy(sineWav, 0, soundBuf, sampleRate * 2 * i, sampleRate*2);\n            }\n            do\n            {\n\n                if (medEl == null)\n                {\n                    medEl = new NAudio.Win8.Wave.WaveOutputs.WasapiOutRT(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 200);\n                    NAudio.Wave.WaveFormat fmt = new NAudio.Wave.WaveFormat(sampleRate/2, 16, 1);\n                    wp = new NAudio.Wave.BufferedWaveProvider(fmt);\n                    wp.BufferDuration = TimeSpan.FromSeconds(10);\n                    wp.AddSamples(soundBuf, 0, sampleRate *2* 1);\n                    await medEl.Init(wp);\n                    medEl.Play();\n                }\n\n                if (wp.BufferLength - wp.BufferedBytes &gt;= 16000)\n                {\n                    wp.AddSamples(soundBuf, 0, sampleRate * 2 * numSecs);\n                    System.Diagnostics.Debug.WriteLine(&quot;adding&quot;);\n                }\n                else\n                {\n                    await System.Threading.Tasks.Task.Delay(500);\n                    System.Diagnostics.Debug.WriteLine(&quot;waiting&quot;);\n                }\n\n            } while (medEl.PlaybackState != NAudio.Wave.PlaybackState.Stopped);</code></pre>\n\n",
+    "PostedDate": "2016-08-22T17:10:46.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482298",
+    "ThreadId": "657355",
+    "Html": "Does anyone have any guidance on this issue? I can't seem to get WasapiOutRT to take advantage of the BufferedWaveProvider.<br />\n",
+    "PostedDate": "2016-08-28T21:16:22.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482443",
+    "ThreadId": "657355",
+    "Html": "You seem to be trying to use a very low sample rate. WASAPI typically requires either 44.1kHz or 48kHz and IEEE float samples, so it's a little surprising that you get past Init successfully. \r<br />\n<br />\nPlayback will stop when BufferedWaveProvider returns 0 from Read, which shouldn't happen with a BufferedWaveProvider. So I would subscribe to the PlaybackStopped event of the WasapiOutRT and check the Exception property to see if there is a problem that is causing it to stop.<br />\n",
+    "PostedDate": "2016-08-30T13:00:18.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485486",
+    "ThreadId": "657355",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nYou seem to be trying to use a very low sample rate. WASAPI typically requires either 44.1kHz or 48kHz and IEEE float samples, so it's a little surprising that you get past Init successfully. <br />\n<br />\nPlayback will stop when BufferedWaveProvider returns 0 from Read, which shouldn't happen with a BufferedWaveProvider. So I would subscribe to the PlaybackStopped event of the WasapiOutRT and check the Exception property to see if there is a problem that is causing it to stop.<br />\n</blockquote>\nHi Mark<br />\n<br />\nThanks for getting back to me. It seems that the Init method succeeds somewhat because the data in the BufferedWaveProvider ends up resampled. After I call the play method and the buffer is filled, the resamplerNeeded property becomes true (I can see that the outputFormat parameter contains 32-bit samples at 48 kHz). What's odd is that the audioClient object is null which makes me think something could be failing in the Activate() call. Regardless, I am able to get a sound played, albeit only for the duration of the latency parameter.<br />\n<br />\nI took your advice and subscribed to the PlaybackStopped event. The exception thrown is an InvalidOperation exception that says &quot;Timed out waiting for event.&quot; This is thrown immediately after calling play. Looking at the source, it seems that this comes from a windows API call (line 117 in WasapiOutRT.cs). Again, everything seems to be going fine because sound plays after this exception is thrown. Once the sound stops playing, the playback state is still set to &quot;Playing&quot; (likely because there's still plenty of data in the BufferedWaveProvider). Do you have any ideas on how to proceed at this point?<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2016-10-06T17:45:32.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485568",
+    "ThreadId": "657355",
+    "Html": "not sure what's going on I'm afraid. The Win 10 WASAPI support in NAudio is still quite ropey. I've been looking at the new UWP AudioGraph API recently, which I suspect will be a much better option for most people on Win 10 moving forwards. Hopefully I'll find some time to create some demos of how to integrate it with NAudio.<br />\n",
+    "PostedDate": "2016-10-07T10:53:06.397-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486048",
+    "ThreadId": "657355",
+    "Html": "Hi Mark<br />\n<br />\nI decided to place the source code directly into my project so that I could debug easier. One thing that I've noticed is that my WaveProvider is being transformed into a SampleToWaveProvider due to the fact that resampling is needed. It seems that when this occurs, I lose the BufferedWaveProvider capability that I want. Is there an NAudio or WASAPI method that will resample a byte buffer for me so that WasapiOutRT won't replace the WaveProvider on initialization? I know that two resamplers are provided (WdlResampler and Media Foundation), but will they work for a Win RT app?<br />\n",
+    "PostedDate": "2016-10-13T18:50:45.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486056",
+    "ThreadId": "657355",
+    "Html": "WASAPI likes to play IEEE float so that's why internally it will turn it to a SampleProvider. The WdlResampler is entirely managed so it will work on any platform. Off the top of my head I can't remember whether I managed to get the Media Foundation resampler working on Win 10. I seem to remember I was calling some disallowed APIs to instantiate the MFT.<br />\n",
+    "PostedDate": "2016-10-13T23:20:02.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

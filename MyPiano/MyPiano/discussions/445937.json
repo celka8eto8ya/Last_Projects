@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1052566",
+    "ThreadId": "445937",
+    "Html": "Hi,<br />\nSorry for my english...<br />\nI've a problem with play any file *.ogg <br />\nI using this code:<br />\n<pre><code>       long dl;\n       using (var vor = new NVorbis.NAudioSupport.VorbisWaveReader(@&quot;D:\\voice.ogg&quot;))\n       using (var wav = new NAudio.Wave.WaveOut())\n       {\n                 wav.Init(vor);\n                 dl = vor.Length;\n                 wav.Play();\n                 while (wav.PlaybackState != NAudio.Wave.PlaybackState.Stopped)\n                {\n                      if (wav.GetPosition() &gt; dl)\n                      {\n                            wav.Stop();\n                       }\n                      Thread.Sleep(100);\n                 }\n        }\n\n</code></pre>\n\nif I create consoleapplication - I not have a problem with playing...<br />\nif I create wpfapplication, then I have a problem. this object wav.GetPosition() returned value 105840 and not play...<br />\n<br />\nWhat do I very bad ? ....<br />\nBest regards...<br />\nAndrzej<br />\n",
+    "PostedDate": "2013-06-04T04:21:46.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1052583",
+    "ThreadId": "445937",
+    "Html": "aboczko:\r<br />\n<br />\nLooks like your code is running on the same thread as the UI.  Try creating a separate thread to run the code above when running under WPF or WinForms.\r<br />\n<br />\nAlso, playback should stop automatically when the end of the stream is reached, so the position check should not be necessary.\r<br />\n<br />\nHave fun!<br />\n",
+    "PostedDate": "2013-06-04T05:01:06.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1052837",
+    "ThreadId": "445937",
+    "Html": "Thank you for your answer.<br />\n<blockquote>\nAlso, playback should stop automatically when the end of the stream is reached, so the position check should not be necessary. <br />\n</blockquote>\nI know that, use another thread - to be able to control the playback: play / pause / stop<br />\n<blockquote>\nLooks like your code is running on the same thread as the UI. Try creating a separate thread to run the code above when running under WPF or WinForms. <br />\n</blockquote>\nCreate a new thread does not work.<br />\nThe process of playing the file to 105842 byte and stops. Proper operation of this is visible only when the console application. This is regardless of the file playback <em>. ogg or </em>. wave<br />\n<br />\nBest regards.<br />\n",
+    "PostedDate": "2013-06-04T15:08:18.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1053622",
+    "ThreadId": "445937",
+    "Html": "OK, try this:<br />\n<ul>\n<li>Make vor and wav member variables on your UI class in the codebehind</li>\n<li>In your &quot;Play&quot; button's click handler instantiate vor and wav, init wav, add a handler for wav.PlaybackStopped, then start playback.  Do NOT use a &quot;using&quot; statement.</li>\n<li>In the PlaybackStopped handler, put your cleanup code (wav.Dispose(); vor.Dispose();)</li>\n<li>\nAdd a &quot;Stop&quot; button and in its click handler call wav.Stop() if wav is currently playing.<br />\n</li>\n</ul>\nI know this is different than the console code, but it should sidestep any message pumping issues that might be causing the behavior.\r<br />\n<br />\nOne side note: NVorbis is pretty fast, but may not be fast enough to decode in real-time on some slower machines.<br />\n",
+    "PostedDate": "2013-06-06T08:51:55.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1053898",
+    "ThreadId": "445937",
+    "Html": "Thank you for your answer. \r<br />\n<br />\nI do not know how or why, but it works. Earlier, as I tried it I had a problem with the initiation of objects Vor and Wav. I think I know why.\r<br />\n<br />\nThank you for the hint.\r<br />\n<br />\nBest regards.<br />\n",
+    "PostedDate": "2013-06-07T00:51:43.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

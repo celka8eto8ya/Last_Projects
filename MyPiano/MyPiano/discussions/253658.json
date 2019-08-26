@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "596340",
+    "ThreadId": "253658",
+    "Html": "\r\n<p>Is it possible to specify the output device when using wasapi like you can with waveout?</p>\r\n",
+    "PostedDate": "2011-04-12T22:39:19.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "597446",
+    "ThreadId": "253658",
+    "Html": "<p>I've updated the NAudio demo to show how to do this</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-14T13:08:23.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "597665",
+    "ThreadId": "253658",
+    "Html": "<p>Very nice!&nbsp; Thank you for adding the function overload to include MMDevice as an option.&nbsp; This will allow me to get wasapi in exclusive mode with a secondary sound device, in this case an M2Tech Evo usb to spdif converter.</p>\n<p>The demo code update is nice also, it clearly shows those like myself that are new to the project how to deal with selecting the correct device.</p>",
+    "PostedDate": "2011-04-14T20:59:17.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "917074",
+    "ThreadId": "396780",
+    "Html": "\r\n<p>PropertyStore class provides an indexer for type Guid, to fetch PropertStoreProperty for the format guid of the device property. This look up method is not correct, since multiple properties can share the same format id. The unique key for a property is\r\n formatid &#43; propertyid combination. A quick look at windows SDK include files mmdeviceapi.h and&nbsp;FunctionDiscoveryKeys_devpkey.h will verify this.</p>\r\n<p>The indexer type should be changed to PropertyKey instead of Guid and both formatid and propertyid should be compared in the get methods. Same for Contains method of PropertyStore. Also static keys defined in PropertyKeys class should be changes to PropertKey\r\n type from Guid.</p>\r\n<p>I made the changes and they worked for me. I have a diff set which I can send to NAudio project managers.</p>\r\n",
+    "PostedDate": "2012-09-25T00:39:15.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917088",
+    "ThreadId": "396780",
+    "Html": "<p>thanks for reporting this, please send a patch, or if you know how to use Mercurial, you can fork it and issue a pull request</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-09-25T01:18:15.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

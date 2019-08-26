@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "937938",
+    "ThreadId": "402261",
+    "Html": "\r\n<p>I'm a beginner. I want to know how to remove noise from an audio file.</p>\r\n<p>(More over : Is it easy or possible to remove the noisy part of the file manually from plotted waveform of the file ?)</p>\r\n",
+    "PostedDate": "2012-11-07T06:28:45.657-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938016",
+    "ThreadId": "402261",
+    "Html": "<p>You'd have to come up with your own algorithm that decided what was noise. For the second part of your question, have a look at the <a href=\"http://voicerecorder.codeplex.com/\">.NET Voice Recorder</a> project I created which allows you to view the waveform and trim to a selected region.</p>",
+    "PostedDate": "2012-11-07T08:49:17.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938303",
+    "ThreadId": "402261",
+    "Html": "\r\n<p>@<a href=\"http://www.codeplex.com/site/users/view/markheath\">markheath</a> Your project is a very nice one. Really what i need.&nbsp;</p>\r\n<p>thanks</p>\r\n",
+    "PostedDate": "2012-11-07T20:31:42.703-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

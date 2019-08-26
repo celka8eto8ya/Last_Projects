@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1325864",
+    "ThreadId": "573086",
+    "Html": "Hi Mark,<br />\n<br />\nI  am using naudio for my player and change some coding  in play method and createinput strem ,<br />\n<br />\nHere is the code :<br />\n<pre><code>   private void PlaySong(Boolean ButtonClick = false)\n        {\n            try\n            {\n               \n                if (!SelectedOutputDevicePlugin.IsAvailable)\n                {\n                    //MessageBox.Show(&quot;The selected output driver is not available on this system&quot;);\n                    return;\n                }\n\n                if (waveOut != null &amp;&amp; CurrentlyActiveWaveOut1 == true)\n                {\n                    if (waveOut.PlaybackState == PlaybackState.Playing)\n                    {\n                        return;\n                    }\n                    else if (waveOut.PlaybackState == PlaybackState.Paused)\n                    {\n                        waveOut.Play();\n                        groupBoxDriverModel.Enabled = false;\n                        return;\n                    }\n                }\n\n                if (waveOut2 != null &amp;&amp; CurrentlyActiveWaveOut1 == false)\n                {\n                    if (waveOut2.PlaybackState == PlaybackState.Playing)\n                    {\n                        return;\n                    }\n                    else if (waveOut2.PlaybackState == PlaybackState.Paused)\n                    {\n                        waveOut2.Play();\n                        groupBoxDriverModel.Enabled = false; \n                        return;\n                    }\n                }                            \n                        fileName = Application_StartUpPath + &quot;\\\\Current Song.{2559a1f2-21d7-11d4-bdaf-00c04f60b9f0}\\\\&quot; + lstSongDetails.Items[0].SubItems[1].Text + &quot;.mp3&quot;;//new\n              \n                \n                if (String.IsNullOrEmpty(fileName))\n                {\n                    if (ButtonClick == true)\n                        //MessageBox.Show(&quot;Song Downloading!!!&quot;);\n                    return;\n                }\n                this.Invoke(new MethodInvoker(delegate\n                {\n                    DecryptFile(lstSongDetails.Items[0].SubItems[1].Text + &quot;.mp3&quot;);//new                  \n                    fileName = Application_StartUpPath + &quot;\\\\Current Song.{2559a1f2-21d7-11d4-bdaf-00c04f60b9f0}\\\\&quot; + lstSongDetails.Items[0].SubItems[1].Text + &quot;.mp3&quot;;//new\n                }));           \n                \n             \n                try\n                {\n                    CreateWaveOut();\n                }\n                catch (Exception driverCreateException)\n                {\n                  \n                }\n                sampleProvider = null;\n                if (listSongDetails.Count &lt;= 0)\n                    return;\n                try\n                {\n                    sampleProvider = CreateInputStream(fileName);\n                }\n                catch (Exception createException)\n                {\n                \n                }\n              \n                try\n                {\n                    compress1 = new SimpleCompressorStream(wavechannel32);    \n                    compress1.Enabled = true;\n                    compress1.Attack = Convert.ToDouble(25);\n                    compress1.Release = Convert.ToDouble(100);\n                      \n                    compress1.Threshold = -22;\n                    compress1.Ratio = 3;\n                       compress1.VolumeStatus1L = objsetting.VolumeStatus1L;\n                       compress1.VolumeStatus2R = objsetting.VolumeStatus2R;\n                       compress1.MakeUpGain = 0;\n                 \n                       waveOut.Init(compress1);\n                       compress1.Dispose();\n                       //compress1 = null;\n                }\n             \n                 if (objsetting.Mutevolume == true)\n                {\n                    setVolumeDelegate(0);\n                }\n                else\n                {\n                    setVolumeDelegate(objsetting.volume);\n                }\n               \n               \n            }\n          \n        }\n</code></pre>\n\nprivate ISampleProvider CreateInputStream2(string fileName)<br />\n<pre><code>    {\n        try\n        {\n            object syncLock = new object();\n            var plugin = GetPluginForFile(fileName);\n            if (plugin == null)\n            {\n                throw new InvalidOperationException(&quot;Unsupported file extension&quot;);\n            }\n            lock (syncLock)\n            {\n                this.fileWaveStream2 = plugin.CreateWaveStream(fileName);\n            }\n            plugin = null;\n\n            this.Invoke(new MethodInvoker(delegate\n             {\n                 if (lstSongDetails.Items.Count &gt; 0)//changes\n                 {\n                     fileWaveStream2.CurrentTime = TimeSpan.FromSeconds(Convert.ToDouble(lstSongDetails.Items[0].SubItems[3].Text.Remove(0, 3)));\n                 }\n             }));\n\n            waveChannel2 = new SampleChannel(this.fileWaveStream2,true);\n            waveChannel2.Volume1L = objsetting.Volume1L;\n            waveChannel2.Volume2R = objsetting.Volume2R;\n            this.setVolumeDelegate = (vol) =&gt; waveChannel2.Volume = vol;\n            if (objsetting.Mutevolume == true)\n            {\n                setVolumeDelegate(0);\n            }\n            this.setNormalizeDelegate = (vol) =&gt; fileWaveStream2.NormalizedDB = vol;\n            this.setNormalizeDelegate = (vol) =&gt; waveChannel2.NormalizeValue = vol;\n            if (waveChannel != null)\n                waveChannel.PreVolumeMeter -= OnPreVolumeMeter;\n            waveChannel2.PreVolumeMeter += OnPreVolumeMeter;\n\n            if (postVolumeMeter != null)\n                postVolumeMeter.StreamVolume -= OnPostVolumeMeter;\n            postVolumeMeter = null;\n            postVolumeMeter = new MeteringSampleProvider(waveChannel2);\n            postVolumeMeter.StreamVolume += OnPostVolumeMeter;\n\n            IEnumerable&lt;double&gt; objSongDetails = (from d in listSongDetails where d.Name == fileName.Substring(fileName.LastIndexOf(&quot;\\\\&quot;) + 1, fileName.Length - fileName.LastIndexOf(&quot;\\\\&quot;) - 1) select d.CueOutTime).ToList();\n            waveChannel2.FadeOutSongTime = fileWaveStream2.TotalTime.TotalSeconds - objSongDetails.FirstOrDefault();\n            songPositionSlider1.SongLength = (int)waveChannel2.FadeOutSongTime;\n            objSongDetails = null;\n\n            return postVolumeMeter;\n        }\n        catch(Exception ex) \n        {\n            obj_Global.WriteErrorLogFile(&quot;AudioPlayBackPanel&quot;, &quot;CreateInputStream2()&quot;, ex.Message);\n            return postVolumeMeter; }\n    }\n\n    void OnPostVolumeMeter(object sender, StreamVolumeEventArgs e)\n    {\n        // we know it is stereo\n        //volumeMeter1.Amplitude = e.MaxSampleValues[0];\n        ////volumeMeter2.Amplitude = e.MaxSampleValues[1];\n    }</code></pre>\n\n<code></code>Please guide me How to now we implement left channel and right channel graph?<br />\n",
+    "PostedDate": "2014-11-25T03:45:58.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1325902",
+    "ThreadId": "573086",
+    "Html": "Hello SudipDas,\r<br />\n<br />\nyou can use the CoreAudioApi to recieve volume values of master or left/right channels, available since win 7 and vista.\r<br />\n<br />\nKind Regards\r<br />\n<br />\nFreefall<br />\n",
+    "PostedDate": "2014-11-25T06:01:24.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1326192",
+    "ThreadId": "573086",
+    "Html": "Hi All,\r<br />\n<br />\nI can open multiple player at a time son it is not possible to use one single core audio api.Please help me how to solve this issue.<br />\n",
+    "PostedDate": "2014-11-25T21:34:17.557-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1326705",
+    "ThreadId": "573086",
+    "Html": "Hi Mark,\r<br />\n<br />\nPlease help me. <br />\n",
+    "PostedDate": "2014-11-26T23:25:38.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327084",
+    "ThreadId": "573086",
+    "Html": "Have you looked at the code sample in the NAudio demo? It shows a left and a right level meter using a Metering Sample Provider<br />\n",
+    "PostedDate": "2014-11-28T09:24:05.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327148",
+    "ThreadId": "573086",
+    "Html": "Hi Mark,\r<br />\n<br />\nIn previous code we can  implement left and right  channel graph but now we change the logic(please see the code) and we are unable to implement channel indicator.Please  see my above code and suggest me.<br />\n",
+    "PostedDate": "2014-11-28T21:11:20.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

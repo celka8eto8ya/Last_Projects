@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "940240",
+    "ThreadId": "402844",
+    "Html": "\r\n<p>Hello everyone ,</p>\r\n<p>I'm a beginner with NAudio and I want to create a basic sinus wave and modify its frequency with the move of the mouse . I followed this\r\n<a href=\"http://mark-dot-net.blogspot.se/2009/10/playback-of-sine-wave-in-naudio.html\">\r\ntutorial</a> .And in my MainWindow , I've just added</p>\r\n<p>And my sinus wave changed its frequency but the changes are not fluid , anyone has some ideas how that can be more fluid ?</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">double</span> GetFrequency(Rectangle sender, MouseEventArgs e)<br><span style=\"color:#008000\">// This function is just to convert the position of the mouse to a frequency</span>\n        {\n           ...\n        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Rectangle_MouseMove_2(<span style=\"color:blue\">object</span> sender, MouseEventArgs e)\n        {   <span style=\"color:blue\">if</span>(Mouse.LeftButton == MouseButtonState.Pressed)\n            {\n                <span style=\"color:#ff0000\">sineWaveProvider.Frequency = (float)GetFrequency((Rectangle)sender, e);</span><span style=\"color:green\"><br>// Here I change the frequency while playing</span>\n            }\n       \n        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Rectangle_MouseLeftButtonDown_1(<span style=\"color:blue\">object</span> sender, MouseButtonEventArgs e)\n        {\n                sineWaveProvider.Frequency = (<span style=\"color:blue\">float</span>)GetFrequency((Rectangle)sender, e);\n                sineWaveProvider.Amplitude = 0.25f;\n                waveOut = <span style=\"color:blue\">new</span> WaveOut();\n                waveOut.Init(sineWaveProvider);\n                waveOut.Play();<br>                /<span style=\"color:#008000\">/ When you click , the sound starts playing</span> <br>&nbsp;        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Rectangle_MouseLeftButtonUp_1(<span style=\"color:blue\">object</span> sender, MouseButtonEventArgs e)\n        {\n            waveOut.Stop();\n            waveOut.Dispose();\n            waveOut = <span style=\"color:blue\">null</span>;<br>\n<span style=\"color:#008000\">// When you released, the sound stops </span>} }</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-11-12T04:27:37.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940251",
+    "ThreadId": "402844",
+    "Html": "<p>for smooth frequency changes you need to implement a portamento algorithm. One way to do this is with a wavetable, where you slowly change the offset intot the wavetable you are operating with. It's a tricky algorithm if you are a beginner to DSP, but hopefully that points you in the right direction.</p>",
+    "PostedDate": "2012-11-12T04:54:30.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940339",
+    "ThreadId": "402844",
+    "Html": "<p>I've found this that's totally solved my problem --&gt; http://msdn.microsoft.com/en-us/magazine/ee309883.aspx</p>",
+    "PostedDate": "2012-11-12T07:58:13.45-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2011-07-07T00:33:29.657-07:00",
+    "CommentCount": 5,
+    "Custom": "",
+    "Description": "I am implementing a Media Player and using NAudio to play my files. Is there any way to increase the playback speed like (2X or 4X) while the sound is playing. Code samples will be appreciated.\n\nThanks in Advance Cheers.",
+    "LastUpdatedDate": "2011-07-07T02:31:42.167-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-07-06T22:40:11.033-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "How to Change Playback Speed using NAudio like (2x or 4x)",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16223
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "So can you guide me how to request for support. Thanks",
+      "PostedDate": "2011-07-06T23:42:17.937-07:00",
+      "Id": 41791
+    },
+    {
+      "Message": "this is a support request, not an issue\r\n\n\n** Closed by markheath 7/6/2011 11:17 PM",
+      "PostedDate": "2011-07-06T23:53:34.37-07:00",
+      "Id": 41792
+    },
+    {
+      "Message": "Kindly guide me how to request for support. Thanks",
+      "PostedDate": "2011-07-06T23:53:34.963-07:00",
+      "Id": 41793
+    },
+    {
+      "Message": "you have asked in three places (issues, discussion, stackoverflow). I'll get round to replying later today hopefully",
+      "PostedDate": "2011-07-06T23:59:33.89-07:00",
+      "Id": 41794
+    },
+    {
+      "Message": "Thanks mate",
+      "PostedDate": "2011-07-07T02:31:42.167-07:00",
+      "Id": 41795
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Hi Mark, just i want to know is there any way to read \".au\" file format using MFT.\r\nIt has thrown  the following exception, \"Exception from HRESULT: 0xC00D36C4\".",
+    "LastUpdatedDate": "2013-11-28T04:35:52.633-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-11-27T00:47:46.097-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "au to mp3 using NAudio MFT",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16422
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Media Foundation can only play file types that it has an appropriate source reader for. By default Windows comes with wma, mp3, and maybe aac. But anything else, you'll need to find your own codecs/converters for. A command line tool is almost always the easiest solution in this case.",
+      "PostedDate": "2013-11-28T03:45:45.027-08:00",
+      "Id": 125538
+    },
+    {
+      "Message": "Thanks Mark !!",
+      "PostedDate": "2013-11-28T04:35:52.633-08:00",
+      "Id": 125543
+    }
+  ]
+}

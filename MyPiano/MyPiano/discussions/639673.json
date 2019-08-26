@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1429611",
+    "ThreadId": "639673",
+    "Html": "How can I use NAudio library to get sample float array from mp3 file?\r<br />\n<br />\nHere is my code:<br />\n<pre><code>        float[] buffer = new float[2000];\n\n        AudioFileReader reader = new AudioFileReader(filePath);\n        reader.Read(buffer, 0, 2000);</code></pre>\n\nAfter that buffer is always empty (only zeros inside).<br />\n",
+    "PostedDate": "2015-06-08T14:13:01.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430280",
+    "ThreadId": "639673",
+    "Html": "Hi,\r<br />\n<br />\nyou read only the first 2000 samples of your mp3 file, which are all zeros when some silence is in there at start.\r<br />\n<br />\nBesides that, it is a obviously very dangerous approach to assume it owns a fixed number of samples.\r<br />\nI recommend writing a While Loop and exit after you got 2000 samples if that is what you want. If you want the whole file as float array, run the While Loop completely through and better use a List of Float to store the samples dynamically.\r<br />\n<br />\nCheers.<br />\n",
+    "PostedDate": "2015-06-12T10:50:45.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

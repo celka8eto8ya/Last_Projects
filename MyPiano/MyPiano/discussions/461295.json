@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1104111",
+    "ThreadId": "461295",
+    "Html": "Does anyone have any examples or best practices for realtime panning &amp; volume adjustment during playback?  I'd like to be able to adjust the PanningCampleProvider &amp; SampleChannelProvider while audio is playing. <br />\n",
+    "PostedDate": "2013-10-05T21:33:29.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1104849",
+    "ThreadId": "461295",
+    "Html": "Figured this out, but for some reason my panning channels are reversed.  I'll keep digging into it.  <br />\n",
+    "PostedDate": "2013-10-07T22:01:30.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

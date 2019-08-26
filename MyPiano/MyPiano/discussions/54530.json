@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "183822",
+    "ThreadId": "54530",
+    "Html": "Hello,<br>\r\nfirst thanks for providing such great software for .NET to play WAV and MP3.<br>\r\n<br>\r\nHowever I'm having troubles with handling the playback finished (meaning by that that the input stream reached its end). I'm playing MP3 from file - constant bit rate 128 kbps, using WaveOut and I noticed playbackStopped event will not handle when the stream reaches its end (the OnDone method has a byte array full of zeroes, however it is expecting from the method Read to return 0. So I tried adding to the WaveStream Read method that if (Position &gt;= Length) return 0; The event was signalled, but even sooner that the playback truly finished (I noticed the MP3 length is 4:34, while the real MP3 length is 4:39, put playing it is flawless. At 4:34 the Position = Length in the MP3FileReader.). Any suggestion why that might be happening?<br>\r\n<br>\r\nEDIT:<br>\r\nI added the Position &gt;= Length thing to the wrong stream. However I noticed that in WaveChannel32.cs in method Read there is a bug with PaddingWithZeroes. The buffer was padded with zeroes even if the the read from the source stream returned zero and the return value was the length of the array. So by adding a check to return a zero when the SourceStream read method returns 0 I resolved the issue and the StoppedCallback is now properly called when the playing truly finishes.\r\n",
+    "PostedDate": "2009-04-26T13:32:14.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "190329",
+    "ThreadId": "54530",
+    "Html": "<p>Hi there,</p>\r\n<p>The length determining of MP3 files is not particularly good, as it may be VBR, in which case it cannot be determined. The solution you have come up with is the right approach though.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-05-14T09:48:40.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "202778",
+    "ThreadId": "54530",
+    "Html": "<p>Mark:</p>\r\n<p>I've built a waveform visualization around NAudio, but I'm being bitten badly by the MP3 length issue. I find that when I open an MP3 file, the length is a couple of seconds shorter than reported by other audio editors and that as the file plays, it gets out of sync with the waveform. When I open a WAV file, this is not a problem.</p>\r\n<p>I understand that determining the MP3 length without scanning the whole file makes it hard to predict the length, but isn't there some way that one can determine the actual length? Even if it means scanning the whole file?</p>\r\n<p>Russell</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-06-17T23:18:21.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "202846",
+    "ThreadId": "54530",
+    "Html": "<p>Yes, it should be possible to determine the length if you read the entire file. You could even generate a map of positions in the file to timestamps to aid in repositioning later. Its something that would be nice to put into a future version.</p>",
+    "PostedDate": "2009-06-18T03:24:28.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

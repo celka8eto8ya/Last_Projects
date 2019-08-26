@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "459064",
+    "ThreadId": "217067",
+    "Html": "Hello,\r\n\r\nIve got about 4-5 different files loaded in and played separately with a trackbar that controls the volume and some simple play, pause, stop buttons.\r\n\r\nAnyway they all play and pause independently however if i change the volume on one of them they all change, is this normal and is there any way to give them all separate volumes?\r\n\r\nOne other thing i find odd is if i pause and then resume its fine, however if i stop it still seems to resume where it was playing last, how can i get it to reset to the start of the stream its playing?",
+    "PostedDate": "2010-06-23T10:44:44.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "459808",
+    "ThreadId": "217067",
+    "Html": "As no one else has responded i thought i would post back my current findings, be them correct or wrong...\r\n\r\nIt looks like WaveOut is some sort of device handle for playing music so if you set volume on it then you set the volume for the entire device, however if you create a WaveChannel32 and put your stream into that then put that into the WaveOut it seems that altering the channel's volume will only effect that bit of music.",
+    "PostedDate": "2010-06-24T23:22:30.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "461106",
+    "ThreadId": "217067",
+    "Html": "<p>hi grofit, yet that is right, glad you figured it out</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-06-29T03:42:19.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

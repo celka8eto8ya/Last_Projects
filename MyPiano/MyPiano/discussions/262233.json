@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "630761",
+    "ThreadId": "262233",
+    "Html": "\r\n<p>I am coding a karaoke program with NAudio. My scenario is that when the user starts recording. I'm playing the audio with WaveOut and record the mic with WaveIn simultaneously. When the user stops the recording I'm mixing the two wavs with WaveMixerStream32\r\n at hard-coded WaveFormat of 44100, 16, 1.<br>\r\nIt looks like it's working OK but on some machines there is a latency issue. i.e. the mic is recorded some milliseconds behind the instrumental audio. What could cause that behavior?</p>\r\n",
+    "PostedDate": "2011-06-21T13:27:39.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630822",
+    "ThreadId": "262233",
+    "Html": "<p>NAudio does not operate by default at a low latency. You can adjust the buffer sizes and number of buffers, but if you go too low, there will be dropouts.</p>\r\n<p>Also, you will always need to compensate for the latency when aligning what is recorded with what was played. In other words, the recording is always one buffer length behind the playback.</p>",
+    "PostedDate": "2011-06-21T15:10:28.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "631281",
+    "ThreadId": "262233",
+    "Html": "<p>I'm recording the instrumental and the voice at two separate files and then mix them. Do I need to align the two files before I mix them with WaveMixerStream32?</p>",
+    "PostedDate": "2011-06-22T10:58:35.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "632887",
+    "ThreadId": "262233",
+    "Html": "<p>How do you take input from the microphone and play it out of the speakers? Could you say something about how you're doing that?</p>",
+    "PostedDate": "2011-06-24T22:46:05.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633191",
+    "ThreadId": "262233",
+    "Html": "<p>I'm recording the input with WaveIn to a wav file and then mix it with the wav from the audio....</p>",
+    "PostedDate": "2011-06-26T11:53:03.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633194",
+    "ThreadId": "262233",
+    "Html": "<p>ok, then you will probably need to compensate by the playback latency. Try with multiples of your buffer size, starting with one buffer.</p>",
+    "PostedDate": "2011-06-26T11:57:35.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633198",
+    "ThreadId": "262233",
+    "Html": "<p>But I think that the latency differ from one PC to another. How can I detect the amount of latency that I have to compensate?</p>",
+    "PostedDate": "2011-06-26T12:18:59.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633203",
+    "ThreadId": "262233",
+    "Html": "<p>The latency is calculated from buffer sizes, which you know. What size buffers are you using on WaveOut and WaveIn? I suspect you are using the defaults which is 100ms buffers. However, old versions of NAudio used 3 buffers, so the effective playback latency was 200ms (two buffers queued while the other one is playing)</p>",
+    "PostedDate": "2011-06-26T12:21:39.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633733",
+    "ThreadId": "262233",
+    "Html": "<p>Maybe it is a better idea to change the workflow of my scenario so instead of recording the two streams separately and then mix them, it would be better to mix the wav file and the stream from the mic in real-time. Is it possible?</p>",
+    "PostedDate": "2011-06-27T13:09:33.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636200",
+    "ThreadId": "262233",
+    "Html": "<p>that doesn't really change anything, there will always be latency to compensate for because of buffering</p>",
+    "PostedDate": "2011-07-01T13:36:41.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "651325",
+    "ThreadId": "262233",
+    "Html": "<p>I still can't understand how can I change the latency amount on a particular client machine, so I compensate correctly.</p>",
+    "PostedDate": "2011-08-02T12:18:16.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

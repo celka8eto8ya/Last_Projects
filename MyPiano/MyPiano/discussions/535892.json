@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1216102",
+    "ThreadId": "535892",
+    "Html": "Hi!\r<br />\n<br />\nAt the moment I have some troubles at playing audio using the methods WaveOutEvent (too high latency), DirectSound (application crashes randomly [DirectSound buffer full]) and Wasapi (the soundcard crashes after a few minutes!). So my last hope to get this all working is by using AsioOut.\r<br />\n<br />\nI have 2 soundcards installed in my PC. AsioOut works fine with one of them because the AsioSampleType of the OutputChannels is Int32LSB. The other one does not work because the <strong>SampleType Int32LSB24 is not yet supported</strong> (there is no convertor implemented). The convertors all look so simple, but I have no idea, what I have to do :P I hope someone can help me there.\r<br />\n<br />\nMy 2nd question is, can I specify the asio channel(s) where the audio should be played? I have 32 Output Channels on my soundcard and I want to use the channels 10 and 11 for one stereo signal and 12/13 for a second stereo signal. How can i achieve this?\r<br />\n<br />\n<br />\nStefan<br />\n",
+    "PostedDate": "2014-02-28T05:39:46.69-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216104",
+    "ThreadId": "535892",
+    "Html": "for the converter, you coiuld try with ConvertorFloatToIntGeneric, but using clampTo24Bit instead of clampToInt\r<br />\nBasically I think its 24 bit samples in 32 bit words, so the only real challenge is making sure the unused byte is at the right end\r<br />\n<br />\nAs for the second issue, have a look at AsioOut ChannelOffset, which is a bit of a hack, but would let you start from channel 10\r<br />\n<br />\nMultiplexingSampleProvider/MultiplexingWaveProvider will let you join together your stereo signals into 4 channel audio<br />\n",
+    "PostedDate": "2014-02-28T05:47:30.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216152",
+    "ThreadId": "535892",
+    "Html": "hi!\r<br />\n<br />\nThanks for the very quick response. I've copied the Convertor and changed what you have suggested. Now that the &quot;Int32LSB24 is not yet supported&quot; Exception isn't thrown anymore I have a new problem. I get an exception during the AsioOut.Init-method. More specificly: The function CreateBuffers(int, int, bool) from ASIODriverExt.cs throws the Exception <strong>Error code [ASE_InvalidMode] while calling ASIO method &lt;createBuffers&gt;,</strong><br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">unsafe</span>\n            {\n                <span style=\"color:Blue;\">fixed</span> (ASIOBufferInfo* infos = &amp;bufferInfos[0])\n                {\n                    IntPtr pOutputBufferInfos = <span style=\"color:Blue;\">new</span> IntPtr(infos);\n\n                    <span style=\"color:Green;\">// Create the ASIO Buffers with the callbacks</span>\n                    driver.createBuffers(pOutputBufferInfos, nbTotalChannels, bufferSize, <span style=\"color:Blue;\">ref</span> callbacks);\n                }\n            }\r\n</pre></div>bufferInfos.length == 64\r<br />\nnbTotalChannels == 64 (32 input, 32 output)\r<br />\nbufferSize == 256 (at first it was 800, but then I looked at the bufferSize when using the other soundcard. there the bufferSize was 256, so I changed it to 256 using the AsioSettingsDialog)\r<br />\n<br />\nIn an ASIO SDK documention I found<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\nASIOError ASIOCreateBuffers(ASIOBufferInfo *bufferInfos, <span style=\"color:Blue;\">long</span> numChannels, <span style=\"color:Blue;\">long</span> bufferSize, ASIOCallbacks *callbacks);\r\n</pre></div><blockquote>\nIf not enough memory is available ASE_NoMemory will be returned. If no input/output is present<br />\nASE_NotPresent will be returned. If bufferSize is not supported, or one or more of the bufferInfos<br />\nelements contain invalid settings, ASE_InvalidMode will be returned.<br />\n</blockquote>\nMaybe the 256 are wrong, but I've chosen this value from a DropDownList from the AsioSettingsDialog.\r<br />\n<br />\n<br />\n<br />\nThe other thing with the ChannelOffset seems to work. :)\r<br />\n<br />\n<br />\nStefan<br />\n",
+    "PostedDate": "2014-02-28T07:19:32.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216182",
+    "ThreadId": "535892",
+    "Html": "hmm, hard to know what's going wrong there. You'll just have to experiment a bit more with the parameters. What sample rate are you using?\r<br />\nAlso, are you calling AsioOut.Init or InitRecordAndPlayback, and if so, what are the in and out channel counts?<br />\n",
+    "PostedDate": "2014-02-28T08:06:12.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217785",
+    "ThreadId": "535892",
+    "Html": "I've tried different sample rates: 8000, 44100, 48000, 96000\r<br />\n<br />\nI'm calling AsioOut.Init<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\nMultiplexingWaveProvider multiplexer = <span style=\"color:Blue;\">new</span> MultiplexingWaveProvider(<span style=\"color:Blue;\">new</span> List&lt;IWaveProvider&gt;() { monoA, monoB }, 2);\n<span style=\"color:Green;\">// --&gt; WaveFormat: {16 bit PCM: 44kHz 2 channels}</span>\nmultiplexer.ConnectInputToOutput(0, 0);\nmultiplexer.ConnectInputToOutput(1, 1);\n\nasioOutA = <span style=\"color:Blue;\">new</span> AsioOut(0);\nasioOutA.ChannelOffset = 10;\nasioOutA.Init(multiplexer);\n\nasioOutA.Play();\r\n</pre></div>I don't know what I'm doing wrong. If I use my other soundcard (8 In/8 Out-channels) everything works fine. Maybe it is a problem that I have 32 Input and 32 Output channels. Could it be that there is some Array too small? But I don't think so.\r<br />\nIn the array of <code>ASIOBufferInfo</code> objects there is also everything fine, I would say. 32 items having <code>.isInput = true</code>, another 32 having <code>.isInput = false</code>. And the channelNum goes from 0 to 63. There is not much that can go wrong in this CreateBuffers method regarding to the ASIO SDK doc.\r<br />\n<br />\nAs I stated in my original post, there are also troubles if I use DirectSound or Wasapi. Using Wasapi causes the following: Sound will be played for some seconds (between 1 and 60) then the whole Operating System freezes (can't move mouse) for 0.5-1 second and I can hear a strange/ugly beep on the Speakers. This repeates until the soundcard completely crashes and I have to restart my PC(!). It looks like there are strange driver or hardware issues with this card. I thought maybe if I use ASIO the problems will disappear (the asio driver model is different from the normal windows drivers, right?), but it seems like I don't even get this running.\r<br />\n<br />\n<br />\nStefan<br />\n",
+    "PostedDate": "2014-03-03T03:05:26.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217788",
+    "ThreadId": "535892",
+    "Html": "shame, I'd definitely try to see if you can find updated ASIO drivers for your card. I know some soundcard manufacturers tend to drag their heels when it comes to updating drivers for new versions of Windows. <br />\n",
+    "PostedDate": "2014-03-03T03:08:03.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1221020",
+    "ThreadId": "535892",
+    "Html": "Ok, I think I know the problem now. In my code sample above you can see this <code>MultiplexingWaveProvider</code>. The sources for this monoA and monoB-WaveStreams come from 2 WaveIn-Providers. It seems like that I can't have WaveIn and AsioOut for the same soundcard. Is that true? Can't test it with my other soundcard at the moment.\r<br />\n<br />\nSo now that this is working (I just have AsioOut now and record there) I would need the conversation from the ASIO format (<strong>Int32LSB24</strong>) to the 32bit float format in the function <code>public int GetAsInterleavedSamples(float[] samples)</code> of the <code>AsioAudioAvailableEventArgs</code> class.\r<br />\n<br />\nFor converting to the ASIO format I use this<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">static</span> <span style=\"color:Blue;\">void</span> ConvertorFloatToIntGeneric24(IntPtr inputInterleavedBuffer, IntPtr[] asioOutputBuffers, <span style=\"color:Blue;\">int</span> nbChannels, <span style=\"color:Blue;\">int</span> nbSamples)\n        {\n           <span style=\"color:Blue;\">unsafe</span>\n           {\n              <span style=\"color:Blue;\">float</span>* inputSamples = (<span style=\"color:Blue;\">float</span>*)inputInterleavedBuffer;\n              <span style=\"color:Blue;\">int</span>*[] samples = <span style=\"color:Blue;\">new</span> <span style=\"color:Blue;\">int</span>*[nbChannels];\n              <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> i = 0; i &lt; nbChannels; i++)\n              {\n                 samples[i] = (<span style=\"color:Blue;\">int</span>*)asioOutputBuffers[i];\n              }\n\n              <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> i = 0; i &lt; nbSamples; i++)\n              {\n                 <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> j = 0; j &lt; nbChannels; j++)\n                 {\n                    *samples[j]++ = clampTo24Bit(*inputSamples++);\n                 }\n              }\n           }\n        }\r\n</pre></div>Stefan<br />\n",
+    "PostedDate": "2014-03-10T06:25:36.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1221387",
+    "ThreadId": "535892",
+    "Html": "It seems like my brutforce method did work (after 5 hours :P).\r<br />\n<br />\nI've written this in the <code>GetAsInterleavedSamples</code>-Method<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n <span style=\"color:Blue;\">else</span> <span style=\"color:Blue;\">if</span> (AsioSampleType == Asio.AsioSampleType.Int32LSB24)\n            {\n               <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> n = 0; n &lt; SamplesPerBuffer; n++)\n               {\n                  <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> ch = 0; ch &lt; channels; ch++)\n                  {\n                     <span style=\"color:Blue;\">byte</span>* pSample = ((<span style=\"color:Blue;\">byte</span>*)InputBuffers[ch] + n * 4);\n\n                     <span style=\"color:Blue;\">int</span> sample = pSample[0] | (pSample[1] &lt;&lt; 8) | ((<span style=\"color:Blue;\">sbyte</span>)pSample[2] &lt;&lt; 16);\n\n                     samples[index++] = sample / 8388608.0f;\n                  }\n               }\n            }\r\n</pre></div>I looked at the code from the AsioSampleType.Int24LSB conversation. What I don't understand: Why is in the outer for-loop <code>n &lt; SamplesPerBuffer</code> and not <code>n &lt; SamplesPerBuffer / 4</code>? I multiply by 4 in the loop. I thought I'll get an index out of the range of the buffer.\r<br />\n<br />\nAnd it seems like if you do too much in this function (I tried to Console.WriteLine some values) this code isn't working anymore. So it really has to be fast! Or there was another problem.\r<br />\n<br />\n<br />\nStefan<br />\n",
+    "PostedDate": "2014-03-11T05:02:51.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 7,
+    "Custom": null,
+    "Description": "There seem to be a problem with how NAudio get´s the buffer.\r\n\r\nMy driver is not 100% foolproof though as it seems, other applications have problems as well at time.\r\n\r\nHowever, one problem always seems to be able to get the Information that´s wanted, and that is mumble.\r\n\r\nAs you can see in the Picture Mumble can get all the Buffers, at least the information about it.\r\nAnd worth noting, While mumble is on with this, application often work, but when it´s shut down they won´t work.\r\n\r\nI have no idea why, and i didn´t really care as the problem was often solved just by opening Mumbled and pressing Query to show the information.\r\n\r\nBut now even that doesn´t cure the issue in NAudio, so i thought it may be best to start investigate it and perhaps find a way to solve it within this Library.\r\n\r\n![Image](https://doc-10-28-docs.googleusercontent.com/docs/securesc/7lhgl5lp7krkao9t7c07iicbq39nia9s/iabfavn2domtuk9vv9rmj0i0osru6koi/1387101600000/13669442625441277937/13669442625441277937/0B_UKJFH8rbiNbDNUeVhhME1JZDQ?h=16653014193614665626&e=view)",
+    "LastUpdatedDate": "2014-01-03T14:08:52.247-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-12-15T02:49:08.347-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "ASIO issues GetBuffer",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16424
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I'm afraid I have no idea what mumble is, and your picture is not showing.",
+      "PostedDate": "2013-12-15T08:46:02.68-08:00",
+      "Id": 127553
+    },
+    {
+      "Message": "Damn what happened to the picture, it was up before, will reupload it*\n\nwell Mumble in itself is a VOIP software, but that isn´t really anything you need to know, what i wanted to point out is that NAudio isn´t able to get the Asio Driver, but Mumble does.\n\nI think also Foobar2000 does(sort of a media player with advanced plugins).\n\nSo something is wrong or can be improved in the way it retrieves information about the Driver.\n\n![Image](https://docs.google.com/uc?export=download&id=0B_UKJFH8rbiNbDNUeVhhME1JZDQ)\n",
+      "PostedDate": "2013-12-15T10:58:31.333-08:00",
+      "Id": 127559
+    },
+    {
+      "Message": "Only one application is allowed to open the ASIO driver at once",
+      "PostedDate": "2013-12-18T16:23:51.84-08:00",
+      "Id": 128008
+    },
+    {
+      "Message": "Correct, but the problem doesn´t lay in that the Driver is in use, but that it can´t obtain the information needed, while Mumble can.\n\nIt´s completely random though, now for example, i don´t get the issue anymore.\n\nThe only real problem is that the \"GetBuffer\" is probably not perfect, as it can at occasions, not get the Buffer from my driver, while other applications can.\n\nIf i have the ASIO driver in use, \"GetBuffer\" isn´t the error but, something about \"Hardware...\" fails to initialize or something.",
+      "PostedDate": "2013-12-18T22:02:27.267-08:00",
+      "Id": 128032
+    },
+    {
+      "Message": "Here is a video to demostrate that other applications work, while mine doesn´t.\n\nhttp://www.sendspace.com/file/yln6wf\n\n",
+      "PostedDate": "2013-12-19T00:33:50.877-08:00",
+      "Id": 128041
+    },
+    {
+      "Message": "It may be the order in which various initialization methods are being sent to the ASIO driver. I only own a couple of soundcards, so I have no way of knowing if the code will work with all cards. If you don't mind experiment, take your own copy of NAudio, and experiment with different calls to the ASIO functions.",
+      "PostedDate": "2013-12-23T12:53:39.057-08:00",
+      "Id": 128336
+    },
+    {
+      "Message": "Ah understandable, well i sadly don´t know such low level code, C# with Naudio and the easiness that it provides, is all i can muster.\n\nBut thanks for telling, good that it wasn´t a clear bug then.",
+      "PostedDate": "2014-01-03T14:08:52.247-08:00",
+      "Id": 129027
+    }
+  ]
+}

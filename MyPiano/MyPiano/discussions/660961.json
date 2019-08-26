@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1491725",
+    "ThreadId": "660961",
+    "Html": "Hi guys,\r<br />\nis it possible to play 5.1 audio files with Naudio?\r<br />\n I'm getting an exception at <br />\n<pre><code>outputDevice.Init(mixer); </code></pre>\n\nstep if trying to set channelCount = 6 creating WasapiOut or WaveOut instance.\r<br />\n<br />\nSystem.ArgumentException was unhandled\r<br />\nHResult=-2147024809\r<br />\nMessage=Value does not fall within the expected range.\r<br />\nSource=mscorlib\r<br />\nStackTrace:\r<br />\nat System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)\r<br />\nat NAudio.Wave.WasapiOut.Init(IWaveProvider waveProvider)\r<br />\nat NAudio.Wave.WaveExtensionMethods.Init(IWavePlayer wavePlayer, ISampleProvider sampleProvider, Boolean convertTo16Bit)....﻿\r<br />\n<br />\nKind regards,\r<br />\nAndrei<br />\n",
+    "PostedDate": "2017-01-26T10:00:08.22-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491730",
+    "ThreadId": "660961",
+    "Html": "Some hardware and driver (Asio?) might support that, but not always. When you want to ensure playback, then mix the samples to 2 channels.<br />\n",
+    "PostedDate": "2017-01-26T11:50:31.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491748",
+    "ThreadId": "660961",
+    "Html": "But I need at least 4 channels to play.<br />\n",
+    "PostedDate": "2017-01-26T22:23:13.557-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491795",
+    "ThreadId": "660961",
+    "Html": "Then you could try with Asio and ship asio drivers with your assembly.<br />\n",
+    "PostedDate": "2017-01-27T11:51:26.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491810",
+    "ThreadId": "660961",
+    "Html": "OK. Thank you. \r<br />\nI will try with Asio drivers.<br />\n",
+    "PostedDate": "2017-01-28T00:14:10.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491840",
+    "ThreadId": "660961",
+    "Html": "It works now with AsioOut. Thank you Freefall !\r<br />\nI wonder are there any limitations of using Naudio AsioOut in a payware project related to Steinberg property right.\r<br />\nCan't see nothing about that in Naudio license.<br />\n",
+    "PostedDate": "2017-01-29T02:57:18.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491962",
+    "ThreadId": "660961",
+    "Html": "It was said NAudio is free to use, even for commercial applications<br />\n",
+    "PostedDate": "2017-01-30T23:01:22.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

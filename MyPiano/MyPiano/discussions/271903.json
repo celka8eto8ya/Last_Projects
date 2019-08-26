@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "669046",
+    "ThreadId": "271903",
+    "Html": "\r\n<p>Is it possible to be recording from a sound card, and at the same time streaming that same .wav file, without having the full .WAV? Or in another words, &nbsp;while recording a wav file (which might be as long as 2h) into disk, is it possible &nbsp;to stream\r\n it while it is not complete??<br>\r\n<br>\r\nI am a complete&nbsp;newbie&nbsp;on this. Not just in NAudio, but in audio processing/recording. Just getting familiar with WAV file format....but I am sure that you already knew it!&nbsp;<br>\r\n<br>\r\nCheers!<br>\r\n<br>\r\n<br>\r\n&nbsp;</p>\r\n",
+    "PostedDate": "2011-09-08T04:22:18.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "671748",
+    "ThreadId": "271903",
+    "Html": "<p>It's not easy to do since a WAV file is not strictly valid until it has completed writing. However, I have done this myself as part of a commercial project. You can make a basic custom WaveFileReader that doesn't care about the length of the data chunk.</p>",
+    "PostedDate": "2011-09-14T07:54:52.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

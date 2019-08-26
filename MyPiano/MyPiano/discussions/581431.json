@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1354166",
+    "ThreadId": "581431",
+    "Html": "Good day,<br />\n<br />\nI have a question about encoding/decoding voice with NSpeex from example NetworkChat. All is ok when I am using sockets, but the <strong>same</strong> algorithm with ZigBee connected via COM is crashed on decode received bytes with message &quot;Invalid sideband mode encountered (1st sideband): 7&quot;.<br />\n<br />\nI have tried like <a href=\"https://nspeex.codeplex.com/discussions/256841\" rel=\"nofollow\">this</a> topic, but it is vainly, same error.<br />\n<br />\nWhat do you think, is it problem on COM side or something wrong with Speex?<br />\n<br />\nThanks in advance.<br />\n<pre><code>//preparing\nZigUsbReceived.Handshake = Handshake.XOnXOff;\nZigUsbSent.Handshake = Handshake.XOnXOff;\nZigUsbReceived.Open();\nZigUsbSent.Open(); \n\ncodec1 = new NAudioDemo.NetworkChatDemo.NarrowBandSpeexCodec();\n\ninput = new WaveIn();\ninput.BufferMilliseconds = 10;\ninput.WaveFormat = codec1.RecordFormat;\ninput.DataAvailable += Voice_Input;\n\noutput = new DirectSoundOut();\nbufferStream = new BufferedWaveProvider(codec1.RecordFormat);\noutput.Init(bufferStream);\n\n//sending\nvar encodedData = codec1.Encode(e.Buffer, 0, e.BytesRecorded);\nZigUsbSent.Write(encodedData, 0, 38);\n//client.SendTo(encodedData, 0, 38, SocketFlags.None, remote_point); //working variant\n\n//receiving\nZigUsbReceived.Read(data, 0, 38);\n//listeningSocket.ReceiveFrom(data, ref remoteIp); //working variant\nbyte[] decodeData = codec.Decode(data, 0, 38);\nbufferStream.AddSamples(decodeData, 0, decodeData.Length);\n\n//crushed here\npublic byte[] Decode(byte[] data, int offset, int length)\n{\n     var outputBufferTemp = new byte[length * 320];\n     var wb = new WaveBuffer(outputBufferTemp);\n     int samplesDecoded = decoder.Decode(data, offset, length, wb.ShortBuffer, 0, false); // this string with error &quot;Invalid sideband mode encountered (1st sideband): 7&quot;\n     int bytesDecoded = samplesDecoded * 2;\n     var decoded = new byte[bytesDecoded];\n     Array.Copy(outputBufferTemp, 0, decoded, 0, bytesDecoded);\n     Debug.WriteLine(String.Format(&quot;NSpeex: In {0} bytes, decoded {1} bytes [dec frame size = {2}]&quot;, length, bytesDecoded, decoder.FrameSize));\n     return decoded;\n}</code></pre>\n\n",
+    "PostedDate": "2015-02-19T15:34:39.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354231",
+    "ThreadId": "581431",
+    "Html": "yeah I'd recommend running some tests on your COM device to make sure you can send arbitrary byte arrays and get exactly the same thing back. It may be simply that it is breaking your incoming data up in places that are not multiples of block align<br />\n",
+    "PostedDate": "2015-02-19T23:45:52.137-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354423",
+    "ThreadId": "581431",
+    "Html": "Thank you for your reply.\r<br />\n<br />\nI have tested, 2-3 bytes is lost sometimes, it is problem in hardware, I suppose.\r<br />\nIs lost bytes critical for Speex? I heard that some codecs supporting encode/decode with some losses. <br />\n",
+    "PostedDate": "2015-02-20T11:02:37.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354428",
+    "ThreadId": "581431",
+    "Html": "well I'd imagine that losing bytes would mean that block of audio you received would essentially be lost, but the next block should hopefully be decodable<br />\n",
+    "PostedDate": "2015-02-20T11:14:33.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

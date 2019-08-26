@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1461475",
+    "ThreadId": "650729",
+    "Html": "Hi!<br />\n<br />\nSorry for my bad english<br />\n<br />\nI use your Mp3Streaming demo and now I get response stream from server, write it to mp3 file and play it from this file at the same time, using <br />\n<pre><code>FileStream fileStream = new FileStream(&quot;myfile.mp3&quot;, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);\n                    var readFullyStream = new ReadFullyStream(fileStream);</code></pre>\n\nbut about 50% of files from this website throws <strong>endofstreamexception Unexpected end of stream before frame complete</strong> at the different areas of time. But if file is full downloaded - all work fine.<br />\nCan you offer me a solution of this problem, please?<br />\n",
+    "PostedDate": "2016-01-30T10:04:29.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "834317",
+    "ThreadId": "355180",
+    "Html": "<p>I have an electric keyboard connected to&nbsp;the&nbsp;microphone jack on my computer.&nbsp; I can easily record music that I play using NAudio.&nbsp; However, I'm trying to create a very basic app that tells me which key was pressed on the electric keyboard.&nbsp; Only one key is pressed at any one time and no special synthesizer settings are used.&nbsp; Can someone point me in the right direction, or am I using the wrong tool?</p>\n<p>One other thing, I am not using a MIDI keyboard.&nbsp; Also (perhaps to make things easier), each key is pressed for exactly one second, and only 7 keys are used (i.e. <span class=\"st\"><em>Do Re Mi Fa So La Ti).</em></span>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+    "PostedDate": "2012-05-09T16:07:42.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "834681",
+    "ThreadId": "355180",
+    "Html": "<p>Never mind. I found this discussion, which pointed me in the right direction:</p>\r\n<p><a href=\"http://naudio.codeplex.com/discussions/248511\">http://naudio.codeplex.com/discussions/248511</a></p>",
+    "PostedDate": "2012-05-10T09:22:03.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

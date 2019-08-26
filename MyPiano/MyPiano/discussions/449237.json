@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1065235",
+    "ThreadId": "449237",
+    "Html": "Title says it all, what would be the best way to retrieve samples into a float array from a WaveStream?<br />\n",
+    "PostedDate": "2013-07-07T04:19:08.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1066163",
+    "ThreadId": "449237",
+    "Html": "if you convert to a SampleProvider (using SampleProviderConverters.ConvertWaveProviderIntoSampleProvider)  then you can call Read directly into a float array.<br />\n",
+    "PostedDate": "2013-07-09T08:06:44.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1066192",
+    "ThreadId": "449237",
+    "Html": "Alright, and how would I set a 20ms window from which the samples are taken from the file whilst it is played as well.<br />\n",
+    "PostedDate": "2013-07-09T09:12:28.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1066260",
+    "ThreadId": "449237",
+    "Html": "Right sorry, do you have any full code demonstrating the use of SampleProvider as I can't seem to figure it out.<br />\n",
+    "PostedDate": "2013-07-09T12:06:34.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1066539",
+    "ThreadId": "449237",
+    "Html": "<pre><code>using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\nusing NAudio;\nusing NAudio.Wave;\nusing NAudio.Wave.SampleProviders;\n\n\nclass Naudio2\n{\n    //Declarations required for audio out and the MP3 stream\n    static IWavePlayer waveOutDevice;\n    static WaveStream mainOutputStream;\n    static WaveChannel32 volumeStream;\n    //static SampleChannel volumeStream;\n    static float[] sampleData;\n    static int l4;\n    static int length20ms;\n\n    static void Main()\n    {\n        waveOutDevice = new WaveOut();\n        mainOutputStream = CreateInputStream(&quot;path to song&quot;);\n        waveOutDevice.Init(mainOutputStream);\n        waveOutDevice.Play();\n        WaveToSampleProvider test = new WaveToSampleProvider(mainOutputStream);\n        length20ms = ((test.WaveFormat.BitsPerSample * test.WaveFormat.SampleRate) / 100) * 20;\n        l4 = length20ms / 4;\n        sampleData = new float[l4];\n        test.Read(sampleData, 1000, 1);\n        for (int i = 0; i &lt; sampleData.Length; i++)\n        {\n            System.Console.WriteLine(sampleData[i]);\n        }\n        //ISampleProvider inputsteam = (ISampleProvider)mainOutputStream;\n        //inputsteam.Read(sampleData, 0, length20ms);\n        /*for (int i = 0; i &lt; sampleData.Length; i++)\n        {\n            System.Console.WriteLine(sampleData[i]);   \n        }*/\n        if (mainOutputStream.Position &gt;= mainOutputStream.Length)\n        {\n            CloseWaveOut();\n        }\n        System.Console.ReadLine();\n        \n     \n    }\n    static WaveStream CreateInputStream(string fileName)\n    {\n        WaveChannel32 inputStream;\n        if (fileName.EndsWith(&quot;.mp3&quot;))\n        {\n            WaveStream mp3Reader = new Mp3FileReader(fileName);\n            inputStream = new WaveChannel32(mp3Reader);\n        }\n        else\n        {\n            throw new InvalidOperationException(&quot;Unsupported extension&quot;);\n        }\n        volumeStream = inputStream;\n        return volumeStream;\n    }\n    static void CloseWaveOut()\n    {\n        if (waveOutDevice != null)\n        {\n            waveOutDevice.Stop();\n        }\n        if (mainOutputStream != null)\n        {\n            // this one really closes the file and ACM conversion\n            volumeStream.Close();\n            volumeStream = null;\n            // this one does the metering stream\n            mainOutputStream.Close();\n            mainOutputStream = null;\n        }\n        if (waveOutDevice != null)\n        {\n            waveOutDevice.Dispose();\n            waveOutDevice = null;\n        }\n    }\n}</code></pre>\n\nThat's what I have so far, unfortunately all of the samples seem to be equal to 0, any ideas?<br />\n",
+    "PostedDate": "2013-07-10T05:45:49.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

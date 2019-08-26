@@ -1,0 +1,138 @@
+[
+  {
+    "Id": "1112026",
+    "ThreadId": "463547",
+    "Html": "We're currently using NAudio on a project and it's fantastic, by far the easiest way to handle and manipulate audio in Windows. \r<br />\nThe project involves taking audio from a microphone using wasapi,   putting 20 milliseconds at a time into an RTP Packet and sends it to another machine which plays it using wasapi. A problem has arisen where the audio quality degrades between point A and point B, the audio is currently converted 4 times from start to finish in this order.\r<br />\n<br />\n// Sender\r<br />\nStep 1) Recording audio comes from the sound card at milliseconds\r<br />\nStep 2) Converted from 44100, 16 bit, 2 channels to 8000, 16 bit, 1 channel\r<br />\nStep 3) Converted from 8000, 16 bit, 1 channel to 8000, 8, 1 (A-Law)\r<br />\n<br />\n// Receiver\r<br />\nStep 4) Converted from 8000, 8, 1 (A-Law) to 8000, 16 bit, 1 channel\r<br />\nStep 5) Converted from 8000, 16, bit, 1 channel to 44100, 16 bit, 2 channels\r<br />\nStep 6) Audio added to a buffed wave provider and played.\r<br />\n<br />\nAt step 6 the audio is tinny. At first I thought it could be because of the audio going into RTP packets, but the same occurs if audio is routed directly from a microphone via the same conversion path to the headphone on the same machine. I have also repeated the test on a wave file, converting it through each stage and the same happens again but also the final wave file is a lot louder than the original.\r<br />\n<br />\nSo, I've hit a block and I'm not too sure where to go from here, any help would be much appreciated!<br />\n",
+    "PostedDate": "2013-10-25T03:44:29.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112032",
+    "ThreadId": "463547",
+    "Html": "First of all, there is inevitable quality loss. You are going right down to a very low quality codec and low sample rate. A better codec might be a better approach.\r<br />\n<br />\nThe way to debug this problem is to create a WAV file at every step. Record some audio from your microphone direcl to a WAV file.\r<br />\nThen convert that to 8kHz, 16 bit mono. Save as WAV and listen to that. What resampler are you using?\r<br />\nThen convert to A-law and back, and listen to what you get then.\r<br />\nThen upsample to 16 bit, and listen again.<br />\n",
+    "PostedDate": "2013-10-25T03:52:21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112092",
+    "ThreadId": "463547",
+    "Html": "As far as I can hear there is no difference in quality between the 8khz 16 bit mono wav file before and after is converted to/from A-Law. It sounds bad once it goes back to 44.1khz.  What do you mean by &quot;what resampler are you using?&quot;, program or object?<br />\n",
+    "PostedDate": "2013-10-25T06:43:19.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112100",
+    "ThreadId": "463547",
+    "Html": "what code do you write to turn the audio into 44.1kHz? You need to use a resampler to do that.<br />\n",
+    "PostedDate": "2013-10-25T07:01:49.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112112",
+    "ThreadId": "463547",
+    "Html": "I've tried something else and it yielded the same result. This time i went through these steps:\r<br />\n<br />\n1) Record a wav file at 44.1khz, 16 bit, stereo\r<br />\n2) Convert wav file to 8khz, 16 bit, mono\r<br />\n3) Convert new wav file back to 44.1khz, 16 bit, stereo\r<br />\n<br />\nThe audio degrades a lot when converting from 8khz, 16 bit, mono to 44.1khz, 16bit, stereo. <br />\n",
+    "PostedDate": "2013-10-25T07:31:59.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112113",
+    "ThreadId": "463547",
+    "Html": "but how are you converting it? what code are you writing? Again the quality has to degrade when you downsample, because you lose all frequency information above the Nyquist frequency.<br />\n",
+    "PostedDate": "2013-10-25T07:33:29.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112114",
+    "ThreadId": "463547",
+    "Html": "I'm currently using your ACM Format Conversion in the windows form NAudio Demo app to convert the files.<br />\n",
+    "PostedDate": "2013-10-25T07:34:48.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112125",
+    "ThreadId": "463547",
+    "Html": "OK, I don't think that does any filtering, so you could be getting aliasing. I'm surprised it let you resample and change channel count at the same time. Normally that's not possible. You do understand that 8kHz audio is low quality right? Once you've downsampled you've permanently degraded the quality. You can't get it back by upsampling.<br />\n",
+    "PostedDate": "2013-10-25T07:46:19.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112133",
+    "ThreadId": "463547",
+    "Html": "I understand that the audio will be permenantly degraded, it only needs to be of telephone quality when it is played back on the receiver. Is there anything I can do to the stream to clear up the buzz/tinny effect present?<br />\n",
+    "PostedDate": "2013-10-25T08:17:33.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112202",
+    "ThreadId": "463547",
+    "Html": "well it's hard to diagnose exactly what problem you are describing, but it might be aliasing if the audio is acceptable before the upsampling but not after. I'd run a low pass filter with a cutoff of 4kHz on the upsampled audio and see if that cleans it up. Or use a better resampler, like the DMO / MediaFoundation Resampler<br />\n",
+    "PostedDate": "2013-10-25T11:12:18.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113147",
+    "ThreadId": "463547",
+    "Html": "I've had a look at the LowPassFilter method in the BiQuadFilter class and encountered a few problems; the BiQuadFilter class isn't public and the Transform method throws an IndexOutOfRange exception when called. Am I meant to be using the filter in a particular way?<br />\n",
+    "PostedDate": "2013-10-28T08:57:44.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113153",
+    "ThreadId": "463547",
+    "Html": "check the very latest code. BiQuadFilter is now public and should work. The one that's been sat in there for years was a forgotten class that was never finished.<br />\n",
+    "PostedDate": "2013-10-28T09:04:05.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113555",
+    "ThreadId": "463547",
+    "Html": "I've decided to use the MediaFoundation resampler instead of ACM with a filter. Is there any reason the media foundation cannot take A-Law as a format to convert to/from?<br />\n",
+    "PostedDate": "2013-10-29T03:22:48.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113567",
+    "ThreadId": "463547",
+    "Html": "you should always resample with uncompressed samples. So convert A-law to PCM, then resample, and then back to A-law again if that's what you need<br />\n",
+    "PostedDate": "2013-10-29T04:05:16.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113595",
+    "ThreadId": "463547",
+    "Html": "I've continued to use the ACM based converter to convert the A-Law encoded bytes into 8khz, 16 bit, mono PCM bytes, these PCM bytes are added to a BufferedWaveProvider. The BufferedWaveProvider object has been inserted into a MediaFoundationResampler with the outputFormat 44.1khz, 16 bit stereo. The example app I have takes audio from a Wasapi device, encodes it A-Law and then decodes from A-Law via the MediaFoundationResampler, doing this gets the audio quality spot on, but there is a delay of about a second from when I speak into the microphone to when it is played through a speaker. Is there anything different I should be doing?<br />\n<br />\nEdit: I've looked through the source and the MediaFoundationSampler takes a second worth of audio before converting, is there anyway to configure this?<br />\n",
+    "PostedDate": "2013-10-29T04:58:17.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113618",
+    "ThreadId": "463547",
+    "Html": "It's always a bit of a pain with a resampler knowing how much to read from the source for a given number of output bytes. But you could try experimenting with a custom implementation of MediaFoundationTransform to see if you can get the read size down. \r<br />\n<br />\nYou also have latency in the record and playback stages. You can try decreasing buffer sizes at the cost of risking dropouts<br />\n",
+    "PostedDate": "2013-10-29T06:04:54.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113657",
+    "ThreadId": "463547",
+    "Html": "That's worked a treat, thanks so much.<br />\n",
+    "PostedDate": "2013-10-29T07:07:19.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

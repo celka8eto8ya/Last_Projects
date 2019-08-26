@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1042754",
+    "ThreadId": "443454",
+    "Html": "hi mark,I want to Change left or right channel volume using naudio. and i want to select at a time 3 output sound device ex-&quot;Speaker(realtek high definition audio&quot;, line1(virtual audio cable)&quot;,&quot;Realtek digital output&quot;.<br />\n",
+    "PostedDate": "2013-05-13T04:15:20.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043913",
+    "ThreadId": "443454",
+    "Html": "I'd do this with a custom ISampleProvider, which would make it easy to multiply the samples by different left and right channel volumes as they came through. Look at the source code for VolumeSampleProvider for an example of mono volume modification. It wouldn't be too hard to change it for stereo - you'd just have LeftVolume and RightVolume and you'd alternate samples in the Read method:<br />\n<pre><code>for (int n = 0; n &lt; sampleCount; n+= 2)\n{\n    buffer[offset + n] *= LeftVolume;\n    buffer[offset + n + 1] *= RightVolume;\n}</code></pre>\n\n",
+    "PostedDate": "2013-05-15T07:54:24.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043943",
+    "ThreadId": "443454",
+    "Html": "I can set master volume for overall song.<br />\nlike: volumesampleprovider class:<br />\n<pre><code> public class VolumeSampleProvider : ISampleProvider\n{\n    private ISampleProvider source;\n    private float volume;\n  public VolumeSampleProvider(ISampleProvider source)\n    {\n          this.volume = 1.0f;\n   public int Read(float[] buffer, int offset, int sampleCount)\n    {\n        int samplesRead = source.Read(buffer, offset, sampleCount);\n\n        for (int n = 0; n &lt; sampleCount; n++)\n        {\n                buffer[offset + n] *= volume * .8F;\n         }\n       public float Volume\n    {\n        get { return volume; }\n        set { volume = value; }\n    }</code></pre>\n\nand my i sample provider is:<br />\npublic interface ISampleProvider<br />\n<pre><code>{\n\n    WaveFormat WaveFormat { get; }\n    int Read(float[] buffer, int offset, int count);\n}\n</code></pre>\n\nhow i set left channel and write channel volume from this two class?<br />\nmy audioplaybackpanel class is:<br />\n  this.setVolumeDelegate = (vol) =&gt; waveChannel.Volume = vol;<br />\n setVolumeDelegate(volumeSlider1.Volume);<br />\n<br />\nI want to set left and right channel from this(audioplaybackpanel class)<br />\n",
+    "PostedDate": "2013-05-15T08:33:35.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044603",
+    "ThreadId": "443454",
+    "Html": "Just use the code I showed above, and add a LeftVolume and RightVolume property instead of the Volume one.<br />\n",
+    "PostedDate": "2013-05-16T09:00:38.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1045422",
+    "ThreadId": "443454",
+    "Html": "It work all right for single song. When go to next song then it is reset. what i doing now?<br />\n",
+    "PostedDate": "2013-05-18T01:21:45.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

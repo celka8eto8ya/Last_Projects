@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1458130",
+    "ThreadId": "649635",
+    "Html": "I'm gettin this error no matter what i try.<br />\n<pre><code>Error   2   Exception while loading assemblies: System.IO.FileNotFoundException: Could not load assembly 'System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Perhaps it doesn't exist in the Mono for Android profile?\nNombre de archivo: 'System.Windows.Forms.dll'\n   en Xamarin.Android.Tuner.DirectoryAssemblyResolver.Resolve(AssemblyNameReference reference, ReaderParameters parameters)\n   en Xamarin.Android.Tasks.ResolveAssemblies.AddAssemblyReferences(ICollection`1 assemblies, AssemblyDefinition assembly, Boolean topLevel)\n   en Xamarin.Android.Tasks.ResolveAssemblies.AddAssemblyReferences(ICollection`1 assemblies, AssemblyDefinition assembly, Boolean topLevel)\n   en Xamarin.Android.Tasks.ResolveAssemblies.Execute() Launcher\n</code></pre>\n\nHelp would eb appreciated.<br />\n",
+    "PostedDate": "2016-01-05T14:56:45.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1458170",
+    "ThreadId": "649635",
+    "Html": "Unfortunately, you can't use NAudio on Android as it calls Windows APIs for all the sound playing, recording and codecs<br />\n",
+    "PostedDate": "2016-01-06T02:52:07.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

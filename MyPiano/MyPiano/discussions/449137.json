@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1064850",
+    "ThreadId": "449137",
+    "Html": "Instead of trying to open the sourcestream in a chart right away, I have now chosen, to make a winform with two tabs.\r<br />\n<br />\nIn the first one I record a stream, and save it. When I afterwoods click the tab, an on 'Mouseclick-on-tab'-event disposes all the recorded information.\r<br />\nOr this is what it should have been doing, cause when I then open the recorded wav-file in the next tab-environment, I get a application crash error telling me that the buffer is full.\r<br />\n<br />\nHow can dispose the buffer, in order for it to be empty when I open the wave-file? - obt\r<br />\n<br />\n/br Thomas, CPH<br />\n",
+    "PostedDate": "2013-07-05T04:34:24.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

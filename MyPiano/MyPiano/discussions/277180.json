@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "689202",
+    "ThreadId": "277180",
+    "Html": "\r\n<p>I have gone through all of the posts here and have not seen anything mentioning how to ascertain the Beats Per Minute of an MP3.&nbsp; In web searches, there are some complex formulas but I am wondering if anyone has discovered a more simplistic method and\r\n using a sample of an MP3 to get a general BPM reading.&nbsp; Yes, there are standalone programs available, but I would really like to have this working within my framework using NAudio.&nbsp; Has anyone got this working ?&nbsp;&nbsp;&nbsp; Thanks</p>\r\n<p>George</p>\r\n",
+    "PostedDate": "2011-10-25T12:12:26.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "692187",
+    "ThreadId": "277180",
+    "Html": "<p>No, I'm afraid NAudio does not have this capability, and you do have to use fairly complex audio analysis to do a good job of BPM detection</p>",
+    "PostedDate": "2011-11-01T08:35:33.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

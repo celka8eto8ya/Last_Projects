@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "524766",
+    "ThreadId": "235436",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I'm attempting to use NAudio to decode mu-law encoded audio into pcm audio. My service is POSTed the raw mu-law encoded audio bytes and I'm getting an error from NAudio that the data does not have a RIFF header. Do I need to add this somehow? The code I'm\r\n using is:</p>\r\n<pre><code><span>WaveFileReader</span><span> reader </span><span>=</span><span> </span><span>new</span><span> </span><span>WaveFileReader</span><span>(</span><span>tmpMemStream</span><span>);</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span>using</span><span> </span><span>(</span><span>WaveStream</span><span> convertedStream </span><span>=</span><span> </span><span>WaveFormatConversionStream</span><span>.</span><span>CreatePcmStream</span><span>(</span><span>reader</span><span>))</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span>{</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span>WaveFileWriter</span><span>.</span><span>CreateWaveFile</span><span>(</span><span>recordingsPath </span><span>&#43;</span><span> </span><span class=\"str\">&quot;/&quot;</span><span> </span><span>&#43;</span><span> outputFileName</span><span>,</span><span> convertedStream</span><span>);</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span>}</span><span><br></span></code></pre>\r\n<p>I'm also saving the raw data to the disk and doing the decoding in Matlab which is working with no problem.</p>\r\n<p>Thanks for the help!</p>\r\n",
+    "PostedDate": "2010-11-20T11:54:45.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "524895",
+    "ThreadId": "235436",
+    "Html": "\r\n<p>I've answered this on StackOverflow:</p>\r\n<p><a href=\"http://stackoverflow.com/questions/4234665/using-naudio-to-decode-mu-law-audio\">http://stackoverflow.com/questions/4234665/using-naudio-to-decode-mu-law-audio</a></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-11-21T01:58:45.537-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

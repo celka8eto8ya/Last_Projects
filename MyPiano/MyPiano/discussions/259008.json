@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "618286",
+    "ThreadId": "259008",
+    "Html": "\r\n<p><span id=\"result_box\" lang=\"en\"><span title=\"Cliquer ici pour voir d'autres traductions\">hello</span><span title=\"Cliquer ici pour voir d'autres traductions\">,</span><br>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">I have</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\na</span> <span title=\"Cliquer ici pour voir d'autres traductions\">function</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">that</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nallows me</span> <span title=\"Cliquer ici pour voir d'autres traductions\">play a</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">sound file</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nlocated</span> <span title=\"Cliquer ici pour voir d'autres traductions\">in</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">a database</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nin</span> <span title=\"Cliquer ici pour voir d'autres traductions\">all</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nsound cards</span> <span title=\"Cliquer ici pour voir d'autres traductions\">installed</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">in</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nmy</span> <span title=\"Cliquer ici pour voir d'autres traductions\">pc.I uses</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">Naudio</span>&nbsp;<span title=\"Cliquer ici pour voir d'autres traductions\"> library</span><span title=\"Cliquer ici pour voir d'autres traductions\">.</span><br>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">How can I</span><span title=\"Cliquer ici pour voir d'autres traductions\"> repeat</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">reading</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nthis</span> <span title=\"Cliquer ici pour voir d'autres traductions\">file</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nautomatically</span> <span title=\"Cliquer ici pour voir d'autres traductions\">and</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">thank you</span> <span title=\"Cliquer ici pour voir d'autres traductions\">\r\nin advance</span> <span title=\"Cliquer ici pour voir d'autres traductions\">for</span>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\">your helpers.Here is my code:\r\n</p>\r\n<pre>private void PlaySoundInDevice(int deviceNumber, string fileName)\r\n{\r\nif (outputDevices.ContainsKey(deviceNumber))\r\n{\r\noutputDevices[deviceNumber].WaveOut.Dispose();\r\noutputDevices[deviceNumber].WaveStream.Dispose();\r\n}\r\nvar waveOut = new WaveOut();\r\nwaveOut.DeviceNumber = deviceNumber;\r\nWaveStream waveReader = new WaveFileReader(fileName);\r\n// hold onto the WaveOut and WaveStream so we can dispose them later\r\noutputDevices[deviceNumber] = new PlaybackSession { WaveOut = waveOut, WaveStream = waveReader };\r\n\r\nwaveOut.Init(waveReader);\r\nwaveOut.Play();\r\n}\r\n\r\nprivate Dictionary outputDevices = new Dictionary();\r\n\r\nclass PlaybackSession\r\n{\r\npublic IWavePlayer WaveOut { get; set; }\r\npublic WaveStream WaveStream { get; set; }\r\n}\r\nprivate void DisposeAll()\r\n{\r\nforeach (var playbackSession in outputDevices.Values)\r\n{\r\nplaybackSession.WaveOut.Dispose();\r\nplaybackSession.WaveStream.Dispose();\r\n}\r\n}\r\npublic void PlayInAllAvailableDevices(string fileName)\r\n{\r\nint waveOutDevices = WaveOut.DeviceCount;\r\nfor (int n = 0; n &lt; waveOutDevices; n&#43;&#43;)\r\n{\r\nPlaySoundInDevice(n, fileName);\r\n}\r\n} </pre>\r\n</span><br>\r\n<span title=\"Cliquer ici pour voir d'autres traductions\"><br>\r\n</span><span title=\"Cliquer ici pour voir d'autres traductions\"></span></span>\r\n<p></p>\r\n",
+    "PostedDate": "2011-05-25T13:01:14.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618461",
+    "ThreadId": "259008",
+    "Html": "<p>Here's a tutorial on looped playback with NAudio:</p>\r\n<p>http://mark-dot-net.blogspot.com/2009/10/looped-playback-in-net-with-naudio.html</p>",
+    "PostedDate": "2011-05-25T23:11:58.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618645",
+    "ThreadId": "259008",
+    "Html": "<p>Thanks markheath for your rely.</p>\r\n<p>I&nbsp;have&nbsp;another&nbsp;problem.&nbsp;My project&nbsp;allows&nbsp;also&nbsp;broadcast&nbsp;a&nbsp;direct&nbsp;voice message .I want to&nbsp;add&nbsp;a&nbsp;chime function&nbsp;before the star tof diffusion the message.It &nbsp;is a<br /> function&nbsp;that&nbsp;attracts&nbsp;people's attention&nbsp;like the tone&nbsp;we&nbsp;listen &nbsp;in an airport&nbsp;(ding&nbsp;dong).<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">do</span><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">n't know</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">how I</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">can</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">do</span><span title=\"Cliquer ici pour voir d'autres traductions\">.</span>&nbsp;Will&nbsp;you&nbsp;help me&nbsp;to&nbsp;to do&nbsp;this&nbsp;function.</p>",
+    "PostedDate": "2011-05-26T06:13:57.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618653",
+    "ThreadId": "259008",
+    "Html": "<p>It's the same approach. Create a class that derives from WaveStream (actually IWaveProvider is easier). In the constructor take the two source IWaveProviders that you want to play one after the other. Then in the Read method, once you have read all from the first one, start reading from the next.</p>\r\n<p>Something like this (not tested, just coded off the top of my head)</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">int</span> Read(<span style=\"color: blue;\">byte</span>[] buffer, <span style=\"color: blue;\">int</span> offset, <span style=\"color: blue;\">int</span> length)\r\n{\r\n   <span style=\"color: blue;\">int</span> totalRead = 0;\r\n   <span style=\"color: blue;\">if</span> (!readAllFromFirst)\r\n   {\r\n       totalRead = first.Read(buffer,offset,length);\r\n       <span style=\"color: blue;\">if</span> (totalRead &lt; length) readAllFromFirst = <span style=\"color: blue;\">true</span>;\r\n       offset += totalRead;\r\n       length -= totalRead;\r\n   }\r\n   <span style=\"color: blue;\">if</span> (readAllFromFirst)\r\n   {\r\n      totalRead += second.Read(buffer,offset,length);\r\n   }\r\n   <span style=\"color: blue;\">return</span> totalRead;\r\n}\r\n</pre>\r\n</div>\r\nMark</p>",
+    "PostedDate": "2011-05-26T06:21:06.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618665",
+    "ThreadId": "259008",
+    "Html": "<p>&nbsp;</p>\r\n<div id=\"gt-res-content\" class=\"almost_half_cell\">\r\n<div dir=\"ltr\"><span id=\"result_box\" lang=\"en\"><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">The problem</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">have</span><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">n't&nbsp;</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">a</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">file sound</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">to</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">read</span><span title=\"Cliquer ici pour voir d'autres traductions\">.</span>&nbsp;&nbsp;W<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">hen</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">debugging&nbsp;</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I express</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">my message</span><span title=\"Cliquer ici pour voir d'autres traductions\">.</span></span>\r\n<div><span title=\"Cliquer ici pour voir d'autres traductions\"><br /></span></div>\r\n</div>\r\n</div>",
+    "PostedDate": "2011-05-26T06:34:27.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618676",
+    "ThreadId": "259008",
+    "Html": "<p>I'm not quite sure what you mean. You would be best off finding a WAV file with a chime sound that you like.</p>",
+    "PostedDate": "2011-05-26T06:41:46.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618683",
+    "ThreadId": "259008",
+    "Html": "<p>&nbsp;</p>\r\n<div id=\"gt-res-content\" class=\"almost_half_cell\">\r\n<div dir=\"ltr\"><span id=\"result_box\" lang=\"en\"><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I&nbsp;&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">want to say</span></span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">that</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">the</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">second sound&nbsp;</span><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">broadcast&nbsp;</span><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">not</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">a</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">sound file</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">but</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">a</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">live</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">voice message</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">that</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">expressed</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">when&nbsp;</span><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">debugging.</span></span></div>\r\n<div dir=\"ltr\"><span lang=\"en\"><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\"><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">do</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">not know</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">how</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">to use your</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">code for</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">this and thanks for your help markheath</span><br /></span></span></div>\r\n<div dir=\"ltr\">\r\n<div><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\"><br /></span></div>\r\n</div>\r\n</div>",
+    "PostedDate": "2011-05-26T06:50:01.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618687",
+    "ThreadId": "259008",
+    "Html": "<p>Well in that case, \"second\" would be a buffered wave provider.</p>",
+    "PostedDate": "2011-05-26T06:53:57.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618690",
+    "ThreadId": "259008",
+    "Html": "<p>&nbsp;</p>\r\n<p><span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">I</span><span title=\"Cliquer ici pour voir d'autres traductions\">'ll</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">try</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">to</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">work with</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">your</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">idea and I</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">tell you</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">that</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">there is a</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">resulting output&nbsp;</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">and</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">thank you</span>&nbsp;<span class=\"hps\" title=\"Cliquer ici pour voir d'autres traductions\">again.</span></p>",
+    "PostedDate": "2011-05-26T06:58:33.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

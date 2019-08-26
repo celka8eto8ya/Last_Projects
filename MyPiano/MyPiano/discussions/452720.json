@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1077860",
+    "ThreadId": "452720",
+    "Html": "I'm hoping it's a simple request that NAudio can provide the answer to. <br />\n<br />\nI have a 6 channel WAV file that I need to convert to a single channel (or at the very least, a dual channel) WAV file.<br />\n<br />\nIs this possible, and how would I be able to go about getting started?<br />\n<pre><code>using (var reader = new WaveFileReader(inputFile))\n{\n            \n            \nWaveFileWriter.CreateWaveFile(outputFile, reader);\n            \n}</code></pre>\n\nThe above works great to duplicate the track, but when doing so it also duplicates the multiple channels - which isn't what I'm looking for.<br />\n",
+    "PostedDate": "2013-08-07T10:36:28.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083101",
+    "ThreadId": "452720",
+    "Html": "in a loop call reader.Read to read all channels (make sure you read in multiples of BlockAlign). Then just copy the samples for the channel you want into an array, and write it to a WaveFileWriter<br />\n",
+    "PostedDate": "2013-08-21T06:53:03.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

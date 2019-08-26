@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:21:30.54-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Returns Invalid Handle Value\r\nI have x64 and compiled everything for \"AnyCPU\"\r\nI started the Demo Application and wanted to play back the downloaded file (downloaded from: http://dl.cgmm.de/Roger%20Liebi/Wahrheit%20Irrtum/01%20Roger%20Liebi%20-%20Wahrheit%20oder%20Irrtum%20(Teil%201).mp3 )\r\n\r\nError while call to: acmStreamPrepareHeader",
+    "LastUpdatedDate": "2012-10-27T00:21:30.54-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-10-07T05:17:23.07-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Error while call to acmStreamPrepareHeader",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 14397
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "you need to compile for x86 only if you want to use ACM",
+      "PostedDate": "2010-10-08T03:44:51.88-07:00",
+      "Id": 41734
+    },
+    {
+      "Message": "latest source can now successfully play MP3s using ACM in x64 mode",
+      "PostedDate": "2011-06-14T15:09:23.74-07:00",
+      "Id": 41735
+    }
+  ]
+}

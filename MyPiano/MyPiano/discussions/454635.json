@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1085306",
+    "ThreadId": "454635",
+    "Html": "Hello!\r<br />\n<br />\nI write a Push-To-Talk radio interface program.\r<br />\nFrom the remote client goes stream of UDP packets, which begins and ends randomly (PTT button on/off).\r<br />\nWhat a best way to save it to *.wav file with a silence when no data?\r<br />\n<br />\nBest regards,\r<br />\nDmitry.<br />\n",
+    "PostedDate": "2013-08-27T02:31:47.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085773",
+    "ThreadId": "454635",
+    "Html": "<h1>SOLVED:</h1>\nI implemented it as a class with a loop in thread. This loop reads data from BufferedWaveProvider and calculate how many &quot;real time&quot; we need to write. If we have no data at input, BufferedWaveProvider provide a silence.<br />\n<pre><code>private int GetTickCount()\n{\n    return Environment.TickCount &amp; Int32.MaxValue;\n}\n\nprivate int GetDuration(int previousTickCount)\n{\n    int duration, currentTickCount = GetTickCount();\n    if (currentTickCount &gt;= previousTickCount)\n    {\n        duration = currentTickCount - previousTickCount;\n    }\n    else\n    {\n        //over zero\n        duration = currentTickCount + (Int32.MaxValue - previousTickCount) + 1;\n    }\n    return duration;\n}\n\nprivate static int GetBufferSize(int sampleRate, int blockAlign, int milliseconds)\n{\n    int averageBytesPerSecond = sampleRate * blockAlign;\n    int bytes = (int)((averageBytesPerSecond / 1000.0) * milliseconds);\n    if ((bytes % blockAlign) != 0)\n    {\n        bytes = bytes + blockAlign - (bytes % blockAlign);\n    }\n    return bytes;\n}\n\nprivate void WriteLoop()\n{\n    _processedSamples = 0; //written samples count\n    _startTime = GetTickCount(); //start recording time\n\n    WaveFormat wf = _waveProvider.WaveFormat;\n    int sampleRate = wf.SampleRate;\n    int blockAlign = wf.BlockAlign;\n    \n    byte[] buffer = null;\n    int bufferSize = GetBufferSize(sampleRate, blockAlign, _interval * 2);\n    buffer = BufferHelpers.Ensure(buffer, bufferSize);\n\n    while (_isWorking)\n    {\n        Thread.Sleep(_interval);\n\n        int processedDuration = (int)(_processedSamples * 1000L / sampleRate);\n        int realDuration = GetDuration(_startTime);\n\n        int deltaMilliseconds = realDuration - processedDuration;        \n\n        if (deltaMilliseconds &gt; 0)\n        {\n            int bytesRequired = GetBufferSize(sampleRate, blockAlign, deltaMilliseconds);\n            buffer = BufferHelpers.Ensure(buffer, bytesRequired);\n            int bytesRead = _waveProvider.Read(buffer, 0, bytesRequired);\n            int samples = bytesRead / blockAlign;\n            _processedSamples += samples;\n            _stream.Write(buffer, 0, bytesRead);\n        }\n    }\n}</code></pre>\n\n",
+    "PostedDate": "2013-08-28T06:43:41.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085902",
+    "ThreadId": "454635",
+    "Html": "glad you got it working<br />\n",
+    "PostedDate": "2013-08-28T12:16:40.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

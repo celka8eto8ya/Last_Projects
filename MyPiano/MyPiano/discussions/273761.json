@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "676357",
+    "ThreadId": "273761",
+    "Html": "\r\n<p>i am new to naudio but got the basics sorted and manage to record and playback audio.</p>\r\n<p>i am intending to record/playback a large number of speech audio files.</p>\r\n<p>now I am looking for an audio compression format supported by naudio&nbsp;for reading/writing these from/to disk.</p>\r\n<p>unfortunately it seems there is no mp3-writer to go with the mp3reader. so that's out the window.</p>\r\n<p>compression rate should be high, so&nbsp;i don't mind a lossy format. i am aiming at decent but not first rate audio quality.&nbsp;</p>\r\n<p>any suggestions?</p>\r\n<p>cheers :)</p>\r\n",
+    "PostedDate": "2011-09-25T07:47:32.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "680851",
+    "ThreadId": "273761",
+    "Html": "<p>to encode MP3, you could use lame.exe. Alternatively, you could use an ACM codec. The compression rate for the ones supplied with Windows (e.g. mu-law, ADPCM etc) doesn't tend to be high though. If it is just speech, it is common to sample in mono, 16 bit, 8kHz (or 16kHz for slightly better quality).</p>",
+    "PostedDate": "2011-10-06T08:50:45.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

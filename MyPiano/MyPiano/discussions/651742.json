@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1464499",
+    "ThreadId": "651742",
+    "Html": "Hello!\r<br />\nI have this project in VB that in my intention should play a decrypted mp3 file from the clipboard with  AxWindowsMediaPlayer1. I tried to find this information in internet but nothing... I don't want to think that it is impossible!\r<br />\nThe Form needs 3 Buttons, 1 Label, 1 Windows Media Player... Of course you should change the mp3 file address to test.\r<br />\nHere's the code: \r<br />\n<br />\nImports System.Security.Cryptography\r<br />\nImports System.IO\r<br />\nImports System.Text\r<br />\n<br />\nPublic Class Form1<br />\n<pre><code>Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click\n    Dim rij As New RijndaelManaged()\n    rij.KeySize = 256\n    rij.BlockSize = 256\n    rij.IV = New [Byte]() {24, 23, 35, 83, 77, 35, 28, 34, 94, 25, 45, 2, 73, 26, 27, 78, 12, 23, 35, 83, 57, 35, 28, 34, 94, 25, 45, 22, 73, 26, 27, 78}\n    Dim pwd As Byte() = New Byte(31) {}\n    UTF8Encoding.UTF8.GetBytes(&quot;123abc&quot;).CopyTo(pwd, 0)\n    Dim cs As New CryptoStream(File.OpenRead(&quot;C:\\Users\\User\\Desktop\\aa.mp3&quot;),\n  rij.CreateEncryptor(pwd, rij.IV), CryptoStreamMode.Read)\n    Dim s As Stream = File.OpenWrite(&quot;C:\\Users\\User\\Desktop\\bb.mp3&quot;)\n    cs.CopyTo(s)\n    s.Flush()\n    s.Close()\n    cs.Close()\n    Label1.Text = &quot;Crypted!&quot;\nEnd Sub\n\nPrivate Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click\n    Dim rij As New RijndaelManaged()\n    rij.KeySize = 256\n    rij.BlockSize = 256\n    rij.IV = New [Byte]() {24, 23, 35, 83, 77, 35, 28, 34, 94, 25, 45, 2, 73, 26, 27, 78, 12, 23, 35, 83, 57, 35, 28, 34, 94, 25, 45, 22, 73, 26, 27, 78}\n    Dim pwd As Byte() = New Byte(31) {}\n    UTF8Encoding.UTF8.GetBytes(&quot;123abc&quot;).CopyTo(pwd, 0)\n    Dim mp3Bytes() As Byte\n    Using cs As New CryptoStream(File.OpenRead(&quot;C:\\Users\\User\\Desktop\\bb.mp3&quot;), rij.CreateDecryptor(pwd, rij.IV), CryptoStreamMode.Read)\n        Using ms As New MemoryStream\n            cs.CopyTo(ms)\n            mp3Bytes = ms.GetBuffer\n        End Using\n    End Using\n    Label1.Text = &quot;Decrypted!&quot;\n\n    Clipboard.Clear()            'clear the clipboard\n    Clipboard.SetAudio(mp3Bytes) 'set the mp3 audio file bytes to the clipboard\n    If Clipboard.ContainsAudio Then\n        Dim btsFromClipboard() As Byte = {}\n        Using cbstrm As Stream = Clipboard.GetAudioStream\n            ReDim btsFromClipboard(CInt(cbstrm.Length) - 1)\n            cbstrm.Read(btsFromClipboard, 0, CInt(cbstrm.Length))\n        End Using\n\n        'Now I would like to play the mp3 audio file directly from the clipboard\n\n        AxWindowsMediaPlayer1.Ctlcontrols.play() ' ???? I don't know how to go on\n\n    End If\n\nEnd Sub\n\nPrivate Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click\n    End\nEnd Sub</code></pre>\n\nEnd Class<br />\n",
+    "PostedDate": "2016-02-24T19:37:47.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468048",
+    "ThreadId": "651742",
+    "Html": "Well none of that code uses NAudio. You could try putting the decrypted audio into a MemoryStream and then passing that into Mp3FileReader and playing it with WaveOutEvent.<br />\n",
+    "PostedDate": "2016-03-26T03:56:56.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

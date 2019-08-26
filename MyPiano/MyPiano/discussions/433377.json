@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1002234",
+    "ThreadId": "433377",
+    "Html": "Hi,\r<br />\n<br />\nFirstly, I'd just like to say thank you for NAudio, it's a brilliant library.\r<br />\n<br />\nI'm having difficulty in trying to extract pitches from a single channel wave file. I have taken a look at Autotune.NET and used the piece of code to read the wave file into a buffer<br />\n<pre><code>using (WaveFileReader reader = new WaveFileReader(file))\n{\n                IWaveProvider stream32 = new Wave16ToFloatProvider(reader);\n\n                byte[] buffer = new byte[4096];\n                int bytesRead;\n\n                do\n                {\n                    bytesRead = stream32.Read(buffer, 0, buffer.Length);\n                } while (bytesRead != 0);</code></pre>\n\nHowever, I am not sure what the next step would be to go ahead and get pitches from it.\r<br />\n<br />\nAny help or advice would be much appreciated.\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2013-02-16T10:15:48.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002682",
+    "ThreadId": "433377",
+    "Html": "well in Autotune.net I use an FFT for pitch detection. There are other (and possibly better) ways, but for an explanation of how to use FFT with NAudio, read this article:\r<br />\n<a href=\"http://channel9.msdn.com/coding4fun/articles/AutotuneNET\" rel=\"nofollow\">http://channel9.msdn.com/coding4fun/articles/AutotuneNET</a>\r<br />\n<br />\nYou will need some patience if you are new to DSP, as I found it took me a long time to understand FFTs.<br />\n",
+    "PostedDate": "2013-02-18T00:37:31.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1004631",
+    "ThreadId": "433377",
+    "Html": "Thanks for the reply.\r<br />\n<br />\nI have discovered a problem with the code, but I am not sure why the error is happening.\r<br />\n<br />\nThe byte[] buffer is always filled with 0s and never any content. Is this right?\r<br />\n<br />\nAlso, am I right in believing that the byte[] should be filled with sample values after the read command?\r<br />\n<br />\nThanks again for any advice or clarification.<br />\n",
+    "PostedDate": "2013-02-21T05:55:05.58-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1004720",
+    "ThreadId": "433377",
+    "Html": "Yes, after each call to read there should be data in the buffer. Does bytesRead return a non-zero value?<br />\n",
+    "PostedDate": "2013-02-21T08:10:45.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1005257",
+    "ThreadId": "433377",
+    "Html": "Yes, bytesRead does return a non-zero value until it reaches the end of the file, where its zero. <br />\n",
+    "PostedDate": "2013-02-22T07:13:17.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006225",
+    "ThreadId": "433377",
+    "Html": "Is this the correct result?\r<br />\n<br />\nI editted the code slightly to write out to the console when a value in the console is greater than zero, but the values barely go above 200, which for a constant 500Hz tone I'm not sure is right...<br />\n",
+    "PostedDate": "2013-02-25T03:51:55.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006385",
+    "ThreadId": "433377",
+    "Html": "my autotune code is just looking for the most likely musical note - it is not interested in what octave that note is in, so the range of pitches it outputs may not include the test tones you are using. You need to examine the FFT output directly yourself.<br />\n",
+    "PostedDate": "2013-02-25T08:25:27.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1090527",
+    "ThreadId": "456327",
+    "Html": "how to play .amr file ?<br />\n",
+    "PostedDate": "2013-09-10T02:11:18.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1092701",
+    "ThreadId": "456327",
+    "Html": "I'm afraid NAudio does not provide amr file support. You'd have to write your own, or find a codec that can read amr. More information here:\r<br />\n<a href=\"http://en.wikipedia.org/wiki/Adaptive_Multi-Rate_audio_codec\" rel=\"nofollow\">http://en.wikipedia.org/wiki/Adaptive_Multi-Rate_audio_codec</a><br />\n",
+    "PostedDate": "2013-09-14T09:23:09.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

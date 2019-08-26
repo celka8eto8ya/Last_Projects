@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1478372",
+    "ThreadId": "656198",
+    "Html": "I am trying to attach USB device used for tele calling which have pnp sound controller for mic and speaker. Now i have two speaker and two mic for input output as shown in image below.\r<br />\n<img src=\"http://i.stack.imgur.com/AXVcd.png\" alt=\"speaker\" /> <img src=\"http://i.stack.imgur.com/uXhA4.png\" alt=\"mic\" /> Now my motive is to transfer audio stream from system mic to external sound card mic and from external sound card speaker  to system speaker.\r<br />\n<br />\nWhat can be the possible solution that can be attained using c#.\r<br />\n<br />\nI don't have knowledge about this, so don't know how to start.<br />\n",
+    "PostedDate": "2016-07-07T20:45:38.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479525",
+    "ThreadId": "656198",
+    "Html": "Not really easy to do in C# I'm afraid. The WasapiLoopbackCapture class can capture all sound being sent to a device, so that could be used to route it to another (with a small amount of latency)\r<br />\nOther solutions include purchasing a virtual audio cable piece of software<br />\n",
+    "PostedDate": "2016-07-21T12:10:17.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

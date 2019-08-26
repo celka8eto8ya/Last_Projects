@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "190154",
+    "ThreadId": "56284",
+    "Html": "<p>Hi, i'm french coder and i'm porting the famous Mod Player MikMod to C#.</p>\r\n<p>Here, a video of the actual state of the player : <a href=\"http://www.youtube.com/watch?v=FWdcc4RgvXg\">http://www.youtube.com/watch?v=FWdcc4RgvXg</a></p>\r\n<p>I Wonder if you're interresting to work with me.</p>\r\n<p>Have fun.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-05-14T03:54:53.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "190326",
+    "ThreadId": "56284",
+    "Html": "<p>Hi there,</p>\r\n<p>the video is impressive. Very cool. Sadly I have very little time at the moment for embarking on new development projects as I already have several commitments, but please keep me updated with your progress, and feel free to ask any questions here.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-05-14T09:44:49.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "617151",
+    "ThreadId": "56284",
+    "Html": "<p>Hi, I've released my player on codeplex. The Windows version use Naudio 1.3 (I plan to test with 1.4 RC)</p>\r\n<p><a href=\"http://sharpmod.codeplex.com/\">http://sharpmod.codeplex.com/</a></p>",
+    "PostedDate": "2011-05-24T00:13:49.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "617153",
+    "ThreadId": "56284",
+    "Html": "<p>awesome, looking forward to giving this a try</p>",
+    "PostedDate": "2011-05-24T00:16:56.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

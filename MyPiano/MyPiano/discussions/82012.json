@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "281696",
+    "ThreadId": "82012",
+    "Html": "<p>Hi,</p>\r\n<p>thanks for a great library! I've been using it for couple of projects to get Mic input with great success, but now I got stuck with a problem I cannot resolve:</p>\r\n<p>In my app I'd like to capture sound either from microphone input, or from stereo mixer (sound output). When using for example Audacity software, I can choose whether the caputerd sound comes from Mic or from mixer, but using NAudio's WaveIn.DeviceCount I can always get only 1 device, so there is no way to switch between the sources.</p>\r\n<p>Of course, I can switch the sources using audio driver options, or directly in&nbsp; Audacity or similar apps - the change affects my application as well. But I'd like to do it within my code and I have no idea how.</p>\r\n<p>I don't know If I'm missing something fundamental, or such funcionality is just not supported by NAudio. But then again, if Audacity can do it, there must be some standardized way to do it.... Does anyone came across the same problem? Thanks for advice...</p>\r\n<p>(My audio device is Realtek HD.)</p>",
+    "PostedDate": "2010-01-25T21:51:23.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "281748",
+    "ThreadId": "82012",
+    "Html": "<p>hi MuHoR,</p>\r\n<p>there is a distinction between physical inputs on your soundcard and WaveIn devices. Often there is just a single WaveIn device for many physical inputs. The mixer API is the way to choose what you actually want to record. NAudio has wrappers for the mixer API, but unfortunately due to changes to the Windows audio subsystem in Vista it is extremely hard to write code that works reliably in both XP and Vista/Win7. I haven't used Audacity recently, so I don't know what mechanism they are using, but I would expect it is the mixer API.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-01-26T01:36:19.657-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "282180",
+    "ThreadId": "82012",
+    "Html": "<p>Thank's a lot for your reply, Mark!</p>\r\n<p>I was following your advice and studied about the windows mixer api and NAudio's wrapper for it. I think I understand the structure now and I can use the NAudio mixer-related classes to enumerate sources and destinations and their controls, but I can't see any way how to actually change any of those controls using NAudio. Neither can I see how to achieve the main thing I'm attempting to do - switching sources from Microphone to WaveOut. Everythings seems to be ReadOnly in NAudio wrapper classes.</p>\r\n<p>I guess this is quite an infrequent problem I'm trying to solve here, but if someone tried (and achieved) to do the same, please share your experience.</p>",
+    "PostedDate": "2010-01-27T00:20:49.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "282396",
+    "ThreadId": "82012",
+    "Html": "<p>you can set the value of controls with NAudio. I would imagine that there are some boolean controls you could use to select a mixer input</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-01-27T08:57:01.537-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "282571",
+    "ThreadId": "82012",
+    "Html": "<p>Thanks for another advice, Mark!</p>\r\n<p>As you said, the settings is in the boolean control called Mux in the MixerLine I get from the WaveIn. I can see it changing to True when I switch to the WaveOut (in Audacity or elsewhere) and False when I set it to MicIn. However, I still didn't manage to change the value of it - if I try, I get the exception &quot;InvalidParameter calling mixerSetControlDetails&quot;.</p>\r\n<p>So I had a look into the source of BooleanMixerControl(.cs - 1.3 beta Oct. 10 2009), and it seems that the Set part of Value property actually doesn't pass the new value to the mixerControlDetails - it's commented out:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>\t\t<span style=\"color:Blue\">public</span> <span style=\"color:Blue\">bool</span> Value \r\n\t\t{\r\n\t\t\t<span style=\"color:Blue\">get</span> \r\n\t\t\t{\r\n\t\t\t\tGetControlDetails(); <span style=\"color:Green\">// make sure we have the latest value</span>\r\n\t\t\t\t<span style=\"color:Blue\">return</span> (boolDetails.fValue == 1);\r\n\t\t\t}\r\n\t\t\t<span style=\"color:Blue\">set</span> \r\n\t\t\t{\r\n\t\t\t\t<span style=\"color:Green\">//GetControlDetails();</span>\r\n\t\t\t\t<span style=\"color:Green\">//MixerInterop.MIXERCONTROLDETAILS_BOOLEAN boolDetails = (MixerInterop.MIXERCONTROLDETAILS_BOOLEAN) <br>//Marshal.PtrToStructure(mixerControlDetails.paDetails,typeof(MixerInterop.MIXERCONTROLDETAILS_BOOLEAN));</span>\r\n\t\t\t\t<span style=\"color:Green\">//boolDetails.fValue = (value) ? 1 : 0;</span>\r\n\t\t\t\t<span style=\"color:Green\">// TODO: pin the memory</span>\r\n                MmException.Try(MixerInterop.mixerSetControlDetails<br>(mixerHandle, <span style=\"color:Blue\">ref</span> mixerControlDetails, MixerFlags.Value | mixerHandleType), <span style=\"color:#A31515\">&quot;mixerSetControlDetails&quot;</span>);\r\n\t\t\t}\r\n\t\t}\r\n</pre>\r\n<br>&nbsp;Anyways, if the value doesn't get passed, where is the invalid paramer exception coming from?<br>I tried to fix this and marshal the value the same way you do it in the signed mixer control:<br>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">set</span> \r\n\t\t\t{\r\n                boolDetails.fValue = Convert.ToInt32(value);\r\n                Marshal.StructureToPtr(boolDetails, mixerControlDetails.paDetails, <span style=\"color:Blue\">false</span>);\r\n                MmException.Try(MixerInterop.mixerSetControlDetails<br>(mixerHandle, <span style=\"color:Blue\">ref</span> mixerControlDetails, MixerFlags.Value | mixerHandleType), <span style=\"color:#A31515\">&quot;mixerSetControlDetails&quot;</span>);\r\n                Marshal.FreeHGlobal(mixerControlDetails.paDetails);\r\n\t\t\t}\r\n</pre>\r\n</div>\r\nBut I still get the InvalidParameter exception. I think I'll tinker with this a bit more, but I would like to know if there was something which made you comment the code out in the original version before geetting too deep into the problem (I.e. if there were some underlying problems I can't know about at this level).<br><br>I added this into the issues section as well. Thanks for the help so far!</div>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-27T19:18:37.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "282665",
+    "ThreadId": "82012",
+    "Html": "<p>oh, I didn't realise I hadn't done the boolean control. I think the signed and unsigned controls work, so you could compare with the set value code for them. I wrote the original code ages ago. It was more or less the first .NET interop code I had ever written. I didn't really know what I was doing back then (still don't if I'm honest!)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-01-28T01:53:54.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "536586",
+    "ThreadId": "82012",
+    "Html": "\r\n<p>I read an article on codeproject where someone created an interop for the IMAPI2 library\r\n<br>\r\nand they had said the hard thing for them to figure out when they wrote the wrapper was\r\n<br>\r\nthat they needed to place the Set method&nbsp;before the Get method and for some strange reason that<br>\r\nmade the wrapper work correctly.</p>\r\n<p>&nbsp;</p>\r\n<p>I am posting this here even though it is an old thread so that if someone else is writing a wrapper or having difficulties / issues.</p>\r\n<p>Just thought I would pass it along... cheers.</p>\r\n",
+    "PostedDate": "2010-12-16T00:06:31.933-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "564584",
+    "ThreadId": "82012",
+    "Html": "<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>I make same thing MuHoR did, i don't have any error but Mute value doesn't chnage.</p>\n<p>&nbsp;</p>\n<p>Anyone solves this issue?</p>",
+    "PostedDate": "2011-02-11T05:45:27.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

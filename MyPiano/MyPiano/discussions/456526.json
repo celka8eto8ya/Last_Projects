@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1091189",
+    "ThreadId": "456526",
+    "Html": "Hi All, been looking everywhere with no luck.<br />\n<pre><code>var wasapiIn = new WasapiCapture(device);\nwasapiIn.DataAvailable += waveIn_DataAvailable;\nwasapiIn.RecordingStopped += waveIn_RecordingStopped;\nwasapiIn.StartRecording();\n\npublic void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n{\n        using (var converter = new WaveFormatConversionStream(????))\n        {\n             writer.Write(????);\n        }\n}  \n</code></pre>\n\nmeanwhile i am using Resampler in the following way<br />\n<pre><code>MediaBuffer b = new MediaBuffer(e.Buffer.Length);\nb.LoadData(e.Buffer, e.BytesRecorded);\nresampler.MediaObject.ProcessInput(0, b, DmoInputDataBufferFlags.None, 0, 0);\nusing (DmoOutputDataBuffer outputBuffer = new DmoOutputDataBuffer(waveFmt.AverageBytesPerSecond))\n{\nresampler.MediaObject.ProcessOutput(DmoProcessOutputFlags.None, 1, new DmoOutputDataBuffer[] { outputBuffer });\nbyte[] oBytes = new byte[outputBuffer.Length];\noutputBuffer.RetrieveData(oBytes, 0);\nwriter.Write(oBytes, 0, oBytes.Length);\n}\n\n</code></pre>\n\nbut i suspect that my output sound quality is a bit poor so maybe WaveFormatConversionStream might be faster<br />\n<br />\nthanks in advance<br />\n",
+    "PostedDate": "2013-09-11T07:21:32.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1092694",
+    "ThreadId": "456526",
+    "Html": "WaveFormatConversionStream is an older class from NAudio that expects a WaveStream as input, so you either need to get your audio into a WaveStream (which is a little tricky but not impossible - use a BufferedWaveProvider and turn it into a WaveStream with a custom adapter class), or you go one level lower and use AcmStream directly like I do in the NetworkChat demo code.<br />\n",
+    "PostedDate": "2013-09-14T08:05:19.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1092845",
+    "ThreadId": "456526",
+    "Html": "10x Mark,\r<br />\ntryed what you've suggested like the following<br />\n<pre><code>public void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n{\n                    using (AcmStream encodeStream = new AcmStream(wasapiIn.WaveFormat, waveFmt))\n                    {\n                        int encodeSourceBytesLeftovers=-1;\n                        byte[] oBytes = Convert(encodeStream, e.Buffer, 0, e.Buffer.Length, ref encodeSourceBytesLeftovers);\n                        writer.Write(oBytes, 0, oBytes.Length);\n                    }\n}\n</code></pre>\n\nbut this throws the following exception on first using line\r<br />\n<br />\nAcmNotPossible calling acmStreamOpen\r<br />\n<br />\nany idea?\r<br />\n<br />\nTIA<br />\n",
+    "PostedDate": "2013-09-15T08:23:23.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1093563",
+    "ThreadId": "456526",
+    "Html": "what waveformat are you converting from and to? Some conversions cannot be done in a single step.<br />\n",
+    "PostedDate": "2013-09-17T07:45:38.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1093718",
+    "ThreadId": "456526",
+    "Html": "as you can see i use wasapi and what it gives me is 44100 32bit stereo and i want to convert to \r<br />\n11025 16 bit mono\r<br />\n<br />\n10x again for ur kind support<br />\n",
+    "PostedDate": "2013-09-17T12:44:57.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1093720",
+    "ThreadId": "456526",
+    "Html": "OK, definitely can't do that in one hit.\r<br />\nStep one - get to 16 bit. WaveFormatConversionStream may not do that for you. Multiply each floating point sample by 32767 and cast to float\r<br />\nGoing to mono - discard one channel might be easiest\r<br />\nThen use WaveFormatConversionStream to resample 44100 to 11025<br />\n",
+    "PostedDate": "2013-09-17T12:48:55.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1093772",
+    "ThreadId": "456526",
+    "Html": "10x, could u please show me some code.\r<br />\nif its not too much<br />\n",
+    "PostedDate": "2013-09-17T16:15:46.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1100519",
+    "ThreadId": "456526",
+    "Html": "OK, here's a start (not tested code, just to give an idea). <br />\n<ol>\n<li>\nCreate a BufferedWaveProvider and store it. It's format will be IEEE float 44100 stereo<br />\n</li>\n</ol>\n<pre><code>    bufferedWaveProvider = new BufferedWaveProvider(WaveFormat.CreateIeeeFloat(44100,2));</code></pre>\n\nNow add the<br />\n<pre><code>     bufferedWaveProvider.Add(e.Buffer, 0, e.BytesRecorded);</code></pre>\n\nNow set up your signal chain. If I was writing this, I'd certainly make some of my own signal chain components to simplify this, but here's something out of the ones in the box<br />\n<pre><code>    var sampleProvider = new WaveToSampleProvider(bufferedWaveProvider)\n    var wave16 = new SampleToWaveProvider16(sampleProvider)\n    var mono = new StereoToMonoProvider16(wave16)</code></pre>\n\nNow you can read mono 16 bit audio out of this signal chain every time.\r<br />\n<br />\nResampling on the fly is really hard, because number of samples out doesn't match number of samples in. You'd need to keep track of how many 44.1kHz samples you have and read from that. It might be easier to save the file at high sample rate and use WaveFormatConversionStream to resample at the end.\r<br />\n<br />\nBTW I'm currently making a pluralsight training course on NAudio in which I do a whole hour on modifying bit depths, channel counts and sample rates, so you might want to check that out when it is released (hopefully in November)<br />\n",
+    "PostedDate": "2013-09-29T00:12:25.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

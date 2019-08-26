@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "908516",
+    "ThreadId": "394437",
+    "Html": "\r\n<p>Hi there!</p>\r\n<p>I'am using naudio to play phone calls voice data and I'm completely confused the way of how the playback should do.</p>\r\n<p>Now i'am creating waveout class as shown:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>                RawSourceWaveStream rawSourceWaveStream = <span style=\"color:blue\">new</span> RawSourceWaveStream(dataPort.BaseStream, new WaveFormat(8000, 16, 1));\n                WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(rawSourceWaveStream);\n                waveRecorder = <span style=\"color:blue\">new</span> WaveRecorder(pcmStream, incomingWavFilename);\n\n                waveOut = <span style=\"color:blue\">new</span> WaveOutEvent();\n\n                waveOut.DeviceNumber = waveDevice.OutDeviceNumber;\n                waveOut.DesiredLatency = 150;\n\n                waveOut.Init(waveRecorder);\n                waveOut.PlaybackStopped &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;StoppedEventArgs&gt;(waveOut_PlaybackStopped);\n\n                waveOut.Play();\n</pre>\r\n</div>\r\n<p><br>\r\nIt's working quite good but some pc:s the calls is like talking to walkie talkie.<br>\r\n<br>\r\nSo is the WaveOutEvent proper way of playing the call and should I use Gsm610WaveFormat instead of WaveFormat.\r\n<br>\r\n<br>\r\nAlso when I use WaveOutEvent and call waveOut.Stop() , the event won't fire? Maybe a threading issue or misconfigured WaveOutEvent - object.<br>\r\n<br>\r\nBut if I close the</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>dataPort.BaseStream\n</pre>\r\n</div>\r\n<p>event fires always but it's sending IO - exception on PlaybackStopped event and cause random crashesh, so I can't use it in this way.</p>\r\n",
+    "PostedDate": "2012-09-05T00:24:51.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908737",
+    "ThreadId": "394437",
+    "Html": "<p>you would need to use Gsm610WaveFormat if the incoming audio is GSM610. Also, for streaming over the network, this is not a preferred way to work as waveOutEvent wants audio available on demand. Instead, I would use a BufferedWaveProvider to play from. See the NAudioDemo example code for voice chat for an example of how to do this</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-09-05T09:04:38.543-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908745",
+    "ThreadId": "394437",
+    "Html": "\r\n<p>Yes,that Gsm610WaveFormat was just a random idea and as I now remember the gsm modem send the data in format as used above.</p>\r\n<p>Well. Now I changed the initalizing as shown</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>                waveProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(<span style=\"color:blue\">new</span> WaveFormat(8000, 16, 1));\n                waveRecorder = <span style=\"color:blue\">new</span> WaveRecorder(waveProvider, incomingWavFilename);\n\n                waveOut = <span style=\"color:blue\">new</span> WaveOutEvent();\n                waveOut.DeviceNumber = waveDevice.OutDeviceNumber;\n                waveOut.DesiredLatency = 150;\n                waveOut.Init(waveRecorder);\n                waveOut.PlaybackStopped &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;StoppedEventArgs&gt;(waveOut_PlaybackStopped);\n\n                waveOut.Play();\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>And now in SerialPort DataReceived I just call BufferedWaveProvider.AddSamples?</p>\r\n<p>Is there any problems if the buffer starts to increase, ie. 2h calls?</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2012-09-05T09:13:07.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908774",
+    "ThreadId": "394437",
+    "Html": "<p>Oh, was edit.</p>",
+    "PostedDate": "2012-09-05T09:58:38.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908987",
+    "ThreadId": "394437",
+    "Html": "<p>the buffer will be constantly emptied by the playback. It has a maximum size anyway, so once it has emptied you'll just play silence. For it to work smoothly you need audio to be coming in as fast as you are playing it.</p>",
+    "PostedDate": "2012-09-05T23:24:01.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909222",
+    "ThreadId": "394437",
+    "Html": "\r\n<p>Got it work using BufferedWaveProvider. Is there a good way to determine the WaveOut DesiredLatency?</p>\r\n<p>Modem is set to use 20ms frame periods</p>\r\n<p>55ms was the best latency I achieved for smooth playing but can't say is it working good for every computer.</p>\r\n",
+    "PostedDate": "2012-09-06T08:59:27.173-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909515",
+    "ThreadId": "394437",
+    "Html": "<p>As a general rule, the higher the latency, the smoother the playback will be. 200ms is a value I often use unless I have a really important reason why it should be lower.</p>",
+    "PostedDate": "2012-09-07T02:28:33.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909802",
+    "ThreadId": "394437",
+    "Html": "<p>A little off-topic.</p>\r\n<p>Sometimes I got exception&nbsp; when I try to start playign incoming voice</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>Unhandled exception: InvalidHandle calling waveOutPrepareHeader    \r\nat System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)   \r\nat MS.Internal.Threading.ExceptionFilterHelper.TryCatchWhen(Object source, Delegate method, Object args, Int32 numArgs, Delegate catchHandler)\r\n</pre>\r\n</div>\r\n</p>\r\n<p>&nbsp;</p>\r\n<p>This is very hard to repeat because it comes randomly.</p>\r\n<p>Code is something like : modem sents serial port data \"call ready\" in my serial port eventhandler I initalize the waveoutevent and that recorder and start playing ( code above ).</p>\r\n<p>I tried to create the waveout device only once not every time I start a new call but in after a sometime the waveout doesn't play nothing or the voice is almost silence.Creating a new waveoutevent instance fix this.</p>",
+    "PostedDate": "2012-09-07T14:06:29.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1497177",
+    "ThreadId": "663300",
+    "Html": "Hi\r<br />\n<br />\nI'm trying to open a stream using the example MP3 Streaming but get this error. I get this when trying to open a broadcastify stream like: <a href=\"http://relay.broadcastify.com:80/il_chicago_police2?xan=5C8A19BB2F7E9B2A63C1A2CB2269B8C9\" rel=\"nofollow\">http://relay.broadcastify.com:80/il_chicago_police2?xan=5C8A19BB2F7E9B2A63C1A2CB2269B8C9</a>\r<br />\n<br />\nI can paste this URI into WMP or VLC and it works just fine, any ideas would be helpful. Thanks.<br />\n",
+    "PostedDate": "2017-06-23T18:12:23.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "868009",
+    "ThreadId": "369193",
+    "Html": "\r\n<p>Hello, I discover a problem today, I sending midi trough MIDI loopbe1 free apzz, a virtual wire.&nbsp; Have this error:<br>\r\n<br>\r\n<br>\r\nNAudio.MmException was unhandled<br>\r\n&nbsp; HResult=-2146233088<br>\r\n&nbsp; Message=NoDriver calling midiOutShortMsg<br>\r\n&nbsp; Source=NAudio<br>\r\n&nbsp; StackTrace:<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at NAudio.MmException.Try(MmResult result, String function)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at NAudio.Midi.MidiOut.Send(Int32 message)<br>\r\n<br>\r\nThis happen only when&nbsp;I run my code, and then lock windows , after unlock MS windows when&nbsp; send MIDI NOTES, this error happen, but no if send CC, only with MIDI NOTES, I repeat not when send midi CC.<br>\r\nHoppe can help to me Mark, 100% stuck on this, if window is locked when my software is running then when unlock windows, the software crash due that NAudio.MmException.</p>\r\n<p><span style=\"font-size:x-small; font-family:Consolas\"><span style=\"font-size:x-small; font-family:Consolas\"><span style=\"font-size:x-small; font-family:Consolas\"><span style=\"font-size:x-small; font-family:Consolas\"><span style=\"font-size:x-small; font-family:Consolas\"><span style=\"font-size:x-small; font-family:Consolas\">&nbsp;</span></span></span></span></span></span>\r\n</p>\r\n<p><span style=\"font-size:x-small; font-family:Consolas; color:#2b91af\"><span style=\"font-size:x-small; font-family:Consolas; color:#2b91af\"><span style=\"font-size:x-small; font-family:Consolas; color:#2b91af\">MidiMessage</span></span></span><span style=\"font-size:x-small; font-family:Consolas\"><span style=\"font-size:x-small; font-family:Consolas\">.StartNote(1,\r\n 127, 1).RawData);<br>\r\n<br>\r\n<br>\r\nWhy this happen after lock windows and unlock windows?<br>\r\n<br>\r\nSome idea?</span></span></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>midiOut.Send(</p>\r\n<p></p>\r\n",
+    "PostedDate": "2012-07-15T07:26:01.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "870624",
+    "ThreadId": "369193",
+    "Html": "<p>Not sure what is causing this, but the error is NoDriver, so there seems to be a problem with the MIDI driver. All you can do is close the device and reopen it</p>",
+    "PostedDate": "2012-07-17T01:37:36.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "870695",
+    "ThreadId": "369193",
+    "Html": "<p>Yes, is very clear is related to driver, I try closing and open again if system is locked, but have to surf deep on the windows api for detect when that happen.<br />Thank you!</p>",
+    "PostedDate": "2012-07-17T03:55:36.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

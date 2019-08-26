@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "831525",
+    "ThreadId": "354373",
+    "Html": "\r\n<p>Hi!</p>\r\n<p>I would like to decompress (convert) a mp3 file to byte array, so I can manipulate it and apply some of my own audio filters. How would I do that with naudio? Code would be very much&nbsp;appreciated :)</p>\r\n<p>Thanks!&nbsp;</p>\r\n",
+    "PostedDate": "2012-05-03T02:43:15.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "832645",
+    "ThreadId": "354373",
+    "Html": "<p>So I can be more clear: &nbsp;I need a sample data from a mp3 file, so I can <span>manipulate the data and then play the newly manipulated data.</span></p>\r\n<p><span><br /></span></p>\r\n<p><span>I have searched on google for a long time and did not get any info, that would come handy :S</span></p>\r\n<p>&nbsp;</p>\r\n<p><span>I hope you can help me.</span></p>",
+    "PostedDate": "2012-05-06T01:54:31.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "833118",
+    "ThreadId": "354373",
+    "Html": "<p>NAudio provides MP3FileReader for this purpose. You call the Read method to read audio data out into a byte array</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-05-07T14:16:25.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "833120",
+    "ThreadId": "354373",
+    "Html": "<p>Once I have the byte array and I change the values, how do I play this byte array now?</p>\r\n<p>Thanks for the answer!</p>",
+    "PostedDate": "2012-05-07T14:18:57.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "833312",
+    "ThreadId": "354373",
+    "Html": "<p>You implement your own inherited IWaveProvider or ISampleProvider whose Read method reads from the MP3 file, performs the processing and passes it on.</p>",
+    "PostedDate": "2012-05-08T01:40:47.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "834503",
+    "ThreadId": "354373",
+    "Html": "<p>I'm really&nbsp;confused right now about your last post. Do you maybe have a&nbsp;code sample? Would REALLY&nbsp;appreciate&nbsp;it.</p>",
+    "PostedDate": "2012-05-10T04:13:29.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "836593",
+    "ThreadId": "354373",
+    "Html": "<p>Create a new class that interherits from IWaveProvider.</p>\r\n<p>Now create as example a ctor and give set as parameter a IWaveProvider. Store this in a field. Now in your Readmethod you first read from the stored IWaveProvider and manipulate the read bytes.</p>",
+    "PostedDate": "2012-05-15T04:47:50.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

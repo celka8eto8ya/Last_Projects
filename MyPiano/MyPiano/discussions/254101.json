@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "598141",
+    "ThreadId": "254101",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I just found NAudio, it seems like a very nice wrapper around an annoying COM interop.<br>\r\nIs there any way to get the process id of the process that is playing sounds? Like the Win7 mixer that is showing a volume bar per process?</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you!@</p>\r\n",
+    "PostedDate": "2011-04-15T11:44:40.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598252",
+    "ThreadId": "254101",
+    "Html": "<p>I noticed that NAudio has CoreAudioAPI inside - which supports it (with IAudioSessionManager2) in CodeProject - can NAudio integrate the latest CoreAudioAPI?</p>",
+    "PostedDate": "2011-04-15T16:00:54.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598338",
+    "ThreadId": "254101",
+    "Html": "<p>hi, I don't know about the process ID, you might be best asking on a forum where there are some WASAPI experts. NAudio doesn't have IAudioSessionManager2 wrappers, but it sounds like something that would be useful. Fancy submitting a patch?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-16T00:25:47.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "599179",
+    "ThreadId": "254101",
+    "Html": "<p>Hi Mark,</p>\r\n<p>NAudio is yours? Awesome work!</p>\r\n<p>I used the CoreAudioAPI from codeproject to enumerate audio sessions, it works.</p>\r\n<p>If I end up using NAudio for something, I will definitely try to incorporate IAudioSessionManager2.<br />I found NAudio because I originally intended to record individual sessions (like only record from a certain PID), but I realized it's a pipe dream.</p>\r\n<p>Thank you!</p>",
+    "PostedDate": "2011-04-18T08:51:57.11-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "599201",
+    "ThreadId": "254101",
+    "Html": "<p>yes, its unfortunate that the CoreAudio API blocks you from getting at the audio from certain processes. I guess its to avoid the legal issues of people ripping the audio output of media players</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-18T09:13:43.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

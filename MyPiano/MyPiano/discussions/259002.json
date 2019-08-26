@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "618260",
+    "ThreadId": "259002",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I was wondering if it's possible to read CAF files in NAudio?</p>\r\n<p>I need that in my application, and it would be great if you can help me with that.</p>\r\n<p>Bests,</p>\r\n<p>Amin</p>\r\n",
+    "PostedDate": "2011-05-25T12:22:13.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618264",
+    "ThreadId": "259002",
+    "Html": "<p>I'm afraid that isn't a format supported in NAudio. It's a new one on me. Looks like it is well documented though, so if someone wanted to contribute a CAF file reader</p>\r\n<p><a href=\"http://developer.apple.com/library/mac/#documentation/MusicAudio/Reference/CAFSpec/CAF_intro/CAF_intro.html\">http://developer.apple.com/library/mac/#documentation/MusicAudio/Reference/CAFSpec/CAF_intro/CAF_intro.html</a></p>\r\n<p>It seems that, like WAV, it is a container format, able to hold audio compressed in several other formats</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-25T12:27:16.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618347",
+    "ThreadId": "259002",
+    "Html": "<p>I have no experience in doing that, otherwise I would love to contribute. Is there any tutorial that I can read, so I can write the CAF File reader?</p>\r\n<p>Amin</p>",
+    "PostedDate": "2011-05-25T14:57:30.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618351",
+    "ThreadId": "259002",
+    "Html": "<p>You would need to create a class derived from WaveStream. The AiffFileReader (in the latest source code) would be a good example of what needs to be done.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-25T15:06:34.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619619",
+    "ThreadId": "259002",
+    "Html": "<p>What about AMR files? Should I write e Reader for that file type as well?</p>",
+    "PostedDate": "2011-05-27T15:58:56.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619701",
+    "ThreadId": "259002",
+    "Html": "<p>that's another I hadn't come across before. That might be more tricky though since it seems that AMR files contain ACELP encoded audio, and Windows doesn't come with an ACM ACELP decoder so there would be no easy way for NAudio to play it.</p>",
+    "PostedDate": "2011-05-28T00:21:51.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1275698",
+    "ThreadId": "552653",
+    "Html": "Hallo,\r<br />\n<br />\nas newbie with naudio I'm straggeling with PCM conversion. I want to built a c# applicaion which takes skype calls and transfers the audio bidirectional to a capi call.\r<br />\n<br />\nTaking the call and dailing capi runs well but I don't know how to resample audio from 16 kHz, 16 bit, mono (Skype) to and from 8 kHz, 8 bit, mono.\r<br />\n<br />\nI thought of two threads each reading async byte stream and converting it. But I'm not sure if this is a good solution??\r<br />\n<br />\nSo, hoping for hints and/or examples how to do this conversation stuff...<br />\n",
+    "PostedDate": "2014-07-23T13:58:16.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278433",
+    "ThreadId": "552653",
+    "Html": "You can do the sample rate conversion with WaveFormatConversionStream, or MediaFoundationResampler.\r<br />\nI'd recommend against using 8 bit audio unless you absolutely need it. Are you actually wanting mu-law/a-law?<br />\n",
+    "PostedDate": "2014-07-28T09:24:48.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1350061",
+    "ThreadId": "579746",
+    "Html": "Hi,\r<br />\n<br />\nThanks to you all and Mark for publishing and contributing to this great project.\r<br />\nI'm evaluating if I can use NAudio in one of my projects.\r<br />\nI mostly need to handle master volume changes.\r<br />\nUnfortunately I could not find any example doing such basic things.\r<br />\nSo I modified the existing &quot;Audio File Playback&quot; demo and added a master volume slider to it.\r<br />\n<br />\nHere is the <a href=\"http://pastebin.com/G5HEAGgw\" rel=\"nofollow\">patch</a>.\r<br />\nI also added support for that <a href=\"http://www.editorconfig.org\" rel=\"nofollow\">editorconfig</a> thing.\r<br />\n<br />\nIs there a way to get notified when the default device changes?\r<br />\nMark, how do you usually handle contributions such as this?\r<br />\n<br />\nCheers,\r<br />\nS.<br />\n",
+    "PostedDate": "2015-02-08T04:14:24.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1350064",
+    "ThreadId": "579746",
+    "Html": "Ok I found this documentation about device change notification and implemented it in that example but for some reason I only got the first device change notification:<br />\n<a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/dd371417%28v=vs.85%29.aspx\" rel=\"nofollow\">https://msdn.microsoft.com/en-us/library/windows/desktop/dd371417%28v=vs.85%29.aspx</a><br />\n<br />\nLATER: Ok it works better if I keep the enumerator in a data member :)<br />\n",
+    "PostedDate": "2015-02-08T04:51:02.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1350084",
+    "ThreadId": "579746",
+    "Html": "Here is a new version of that patch now handling default device changes:\r<br />\n<a href=\"http://pastebin.com/QaXq70KB\" rel=\"nofollow\">http://pastebin.com/QaXq70KB</a><br />\n",
+    "PostedDate": "2015-02-08T07:55:02.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1351975",
+    "ThreadId": "579746",
+    "Html": "hi thanks for this. Contributions are usually done with forks and pull requests (NAudio uses Mercurial). I actually would like to revamp the NAudio demos into a series of much smaller focused applications, as many users find the projects too complicated. One possible issue with your patch is that it assumes the core audio interfaces are available, which is not necessarily true on all systems NAudio supports, so protection against that would be a good idea.<br />\n",
+    "PostedDate": "2015-02-12T14:36:32.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352119",
+    "ThreadId": "579746",
+    "Html": "Which platforms is NAudio supporting? Are you talking about XP not supporting core audio or other non Microsoft platforms?\r<br />\n<br />\nIn any case having a demo/example of how to handle and manipulate various basic audio settings such as mute and volume sounds like a good idea to bring people to use NAudio even for such simple tasks.<br />\n",
+    "PostedDate": "2015-02-13T02:15:11.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1352159",
+    "ThreadId": "579746",
+    "Html": "Yeah, NAudio does still support Window XP, although will be hoping to be able to drop that eventually. Also, many server OS editions of Windows come with a lot of Media Foundation turned off, so would want to check that is there.\r<br />\n<br />\nBut yes, definitely would be great to have a demo of this.<br />\n",
+    "PostedDate": "2015-02-13T03:48:59.777-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1048427",
+    "ThreadId": "444932",
+    "Html": "Hi. Can anyone explain what is the logic behind an audio visualizer and how can I use NAudio to make a simple visualizer ? I supose I need to make use of NAudio.Wave and analize the waveform created ... but then ? <br />\n",
+    "PostedDate": "2013-05-24T13:25:49.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1050522",
+    "ThreadId": "444932",
+    "Html": "I'd recommend starting by looking at the demo projects that come with NAudio. They show how to draw waveforms and use FFT for spectrum analyser<br />\n",
+    "PostedDate": "2013-05-30T02:38:26.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1050816",
+    "ThreadId": "444932",
+    "Html": "Thank you sir !<br />\n",
+    "PostedDate": "2013-05-30T12:45:03.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1422511",
+    "ThreadId": "444932",
+    "Html": "Hi there, I know this is an old thread, but I thought I didn't really think it was necessary to create a new thread. What is meant by FFT?<br />\n",
+    "PostedDate": "2015-05-03T00:24:42.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1422580",
+    "ThreadId": "444932",
+    "Html": "An FFT (Fast Fourier Transform) takes a block of raw Audio samples with a power of 2, to transform it into a Frequency and Amplitude representation. <strong>Just imagine, any Signal can be displayed as an overlap of many many Sinus curves:</strong><br />\n<br />\n<img src=\"http://www.cbcity.de/wp-content/uploads/2013/08/Time-2-Frequency-Domain-FFT.gif\" alt=\"Animation\" /><br />\n<br />\nThis is exactly, what FFT does. It splits the block into many Sinus curves and assumes them periodic. This Sinus calculation is done by vectors. To represent any possible vector, this is done with complex numbers. The power of 2 is just for algorithm optimization, to be a &quot;fast&quot; Fourier transform.<br />\n<hr />\n<strong>So basically in practice your approach is e.g. like this:</strong><br />\n<br />\nTake 1024 raw Audio samples (from a MeteringSampleProvider ) -&gt; FFT (in a SampleAggregator) -&gt; Complex Array with 2048 samples -&gt; Loop through first (or second, as values are mirrored around zero) 1024 of them like this (blue part in Image above, second part is cut off as it is mirrored):<br />\n<pre><code>    'NOTE: this Event is fired by the SampleAggregator class.\n    Public Sub FftCalculated(ByVal sender As Object, ByVal e As FftEventArgs)\n           For i = 0 To e.Result.Length / 2 - 1\n                Dim Amplitude As Double = Math.Sqrt(e.Result(i).X ^ 2 + e.Result(i).Y ^ 2)\n                Dim Frequency As Double = i * 44100 / e.Result.Length\n                'TODO: Paint Frequency and Amplitude here on a control, Bitmap...\n                'Some side notes:\n                'Max Frequency is half SampleRate. In this case 22050.\n                'If you want to get real human reconized values, apply Logarithm on Amplitude and Frequency.\n           Next\n    End Sub</code></pre>\n\nNOTE: I assumed a SampleRate of 44100 in above Example.<br />\n<br />\nThe above Event is fired by the <strong>SampleAggregator</strong> class, that you can find in a NAudio example. To feed the SampleAggregator I used a <strong>MeteringSampleProvider</strong> with the StreamVolume Event (where you can also feed a WaveformPainter, etc.):<br />\n<pre><code>    'NOTE: This Event is fired by MeteringSampleProvider class.\n    Private Sub m_SampleProvider_StreamVolume(ByVal sender As Object, ByVal e As NAudio.Wave.SampleProviders.StreamVolumeEventArgs)\n\n        Dim left As Single = 0\n        Dim right As Single = 0\n\n        If e.MaxSampleValues.Length &gt; 0 Then left = e.MaxSampleValues(0)\n        'Is not mono Stream?\n        If e.MaxSampleValues.Length &gt; 1 Then right = e.MaxSampleValues(1)\n\n        SampleAggregator.Add(0.5 * (left + right))\n        'WaveformPainter1.AddMax((left + right) / 2)\n\n    End Sub</code></pre>\n\n<strong>Just add the MeteringSampleProvider in your Signal chain to access the raw Audio sample data.</strong><br />\n<br />\nI hope this Points you into the right direction, without confusing you too much with Details.<br />\n<br />\nKind regards<br />\n<br />\nFreefall<br />\n<br />\n<br />\nPS: I created a StereoWaveformPainter some time ago based on the WaveformPainter class. Perhaps you want to incorporate it in a future release Mark.<br />\n",
+    "PostedDate": "2015-05-03T13:20:12.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1422581",
+    "ThreadId": "444932",
+    "Html": "Ah thanks, I understand it better now!<br />\n",
+    "PostedDate": "2015-05-03T13:32:58.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1422583",
+    "ThreadId": "444932",
+    "Html": "Please mark this thread as answered so others can see quickly for future questions concerning this.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2015-05-03T13:57:52.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1422584",
+    "ThreadId": "444932",
+    "Html": "\r\n<p dir=\"ltr\">I want OP of the thread, I don't think I can. I was just asking the question in relation to a previous reply to the OP's initial question ah.\r\n</p>\r\n<div></div>\r\n",
+    "PostedDate": "2015-05-03T14:01:00.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

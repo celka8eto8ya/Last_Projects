@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "483107",
+    "ThreadId": "224353",
+    "Html": "<p>Is it possible for me to listen for a specific tone? I am working on an application for a fire department and they send calls out on a scanner. They initialize two tones before the actual message is broad casted. The tones are 352.7 and 345.6, I am assuming this is a frequency. I already have some code written to do the recording but I only want to kick off the actual writing method when these tones are heard. Can NAudio listen for this type of frequency and what are the classes for me to look into? If not are there other library's that can help me do this.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Steven Combs</p>",
+    "PostedDate": "2010-08-21T10:40:38.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "489662",
+    "ThreadId": "224353",
+    "Html": "<p>I'm afraid NAudio has nothing built in. Fast Fourier Transforms can be used to detect the frequencies contained in a signal. I'm not sure if they are the best way to actually look for a specific frequency though</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-06T04:04:08.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508206",
+    "ThreadId": "224353",
+    "Html": "<p>Mark is right about the FFT thing, and there is a relatively fast implementation in C++ here: http://www.librow.com/articles/article-10</p>\r\n<p>Edit: Actually, I did notice that NAudio has an FFT implementation, but when testing it, it was MIGHTY slow. I have ported the code in the link above to C#, and if anyone wants I could clean it up and upload it somewhere. Maybe it could even be put in NAudio.</p>",
+    "PostedDate": "2010-10-16T07:12:29.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508252",
+    "ThreadId": "224353",
+    "Html": "<p>Wow, this website has some complicated math functions I am unfortunately not that good yet but ty for the post. This may take a couple months for me to figure out but I should be able to get there.</p>",
+    "PostedDate": "2010-10-16T09:41:12.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508290",
+    "ThreadId": "224353",
+    "Html": "<p>Well, to be honest I don't really understand the math too well either, but if you want I can upload the code I use, along with some instructions.</p>",
+    "PostedDate": "2010-10-16T10:58:04.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554152",
+    "ThreadId": "224353",
+    "Html": "\r\n<p>Hi Bevinsky!</p>\r\n<p>It might be a little late for this but just in case, would it be too much trouble to ask you to share your code regarding the FFT? Im experimenting on working on trying to use it for Chord detection but I cant seem to get Naudio's FFT to work.</p>\r\n<p>Thank you very much!</p>\r\n",
+    "PostedDate": "2011-01-23T21:23:21.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "582071",
+    "ThreadId": "224353",
+    "Html": "<p>Hello Bevinsky!</p>\r\n<p>Same here, would you share your code with us? Thank you!</p>",
+    "PostedDate": "2011-03-17T06:52:48.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "582670",
+    "ThreadId": "224353",
+    "Html": "<p>bloodfire and edudiego: Here is my C# FFT algorithm. It's full of comments and help for the functions.</p>\r\n<p><a href=\"http://www.mediafire.com/?832lj7aww8lfxb3\" target=\"_blank\">http://www.mediafire.com/?832lj7aww8lfxb3</a></p>",
+    "PostedDate": "2011-03-18T08:28:58.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "585766",
+    "ThreadId": "224353",
+    "Html": "<p>thx bevinsky!</p>",
+    "PostedDate": "2011-03-24T08:16:17.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602844",
+    "ThreadId": "224353",
+    "Html": "<p>I've read C# FFT algorithm but how can i pass the int buffer for the transform function?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-04-26T04:07:43.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602847",
+    "ThreadId": "224353",
+    "Html": "<p>have a look at the WPF demo supplied with NAudio to see the FFT algorithm being used</p>",
+    "PostedDate": "2011-04-26T04:14:42.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

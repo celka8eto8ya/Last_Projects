@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1490420",
+    "ThreadId": "660392",
+    "Html": "I'm trying to record audio from the microfone and the speaker output simultaneously:<br />\n<pre><code>micInputAudioSource = new WasapiCapture(micDevice);\nmicInputAudioWriter = CreateMp3Writer(micInputFileName, micInputAudioSource.WaveFormat, mp3AudioQualityPreset);\nmicInputAudioSource.DataAvailable += OnMicInputAudioDataAvailable;\n\noutputAudioSource = new WasapiLoopbackCapture(outDevice);\noutputAudioWriter = CreateMp3Writer(outputFileName, outputAudioSource.WaveFormat, mp3AudioQualityPreset);\noutputAudioSource.DataAvailable += OnOutputAudioDataAvailable;\n\nmicInputAudioSource.StartRecording();\noutputAudioSource.StartRecording();</code></pre>\n\nThis works perfectly except that the outputAudioSource only starts recording when there is an actual audio signal. If there is silence, the output file does not contain any data. In this case, the DataAvailable event will be triggered repeatedly but the WaveInEventArgs.BytesRecorded property contains 0, so no samples are written. This is a problem because I need to synchronize both audio signals. \r<br />\n<br />\nHow can I start the recording immediately, even if there is only silence to record? \r<br />\nOr, if this is not possible, how can I synchronize both audio streams to mix them at the exact time?<br />\n",
+    "PostedDate": "2016-12-29T09:47:03.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491733",
+    "ThreadId": "660392",
+    "Html": "Seems to be a driver limitation.\r<br />\n<br />\nYou could try to manually create a silent sample buffer and write it to the output file when the<br />\n<blockquote>\nWaveInEventArgs.BytesRecorded property contains 0<br />\n</blockquote>\nAlternatively, grab the NAudio WasapiLoopbackCapture source and experiment with it.<br />\n",
+    "PostedDate": "2017-01-26T11:55:43.663-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

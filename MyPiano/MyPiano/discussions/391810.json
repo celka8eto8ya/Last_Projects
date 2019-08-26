@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "899766",
+    "ThreadId": "391810",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I am having a strange issue with some mp3 files.</p>\r\n<p><br>\r\nThe symptom is an AcmNotPossible exception in ActmStreamHeader.Convert:</p>\r\n<p>&nbsp;</p>\r\n<pre>A first chance exception of type 'NAudio.MmException' occurred in NAudio.dll\r\nexception: NAudio.MmException: AcmNotPossible calling acmStreamConvert\r\n   at NAudio.MmException.Try(MmResult result, String function) in D:\\Development\\c#\\ThirdParty\\nAudio\\1.5\\NAudio\\Wave\\MmeInterop\\MmException.cs:line 41\r\n   at NAudio.Wave.Compression.AcmStreamHeader.Convert(Int32 bytesToConvert, Int32&amp; sourceBytesConverted) in D:\\Development\\c#\\ThirdParty\\nAudio\\1.5\\NAudio\\Wave\\Compression\\AcmStreamHeader.cs:line 65</pre>\r\n<p>&nbsp;</p>\r\n<p>In experimenting, I simply put a try-catch block around:</p>\r\n<p></p>\r\n<pre>MmException.Try(AcmInterop.acmStreamConvert(streamHandle, streamHeader, flags), &quot;acmStreamConvert&quot;); </pre>\r\n<p></p>\r\n<p>The strange thing is that the 'corrupt' blocks get ignored and I get playback.</p>\r\n<p>However; there are two different situations:</p>\r\n<ul>\r\n<li>Normal playback </li><li>Half-speed playback </li></ul>\r\n<p>Having inspected the suspect files, I can say that it appears the half-speed ones are &quot;technically&quot; corrupt in places; although they play fine in applications like VLC and WMP.</p>\r\n<p>I have a suspect that some frames are being incorrectly located or their headers are being decoded incorrectly (from my debug output)</p>\r\n<p>Do you have any advice on how to proceed to resolve this?&nbsp; I understand that the files are not perfect but the problem is there are a lot like this in a massive library and I'm not in a position to fix the files.</p>\r\n<p>I can provide the mp3 files and/or logging if that will help at all</p>\r\n<p>Cheers,</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Darren</p>\r\n",
+    "PostedDate": "2012-08-15T21:24:51.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "900831",
+    "ThreadId": "391810",
+    "Html": "<p>this is probably related to sample rate or number of channels changing midway through an MP3 file, which the MP3 file reader in NAudio cannot cope with. You would need to write your own custom code to detect and handle this</p>",
+    "PostedDate": "2012-08-17T13:01:36.22-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

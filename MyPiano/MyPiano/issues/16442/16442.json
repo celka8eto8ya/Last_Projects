@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "When calling WaveOutEvent.Init() with a device that points to a speaker that has Speaker Fill or Channel Phantoming(Options in Microsoft's basic sound driver) and a sample rate that is exactly equal to the device's sample rate the Init function throws this error:\r\nNAudio.MmException\r\n\"UnspecifiedError calling waveOutOpen\"\r\n\r\nThe following crashes when my speakers are set to 16 or 24 bit 44100 quality with either Channel Phantoming or Speaker Fill enabled:\r\n```\r\n//waveProvideris an instance of a class that inherits WaveProvider32\r\nwaveProvider.SetWaveFormat(44100, 2);\r\n\r\nNAudio.Wave.WaveOutEvent waveOut = new WaveOutEvent();\r\n\r\nwaveOut.Init(waveProvider);\r\n\r\nwaveOut.Play();\r\n```\r\nBut changing just the first line to Instance.SetWaveFormat(44099, 2); or Instance.SetWaveFormat(44101, 2); and it runs fine. Or ensuring Channel Phantoming and Speaker Fill are disabled and leaving it with sample rate 44100 will also make it run fine.\r\n\r\nThe same is true if my speakers are set to 48000 sample rate and have the first line as Instance.SetWaveFormat(48000, 2);",
+    "LastUpdatedDate": "2016-06-16T03:01:30.08-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-05-18T14:12:58.383-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "UnspecifiedError calling waveOutOpen when using Channel Phantoming or Speaker Fill",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 2,
+    "Id": 16442
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "that's a strange issue. Could be a driver problem. might be worth reading the MSDN waveOutOpen documentation and seeing if there are any clues there",
+      "PostedDate": "2014-05-23T07:13:46.89-07:00",
+      "Id": 147531
+    }
+  ]
+}

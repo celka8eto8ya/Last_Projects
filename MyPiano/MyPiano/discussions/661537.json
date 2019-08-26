@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1493158",
+    "ThreadId": "661537",
+    "Html": "Hello - Is there a demo for how to choose from the installed sound cards as the output device? Also I'm looking for a demo for outputting to specific channels. I have a 12-in 16-out soundcard and would like example code to for instance send a sine wave to output number 6. Thanks.<br />\n",
+    "PostedDate": "2017-02-23T10:02:17.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1347965",
+    "ThreadId": "579153",
+    "Html": "Hi, I'm new to NAudio. I've added the following code to an application of mine, but the DataAvailable event handler never fires, so I'm not able to capture any recording. I just get a broken wave file. Can anyone tell me where I'm going wrong here?<br />\n<br />\nAll help is appreciated.<br />\n<pre><code>        public static WaveIn waveIn;\n        public static WaveFileWriter waveFile;\n        public static void AudioStart()\n        {\n                    waveIn = new WaveIn();\n                    waveFile = null;\n                    waveIn.WaveFormat = new WaveFormat(8000, 8, 1);\n                    waveIn.DataAvailable += new EventHandler&lt;WaveInEventArgs&gt;(waveIn_DataAvailable);\n                    waveIn.RecordingStopped += new EventHandler&lt;StoppedEventArgs&gt;(waveIn_RecordingStopped);\n\n                    waveFile = new WaveFileWriter(@&quot;C:\\WPF8Data\\test\\temp.wav&quot;, waveIn.WaveFormat);\n                    waveIn.StartRecording();\n\n                   //I've been using breakpoints to pause between start and stop\n\n                    waveIn.StopRecording()\n        }\n\n        static void waveIn_RecordingStopped(object sender, StoppedEventArgs e)\n        {\n            if (waveIn != null)\n            {\n                waveIn.Dispose();\n                waveIn = null;\n            }\n\n            if (waveFile != null)\n            {\n                waveFile.Dispose();\n                waveFile = null;\n            }\n        }\n\n        static void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            if (waveFile != null)\n            {\n                waveFile.Write(e.Buffer, 0, e.BytesRecorded);\n                waveFile.Flush();\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2015-02-01T06:27:07.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347966",
+    "ThreadId": "579153",
+    "Html": "Most likely you are in a console application, or simply not on a GUI thread. Try WaveInEvent instead, which makes a separate thread for reading audio.<br />\n",
+    "PostedDate": "2015-02-01T06:28:35.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347970",
+    "ThreadId": "579153",
+    "Html": "Thanks. Not a console application, but not being on a GUI thread is possible. I'm calling the static method (AudioStart) from one of my screens. I'm going to assume simply changing WaveIn to WaveInEvent isn't enough to do this is it? If that actually is all involved, then it didn't fix my issue.<br />\n",
+    "PostedDate": "2015-02-01T06:36:26.573-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347971",
+    "ThreadId": "579153",
+    "Html": "Strange. Why not create a very simple blank application that just attempts to record and nothing else? Does that work? Could also try recording in 16 bit, just in case your soundcard driver is being difficult. What OS are you using? You're not remote desktopping in or anything unusual are you?<br />\n",
+    "PostedDate": "2015-02-01T06:46:43.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347972",
+    "ThreadId": "579153",
+    "Html": "To answer your questions. I am running Windows 8.1. And nothing unusual.\r<br />\n<br />\nI will post back with the results of my blank application test.\r<br />\n<br />\nEDIT: just found the issue. It doesn't like me having called StartRecording(), and then StopRecording() within my AudioStart() method. Even though I was using a breakpoint to simulate time elapsed between them. I removed StopRecording, and let it run, the DataAvailable method fired, and my recording size started increasing.\r<br />\n<br />\nThanks for your help. I think I should be sorted out :)<br />\n",
+    "PostedDate": "2015-02-01T06:56:53.583-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347974",
+    "ThreadId": "579153",
+    "Html": "Sorry, 1 last minor question. Is there an easy way using NAudio to tell the state of Recording. Like, Stopped, Paused, Recording etc?<br />\n",
+    "PostedDate": "2015-02-01T07:03:48.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347975",
+    "ThreadId": "579153",
+    "Html": "Not really, although it's two state - either recording or not. It starts after you call StartRecording and is stopped when you get the RecordingStopped event fired<br />\n",
+    "PostedDate": "2015-02-01T07:06:14.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347976",
+    "ThreadId": "579153",
+    "Html": "Ok, perfect. Then, I'll just use a Boolean. Appreciate all your help. Have a good one!<br />\n",
+    "PostedDate": "2015-02-01T07:07:34.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

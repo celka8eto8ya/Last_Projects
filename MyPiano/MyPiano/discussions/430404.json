@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "990220",
+    "ThreadId": "430404",
+    "Html": "\r\n<p><span style=\"color:black; font-size:10pt\">I have started with an electronic drum kit project at home and made progress to the point where I have data streaming over serial port from my kit. Now I need to play wav files to represent the drum data.\r\n</span></p>\r\n<p><span style=\"color:black; font-size:10pt\">How do I load multiple wav files and play them back at the same time ? Keep in mind that a relatively long wav could be already playing and I want to play another one (or more) on top of it.</span></p>\r\n<p><span style=\"color:black; font-size:10pt\">Any info would be appreciated greatly.</span></p>\r\n",
+    "PostedDate": "2013-01-22T02:42:02.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990297",
+    "ThreadId": "430404",
+    "Html": "\r\n<p>If you have a look at the source code for the WPF Demo app you'll see a drum machine sample app which should give you a good starting point. It uses a MixingSample provider and then inserts the drum hits as new mixer inputs when needed. It automatically\r\n removes them as mixer inputs when they finish playing. This approach means you only need to open one sound device.</p>\r\n",
+    "PostedDate": "2013-01-22T06:21:44.94-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990787",
+    "ThreadId": "430404",
+    "Html": "\r\n<p>I ran the pre-compiled demo and it look exactly like what i am looking for.&nbsp; Thank you for the info.</p>\r\n<p>I downloaded the demo source, but cannot get it to compile. I get the following error in MediaTypeVieeModel.cs :</p>\r\n<p>using NAudio.MediaFoundation; -- the type or namespace name '&#65279;&#65279;MediaFoundation' does not exist.</p>\r\n<p>Is this in version 1.6 ?</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2013-01-23T02:19:26.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990792",
+    "ThreadId": "430404",
+    "Html": "\r\n<p>MediaFoundation is new to NAudio 1.7 (still in alpha). It's not part of the drum machine demo though, so you should be able to use that code with 1.6</p>\r\n",
+    "PostedDate": "2013-01-23T02:29:53.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

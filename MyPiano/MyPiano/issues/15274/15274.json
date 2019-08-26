@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "duplicate of 15275 ",
+    "ClosedDate": "2012-09-26T06:10:57.45-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "Working on an mp3 player that uses NAudio.Gui.WaveformPainter component. Come across same problem on Windows 7 Home x64 and Professional x64.\n\nIf main form (containing WaveformPainter) is minimized (not just unfocused/behind another window), whilst a song is playing/painter is drawing, I have encountered two different crashes. Stack traces below. \n\n\nSystem.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.\nParameter name: index\n   at System.ThrowHelper.ThrowArgumentOutOfRangeException()\n   at System.Collections.Generic.List`1.set_Item(Int32 index, T value)\n   at NAudio.Gui.WaveformPainter.AddMax(Single maxSample)\n   at N_Audio_Project_2.Form1.meteringStream_StreamVolume(Object sender, StreamVolumeEventArgs e) in C:\\Users\\Christopher Clayton\\documents\\visual studio 2010\\Projects\\N Audio Project 2\\N Audio Project 2\\Form1.cs:line 125\n   at N_Audio_Project_2.MeteringStream.RaiseStreamVolumeNotification() in C:\\Users\\Christopher Clayton\\documents\\visual studio 2010\\Projects\\N Audio Project 2\\N Audio Project 2\\MeteringStream.cs:line 87\n   at N_Audio_Project_2.MeteringStream.ProcessData(Byte[] buffer, Int32 offset, Int32 count) in C:\\Users\\Christopher Clayton\\documents\\visual studio 2010\\Projects\\N Audio Project 2\\N Audio Project 2\\MeteringStream.cs:line 74\n   at N_Audio_Project_2.MeteringStream.Read(Byte[] buffer, Int32 offset, Int32 count) in C:\\Users\\Christopher Clayton\\documents\\visual studio 2010\\Projects\\N Audio Project 2\\N Audio Project 2\\MeteringStream.cs:line 56\n   at NAudio.Wave.WaveOutBuffer.OnDone()\n   at NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved)\n   at NAudio.Wave.WaveWindow.WndProc(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n\n\nSystem.DivideByZeroException: Attempted to divide by zero.\n   at NAudio.Gui.WaveformPainter.AddMax(Single maxSample)\n   at N_Audio_Project_2.Form1.meteringStream_StreamVolume(Object sender, StreamVolumeEventArgs e) in C:\\Users\\Christopher Clayton\\documents\\visual studio 2010\\Projects\\N Audio Project 2\\N Audio Project 2\\Form1.cs:line 125\n   at N_Audio_Project_2.MeteringStream.RaiseStreamVolumeNotification() in C:\\Users\\Christopher Clayton\\documents\\visual studio 2010\\Projects\\N Audio Project 2\\N Audio Project 2\\MeteringStream.cs:line 87\n   at N_Audio_Project_2.MeteringStream.ProcessData(Byte[] buffer, Int32 offset, Int32 count) in C:\\Users\\Christopher Clayton\\documents\\visual studio 2010\\Projects\\N Audio Project 2\\N Audio Project 2\\MeteringStream.cs:line 74\n   at N_Audio_Project_2.MeteringStream.Read(Byte[] buffer, Int32 offset, Int32 count) in C:\\Users\\Christopher Clayton\\documents\\visual studio 2010\\Projects\\N Audio Project 2\\N Audio Project 2\\MeteringStream.cs:line 56\n   at NAudio.Wave.WaveOutBuffer.OnDone()\n   at NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved)\n   at NAudio.Wave.WaveWindow.WndProc(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)",
+    "LastUpdatedDate": "2012-09-26T06:10:57.45-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-02-09T02:16:50.417-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Gui.WaveformPainter crashes/errors when window minimized",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 15274
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

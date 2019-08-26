@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "906740",
+    "ThreadId": "393883",
+    "Html": "\r\n<p>Hi I'm creating basic audio program. And I have to add to add two or more audio files to current .wav file( don't mix).</p>\r\n<p>Example.</p>\r\n<p>I have a.wav - 00:04s</p>\r\n<p>And I have b.wav - 00:05s</p>\r\n<p>My output must be ab.wav( contains a.wav and b.wav)- 00:09 s.</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2012-08-31T01:52:26.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "906742",
+    "ThreadId": "393883",
+    "Html": "<p>See my example code here:</p>\r\n<p>http://stackoverflow.com/a/6778791/7532</p>",
+    "PostedDate": "2012-08-31T01:54:49.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "918646",
+    "ThreadId": "393883",
+    "Html": "<p>Thanks Mark for the wonderful library that you have made available . My question is continuing in the same line but may be one step further on...</p>\r\n<p>I have a similar requirement of splitting and merging 2 wave files at designated points.</p>\r\n<p>The part related to cutting and joining is done, but there is always a glitch heard at the point of the join. Any ideas on how I can eliminate this ?</p>",
+    "PostedDate": "2012-09-27T11:16:48.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "918694",
+    "ThreadId": "393883",
+    "Html": "<p>Does it sound like a \"pop\"? &nbsp;If so, try doing a fade between the wave files over about 100 samples, centered on the merge point. &nbsp;A linear fade would probably work, but you should probably experiment with other window functions to find one that works best for your scenario.</p>",
+    "PostedDate": "2012-09-27T13:11:20.343-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "918795",
+    "ThreadId": "393883",
+    "Html": "<p>I recorded the merged sounds using audacity - and examined the waveform - I can clearly see a difference in the volume levels at the point where the sound level jumps.. The application would be merging any 2 sound files randomly chosen by the user so there is no way of knowing which 2 files will be merged or where will the merge point be on each file.</p>\r\n<p>again a nooby question- can you guide me to some documentation to really understand sample, channels, volume, frequency etc ? also read in one of replies given by mark to use logarithmic scale for something related to volume of the sound. I am at a loss as to the interrelation of all these terms- maybe getting confused... any help towards documentation ?</p>",
+    "PostedDate": "2012-09-27T19:27:24.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "922974",
+    "ThreadId": "393883",
+    "Html": "<p>there is a FadeInOutSampleProvider recently checked into NAudio which can be used either directly, or as an example to help you with your own fading in / out. Cross-fades are also sometimes used when joining two audio files, where you fade one out and another in, with a small overlapping section.</p>\r\n<p>As for documentation on samples, channels, volume, frequency, there are lots of resourses on the web if you search for phrases like \"introduction to audio sampling\" or \"introduction to digital audio\". Paul Whites' short book \"Basic Digital Recording\" might be worthwhile as well.</p>",
+    "PostedDate": "2012-10-07T00:05:38.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "263015",
+    "ThreadId": "76928",
+    "Html": "<p>Hello,<br><br>I'm looking to write a program that will take 2 input MP3 files and join them into one output file, with the second playing immediately following the first.&nbsp; I think this library might have some usefull items to help accomplish this, but I'm not really sure where to start.&nbsp; Are there any examples of a program doing this with NAudio?&nbsp; Thanks!</p>",
+    "PostedDate": "2009-12-02T20:08:01.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "265317",
+    "ThreadId": "76928",
+    "Html": "<p>Hi,</p>\r\n<p>I did once write an MP3 file joining utility, using some of the classes from NAudio, but it only supported CBR, whereas most new MP3 files are VBR these days. You might find it easier to seek out a command line utility and automate it in code.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-12-09T06:27:21.86-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

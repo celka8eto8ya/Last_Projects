@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1259065",
+    "ThreadId": "549467",
+    "Html": "Hello reader\r<br />\n<br />\nI am not a programmer but managed to get into vb.net and dotspatial and combine it into a working programm. \r<br />\nNow I want to add to this project some NAudio features.\r<br />\n<br />\nI have a list of adresses values in octaves stored in a table.. what i want to achieve is that \r<br />\n<br />\n1) A chosen traffic-noise sample must be equalized based on these values....\r<br />\n2) The sample must be lowered in volume \r<br />\n3) An outputmeter should show the outputted sound-value \r<br />\n<br />\nWho has experience in programming such things and is willingly to help? \r<br />\n<br />\nFeel free to contact me.\r<br />\n<br />\nGreetings Joska<br />\n",
+    "PostedDate": "2014-06-23T16:35:16.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

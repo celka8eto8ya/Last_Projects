@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1465104",
+    "ThreadId": "651928",
+    "Html": "Hi,\r<br />\nWhat is the maximum and minimum volume range I can increase or decrease for WaveOut device?<br />\n",
+    "PostedDate": "2016-03-01T05:19:27.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466460",
+    "ThreadId": "651928",
+    "Html": "It should range from 0 to 65565 if I remember correctly.<br />\n",
+    "PostedDate": "2016-03-10T16:54:25.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466586",
+    "ThreadId": "651928",
+    "Html": "In NAudio, Volume on WaveOut goes from 0.0f (silence) to 1.0f (full volume). That gets turned into the range Freefall mentions under the hood.<br />\n",
+    "PostedDate": "2016-03-11T12:48:07.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

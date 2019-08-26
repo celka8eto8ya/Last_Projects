@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1229181",
+    "ThreadId": "540859",
+    "Html": "Hello,<br />\n<br />\nI have downloaded the NAudio Demo, and I noticed a slight delay in the AudioPlayback Demo playback's respond on MP3 files, meaning, when I click on PLAY, 3 min MP3 files take close to a second to start playing, whereas 3 min WAV files start playing a lot faster, perhaps a buffer?, or is the Mp3FileReader decompressing the mp3 files before playing them?.<br />\n<br />\nJust an additional note, I tested all Plugins in the AudioPlayback demo and they all seem to respond the same way. MP3 files seem to take just a bit longer to actually play the audio than wav files.<br />\n<br />\nI'm currently using the DirectSound plugin with a latency of 50ms.<br />\n<br />\nDoes anyone know why is this? or how to adjust it?<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2014-04-01T14:06:21.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1230345",
+    "ThreadId": "540859",
+    "Html": "Mp3FileReader creates a table of contents of frames before starting which may be delaying it. Use MediaFoundationReader if you can for a faster startup. In the future I may offer an option to defer the table of contents creation on startup<br />\n",
+    "PostedDate": "2014-04-04T07:23:49.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-04-23T14:16:09.313-07:00"
+  },
+  {
+    "Id": "1237259",
+    "ThreadId": "540859",
+    "Html": "Thanks for the help.<br />\n",
+    "PostedDate": "2014-04-23T14:15:56.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

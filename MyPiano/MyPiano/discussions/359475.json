@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "848513",
+    "ThreadId": "359475",
+    "Html": "\r\n<p>Hi mark,&nbsp;First i want to thank you for naudio, i used naudio for my app and it help me alot.</p>\r\n<p>Now i have some req to take file with very low vol and amplify the volume that it will be possible to earing something.</p>\r\n<p>I saw you wrote somwhere that you did it in your skype project but i tried to understand from it&nbsp;how to do it without succsess.</p>\r\n<p>So can you help me with it? how can i do it with naudio and what is the general &nbsp;methode to do it</p>\r\n<p>Thanks in advance</p>\r\n",
+    "PostedDate": "2012-06-13T09:43:54.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850356",
+    "ThreadId": "359475",
+    "Html": "<p>You can do this with NAudio. The first step is usually to get the audio to floating point instead of 16 bit. Then you can amplify by a small amount (multiply each sample by a value &gt; 1). Then constrain to +/- 1.0 before going back to 16 bit just in case you have clipped.</p>\r\n<p>Another approach that is very good for speech is to use a compressor/limiter effect. This is a bit more advanced DSP-wise but can give excellent results. You are essentially reducing the peaks in the signal, so that you can amplify everything without clipping.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-06-18T07:19:24.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

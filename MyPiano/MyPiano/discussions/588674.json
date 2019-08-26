@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1368900",
+    "ThreadId": "588674",
+    "Html": "The Doppler effect is divided into two parts. The source is moving <strong>to</strong> the observer and moving <strong>away</strong> from the observer.<br />\n<br />\nThat's done with pitch shifting, but <strong>NAudio</strong> does not support it at this moment, am I right?<br />\n<br />\nHow am I supposed to implement the <strong>Doppler effect</strong> in <strong>NAudio</strong>?<br />\n<br />\nIs it possible to change the frequency of the sound while playing and change the pitch that way?<br />\n",
+    "PostedDate": "2015-03-21T04:39:22.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

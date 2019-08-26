@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "255920",
+    "ThreadId": "74769",
+    "Html": "<p>Is there a way to get the list of device full names?&nbsp; I saw the RecordingForm app getting the list of device names but the &quot;FriendlyName&quot; property doesn't have the complete name that I want.&nbsp; For example, in the following image, the &quot;Line-in&quot; device has extra into (on the second line): &quot;Creative SB X-Fi&quot;.&nbsp; Is there a way for me to get this extra device name info as well?&nbsp; The FriendlyName property in this case only return the first line (&quot;Line-In&quot;).</p>\r\n<p><img src=\"http://www.tkaraoke.com/images/tutorials/RecordingDeviceName.png\" alt=\"\"></p>",
+    "PostedDate": "2009-11-11T03:41:40.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "262037",
+    "ThreadId": "74769",
+    "Html": "<p>I haven't look that mutch in to NAudio, but heere's an article that shows how to do it. Maybe you can find the same part in NAudio.</p>\r\n<p><a href=\"http://www.codeproject.com/KB/audio-video/DirectSound9p1.aspx\">http://www.codeproject.com/KB/audio-video/DirectSound9p1.aspx</a></p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-30T14:11:08.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "262045",
+    "ThreadId": "74769",
+    "Html": "<p>yes, this is a limitation of the WaveIn APIs, it seems DirectSound has a better way of getting device names</p>",
+    "PostedDate": "2009-11-30T14:43:14.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

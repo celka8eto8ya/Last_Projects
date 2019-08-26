@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1489004",
+    "ThreadId": "659834",
+    "Html": "Hi,\r<br />\n<br />\nI'm using Naudio dll to read and process data. I want to know if it is possible to change the buffer size that each buffer is being read in. This is to see if processing times are more efficient if each buffer is a smaller.\r<br />\n<br />\nCreateBuffers() in WaveIn seems to create the buffer size:\r<br />\nint bufferSize = BufferMilliseconds * WaveFormat.AverageBytesPerSecond / 1000;\r<br />\n<br />\nI tried changing WaveFormat.AverageBytesPerSecond but it is read-only.<br />\n",
+    "PostedDate": "2016-11-29T12:06:59.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1452875",
+    "ThreadId": "647748",
+    "Html": "Is it possible to pipe audio from one application to another in real-time or would this need to be implemented at a lower level, i.e. in the Windows driver stack somewhere?\r<br />\n<br />\nAn example would be a patchbay application which exposes audio end-points to a collection of other applications similar to jack in Linux.<br />\n",
+    "PostedDate": "2015-11-17T15:04:03.993-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453105",
+    "ThreadId": "647748",
+    "Html": "I'm not aware of any built-in facility to do this. You'd need to come up with your own solution, pipes, shared memory, sockets etc<br />\n",
+    "PostedDate": "2015-11-18T23:49:05.32-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

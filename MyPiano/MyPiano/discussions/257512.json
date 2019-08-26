@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "612313",
+    "ThreadId": "257512",
+    "Html": "\r\n<p>Hi All,</p>\r\n<p>I have a &quot;midi&quot; type of sound converted to customized as per client, 90% of the sound file is play<em><strong>able</strong></em>, 10% is some raw bytes. I need to cut the file into 90% and 10 % than need to play the 90% of part of the file. I could albe\r\n to find that NAudio plays only &quot;.wav&quot; and &quot;.mp3&quot; but if I have custom file it doesn't produce any sound and throws exception that file is not supported.</p>\r\n<p>&nbsp;</p>\r\n<p>Kindly help me how to play sound from custom file.</p>\r\n<p>Thanks,</p>\r\n",
+    "PostedDate": "2011-05-13T04:24:15.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "612501",
+    "ThreadId": "257512",
+    "Html": "<p>Hi,</p>\r\n<p>If you take a look at Practice# source code, you would see how to process raw audio.</p>\r\n<p>I basically wrote an \"ETL\" process for audio. &nbsp;:)</p>\r\n<p>The first stage <strong>E</strong>xtracts the samples from the input file into raw samples.</p>\r\n<p>The second stage <strong>T</strong>ransforms the samples inside the buffer, by applying time-stretching.</p>\r\n<p>The third stage <strong>L</strong>oads the transformed raw samples back into NAudio, for output.</p>\r\n<p>&nbsp;</p>\r\n<p>In particular look look at&nbsp;PracticeSharpLogic.ProcessAudio (PracticeSharpLogic.cs) and&nbsp;AdvancedBufferedWaveProvider.cs</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Yuval Naveh</p>\r\n<p>Author of Practice#</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/\">http://code.google.com/p/practicesharp/</a></p>",
+    "PostedDate": "2011-05-13T10:01:09.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

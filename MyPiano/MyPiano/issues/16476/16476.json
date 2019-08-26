@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "NAudio.SoundFont.InfoChunk throws an unnecesary exception if some of the information chunks are missing even though they're optional, makes it harder to load some of the SF2 files.",
+    "LastUpdatedDate": "2016-09-29T02:57:38.26-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-04-29T12:48:40.157-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudio.SoundFont.InfoChunk exception",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16476
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for reporting. which chunks in particular?",
+      "PostedDate": "2016-09-27T05:55:27.15-07:00",
+      "Id": 204345
+    },
+    {
+      "Message": "I'll be honest, this was a year ago and I'm not entirely sure what I needed this for :( But I'll try to figure it out over the weekend.",
+      "PostedDate": "2016-09-28T14:33:12.017-07:00",
+      "Id": 204397
+    },
+    {
+      "Message": "sure, sorry was just trying to clean up some old issues",
+      "PostedDate": "2016-09-29T02:57:38.26-07:00",
+      "Id": 204411
+    }
+  ]
+}

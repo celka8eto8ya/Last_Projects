@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1002758",
+    "ThreadId": "433522",
+    "Html": "Hello,\r<br />\n<br />\nwhen loading an audio file via NAudio.Wave.AudioFileReader the waveform does not match the waveform loaded when using NAudio.Wave.WaveFileReader or NAudio.Wave.Mp3FileReader:\r<br />\n<br />\n<img src=\"http://i.imgur.com/TcYYnyo.jpg\" alt=\"Image\" />\r<br />\n<br />\nThis makes it difficult to compare the waveforms of different file types.\r<br />\nWhat is the difference between WaveFileReader and AudioFileReader loading a wave file?<br />\n",
+    "PostedDate": "2013-02-18T03:31:28.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002943",
+    "ThreadId": "433522",
+    "Html": "AudioFileReader returns IEEE floating point whilse Mp3FileReader and WaveFileReader will return PCM (probably 16 bit). I expect that the waveform drawing code is expecting 16 bit samples.<br />\n",
+    "PostedDate": "2013-02-18T10:57:17.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

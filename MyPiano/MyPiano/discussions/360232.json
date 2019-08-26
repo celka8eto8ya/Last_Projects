@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "851204",
+    "ThreadId": "360232",
+    "Html": "\r\n<p>Hi!</p>\r\n<p>&nbsp;</p>\r\n<p>I have been used this library sience 2 weeks and I have a problem. I have Wave sound, I check frequency for this and I would like to make my custom sound with the same simple frequency. Could you show me how can I make my own sound with different frequency\r\n (i found tutorial with infinity (long.MaxLength) time and only one frequency)?</p>\r\n<p>&nbsp;</p>\r\n<p>Best Regards</p>\r\n<p>Cookie Monster</p>\r\n",
+    "PostedDate": "2012-06-19T16:28:06.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "852010",
+    "ThreadId": "360232",
+    "Html": "<p>here's how to generate a sine wave:</p>\r\n<p>http://mark-dot-net.blogspot.co.uk/2009/10/playback-of-sine-wave-in-naudio.html</p>\r\n<p>for more complex sounds, you would mix together multiple frequencies.</p>",
+    "PostedDate": "2012-06-21T02:08:30.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "852020",
+    "ThreadId": "360232",
+    "Html": "<p>Thank you very much :)</p>",
+    "PostedDate": "2012-06-21T02:28:49.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

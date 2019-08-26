@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1079259",
+    "ThreadId": "453084",
+    "Html": "I saw that the current preview release provides a class for reading AAC files, which is great.  When I went in to abstract out the WaveProvider, so I could support this, I ran into a problem.  Originally I was just using AudioFileReader, which provides a volume property.  MediaFoundationReader does not.\r<br />\n<br />\nWould it be possible to move this property up to IWaveProvider, especially since the documentation says to use volume there instead of WaveOut?<br />\n",
+    "PostedDate": "2013-08-11T09:04:47.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082702",
+    "ThreadId": "453084",
+    "Html": "pass it through a VolumeWaveProvider16, or if you go to floating point, use VolumeSampleProvider. That's what AudioFileReader is doing under the hood.<br />\n",
+    "PostedDate": "2013-08-20T07:29:42.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

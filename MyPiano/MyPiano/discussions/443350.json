@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1042284",
+    "ThreadId": "443350",
+    "Html": "I am using building a c# application that plays music. I have heard about this project a lot and it seems like a good choice. I am curious to see if this runs cross platform on mono. If so, what are the limitations? I have heard that it can't play mp3 cross platform, but is their any workarounds? Thank you!<br />\n",
+    "PostedDate": "2013-05-11T11:29:51.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042376",
+    "ThreadId": "443350",
+    "Html": "It depends on what you call cross platform. Running your application using mono on a Windows workstation wouldn't be a problem. NAudio depends heavily on p-invoke calls to the underlying operating system (Windows). So running your application on a different operating system, e.g. Linux, will result in no audio at all.\r<br />\nThere will be parts of NAudio that work. e.g. wavestreams for reading information from wave files doesn't rely on native OS calls.\r<br />\n<br />\nI would suggest to create an abstraction of playing audio files in your application, so you can choose the appropriate audio framework based on the platform you are running on. And then use NAudio for playing on a Windows playform.<br />\n",
+    "PostedDate": "2013-05-12T00:26:40.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042436",
+    "ThreadId": "443350",
+    "Html": "Thanks for the advice. So you recommend a different library for each platform?<br />\n",
+    "PostedDate": "2013-05-12T07:01:25.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042442",
+    "ThreadId": "443350",
+    "Html": "probably the best idea if you like the NAudio structure is to create a new implementation of IWavePlayer for Mono that P/Invokes into Linux audio playback APIs (I'm not a mono or Linux expert so I have no idea how hard that would be). The same would apply for any audio format conversion. Instead of WaveFormatConversionStream (which uses the Windows ACM API), you'd need something that hooks into codecs available for Linux.<br />\n",
+    "PostedDate": "2013-05-12T07:29:39.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Released in NAudio 1.4",
+    "ClosedDate": "2011-05-27T13:32:37.98-07:00",
+    "CommentCount": 5,
+    "Custom": "",
+    "Description": "Hello Mark,\ni came accros this while loading, playing and automixing MP3's\nSometimes when MP3's are encoded using VBR, the calculated bitrate of the first frame is far out of scope, so the time estimation is wrong.\nI did a simple trick to calculate it very near to the correct time by reading a few more MP3Frames and use the average bitrate of the frames.\n\n        /// <summary>\n        /// Opens MP3 from a stream rather than a file\n        /// Will not dispose of this stream itself\n        /// </summary>\n        /// <param name=\"inputStream\"></param>\n        public Mp3FileReader(Stream inputStream)\n        {\n            int sampleRate;\n            int bitRate;\n\n            mp3Stream = inputStream;\n            id3v2Tag = Id3v2Tag.ReadTag(mp3Stream);\n\n            dataStartPosition = mp3Stream.Position;\n            Mp3Frame mp3Frame = new Mp3Frame(mp3Stream);\n            sampleRate = mp3Frame.SampleRate;\n            frameLengthInBytes = mp3Frame.FrameLength;\n            bitRate = mp3Frame.BitRate;\n            xingHeader = XingHeader.LoadXingHeader(mp3Frame);\n\n            this.length = mp3Stream.Length - dataStartPosition;\n\n            // try for an ID3v1 tag as well\n            mp3Stream.Position = mp3Stream.Length - 128;\n            byte[] tag = new byte[128];\n            mp3Stream.Read(tag, 0, 3);\n            if (tag[0] == 'T' && tag[1] == 'A' && tag[2] == 'G')\n            {\n                id3v1Tag = tag;\n                this.length -= 128;\n            }\n\n            mp3Stream.Position = dataStartPosition;\n\n            // Read a few MP3Headers to calculate the bitrate more accurately\n            int i;\n            for (i = 1; i <= 5000; i++) {\n                mp3Frame = ReadNextFrame();\n                if (mp3Frame == null) {\n                    break;\n                }\n                bitRate += mp3Frame.BitRate;\n            }\n\n            bitRate = bitRate / i;\n            mp3Stream.Position = dataStartPosition;\n            waveFormat = new Mp3WaveFormat(sampleRate, 2, frameLengthInBytes, bitRate);\n        }\n\nThat does the trick.\nGreets - Helmut",
+    "LastUpdatedDate": "2011-05-27T13:32:37.98-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-08-04T08:15:40.753-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Estimating the bitrate for VBR MP3 files",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 13902
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I suggest implementing this, I have the same issue.",
+      "PostedDate": "2010-10-16T15:25:32.373-07:00",
+      "Id": 41729
+    },
+    {
+      "Message": "I tried implementing your fix, and the issue wasn't resolved. Do you know what might be wrong?",
+      "PostedDate": "2010-10-17T10:07:09.78-07:00",
+      "Id": 41730
+    },
+    {
+      "Message": "Hi. For me it worked fine for  the most files. But it depends on the file.\r\nTo get the accurate bitrate you must fly through the whole file.\r\nThe more frames you read, the better the estimation.\r\nTry to increase the number of Frames you read.\r\nAlso dump the bitrate for each frame to see the values.\r\nGreets - Helmut",
+      "PostedDate": "2010-10-17T23:29:36.533-07:00",
+      "Id": 41731
+    },
+    {
+      "Message": "the current MP3 bitrate is in kbps instead of bps which may be causing some confusion for people. I'm going to change it in the near future. Also, the bitrate of the first frame should only be trusted for CBR. ",
+      "PostedDate": "2010-10-18T02:57:18.827-07:00",
+      "Id": 41732
+    },
+    {
+      "Message": "we now have sample accurate length detection of MP3 files",
+      "PostedDate": "2010-11-07T13:54:11.567-08:00",
+      "Id": 41733
+    }
+  ]
+}

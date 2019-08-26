@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "684911",
+    "ThreadId": "276073",
+    "Html": "\r\n<p>there is an option to play wave audio with waveout in mstsc?</p>\r\n<p>every time i try to do this i get some waveout exception</p>\r\n",
+    "PostedDate": "2011-10-16T13:26:00.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685099",
+    "ThreadId": "276073",
+    "Html": "<p>Haven't tried this myself. Have you tried DirectSoundOut instead?</p>",
+    "PostedDate": "2011-10-17T02:29:35.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1037419",
+    "ThreadId": "442024",
+    "Html": "I am downloading a wav file from an http server, copying it to a memorystream and then trying to open it for conversion via WavFileReader.<br />\n\r<br />\nWhen I do this, I get a &quot;can't read past end of stream&quot; exception.  If I write the bytes (using WriteAllBytes) to a file and then open using WavFileReader passing in a filename, it works just fine.  The file is encoded at 13kbps (I can provide the file upon request).<br />\n\r<br />\nwhat am I doing wrong?  At this point, I'm thinking of writing the file out to a tmp file and then just making sure I delete it.  <br />\n",
+    "PostedDate": "2013-04-29T17:10:47.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1040009",
+    "ThreadId": "442024",
+    "Html": "Do you reposition the MemoryStream to 0 before passing it into the WaveFileReader?<br />\n",
+    "PostedDate": "2013-05-06T11:19:08.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

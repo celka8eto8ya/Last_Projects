@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1041377",
+    "ThreadId": "443116",
+    "Html": "Hi , I'm working on a project that applies some effects over some microphone input and I would like to be able to get that input to a wavestream. I tried using BufferedWaveProvider to send the input to the wavestream but it doesn't work.\r<br />\n<br />\nIs there a way to achieve this? Some example would be helpful.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2013-05-09T06:51:38.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1041576",
+    "ThreadId": "443116",
+    "Html": "why do you need a wavestream? WaveProvider is simply a non-repositionable wavestream.<br />\n",
+    "PostedDate": "2013-05-09T14:20:27.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1041838",
+    "ThreadId": "443116",
+    "Html": "In my project I use wavestream for my effects class and now I need to bring the input from the microphone in that class. I get the microphone input with the waveinprovider but I don't know how to convert from waveinprovider to wavestream.\r<br />\n<br />\nIf i read from a mp3/wav file with Mp3FileReader/WaveFileReader I manage to send the data to my class but from waveinprovider i can't.\r<br />\n<br />\nIs there a way to get microphone input to a stream (wavestream)? \r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2013-05-10T05:34:28.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1041932",
+    "ThreadId": "443116",
+    "Html": "There shouldn't really be a need for your effects to take a WaveStream as the only things a WaveStream has over an IWaveProvider is position get/set and Length get. If you really must turn an IWaveProvider into a WaveStream it is very easy by creating an adapter class. In Position get, return total bytes read so far, throw an exception for Position set, and Length get can return whatever you want it to. All other methods (Read + WaveFormat) can delegate down to the IWaveProvider.<br />\n",
+    "PostedDate": "2013-05-10T08:36:15.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1041955",
+    "ThreadId": "443116",
+    "Html": "Now I am traing, thanks for the solution :D .<br />\n",
+    "PostedDate": "2013-05-10T09:03:31.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

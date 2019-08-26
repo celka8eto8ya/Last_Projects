@@ -1,0 +1,117 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using NAudio.Wave;
+using NAudio.CoreAudioApi;
+using System.IO;
+using System.Threading;
+using System.Drawing;
+
+namespace PearWars
+{
+    public class Sound : IDisposable
+    {
+        IWavePlayer waveOutDevice; 
+        WaveStream mainOutputStream;
+        DateTime start;
+        GameBoard board;
+
+        /// <summary>
+        /// Create a new Sound.
+        /// </summary>
+        /// <param name="name">File name.</param>
+        /// <param name="vol">Volume level in percent.</param>
+        /// <param name="pos">X-weight of source in the range (-1..1).</param>
+        /// <param name="pos">The GameBoard, to workaround memory management bug</param>
+        public Sound(string name, int vol, float pos, GameBoard b)
+        {
+            board = b;
+            try
+            {
+                waveOutDevice = new NAudio.Wave.DirectSoundOut();
+            }
+            catch (Exception driverCreateException)
+            {
+                throw new InvalidOperationException("Driver creation error: " + driverCreateException.Message);
+            }
+            
+            mainOutputStream = CreateInputStream("snd/" + name, vol, pos);
+
+            start = DateTime.Now;
+            Play();
+            board.sounds.Add(this);
+        }
+
+        /// <summary>
+        /// Create an input stream from a given filename.
+        /// </summary>
+        /// <param name="fileName">Path to file.</param>
+        /// <param name="vol">Volume level in percent.</param>
+        /// <param name="pos">X-weight of source in the range (-1..1).</param>
+        /// <returns>WaveStream</returns>
+        private WaveStream CreateInputStream(string fileName, int vol, float pos)
+        {
+            WaveChannel32 inputStream;
+            if (fileName.EndsWith(".wav"))
+            {
+                WaveStream readerStream = new WaveFileReader(fileName);
+                if (readerStream.WaveFormat.Encoding != WaveFormatEncoding.Pcm) 
+                {
+                    readerStream = WaveFormatConversionStream.CreatePcmStream(readerStream);
+                    readerStream = new BlockAlignReductionStream(readerStream); 
+                }
+                if (readerStream.WaveFormat.BitsPerSample != 16) 
+                {
+                    var format = new WaveFormat(readerStream.WaveFormat.SampleRate, 16, readerStream.WaveFormat.Channels);
+                    readerStream = new WaveFormatConversionStream(format, readerStream); 
+                }
+                //inputStream = new WaveChannel32(readerStream); 
+                inputStream = new WaveChannel32(readerStream, ((float)vol / 100.0f), pos);
+
+            }
+            else if (fileName.EndsWith(".mp3"))
+            {
+                WaveStream mp3stream = new Mp3FileReader(fileName);
+                WaveStream readerStream = WaveFormatConversionStream.CreatePcmStream(mp3stream);
+                readerStream = new BlockAlignReductionStream(readerStream);
+                //inputStream = new WaveChannel32(readerStream);
+                inputStream = new WaveChannel32(readerStream, ((float)vol / 100.0f), pos);
+            }
+            else
+            {
+                throw new InvalidOperationException("Unsupported extension");
+            }
+            return inputStream;
+        }
+
+        /// <summary>
+        /// Play the sound.
+        /// </summary>
+        public void Play()
+        {
+            try
+            {
+                waveOutDevice.Init(mainOutputStream);
+            }
+            catch (Exception initException)
+            {
+                throw new InvalidOperationException("Error Initializing Output: " + initException.Message);
+            }
+            waveOutDevice.Play();
+        }
+
+        public void Dispose()
+        {
+            // workaround bug with (waveOutDevice.PlaybackState == PlaybackState.Playing) always true
+            bool a = (start.Ticks + mainOutputStream.Length > DateTime.Now.Ticks);
+            if (a)
+            {
+                waveOutDevice.Stop();
+                waveOutDevice.Dispose();
+                mainOutputStream.Close();
+                mainOutputStream.Dispose();
+            }
+        }
+    }
+}

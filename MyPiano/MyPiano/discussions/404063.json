@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "945018",
+    "ThreadId": "404063",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp; &nbsp;I need to set audio output device(sound card) how can i assign audio device using naudio in normal form in normal form. can you please tell the sample code.</p>\r\n<p>&nbsp;</p>\r\n<p>public AudioPlaybackPanel([ImportMany]IEnumerable&lt;IOutputDevicePlugin&gt; outputDevicePlugins)<br>\r\n{</p>\r\n<p>}</p>\r\n<p>&nbsp;</p>\r\n<p>From where you are getting &quot;outputDevicePlugins&quot; value</p>\r\n<p>Thanks &amp; Regards,</p>\r\n<p>S.Maria Hinshin Das</p>\r\n",
+    "PostedDate": "2012-11-21T01:43:48.82-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

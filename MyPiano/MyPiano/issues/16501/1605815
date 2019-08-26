@@ -1,0 +1,64 @@
+2016-09-07 09:34:25.9158  - RUN TEST 466   - Dicteon.Producer.RecorderDialog+<>c__DisplayClass1a.<Button_Click>b__14
+2016-09-07 09:34:25.9158  - slider stop    - Dicteon.Producer.RecorderDialog.deviceManager_StopButtonPushed
+2016-09-07 09:34:25.9158  - pause called, recording False, statusPlay   - Dicteon.Client.Logic.Recording.PlayRecord.Pause
+2016-09-07 09:34:25.9158  - pause method end, status Pause   - Dicteon.Client.Logic.Recording.PlayRecord.Pause
+2016-09-07 09:34:25.9158  - slider stop method end   - Dicteon.Producer.RecorderDialog.deviceManager_StopButtonPushed
+2016-09-07 09:34:26.4168  - slide REC   - Dicteon.Producer.RecorderDialog.deviceManager_RecButtonPushed
+2016-09-07 09:34:26.4168  - RecButtonPushed, e.IsPushed: True _controller.IsRecording: False   - Dicteon.Producer.RecorderDialog.deviceManager_RecButtonPushed
+2016-09-07 09:34:26.4168  - RecButtonPushed, e.IsPushed = true, so start recording   - Dicteon.Producer.RecorderDialog.deviceManager_RecButtonPushed
+2016-09-07 09:34:26.4168  - pause called, recording False, statusPause   - Dicteon.Client.Logic.Recording.PlayRecord.Pause
+2016-09-07 09:34:26.4168  - pause method end, status Pause   - Dicteon.Client.Logic.Recording.PlayRecord.Pause
+2016-09-07 09:34:26.4168  - Process recording   - Dicteon.Producer.RecorderDialog.RecordingProccess
+2016-09-07 09:34:26.4168  - Start rec   - Dicteon.Producer.RecorderDialog.RecordingProccess
+2016-09-07 09:34:26.4168  - record called, status Pause   - Dicteon.Producer.Controllers.RecorderController.Record
+2016-09-07 09:34:26.4168  - record called. status = Pause   - Dicteon.Client.Logic.Recording.PlayRecord.Record
+2016-09-07 09:34:26.4308  - PlayerStopped, set status Stop   - Dicteon.Client.Logic.Recording.PlayRecord.PlayerStopped
+2016-09-07 09:34:26.9278  - capture start   - Dicteon.Client.Logic.Recording.Recorder.Capture
+2016-09-07 09:34:26.9318 start rec   - NAudio.Wave.WaveIn.StartRecording
+2016-09-07 09:34:26.9318 open wavein   - NAudio.Wave.WaveIn.OpenWaveInDevice
+2016-09-07 09:34:26.9538 open wavein method end, result NoError   - NAudio.Wave.WaveIn.OpenWaveInDevice
+2016-09-07 09:34:26.9538 start rec method end   - NAudio.Wave.WaveIn.StartRecording
+2016-09-07 09:34:26.9538  - capture method end   - Dicteon.Client.Logic.Recording.Recorder.Capture
+2016-09-07 09:34:26.9538  - record capture called, status = Record   - Dicteon.Client.Logic.Recording.PlayRecord.Record
+2016-09-07 09:34:26.9538  - slide REC method end   - Dicteon.Producer.RecorderDialog.deviceManager_RecButtonPushed
+2016-09-07 09:34:27.1268 RaiseDataAvailable BytesRecorded: 3200   - NAudio.Wave.WaveIn.RaiseDataAvailable
+2016-09-07 09:34:27.1268  - OnDataAvailable start method, IsCapturing: True _insertMode: False   - Dicteon.Client.Logic.Recording.Recorder.OnDataAvailable
+2016-09-07 09:34:27.1268 Reuse WaveInBuffer   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.1268 Reuse WaveInBuffer : waveInUnprepareHeader   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.1328 Reuse WaveInBuffer : waveInPrepareHeader   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.1328 Reuse WaveInBuffer : waveInAddBuffer   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.2268 RaiseDataAvailable BytesRecorded: 3200   - NAudio.Wave.WaveIn.RaiseDataAvailable
+2016-09-07 09:34:27.2268  - OnDataAvailable start method, IsCapturing: True _insertMode: False   - Dicteon.Client.Logic.Recording.Recorder.OnDataAvailable
+2016-09-07 09:34:27.2268 Reuse WaveInBuffer   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.2268 Reuse WaveInBuffer : waveInUnprepareHeader   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.2268 Reuse WaveInBuffer : waveInPrepareHeader   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.2268 Reuse WaveInBuffer : waveInAddBuffer   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.3268 RaiseDataAvailable BytesRecorded: 3200   - NAudio.Wave.WaveIn.RaiseDataAvailable
+2016-09-07 09:34:27.3268  - OnDataAvailable start method, IsCapturing: True _insertMode: False   - Dicteon.Client.Logic.Recording.Recorder.OnDataAvailable
+2016-09-07 09:34:27.3268 Reuse WaveInBuffer   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.3268 Reuse WaveInBuffer : waveInUnprepareHeader   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.3268 Reuse WaveInBuffer : waveInPrepareHeader   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.3268 Reuse WaveInBuffer : waveInAddBuffer   - NAudio.Wave.WaveInBuffer.Reuse
+2016-09-07 09:34:27.4168  - slide REC   - Dicteon.Producer.RecorderDialog.deviceManager_RecButtonPushed
+2016-09-07 09:34:27.4168  - RecButtonPushed, e.IsPushed: False _controller.IsRecording: True   - Dicteon.Producer.RecorderDialog.deviceManager_RecButtonPushed
+2016-09-07 09:34:27.4168  - RecButtonPushed, e.IsPushed = false, so rec slider released, stop recording   - Dicteon.Producer.RecorderDialog.deviceManager_RecButtonPushed
+2016-09-07 09:34:27.4168  - Stopping recording   - Dicteon.Client.Logic.Recording.PlayRecord.StopRecord
+2016-09-07 09:34:27.4168 stop rec   - NAudio.Wave.WaveIn.StopRecording
+2016-09-07 09:34:27.4168 RaiseDataAvailable BytesRecorded: 3190   - NAudio.Wave.WaveIn.RaiseDataAvailable
+2016-09-07 09:34:27.4168  - OnDataAvailable start method, IsCapturing: True _insertMode: False   - Dicteon.Client.Logic.Recording.Recorder.OnDataAvailable
+2016-09-07 09:34:27.4168 raise rec stopped   - NAudio.Wave.WaveIn.RaiseRecordingStopped
+2016-09-07 09:34:27.4288 raise rec stopped method end   - NAudio.Wave.WaveIn.RaiseRecordingStopped
+2016-09-07 09:34:27.4288 stop rec ,method end   - NAudio.Wave.WaveIn.StopRecording
+2016-09-07 09:34:27.4288  - status StoppingRecord   - Dicteon.Client.Logic.Recording.PlayRecord.StopRecord
+2016-09-07 09:34:27.4288  - slide REC method end   - Dicteon.Producer.RecorderDialog.deviceManager_RecButtonPushed
+2016-09-07 09:34:27.4288  - callback rec stop   - Dicteon.Client.Logic.Recording.Recorder.captureDevice_RecordingStopped
+2016-09-07 09:34:27.4288  - wave_in start disposing   - Dicteon.Client.Logic.Recording.Recorder.captureDevice_RecordingStopped
+2016-09-07 09:34:27.4288 close wavein   - NAudio.Wave.WaveIn.CloseWaveInDevice
+2016-09-07 09:34:27.4288 close wavein, buffers=3   - NAudio.Wave.WaveIn.CloseWaveInDevice
+2016-09-07 09:34:27.4288 buffers[0] dispose call   - NAudio.Wave.WaveIn.CloseWaveInDevice
+2016-09-07 09:34:27.4288 buffers[0] disposed   - NAudio.Wave.WaveIn.CloseWaveInDevice
+2016-09-07 09:34:27.4288 buffers[1] dispose call   - NAudio.Wave.WaveIn.CloseWaveInDevice
+2016-09-07 09:34:27.4288 buffers[1] disposed   - NAudio.Wave.WaveIn.CloseWaveInDevice
+2016-09-07 09:34:27.4288 buffers[2] dispose call   - NAudio.Wave.WaveIn.CloseWaveInDevice
+2016-09-07 09:34:27.4448 buffers[2] disposed   - NAudio.Wave.WaveIn.CloseWaveInDevice
+2016-09-07 09:34:27.4448 buffers disposed, try to close waveIn   - NAudio.Wave.WaveIn.CloseWaveInDevice

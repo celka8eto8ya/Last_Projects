@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1246891",
+    "ThreadId": "545807",
+    "Html": "On Windows Server 2008 32 bit with installed Desktop Experience I get<br />\n<br />\nSystem.Runtime.InteropServices.COMException (0xC00D36E3): Exception from HRESULT: 0xC00D36E3<br />\n   at NAudio.MediaFoundation.MediaFoundationInterop.MFStartup(Int32 version, Int32 dwFlags)<br />\n   at NAudio.MediaFoundation.MediaFoundationApi.Startup()<br />\n   at NAudio.Wave.MediaFoundationReader..ctor(String file, MediaFoundationReaderSettings settings)<br />\n   at NAudio.Wave.MediaFoundationReader..ctor(String file)<br />\n<br />\nDll is complied for All CPU. Can somebody help me to solve it? What should I change, install to make it work. It is asp.net mvc 4.0 application. On 64 bit system it works fine.<br />\n<br />\nIt looks like mfplat.dll on 32 bit system is in version 11. Probably api is not compatible with current library?<br />\n",
+    "PostedDate": "2014-05-19T05:22:56.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1246914",
+    "ThreadId": "545807",
+    "Html": "I stopped using MediaFoundationReader and switched to Mp3FileReader.<br />\n",
+    "PostedDate": "2014-05-19T06:30:08.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1254028",
+    "ThreadId": "545807",
+    "Html": "Same issue here. I tried using MediaFoundationReader  to play FLAC files (I have Flac drivers installed - <a href=\"http://sourceforge.net/projects/mfflac/\" rel=\"nofollow\">http://sourceforge.net/projects/mfflac/</a>) - and the COMException brings the app down.\r<br />\n<br />\nHere is the code I use in unit tests:<br />\n<pre><code>        [Test]\n        public void FlacTestWithMediaFoundation()\n        {\n            string file = @&quot;C:\\Users\\...\\Track.flac&quot;;\n            byte[] buffer = new byte[65536];\n            using (var fileReader = new MediaFoundationReader(file))\n            {\n                int bytesRead;\n                do\n                {\n                    bytesRead = fileReader.Read(buffer, 0, 65536);\n                    Console.WriteLine(&quot;Read &quot; + bytesRead);\n                } while (bytesRead &gt; 0);\n            }            \n        }</code></pre>\n\nIt reads the file to the end, then throws the exception:<br />\n<pre><code>   at NAudio.MediaFoundation.IMFSourceReader.ReadSample(Int32 dwStreamIndex, Int32 dwControlFlags, ref Int32 pdwActualStreamIndex, ref MF_SOURCE_READER_FLAG pdwStreamFlags, ref UInt64 pllTimestamp, ref IMFSample ppSample)\n   at NAudio.Wave.MediaFoundationReader.Read(Byte[] buffer, Int32 offset, Int32 count) in c:\\src\\naudio-current\\NAudio\\Wave\\WaveStreams\\MediaFoundationReader.cs: line 193\n   at MyApp.UnitTests.FlacTestWithMediaFoundation() in UnitTests.cs: line 60</code></pre>\n\nIt may be worth re-iterating that while the unit test simply fails, when I try running my app and playing a FLAC file, Windows shuts the app down, implying a non-recoverable error happens there even though I have exception handling code in the important places.<br />\n",
+    "PostedDate": "2014-06-07T09:53:21.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1214382",
+    "ThreadId": "535258",
+    "Html": "First of all (as expected from every newbie/noob as message starter expected):\r<br />\n<br />\nThank you for your great work on NAudio! (-:\r<br />\n<br />\nThat being set, I have a problem regarding file playback via the ASIO driver.\r<br />\n<br />\nFor getting into audio and NAudio coding, I started looking into the NAudio sources as well as the demo app(s). Playback of files using the &quot;Audio File Playback&quot; module works with WaveOut,DirectSound etc without problems (allthough I have to explicitly press the stop button in order to play a file again, even after EOF. I guess this is due to no explicitly EOF handling implemented, but no problem so far).\r<br />\n<br />\nHowever when using ASIO  (with ASIO4all as device driver on my laptop), on EOF the last sample(s?) are played in a loop. Also, the playback cannot be stopped and the Demo application has to be killed via taskmanager.\r<br />\nHitting the stop button before EOF does stop the playback as expected.\r<br />\n<br />\nAny ideas?\r<br />\n<br />\n(plz forgive me if I haven't provided enough information, I am quite new to the whole topic)\r<br />\n<br />\nRegards,\r<br />\n<br />\nHarry<br />\n",
+    "PostedDate": "2014-02-25T03:16:01.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215864",
+    "ThreadId": "535258",
+    "Html": "hmm that doesn't sound good. When the input stream reaches its end, playback ought to stop automatically.\r<br />\nIf you are able to debug, put a breakpoint in AsioOut.driver_BufferUpdate at the point where it calls Stop (read returned 0).<br />\n",
+    "PostedDate": "2014-02-27T14:21:19.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215989",
+    "ThreadId": "535258",
+    "Html": "well on EOF it comes up to ASIODriver.stop(), but never returning from:\r<br />\n<br />\n<em>return asioDriverVTable.stop(pASIOComObject);</em>\r<br />\n<br />\nunfortunatly this is where my debugging came to an end (-:<br />\n",
+    "PostedDate": "2014-02-28T00:48:13.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216012",
+    "ThreadId": "535258",
+    "Html": "oh dear, that's not good at all. I wonder if its your ASIO driver not liking being called from within the BufferUpdate callback. I know certain laptop chipsets (RealTek) have that problem with their WaveOut drivers and Function callbacks.\r<br />\n<br />\nYou could play a never-ending stream, and then call stop from outside.<br />\n",
+    "PostedDate": "2014-02-28T01:49:50.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216018",
+    "ThreadId": "535258",
+    "Html": "Well I kinda stumbled onto this problem by chance, since the application;s main function  will not be playing files  and the target machine will have a MADI card which will be used, so hopefully this is only a local issue with my development laptop. Didn't have the chance to test it on the target machine yet though.\r<br />\n<br />\nThx anyways for your input (-:<br />\n",
+    "PostedDate": "2014-02-28T01:58:13.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

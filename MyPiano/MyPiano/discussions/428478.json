@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "982991",
+    "ThreadId": "428478",
+    "Html": "\r\n<p>Hi..</p>\r\n<p>I have created Audio player which supports GUI as well as thread environment. It works fine if we are playing audio on GUI&nbsp;thread&nbsp;but if there are so many background threads which are playing audio file then within 1 hour audio player getting crashed\r\n with above exception.</p>\r\n<p>to support threading i am using WaveOutEvent.</p>\r\n<p>Also internally for each play i am creating new device to play loaded audio.</p>\r\n<p>All operation like create device, stop, play audio, reset duration am doing on single thread using AutoResetEvent.</p>\r\n<p>Also if we want to play audio for 30 seconds then i am playing same audio for 30 second but for each replay i am creating new device and loading same file again.&nbsp;</p>\r\n<p>for play and replay purpose i am using same code please check following</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> <span style=\"color:blue\">private</span> <span style=\"color:blue\">bool</span> PlayAudioFile()\n        {\n            <span style=\"color:blue\">if</span> (_wavePlayer == <span style=\"color:blue\">null</span> || _fileStream == <span style=\"color:blue\">null</span> || _wavePlayer.PlaybackState == PlaybackState.Playing)\n                <span style=\"color:blue\">return</span> <span style=\"color:blue\">false</span>;\n            _fileStream.Position = 0;\n            CloseWavePlayer();\n            EnsureDeviceCreated();\n            _wavePlayer.Init(<span style=\"color:blue\">new</span> SampleToWaveProvider(_sampleChannel));\n            _wavePlayer.Play();\n            _dontFireEvent = <span style=\"color:blue\">false</span>;\n            <span style=\"color:blue\">return</span> <span style=\"color:blue\">true</span>;\n        }\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>here EnsureDeviceCreated creating new WaveOutEvent with 200 latency.</p>\r\n<p>Exception&nbsp;coming at following line in WaveOutBuffer's constructor.</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> MmException.Try(WaveInterop.waveOutPrepareHeader(hWaveOut, header, Marshal.SizeOf(header)), <span style=\"color:#a31515\">&quot;waveOutPrepareHeader&quot;</span>);\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Please help me to sort out above issue...</p>\r\n<p>Thanks in Advanced..</p>\r\n<p>NileshN</p>\r\n",
+    "PostedDate": "2013-01-04T03:26:37.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "995141",
+    "ThreadId": "428478",
+    "Html": "generally Why system throws access violation error ?<br />\n",
+    "PostedDate": "2013-02-01T04:56:16.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996563",
+    "ThreadId": "428478",
+    "Html": "access violation relates to memory corruption. It could be something strange with the way you do threading, or a bug somewhere in NAudio (are you using the latest version?), or even a problem with your soundcard drivers. Tracking them down is hard. I usually try to create the simplest program possible that exhibits the problem.<br />\n",
+    "PostedDate": "2013-02-05T01:47:54.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996814",
+    "ThreadId": "428478",
+    "Html": "I ran into the same problem. Looks like it occurs if you create and destroy waveOutEvent player continuously.\r<br />\nCould not trace the root cause though.\r<br />\nMy requirement was to play a succession of wav files. Creating, initing with file provider, playing, destroying a waveplayer in a cycle seemed the obvious solution. But alas.\r<br />\nI ended up solving the problem in another way: creating a SwitchingWaveProvider, which wraps actual providers, which can be changed at runtime. Create a player once and init once with this provider. Keep switching providers on this front provider. Probably one of the mixing providers could have done the trick too, but could'nt find one for 16 bit format.\r<br />\nHere is SwitchingWaveProvider.cs code. Include if it seems useful<br />\n<pre><code>using System;\nusing System.Collections.Generic;\nusing System.Text;\nusing System.Collections;\nusing NAudio.Wave;\nusing NAudio.Utils;\n\nnamespace NAudio.Wave\n{\n    /// &lt;summary&gt;\n    /// Facade for a real wave provider which can be switched at runtime\n    /// &lt;/summary&gt;\n    public class SwitchingWaveProvider : IWaveProvider\n    {\n        private WaveFormat waveFormat;\n        private IWaveProvider srcProvider = null;\n        private object lockObj = new object();\n\n        /// &lt;summary&gt;\n        /// Creates a new switching WaveProvider\n        /// &lt;/summary&gt;\n        /// &lt;param name=&quot;waveFormat&quot;&gt;WaveFormat&lt;/param&gt;\n        public SwitchingWaveProvider(WaveFormat waveFormat)\n        {\n            this.waveFormat = waveFormat;\n        }\n\n        /// &lt;summary&gt;\n        /// Gets the WaveFormat\n        /// &lt;/summary&gt;\n        public WaveFormat WaveFormat\n        {\n            get { return waveFormat; }\n        }\n\n        /// &lt;summary&gt;\n        /// Switch input source to new provider\n        /// &lt;/summary&gt;\n        public bool SwitchWaveProvider(IWaveProvider newProvider)\n        {\n            if ((newProvider != null) &amp;&amp;\n                !this.waveFormat.Equals(newProvider.WaveFormat))\n                return false;\n\n            lock (lockObj)\n            {\n                srcProvider = newProvider;\n            }\n            return true;\n        }\n\n        /// &lt;summary&gt;\n        /// Reads from source WaveProvider\n        /// &lt;/summary&gt;\n        public int Read(byte[] buffer, int offset, int count) \n        {\n            int readCount = 0;\n            lock (lockObj)\n            {\n                if (srcProvider != null)\n                {\n                    readCount = srcProvider.Read(buffer, offset, count);\n                }\n            }\n\n            if (readCount &lt; count)\n            {\n                int strt = offset + readCount;\n                int end = offset + count;\n                for (int i = strt; i &lt; end; i++)\n                    buffer[i] = 0;\n            }\n\n            return count;\n        }\n    }\n}\n</code></pre>\n\n",
+    "PostedDate": "2013-02-05T10:15:52.783-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996971",
+    "ThreadId": "428478",
+    "Html": "One thing to try is making sure you don't Dispose WaveOutEvent until after the PlaybackStopped event has been fired. Otherwise the background thread could be making calls into the driver at the same time as it is being closed.<br />\n",
+    "PostedDate": "2013-02-05T15:16:45.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997040",
+    "ThreadId": "428478",
+    "Html": "Yes, that would certainly spoil your day.\r<br />\nI ran into a couple of more issues: media not playing after a few Play/Stop cycles, garbled output sometimes. The core issue seems to be that we don't wait for play thread to exit at Stop. That results in multiple play threads at times if you do Play/Start very fast. And also the issue that you mentioned. I fixed it by a ManualResetEvent which tracks if play thread is off or not. Below is the waveOutEvent changes I ended up with. It also includes setting callbackEvent when creating a new play thread. This fixed no media problem:<br />\n<pre><code>private ManualResetEvent playThreadOff; // &lt;----- declare this class var\n\nthis.playThreadOff = new ManualResetEvent(true); // &lt;------ init in contructor\n\npublic void Play()\n        {\n            if (playbackState == PlaybackState.Stopped)\n            {\n                callbackEvent.Set();      // &lt;---- Kick thread\n                playThreadOff.WaitOne(); // &lt;---------wait for previous thread, if any to end\n                playThreadOff.Reset(); // &lt;-------- Play thread is now on\n                playbackState = PlaybackState.Playing;\n                callBackEvent.Set(); // &lt;------- set again if it was reset by any previous thread\n                ThreadPool.QueueUserWorkItem((state) =&gt; PlaybackThread(), null);\n            }\n            else if (playbackState == PlaybackState.Paused)\n            {\n                Resume();\n                callbackEvent.Set(); // give the thread a kick\n            }\n        }\n\nprivate void PlaybackThread()\n        {\n            Exception exception = null;\n            try\n            {\n                DoPlayback();\n            }\n            catch (Exception e)\n            {\n                exception = e;\n            }\n            finally\n            {\n                playbackState = PlaybackState.Stopped;\n                playThreadOff.Set(); &lt;----------- Thread going off\n                // we're exiting our background thread\n                RaisePlaybackStoppedEvent(exception);\n            }\n        }\n\npublic void Stop()\n        {\n            if (playbackState != PlaybackState.Stopped)\n            {\n                // in the call to waveOutReset with function callbacks\n                // some drivers will block here until OnDone is called\n                // for every buffer\n                playbackState = PlaybackState.Stopped; // set this here to avoid a problem with some drivers whereby \n                MmResult result;\n                lock (waveOutLock)\n                {\n                    result = WaveInterop.waveOutReset(hWaveOut);\n                }\n                if (result != MmResult.NoError)\n                {\n                    throw new MmException(result, &quot;waveOutReset&quot;);\n                }\n                callbackEvent.Set(); // give the thread a kick, make sure we exit\n                playThreadOff.WaitOne(); // &lt;---------------------wait for play thread to exit\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2013-02-05T21:35:59.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997058",
+    "ThreadId": "428478",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\naccess violation relates to memory corruption. It could be something strange with the way you do threading, or a bug somewhere in NAudio (are you using the latest version?), or even a problem with your soundcard drivers. Tracking them down is hard. I usually try to create the simplest program possible that exhibits the problem.<br />\n</blockquote>\nThanks sir, <br />\n<br />\nYes i am using latest NAudio. <br />\ni'll create simplest program to play audio file and i'll update you if i'll get same exception..<br />\n",
+    "PostedDate": "2013-02-05T22:57:04.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

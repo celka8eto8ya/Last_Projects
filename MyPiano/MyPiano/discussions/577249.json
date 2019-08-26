@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1340259",
+    "ThreadId": "577249",
+    "Html": "i want to read a __.ra,.rm __file using naudio. If this is not possible then can you lead me any idea to convert .ra, .rm file into mp3/wav/wma file using C#. <br />\n<br />\nLike using lameexe we can convert wav file into mp3.<br />\n<br />\nAnd my 2nd question is about setting bass for different audio/s while mixing sounds. Like we can set volume for sounds while mixing. Like set rate of beat/bass from  Graphic Equalizer.<br />\n<br />\nFor Any Help<br />\nThanx<br />\n",
+    "PostedDate": "2015-01-08T22:31:51.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340521",
+    "ThreadId": "577249",
+    "Html": "Sorry, ra and rm are not open formats, and NAudio has no built-in support for them. I'd look for a command-line tool that converts it to WAV.\r<br />\n<br />\nAnd yes you can use a BiQUad filter for adjusting bass. Look in the WPF project at the example graphic equalizer source code to pick up some ideas on how to do this.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2015-01-09T14:08:13.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

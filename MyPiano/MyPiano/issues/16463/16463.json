@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I'm trying to initialize a device in WASAPI exclusive mode and am seeing this exception:\r\n\r\n> System.Runtime.InteropServices.COMException (0x88890019): Exception from HRESULT: 0x88890019\r\n   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)\r\n   at NAudio.CoreAudioApi.AudioClient.Initialize(AudioClientShareMode shareMode, AudioClientStreamFlags streamFlags, Int64 bufferDuration, Int64 periodicity, WaveFormat waveFormat, Guid audioSessionGuid) in C:\\src\\naudio-trunk\\NAudio\\CoreAudioApi\\AudioClient.cs:line 63\r\n   at NAudio.Wave.WasapiOut.Init(IWaveProvider waveProvider) in C:\\src\\naudio-trunk\\NAudio\\Wave\\WaveOutputs\\WasapiOut.cs:line 370\r\n   at NAudio.Wave.WaveExtensionMethods.Init(IWavePlayer wavePlayer, ISampleProvider sampleProvider, Boolean convertTo16Bit) in C:\\src\\naudio-trunk\\NAudio\\Wave\\WaveExtensionMethods.cs:line 35\r\n\r\nAfter some digging I found out the likely culprit is buffer alignment - the error code is AUDCLNT_E_BUFFER_SIZE_NOT_ALIGNED and MSDN states that \"The caller must call Initialize again with the aligned buffer size.\" (http://msdn.microsoft.com/en-us/library/windows/desktop/dd370875(v=vs.85).aspx)\r\n\r\nIn AudioClient.cs (NAudio trunk) I see that the Initialize() method is only called once, meaning if it fails, it's not called again with an aligned buffer size. I'm not sure how to approach it but found this interesting source: http://blogs.msdn.com/b/matthew_van_eerde/archive/2009/04/03/sample-wasapi-exclusive-mode-event-driven-playback-app-including-the-hd-audio-alignment-dance.aspx",
+    "LastUpdatedDate": "2014-12-28T07:53:50.56-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-12-17T04:18:15.303-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Exception when initializing device under WASAPI Exclusive mode",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16463
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for reporting. Do you know how to reproduce this issue?",
+      "PostedDate": "2014-12-28T07:53:50.56-08:00",
+      "Id": 168957
+    }
+  ]
+}

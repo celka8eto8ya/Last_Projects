@@ -1,0 +1,170 @@
+[
+  {
+    "Id": "1197245",
+    "ThreadId": "526048",
+    "Html": "I found this code online and I have been using it, but I do not know why you have to<br />\ndivide  by 32768f. and why do you have to make it a short ?<br />\nI want my to be a double to that is why I added <br />\nbuffer1[tempint] = (double)sample32;<br />\nis there a better way of doing it ?<br />\n<pre><code>void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\nt sample = (short)((buffer[index + 1] &lt;&lt; 8) |\n                                        buffer[index + 0]);\n\n                float sample32 = sample / 32768f;\n                buffer1[tempint] = (double)sample32;\n                tempint++;\n}</code></pre>\n\nand why do you have to divide by 32768f?<br />\n",
+    "PostedDate": "2014-01-25T07:37:57.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1197292",
+    "ThreadId": "526048",
+    "Html": "To get an IEEE float sample from a 16bit PCM sample you need to divide it by 32768. That's just the way it is.\r<br />\n<br />\nHave a look at the NAudio source, Wave16ToFloatProvider.cs show you how it's done.<br />\n",
+    "PostedDate": "2014-01-25T08:43:33.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1197301",
+    "ThreadId": "526048",
+    "Html": "ok I change my code to this :\r<br />\n<br />\n  for (int index = 0; index &lt; 32768; index += 2)<br />\n<pre><code>        {\n\n            buffer1[tempint] = ((buffer[index + 1] &lt;&lt; 8) |\n                                    buffer[index + 0]);\n            tempint++;\n\n        }</code></pre>\n\nbecause I want a double \r<br />\nthat should work right ?<br />\n",
+    "PostedDate": "2014-01-25T08:55:14.237-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1197632",
+    "ThreadId": "526048",
+    "Html": "What is buffer1 used for? I can't see why you would need a double for a sample, it should be either a 16bit int sample or a floating point sample.\r<br />\n<br />\n16bit int sample ranges from -32768 to 32768\r<br />\nfloat sample ranges from about -1.0f to 1.0f\r<br />\n<br />\nTo turn a 16bit sample into a float you divide it by 32768. Casting it to a double just blows the sample range out of proportion, it will still be within the -1.0d to 1.0d range.\r<br />\n<br />\n&quot;for (int index = 0; index &lt; 32768; index += 2)&quot; means you are iterating through a total of 32768 samples. It should be &quot;for (int index = 0; index &lt; buffer1.Length; index += 2)&quot;\r<br />\n<br />\nThe buffer would typically have 44100 samples per second per channel.<br />\n",
+    "PostedDate": "2014-01-25T16:38:57.923-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198488",
+    "ThreadId": "526048",
+    "Html": "buffer1 is a double array\r<br />\n<br />\nI going send  32768 sample to my fft\r<br />\nbecause it has to be 2^n number of sample sent to the fft\r<br />\n<br />\nI would told that double has more information than float and int\r<br />\nand my graphic class only takes in double \r<br />\n<br />\nwhat do you mean by  just blows the sample range out of proportion?\r<br />\nit have more useful information right?\r<br />\nfor my FFT?<br />\n",
+    "PostedDate": "2014-01-26T17:28:37.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198509",
+    "ThreadId": "526048",
+    "Html": "It all makes sense now, casting to a double should work fine.<br />\n<br />\nUsing a Sample Collector/Aggregator may be the best solution. It's a much cleaner way of sending samples to an FFT visualizer.<br />\n<br />\nHave a look at the AudioPlaybackDemo example app in the NAudio source. It should work fine with WaveIn.<br />\n<br />\nAudioPlayback.cs<br />\nSampleAggregator.cs<br />\n<br />\nCopy SampleAggregator.cs into your project, then have a look how AudioPlayback.cs interfaces with the SampleAggregator.<br />\n<br />\nSpecifically this function and the OnFftCalculated() function:<br />\n<pre><code>        private void OpenFile(string fileName)\n        {\n            try\n            {\n                var inputStream = new AudioFileReader(fileName);\n                fileStream = inputStream;\n                var aggregator = new SampleAggregator(inputStream);\n                aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;\n                aggregator.PerformFFT = true;\n                aggregator.FftCalculated += (s, a) =&gt; OnFftCalculated(a);\n                aggregator.MaximumCalculated += (s, a) =&gt; OnMaximumCalculated(a);\n                playbackDevice.Init(aggregator);\n            }\n            catch (Exception e)\n            {\n                MessageBox.Show(e.Message, &quot;Problem opening file&quot;);\n                CloseFile();\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2014-01-26T17:58:00.583-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199106",
+    "ThreadId": "526048",
+    "Html": "K24A3\r<br />\n<br />\nI am a little lost here.\r<br />\n<br />\nI was able to find AudioPlayback demo file but I was not able to find AudioPlayback.cs or\r<br />\nSampleAggregator.cs\r<br />\n<br />\n<a href=\"http://naudio.codeplex.com/SourceControl/latest#NAudioDemo/AudioPlaybackDemo/AudioPlaybackPanel.cs\" rel=\"nofollow\">http://naudio.codeplex.com/SourceControl/latest#NAudioDemo/AudioPlaybackDemo/AudioPlaybackPanel.cs</a><br />\n",
+    "PostedDate": "2014-01-27T13:14:34.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199109",
+    "ThreadId": "526048",
+    "Html": "<a href=\"http://naudio.codeplex.com/SourceControl/latest#NAudioWpfDemo/AudioPlaybackDemo/SampleAggregator.cs\" rel=\"nofollow\">http://naudio.codeplex.com/SourceControl/latest#NAudioWpfDemo/AudioPlaybackDemo/SampleAggregator.cs</a><br />\n",
+    "PostedDate": "2014-01-27T13:19:04.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199129",
+    "ThreadId": "526048",
+    "Html": "ok I got it ...<br />\n<br />\nbut I am not reading from a file.<br />\nI am reading from a microphone <br />\n<pre><code>void Voice()\n        {\n            //Byte[] buffer = new Byte[10];\n            // sound from the Mic\n\n            int deviceNumber = 0;\n            waveIn = new WaveIn();\n            waveIn.BufferMilliseconds = 250;\n            waveIn.DeviceNumber = deviceNumber;\n            waveIn.DataAvailable += waveIn_DataAvailable;\n            waveIn.WaveFormat = new WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(deviceNumber).Channels);\n            waveIn.StartRecording();\n        }</code></pre>\n\nSampleAggregator() take in a AudioFileReader<br />\n<br />\nalso what does this do ?<br />\n<pre><code> aggregator.FftCalculated += (s, a) =&gt; OnFftCalculated(a);\n                aggregator.MaximumCalculated += (s, a) =&gt; OnMaximumCalculated(a);</code></pre>\n\nare they two events?<br />\nwhy is int fftLength = 1024? that is a small sample ... it is enough to do a fft on a live sample system ?<br />\n",
+    "PostedDate": "2014-01-27T13:53:39.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199133",
+    "ThreadId": "526048",
+    "Html": "what is with all the \r<br />\nthis. ?<br />\n<pre><code> public SampleAggregator(ISampleProvider source, int fftLength = 1024)\n        {\n            channels = source.WaveFormat.Channels;\n            if (!IsPowerOfTwo(fftLength))\n            {\n                throw new ArgumentException(&quot;FFT Length must be a power of two&quot;);\n            }\n            this.m = (int)Math.Log(fftLength, 2.0);\n            this.fftLength = fftLength;\n            this.fftBuffer = new Complex[fftLength];\n            this.fftArgs = new FftEventArgs(fftBuffer);\n            this.source = source;\n        }</code></pre>\n\nyou use this. when you are working with more that one thread right ?\r<br />\n<br />\nbut you are only reading from one file, so why would you need it ?<br />\n",
+    "PostedDate": "2014-01-27T13:58:06.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199137",
+    "ThreadId": "526048",
+    "Html": "why are you doing this ?<br />\n<pre><code> aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;\n</code></pre>\n\nwhy are you  dividing my 100?\r<br />\nalso are you using the default Sample rate?<br />\n",
+    "PostedDate": "2014-01-27T14:01:32.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199138",
+    "ThreadId": "526048",
+    "Html": "also in SampleAggregator.cs<br />\nthe  Read function  calls Add function and the Add function calls the FFT function .<br />\nbut where is the Read function called to start all of this off?<br />\n",
+    "PostedDate": "2014-01-27T14:09:03.303-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199251",
+    "ThreadId": "526048",
+    "Html": "Try SampleAggregator(wavein). I cant check if it works at the moment.\r<br />\n<br />\nThis is the event using Linq\r<br />\naggregator.FftCalculated += (s, a) =&gt; OnFftCalculated(a);\r<br />\n<br />\nThis is how many times a second aggregator will send the FFT data to your OnFftCalculated function.\r<br />\naggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100; // Your FFT visualizer will update 10 times a second\r<br />\n<br />\nOnFftCalculated will be called 10 times a second and will send 1024 FFT data (not 1024 samples). FFT data is a range of peak frequencies detected in all the samples that were sent to the aggregator within that 1/10th of a second. The aggregator doesn't care how many samples it receives, it keeps on calculating the volume peaks, sends the current data, and resets 10 times a second.<br />\n",
+    "PostedDate": "2014-01-27T16:48:04.8-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199272",
+    "ThreadId": "526048",
+    "Html": "wait before I do all of that...\r<br />\ni just learned that my program is kind of working ...\r<br />\nI am using this site for testing now \r<br />\n<a href=\"http://onlinetonegenerator.com/?freq=5000\" rel=\"nofollow\">http://onlinetonegenerator.com/?freq=5000</a>\r<br />\nand not that youtube video ...\r<br />\n<br />\nI always get half the right Frequency\r<br />\n<br />\nI also did 3000Hz from that same site\r<br />\nand the highest point I get is 1499.249\r<br />\n<br />\nI did 5000Hz\r<br />\nand I got 2500Hz\r<br />\n<br />\nI did 261.625565Hz\r<br />\nand I got 131.890Hz\r<br />\nso why is that ?<br />\n",
+    "PostedDate": "2014-01-27T17:17:20-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199275",
+    "ThreadId": "526048",
+    "Html": "someone else told me that \r<br />\nthe samples might actually be 8-bit samples, not 16-bit \r<br />\nif that is so then I am cutting my in coming samples in half<br />\n<pre><code>            PointPairList list = new PointPairList();\n            PointPairList list2 = new PointPairList();\n            byte[] buffer = e.Buffer;\n            int bytesRecorded = e.BytesRecorded;\n            points = new RollingPointPairList(32768 / 2);\n            buffer1 = new double[(32768 / 2)];\n            int tempint = 0;\n            for (int index = 0; index &lt; 32768; index += 2)\n            {\n\n                buffer1[tempint] = ((buffer[index + 1] &lt;&lt; 8) |\n                                        buffer[index + 0]);\n\n                //float sample32 = sample / 32768f;\n               // buffer1[tempint] = (double)sample32;\n                tempint++;\n\n            }\n\n            DSP = new DSPclass(buffer1, 44100);\n            DSP.FFT1();\n            double[] F = new double[bytesRecorded];\n            double[] C = new double[bytesRecorded];\n            int temp = DSP.frequencies(F, C);\n            \n             LineItem myCurve;\n            if (temp1 == true)\n            {\n                temp1 = false;\n                for (int i = 0; i &lt; buffer1.Length; i++)\n                {\n                    points.Add(counter, (double)buffer1[i]);\n                    counter++;\n\n                }\n                myCurve = myPane.AddCurve(&quot;&quot;, points, System.Drawing.Color.Blue, SymbolType.Circle);\n                if (counter &gt;= 10)\n                {\n                    myPane.XAxis.Scale.Max = points[points.Count - 1].X;\n                    myPane.XAxis.Scale.Min = myPane.XAxis.Scale.Max - 20;\n                    zedGraphControl1.AxisChange();\n                    zedGraphControl1.Invalidate();\n                    zedGraphControl1.Refresh();\n                }\n                else\n                {\n\n                    zedGraphControl1.AxisChange();\n                    zedGraphControl1.Invalidate();\n                    zedGraphControl1.Refresh();\n                }\n\n                for (int u = 0; u &lt; temp; u++)\n                {\n                    list2.Add((double)F[u], (double)C[u]);\n                  //  richTextBox1.Text = richTextBox1.Text + &quot; &quot; + Convert.ToString(F[u]);\n                }\n               LineItem myCurve2 = myPane2.AddCurve(&quot;&quot;, list2, System.Drawing.Color.Blue, SymbolType.Circle);\n                zedGraphControl2.AxisChange();\n                zedGraphControl2.Invalidate();\n                zedGraphControl2.Refresh();\n            }</code></pre>\n\n",
+    "PostedDate": "2014-01-27T17:21:40.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199294",
+    "ThreadId": "526048",
+    "Html": "If you can get it working then that's fine. I'd use SampleAggregator personally since it is done and tested.<br />\n<br />\ni dont think it matters what the bitspersample is. max volume should still be about 1.0f<br />\n",
+    "PostedDate": "2014-01-27T18:06:52.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199414",
+    "ThreadId": "526048",
+    "Html": "I think it does...\r<br />\nit is it 8 bit samples that i am losing have my samples \r<br />\nbut is it 16 bit then I am doing it right\r<br />\nso which is it ?  <br />\n",
+    "PostedDate": "2014-01-27T21:00:05.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199421",
+    "ThreadId": "526048",
+    "Html": "so I just tried this :<br />\n<pre><code>  for (int index = 0; index &lt; 32768; index++)\n            {\n                buffer1[tempint] = buffer[index]; \n                tempint++;\n            }\n</code></pre>\n\nand the fft is off<br />\nso maybe it really is 16bits<br />\n<br />\ndo anyone know anything that might help me?<br />\n",
+    "PostedDate": "2014-01-27T21:10:52.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199442",
+    "ThreadId": "526048",
+    "Html": "Not sure but here is the code to get SampleAggregator working<br />\n<pre><code>\ninit()\n{\n        WaveIn wavein = new WaveIn();\n        waveIn.BufferMilliseconds = 250;\n        waveIn.DeviceNumber = 0;\n        //waveIn.DataAvailable += waveIn_DataAvailable;\n        waveIn.WaveFormat = new WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(deviceNumber).Channels);\n        \n        SampleAggregator aggregator = new SampleAggregator(wavein);\n        aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;\n        aggregator.PerformFFT = true;\n        aggregator.FftCalculated += OnFftCalculated; // for spectrum analyzer\n        //aggregator.MaximumCalculated += (s, a) =&gt; OnMaximumCalculated(a); // for volume peaks\n        \n        waveIn.StartRecording();    \n}\n\n        void audioGraph_FftCalculated(object sender, FftEventArgs e)\n        {\n            if (yourControl != null)\n            {\n                yourControl .OnFftCalculated(e.Result); // The float array, 0 to 1023 is the frequency peaks from 20hz to 20000hz (or there abouts)\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2014-01-27T21:43:04.74-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199480",
+    "ThreadId": "526048",
+    "Html": "can anyone tell me if I am read in the sample right?\r<br />\nfrom the microphone ?\r<br />\n<br />\nI know my fft works... because I compared it to mat lab...\r<br />\nI just need to know more about reading in for the microphone <br />\n",
+    "PostedDate": "2014-01-27T22:32:41.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199544",
+    "ThreadId": "526048",
+    "Html": "if you construct a signal chain (say WaveIn -&gt; BufferedWaveProvider -&gt; ToSampleProvider -&gt; SampleAggregator), then you will still need something to &quot;pull&quot; data out the other end. Normally this is the soundcard, or a WaveFileWriter. In your case, you would have to call Read on the SampleAggregator and pull out the number of samples you knew had been put in.\r<br />\n<br />\nSo in your case, with nothing playing the data, I'd just pull out the code from within SampleAggregator and use that to build up buffers full of samples. When you've got the required number (e.g. 1024 or 2048), then you can run your FFT on it.<br />\n",
+    "PostedDate": "2014-01-28T00:01:17.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

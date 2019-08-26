@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1358302",
+    "ThreadId": "583684",
+    "Html": "Greetings all,\r<br />\n<br />\nmy goal is to modify the current audio output stream in order to apply audio effects such as echo or reverb. I currently don't have a clue on how to achieve this with NAudio, but I think it should be possible.\r<br />\n<br />\nFirst I would have to retrieve the current active audio output device, then I'd have to apply an effect. Can anyone show me how this can be done?\r<br />\n<br />\nThanks in advance!\r<br />\nRegards<br />\n",
+    "PostedDate": "2015-03-01T06:35:57.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358850",
+    "ThreadId": "583684",
+    "Html": "If you want to add effects to audio that you are playing yourself with NAudio, then this is done simply by creating an ISampleProvider that processes the samples as they are played. You would need to create the effect algorithms yourself, or borrow them from elsewhere.\r<br />\n<br />\nHowever, if you want to intercept sound being played by other applications, this is not something that the underlying Windows audio infrastructure allows you to do easily, and cannot be done with NAudio.<br />\n",
+    "PostedDate": "2015-03-02T08:58:57.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358854",
+    "ThreadId": "583684",
+    "Html": "Windows can do that? Sounds interesting. How?`\r\n\r\nPs. I'm looking forward to modify the sound of all running applications, i.e. the output device (speakers)<br />\n",
+    "PostedDate": "2015-03-02T09:06:25.82-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1360675",
+    "ThreadId": "583684",
+    "Html": "I've been experementing with the WasapiLoopbackCapture and WasapiOut. All I think I need to do, is something like<br />\n<pre><code>loop\n{\n    record for 100ms\n    play recorded input\n}</code></pre>\n\nCan you help me out with the object model of NAudio? It's complicated and I don't see through...\r<br />\n<br />\nWould appreciate that :)<br />\n",
+    "PostedDate": "2015-03-07T15:54:50.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1360678",
+    "ThreadId": "583684",
+    "Html": "This is what I have so far, but it's only causing some sort of noise. I also don't see a way to control how often &quot;DataAvailable&quot; is called. I would rather like to record like 100ms and then play it at half volume to create the echo effect.<br />\n<pre><code>WasapiLoopbackCapture waveIn = new WasapiLoopbackCapture();\nwaveIn.DataAvailable += delegate(object sender, WaveInEventArgs e)\n{\n    try\n    {\n        byte[] bytes;\n        using (MemoryStream mem = new MemoryStream())\n        {\n            using (WaveFileWriter file = new WaveFileWriter(mem, new WaveFormat(44000, 2)))\n            {\n                file.Write(e.Buffer, 0, e.BytesRecorded);\n            }\n            bytes = mem.ToArray();\n        }\n        WaveOut waveOut = new WaveOut();\n        waveOut.Init(new WaveFileReader(new MemoryStream(bytes)));\n        waveOut.Play();\n    }\n    catch (Exception ex)\n    {\n\n    }\n};\nwaveIn.StartRecording();\nApplication.Run();</code></pre>\n\n",
+    "PostedDate": "2015-03-07T16:18:14.96-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

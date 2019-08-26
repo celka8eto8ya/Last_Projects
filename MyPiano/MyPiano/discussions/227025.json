@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "492777",
+    "ThreadId": "227025",
+    "Html": "<p>How do I use the CoreAudioApi.AudioMeterInformation. It doesn't have a constructor, so I have no idea how to get an instance of this object. Any help would be appreciated.</p>\r\n<p>Thanks!!!</p>",
+    "PostedDate": "2010-09-13T06:46:27.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "494402",
+    "ThreadId": "227025",
+    "Html": "<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre><span style=\"font-family:'Segoe UI', 'Microsoft Sans Serif', Arial, Geneva, sans-serif\"><span style=\"white-space:normal\"><span style=\"font-family:Consolas, 'Courier New', Courier, monospace\"><span style=\"white-space:pre\"><div style=\"color:black;background-color:white\"><pre><span style=\"color:blue\">using</span> NAudio.CoreAudioApi;\r\n\r\nMMDeviceEnumerator devEnum = <span style=\"color:blue\">new</span> MMDeviceEnumerator();\r\nMMDevice defaultDevice = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);\r\n\r\n<span style=\"color:blue\">string</span> currVolume = <span style=\"color:#a31515\">&quot;MasterPeakVolume : &quot;</span> + defaultDevice.AudioMeterInformation.MasterPeakValue.ToString();\r\n</pre>\r\n</div>\r\n<br></span></span></span></span></pre>\r\n</div>\r\n</p>\r\n<p>Copied from&nbsp;<a href=\"http://stackoverflow.com/questions/2534595/get-master-sound-volume-in-c/3613699#3613699\">http://stackoverflow.com/questions/2534595/get-master-sound-volume-in-c/3613699</a></p>",
+    "PostedDate": "2010-09-16T04:47:38.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "494732",
+    "ThreadId": "227025",
+    "Html": "<p>Thanks for the reply!!!</p>\r\n<p>The MMDeviceEnumerator only works for Windows Vista or Windows 7. Is there any other way to get the information in the AudioMeterInformation object for Windows XP?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks again!!!</p>",
+    "PostedDate": "2010-09-16T18:59:17.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "498621",
+    "ThreadId": "227025",
+    "Html": "<p>AudioMeterInformation is not available in Windows XP.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-09-26T11:52:49.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "499230",
+    "ThreadId": "227025",
+    "Html": "<p>Hello.</p>\r\n<p>So, Is there any way using any other resources or combination of them in the NAudio library to get the MastePearkValue and PeakValues using components available for Windows XP?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks for help!!!!</p>",
+    "PostedDate": "2010-09-27T17:47:11.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "502652",
+    "ThreadId": "227025",
+    "Html": "<p>I guess there must be some way, but I'm afraid I don't know what it is. You might be best off asking a question on StackOverflow</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-05T11:52:48.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "587425",
+    "ThreadId": "251444",
+    "Html": "<p>Hi,</p>\n<p>Is it possible to use Naudio to convert a AMR (format used in mobile for instance) file to a Wav file?</p>\n<p>&nbsp;</p>\n<p>Thanks&nbsp;</p>",
+    "PostedDate": "2011-03-28T00:26:18.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588671",
+    "ThreadId": "251444",
+    "Html": "<p>Any idea??</p>",
+    "PostedDate": "2011-03-30T02:15:53.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588672",
+    "ThreadId": "251444",
+    "Html": "<p>I'm afraid I don't know what the AMR file format is. NAudio doesn't have any built in support for it.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-30T02:17:10.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

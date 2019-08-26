@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "425008",
+    "ThreadId": "207659",
+    "Html": "<p>Hi Mark,</p>\r\n<p>I have two questions. The ResamplerDmoStream class has a limitation, that it is dependent on the samplerdmo which is not available in Windows XP. I can get and the dlls and register them. Though, I want the application to be as simple as possible for users. So, is there any way to overcome this at all. Also, is there any way to make the ResamplerDmoStream accept chuncks of data as an input?</p>\r\n<p>Thanks a lot.</p>",
+    "PostedDate": "2010-03-29T09:20:06.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425353",
+    "ThreadId": "207659",
+    "Html": "<p>the easy way is to use WaveFormatConversionStream, since all XP machines have an ACM codec that can do Sample Rate Conversion.</p>\r\n<p>I'm not entirely sure what you mean by accepting chunks of data as input. If you derive your own WaveStream class, then you can pass chunks of data into that, and they can be read out from the Read method</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-30T02:27:58.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425470",
+    "ThreadId": "207659",
+    "Html": "<p>Acm codec is not accurate in both downsampling and upsampling. I hear   a lot of noise in the audio track. Any solution to this? By the way, I   have tried the conversion using both of WaveFormatConversionStream  class  and the Windows XP Sound Recoder. They end up in the same result.</p>\r\n<p><strong>I'm  not entirely sure what you mean by accepting chunks of data as   input.</strong></p>\r\n<p>What  I meant, is I need to split the wav source into blocks and  resample each  of them, one at a time then write them to a file.  How can I  achieve that? Also, it would be really nice if you point to an  example.</p>\r\n<p>I  appreciate it, Mark.</p>",
+    "PostedDate": "2010-03-30T06:55:06.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425908",
+    "ThreadId": "207659",
+    "Html": "<p>I'm surprised you get a lot of noise. What are you going from and to? Is it clicking noise?</p>\r\n<p>I'm afraid I have no example code, but you can simply make a custom WaveStream that only returns the portion of your WAV file you want to resample in your Read method. Then you can use that as the input to the WaveFormatConversionStream</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-31T03:51:22.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425964",
+    "ThreadId": "207659",
+    "Html": "<p>I have tried some files with different sampling rates (they share the same bitdepth which is 16bit, and the same number of channels which is 1 (mono)). Either, I hear a noise like the one your hear in a vinyl record or the one you hear when they try to make a robotic speaking sound effect (that is the closest thing to it). Anyway, I am not surprised. I have seen another thread with a user having the same problem. It is dependent on the acm codec. So, I will stick to the resamplerdmo at the moment. I will give it a go with the WaveStream class. I hope I find my way around it. Thank you for your continuous support, Mark. Also, thanks for this great framework.</p>",
+    "PostedDate": "2010-03-31T05:49:51.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

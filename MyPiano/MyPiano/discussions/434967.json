@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1008593",
+    "ThreadId": "434967",
+    "Html": "I am trying to play a stereo stream across 4 channels (Right channel to RF RR and Left channel to LF LR), but only if the current hardware supports it (sound card with at least 4 outputs).\r<br />\n<br />\nHow do I accomplish this?<br />\n",
+    "PostedDate": "2013-02-28T20:09:04.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008644",
+    "ThreadId": "434967",
+    "Html": "Exactly for your problem naudio has a class called <a href=\"http://naudio.codeplex.com/SourceControl/changeset/view/b67d20a2915e#NAudio/Wave/WaveProviders/MultiplexingWaveProvider.cs\" rel=\"nofollow\">MultiplexingWaveProvider</a>. \r<br />\n<br />\nJust use the ConnectInputToOutput to connect your right channel to rf and rr and so on. If you call Read or playback the multiplexingwaveprovider you've created, your channels will be mapped automatically.<br />\n",
+    "PostedDate": "2013-02-28T23:52:12.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008797",
+    "ThreadId": "434967",
+    "Html": "How do I verify the current hardware supports 4 channels before I use the MultiplexingWaveProvider?\r<br />\n<br />\nWill it error out if I set up 4 channels and the hardware only supports 2?<br />\n",
+    "PostedDate": "2013-03-01T05:18:08.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008827",
+    "ThreadId": "434967",
+    "Html": "It depends on the soundout you are using. But of course it will cause an error. \r<br />\nFor example if you use directsoundout you can findout whether 4 channels are supported by calling GetCaps. Or if you use WaveOut you can call WaveOut.GetCapabilities(int) and check the channels. But DirectSoundOut and WaveOut won't support that anyway. I guess WasAPI can do this but you still will have to check wether it supports it or not.<br />\n",
+    "PostedDate": "2013-03-01T06:08:45.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

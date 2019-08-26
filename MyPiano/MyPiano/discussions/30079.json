@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "100218",
+    "ThreadId": "30079",
+    "Html": "hello,<br>\r\nit's me again..like I told you&nbsp; I'm trying to convert from MP3(or wave ) to Wave(CCitt Alaw )..<br>\r\nI'm trying this using NAudio:<br>\r\nanyway here is it:<br>\r\n<br>\r\n&nbsp;&nbsp; &nbsp; class Program<br>\r\n&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; static void Main(string[] args)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string inputfile = &quot;test1.wav&quot;;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string outputfile = &quot;test1conv.wav&quot;;<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp; <br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NAudio.Wave.WaveFormat frt = NAudio.Wave.WaveFormat.CreateCustomFormat(<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NAudio.Wave.WaveFormatEncoding.ALaw, 1,8000, 8000, 1, 8);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (NAudio.Wave.WaveFileReader srcFile = new NAudio.Wave.WaveFileReader(inputfile))<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (NAudio.Wave.WaveFormatConversionStream conv = new NAudio.Wave.WaveFormatConversionStream(frt, (NAudio.Wave.WaveStream)srcFile))//MmException here, it said: AcmNotPossible calling acmStreamOpen???<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (NAudio.Wave.WaveFileWriter write = new NAudio.Wave.WaveFileWriter(outputfile, frt))<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte[] buffer = new byte[1024];<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int byteRead;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; do<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byteRead = conv.Read(buffer, 0, buffer.Length);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; write.WriteData(buffer, 0, byteRead);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } while (byteRead &gt; 0);<br>\r\n<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp; }<br>\r\n<br>\r\ndo you have any idea what's could be the problem??<br>\r\nthanks.<br>\r\n<br>\r\n<br>\r\n<br>\r\n",
+    "PostedDate": "2008-06-22T08:36:29.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "100226",
+    "ThreadId": "30079",
+    "Html": "these type of conversions usually require multiple stages. First the MP3 needs to be converted to PCM. I would use WaveFormatConversionStream.CreatePcmStream for this. With a typical MP3 file this would come out as PCM 16 bit stereo 44.1kHz. Next use a second WaveFormatConversionStream to convert to PCM with the sample rate and channels you require - i.e. PCM 16 bit mono 8kHz. Now finally you can use a third WaveFormatConversionStream to get to the A-law format you want.<br>\r\n<br>\r\nhope this helps<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-06-22T09:32:27.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "100327",
+    "ThreadId": "30079",
+    "Html": "Hi,<br>\r\nI'm trying your way...I got an MP3 file and I'm trying to conversion to\r\nPCM ...I read my MP3&nbsp; MP3FileReader, then I use\r\nthe&nbsp;<br>\r\nWaveFormatConversionStream<span style=\"font-size:13px\">.CreatePcmStream to get a Wave\r\nStream ..then I instantiate a Wave Writer and try to read form the PCMStream and\r\nWrite...but It's not Working .. <br>\r\n</span><span style=\"font-size:13px;color:rgb(43, 145, 175)\"><span style=\"color:rgb(0, 0, 0)\">this the part of the code:<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public static string inputfile = &quot;Test2.mp3&quot;;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public static string outputfile = &quot;Testconv1.wav&quot;;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public static void convertToPcm()<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (NAudio.Wave.Mp3FileReader mp3Reader = new NAudio.Wave.Mp3FileReader(inputfile))<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (NAudio.Wave.WaveStream pcmStream = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(mp3Reader))<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (NAudio.Wave.WaveFileWriter writer = new NAudio.Wave.WaveFileWriter(outputfile, pcmStream.WaveFormat))<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writer.Flush();&nbsp;&nbsp;&nbsp; <br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte[] buffer = new byte[1024];<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int byteRead;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; do<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byteRead = pcmStream.Read(buffer, 0, buffer.Length);///Here is the Problem...It return 0 ..always!!!<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writer.WriteData(buffer,0, byteRead);<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } while (byteRead &gt; 0);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n<br>\r\n<br>\r\n</span></span><span style=\"font-size:13px;color:rgb(43, 145, 175)\"><span style=\"color:rgb(0, 0, 0)\"> byteRead = pcmStream.Read(buffer, 0, buffer.Length);///Here is the Problem...It return 0 ..always!!!<br>\r\neven the first time I read the file!!!<br>\r\ndo You have any idea !!<br>\r\nthanks a lot..<br>\r\ncheers,<br>\r\nWalid<br>\r\n</span></span>\r\n",
+    "PostedDate": "2008-06-23T03:33:43.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "100364",
+    "ThreadId": "30079",
+    "Html": "Hi Walid,<br>\r\nI'm not sure exactly what is going wrong. Perhaps you could try reading with a larger buffer (say 8KB). Also, is your MP3 file using CBR or VBR?<br>\r\nI have to admit that the Mp3FileReader class is still in its early stages, and probably needs to be made more robust. It currently uses whatever MP3 ACM decoder it can find on your system. Let me know how you get on.<br>\r\nMark<br>\r\n<br>\r\n",
+    "PostedDate": "2008-06-23T07:12:53.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "100391",
+    "ThreadId": "30079",
+    "Html": "hello,<br>\r\nI'm trying to fix this..but do you think that for the moment..I can just convert from normal wave to CCITT ALaw 8Khz Mono..???<br>\r\nthanks..<br>\r\n",
+    "PostedDate": "2008-06-23T08:37:00.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "100415",
+    "ThreadId": "30079",
+    "Html": "Walid, are you using the latest code from CodePlex? I have made some improvements to the ACM conversion code recently. If you can build it, you can run the NAudioDemo application and use it to perform a WAVE conversion to A-law. (You might need to do it in two stages though, depending on the sample-rate of your original file).<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-06-23T11:22:27.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "100453",
+    "ThreadId": "30079",
+    "Html": "Thanks man, I'll give it a shot..I'm under a lot of pressure to make this work..<br>\r\nwhen you say two stage: from wave --&gt;PCM 16 bit stereo 44.1kHz --&gt; PCM 8 bit Mono 8kHz--&gt; then CCITT (with CustomWaveFormat Class)??<br>\r\nand just a last thing , I still have this MmException saying &quot;AcmNotPossible calling acmStreamOpen&quot;!!!<br>\r\ndo you where this is coming from !!<br>\r\nthanks a lot <br>\r\ncheers, <br>\r\nWalid<br>\r\n",
+    "PostedDate": "2008-06-23T14:50:08.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "100789",
+    "ThreadId": "30079",
+    "Html": "hello,<br>\r\nI got the Demo&nbsp;working now!! :D<br>\r\nwhat is the stage to go from a wave (PCM 44Khz Stereo)--&gt; to a Wave (CCITT A-Law 8Khz MOnO&nbsp;)<br>\r\nplease???<br>\r\n<br>\r\n<br>\r\ncheers,<br>\r\nWalid\r\n",
+    "PostedDate": "2008-06-25T07:43:28.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "100824",
+    "ThreadId": "30079",
+    "Html": "<br>\r\n<div style=\"border-style:dotted none;border-color:rgb(170, 170, 170) -moz-use-text-color;border-width:0.1em medium;margin:1em 0em 2.5em 3em;padding:0.2em;font-style:italic\"><br>\r\nwhat is the stage to go from a wave (PCM 44Khz Stereo)--&gt; to a Wave (CCITT A-Law 8Khz MOnO&nbsp;)<br>\r\nplease???<br>\r\n<br>\r\n</div>\r\nHi Walid<br>\r\n<br>\r\nYou need to go first from PCM 44kHz Stereo to PCM 8kHZ mono. Then you can convert to A-law<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-06-25T09:29:52.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

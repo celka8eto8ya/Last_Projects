@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "982975",
+    "ThreadId": "428472",
+    "Html": "\r\n<p>Hi..</p>\r\n<p>I am creating a user control which will support all functionality like we can enable,disable, Mute audio capture device also we can change audio capture device volume..etc. and it should be&nbsp;synchronized&nbsp;with windows audio settings dialog (Mixer\r\n settings)</p>\r\n<p>Please check following code. using this i am only getting volume and mute value. but how to check whether audio device is disabled or enabled.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> <span style=\"color:blue\">foreach</span> (<span style=\"color:blue\">var</span> control <span style=\"color:blue\">in</span> mixerline.Controls)\n   {\n                <span style=\"color:blue\">var</span> audioControl = control <span style=\"color:blue\">as</span> NAudio.Mixer.UnsignedMixerControl;\n                <span style=\"color:blue\">if</span> (audioControl != <span style=\"color:blue\">null</span>)\n                {\n                    _volume = (<span style=\"color:blue\">int</span>)audioControl.Percent;\n                }\n\n                <span style=\"color:blue\">var</span> audioControl1 = control <span style=\"color:blue\">as</span> NAudio.Mixer.BooleanMixerControl;\n                <span style=\"color:blue\">if</span> (audioControl1 != <span style=\"color:blue\">null</span>)\n                {\n                    _isMute = audioControl1.Value;\n                }\n   }</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Thanks in advanced.</p>\r\n<p>NileshN</p>\r\n",
+    "PostedDate": "2013-01-04T02:40:11.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

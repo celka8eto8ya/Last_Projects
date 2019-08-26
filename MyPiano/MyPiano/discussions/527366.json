@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1198922",
+    "ThreadId": "527366",
+    "Html": "I'm preparing AacWaveFormat based on WaveFormat which has a variable 'Extra Size' at the end. So I added a byte[] array at the end like in WaveFormatExtraData.cs<br />\n<br />\nIn AacWaveFormat:<br />\n[MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]<br />\nprivate byte[] pbAudioSpecificConfig = new byte[40];<br />\n<br />\nIn WaveFormatExtraData.cs:<br />\n// try with 100 bytes for now, increase if necessary<br />\n[MarshalAs(UnmanagedType.ByValArray, SizeConst = 100)]<br />\nprivate byte[] extraData = new byte[100];<br />\n<br />\nBut Media Foundation doesn't accept it, it says:<br />\n<br />\nSystem.Runtime.InteropServices.COMException (0xC00D36B4): The data specified for the media type is invalid, inconsistent, or not supported by this object. (Exception from HRESULT: 0xC00D36B4)<br />\n   at NAudio.MediaFoundation.IMFTransform.SetInputType(Int32 dwInputStreamID, IMFMediaType pType, _MFT_SET_TYPE_FLAGS dwFlags)<br />\n<br />\nThe weird thing is that I can add as many normal bytes as I want<br />\n<br />\npublic byte pbAudioSpecificConfig1;<br />\npublic byte pbAudioSpecificConfig2;<br />\n...<br />\npublic byte pbAudioSpecificConfig7;<br />\npublic byte pbAudioSpecificConfig9999999;<br />\n<br />\n...which is fine because the ExtraSize is 12 (stock standard AAC Extra Size), anything before pbAudioSpecificConfig1 is not read anyway.<br />\n<br />\nBut as soon as I add a &quot;private byte[] pbAudioSpecificConfig = new byte[1];&quot; of any size including 0, I get an exception, even though it is AFTER the 12 standard AAC extra bytes which should be ignored.<br />\n<pre><code>   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 2)]\n    public class AacWaveFormat : WaveFormat\n    {\n        // *** typedef struct heaacwaveformat_tag {\n        // ***  HEAACWAVEINFO wfInfo;\n        // ***  BYTE          pbAudioSpecificConfig[1];\n        // *** } HEAACWAVEFORMAT, *PHEAACWAVEFORMAT;        \n\n        /* HEAACWAVEINFO structure */\n        public ushort wPayloadType;\n        /// &lt;summary&gt;\n        /// wPayloadType\n        /// &lt;/summary&gt;\n        public ushort wAudioProfileLevelIndication;\n        /// &lt;summary&gt;\n        /// wStructType\n        /// &lt;/summary&gt;\n        public ushort wStructType;\n        /// &lt;summary&gt;\n        /// wReserved1\n        /// &lt;/summary&gt;\n        public ushort wReserved1;\n        /// &lt;summary&gt;\n        /// dwReserved2\n        /// &lt;/summary&gt;\n        public UInt32 dwReserved2;   \n\n// All of the above is the 12 standard bytes. Anything after is not read...     \n\n        /* BYTE pbAudioSpecificConfig[1]; */\n        /// &lt;summary&gt;\n        /// pbAudioSpecificConfig\n        /// &lt;/summary&gt;\n        //public byte[] pbAudioSpecificConfig = new byte[2]; // EXCEPTION\n        public byte pbAudioSpecificConfig1; // no problem\n        public byte pbAudioSpecificConfig2; // no problem       \n        public byte pbAudioSpecificConfig3; // test... no problem\n        public byte pbAudioSpecificConfig4; // test\n        public byte pbAudioSpecificConfig5; // test\n        public byte pbAudioSpecificConfig6; // test\n        public byte pbAudioSpecificConfig7; // test .. I can add a million of these, no problem\n        \n        // EXCEPTION The data specified is invalid\n        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]\n        private byte[] pbAudioSpecificConfig = new byte[1]; // byte[2]; // byte[100]; // byte[0]\n</code></pre>\n\nTried making it public, no change. Tried removing the MarshalAs, no change. Tried making it an empty array (byte[0]), no change.<br />\n<br />\nWhy does MF fail when I introduce a byte[] array AFTER the bytes it is told to read?<br />\n<br />\nMaybe WaveFormatExtraData.cs has the same problem, which I believe it does because I am getting the same exception when loading a WaveFormatExtraData in Media Foundation.<br />\n<br />\nIt appears a byte[] array is simply not acceptable in a StructLayout used through a COM interface.<br />\n<br />\n<br />\n<br />\n<br />\n... UPDATE<br />\n<br />\nApparently removing the &quot;= new byte[x]&quot; from the Struct and adding it to the constructor is supposed to work, but no dice.<br />\n<br />\n<a href=\"http://social.msdn.microsoft.com/Forums/vstudio/en-US/876ff2aa-07ff-4924-a124-8ff2b7642eb4/c-to-c-send-structur-with-byte-array-from-c-to-c?forum=csharpgeneral\" rel=\"nofollow\">http://social.msdn.microsoft.com/Forums/vstudio/en-US/876ff2aa-07ff-4924-a124-8ff2b7642eb4/c-to-c-send-structur-with-byte-array-from-c-to-c?forum=csharpgeneral</a><br />\n<pre><code>[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]\nprivate byte[] pbAudioSpecificConfig;// = new byte[2];\n\npublic AacWaveFormat(......)\n{\n    ....\n    ....\n    pbAudioSpecificConfig = new byte[2]; // same exception. If I remove this, it works fine. But I can't allocate the bytes obviously, plus it is fixed to 2 bytes since &quot;SizeConst = 2&quot; in the struct.\n}</code></pre>\n\nPerhaps it is because &quot;Pack = 2&quot;?<br />\nMaybe byte[] arrays only work with &quot;Pack = 1&quot; since they are an array of sequential data?<br />\n",
+    "PostedDate": "2014-01-27T04:14:49.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198966",
+    "ThreadId": "527366",
+    "Html": "what MF function are you actually calling that throws the exception? Maybe I used the NAudio custom waveformat marshaller for that bit, in which case you'll need to tell it about your AAC one. <br />\n",
+    "PostedDate": "2014-01-27T06:59:12.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198969",
+    "ThreadId": "527366",
+    "Html": "Same as in CreateTransform in MediaFoundationResampler.cs. SetInputType()<br />\n",
+    "PostedDate": "2014-01-27T07:13:20.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199256",
+    "ThreadId": "527366",
+    "Html": "Here is the code:<br />\n<pre><code>                var comObject = CreateAACDecoderComObjectUsingActivator(null);\n                var resamplerTransform = (IMFTransform)comObject;\n                \n                \n    \n                // Input Media Type\n                IMFMediaType inputMediaFormat = MediaFoundationApi.CreateMediaTypeFromWaveFormat(inputWaveFormat);\n                resamplerTransform.SetInputType(0, inputMediaFormat, 0); // &lt;EXCEPTION\n                Marshal.ReleaseComObject(inputMediaFormat);\n    \n\n                    // Output Media Type\n                IMFMediaType outputMediaFormat = MediaFoundationApi.CreateMediaTypeFromWaveFormat(outputWaveFormat);\n        resamplerTransform.SetOutputType(0, outputMediaFormat, 0);              \n                Marshal.ReleaseComObject(outputMediaFormat);</code></pre>\n\n",
+    "PostedDate": "2014-01-27T16:55:24.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199547",
+    "ThreadId": "527366",
+    "Html": "Shame that that approach doesn't work with COM. What I usually fall back to is marshalling an IntPtr and Marshal.StructToIntPtr (or whatever it is called)\r<br />\nAlternatively in your case, do you even need to use CreateMediaTypeFromWaveFormat? Might it be simpler just to create a MediaType and set up its properties (you can find out what properties it should have with the MFT enumeration demo).<br />\n",
+    "PostedDate": "2014-01-28T00:05:33.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199557",
+    "ThreadId": "527366",
+    "Html": "I'm doing it both ways actually:<br />\npublic MediaFoundationDecoder(IMFMediaType inputMediaType, IMFMediaType outputMediaType)<br />\npublic MediaFoundationDecoder(WaveFormat inputFormat, WaveFormat outputFormat)<br />\n<br />\nBut for some reason when I pass through the IMFMediaType I get this exception:<br />\nSystem.InvalidCastException: Unable to cast COM object of type 'System.__ComObject' to interface type 'NAudio.MediaFoundation.IMFMediaType'. This operation failed because the QueryInterface call on the COM component for the interface with IID '{44AE0FA8-EA31-4109-8D2E-4CAE4997C555}' failed due to the following error: No such interface supported (Exception from HRESULT: 0x80004002 (E_NOINTERFACE)).<br />\n<br />\n<br />\n<br />\n...Anyway I got WaveFormatExtraData working in MediaFoundation by removing the byte[] and adding simple bytes. It seems MediaFoundation checks the whole structure for arrays and refuses to handle them.<br />\n<pre><code>   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 2)]\n    public class WaveFormatExtraDataNEW : WaveFormat\n    {\n        // try with 100 bytes for now, increase if necessary\n        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]\n        //private byte[] extraData = new byte[14];\n\n        /// &lt;summary&gt;\n        /// Allows the extra data to be read\n        /// &lt;/summary&gt;\n        //public byte[] ExtraData { get { return extraData; } }\n        \n        \n        \n        public byte byte1;\n        public byte byte2;\n        public byte byte3;\n        public byte byte4;\n        public byte byte5;\n        public byte byte6;\n        public byte byte7;\n        public byte byte8;\n        public byte byte9;\n        public byte byte10;\n        public byte byte11;\n        public byte byte12;\n        public byte byte13;\n        public byte byte14;</code></pre>\n\n",
+    "PostedDate": "2014-01-28T00:17:37.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199640",
+    "ThreadId": "527366",
+    "Html": "This is strange, I cant seem to create an IMFMediaType in one class and send it through the constructor of another class, it seems to break. Even a simple GetUInt32() fails on it. Same exception. I'm creating IMFMediaType the exact same way.<br />\n<br />\nMaybe that is why whoever wrote MediaFoundationTransform.cs ran into the same problem and made CreateTransform() function as an abstract function. I'll just have to do something similar and avoid parsing IMFMediaType through the Constructor.<br />\n<br />\n<br />\n<br />\nAnyway, the byte[] problem in WaveFormat is the biggest issue. It doesn't matter if I use CreateMediaTypeFromWaveFormat to create the WaveFormat or use my own wave format, if it has a byte[] in it, even after the ExtraSize cut off, MF fails to load it.<br />\n<br />\n<br />\nI think we should modify WaveFormatExtraData.cs and set the array this way:<br />\n<br />\n// in struct<br />\nIntPtr pbAudioSpecificConfig = Marshal.AllocCoTaskMem(2);<br />\n<br />\n// adding data<br />\nMarshal.WriteByte(pbAudioSpecificConfig, 0, 0x12);<br />\nMarshal.WriteByte(pbAudioSpecificConfig, 1, 0x10);<br />\n<br />\nIt seems to be the proper way of doing it in .NET. I'll test it and see how it goes.<br />\n",
+    "PostedDate": "2014-01-28T01:52:56.84-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1199810",
+    "ThreadId": "527366",
+    "Html": "Using Marshal.WriteByte to write the extra bytes works fine.<br />\n<br />\nBut copying the whole struct in unmanaged code doesn't seem to work. I guess that is where the custom marshal comes in, correct?<br />\n<br />\nOr using Marshal.StructToIntPtr() as you mentioned?<br />\n<br />\nI'm not too good at all this Interop stuff :p<br />\n",
+    "PostedDate": "2014-01-28T05:28:42.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216015",
+    "ThreadId": "527366",
+    "Html": "yes, I don't actually pass WaveFormatExtraData directly into an interop signature, just use Marshal.StructToIntPtr (and vice versa). I thought that was working, as I used it quite a lot with the ACM format enumeration work I was doing.<br />\n",
+    "PostedDate": "2014-02-28T01:54:50.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216606",
+    "ThreadId": "527366",
+    "Html": "I already have this working but with the new WaveFormatExtraData using separate bytes instead of the byte[] array so MF accepts it.<br />\n<pre><code>        AacWaveFormat aac = new AacWaveFormat(44100,2,0,0,null);\n        IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(AacWaveFormat));\n        WaveFormat waveFormat = MediaFoundationApi.CreateWaveFormatFromMediaType(mt);\n        Marshal.StructureToPtr(waveFormat, ptr, true);\n        aac = (AacWaveFormat)Marshal.PtrToStructure(ptr, typeof(AacWaveFormat));</code></pre>\n\n",
+    "PostedDate": "2014-03-01T16:53:46.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

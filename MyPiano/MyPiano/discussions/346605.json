@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "802731",
+    "ThreadId": "346605",
+    "Html": "\r\n<p>Hi, i have a project that needs to convert an ASCII text file or a BIN file to a WAV file. I understand the formats of the files but my coding is not very strong.</p>\r\n<p>&nbsp;</p>\r\n<p>I can read the ASCII file, that contains a series of floats. this then needs to be converted to a byte array where it can then be used to create a WAV file. I found the NAudio library and was wondering if this is possible in NAudio and if anyone can highlight\r\n techniques that could help me i would be very&nbsp;greatfull&nbsp;&nbsp;</p>\r\n<p>Mike</p>\r\n",
+    "PostedDate": "2012-02-28T10:30:31.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "802814",
+    "ThreadId": "346605",
+    "Html": "<p>Hi Mike,</p>\r\n<p>The WaveFileWriter class has a WriteSample method you can call for each float in your input file</p>\r\n<p>Marl</p>",
+    "PostedDate": "2012-02-28T13:05:41.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "802874",
+    "ThreadId": "346605",
+    "Html": "<p>Thanks for replying Mark. &nbsp;do you know how this would be done? i am trying to use visual c#, using a GUI to open the ASCII .txt file then write the samples to wave format. I am not to clear on the processes it would take to do that from a txt or BIN file</p>\r\n<p>Mike</p>",
+    "PostedDate": "2012-02-28T14:51:44.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "804390",
+    "ThreadId": "346605",
+    "Html": "<p>well to parse samples in a text file you would use float.Parse. For a binary file, you would need to use a FileStream and read into a buffer, and then use the BitConverter to get the data out as samples</p>",
+    "PostedDate": "2012-03-02T05:38:53.58-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808147",
+    "ThreadId": "346605",
+    "Html": "<p>Mark,</p>\r\n<p>Thanks for your help. I am currently working to convert the binary file to wav. i am using the steps you recommended but the wav file sounds like noise with a high pitch. I am using ReadAllBytes to create a byte [] from the file. I have tried to use bit converter and the file sounds no different. Can you think of anything i am doing wrong in the conversion steps or anything else i should try.&nbsp;</p>\r\n<p>Mike</p>",
+    "PostedDate": "2012-03-09T09:04:37.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808154",
+    "ThreadId": "346605",
+    "Html": "<p>Mark,</p>\r\n<p>Please ignore last post. The program&nbsp;I&nbsp;created using NAudio successfully converts bin files to the wav format. Does the WaveFileWriter always write at 44.1 or can this be changed? The next step&nbsp;I&nbsp;need to do is read ascii files, convert the data to byte array and then use it to create a wav file.</p>\r\n<p>Mike</p>",
+    "PostedDate": "2012-03-09T09:21:18.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808412",
+    "ThreadId": "346605",
+    "Html": "<p>The WaveFileWriter takes a WaveFormat object in its constructor. Just pass in one with a different sample rate.</p>",
+    "PostedDate": "2012-03-10T01:37:33.35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

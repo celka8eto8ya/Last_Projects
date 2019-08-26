@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "898653",
+    "ThreadId": "391279",
+    "Html": "\r\n<p></p>\r\n<p style=\"margin:0px 0px 1em; padding:0px; border:0px; font-size:14px; vertical-align:baseline; clear:both; word-wrap:break-word; font-family:Arial,'Liberation Sans','DejaVu Sans',sans-serif; line-height:18px\">\r\nI'm fairly new to NAudio and I'm trying to load audio channels from a WAV file into WaveStreams and display each of those channels in its own WaveViewer.</p>\r\n<p style=\"margin:0px 0px 1em; padding:0px; border:0px; font-size:14px; vertical-align:baseline; clear:both; word-wrap:break-word; font-family:Arial,'Liberation Sans','DejaVu Sans',sans-serif; line-height:18px\">\r\nHow can I go about this ? Thanks !</p>\r\n<p></p>\r\n<div id=\"_mcePaste\" style=\"left:-10000px; top:0px; width:1px; height:1px; overflow:hidden\">\r\n<h1 style=\"margin:0px 0px 7px; padding:0px; border:0px; font-size:23px; vertical-align:baseline; font-family:'Trebuchet MS','Liberation Sans','DejaVu Sans',sans-serif; line-height:1.3\">\r\n<a href=\"http://stackoverflow.com/questions/11859409/how-to-play-multi-channel-audio-from-wav-file-using-naudio\" style=\"margin:0px; padding:0px; border:0px; vertical-align:baseline; background-color:transparent; color:#000000\">play multi-channel audio from\r\n WAV file using Naudio?</a></h1>\r\n</div>\r\n",
+    "PostedDate": "2012-08-12T23:31:34.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "900834",
+    "ThreadId": "391279",
+    "Html": "<p>The WaveViewer is a fairly rudimentary control that is just in NAudio as an example. You would need to customise it for your purposes, by sending the samples to each WaveViewer in turn (they are interleaved in a multi-channel audio file).</p>",
+    "PostedDate": "2012-08-17T13:05:57.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

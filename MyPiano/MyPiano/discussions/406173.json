@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "953700",
+    "ThreadId": "406173",
+    "Html": "\r\n<p>Background</p>\r\n<p>I have a reasonably complex application where an NAudio&nbsp;WaveIn stream is started and seems to run correctly.&nbsp; &#65279;&#65279;The input has two 44,100 channels.&nbsp;&nbsp;But&nbsp;if additional windows in the application are opened the application\r\n falls over with an &quot;Access violation&nbsp;on location 0x00000000&quot;.&nbsp; These additional windows have nothing to do with NAudio code.&nbsp; The OS is Windows 7.</p>\r\n<p>On&nbsp;investigation it appears that the problem only occurs&nbsp;if&nbsp;the waveIn BufferMilliseconds value&nbsp;has been increased to&nbsp;482 milliseconds or greater, giving a buffer over 85,000 bytes.&nbsp; It is possible&nbsp;the crash may be connected\r\n to the garbage collector coming in soon after the additional, and memory hungry, &nbsp;application windows open.</p>\r\n<p>Possible Cause</p>\r\n<p>Suspecting a memory issue I changed the following code in the NAudio file WaveInBuffer.cs so the 'header' value is now 'pinned'.&nbsp; This seems to fix the problem.&nbsp;&nbsp;</p>\r\n<p>//hHeader = GCHandler.Alloc(header);</p>\r\n<p>hHeader = GCHandler.Alloc(header, GCHandlerType.Pinned);</p>\r\n<p>I am not certain of the exact difference between the GCHandlerTypes 'Normal' and 'Pinned'&nbsp;but it&nbsp;may be worthwhile making this change to NAudio.&nbsp;</p>\r\n<p>Kind Regards</p>\r\n<p>&#65279;&#65279;John C</p>\r\n",
+    "PostedDate": "2012-12-09T18:45:28.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953721",
+    "ThreadId": "406173",
+    "Html": "\r\n<p>Just a comment on getting access violations if BufferMilliseconds is 482 or higher.&nbsp;&nbsp; I see that anything 85,000 bytes or larger is placed by the garbage collector on the large object heap so is treated differently by the garbage collector.</p>\r\n<p>John C</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-09T22:30:22.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953751",
+    "ThreadId": "406173",
+    "Html": "\r\n<p>thanks for reporting this. Pinning is where you tell the garbage collector that it is not allowed to move the location of something. You need to pin if you pass a pointer to an API and it might access that pointer outside of the call (I'm pretty sure that\r\n the .NET marshalling pins things during the API call). However pinning reduces the efficiency of the GC as it has to work around the objects that cannot be moved, which is my I pin as little as I can get away with in NAudio.</p>\r\n<p>This probably means that the same issue is possible with WaveOutBuffer as well, although I am a little surprised I have never encountered it. That is quite a high value for buffer milliseconds though, so that might explain it.</p>\r\n<p>I'll try to get round to sorting this out soon. I'm a bit concerned that it could mean the use of the userData member is not safe (which would require pinning the entire WaveInBuffer class). It might be better to use a buffer index instead.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-10T00:15:13.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953766",
+    "ThreadId": "406173",
+    "Html": "\r\n<p>thinking about it the userData ought to be safe, since the windows APIs don't actually use it and it is a GC Handle, not a pointer. I've made the change you suggest, so if you get the chance, please try again with the very latest version of the code.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-10T01:02:19.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954267",
+    "ThreadId": "406173",
+    "Html": "\r\n<p>Mark,</p>\r\n<p>I have tested&nbsp;nAudio with&nbsp;hHeader pinned and everything seems to work as expected.&nbsp;&nbsp;&nbsp;As far as I can see&nbsp;the hHeader pinning is the only change needed, at least on the WaveIn side.&nbsp;</p>\r\n<p>It appears this problem only occurs if 1) the wave input buffer is over 85,000 bytes (at least 482 millisecond buffers&nbsp;with two 16 bit channels) and 2) the Garbage Collector is needing to be aggressive.&nbsp;</p>\r\n<p>In my case the application windows which were started at the time nAudio gave an access violation&nbsp;presented real time graphics&nbsp;on&nbsp;incoming analog data.&nbsp; The input data analysis was displayed each second.&nbsp; The&nbsp;processing involved creating a large number of\r\n short&nbsp;lifetime, but large objects.&nbsp; From Perfmon the large object heap&nbsp;was growing into the hundreds of megabytes.&nbsp;&nbsp;&nbsp;I know - the code&nbsp;will&nbsp;be changed to reuse the large objects rather than creating new ones.&nbsp;</p>\r\n<p>Thanks again Mark for a nice general purpose product in nAudio.</p>\r\n<p>John C</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-10T18:55:37.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

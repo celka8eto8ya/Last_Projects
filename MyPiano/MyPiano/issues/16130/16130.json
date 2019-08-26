@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "duplicate",
+    "ClosedDate": "2011-06-17T12:58:09.6-07:00",
+    "CommentCount": 1,
+    "Custom": "",
+    "Description": "I wanted to compile NAudio source code in the VS 2008 .NET 3.5 but I've met little problem with code backward compatiblity.\nIn many files there are references to Linq \"using System.Linq;\" but most of the files do not need it really. \nAll unused references, like this, should be removed.",
+    "LastUpdatedDate": "2011-06-17T12:58:09.6-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-06-17T07:09:33.277-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "too many \"using\" references, that are not used",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16130
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "please remove this issue item, it is duplicate of #16129. Sorry for that.",
+      "PostedDate": "2011-06-17T07:32:21.927-07:00",
+      "Id": 41783
+    }
+  ]
+}

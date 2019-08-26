@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1203548",
+    "ThreadId": "529193",
+    "Html": "ok right now  i have a Microphone Array ( IDT High Definition Audio CODEC) with 2 channels and I am pull data from both channels<br />\n<pre><code>int deviceNumber = 0;\n            waveIn = new WaveIn();\n            waveIn.BufferMilliseconds = 250;\n            waveIn.DeviceNumber = deviceNumber;\n            waveIn.DataAvailable += waveIn_DataAvailable;\n            waveIn.WaveFormat = new WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(deviceNumber).Channels);\n            waveIn.StartRecording();\n        </code></pre>\n\nI get back 44100 Bytes Recorded at a time. Now I only need 65536 Bytes to pass to my fft, The data is in 16 bit samples so convert them\r<br />\nand there are some negative numbers so I do this :<br />\n<pre><code> byte[] buffer = e.Buffer;\n            int bytesRecorded = e.BytesRecorded;\n            points = new RollingPointPairList(32768/2);\n            buffer1 = new double[(32768/2)];\n            int tempint = 0;\n            for (int index = 0; index &lt; 32768; index += 2)\n            {\n\n                buffer1[tempint] = ((buffer[index + 1] &lt;&lt; 8) |\n                                      buffer[index + 0]);\n                \n                if (buffer1[tempint] &gt; 32767)\n                    buffer1[tempint] = buffer1[tempint] - 65536;\n\n                tempint++;\n\n            }\n\n</code></pre>\n\nis that the right way to read from two channels and pass it to a FFT?\r<br />\nI am reading from both the channels right?\r<br />\nis there anything I am missing ? or I should add to make this work better ?<br />\n",
+    "PostedDate": "2014-02-06T08:35:42.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1203962",
+    "ThreadId": "529193",
+    "Html": "ok i just turn my array mic setting down to 0\r<br />\nand I am still reading in values\r<br />\nhow can that be?<br />\n",
+    "PostedDate": "2014-02-06T19:59:39.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204352",
+    "ThreadId": "529193",
+    "Html": "I dont understand why your FFT requires 65536 bytes, it seems very excessive. It should be 2048 floats/samples (1024 per channel).\r<br />\n<br />\nAre you sending the FFT data to a spectrum analyser?\r<br />\n<br />\nspectrum analysers only need 2048 FFT floats every 100ms to draw a smooth animation.\r<br />\n<br />\nYou should really use a Sample Aggregator to collect the samples and tell it to send the data 10 times a second. The Aggregator may look complex at first but believe me its quite simple and the best way to do it. At least give it a try.<br />\n",
+    "PostedDate": "2014-02-07T07:36:57.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204368",
+    "ThreadId": "529193",
+    "Html": "K24A3,\r<br />\n<br />\nmy fft requires 2^samples, I only pick  65536 bytes because the more samples you have the better your fft works, right&gt;\r<br />\n<br />\nI am outputting the information to a graph \r<br />\n<br />\ncheck out these \r<br />\nyoutube vid:\r<br />\n<a href=\"https://www.youtube.com/watch?v=92UC_drDwB4\" rel=\"nofollow\">https://www.youtube.com/watch?v=92UC_drDwB4</a>\r<br />\n<a href=\"https://www.youtube.com/watch?v=NrLg7MTn4ac\" rel=\"nofollow\">https://www.youtube.com/watch?v=NrLg7MTn4ac</a>\r<br />\n<br />\nthis is my program I have... \r<br />\n<br />\nso does my code look right to you?<br />\n",
+    "PostedDate": "2014-02-07T07:57:22.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204392",
+    "ThreadId": "529193",
+    "Html": "It looks like that graph only updates every 250ms so you only need a snapshot of the audio every quarter of a second. <br />\n<br />\nThe SampleAggregator will collect (or cycle over) the samples, then calculate and send the current snapshot to the graph when needed.<br />\n<br />\nThat graph appears to need around 2048 float of FFT data. Calculating the FFT on absolutely all the samples would be redundant <br />\n",
+    "PostedDate": "2014-02-07T08:17:08.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207430",
+    "ThreadId": "529193",
+    "Html": "I tried to drop the simple down to 2048 and the FFT is now not get as close to the right frequency as it was before<br />\n",
+    "PostedDate": "2014-02-12T09:57:31.643-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207749",
+    "ThreadId": "529193",
+    "Html": "Take a bigger snapshot until you are happy with the frequency detail. 4096, 8192 etc..<br />\n",
+    "PostedDate": "2014-02-13T00:59:07.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "717364",
+    "ThreadId": "284219",
+    "Html": "\r\n<p><br>\r\nI want to write a program to play mp3 to multiple channels of sound card. I use M-audio fast track pro sound which has got 4in/4out.<br>\r\n<br>\r\nBut when i use some function in winmm.dll so i just get only 1 output device, but i thinks it must be return me 4 output device.<br>\r\n<br>\r\nI search on the google and found NAudio library, and i hear some body say that if i use AsioDriver i can play multiple mp3 file to multiple output channels.<br>\r\n<br>\r\nI had download and run the NAudioDemo, and select&nbsp; AsioDriver, in that example i just can play the .wave file for Asio<br>\r\n<br>\r\nMy question is how to play mp3 file with AsioOut.<br>\r\n<br>\r\nCould you help me?</p>\r\n",
+    "PostedDate": "2011-12-27T00:31:39.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717452",
+    "ThreadId": "284219",
+    "Html": "<p>hi,</p>\r\n<p>NAudio isn't particularly well set up to do this, but it is possible by creating a 4 channel wavestream that multiplexes two MP3 streams together. You would have to write that class yourself though. It's a possible feature for a future NAudio, but will have to wait until I own a multi-out soundcard myself ;)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-27T07:12:27.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717700",
+    "ThreadId": "284219",
+    "Html": "<p>Now i have a new problem.</p>\r\n<p>Some time before i use libZPlayer to play mp3 file, i create an install pagkage and deploy to others computer it run ok.</p>\r\n<p>But now i change libZplay and use NAudio to play mp3 music, i create install pagkage and deploy to others computer, when i run the application i get a Just-In-Time Debugger</p>\r\n<p>with the error: An unhandled win32 exception occured in my application.</p>\r\n<p>then i click Yes button to debug i get assembly&nbsp; code, so i can not determine error in what class</p>\r\n<p>How to solve this problem?</p>",
+    "PostedDate": "2011-12-27T20:04:13.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717741",
+    "ThreadId": "284219",
+    "Html": "<p>Can you try to play this using the NAudio demo application that comes with the latest NAudio? Also if possible, download the latest NAudio source code and run it through Visual Studio in the debugger. We need to know at what point the exception is happening (e.g. opening the ASIO driver, or during playback</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-27T23:41:59.967-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "718621",
+    "ThreadId": "284219",
+    "Html": "<p>I see the exception An unhandled win32 exception occured in my application,i think i cause from NAudio, because in NAudio have some unmanage code, but now i reconize that it not cause by NAudi, the NAudio run OK, the error cause bacause set an icon my form, the icon is a bad image so it cause the error.</p>\r\n<p>Now i have one more question.</p>\r\n<p>I want to use WaveOut to play mp3, my question is could i determine my output sound card have multi channels. for example if the output have left side, right side, and center.</p>\r\n<p>I want to one mp3 to left side, one different mp3 to right side, one for center.</p>\r\n<p>&nbsp;</p>\r\n<p>How to implement that?</p>",
+    "PostedDate": "2011-12-30T03:30:05.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "719806",
+    "ThreadId": "284219",
+    "Html": "<p>it depends on your soundcard drivers - they may not allow you to open WaveOut with multiple outputs. But if you can open with 3 or four channels, then you would need to make your own derived IWaveProvider that read from your source streams and interleaved the samples correctly to go to each channel in turn.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-01-03T06:18:12.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

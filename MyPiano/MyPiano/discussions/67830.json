@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "230587",
+    "ThreadId": "67830",
+    "Html": "<p>Hi All,</p>\r\n<p>after having a brief look at this interesting library I was wondering what codecs are supported. On the main page it says that ACM codecs are working so in theory it should be possible to use the ACM version of the Speex codec and hook it up with NAudio to be able to play back sound.</p>\r\n<p>Are there any example on how to use ACM codecs in NAudio?</p>\r\n<p>thanks,</p>\r\n<p>Christoph</p>",
+    "PostedDate": "2009-09-03T02:17:15.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "231618",
+    "ThreadId": "67830",
+    "Html": "<p>Hi Christoph,</p>\r\n<p>have a look at the NAudio demo project. It will show you how to pass data through the ACM codec. Usually the biggest challenge for custom codecs is working out the correct WaveFormat structure to use. But using NAudio demo and examining the bytes of the WaveFormat that it creates can be useful.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-09-06T11:55:34.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

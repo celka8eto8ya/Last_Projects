@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "945337",
+    "ThreadId": "404144",
+    "Html": "\r\n<p>Is there a way to modify a WAV file's frequency?</p>\r\n",
+    "PostedDate": "2012-11-21T12:49:49.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945688",
+    "ThreadId": "404144",
+    "Html": "\r\n<p>do you mean change the sample rate? If so you can use WaveFormatConversionStream or DmoResamplerStream</p>\r\n",
+    "PostedDate": "2012-11-22T07:12:45.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

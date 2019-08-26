@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1037733",
+    "ThreadId": "442115",
+    "Html": "Using NAudio I am capturing microphone samples in order to play them back on a remote machine. In some cases I'd like to apply a low-pass filter. How can this done with NAudio?<br />\n<br />\nIdeally I would like to apply the filter based on end user input on the playback machine (maybe via a &quot;enable/disable low-pass filter&quot; button).<br />\n<br />\nIt appears as though I need to use...<br />\n<pre><code>var myFilter = BiQuadFilter.LowPassFilter (x, y, z);\nmyFilter.Transform (inBuffer, outBuffer);</code></pre>\n\nHowever, it isn't clear how/where I insert this transformation prior to playback.<br />\n",
+    "PostedDate": "2013-04-30T10:23:54.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1037936",
+    "ThreadId": "442115",
+    "Html": "This is more or less a guess, I'm sure there is a better way but this is what I would start with.\r<br />\nIf you just need a stream of bytes to apply your filter to, you can capture them with WaveIn eventhandler to a MemoryStream then send it to myFilter.Transform as the inBuffer.<br />\n<pre><code>\nYourWaveIn.DataAvailable += WaveIn_DataAvailable;\n\nMemoryStream ms = new MemoryStream();\n private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n//use WaveInEventArgs to write buffer to ms\n//then send ms to some function that converts to float[]\n//then send float[] to myFilter\n}\n</code></pre>\n\n",
+    "PostedDate": "2013-04-30T20:27:49.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1039057",
+    "ThreadId": "442115",
+    "Html": "You'd need to pass the audio through a low pass filter. The route I would take is a BufferedWaveProvider, converted to a SampleProvider (i.e. go 32 bit), then through the BiQuad filter. I'm hoping that a future NAudio will make this a bit more straightforward to setup. but if you understand audio pipelines, you should be able to do this.<br />\n",
+    "PostedDate": "2013-05-03T08:15:08.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

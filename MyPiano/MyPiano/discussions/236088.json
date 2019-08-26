@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "527192",
+    "ThreadId": "236088",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>Encouraged by the good results of Ogg support I managed to create another FileReader - this time for WMA.</p>\r\n<p>Unlike NAudioOgg now the license for the WMA portion (not my entire LGPL utility) is MIT (or I can make it anything that fits NAudio's MS-PL) as I don't have dependencies on LGPL.</p>\r\n<p>The class to look at is <strong>WMAFileReader</strong>.</p>\r\n<p>The code is based on WMFSDK - I saw that you have some support for these COM interfaces, but I took some other classes that were actually working.</p>\r\n<p>If you take the latest sources of Practice# (Beta 3.0) , I didn't prepare a binary, you can see a project named NAudioWMA. Inside there are Library and TestApp folders. The TestApp is a simple Console application that is similar to the test application I\r\n wrote for NAudioOgg.</p>\r\n<p>Please feel free to incorporate these WMA sources into NAudio or at least provide them as a Demo application for other users.</p>\r\n<p>Thanks,</p>\r\n<p>Yuval Naveh</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/\">http://code.google.com/p/practicesharp/</a></p>\r\n",
+    "PostedDate": "2010-11-25T20:48:41.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "527242",
+    "ThreadId": "236088",
+    "Html": "\r\n<p>brilliant, I will look into seeing if I can incorporate this. I want to get a new drop of NAudio out fairly shortly, and it would be nice if I can get this in in time,.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-25T23:39:11.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "527356",
+    "ThreadId": "236088",
+    "Html": "\r\n<p>Just one important technical note:</p>\r\n<p>WMFSDK is implemented in COM which introduces some COM related issues - namely threading&nbsp;apartment models: STA and MTA&nbsp;</p>\r\n<p>If WMFSDK (and NAudioWMA) is used within a single threaded application (STA) like my demo console application then everything works fine.</p>\r\n<p><strong>HOWEVER, </strong>If there is one main STA (e.g. Windows Forms) and another worker thread where the COM interfaces are used then ALL calls to WMFSDK must go through the thread, in particular initialization.</p>\r\n<p>Changing the main threading model (in Program) to MTA solved the problem, but Windows Forms is not supposed/does not properly to run in MTA.</p>\r\n<p>To workaround this problem, I made my thread MTA (but kept the UI as STA) and moved ALL WMFSDK calls into my thread.</p>\r\n<p>This solution works without any problems.</p>\r\n<p>So to sum it up: There shouldn't be any cross-thread calls on WMFSDK, since COM does not like it.</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-11-26T06:09:27.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "527358",
+    "ThreadId": "236088",
+    "Html": "\r\n<p>Yes, have run into similar issues with DirectSound in the past. I've checked in a bunch of your code, overwriting the original WMF interop code I had in there (which was only half-complete anyway).</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-26T06:12:33.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "527549",
+    "ThreadId": "236088",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>Took your latest sources and it works great. So my NAudioWMA project has been deprecated in my tool.</p>\r\n<p>One minor documentation mistake I had in WMAFileReader.cs:</p>\r\n<p>&nbsp;&nbsp; &nbsp;/// NAudio reader for WMA <span style=\"color:#ff0000\"><strong>Vorbis</strong></span> files</p>\r\n<p>... I used my Ogg Vorbis reader as a base line for WMA...</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-11-26T16:42:14.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "528361",
+    "ThreadId": "236088",
+    "Html": "\r\n<p>yes, I noticed that while copying it across but forgot to change it. I'll try to do that in a future checkin</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-29T09:06:06.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

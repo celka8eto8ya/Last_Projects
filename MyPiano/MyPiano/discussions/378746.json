@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "879272",
+    "ThreadId": "378746",
+    "Html": "\r\n<p>Im currently trying to develop a multi room audio system and i want to accomplish this with multiple soundcards (1 for each room).</p>\r\n<p>The problem is, that i can't figure out how to play one audio file on two soundcards synchronized.</p>\r\n<p>Is this even possible with NAudio?</p>\r\n",
+    "PostedDate": "2012-07-20T01:59:55.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "879364",
+    "ThreadId": "378746",
+    "Html": "<p>I had a similar problem and I found out that <a href=\"http://jackaudio.org/multiple_devices\">JACK</a>&nbsp;could sync the clocks of multiple soundcards. But I ended up using Virtual Audio Cable to replicate the audio with all the clocks synced, because I didn't want to learn the JACK api for a small personal project.</p>",
+    "PostedDate": "2012-07-20T02:37:22.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "879403",
+    "ThreadId": "378746",
+    "Html": "<p>I also discovered VAC but i want to choose the output device/devices dynamically.&nbsp;</p>",
+    "PostedDate": "2012-07-20T02:53:46.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "879407",
+    "ThreadId": "378746",
+    "Html": "<p>No, I'm afraid that NAudio contains nothing special to do this. You simply would have to try to sync playback to both devices yourself. This is because the Windows API's NAudio is making use of do not have any provision for this. You might find some virtual audio driver that can present multiple cards to Windows as though they were a single audio device.</p>",
+    "PostedDate": "2012-07-20T02:55:21.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "879602",
+    "ThreadId": "378746",
+    "Html": "<p>From VAC help file:</p>\r\n<p>\"...clock rates are calculated roughly because data amount is counted in portions  (<a>buffers</a>).\"</p>\r\n<p>So my guess is that, you could set WaveOut of each soundcard to use multiple buffers, ie 4, and then upon receiving WOM_DATA callback, calculate the clock drift, and \"lenghten\" (don't know the correct audio term) the audio data slightly (using interpolation?), and feed it to the device that is lagging behind. (or shorten the audio (compress to a shorter time frame?) if one of the devices playing back too fast)</p>",
+    "PostedDate": "2012-07-20T04:17:15.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

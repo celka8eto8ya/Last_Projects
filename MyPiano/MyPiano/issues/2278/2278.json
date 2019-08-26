@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:31:01.2-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "I think your interop with the MIDIHDR struct is wrong. You use a marshal-as attribute and a ref. I think this will not prevent the GC from relocating the (managed) MIDIHDR and when that happens the ref passed to (for instance) midiInAddBuffer is no longer valid. I would use an IntPtr to an unmanaged memory block that contains the MIDIHDR (copied there using Marshal.StructureToPtr).",
+    "LastUpdatedDate": "2012-10-27T00:31:01.2-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2007-05-16T08:56:16.82-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Midi Interop with MIDIHDR is wrong?",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 2278
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks. The MIDI interop is still in its very early stages compared to the Wave interop, and I don't have any test code that uses midiInAddBuffer yet (I'm just sending and receiving short messages at the moment). When I get round to doing it, I will probably use a similar technique to that done with with waveOutAddBuffer functions as I have extensively debugged those.",
+      "PostedDate": "2007-05-16T10:32:04.85-07:00",
+      "Id": 41659
+    },
+    {
+      "Message": "a new MIDIHDR struct has been checked in",
+      "PostedDate": "2011-06-14T15:13:47.673-07:00",
+      "Id": 41660
+    }
+  ]
+}

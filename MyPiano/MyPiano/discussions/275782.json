@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "683794",
+    "ThreadId": "275782",
+    "Html": "\r\n<p>I'm having trouble with a particular card that is set to&nbsp;</p>\r\n<p>&nbsp;&lt;PCMBits&gt;24&lt;/PCMBits&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;PCMSampleRate&gt;48000&lt;/PCMSampleRate&gt;</p>\r\n<p>Calling&nbsp;IWavePlayer.Init &nbsp;with the BufferedWaveProvider or&nbsp;VolumeWaveProvider16 ( understandably this one wont work ) &nbsp;causes an exception in&nbsp;</p>\r\n<p>ResamplerDmoStream&nbsp;Unsupported Output Stream format.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>My understanding is the kernel should be able to handle the mixing , so I'm at a loss regarding what is wrong.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Anyone have any idea how to handle this ? Kinda desperate , we've put alot of time into making things work , and testing to find this late in the game.&nbsp;</p>\r\n<p><br>\r\nThanks in advance !</p>\r\n<p>&nbsp;</p>\r\n<p>Evan</p>\r\n",
+    "PostedDate": "2011-10-13T09:10:49.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685105",
+    "ThreadId": "275782",
+    "Html": "<p>I think it is the bit depth that is being rejected. Have you tried this with the latest code in source control?</p>",
+    "PostedDate": "2011-10-17T02:38:40.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685183",
+    "ThreadId": "275782",
+    "Html": "<p>Thx for the reply It was the WASPAPI&nbsp;IWavePlayer. First I had an issue with the VolumeWaveProvider16 , so removed it ( since we don't need volume control our device is 'line out') &nbsp;and used the&nbsp;BufferedWaveProvider. Then a problem arose with the&nbsp;ResamplerDmoStream(IWaveProvider inputProvider, WaveFormat outputFormat) constructor. Not fully understanding the issue I dump wasapi for dsound. Seemed to make everything good to go. Strange though the other night I was testing and now there's a strange crakling or popping. Very odd and only noticable on a decent audio system.</p>\r\n<p>&nbsp;</p>\r\n<p>Any ideas or suggestions would be awesome, we have to release in 2 weeks and I'd hate to abandon the API.</p>\r\n<p>&nbsp;</p>\r\n<p>Thx</p>\r\n<p>&nbsp;</p>\r\n<p>Evan</p>",
+    "PostedDate": "2011-10-17T07:00:38.343-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685196",
+    "ThreadId": "275782",
+    "Html": "<p>If you can dump your audio to a WAV file using WAV File Writer instead of playing it, then you can listen to the WAV file and see whether the crackling is introduced in the samples generated, or by the playback path</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-10-17T07:37:57.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1486234",
+    "ThreadId": "658750",
+    "Html": "Hi,\r<br />\nI'm trying to use a MixingWaveProvider32 to play both wav files and oscillator tones. How should I go about doing this? I have the wav files working but the oscillator is generating a bunch of noise. I'm using something like <a href=\"http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html\" rel=\"nofollow\">this</a> for the oscillator. Any help would be much appreciated.<br />\n",
+    "PostedDate": "2016-10-17T02:25:43.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486235",
+    "ThreadId": "658750",
+    "Html": "I can't tell what the issue you're facing is, but you could try using <code>MixingSampleProvider</code> and <code>SignalGenerator</code>  which are newer than that blog post and may prove easier to use.<br />\n",
+    "PostedDate": "2016-10-17T02:33:11.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486240",
+    "ThreadId": "658750",
+    "Html": "I got it working using those newer classes. Thanks!<br />\n",
+    "PostedDate": "2016-10-17T02:51:03.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

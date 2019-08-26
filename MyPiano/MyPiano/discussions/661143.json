@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1492194",
+    "ThreadId": "661143",
+    "Html": "Hello,\r<br />\nI have an Multichannel USB Audio Device. I try to playback Channel 9 &amp; 10 (Stereo) on Windows 10. Recording with &quot;asioOut.InitRecordAndPlayback&quot; with &quot;asioOut.InputChannelOffset = 8&quot; is no Problem. But Playback only with Marshal.Copy to direct to the Output Buffer does not work. I think because &quot;asioOut.InputChannelOffset = 8&quot; only works for Recording. Is there a Solution / Workaround?\r<br />\n<br />\nJens<br />\n",
+    "PostedDate": "2017-02-04T08:51:56.777-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1492327",
+    "ThreadId": "661143",
+    "Html": "I found out, that InputChannelOffset is also working for Playback. So that is not the Poblem of hearing no sound. I tried to AddSamples direct to a BufferedWaveProvider. Now I heard a Sound, but very distortet. I don't understand that, because recording and playback works without a Problem.<br />\n",
+    "PostedDate": "2017-02-07T12:43:06.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

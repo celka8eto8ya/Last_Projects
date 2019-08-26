@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "Maybe a stupid question but can the WaveViewer control display 24 bit wav files ?\r\nI am doing this:\r\n\r\n   WaveViewer1.SamplesPerPixel = 400\r\n   Dim fr = New NAudio.Wave.WaveFileReader(filename)\r\n   WaveViewer1.WaveStream = fr\r\n\r\nIf filename is a file with 16bit depth (or lower), everything works fine. If the file is above 16bit, I think that the values becomes too big and verticaly the whole control is drawn.\r\n\r\nAny help?",
+    "LastUpdatedDate": "2014-04-16T07:54:48.807-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-04-14T06:45:59.48-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveViewer and 24bit wavs",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16438
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "No, 24 bit support is not in there at the moment. To be honest, the WaveViewer is likely to be removed, and the examples in the demo applications should be used in preference",
+      "PostedDate": "2014-04-16T06:12:28.57-07:00",
+      "Id": 142069
+    },
+    {
+      "Message": "Thank you for your replying Mark. Just let me tell you that I have already started to change the WaveViewer control in order to be able to draw 24 bit waves and I think I'm getting near. In any case, what is the equivalent control for WaveViewer in the demo apps ?\n\nBecause in the demo I have only seen the WaveFormPainter which does not cover my need (I need to display the wave at once not while it plays).\n\nIf I am missing something please correct me.",
+      "PostedDate": "2014-04-16T07:02:59.177-07:00",
+      "Id": 142079
+    },
+    {
+      "Message": "I never use WaveViewer myself, I always write my own control that matches what my requirements are. Sometimes I want scrolling, sometimes I want zooming etc. So WaveViewer was only ever intended to be a simple example. I do have a couple of other WaveForm drawing control that I may make part of the NAudio demo apps at some point in the future.",
+      "PostedDate": "2014-04-16T07:23:43.51-07:00",
+      "Id": 142084
+    },
+    {
+      "Message": "Thanks you again Mark. Just let me tell you (again) that I have managed to correct the WaveViewer and make it draw 24bit wavs. Perhaps it sounds easy for you, since you design these WaveViewers at will, but it wasn't easy for me !!! But I managed to understand how those 3 bytes contain the information...\n\nAnyway, it would be nice if you included sometime those other controls that you have made.\n\nThank you again for everything. Your stuff have helped me a lot.",
+      "PostedDate": "2014-04-16T07:54:48.807-07:00",
+      "Id": 142092
+    }
+  ]
+}

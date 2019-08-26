@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "955676",
+    "ThreadId": "406671",
+    "Html": "\r\n<p>Greetings,</p>\r\n<p>&nbsp; &nbsp; I'm studying this project, and I've read any your response into other discussion about BPM... but I'd like to know if it's possible to increase or decrease the audio rendering speed.</p>\r\n<p>If at the moment isn't possible, are there any future develops about that?</p>\r\n<p>Thank you</p>\r\n",
+    "PostedDate": "2012-12-13T09:01:28.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956166",
+    "ThreadId": "406671",
+    "Html": "\r\n<p>Not really. One trick is to use a Resampler to adjust the sample rate, but a pitch shift will also occur at the same time.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-14T08:14:03.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

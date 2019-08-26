@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1256174",
+    "ThreadId": "548616",
+    "Html": "I've posted this question on stackoverflow here: <a href=\"http://stackoverflow.com/questions/24210306/convert-wav-streamed-over-http-to-mp3-in-real-time\" rel=\"nofollow\">question</a><br />\n<br />\n<strong>Background</strong>: I am consuming a service which returns data with a MIME type of audio/wav. I need to provide a playback mechanism for this audio (currently built as an MVC application). As an example, my endpoint looks something like <a href=\"https://audio.fooservice.com/GetAudio?audioId=123\" rel=\"nofollow\">https://audio.fooservice.com/GetAudio?audioId=123</a><br />\n<br />\nThe audio is 8kHz, 1-channel u-law.<br />\n<br />\nDue to varying format support across browsers when using the HTML5 &lt;audio&gt; tag, I am unable to use the original u-law wav because Internet Explorer will not play it.<br />\n<br />\nMy proposed solution is to do a real-time conversion from the source format to mp3.<br />\n<br />\nI've cobbled together a partially working solution from various other questions here and in the NAudio forums, but it throws an exception as noted in the comments below.<br />\n<br />\nPlease note:  I have all of about an hour of experience with NAudio (and audio processing in general).  This particular piece is a <em>very small</em> piece of a much larger application, so forgive my ignorance/stupidity.<br />\n<br />\nThis seems like it should be fairly simple.  From my layman's perspective, I want to:<br />\n<ul>\n<li>Grab an audio stream, which is 8kHz single-channel mu-law</li>\n<li>Get all of the bytes for that audio stream</li>\n<li>Convert to PCM (this step may not be necessary?)</li>\n<li>Convert to mp3</li>\n<li>Provide that mp3 stream as an endpoint for my application to consume</li>\n</ul>\n<pre><code>private void NAudioTest(string url)\n{\n    Stream outStream = new MemoryStream();\n    var format = WaveFormat.CreateMuLawFormat(8000, 1);\n\n    using (Stream ms = new MemoryStream())\n    {\n        var request = (HttpWebRequest)WebRequest.Create(url);\n        request.KeepAlive = false;\n        request.ProtocolVersion = HttpVersion.Version10;\n\n        using (Stream stream = request.GetResponse().GetResponseStream())\n        {\n            using (var reader = new RawSourceWaveStream(stream, format))\n            {\n                // reader is not seekable; we need to convert to a byte array to seek\n                var bytes = reader.ToByteArray();\n\n                // create a new stream from the byte aray\n                var seekableStream = new MemoryStream(bytes);\n\n                // instantiating a WaveFileReader as follows will throw an exception:\n                // &quot;System.FormatException: Not a WAVE file - no RIFF header&quot;\n                using (var waveReader = new WaveFileReader(seekableStream))\n                {\n                    using (var pcmStream = WaveFormatConversionStream.CreatePcmStream(waveReader))\n                    {\n                        var pcmBytes = pcmStream.ToByteArray();\n                        var mp3 = pcmBytes.ToMp3();\n                    }\n                }\n            }\n        }\n    }\n}\n\npublic static class StreamExtensions\n{\n    public static byte[] ToByteArray(this Stream stream)\n    {\n        var ms = new MemoryStream();\n        var buffer = new byte[1024];\n        int bytes = 0;\n\n        while ((bytes = stream.Read(buffer, 0, buffer.Length)) &gt; 0)\n            ms.Write(buffer, 0, bytes);\n\n        return ms.ToArray();\n    }\n}\n\npublic static class ByteExtensions\n{\n    public static byte[] ToMp3(this byte[] bytes)\n    {\n        using (var outStream = new MemoryStream())\n        {\n            using (var ms = new MemoryStream(bytes))\n            {\n                using (var reader = new WaveFileReader(ms))\n                {\n                    using (var writer = new LameMP3FileWriter(outStream, reader.WaveFormat, 64))\n                    {\n                        reader.CopyTo(writer);\n                        return outStream.ToArray();\n                    }\n                }\n            }\n        }\n    }\n}</code></pre>\n\n",
+    "PostedDate": "2014-06-13T13:57:01.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1256940",
+    "ThreadId": "548616",
+    "Html": "Yes, you need to get to PCM before you go to MP3. Also I'm not even sure all MP3 encoders will encode at such a low sample rate so you may end up having to upsample. I wrote a fairly detailed article on converting between formats with NAudio <a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">here</a> which should help you<br />\n",
+    "PostedDate": "2014-06-17T01:38:38.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1257102",
+    "ThreadId": "548616",
+    "Html": "Thanks Mark.\r<br />\n<br />\nI did resolve my RIFF exception (aka, I actually thought about what I was trying to do for a few minutes), but the mp3 stream I'm producing is nothing but white noise.\r<br />\n<br />\nDo you think that's due to the low sample rate of the source stream?<br />\n<pre><code>    [HttpGet]\n    public ActionResult GetMp3(string url)\n    {\n        if (String.IsNullOrWhiteSpace(url))\n            return null;\n\n        var muLawFormat = WaveFormat.CreateMuLawFormat(8000, 1);\n        var compressedStream = new MemoryStream();\n\n        using (var ms = new MemoryStream())\n        {\n            var request = (HttpWebRequest)WebRequest.Create(url);\n            request.KeepAlive = false;\n            request.ProtocolVersion = HttpVersion.Version10;\n\n            using (Stream webStream = request.GetResponse().GetResponseStream())\n            {\n                var buffer = new byte[4096];\n                int read;\n                while (webStream != null &amp;&amp; (read = webStream.Read(buffer, 0, buffer.Length)) &gt; 0)\n                    ms.Write(buffer, 0, read);\n            }\n\n            ms.Position = 0;\n\n            using (WaveStream wav = WaveFormatConversionStream.CreatePcmStream(new RawSourceWaveStream(ms, muLawFormat)))\n            using (var mp3 = new LameMP3FileWriter(compressedStream, new WaveFormat(), LAMEPreset.MEDIUM_FAST))\n                wav.CopyTo(mp3);\n        }\n\n        compressedStream.Seek(0, 0);\n        return new FileStreamResult(compressedStream, &quot;audio/mpeg&quot;);\n    }</code></pre>\n\n",
+    "PostedDate": "2014-06-17T08:30:49.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1257107",
+    "ThreadId": "548616",
+    "Html": "I don't know about LameMP3FileWriter's inner workings (it's not part of NAudio), but I'd strongly suspect you are passing in the wrong format of PCM. What is the second parameter of the LameMP3FileWriter actually supposed to be?<br />\n",
+    "PostedDate": "2014-06-17T08:34:38.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1257212",
+    "ThreadId": "548616",
+    "Html": "Thanks Mark.\r<br />\n<br />\nThe second parameter, from the source, is as follows:<br />\n<pre><code>        /// &lt;summary&gt;Create MP3FileWriter to write to supplied stream&lt;/summary&gt;\n        /// &lt;param name=&quot;outStream&quot;&gt;Stream to write encoded data to&lt;/param&gt;\n        /// &lt;param name=&quot;format&quot;&gt;Input WaveFormat&lt;/param&gt;\n        /// &lt;param name=&quot;quality&quot;&gt;LAME quality preset&lt;/param&gt;\n        public LameMP3FileWriter(Stream outStream, WaveFormat format, LAMEPreset quality)\n            : base()</code></pre>\n\nI <em>think</em> my issue is that I incorrectly assumed that the <em>WaveFormatConversionStream.CreatePcmStream(...)</em> method would return a stream with the default <em>WaveFormat</em>.\r<br />\n<br />\nI'll certainly post an update when I've got it working.\r<br />\n<br />\nThanks for your questions--you lead me in the right direction!<br />\n",
+    "PostedDate": "2014-06-17T12:52:25.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

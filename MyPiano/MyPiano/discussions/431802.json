@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "995770",
+    "ThreadId": "431802",
+    "Html": "Hi mark\r<br />\nI used this  <a href=\"http://mark-dot-net.blogspot.com/2009/09/trimming-wav-file-using-naudio.html\" rel=\"nofollow\">method</a>. And I passed the Argument to trim-<br />\n<pre><code>Double xpos1 = Math.Ceiling(Convert.ToDouble(startPos1.X * (Convert.ToDouble(waveStream.TotalTime.Milliseconds) / Convert.ToDouble(this.Width))));\n\nWavFileUtils.TrimWavFile(Program.openedFileName, outPath, new TimeSpan(0, 0, Convert.ToInt32(xpos1)), new TimeSpan(0, 0, Convert.ToInt32(Convert.ToDouble(waveStream.TotalTime.Milliseconds))));</code></pre>\n\n<code></code>But I did not get desired output.The Trimmed(Output) File is being too large than i expect.Suppose I expect it will be 2-3 min long but it's length being almost same as input file length. What should I do to fix it ?\r<br />\nregards.<br />\n",
+    "PostedDate": "2013-02-03T06:29:10.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996010",
+    "ThreadId": "431802",
+    "Html": "you can look at the WaveFileFormat's AverageBytesPerSecond value, and use that to calculate the offsets needed. That's what I do in the blog post. Your xPos1 does not take this into account at all.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-04T03:01:20.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

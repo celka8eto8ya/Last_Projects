@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1197866",
+    "ThreadId": "526557",
+    "Html": "Hello,\r<br />\n<br />\nI wrote the code to get the mic recording from 3 USB microphones using 3 instances of WaveInEvent.\r<br />\nIt would be ideal if I can get all signals from multiple microphones &quot;at the same time&quot; with no latency between different microphones. However, I noticed few sample delays between different microphones.\r<br />\n<br />\nI know that for this sort of application that require no/low latency, NAudio is not preferable. I was wondering if I can reduce the latency between different USB mic further by using WASAPI or if you would suggest using other libraries. <br />\n",
+    "PostedDate": "2014-01-25T23:08:55.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198287",
+    "ThreadId": "526557",
+    "Html": "Unfortunately it is not straightforward at all to record three devices and keep them in sync. WASAPI or ASIO will help you get lower latency which will help. All I can suggest is using timestamps for each buffer recorded to allow you to compensate before mixing.<br />\n",
+    "PostedDate": "2014-01-26T12:44:00.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

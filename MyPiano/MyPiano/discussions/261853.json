@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "629525",
+    "ThreadId": "261853",
+    "Html": "<p>Hi there,</p>\n<p>I have a question in a streaming scenario.</p>\n<p>Scenario that is working at the moment: I have one client that uses WaveIn to query samples from a mic, convertes these samples via vodecs into compressed bytes, send them across a network to a server. The server decodes the sample and uses BufferedWaveProvider  to output to a output device.</p>\n<p>Now I need a hint on how to implement the following scenario: I have several client computers, that all send their samples to the same server. This server needs to mix the samples and output it.</p>\n<p>I tried sticking to WaveOut and BufferedWaveProvider methodology, no luck there. I guess I have to do use the Mixer class, but I fail to chose the correct WaveStream implementation.</p>\n<p>I hope anyone can help me on this!!</p>\n<p>Thanks</p>",
+    "PostedDate": "2011-06-18T04:14:22.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629598",
+    "ThreadId": "261853",
+    "Html": "<p>Hi YogiB</p>\r\n<p>In NAudioWpfDemo (available with source) there is a DrumMachineDemo.<br />That project is mixing multiple audio files using MixingSampleProvider.<br />It also has WaveToSampleProvider and SampleToWaveProvider classes for converting between IWaveProvider and ISampleProvider</p>",
+    "PostedDate": "2011-06-18T13:01:31.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629599",
+    "ThreadId": "261853",
+    "Html": "<p>Hi YogiB, hasankhan has pointed you in the right direction. I never did a mixer that just worked with IWaveProviders, although you can easily create a simple adapter class to convert an IWaveProvider into a WaveStream, but in NAudio 1.5, the MixingSampleProvider will be the recommended way for anyone wanting to do mixing with 32 bit floating point audio. If you don't want to switch to the new ISampleProvider interface, you can also easily adapt the existing WaveMixerStream32 to work with IWaveProvider instead of WaveStream.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-18T13:06:54.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629711",
+    "ThreadId": "261853",
+    "Html": "<p>Hi hsankhan and mark,</p>\r\n<p>thanks a lot for your valuable answers - you definitely pushed me in the right direction and I managed to complete the task.</p>\r\n<p>This is how I ended up with for those who are interested:</p>\r\n<p>Output pipeline (set up just once):</p>\r\n<ul>\r\n<li>A MixingSampleProvider with IEEE format</li>\r\n<li>Feed this to SampleToWaveProvider</li>\r\n<li>Feed this to WaveOut</li>\r\n</ul>\r\n<p>For each \"client\" that broadcasts it's samples from mic:</p>\r\n<ul>\r\n<li>Created a WaveProvider with original wave format (usually 16 bit PCM, 1 channel only)</li>\r\n<li>Feed this to stereo using MonoToStereoProvider16</li>\r\n<li>Feed this to Pcm16BitToSampleProvider</li>\r\n</ul>\r\n<p>On each sample I receive on the network, I simply feed it to the waveProvider's AddSample method. And you need to modifiy WaveOutBuffer code, because it would stop playing back when no data was present (no client connected at all, client send timeout, ...). So I never stop playing unless explicitely telling it to.</p>\r\n<p>I hope this helps people. Thanks again for your answers.</p>\r\n<p>I think that the audio pipeline is very powerful, but learning curve is high in the beginning as you not intuiteively know which helper and converter classes to use and format's are expected unless by trial and error.</p>",
+    "PostedDate": "2011-06-19T03:46:56.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630975",
+    "ThreadId": "261853",
+    "Html": "<p>Glad you got it working in the end. Understanding the audio pipeline is the key to using NAudio effectively. I'm hoping to make a video tutorial at somepoint to explain it properly.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-22T01:17:55.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "639863",
+    "ThreadId": "261853",
+    "Html": "<p>Is there any way this can be accomplished without using SampleProviders, or some more detail on this?</p>\r\n<p>Cheers!</p>\r\n<p>Luke</p>",
+    "PostedDate": "2011-07-09T08:05:52.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

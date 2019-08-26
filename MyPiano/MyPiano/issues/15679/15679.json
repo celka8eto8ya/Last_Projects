@@ -1,0 +1,66 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:17:56.973-07:00",
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "System.IO.BinaryReader contain some referred resources too, so you should move the BinaryReader to become a class member, not just create new one as a local variable inside a function.\r\nSo you may just declare the BinaryReader in the constructor, and each method which need to use BinaryReader may just call this private class member.\r\n\r\npublic class WaveFileReader : WaveStream\r\n    {\r\n        private WaveFormat waveFormat;\r\n        private Stream waveStream;\r\n        private bool ownInput;\r\n        private long dataPosition;\r\n        private int dataChunkLength;\r\n        private List<RiffChunk> chunks = new List<RiffChunk>();\r\n        private BinaryReader br;<-------------------------------\r\n\r\n\r\npublic WaveFileReader(Stream inputStream)\r\n        {\r\n            this.waveStream = inputStream;\r\n            this.br = new BinaryReader(this.waveStream);<-----------------------------\r\n            ReadWaveHeader(br, out waveFormat, out dataPosition, out dataChunkLength, chunks);\r\n            Position = 0;\r\n        }\r\n\r\n\r\nAnd please really override and make the method Close() to let programmers delete all the loaded unused resources (stream and BinaryReader) manually and explicitly which will never be referred anymore.\r\nAnd don't just wait for the GC, because GC may be applied on this object after a long time from this reader lost reference, and the process would become use more and more memory and never release and reduce, which become memory leaking.\r\n\r\npublic override void Close()\r\n        {\r\n            this.Close(true);\r\n        }\r\n\r\npublic void Close(bool closestreamandreader)\r\n        {\r\n            if (closestreamandreader)\r\n            {\r\n                this.br.Close();\r\n                this.br.Dispose();\r\n                this.waveStream.Close();\r\n                this.waveStream.Dispose();\r\n            }\r\n            else\r\n            {\r\n                this.br.Dispose();\r\n            }\r\n            base.Close();\r\n        }\r\n\r\n protected override void Dispose(bool disposing)\r\n        {\r\n            if (disposing)\r\n            {\r\n                // Release managed resources.\r\n                if (br != null)\r\n                {\r\n                    // only dispose our source if we created it\r\n                    if (ownInput)\r\n                    {\r\n                        br.Close();\r\n                    }\r\n                    br.Dispose();\r\n                    br = null;\r\n                }\r\n\r\n                if (waveStream != null)\r\n                {\r\n                    // only dispose our source if we created it\r\n                    if (ownInput)\r\n                    {\r\n                        waveStream.Close();\r\n                    }\r\n                    waveStream = null;\r\n                }\r\n            }\r\n            else\r\n            {\r\n                System.Diagnostics.Debug.Assert(false, \"WaveFileReader was not disposed\");\r\n            }\r\n            // Release unmanaged resources.\r\n            // Set large fields to null.\r\n            // Call Dispose on your base class.\r\n            base.Dispose(disposing);\r\n        }\r\n\r\nHere this attached file is an example, and you guys should apply and care such problems to all the other classes they need.",
+    "LastUpdatedDate": "2012-10-27T00:17:56.973-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-04-11T04:45:59.617-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "You guys should pay more attention to avoid memory leaking, Close() and Dispose()",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 15679
+  },
+  "FileAttachments": [
+    {
+      "FileId": 266447,
+      "FileName": "WaveFileReader.cs",
+      "DownloadUrl": ".\\266447"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "you don't need to call Close and Dispose - they do the same thing. Also, there is a very deliberate reason why in some cases we don't close the binary reader - it also closes the input stream which in many cases is absolutely not what we want.",
+      "PostedDate": "2011-04-12T03:31:23.287-07:00",
+      "Id": 41765
+    },
+    {
+      "Message": "but do you worry that would cause the memory leaking?",
+      "PostedDate": "2011-04-15T22:08:45.25-07:00",
+      "Id": 41766
+    },
+    {
+      "Message": "no I'm not too worried as most people release reference to a WaveStream immediately after calling Dispose, so the few bytes of memory that potentially got leaked will be cleaned up on the next garbage collect.",
+      "PostedDate": "2011-04-18T08:45:16.4-07:00",
+      "Id": 41767
+    },
+    {
+      "Message": "the BinaryReader is no longer in WaveFileReader anyway from 1.5 onwards",
+      "PostedDate": "2011-06-14T15:00:54.783-07:00",
+      "Id": 41768
+    }
+  ]
+}

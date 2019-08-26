@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "How can i convert 32 bit PCM  wave into 16 bit PCM??\r\n\r\nI was making software to record system volume using LoopBackCapture. Its capturing data of 32 bit PCM ( 32 bit PCM: 48kHz 2 channels wBitsPerSample:32 dwChannelMask:3 subFormat:00000003-0000-0010-8000-00aa00389b71 extraSize:22 )\r\n\r\nI want to convert it into a 16 bit stereo data....I am not able to get it...\r\n\r\nIts my code to convert the data from 32 bit PCM into 16 bit PCM. I am getting some noises and some real song data. Need help...\r\n\r\n```\r\n    Private Function FX32TO16(ByVal input As Byte(), ByVal len As Integer) As Byte()\r\n        Dim output As Byte() = New Byte(len / 2 - 1) {}\r\n        Dim outputIndex As Integer = 0\r\n        For n As Integer = 0 To len - 1 Step 4\r\n            output(outputIndex) = input(n + 2)\r\n            output(outputIndex + 1) = input(n + 3)\r\n            outputIndex += 2\r\n        Next\r\n        Return output\r\n    End Function\r\n```",
+    "LastUpdatedDate": "2013-05-14T12:37:01.557-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-05-09T07:47:32.61-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "32bit PCM into 16bit PCM",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16397
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "WaveFloatTo16Provider is intended for this purpose (assuming your captured data is floating point rather than 32 bit int).",
+      "PostedDate": "2013-05-09T14:19:37.413-07:00",
+      "Id": 99849
+    },
+    {
+      "Message": "Captured data is in 32 bit int format....\n\nFrom my above function FX32TO16, i can only hear little bit sound and so much noise....\n\nI am sending the sound or music currently being played on pc/laptop to my android phone...which can only play 16 bit stereo or mono waves...32 bit waves are still not possible on android using audioTrack class...\n\nSo i need to convert the 32 bit int data into 16 bit...without any noise...",
+      "PostedDate": "2013-05-14T10:54:11.97-07:00",
+      "Id": 100169
+    },
+    {
+      "Message": "you need to understand audio bit depths if you want to write the conversion code yourself. You can't just throw away two out of every four bytes and expect it to work. Please read my article here for more information:\nhttp://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\n\nAlternatively, just use WaveFloatTo16Provider",
+      "PostedDate": "2013-05-14T11:39:24.517-07:00",
+      "Id": 100174
+    },
+    {
+      "Message": "I tried using WaveFloatTo16Provider, but it was throwing an error something like\" ieee float value expected\"...",
+      "PostedDate": "2013-05-14T12:15:37.283-07:00",
+      "Id": 100176
+    },
+    {
+      "Message": "I'm pretty sure you already have IEEE float so just use that as your WaveFormat for the IWaveProvider you pass into the converter",
+      "PostedDate": "2013-05-14T12:37:01.557-07:00",
+      "Id": 100180
+    }
+  ]
+}

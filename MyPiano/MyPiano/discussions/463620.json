@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1112292",
+    "ThreadId": "463620",
+    "Html": "Just curious, but why does NAudio re-implement the CoreAudioApi.dll instead of just referencing it?<br />\n",
+    "PostedDate": "2013-10-25T15:52:12.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112999",
+    "ThreadId": "463620",
+    "Html": "core audio is a COM based API not a .NET assembly. Also there is no coreaudioapi.dll\r<br />\n<br />\nthe classes are contained in audioses.dll and mmdevapi.dll and you can't add those as references to a .net application<br />\n",
+    "PostedDate": "2013-10-28T04:27:50.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113142",
+    "ThreadId": "463620",
+    "Html": "Yes there is a CoreAudioApi.dll. Try googling for it. It's all over the internet. <br />\n",
+    "PostedDate": "2013-10-28T08:54:55.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113152",
+    "ThreadId": "463620",
+    "Html": "OK I see. CoreAudioApi.dll the name of a DLL written by Ray Molenkamp as part of <a href=\"http://www.codeproject.com/Articles/18520/Vista-Core-Audio-API-Master-Volume-Control\" rel=\"nofollow\">this CodeProject article</a>. Quite a lot of his code has been included in NAudio with permission (look in the source code and you will see). I have made several of my own changes, customisations and bug-fixes. I only discovered it after having manually written the wrappers for about a third of WASAPI.<br />\n",
+    "PostedDate": "2013-10-28T09:02:59.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2013-10-28T09:15:28.68-07:00"
+  },
+  {
+    "Id": "1113161",
+    "ThreadId": "463620",
+    "Html": "Ah. I see. I inherited a project that already had the CoreAudioApi.dll in it. I see Core Audio API mentioned all over MSDN as part of Vista++ so I assumed that the aforementioned dll was part of Windows. Sorry for the confusion.<br />\n",
+    "PostedDate": "2013-10-28T09:15:18.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "839570",
+    "ThreadId": "356751",
+    "Html": "\r\n<p>Is it possible with NAudio to get a list of all running multimedia applications, i.e. the applications&nbsp;which appear in the standard Windows 7 speakers volume&nbsp;mixer window?</p>\r\n<p>Currently I can get the speakers MMDevice itself, but not the registered applications down below.</p>\r\n<p>Norbert</p>\r\n",
+    "PostedDate": "2012-05-22T12:22:25.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840833",
+    "ThreadId": "356751",
+    "Html": "<p>I imagine this is possible with the WASAPI API's but I wouldn't know which functions. I suggest about the APIs needed on StackOverflow, and then we can see if the NAudio P/Invoke wrappers include the necessary functions.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-05-25T02:28:51.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

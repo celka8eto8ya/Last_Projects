@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1488361",
+    "ThreadId": "659546",
+    "Html": "Hello, \r<br />\n<br />\nI've recently been fiddling around with creating a multitrack wave player using NAudio.\r<br />\n(Tracks are mixed using a customized MixingSampleProvider that also incorporates track pan, volume, etc.)\r<br />\n<br />\nSince I finally got everything working reasonably well through WaveOut, I'm thinking about adding Midi since NAudio provides excellent Midi file event handling capabilities.\r<br />\n(Incidentally, using Mark's PianoRoll (Part2) as a base, I've gotten the Midi data adequately visualized.)\r<br />\n<br />\nBut I'm not sure exactly how to play the Midi in synch with my WaveOut...\r<br />\nI imagine it will involve a timer (I'm already implementing a custom timer which I use for time display and movement of a play position marker), and sending MidiMessage.StartNote, etc. to the designated MidiOut device?\r<br />\nIf so, any ideas on the best way to go about it?\r<br />\n<br />\nMy timer already updates a &quot;PlayPosition&quot; property (in milliseconds), so I have that.\r<br />\nSo, my first thought is to cycle through each midi NoteOn event, and play it if the PlayPosition is between its AbsoluteTime and the next noteoff, but that seems like the most poorly efficient way to do it. \r<br />\n<br />\nThere's a much better way, isn't there...?<br />\n",
+    "PostedDate": "2016-11-18T22:48:05.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488452",
+    "ThreadId": "659546",
+    "Html": "Ok, somewhat later I figured out at least one better way which when crudely implemented seems to work properly....<br />\n<br />\nI keep a &quot;CurrentIndex&quot; for the MidiEvents, and every time the timer ticks, it checks if MidiEvent(CurrentIndex).AbsoluteTime is &lt; or = the PlayPosition.<br />\nIf it is, it sends the MidiMessage.StartNote for that note, and increments the CurrentIndex by 1.<br />\nSo, next timer tick, it simply checks the incremented MidiEvent(CurrentIndex), and so on.<br />\n<br />\n(Now just have to modify that to include program changes, and especially note off events...)<br />\n<br />\nI assume in theory that's that the best way to do it...?<br />\n",
+    "PostedDate": "2016-11-21T00:47:27.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489201",
+    "ThreadId": "659546",
+    "Html": "I'm afraid NAudio has no built-in sequencer, but you might want to have a look in the WPF demo's drum machine sample to see how I attempted to schedule drums to happen at the right time. It's probably not the perfect solution, but it does work reasonable well.<br />\n",
+    "PostedDate": "2016-12-03T14:54:00.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489207",
+    "ThreadId": "659546",
+    "Html": "Thanks,\r<br />\n<br />\nI've been looking over and studying your drum machine sample and borrowed parts of it to try to get it to play SoundFont samples.\r<br />\nAt this point I have it where the midi notes properly trigger playing of samples (that is, at the right times), but the samples aren't getting looped properly :-(<br />\nThis is to say, the samples stutter for the duration of each note.  Obviously a problem with how Im looping them...\r<br />\n<br />\nI'll try to post some code later...\r<br />\nI've been translating all NAudio code to VB for my own use, so when I post code, is VB ok, or should I translate to C#?<br />\n",
+    "PostedDate": "2016-12-03T23:45:34.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

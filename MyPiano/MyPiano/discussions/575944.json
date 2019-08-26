@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1335208",
+    "ThreadId": "575944",
+    "Html": "Good day everyone.<br />\n\r<br />\nFirst of all a big thank you to Mark for doing such a great job on NAudio.  The source code is very well written.\r<br />\n<br />\nI seem to have hit a snag trying to get this to work.  So here is the deal:  I am reading an MP3 file with MP3FileReader... then converting with WaveStream... then using a binaryreader read a portion of the Wavestream converting the bytes to floats.\r<br />\n<br />\nHere is the portion of the code that presumably does this:<br />\n<pre><code> static void Main(string[] args)\n        {\n           \n            WaveFormat wFormat = new WaveFormat(11025,16,1);\n\n            int bSize = 11025*2*10;\n            //short[] buffer = new short[bSize];\n            float[] fBuff = new float[bSize*3];\n\n            string file = args[0];\n\n            using(Mp3FileReader mp = new Mp3FileReader(file))\n            {\n                using(WaveStream ws = new WaveFormatConversionStream(wFormat,mp))\n                {\n                    \n\n                    using(BinaryReader bs = new BinaryReader(ws))\n                    {\n                        \n                        int count = 0;\n                        int pos = bSize*3; //skip 10 seconds\n                        int length = (int)bs.BaseStream.Length;\n                        int required = bSize * 3; // get 30 seconds\n                     \n                        bs.BaseStream.Seek(pos, SeekOrigin.Begin);\n                       \n\n                        while (pos &lt; length &amp;&amp; count &lt; required)\n                        {\n                            fBuff[count] = (float)bs.ReadInt16();\n                                // 5.\n                            // Increment the variables.\n                            pos++;\n                            count++;\n                        }\n                        \n                     }\n                   \n\n                 }</code></pre>\n\nThe code works fine but regardless of where I set &quot;pos&quot;  the first approx 600 bytes (300 16 bit floats)are always 0.<br />\n\r<br />\nAnyone have any idea why this is occurring and how to correct it.\r<br />\n<br />\nThanks in advance\r<br />\n<br />\nRay<br />\n",
+    "PostedDate": "2014-12-20T17:10:01.367-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1337504",
+    "ThreadId": "575944",
+    "Html": "hi Ray,\r<br />\nfirst of all, no need for the conversion stream - MP3fileReader returns PCM by default.\r<br />\nSecond, if you use the .ToSampleProvider() extension method on your reader, you can just call Read and get floats directly. \r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2014-12-28T07:27:53.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1338806",
+    "ThreadId": "575944",
+    "Html": "Hi Mark,<br />\n<br />\nThanks so much for taking the time to address all these questions and helping all of us out with NAudio.  I am still having some difficulty with the same issue I had previously asked.  The reason that I am using the WaveFormatConversion Stream is because I am trying to convert from MP3 then to 11025hz, mono, single channel PCM.  Then convert that to float[] which is then sent to Echoprint Codegen to make an audio fingerprint for use in identifying songs.<br />\nDepending on what I use for the sample.mp3 the result is always the same with the first approx 300 bytes from the wave conversion stream is always zeros.  One of the key things is that you may need to know is that I am trying to extract 30 seconds of the mp3, 10 seconds into the audio.<br />\n<br />\nThe original Codegen.exe uses FFMPEG to convert  an mp3 and return the requested float[] and when I run the sample.mp3 through ffmpeg and compare it to what i get using NAudio they are not the same.<br />\n<br />\nAny advice you can give would be most helpful and thanks again for spending your time responding to these questions.<br />\n<br />\nI should also say that I have not been able to figure out how to use the .ToSampleProvider() that you suggested I use.<br />\n<br />\nBTW &quot; I would be your friend as I like talking about C# and .Net programming :)  I would even buy the coffee&quot;<br />\n<br />\nRegards<br />\n<br />\nRay<br />\n",
+    "PostedDate": "2015-01-03T20:50:59.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340537",
+    "ThreadId": "575944",
+    "Html": "hi Ray, \r<br />\nI'd suggest repositioning on the Mp3WaveFileReader before going through WaveFormatConversionStream\r<br />\nThen you can call .ToSampleProvider on your waveFormatConversionStream, and then call Read to read out some floating point samples. I wouldn't use BinaryReader at all.\r<br />\n<br />\nIf you are expecting byte for byte identical results to using ffmpeg though, you will likely be disappointed. <br />\n",
+    "PostedDate": "2015-01-09T14:57:12.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

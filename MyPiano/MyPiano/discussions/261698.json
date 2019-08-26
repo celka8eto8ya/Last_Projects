@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "628932",
+    "ThreadId": "261698",
+    "Html": "<p>I'm working on an MP3 streaming project to stream audio from Subsonic (www.subsonic.org). The following URL is the stream URL for a specific song:</p>\n<p>[removed]</p>\n<p>&nbsp;</p>\n<p>After playing with the code I wrote for several days I decided to downoad the NAudioDemo and try to stream the MP3 with the Demo application. In both the NAudioDemo AND my application I am getting the following error.</p>\n<p>&nbsp;</p>\n<p><span style=\"color: #ff0000;\">NAudio.MmException:&nbsp;AcmNotPossible&nbsp;calling&nbsp;acmStreamConvert</span></p>\n<p>&nbsp;</p>\n<p><span style=\"color: #000000;\">Here is the code I wrote to test in my own application:</span></p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre>_memoryStream = <span style=\"color: blue;\">new</span> MemoryStream();\n            \n<span style=\"color: blue;\">using</span> (Stream stream = SubsonicRequest.GetSongStream(song))\n{\n    <span style=\"color: blue;\">byte</span>[] buffer = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[32768];\n    <span style=\"color: blue;\">int</span> read;\n    <span style=\"color: blue;\">while</span> ((read = stream.Read(buffer, 0, buffer.Length)) &gt; 0)\n    {\n        _memoryStream.Write(buffer, 0, read);\n    }\n}\n_memoryStream.Position = 0;\n\n_waveStream = <span style=\"color: blue;\">new</span> BlockAlignReductionStream(\n    WaveFormatConversionStream.CreatePcmStream(\n        <span style=\"color: blue;\">new</span> Mp3FileReader(_memoryStream)));\n\n_waveOut = <span style=\"color: blue;\">new</span> WaveOut(WaveCallbackInfo.FunctionCallback());\n_waveOut.Init(_waveStream);\n_waveOut.Play();\n</pre>\n</div>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>I have googled for days and I can't find anything that will give me an accurate answer. Thanks in advance for any help.</p>",
+    "PostedDate": "2011-06-16T14:18:42.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628937",
+    "ThreadId": "261698",
+    "Html": "<p>Are you using the latest NAudio? In that case you just need to set _waveStream = Mp3FileReader(_memoryStream);</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-16T14:25:49.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628938",
+    "ThreadId": "261698",
+    "Html": "<p>I tried that also. I got the same error message.</p>",
+    "PostedDate": "2011-06-16T14:27:04.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628940",
+    "ThreadId": "261698",
+    "Html": "<p>StackTrace:</p>\n<p>at <span class=\"normalLinkEmuLink\"><span style=\"color: #00008b;\">NAudio.Wave.Compression.AcmStreamHeader</span></span>.<span><span style=\"color: #008b8b;\">Convert</span></span>(<span style=\"color: #00008b;\"><span><span style=\"color: #00008b;\">Int32</span></span></span>&nbsp;<span style=\"color: #000000;\">bytesToConvert</span>,&nbsp;<span style=\"color: #0000ff;\">ref&nbsp;</span><span style=\"color: #00008b;\"><span><span style=\"color: #00008b;\">Int32</span></span></span>&nbsp;<span style=\"color: #000000;\">sourceBytesConverted</span>)<br /> at <span class=\"normalLinkEmuLink\"><span style=\"color: #00008b;\">NAudio.Wave.Compression.AcmStream</span></span>.<span><span style=\"color: #008b8b;\">Convert</span></span>(<span style=\"color: #00008b;\"><span><span style=\"color: #00008b;\">Int32</span></span></span>&nbsp;<span style=\"color: #000000;\">bytesToConvert</span>,&nbsp;<span style=\"color: #0000ff;\">ref&nbsp;</span><span style=\"color: #00008b;\"><span class=\"normalLinkEmuLink\"><span style=\"color: #00008b;\">Int32</span></span></span>&nbsp;<span style=\"color: #000000;\">sourceBytesConverted</span>)<br /> at <span class=\"normalLinkEmuLink\"><span style=\"color: #00008b;\">NAudio.Wave.AcmMp3FrameDecompressor</span></span>.<span class=\"normalLinkEmuLink\"><span style=\"color: #008b8b;\">DecompressFrame</span></span>(<span style=\"color: #00008b;\"><span><span style=\"color: #00008b;\">Mp3Frame</span></span></span>&nbsp;<span style=\"color: #000000;\">frame</span>,&nbsp;<span style=\"color: #00008b;\"><span class=\"normalLinkEmuLink\"><span style=\"color: #00008b;\">Byte</span></span></span>[]&nbsp;<span style=\"color: #000000;\">dest</span>,&nbsp;<span style=\"color: #00008b;\"><span><span style=\"color: #00008b;\">Int32</span></span></span>&nbsp;<span style=\"color: #000000;\">destOffset</span>)<br /> at <span class=\"normalLinkEmuLink\"><span style=\"color: #00008b;\">NAudio.Wave.Mp3FileReader</span></span>.<span><span style=\"color: #008b8b;\">Read</span></span>(<span style=\"color: #00008b;\"><span><span style=\"color: #00008b;\">Byte</span></span></span>[]&nbsp;<span style=\"color: #000000;\">sampleBuffer</span>,&nbsp;<span style=\"color: #00008b;\"><span class=\"normalLinkEmuLink\"><span style=\"color: #00008b;\">Int32</span></span></span>&nbsp;<span style=\"color: #000000;\">offset</span>,&nbsp;<span style=\"color: #00008b;\"><span class=\"normalLinkEmuLink\"><span style=\"color: #00008b;\">Int32</span></span></span>&nbsp;<span style=\"color: #000000;\">numBytes</span>)<br /> at <span class=\"normalLinkEmuLink\"><span style=\"color: #00008b;\">NAudio.Wave.WaveOutBuffer</span></span>.<span class=\"normalLinkEmuLink\"><span style=\"color: #008b8b;\">OnDone</span></span>()<br /> at <span><span style=\"color: #00008b;\">NAudio.Wave.WaveOut</span></span>.<span><span style=\"color: #008b8b;\">Play</span></span>()</p>",
+    "PostedDate": "2011-06-16T14:28:17.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628943",
+    "ThreadId": "261698",
+    "Html": "<p>OK, that's quite an unusual MP3 file - it is encoded at 24kHz. I'll download the file, and see if I can come up with a way to decompress it with the Windows ACM codec.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-16T14:34:11.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628944",
+    "ThreadId": "261698",
+    "Html": "<p>Okay thank you very much.</p>",
+    "PostedDate": "2011-06-16T14:35:33.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628954",
+    "ThreadId": "261698",
+    "Html": "<p>OK I've found the problem - it's not MP3, it's MP4. NAudio can't decode MP4 at the moment (something I want to add for NAudio 1.6)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-16T15:01:22.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628959",
+    "ThreadId": "261698",
+    "Html": "<p>That's weird because Subsonic is supposed to transcode this into MP3...I guess it's an issue with my Subsonic server. Thanks for the info and sorry about that.</p>",
+    "PostedDate": "2011-06-16T15:12:03.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628961",
+    "ThreadId": "261698",
+    "Html": "<p><span style=\"color: #888888;\">no problem. liked the song by the way ;)</span></p>",
+    "PostedDate": "2011-06-16T15:14:05.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628967",
+    "ThreadId": "261698",
+    "Html": "<p>Yeah, just tried with another music file and it worked...sorry about that. My own stupid fault lol.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks for your help.</p>",
+    "PostedDate": "2011-06-16T15:20:23.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628968",
+    "ThreadId": "261698",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p><span style=\"color: #888888;\">no problem. liked the song by the way ;)</span></p>\r\n</blockquote>\r\n<p>Thanks lol.</p>",
+    "PostedDate": "2011-06-16T15:22:18.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "545417",
+    "ThreadId": "240846",
+    "Html": "\r\n<p>I've encountered a problem recently. The MIDI library has problems with xml serialization. Is does not support it.</p>\r\n<p>&nbsp;</p>\r\n<p>--&gt;SOLUTION--&gt;</p>\r\n<p>Use the N-Audio libraries in a diffrent class than your object you want to serialize.</p>\r\n<p>&nbsp;</p>\r\n<p>Example:--&gt; Class 1(data)&nbsp; =ordinary data types like struct, int, string, etc.&nbsp; ***you'll be able to serialize this class***</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Class 2 (N-Audio)&nbsp; = Methods with midiplayer, N-audio types, Static methods to construct the midiEvent collections&nbsp;&nbsp; **Do not serialize\r\n this class**</p>\r\n<p>Hope this helps&nbsp; :)</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-07T07:33:05.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1457262",
+    "ThreadId": "649344",
+    "Html": "I'm using ASIO out but all of my outputs are showing as mono.   Is there a way to make the stereo pairs list and be addressed as stereo pairs like 1/2?\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2015-12-27T10:01:42.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457277",
+    "ThreadId": "649344",
+    "Html": "With ASIO you open all the inputs and outputs on the card and write to them yourself. NAudio has a MultiplexingWaveProvider (and MultiplexingSampleProvider) class that can make life a bit easier for you,<br />\n",
+    "PostedDate": "2015-12-27T12:46:57.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457283",
+    "ThreadId": "649344",
+    "Html": "Thanks Mark.    Now I only need to figure out how to point my ouput selection (ComboOutput.SelectedIndex) to be the target for playback.   No matter what I do in that bottom code block (empty here) it still plays through the default audio device..  Suffice to say, the C# examples are not that clear to me, a VB guy.<br />\n<br />\nForgetting the larger C# classes for now, I simply need to play a file (filename) out of Device X &amp; Output X, via ASIO in that one code block.   I'd appreciate any example.<br />\n<pre><code>Private Sub ComboASIO_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboASIO.SelectedIndexChanged\n    ' Hold the current device index in case of failure.\n    Dim CurrentIndex = ComboASIO.SelectedIndex\n\n    Try\n        Dim Asio = New AsioOut(ComboASIO.SelectedIndex)\n        Dim outputs = Asio.DriverOutputChannelCount\n\n        ' load the outputs from the selected device\n        ComboASIOOutputs.Items.Clear()\n        For output = 0 To outputs - 1\n            ComboASIOOutputs.Items.Add(Asio.AsioOutputChannelName(output))\n        Next\n\n        If ComboASIOOutputs.Items.Count &gt; 0 Then ComboASIOOutputs.SelectedIndex = 0\n\n    Catch ex As Exception\n        MsgBox(ComboASIO.Text &amp; &quot; Error: &quot; &amp; ex.Message, vbOKOnly + vbInformation, &quot;Set ASIO Device&quot;)\n        Exit Sub\n    End Try\nEnd Sub\n\nPrivate Sub ComboASIOOutputs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboASIOOutputs.SelectedIndexChanged\n\n    '**** need code here to make the selected output (or output pair) the target for playback.\n\nEnd Sub</code></pre>\n\n",
+    "PostedDate": "2015-12-27T15:05:04.747-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457285",
+    "ThreadId": "649344",
+    "Html": "I figured it out.   &quot;Channel Offset&quot; to hit the other pairs.   Now I only need to set the volume before it hits the ASIO part, since (I guess) volume isn't supported in ASIO there.<br />\n<pre><code>    wave = New NAudio.Wave.WaveFileReader(Filename)\n\n    Dim output = New AsioOut(ComboASIO.Text)\n    output.ChannelOffset = ComboASIOOutputs.SelectedIndex\n    output.Init(New NAudio.Wave.WaveChannel32(wave))\n    output.Play()\n</code></pre>\n\nAnd the mono/stereo thing is irrelevant, hitting the left hits both anyway so it's a non issue.\r<br />\n<br />\nThanks a lot for your help Mark<br />\n",
+    "PostedDate": "2015-12-27T15:58:13.78-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457333",
+    "ThreadId": "649344",
+    "Html": "yes, that will work, but remember that many ASIO drivers will not let you open multiple instances of the same sound card.<br />\n",
+    "PostedDate": "2015-12-28T05:36:17.86-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457339",
+    "ThreadId": "649344",
+    "Html": "Yes.   Because disposing of these objects is still confusing to me (the how and when) and also because my app will only ever play one file at a time anyway, I moved the instancing to the form level to only ever user the one instance of those things across the board, and dispose of them all on form close.   I just need to do it all without ever calling anything else as &quot;New&quot; that needs additional disposal.<br />\n<pre><code>    Public Player = New WaveOutEvent()\n    Public wave As NAudio.Wave.WaveFileReader\n    Public output As NAudio.Wave.AsioOut</code></pre>\n\n",
+    "PostedDate": "2015-12-28T06:25:34.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

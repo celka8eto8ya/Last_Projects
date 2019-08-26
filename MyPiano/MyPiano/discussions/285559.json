@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "722900",
+    "ThreadId": "285559",
+    "Html": "\r\n<p>Hello!</p>\r\n<p>I've created a program that uses a 8 channel external audio card to play audio through waveOut. I was wondering how would it be possible to create several instances of audio. I would prefer if these additional streams could be created indefinitely, so I\r\n don't have to manually program it for each channel.</p>\r\n<p>Right now everything works fine until I have to stop the audio. If I select two different devices and play, everything is OK, but stopping them messes everything up.</p>\r\n<p>I currently have this (in VB.Net):</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>   <span style=\"color:blue\">Private</span> <span style=\"color:blue\">Function</span> CreateInputStream(<span style=\"color:blue\">ByVal</span> fileName <span style=\"color:blue\">As</span> <span style=\"color:blue\">String</span>) <span style=\"color:blue\">As</span> WaveStream\r\n        <span style=\"color:blue\">Dim</span> inputStream <span style=\"color:blue\">As</span> WaveChannel32\r\n\r\n        <span style=\"color:blue\">If</span> fileName.EndsWith(<span style=\"color:#a31515\">&quot;.mp3&quot;</span>) <span style=\"color:blue\">Then</span>\r\n            <span style=\"color:blue\">Dim</span> mp3Reader <span style=\"color:blue\">As</span> <span style=\"color:blue\">New</span> Mp3FileReader(fileName)\r\n            inputStream = <span style=\"color:blue\">New</span> WaveChannel32(mp3Reader)\r\n        <span style=\"color:blue\">ElseIf</span> fileName.EndsWith(<span style=\"color:#a31515\">&quot;.wav&quot;</span>) <span style=\"color:blue\">Then</span>\r\n            <span style=\"color:blue\">Dim</span> wavReader <span style=\"color:blue\">As</span> <span style=\"color:blue\">New</span> WaveFileReader(fileName)\r\n            inputStream = <span style=\"color:blue\">New</span> WaveChannel32(wavReader)\r\n        <span style=\"color:blue\">Else</span>\r\n            <span style=\"color:blue\">Throw</span> <span style=\"color:blue\">New</span> InvalidOperationException(<span style=\"color:#a31515\">&quot;Unsupported extension&quot;</span>)\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">If</span>\r\n\r\n        volumeStream = inputStream\r\n\r\n        <span style=\"color:blue\">Return</span> volumeStream\r\n\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Function</span>\r\n\r\n    <span style=\"color:blue\">Private</span> <span style=\"color:blue\">Function</span> PlayAudio(<span style=\"color:blue\">ByVal</span> file <span style=\"color:blue\">As</span> <span style=\"color:blue\">String</span>, <span style=\"color:blue\">ByVal</span> devNo <span style=\"color:blue\">As</span> <span style=\"color:blue\">Integer</span>)\r\n\r\n        waveOutDevice = <span style=\"color:blue\">New</span> WaveOut\r\n        mainOutputStream = CreateInputStream(file)\r\n\r\n        waveOutDevice.DeviceNumber = devNo\r\n        waveOutDevice.Init(mainOutputStream)\r\n        waveOutDevice.Play()\r\n\r\n        <span style=\"color:blue\">Return</span> waveOutDevice.PlaybackState\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Function</span>\r\n\r\n    <span style=\"color:blue\">Private</span> <span style=\"color:blue\">Function</span> StopAudio()\r\n        <span style=\"color:blue\">If</span> <span style=\"color:blue\">Not</span> waveOutDevice <span style=\"color:blue\">Is</span> <span style=\"color:blue\">Nothing</span> <span style=\"color:blue\">Then</span>\r\n            waveOutDevice.<span style=\"color:blue\">Stop</span>()\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">If</span>\r\n        <span style=\"color:blue\">If</span> <span style=\"color:blue\">Not</span> mainOutputStream <span style=\"color:blue\">Is</span> <span style=\"color:blue\">Nothing</span> <span style=\"color:blue\">Then</span>\r\n            volumeStream.Close()\r\n            volumeStream = <span style=\"color:blue\">Nothing</span>\r\n            mainOutputStream.Close()\r\n            mainOutputStream = <span style=\"color:blue\">Nothing</span>\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">If</span>\r\n        <span style=\"color:blue\">If</span> <span style=\"color:blue\">Not</span> waveOutDevice <span style=\"color:blue\">Is</span> <span style=\"color:blue\">Nothing</span> <span style=\"color:blue\">Then</span>\r\n            waveOutDevice.Dispose()\r\n            waveOutDevice = <span style=\"color:blue\">Nothing</span>\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">If</span>\r\n        <span style=\"color:blue\">Return</span> <span style=\"color:blue\">Nothing</span>\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Function</span></pre>\r\n</div>\r\n<p></p>\r\n<p>Here's a picture of my UI work in progress to clarify.&nbsp;</p>\r\n<p>http://www.upload.ee/image/1970564/ap.jpg</p>\r\n<p>Any tips would be appreciated.</p>\r\n",
+    "PostedDate": "2012-01-09T23:29:47.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "722903",
+    "ThreadId": "285559",
+    "Html": "<p>it looks like your class just has one instance of waveOutDevice, volumeStream and mainOutputStream. However, there needs to be one per device. A simple way to do this would be to create a usercontrol with your play, pause, volume buttons on it, and then have multiple instances of that usercontrol on your main form.</p>",
+    "PostedDate": "2012-01-09T23:34:26.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "722959",
+    "ThreadId": "285559",
+    "Html": "<p>Thanks! I am quite new to .NET programming and didn't even think about usercontrols. I am making progress now, however could you give me a hint on what would be the easiest way to control all of the user controls at once?</p>",
+    "PostedDate": "2012-01-10T01:50:59.41-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "722961",
+    "ThreadId": "285559",
+    "Html": "<p>well your usercontrol would have public methods, like Play() Stop() etc. Then the host form would have a list of your user controls, and loop through it calling the appropriate method on each one in turn.</p>",
+    "PostedDate": "2012-01-10T01:52:51.933-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "722963",
+    "ThreadId": "285559",
+    "Html": "<p>Thank you a lot for the help!</p>\r\n<p>All the best for you and your project! You're doing awesome job.</p>",
+    "PostedDate": "2012-01-10T01:54:25.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1448762",
+    "ThreadId": "646273",
+    "Html": "Hi,\r<br />\n<br />\nI am recording some audio data using wasapi loopback. And now I want to do input driven resampling (resampling before writing it into file) in order to change sample rate and bit depth.\r<br />\nI know that there is an example on the internet using ACM Resampler, but as wasapi loopback is producing 32bit IeeeFloat samples I cannot use ACM (as far as I know).\r<br />\nDoes anyone know how to do this using the WDL resampler or has a code example for me? I have really no idea about that and I can't find any examples...\r<br />\n<br />\nTha aim is to reduce the amount of data. I think for this purpose it would be even better to do a real-time mp3-conversion, but I am not sure whether this is possible in general. When you have some ideas or code snippets about that, would be very nice :)\r<br />\n<br />\nI would be very grateful for any ideas helping me to implement one of both<br />\n",
+    "PostedDate": "2015-10-15T20:33:02.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448876",
+    "ThreadId": "646273",
+    "Html": "Now I am trying to do it with the Media Foundation Resampler (although I am not sure whether this is the &quot;rigth one&quot; :D). I am trying this one:<br />\n<pre><code>byte[] converted = new byte[38400];\nBufferedWaveProvider rs = new BufferedWaveProvider(loopbackRecorder.WaveFormat);\nMediaFoundationResampler mfr = new MediaFoundationResampler(rs, new WaveFormat(44100,32,2));\n\npublic void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n{\n    // ...\n    rs.AddSamples(e.Buffer, 0, e.BytesRecorded);\n    int count = mfr.Read(converted, 0, rs.BufferedBytes);\n    //...\n}</code></pre>\n\nWhen I am debugging this, it seems to run correctly when data is available the first time. Then something is written in to the converted-Array and the BufferedWaveProvider is cleared because it was read.\r<br />\nBut the next times, the samples are stored in the BufferedWaveProvider but are not read out. And nothing is written into my converted-Array. Finally, this causes a crash because there is soon to much stored in the buffer, more bytes than my converted-Array is long. \r<br />\n<br />\nI am not sure whether this is a good approach and I have no clue why this seems to run only the first time - the code is obviously the same for each time :P<br />\n",
+    "PostedDate": "2015-10-16T20:40:01.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

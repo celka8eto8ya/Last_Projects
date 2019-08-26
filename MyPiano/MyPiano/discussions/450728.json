@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1070978",
+    "ThreadId": "450728",
+    "Html": "I have a simple application to build. I want to play audio and track cue points in the playback where I can display text. Basically a teleprompter / karaoki kind of playback. I have the  timing files and the text files to be displayed and the .mp3 files. I will create a player that allows the user to compose playlists and playback with text prompts synced with the audio.\r<br />\n<br />\nCan NAudio faciliate this? Nothing fancy, no wave files or other stuff, just audio playback with either an event identifying where in the audio file the playback is currently at or preloading into Naudio the cuepoints to trigger events back to me.\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2013-07-21T08:22:28.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071253",
+    "ThreadId": "450728",
+    "Html": "Probably the simplest way is just to have a timer that ticks a few times a second and sees what the current playback position is. Then you can update the display to show whatever is needed. The Position property of the file reader tells you how many bytes in you are, and CurrentTime gives you it as a TimeSpan\r<br />\n<br />\nFor it to be driven by the audio pipeline, I'd create a custom WaveProvider that takes the file reader and in its Read method detects if you've gone over a boundary that requires text to be displayed.<br />\n",
+    "PostedDate": "2013-07-22T05:45:44.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

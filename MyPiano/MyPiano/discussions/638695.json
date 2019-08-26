@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1427385",
+    "ThreadId": "638695",
+    "Html": "I have a laptop with native mic and a web cam with mic, i want to capture sound from these two devices. But when i'm tryin' do this  i have an error:<br />\n<br />\n<strong>already allocated calling waveinopen</strong><br />\n<br />\nNAudio have searched for 3 devices, and i wrote next:<br />\n<pre><code>    NAudio.Wave.WaveIn sourceStream = null;\n    NAudio.Wave.WaveIn sourceStream2 = null;\n    NAudio.Wave.WaveIn sourceStream3 = null;\n    NAudio.Wave.DirectSoundOut waveOut = null;\n    NAudio.Wave.DirectSoundOut waveOut2 = null;\n    NAudio.Wave.DirectSoundOut waveOut3 = null;\n    NAudio.Wave.WaveFileWriter waveWriter = null;\n    NAudio.Wave.WaveFileWriter waveWriter2 = null;\n    NAudio.Wave.WaveFileWriter waveWriter3 = null;\n\n    private void button5_Click(object sender, EventArgs e)\n    {\n        for (int i = 0; i &lt; NAudio.Wave.WaveIn.DeviceCount; i++)\n        {\n            if (sourceStream == null)\n            {\n                sourceStream = new NAudio.Wave.WaveIn();\n                sourceStream.DeviceNumber = i;\n                sourceStream.WaveFormat = new NAudio.Wave.WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(i).Channels);\n\n                sourceStream.DataAvailable += new EventHandler&lt;NAudio.Wave.WaveInEventArgs&gt;(sourceStream_DataAvailable);\n                waveWriter = new NAudio.Wave.WaveFileWriter(String.Concat(&quot;D:/record-&quot;, i + 1, &quot;.wav&quot;), sourceStream.WaveFormat);\n\n                sourceStream.StartRecording();\n                continue;\n            }\n\n            if (sourceStream2 == null)\n            {\n                sourceStream2 = new NAudio.Wave.WaveIn();\n                sourceStream2.DeviceNumber = i;\n                sourceStream2.WaveFormat = new NAudio.Wave.WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(i).Channels);\n\n                sourceStream2.DataAvailable += new EventHandler&lt;NAudio.Wave.WaveInEventArgs&gt;(sourceStream2_DataAvailable);\n                waveWriter2 = new NAudio.Wave.WaveFileWriter(String.Concat(&quot;D:/record-&quot;, i + 1, &quot;.wav&quot;), sourceStream2.WaveFormat);\n\n\n\n                sourceStream2.StartRecording();\n                continue;\n            }\n\n            if (sourceStream3 == null)\n            {\n                sourceStream3 = new NAudio.Wave.WaveIn();\n                sourceStream3.DeviceNumber = i;\n                sourceStream3.WaveFormat = new NAudio.Wave.WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(i).Channels);\n\n                sourceStream3.DataAvailable += new EventHandler&lt;NAudio.Wave.WaveInEventArgs&gt;(sourceStream_DataAvailable);\n                waveWriter3 = new NAudio.Wave.WaveFileWriter(String.Concat(&quot;D:/record-&quot;, i + 1, &quot;.wav&quot;), sourceStream3.WaveFormat);\n\n                sourceStream3.StartRecording();\n                continue;\n            }\n        }\n    }\n\n\n\n</code></pre>\n\nerror occured in line: sourceStream2.StartRecording();<br />\n",
+    "PostedDate": "2015-05-24T15:32:06.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1428617",
+    "ThreadId": "638695",
+    "Html": "it looks like you're trying to open the same device number for recording twice. Put some breakpoints on StartRecording, and see what DeviceNumber is,.<br />\n",
+    "PostedDate": "2015-06-03T07:41:24.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

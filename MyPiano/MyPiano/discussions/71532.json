@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "243973",
+    "ThreadId": "71532",
+    "Html": "<p>I want to play back the captured audio as close to live as possible</p>\r\n<p>the wavinstream capture is easy... i assume i would put the buffer into a memory stream...???? or do i put the data into a wavebuffer?<br>then i need to created a class that is derrived from wavestream, and get the data from the memory stream<br>in the Read method</p>\r\n<p>but im not having much luck, anychance some example code of the derrived wavestream?<br>perticually the overridden Read method</p>\r\n<p>Im&nbsp;just going in circles now...</p>\r\n<p>thanks<br>mitch</p>",
+    "PostedDate": "2009-10-09T10:52:02.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244022",
+    "ThreadId": "71532",
+    "Html": "<p>ok, lets switch to the newer naudio...</p>\r\n<p>&nbsp;</p>\r\n<p>wavin...<br>i dont know what to do with the data that shows up in data arrived, where do i stick it :)<br>i need like a buffer, that can hold say 1 second, of 44.1k 16bit x 2chanel audio?</p>",
+    "PostedDate": "2009-10-09T13:39:01.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244103",
+    "ThreadId": "71532",
+    "Html": "<p>&nbsp;</p>\r\n<p>ok, i got it all working :)</p>\r\n<p>&nbsp;</p>\r\n<p>now how do it control the wavein mixerline ;)</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-09T22:36:27.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "246015",
+    "ThreadId": "71532",
+    "Html": "<p>would it be&nbsp;possible&nbsp;for u to post your&nbsp;derived&nbsp;wavestream</p>\r\n<p>thanks</p>",
+    "PostedDate": "2009-10-15T06:23:00.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "246102",
+    "ThreadId": "71532",
+    "Html": "<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:#000000\">Sure,</span></pre>\r\n<pre></pre>\r\n<pre></pre>\r\n<pre></pre>\r\n<pre><span style=\"color:Blue\"><div style=\"color:Black;background-color:White\"><pre></pre>\r\n<pre></pre>\r\n<pre><span style=\"color:#000000\">mainOutputStream = new WaveOutStream();</span></pre>\r\n<pre></pre>\r\n<pre><span style=\"color:#000000\">its called... line in the capture</span></pre>\r\n<pre><span style=\"color:#000000\">// wavein data from capture<br>&nbsp;&nbsp;private void waveIn_DataAvailable(object sender, WaveInEventArgs e)<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;mainOutputStream.SetStream(e.Buffer, e.BytesRecorded);<br>&nbsp;&nbsp;}</span></pre>\r\n<pre></pre>\r\n<pre><span style=\"color:Blue\">-----------------------------------</span></pre>\r\n<pre><span style=\"color:Blue\">using</span> System.IO\r\n\r\n<span style=\"color:Blue\">public</span> <span style=\"color:Blue\">class</span> WaveOutStream : WaveStream\r\n{\r\n  MemoryStream SourceStream;\r\n  <span style=\"color:Blue\">private</span> <span style=\"color:Blue\">bool</span> Streaming;\r\n\r\n  <span style=\"color:Blue\">public</span> WaveOutStream()\r\n  {\r\n    SourceStream = <span style=\"color:Blue\">new</span> MemoryStream();\r\n  }\r\n\r\n  <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">void</span> SetStream(<span style=\"color:Blue\">byte</span>[] buffer, <span style=\"color:Blue\">int</span> bufferLength)\r\n  {\r\n    <span style=\"color:Blue\">if</span> (Streaming == <span style=\"color:Blue\">true</span>)\r\n    {\r\n      SourceStream.Position = 0;\r\n      SourceStream.Write(buffer, 0, bufferLength);\r\n    }\r\n  }\r\n\r\n  <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">void</span> Stop()\r\n  {\r\n    Streaming = <span style=\"color:Blue\">false</span>;\r\n    SourceStream.Position = 0;\r\n    SourceStream.SetLength(0);\r\n  }\r\n\r\n  <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">void</span> Start()\r\n  {\r\n    Streaming = <span style=\"color:Blue\">true</span>;\r\n  }\r\n\r\n  <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">override</span> <span style=\"color:Blue\">int</span> Read(<span style=\"color:Blue\">byte</span>[] buffer, <span style=\"color:Blue\">int</span> offset, <span style=\"color:Blue\">int</span> count)\r\n  {\r\n    <span style=\"color:Blue\">if</span> (SourceStream.Length == 0)\r\n    {\r\n      buffer[0] = 0;\r\n      <span style=\"color:Blue\">return</span> 1;\r\n    }\r\n    <span style=\"color:Blue\">else</span>\r\n    {\r\n      SourceStream.Position = 0;\r\n      <span style=\"color:Blue\">int</span> bytesRead = SourceStream.Read(buffer, offset, count);\r\n\r\n      <span style=\"color:Blue\">return</span> bytesRead;\r\n    }\r\n  }\r\n\r\n  <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">override</span> WaveFormat WaveFormat\r\n  {\r\n    <span style=\"color:Blue\">get</span> { <span style=\"color:Blue\">return</span> <span style=\"color:Blue\">new</span> WaveFormat(44100, 16, 2); }\r\n  }\r\n\r\n  <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">override</span> <span style=\"color:Blue\">long</span> Length\r\n  {\r\n    <span style=\"color:Blue\">get</span> { <span style=\"color:Blue\">return</span> SourceStream.Length; }\r\n  }\r\n\r\n  <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">override</span> <span style=\"color:Blue\">long</span> Position\r\n  {\r\n    <span style=\"color:Blue\">get</span>\r\n    {\r\n      <span style=\"color:Blue\">throw</span> <span style=\"color:Blue\">new</span> NotImplementedException();\r\n    }\r\n    <span style=\"color:Blue\">set</span>\r\n    {\r\n      <span style=\"color:Blue\">throw</span> <span style=\"color:Blue\">new</span> NotImplementedException();\r\n    }\r\n  }\r\n}\r\n</pre>\r\n</div>\r\n</span></pre>\r\n</div>",
+    "PostedDate": "2009-10-15T09:04:01.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

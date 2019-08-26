@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "985884",
+    "ThreadId": "429386",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I have just started out playing around with the NAudio library,</p>\r\n<p>as my soundcard does not support a &quot;what you hear&quot; record feature&nbsp;I need to have NAudio mixing a WaveIn signal with another WaveStream played in the background.</p>\r\n<p>I've so far accomplished to record the input signal with a WaveIn object, and also using the&nbsp;WasapilLoopbackCapture to record any sound playing of the output instead.</p>\r\n<p>So it's either the one or the other that gets recorded.</p>\r\n<p>&nbsp;</p>\r\n<p>I've looked for a way to mix these two signals using the WaveMixerStream32 but I'm not sure if this is possible and how I should implement this to work</p>\r\n<p>(The WaveMixerStream32 takes no WaveIn but only Stream objects)</p>\r\n<p>&nbsp;</p>\r\n<p>Any help on this subject is appreciated!</p>\r\n<p>&nbsp;</p>\r\n<p>Regards Niclas</p>\r\n",
+    "PostedDate": "2013-01-12T07:08:48.84-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987103",
+    "ThreadId": "429386",
+    "Html": "\r\n<p>WaveMixerStream32 is an older class that has some fairly specific requirements for its inputs. One option is to use two BufferedWaveProviders, each filled with the data receieved. Then convert those IWaveProviders into ISampleProviders and mix them with\r\n the MixingSampleProvider (mixing works best at 32 bit float which is why you need this extra step).</p>\r\n",
+    "PostedDate": "2013-01-15T07:26:43.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

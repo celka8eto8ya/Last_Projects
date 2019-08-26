@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "256356",
+    "ThreadId": "74899",
+    "Html": "<p>Hi guys,</p>\r\n<p>What is the &quot;easiest&quot; way to generate some speech from text (using <strong>speechlib</strong>), process the generated audio stream with some effects (using <strong>NAudio</strong>), and then either play it back, or save it to a WAV (MP3) file (again, using <strong>NAudio</strong>) without having to save any of the interim sound data to temporary WAV or other files (that is - all processing, before saving to WAV or playing back, happens in RAM)?</p>\r\n<p>Thank you in advance!</p>\r\n<div id=\"_mcePaste\" style=\"overflow:hidden;left:-10000px;top:0px;width:1px;height:1px\">\r\n<h1>Skype Voice Changer</h1>\r\n</div>",
+    "PostedDate": "2009-11-12T07:52:32.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "256755",
+    "ThreadId": "74899",
+    "Html": "<p>You would need to create a class derived from WaveStream that gives the output from speechlib from its Read method. Then that WaveStream could be passed through other effects before eventually going out to a WaveFileWriter</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-13T06:33:20.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "257943",
+    "ThreadId": "74899",
+    "Html": "<p>Makes sense.</p>\r\n<p>Thank you!</p>",
+    "PostedDate": "2009-11-17T08:07:47.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

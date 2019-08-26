@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1259182",
+    "ThreadId": "549520",
+    "Html": "Hi Mark,\r<br />\n<br />\nI develop a application using Naudio but it randomly crashed on playing song.I create a error log   and i got  &quot;WaveOutBuffer - WriteToWaveOut() - WaveStillPlaying calling waveOutWrite&quot; this error.How can i resolve the error.Can you fixed this error on the latest version Please let me know immediately because it is very urgent for me.<br />\n",
+    "PostedDate": "2014-06-24T03:37:44.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260961",
+    "ThreadId": "549520",
+    "Html": "you could try WaveOutEvent instead<br />\n",
+    "PostedDate": "2014-06-29T15:22:42.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

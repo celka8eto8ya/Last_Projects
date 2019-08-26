@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "916529",
+    "ThreadId": "396625",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I am running audio recording in windows xp sp2, but when I run it, I got this error:</p>\r\n<p><br>\r\nFunction: BeginMonitoring(), Error: NAudio.MmException: NoDriver calling waveInGetDevCaps<br>\r\n&nbsp;&nbsp; at NAudio.Wave.WaveIn.GetCapabilities(Int32 devNumber)<br>\r\n&nbsp;&nbsp; at VoiceRecorder.Audio.AudioRecorder.BeginMonitoring()</p>\r\n<p>For more information, see Help and Support Center at <a href=\"http://go.microsoft.com/fwlink/events.asp\">\r\nhttp://go.microsoft.com/fwlink/events.asp</a>.</p>\r\n<p>&nbsp;</p>\r\n<p>is NAudio not compatible with windows xp, or there might be other issue?</p>\r\n",
+    "PostedDate": "2012-09-24T01:50:19.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917033",
+    "ThreadId": "396625",
+    "Html": "<p>NAudio is compatible with XP. What device number are you using? Your computer may not have a microphone perhaps?</p>",
+    "PostedDate": "2012-09-24T23:29:29.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

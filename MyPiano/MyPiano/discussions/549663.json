@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1259730",
+    "ThreadId": "549663",
+    "Html": "Hi,\r<br />\n<br />\nI am using the AsioOut class to record from an Asio audio device. I can record by initialising the object and then calling AsioOut.Play. If I then call AsioOut.Stop and then AsioOut.Play again to resume recording, the AudioAvailable event fires exactly 2 times and then doesn't fire again after that.\r<br />\n<br />\nI have looked in the NAudioDemo application at the Asio recording example, and it looks like in the demo, you get around this problem by disposing of the AsioOut object and creating a new one each time you start recording. If I modify this demo app to keep hold of the existing AsioOut object rather than creating a new one one resuming playback, I then get this problem.\r<br />\n<br />\nRegards,<br />\n",
+    "PostedDate": "2014-06-25T08:44:41.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260960",
+    "ThreadId": "549663",
+    "Html": "thanks, probably a bug in AsioOut. Will try to get this looked at at some point<br />\n",
+    "PostedDate": "2014-06-29T15:18:51.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

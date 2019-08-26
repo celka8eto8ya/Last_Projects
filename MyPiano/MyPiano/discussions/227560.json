@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "494772",
+    "ThreadId": "227560",
+    "Html": "<p>Hi, thanks for this great project.</p>\r\n<p>My question is how to change volume when recording, or I only can change it after recording(and how)?</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2010-09-16T21:56:51.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "498482",
+    "ThreadId": "227560",
+    "Html": "<p>Anyone can help me?</p>",
+    "PostedDate": "2010-09-25T19:43:33.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "498624",
+    "ThreadId": "227560",
+    "Html": "<p>if you are using WaveIn, then it is a case of using the mixer interop to try to work out which fader to use. It's a real pain but sadly its the only way.</p>\r\n<p>With the CoreAudio API there might be a better way</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-09-26T12:09:40.397-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1312148",
+    "ThreadId": "569481",
+    "Html": "I'm using the MediaFoundationReader for mp4/mp3 playback. When I change position during playback, I notice the first few buffers contain zeros only. Is there a way to find out when exactly the first decoded audio samples are being returned from ReadSample() after calling Reposition()?\r<br />\nThanks!<br />\n",
+    "PostedDate": "2014-10-10T06:02:40.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354522",
+    "ThreadId": "569481",
+    "Html": "afraid I don't know the answer to that one. MSDN is probably the place to look for answers.<br />\n",
+    "PostedDate": "2015-02-20T23:11:05.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

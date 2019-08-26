@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1083773",
+    "ThreadId": "454249",
+    "Html": "Hi I’m new to naudio and I want to record the audio in (mic) and audio output (speakers).\r<br />\nIs it possible using naudio to capture boot in and output sounds to one file?\r<br />\nCode sample please thanks. <br />\n",
+    "PostedDate": "2013-08-22T11:05:50.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085434",
+    "ThreadId": "454249",
+    "Html": "Have a look at the WasapiLoopbackCapture class. The NAudioDemo application has a code sample.<br />\n",
+    "PostedDate": "2013-08-27T08:16:37.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085442",
+    "ThreadId": "454249",
+    "Html": "Hi.\r<br />\nThanks for the reply.\r<br />\nYes I have thanks.\r<br />\nWhat I did was record the mic and the speaker in to wav and then layer them together In one wav to mp3  :.)\r<br />\nthanks for great work.<br />\n",
+    "PostedDate": "2013-08-27T08:34:41.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

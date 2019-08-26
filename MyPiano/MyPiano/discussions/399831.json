@@ -1,0 +1,114 @@
+[
+  {
+    "Id": "928494",
+    "ThreadId": "399831",
+    "Html": "\r\n<p>How to play a dsp group truespeech data from a stream of 32 bytes.&nbsp;</p>\r\n",
+    "PostedDate": "2012-10-17T19:31:00.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929413",
+    "ThreadId": "399831",
+    "Html": "<p>use the RawSourceWaveStream, passing in your stream and creating a TrueSpeechWaveFormat object</p>",
+    "PostedDate": "2012-10-19T07:10:24.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929705",
+    "ThreadId": "399831",
+    "Html": "<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><br />TrueSpeechWaveFormat tspf = <span style=\"color: blue;\">new</span> TrueSpeechWaveFormat();\r\n            <span style=\"color: blue;\">using</span> (MemoryStream ms = <span style=\"color: blue;\">new</span> MemoryStream(Encoding.Default.GetBytes(dataToPlay)))\r\n            {\r\n                RawSourceWaveStream rws = <span style=\"color: blue;\">new</span> RawSourceWaveStream(ms, tspf);\r\n\r\n                WaveFormatConversionStream pcmStream = (WaveFormatConversionStream)WaveFormatConversionStream.CreatePcmStream(rws);\r\n\r\n                wo.Init(pcmStream);\r\n                wo.Play();\r\n            }\r\n</pre>\r\n<pre>this is inside a function which gets called at a delay of 85ms. So its consuming too much memory. Whats' the neat way of doing this?</pre>\r\n<pre>can you provide a simple source?</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2012-10-19T19:51:30.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929743",
+    "ThreadId": "399831",
+    "Html": "<p>Use a single BufferedWaveProvider, and whenever you receive data, decompress it and put it into the BufferedWaveProvider. Then you can just play from the bufferedwaveprovider. For a full code example, look at the source code for the network chat application in NAudioDemo (see the Source Code tab above)</p>",
+    "PostedDate": "2012-10-20T01:34:38.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929943",
+    "ThreadId": "399831",
+    "Html": "<p>no luck with the source code. the buffer is getting full in 1 second. i tried to boolean option to discard data whn buffer is full. The stream is sending data in an interval of 100ms. its playing i think but no sound coming out. cpu usage is 50.&nbsp;</p>",
+    "PostedDate": "2012-10-20T20:52:01.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929971",
+    "ThreadId": "399831",
+    "Html": "<p>are you sure you're reading from the BufferedWaveProvider?</p>",
+    "PostedDate": "2012-10-21T01:14:50.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930021",
+    "ThreadId": "399831",
+    "Html": "\r\n<p>yes. i just duplicated your network chat demo. But in one second the buffer is getting full. and i hear a click sound in the beginning.&nbsp;</p>\r\n<p>Can you tell me how the bufferwaveprovider works? Is it like, the default length of the buffer is 5 seconds and as we play data from it, it gets emptied? or does the new data overwrites the buffer and whenever we call play on it, it plays whatever data is\r\n in it?</p>\r\n<p>What im doing is, i call the following when the server gets connected. this is exactly the same code from network chat demo. other than discardonbufferoverflow and the remote endpoint.</p>\r\n<p>this.codec = new TrueSpeechChatCodec();</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>waveOut = <span style=\"color:blue\">new</span> WaveOut();\n                                            waveProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(codec.RecordFormat);\n                                            waveProvider.DiscardOnBufferOverflow = <span style=\"color:blue\">true</span>;\n                                            waveOut.Init(waveProvider);\n                                            waveOut.Play();\n                                            connected = <span style=\"color:blue\">true</span>;\n</pre>\r\n<pre><span style=\"white-space:pre\">\t\t\t\t\t</span>    ListenerThreadState state = new ListenerThreadState() { Codec = this.codec };</pre>\r\n<pre><span style=\"white-space:pre\">\t</span> <span style=\"white-space:pre\">\t\t\t\t</span>    ThreadPool.QueueUserWorkItem(this.ListenerThread, state);</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>The above code gets called only once, i.e when the server gets connected. Then, whenever the server sends the truespeech data, i pass the data as string to a public variable. The variable is &quot;PlayString&quot; Then i assume the following code does add the data\r\n to the buffer from the public variable</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">class</span> ListenerThreadState\n        {\n            <span style=\"color:blue\">public</span> INetworkChatCodec Codec { <span style=\"color:blue\">get</span>; <span style=\"color:blue\">set</span>; }\n        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> ListenerThread(<span style=\"color:blue\">object</span> state)\n        {\n            ListenerThreadState listenerThreadState = (ListenerThreadState)state;\n\n            <span style=\"color:blue\">try</span>\n            {\n                <span style=\"color:blue\">while</span> (connected)\n                {\n                    <span style=\"color:blue\">byte</span>[] b = Encoding.Default.GetBytes(<span style=\"color:blue\">this</span>.PlayString);\n                    <span style=\"color:blue\">byte</span>[] decoded = listenerThreadState.Codec.Decode(b, 0, b.Length);\n\n                    waveProvider.AddSamples(decoded, 0, decoded.Length);\n                    \n                }\n            }\n            <span style=\"color:blue\">catch</span> (SocketException)\n            {\n                <span style=\"color:green\">// usually not a problem - just means we have disconnected</span>\n            }\n        }\n</pre>\r\n</div>\r\n<p>This is the code i'm using. do you have any suggestion?&nbsp;this.codec = new TrueSpeechChatCodec();&lt;-- is this particular line of code correct? I added the classes&nbsp;TrueSpeechChatCodec, INetworkChatCodec and AcmChatCodec to my project.</p>\r\n<p>Forgot to mention, the data is 96 bytes. On debugging, the byte[] decoded, is of length 1440 bytes.</p>\r\n",
+    "PostedDate": "2012-10-21T05:15:22.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930035",
+    "ThreadId": "399831",
+    "Html": "<p>BufferedWaveProvider uses a circular buffer, with a read position and a write position, so everything written to it gets read out unless the buffer overflows. Where is your incoming stream coming from? If it is a file, then it is quite possible it is downloading so fast that the buffer fills up and overflows. If it is a realtime stream, then you ought not to get too many problems with overflow. BufferedWaveProvider can be set up to have a longer buffer time if needed (e.g. 30 seconds or more).</p>\r\n<p>What WaveFormat are you passing into the BufferedWaveProvider? The WaveFormat should be the decoded (i.e. PCM) WaveFormat. I have no idea whether those numbers are correct for the formats you are working with. You could compare them with the byte[] sizes in the NAudioDemo</p>",
+    "PostedDate": "2012-10-21T08:10:56.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930040",
+    "ThreadId": "399831",
+    "Html": "<p>as i mentioned earlier, im passing in dsp truespeech waveformat. I tried setting a longer buffer time too. no use still. im getting the truespeech data with a length of 96 bytes from a server in realtime with a delay of 100 ms. In the following code&nbsp;</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">while</span> (connected)\r\n                {\r\n                    <span style=\"color: blue;\">byte</span>[] b = Encoding.Default.GetBytes(<span style=\"color: blue;\">this</span>.PlayString);\r\n                    <span style=\"color: blue;\">byte</span>[] decoded = listenerThreadState.Codec.Decode(b, 0, b.Length);\r\n\r\n                    waveProvider.AddSamples(decoded, 0, decoded.Length);\r\n                    \r\n                }\r\n</pre>\r\n</div>\r\n</p>\r\n<p>PlayString.Length = 96 bytes</p>\r\n<p>Length of \"b\" is 96 bytes</p>\r\n<p>Length of \"decoded\" is 1440 bytes.</p>",
+    "PostedDate": "2012-10-21T08:45:06.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930041",
+    "ThreadId": "399831",
+    "Html": "<p>the WaveFormat of the BufferedWaveProvider must not be Truespeech. It must be PCM. It has to be the exact <strong>decoded </strong>WaveFormat from the Codec.</p>",
+    "PostedDate": "2012-10-21T08:47:10.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930049",
+    "ThreadId": "399831",
+    "Html": "\r\n<p>ok so how do i decode truespeech to pcm and pass it on to the bufferedwaveprovider? im a total newbie in codes and stuffs like that. sry.</p>\r\n<p>i know you already mentioned to use rawwavesource stream. but i really dunno how to.</p>\r\n",
+    "PostedDate": "2012-10-21T09:08:55.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930052",
+    "ThreadId": "399831",
+    "Html": "<p>To debug audio codecs I recommend doing things offline first. So save some incoming audio to a raw .dat file. Then use the RawStreamSource and WaveFileConversionStream to try to convert it to PCM, writing it out with a WaveFileWriter. Listen to the resulting WAV file and see if it sounds right. Only once you are sure you are decoding audio properly are you ready to try and play it back on the fly</p>",
+    "PostedDate": "2012-10-21T09:18:16.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930055",
+    "ThreadId": "399831",
+    "Html": "<p>using the following code the sound is playing.</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (MemoryStream ms = <span style=\"color: blue;\">new</span> MemoryStream(Encoding.Default.GetBytes(dataToPlay)))\r\n            {\r\n                RawSourceWaveStream rws = <span style=\"color: blue;\">new</span> RawSourceWaveStream(ms, tspf);\r\n\r\n                WaveFormatConversionStream pcmStream = (WaveFormatConversionStream)WaveFormatConversionStream.CreatePcmStream(rws);\r\n\r\n                waveOut.Init(pcmStream);\r\n            }\r\n</pre>\r\n</div>\r\n<p>can you tell me how to decode dsp truespeech to pcm in realtime?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-10-21T09:25:31.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930070",
+    "ThreadId": "399831",
+    "Html": "<p>The way to do it is the way that the NAudio chat demo does it. If you are feeding audio into the buffered wave provider in the correct format then it will play</p>",
+    "PostedDate": "2012-10-21T10:42:39.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1479760",
+    "ThreadId": "656675",
+    "Html": "Hi, I am using a FadeInOutSampleProvider for my application fade in and fade out. I am looking for a way to have the file stop playing when the fade out is completed. Is there a way to do this without modifying the sample provider?<br />\n<br />\nWhat I had in mind was to have a option &quot;StopOnFadeOutAtSilence&quot; if there is no other way to do this? If this option is true the provider will return zero count at silence.<br />\nSid<br />\n",
+    "PostedDate": "2016-07-25T10:34:02.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480185",
+    "ThreadId": "656675",
+    "Html": "Yes, that would be a helpful addition to FadeInOutSampleProvider.<br />\n",
+    "PostedDate": "2016-08-01T04:56:29.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

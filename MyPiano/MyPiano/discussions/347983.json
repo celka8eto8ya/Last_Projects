@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "808031",
+    "ThreadId": "347983",
+    "Html": "\r\n<p>Hi, I have downloaded the newest version of NAudio. But still can't check when playback ends. DirectSoundOut.PlaybackStopped event is triggered after calling Stop() method, not when the file ends.</p>\r\n<p>So how do I know when playback ends?<br>\r\n(Stop() method is not called, insetad, end of wave is reached)</p>\r\n",
+    "PostedDate": "2012-03-09T04:09:16.84-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808032",
+    "ThreadId": "347983",
+    "Html": "<p>depends what is in your playback graph. Some WaveStreams / WaveProviders keep returning data no matter whether their source has any input or not. In that case, PlaybackStopped will never happen - it is still playing, just playing silence. What are you passing in to Init?</p>",
+    "PostedDate": "2012-03-09T04:12:01.687-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808054",
+    "ThreadId": "347983",
+    "Html": "<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>\r\n<p>I'm passing WaveFileReader or RawSourceWaveStream</p>",
+    "PostedDate": "2012-03-09T05:19:41.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808414",
+    "ThreadId": "347983",
+    "Html": "<p>What if you use WaveOut? Do you get PlaybackStopped event then? I don't use DirectSoundOut much myself, but the latest version ought to be raising the PlaybackStopped event.</p>",
+    "PostedDate": "2012-03-10T01:39:48.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "827795",
+    "ThreadId": "347983",
+    "Html": "<p>Now I'm using waveOut instead od DirectSoundOut. But PlaybackStopped event still doesn't fire, when playback actually ends itself.</p>",
+    "PostedDate": "2012-04-24T03:46:51.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "827797",
+    "ThreadId": "347983",
+    "Html": "<p>it may be that the waveprovider you gave to waveOut never stops returning data from the Read function. this is quite possible as some streams pad with zeroes. you can simply test it by setting up a loop that reads from your waveprovider and see if it ever exits</p>",
+    "PostedDate": "2012-04-24T04:02:53.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "843514",
+    "ThreadId": "347983",
+    "Html": "<p>Hi ,</p>\r\n<p>&nbsp; I am using NAudio playbak for playing I am playing some noise file. This is loop play or single play&nbsp; I hear a really bad buzz at<br />the loop edge , ho to resolve this any ideas.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks in advance</p>",
+    "PostedDate": "2012-06-01T05:47:11.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847345",
+    "ThreadId": "347983",
+    "Html": "<blockquote style=\"padding-bottom: 0px; font-style: italic; margin: 0.25em 1em 0px; padding-left: 0.25em; padding-right: 0.25em; padding-top: 0px; border: #ccc 0.1em solid;\"><strong>markheath wrote:</strong><br />\r\n<p>it may be that the waveprovider you gave to waveOut never stops returning data from the Read function. this is quite possible as some streams pad with zeroes. you can simply test it by setting up a loop that reads from your waveprovider and see if it ever exits</p>\r\n</blockquote>\r\n<p><br />I record sample with using NAudio and then I play it. Come on, there must be some other, normal way to do this.</p>",
+    "PostedDate": "2012-06-11T02:05:10.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847534",
+    "ThreadId": "347983",
+    "Html": "<p>the playback stopped event will only fire when playback actually stops. If you send in a never-ending stream you would instead check on a timer if the current position was greater than the length of the file and then stop.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-06-11T08:49:35.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950360",
+    "ThreadId": "347983",
+    "Html": "\r\n<p>Is there a simple way of adding loop utility to wavechannel32 object?</p>\r\n<p>I must use wavechannel32 because I am using pan and volume utilities of wc32.</p>\r\n<p>I have implemented a LoopStream class from waveStream successfully, but I have to use pan and volume properties of wc32.</p>\r\n<p>Which one should I choose in your opinion?</p>\r\n<p>Adding loop (when it lasts, it return to position=0) property to wc32 or adding pan and volume properties to my LoopStream?</p>\r\n<p>Or is there any other way.</p>\r\n<p>NOTE: I do not want to track the position by timer!</p>\r\n",
+    "PostedDate": "2012-12-03T00:08:49.137-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950622",
+    "ThreadId": "347983",
+    "Html": "\r\n<p>With NAudio you build up a pipeline, so you could pass your LoopStream into WaveChannel32 as the source.</p>\r\n",
+    "PostedDate": "2012-12-03T08:32:35.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

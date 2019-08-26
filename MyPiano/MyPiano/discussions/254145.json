@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "598324",
+    "ThreadId": "254145",
+    "Html": "\r\n<p>Aiff is just an uncompressed PCM files just like wav file, except the aiff-C</p>\r\n<p>And I'm waiting for your WDM/KS out API too</p>\r\n",
+    "PostedDate": "2011-04-15T22:29:57.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598334",
+    "ThreadId": "254145",
+    "Html": "<p>Maybe we will add AIFF reading at some point. I think the byte order is different.</p>\r\n<p>As for WDM/KS, I really wanted to do that a while back, but could find no good documentation to point me in the right direction. Development effort is more likely to focus on WASAPI and ASIO in the future.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-16T00:19:31.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601830",
+    "ThreadId": "254145",
+    "Html": "<p>Hi Parco and Mark,</p>\n<p>I just happened to make an AiffFileReader class today, which is compatible with NAudio. &nbsp;You can use the source code however you'd like (you can adopt into NAudio if you'd like). &nbsp;It's very similar to WaveFileReader, but with some nasty endian swapping and  a crazy IEEE 80-bit extended precision number. &nbsp;It can only read uncompressed PCM data at 16-bit, 24-bit and 32-bit. &nbsp;Perhaps I'll add support for other formats in the future.</p>\n<p><a href=\"http://www.giawa.com/tutorials/src/AiffFileReader.cs\">http://www.giawa.com/tutorials/src/AiffFileReader.cs</a></p>\n<p>Cheers</p>\n<p>Edit: &nbsp;You can use it just like the WaveFileReader too. &nbsp;Might as well give an example:</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre>OpenFileDialog open = <span style=\"color: blue;\">new</span> OpenFileDialog();\nopen.Filter = <span style=\"color: #a31515;\">\"AIFF File (*.aif)|*.aif;\"</span>;\n<span style=\"color: blue;\">if</span> (open.ShowDialog() != DialogResult.OK) <span style=\"color: blue;\">return</span>;\n\nWaveChannel32 wave = <span style=\"color: blue;\">new</span> WaveChannel32(<span style=\"color: blue;\">new</span> AiffFileReader(open.FileName));\n\nDirectSoundOut waveOut = <span style=\"color: blue;\">new</span> DirectSoundOut();\nwaveOut.Init(wave);\nwaveOut.Play();\n</pre>\n</div>",
+    "PostedDate": "2011-04-23T01:31:44.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601841",
+    "ThreadId": "254145",
+    "Html": "<p>wow, thanks. I'd love to include this in NAudio. AIFF support has been on the TODO list for a very long time</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-23T02:46:21.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601847",
+    "ThreadId": "254145",
+    "Html": "<p>giawa,</p>\r\n<p>But how about the AiffC?</p>",
+    "PostedDate": "2011-04-23T03:47:24.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601925",
+    "ThreadId": "254145",
+    "Html": "<p>Hi Parco,</p>\n<p>Are you actually wanting to decompress the data in an aifc file? &nbsp;or are you only looking to a read an aifc file that has 'NONE' compression (ie - uncompressed PCM data, but in an AIFC container)?</p>\n<p>Unfortunately I don't know much about compression, but if it's just raw PCM data in a different file header then it should be easy enough. &nbsp;You can probably just make the following edit (untested):</p>\n<p>Line 148: &nbsp;Change \"AIFF\" to \"AIFC\"</p>\n<p>Giawa</p>\n<p>Edit: &nbsp;Check out the latest version of&nbsp;<a href=\"http://www.giawa.com/tutorials/src/AiffFileReader.cs\">http://www.giawa.com/tutorials/src/AiffFileReader.cs</a></p>\n<ol>\n<li>Added support for AIFC form type</li>\n<li>Can read compression type in COMM chunk (throws FormatException if compression type != \"none\")</li>\n<li>Added support for 8-bit aiff (sounds terrible!)</li>\n<li>Fixed a possible problem with the alignment of chunks (chunk length must always be %2, even if the chunk header says otherwise)</li>\n</ol>",
+    "PostedDate": "2011-04-23T11:06:06.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "922655",
+    "ThreadId": "254145",
+    "Html": "<p>thanks for this Giawa, your updated version is now in the NAudio source code</p>",
+    "PostedDate": "2012-10-05T14:47:41.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

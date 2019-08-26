@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1453446",
+    "ThreadId": "647925",
+    "Html": "Hi! Do I understand right that AsioSampleType is the same as bit depth of my soundcard?<br />\nIf yes, is it possible to get an AsioSampleType not in the AudioAvailable method?<br />\n<br />\nThe essence of my problem: In description of my soundcard says that one supports 24-bit and 32-bit, but that can't be changed in control panel of soundcard. I tried to change it in WIndows audio settings (deffault is 24-bit), but it automacally changing to deffault state (24-bit). AsioSampleType return Int32LSB and I have to manipulate with 32-bit audio, because only that works well. So, I can't undarstand anything. <br />\n",
+    "PostedDate": "2015-11-21T13:12:00.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453528",
+    "ThreadId": "647925",
+    "Html": "This most likely means a 24 bit sample is being stored in a 32 bit integer. Most ADCs don't have much more than 20 bit resolution anyway.<br />\n",
+    "PostedDate": "2015-11-23T01:40:42.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,370 @@
+[
+  {
+    "Id": "1203914",
+    "ThreadId": "529430",
+    "Html": "Okay let's see if i can explain this.\r<br />\n<br />\n<br />\nAs you may know recording an audio source isn't perfect, at least not in C#.\r<br />\nAnd by that i mean, it's not flawless, and that's to be expected, as it's not made to be that in the way it works.\r<br />\n<br />\n<br />\nBy flawless i mean if anything interrupt the mic recording thread, or rather takes priority of it for some reason at any case, it will be left unfeeded, and the result will be that the audio supposed to be there isn't and it will just continue.\r<br />\n<br />\nThis can happen more occasionally with a low buffer.\r<br />\n<br />\nNormally the solution would be to increase the buffer, but i can't do that as i am using it for Network Chat.\r<br />\n<br />\n<br />\nNow here is the thing, in the data sent through the network i don't care if audio get's skipped sometimes or not, as the timing doesn't really matter it will be rather accurate anyway in the end.\r<br />\n<br />\n<br />\nBut for recording this makes all the difference.\r<br />\n<br />\nIf i record 100 seconds, and i lose 10sec, it will become 90, and there is no way to know where it was lost as it can be anywhere and by small amounts.\r<br />\n<br />\n<br />\nSo, what i  want to do is make an adaptive way to record, meaning if a buffer is lost, which i think will always be the amount of the buffer (10ms = 10ms lost), i want to make it write 10ms silence.\r<br />\n<br />\n<br />\nSo even though the audio may be lost, the time and flow will be accurate.\r<br />\n<br />\n<br />\nHope i explained it well enough, thanks!<br />\n",
+    "PostedDate": "2014-02-06T18:07:15.27-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204359",
+    "ThreadId": "529430",
+    "Html": "If you want to fill in the empty samples you should use the BufferedWaveProvider<br />\n<pre><code>/// &lt;summary&gt;\n/// Provides a buffered store of samples\n/// Read method will return queued samples or fill buffer with zeroes\n/// Now backed by a circular buffer\n/// &lt;/summary&gt;</code></pre>\n\n",
+    "PostedDate": "2014-02-07T07:46:46.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1205362",
+    "ThreadId": "529430",
+    "Html": "How can i use that to Save to a .Wav file?\r<br />\n<br />\nI am using it to playback the audio that's received by just feeding the buffer and playing it.\r<br />\n<br />\nBut how can i save the my recording into a buffer and than save the buffer instead of the actual recording feed?<br />\n",
+    "PostedDate": "2014-02-08T21:58:45.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1205453",
+    "ThreadId": "529430",
+    "Html": "Use the BufferedWaveProvider with a WaveFileWriter to save the samples to a WAV file.\r<br />\n<br />\nHave a look at the NAudio Samples to see how it works.<br />\n",
+    "PostedDate": "2014-02-09T00:27:22.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207028",
+    "ThreadId": "529430",
+    "Html": "Can you show an example?\r<br />\nI know how to add the mic data to a BufferedWaveProvider, but not how to write what's in the Provider with WaveFileWriter.\r<br />\n<br />\nCouldn't find any Samples either.<br />\n",
+    "PostedDate": "2014-02-11T15:25:44.613-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207063",
+    "ThreadId": "529430",
+    "Html": "<pre><code>            BufferedWaveProvider b = new BufferedWaveProvider(waveFormat);\n            WaveFileWriter.CreateWaveFile(@&quot;C:\\buff.wav&quot;, b);\n</code></pre>\n\nSearch the nAudio source for BufferedWaveProvider and CreateWaveFile for more examples of the usage.<br />\n",
+    "PostedDate": "2014-02-11T17:36:27.56-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207070",
+    "ThreadId": "529430",
+    "Html": "Doesn't that only works if everything is in the buffer at once?\r<br />\nI need to append as time goes,\r<br />\n<br />\nwaveWriter.Write(data, 0, data.Length);\r<br />\n<br />\nLike that, just adding data all the time.<br />\n",
+    "PostedDate": "2014-02-11T18:30:38.857-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207075",
+    "ThreadId": "529430",
+    "Html": "I'm not sure if CreateWaveFile waits for the data, if it doesn't try it using .Write instead.<br />\n",
+    "PostedDate": "2014-02-11T18:48:08.267-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207092",
+    "ThreadId": "529430",
+    "Html": "Problem with Write is i can't choose the buffer, i need to choose sample/samples or byte[], and i don't know how to tell it to use the buffer data.<br />\n",
+    "PostedDate": "2014-02-11T19:42:10.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207098",
+    "ThreadId": "529430",
+    "Html": "BufferedWaveProvider has a Read() function so send those bytes to the Wavewriter write function.<br />\n",
+    "PostedDate": "2014-02-11T20:26:22.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207102",
+    "ThreadId": "529430",
+    "Html": "How, the Read function will only return the count bytes, a number not any data?<br />\n",
+    "PostedDate": "2014-02-11T20:37:15.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207103",
+    "ThreadId": "529430",
+    "Html": "You would need to read the data to your own byte[] array first, then write that array to WaveWriter<br />\n",
+    "PostedDate": "2014-02-11T20:39:22.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207104",
+    "ThreadId": "529430",
+    "Html": "Doesn't work as intended, anything wrong?<br />\n<pre><code>\n                        RecordingProvider.AddSamples(e.Buffer, 0, e.BytesRecorded);\n                        waveWriterYour = new WaveFileWriter(path + Environment.UserName + &quot; - &quot; + DateTime.Now.ToString(&quot;yyyy-MM-dd HH-mm-ss-fff&quot;) + &quot;.wav&quot;, new WaveFormat(48000, 16, 2));\n\n                            byte[] temp;\n\n                            temp = new byte[RecordingProvider.BufferedBytes];\n                            RecordingProvider.Read(temp, 0, temp.Length);\n                            waveWriterYour.Write(temp, 0, temp.Length);\n</code></pre>\n\n",
+    "PostedDate": "2014-02-11T20:44:57.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207114",
+    "ThreadId": "529430",
+    "Html": "Looks ok to me but I can't confirm that is the correct way of doing it, perhaps Mark can assist further.<br />\n",
+    "PostedDate": "2014-02-11T21:45:32.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207129",
+    "ThreadId": "529430",
+    "Html": "Found some related info that should help\r<br />\n<a href=\"http://stackoverflow.com/questions/17982468/naudio-record-sound-from-microphone-then-save\" rel=\"nofollow\">http://stackoverflow.com/questions/17982468/naudio-record-sound-from-microphone-then-save</a>\r<br />\n<a href=\"http://opensebj.blogspot.com.au/2009/04/naudio-tutorial-5-recording-audio.html\" rel=\"nofollow\">http://opensebj.blogspot.com.au/2009/04/naudio-tutorial-5-recording-audio.html</a><br />\n",
+    "PostedDate": "2014-02-11T22:45:01.26-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207158",
+    "ThreadId": "529430",
+    "Html": "Well those are what i usually do, but the problem is, if the buffer skipped, it will skip writing, making the timing inaccurate.<br />\n",
+    "PostedDate": "2014-02-11T23:50:34.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207161",
+    "ThreadId": "529430",
+    "Html": "here's how I typically handle this situation. Timestamp each buffer as it arrives, as accurately as possible (depending on the app, the timestamp could even be sent as part of the audio packet). The receiving end should compare the timestamp received with the timestamp it was expecting (i.e. the last timestamp plus the duration of audio in the last buffer). If the expected time is close enough to the received time (e.g less than 10ms), then simply write directly to the file. If however, the received time is greater than the received time by more than a certain amount, then pad with some silence.<br />\n",
+    "PostedDate": "2014-02-11T23:56:26.827-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207172",
+    "ThreadId": "529430",
+    "Html": "That would be ideal, but i don't know how to do that. <br />\n<br />\nI can see it in theory as you explain it, but not sure how to properly make use of it.<br />\n<br />\nIf i simply write all the Mic recorded data to a file, how can i know the time of it?<br />\nI am pretty sure every feed should be the same as the buffer, meaning it should always be 10ms for example, and more or less means something is wrong, right?<br />\n",
+    "PostedDate": "2014-02-12T00:37:03.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207233",
+    "ThreadId": "529430",
+    "Html": "Well you could use a Timer to observe the incoming data every 10ms or so, if there is no data available, insert 10ms of blank audio. If there is valid data, write it to the writer. If there is more than 10ms of data, adjust the time stamp accordingly.<br />\n<br />\nI was under the impression BufferedWaveProvider did this automatically (i.e fill in empty samples when there is no data) but I guess that is not the case or not suitable for this situation.<br />\n",
+    "PostedDate": "2014-02-12T03:04:48.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207682",
+    "ThreadId": "529430",
+    "Html": "That's what i am trying to do know, not really sure how to do it.<br />\n<pre><code>                            if (Record)\n                            {\n                                if (FileCreated != 0)\n                                {\n                                    if (calltimer.IsRunning == false)\n                                        CallTimeThread.Start();\n                                    if (TimeSpan.FromMilliseconds(TestTimer / 192).Milliseconds &lt; calltimer.ElapsedMilliseconds - 5000)\n                                    {\n                                        TestTimer = calltimer.ElapsedMilliseconds;\n                                        int silence = (int)calltimer.ElapsedMilliseconds - TimeSpan.FromMilliseconds(TestTimer / 192).Milliseconds;\n                                        TestTimer = calltimer.ElapsedMilliseconds * 192;\n                                        int avgBytesPerMillisecond = 192;\n                                        var silenceArraySize = avgBytesPerMillisecond * silence;\n                                        byte[] silenceArray = new byte[silenceArraySize];\n                                        waveWriterYour.Write(silenceArray, 0, silenceArray.Length);\n                                    }\n                                    this.BeginInvoke((Action)(() =&gt;\n                      {\n                          RecTime.Text = TimeSpan.FromMilliseconds(TestTimer / 192).ToString();\n                      }));\n                                    waveWriterYour.Write(AudioData2, 0, AudioData2.Length);\n                                    waveWriterYour.Flush();\n                                }\n\n                            }</code></pre>\n\nThis completely fails, but i guess it's somewhere on the line.\r<br />\n<br />\nThe TestTimer will be exactly the same time as the audio, meaning the timer itself is correct.\r<br />\nThe other, CallTimer will begin at about the same time and just measure time itself, so when they are off, it means audio has been skipped (Though they aren't precise when they start, but at least it's pretty close, and can probably be done better.\r<br />\n<br />\n<br />\nNow i just want it to say,  &quot;If TestTimer is 100ms less than Calltimer, add 100ms Silence&quot; , or something like that.\r<br />\n<br />\nWhich should make it fairly accurate, at least in theory.<br />\n",
+    "PostedDate": "2014-02-12T21:47:19.493-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207738",
+    "ThreadId": "529430",
+    "Html": "Try using .TotalMilliseconds instead of .Milliseconds\r<br />\n<br />\nAny length over 1 second would be lost.<br />\n",
+    "PostedDate": "2014-02-13T00:47:05.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1208076",
+    "ThreadId": "529430",
+    "Html": "It seems to work:<br />\n<pre><code>            if (Record &amp;&amp; connect)\n                TestTimer += e.Buffer.Length / 192;\n            else\n                TestTimer = 0;\n            if (!RecordTimer.IsRunning &amp;&amp; Record)\n            {\n                RecordTimer.Reset();\n                RecordTimer.Start();\n            }\n            else\n                RecordTimer.Stop();\n\n            if (TimeSpan.FromMilliseconds(TestTimer).TotalMilliseconds &lt; calltimer.ElapsedMilliseconds)\n            {\n\n                int silence = (int)calltimer.ElapsedMilliseconds - (int)TimeSpan.FromMilliseconds(TestTimer).TotalMilliseconds;\n                TestTimer += silence;\n                int avgBytesPerMillisecond = 192;\n                var silenceArraySize = avgBytesPerMillisecond * silence;\n                byte[] silenceArray = new byte[silenceArraySize];\n                SendQueue.Add((byte[])silenceArray);\n            }\n\n</code></pre>\n\nWhere SendQueue will have the Audio added as well later, and then produces and sends the Audio.\r<br />\n<br />\nIt seems to work when i try to lose much audio data, and it still seems to be synced, probably not perfect, but i think it does the trick.\r<br />\n<br />\nAnything that may be wrong with it, or do you think it will be alright?\r<br />\n<br />\nPS: Yeah 1 second will be lost if it's 1000ms as it goes back to 0 again, but i don't think 1 second can ever be lost, except if something extreme happens, like a total PC Freeze, i think 100-200ms is about the most, and even that is drastic, probably 10-30ms is more realistic.<br />\n",
+    "PostedDate": "2014-02-13T12:02:25.96-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1208555",
+    "ThreadId": "529430",
+    "Html": "Hmm it doesn't seem to work as expected, it seems that a chat will go out of sync when i record it, at least when there is a lot going in, which i guess causes skipped buffers.<br />\n<br />\nThe network should be flawless when it comes to the Data as it's TCP, meaning it must be somewhere on the Recording side.<br />\n<br />\nIt only seem to occurs as before when the PC is very active, and non existent if nothing is going on, which means my &quot;fail safe&quot; doesn't seem to do it's part.<br />\n<br />\nThe case seems to be that my microphone Recording is shorter (Even though the length is the same), then the received recording, though that can probably change depending on which pc skips the most at the time.<br />\n<br />\nMy Silence adding seems to work, which makes me confused at the moment.<br />\n",
+    "PostedDate": "2014-02-14T13:20:33.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209389",
+    "ThreadId": "529430",
+    "Html": "Not sure but I suggest you go back a step and test the basic functionality of each main function. For example make sure the input data is arriving as expected, ensure SendQueue is working as expected, add a lot of debug checks, etc..<br />\n",
+    "PostedDate": "2014-02-17T04:51:51.94-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209460",
+    "ThreadId": "529430",
+    "Html": "I may have solved it, i think i made something wrong with the calculations, however here is my other version:<br />\n<pre><code> private void Sending(object sender, NAudio.Wave.WaveInEventArgs e)\n        {\n            try\n            {\n                TestTimer += e.Buffer.Length / 192;\n\n                if (!RecordTimer.IsRunning)\n                {\n                    RecordTimer.Reset();\n                    RecordTimer.Start();\n                }\n                skip = false;\n                int silence = (int)(RecordTimer.ElapsedMilliseconds - (TestTimer));\n                if (silence &gt; 10 || silence &lt; -10 &amp;&amp; RecordTimer.IsRunning)\n                {\n\n\n                    if (silence &gt; 0)\n                    {\n                        TestTimer += silence;\n                        int avgBytesPerMillisecond = 192;\n                        var silenceArraySize = avgBytesPerMillisecond * silence;\n                        byte[] silenceArray = new byte[silenceArraySize];\n                        SendQueue.Add((byte[])silenceArray);\n                    }\n                    else\n                    {\n                        TestTimer -= e.Buffer.Length / 192;\n                        skip = true;\n                    }\n\n                }\n\n                if (connect &amp;&amp; MuteMic.Checked == false &amp;&amp; skip == false)\n                {\n                    SendQueue.Add((byte[])e.Buffer.Clone());\n                }\n                if (Record)\n                {\n                    if (FileCreated == 0)\n                    {\n                        waveWriterYour = new WaveFileWriter(path + Environment.UserName + &quot; - &quot; + DateTime.Now.ToString(&quot;yyyy-MM-dd HH-mm-ss-fff&quot;) + &quot;.wav&quot;, new WaveFormat(48000, 16, 2));\n                        FileCreated = 1;\n                    }\n\n                }\n\n            }\n            catch (Exception ex)\n            {\n                MessageBox.Show(ex.Message, &quot;:Sending&quot;, MessageBoxButtons.OK, MessageBoxIcon.Error);\n            }\n        }</code></pre>\n\nThis should force the Audio to follow the Stopwatch within a 30ms area, and by that i think it should be synced withing that as well.\r<br />\nHopefully this will work as expected.<br />\n",
+    "PostedDate": "2014-02-17T07:13:17.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210336",
+    "ThreadId": "529430",
+    "Html": "It seems to work when i did some tests.\r<br />\n<br />\nThough i am still at a wonder why BufferedWaveProvider is always increasing in buffer making me force clearing it.\r<br />\n<br />\nCould someone please try to feed your mic (or any other recording device) to a BufferedWaveProvider and check the buffer, does it stay the same all the time, or does it eventually increase?\r<br />\n<br />\nCause in theory, it should always be the same, as the data is going to be played the same speed it gets received.<br />\n",
+    "PostedDate": "2014-02-19T00:03:07.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210390",
+    "ThreadId": "529430",
+    "Html": "That is what BufferedWaveProvider does, fill in zeroes when there is no sample queue. Perhaps you need to use a different WaveProvider or wait for Mark to advise you further.<br />\n",
+    "PostedDate": "2014-02-19T01:47:07.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210396",
+    "ThreadId": "529430",
+    "Html": "It doesn't seem to work as intended, as i see no meaning in adding way to much silence, it goes far beyond what's actually missed.\r<br />\nEven if i try to skip data from the recording to sync to the BufferedWaveProvider it won't change, it just adds the buffer to it's own accord, i have no way to control it.\r<br />\n<br />\nI would gladly like to try another one.\r<br />\n<br />\nThe best thing would be like a MemoryStream, you keep adding the data, and keeps playing it, and then removes what has been played.\r<br />\nThis is however how BufferedWaveProvider works i think, except for the part where it adds zereos all over the place.<br />\n",
+    "PostedDate": "2014-02-19T01:58:08.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210404",
+    "ThreadId": "529430",
+    "Html": "I'd try WaveProvider16, if that doesn't work as expected you could always create your own WaveProvider that suites your needs, perhaps using a MemoryStream as you mentioned.<br />\n",
+    "PostedDate": "2014-02-19T02:16:41.74-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210767",
+    "ThreadId": "529430",
+    "Html": "How am i supposed to use WaveProvider16, i can't add samples or anything to it, so i am a bit confused?<br />\n",
+    "PostedDate": "2014-02-19T13:24:58.26-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210799",
+    "ThreadId": "529430",
+    "Html": "You would need to modify it to suite your needs, add your own AddSamples() function and a MemoryStream or a List collection of samples that will be read by the output interface (wavefilewriter).<br />\n",
+    "PostedDate": "2014-02-19T15:02:41.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210806",
+    "ThreadId": "529430",
+    "Html": "I think you're overcomplicating this. No need for an extra thread. When you get a DataAvailableEvent, write immediately to the file while still in the handler. Here;s some (completely untested and very rough) pseudo code to give you an idea. You could use Stopwatch instead of DateTime for more accuracy.<br />\n<pre><code>void OnDataAvailable(object sender, WaveInEventArgs e) \n{\n    var timeStamp = DateTime.NowUtc;\n    // insert silence if needed (todo: don't insert silence on first buffer)\n    if (timeStamp &gt; expectedTime.AddMilliseconds(20)) // some\n    {\n        var millisecondsToInsert = (timeStamp - expectedTime),TotalMilliseconds;\n        var silence = new byte[bytesPerMillisecond * millisecondsToInsert];\n        writer.Write(silence, 0, silence.Length);\n    }\n    // now write the audio\n    writer.Write(e.Buffer, 0, e.BytesRecorded);\n    // now set up the expected time of the next buffer\n    expectedTime = timeStamp.AddMilliseconds(e.BytesRecorded / bytesPerMillisecond);\n}</code></pre>\n\n",
+    "PostedDate": "2014-02-19T15:17:25.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210849",
+    "ThreadId": "529430",
+    "Html": "Why i am using an Extra Thread is simply to make it easier as i send the Mic data, and i write it, so if i just add the data to a Queue (Silence or real data) it will be in order on that thread anyway.\r<br />\n<br />\nIt also takes of some pressure on the DataAvailable thread, not sure if that matters though.\r<br />\n<br />\n<br />\nI prefer using a StopWatch as you said yourself for accuracy, but here is my attempt to your code, but with a StopWatch, it doesn't work as intended however.<br />\n<pre><code>        private void Sending(object sender, NAudio.Wave.WaveInEventArgs e)\n        {\n            try\n            {\n                var bytesPerMillisecond = 192;\n                if (!RecordTimer.IsRunning)\n                {\n                    TestTimer = 0;\n                    RecordTimer.Reset();\n                    RecordTimer.Start();\n                    if (RecordTimer.ElapsedMilliseconds &lt; 9)\n                        Thread.Sleep(1);\n                }\n                TestTimer += e.Buffer.Length / 192;\n\n                var timeStamp = RecordTimer.Elapsed;\n                this.BeginInvoke((Action)(() =&gt; { SilenceText.Text = String.Format(&quot;Silence: {0} ms&quot;, (timeStamp - expectedtime).TotalMilliseconds); }));\n\n                if (timeStamp.Milliseconds &gt; (expectedtime.Milliseconds + 20))\n                {\n                    double millisecondsToInsert = (timeStamp - expectedtime).TotalMilliseconds;\n                    byte[] silence = new byte[bytesPerMillisecond * (int)millisecondsToInsert];\n                    SendQueue.Add(silence);\n                }\n\n                if (connect &amp;&amp; MuteMic.Checked == false &amp;&amp; skip == false)\n                {\n                    SendQueue.Add((byte[])e.Buffer.Clone());\n                }\n                if (Record &amp;&amp; FileCreated == 0)\n                {\n                    waveWriterYour = new WaveFileWriter(path + Environment.UserName + &quot; - &quot; + DateTime.Now.ToString(&quot;yyyy-MM-dd HH-mm-ss-fff&quot;) + &quot;.wav&quot;, new WaveFormat(48000, 16, 2));\n                    FileCreated = 1;\n                }\n                expectedtime = timeStamp.Add(TimeSpan.FromMilliseconds(e.BytesRecorded / bytesPerMillisecond));\n            }\n            catch (Exception ex)\n            {\n                MessageBox.Show(ex.Message, &quot;:Sending&quot;, MessageBoxButtons.OK, MessageBoxIcon.Error);\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2014-02-19T17:56:31.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1211096",
+    "ThreadId": "529430",
+    "Html": "I have been looking at the Source Code on BufferedWaveProvider, but i can't see what part adds Silence, it just looks like a normal Add/Read/Clear class, nothing fancy automatic operation?<br />\n",
+    "PostedDate": "2014-02-20T04:38:51.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1211105",
+    "ThreadId": "529430",
+    "Html": "BufferedWaveProvider doesn't add silence, it just returns silence when you read if there's nothing in the buffer. So if you have something reading in real-time from it, then it will handle the silence adding automatically.<br />\n",
+    "PostedDate": "2014-02-20T04:56:15.777-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1211109",
+    "ThreadId": "529430",
+    "Html": "Well in the end it will be the same though, silence will get &quot;added&quot;, well that itself isn't a problem, however, the problem is, the BufferedWaveProvider will have A lot more &quot;audio time&quot; compared to the real audio time, it can be seconds (which i think is much) in the end.\r<br />\n<br />\nMy &quot;solution&quot; is to Clear the buffer every time it get´s to 120ms, or similar, and that isn't actually a good solution.\r<br />\n<br />\n<br />\nFrom what you say, this shouldn't be the case if it's only playing silence when nothing is there, and when something is added it will be playing from that, which in should be something like:\r<br />\n<br />\n100ms data added,\r<br />\n100ms played,\r<br />\nnothing added for 500ms,\r<br />\nProvider returns 500ms of silence (one buffer of silence at a time i guess),\r<br />\n100ms data added,\r<br />\nskip the silence buffer currently active and start playing the data.\r<br />\n<br />\n<br />\nAnd if that´s how it works, i can't see how the buffer can always be bigger than the actual data.<br />\n",
+    "PostedDate": "2014-02-20T05:02:32.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1212153",
+    "ThreadId": "529430",
+    "Html": "Mark, is there a way to save the BufferedWaveProvider's buffer?\r<br />\n<br />\nI would like to analyze it and compare it to a direct copy of the stream itself.<br />\n",
+    "PostedDate": "2014-02-22T00:49:06.493-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213481",
+    "ThreadId": "529430",
+    "Html": "you can either write to a WaveFileWriter at the same time as putting data into the BufferedWaveProvider, or, if you want to save any inserted silence, then I usually make a very simple pass-through IWaveProvider that in its Read method reads from its source, writes to a WaveFileWriter, and then passes the audio through.<br />\n",
+    "PostedDate": "2014-02-24T00:13:27.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1214024",
+    "ThreadId": "529430",
+    "Html": "I know a way to do that, read the Buffer and put that in a byte[], however, i can't make it do it completely to always work.\r<br />\n<br />\nMeaning, if it reads it again, it can read duplicated data (if the buffer hasn't been playbacked yet).\r<br />\n<br />\nSo do you have a way to make the whole operation automated?\r<br />\n<br />\nI already get the data from TCP, and i write that data untouched.\r<br />\nI only need to write another one wiht the WaveProviders data, and compare them.<br />\n",
+    "PostedDate": "2014-02-24T15:26:50.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215857",
+    "ThreadId": "529430",
+    "Html": "it really is very simple. In your derived waveprovider's read method just do this<br />\n<pre><code>public int Read(byte[] buffer, int offset, int count) \n{\n    int bytesRead = sourceProvider.Read(buffer, offset, count);\n    waveFileWriter.Write(buffer, offset, bytesRead);\n    return bytesRead;\n}</code></pre>\n\n",
+    "PostedDate": "2014-02-27T14:14:08.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215938",
+    "ThreadId": "529430",
+    "Html": "Should i do that Before i add samples or after (i am guessing after).<br />\n<br />\nAnd if so, it does seems like reading will clear the buffer it has read, so i am guessing i musn't play from the waveprovider at the same time?<br />\n<br />\nEDIT:<br />\n<br />\n<br />\nGot it to work, but weird enough, it's pretty much identical to the source.<br />\n<br />\nSomething must happen that's difference when Reading and Playing from the buffer.<br />\n<br />\nI guess the &quot;Automatic Silence&quot; comes when Playing, and Reading just Reads the Data as told.<br />\n<br />\nWould it be possible to Read the data as it's playing, as i would like to get that &quot;Automatic Silence&quot;.<br />\n",
+    "PostedDate": "2014-02-27T20:24:12.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215970",
+    "ThreadId": "529430",
+    "Html": "You just put this in your signal chain e.g.: BufferedWaveProvider -&gt; CustomWavWritingProvider -&gt; WaveOutEvent\r<br />\n<br />\nThe output device is doing all the calls to Read, and BufferedWaveProvider is doing the automatic silence. <br />\n",
+    "PostedDate": "2014-02-27T23:54:47.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216047",
+    "ThreadId": "529430",
+    "Html": "But how can i write, and then tell it to play it?\r<br />\n<br />\nCause currently, if i add samples to the buffer and then write it, i will not hear anything, which i guess means reading clears it.<br />\n",
+    "PostedDate": "2014-02-28T02:53:51.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1219141",
+    "ThreadId": "529430",
+    "Html": "The wave player is the only thing calling Read. The custom wav writing provider I showed above happens to write it to the WAV as it is being pulled through<br />\n",
+    "PostedDate": "2014-03-04T11:17:47.703-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1219912",
+    "ThreadId": "529430",
+    "Html": "The way i do recording:<br />\ni keep wave in recording always on, but gathering of mic data is only on user command<br />\ni send microphone wave in to buffered wave provider,<br />\nthen send buffered wave provider to my custom dsp_after_mic Effect class (which is as ISampleProvider),<br />\nwhich actually read byte[] 16 bit mic data from buffered, converts it , and outputs float[] buffer<br />\nthen dsp_after_mic is sent to mixer (MixingSampleProvider)<br />\n(if dsp_after_mic read less 16bit samples than mixer requested, remaining floats for mixer float buffer are filled with 0.0f) so it always return number of floats requested<br />\nmixer is then sent to dsp_after_mixer, and then to waveout<br />\nbut dsp_after_mixer also make fork copy of buffer and write it to another buffered wave provider called buffered_dsp_outstream_fork that is later read by encoder and by tcp if needed.<br />\n<br />\nFor mic buffered discard on overflow is true, also true for outsream_fork.<br />\nOn start of gathering mic data, i call Clear of mic buffered wave provider and add dsp_after_mic to mixer.<br />\nOn stop of gathering mic data, i remove dsp_after_mic from mixer.<br />\n",
+    "PostedDate": "2014-03-06T08:18:47.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1222957",
+    "ThreadId": "529430",
+    "Html": "That sadly, is over my capability, i can only hardly grasp what you mean;S\r<br />\n<br />\n<br />\nHowever, i noticed a thing.\r<br />\n<br />\nThis may be worth looking into Mark.\r<br />\n<br />\n<br />\nIf i simply let ASIO/Wasapi play from a Wavein, and that wave in is an Waveinevent (or well doesn't matter i guess, can be run on GUI as well probably).\r<br />\n<br />\nThen it should ALWAYS be delayed the same, as no factor involved should make it increase the delay or anything like that, correct?\r<br />\n<br />\nThough even so, the audio will be delayed more over time, not sure if it has a limit or not, but it will differ from start, to what it can reach.\r<br />\nNot sure how much ms we are talking about, but it's noticeable, but probably not over 100ms, but it may depend.\r<br />\n<br />\n<br />\nNow this is Without any BufferedWaveProvider involved, and only pure, input/output, meaning everything should be untouched and clean.\r<br />\n<br />\n<br />\nDo you have any idea why this is the case Mark, cause the only thing i can think of, is that the Data is touched by something, or that the flow isn't correct.\r<br />\nMy guess is that Recording may be done faster then Playing which causes a &quot;buffer?&quot; to build up. And this shouldn't happen.<br />\n",
+    "PostedDate": "2014-03-14T16:54:40.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

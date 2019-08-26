@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1022984",
+    "ThreadId": "438462",
+    "Html": "Hi there,\r<br />\n<br />\nI am trying to resample some uncompressed WAV files that have different sample rates. All of them are IEEE 32 bit streams and I usually have to resample them from 44.1 to 48 or the other way around. ACM doesn't work and always gives me an &quot;ACM Not Possible&quot; error with IEEE 32 bit streams, therefore I need to use another resampler.\r<br />\n<br />\nThe requirements are:<br />\n<ul>\n<li>Must work with Windows XP</li>\n<li>Don't want to downbit to 16 bits. I'd like to maintain always the IEEE 32 bit.</li>\n<li>\nThe resample needs to have some quality with filtering if possible.<br />\n</li>\n</ul>\nDo you know what would be the best strategy for this case? Is NAudio able to perform such operations in Windows XP or do I need to use SoX or other external programs/libs to perform this?\r<br />\n<br />\nThanks a lot for NAudio by the way. It is a great library! :)<br />\n",
+    "PostedDate": "2013-03-29T10:58:55.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1025222",
+    "ThreadId": "438462",
+    "Html": "Good question. I'm not sure what the answer is. I suspect that the DMO resampler doesn't work in XP either. I have tried a couple of times in the past to make a fully managed resampler, but my current implementation isn't quite ready to release yet. I'd probably use something like sox for now.<br />\n",
+    "PostedDate": "2013-04-03T23:25:22.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

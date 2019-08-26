@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "932045",
+    "ThreadId": "400696",
+    "Html": "\r\n<p>I'd like to apply the compressor to a .wav file and save the output. &nbsp;When I run the code, it says&nbsp;&quot;Not enough disk space&quot; so I'm clearly doing something to cause it to loop forever.</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">var</span> sourceStream = <span style=\"color:blue\">new</span> WaveFileReader(pathToSourceWav);\n\n<span style=\"color:blue\">var</span> compressedStream = <span style=\"color:blue\">new</span> SimpleCompressorStream(sourceStream);\n\ncompressedStream.Enabled = <span style=\"color:blue\">true</span>;\n\nWaveFileWriter.CreateWaveFile(pathToTargetWav, compressedStream);\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Any advice on what I'm doing wrong?</p>\r\n<p>The original file is ~20MB, the target was at 5.5GB when my computer ran out of space. :)</p>\r\n<p><span><br>\r\n</span></p>\r\n",
+    "PostedDate": "2012-10-24T15:51:50.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932801",
+    "ThreadId": "400696",
+    "Html": "<p>It's because the SimpleCompressorStream never stops returning audio. It is a very old class, and I have plans to obsolete it and replace it with something better.</p>\r\n<p>Your best fix for now is simply not to use the CreateWaveFile method. Instead, write a loop that reads from the SimpleCompressorStream (e.g. 16kb at a time) and writes to a WaveFileWriter. You can check where you are up to in your source file and stop writing when you go beyond the end.</p>",
+    "PostedDate": "2012-10-25T23:26:51.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

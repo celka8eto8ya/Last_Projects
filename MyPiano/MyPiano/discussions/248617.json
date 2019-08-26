@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "576294",
+    "ThreadId": "248617",
+    "Html": "\r\n<p>can anyone offer advice on sending SysEx data with the NAudio library?</p>\r\n<p>I'm&nbsp;a&nbsp;beginner programmer but I have managed to parse the MIDI Output ports and send basic Note messages, but my aim is to send simple (short) SysEx strings to set various parameters in my MIDI equipment.</p>\r\n<p>Any help would be gratefullt received</p>\r\n<p>thanks</p>\r\n<p>PhilipJ</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-03-06T07:55:31.613-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "576715",
+    "ThreadId": "248617",
+    "Html": "<p>I'm afraid it isn't something I've tried, but I have made wrappers for some of the Windows MIDI API. I think to do Sysex you have to use <a href=\"http://msdn.microsoft.com/en-us/library/dd798474%28v=vs.85%29.aspx\">midiOutLongMsg</a></p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-07T09:13:13.627-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "577430",
+    "ThreadId": "248617",
+    "Html": "<p>Hi Mark,</p>\r\n<p>thanks for the reply. Yes it is MidiOutLongMsg, I've used it in a Visual C++ v6 program which I am trying to bring up to date with C# and .NET but as I said I am something of a beginner.</p>\r\n<p>I saw that in MidiInterop.cs there is a DllImport for ﻿MidiOutLongMsg and I looked at the source for SysExEvent.cs but I'm afriad it was a bit beyond me. I was hoping there might be some notes or a tutorial on how to actually send a buffer using these calls?</p>\r\n<p>thanks</p>\r\n<p>PhilipJ</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-03-08T14:34:29.523-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "578323",
+    "ThreadId": "248617",
+    "Html": "<p>You might get an answer on StackOverflow. I haven't used MidiOutLongMsg myself.</p>",
+    "PostedDate": "2011-03-10T03:01:35.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1005448",
+    "ThreadId": "248617",
+    "Html": "Have there been any changes to NAudio in the last two years to support sending a SysEx message? I have 8 bytes (F0......F7) I need to send to my midi hardware and am trying to avoid using another library. Can a method be readily added to NAudio to simply send an array of raw byte values out the opened midi port?\r<br />\n<br />\nIf I cannot use NAudio, the C# Midi Toolkit (<a href=\"http://www.codeproject.com/Articles/6228/C-MIDI-Toolkit\" rel=\"nofollow\">http://www.codeproject.com/Articles/6228/C-MIDI-Toolkit</a>) is the only readily available managed MIDI library that I am aware of which supports SysEx. (If anyone knows of an alternative library, please let me know.)\r<br />\n \r<br />\nThanks,\r<br />\n<br />\nGreg<br />\n",
+    "PostedDate": "2013-02-22T13:57:09.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1005579",
+    "ThreadId": "248617",
+    "Html": "No, I'm afraid no new sysex features have been added to NAudio. I'll gladly accept contributions in this area. If you're looking for a MIDI library, I'd take a look at Marc Jacobi's <a href=\"http://midinet.codeplex.com/\" rel=\"nofollow\">MIDI.NET</a>. <br />\n",
+    "PostedDate": "2013-02-22T23:54:05.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1005670",
+    "ThreadId": "248617",
+    "Html": "Thanks for the heads up on Marc Jacobi's MIDI.NET. I am familiar with his VST.NET tool.<br />\n",
+    "PostedDate": "2013-02-23T08:33:13.03-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1440653",
+    "ThreadId": "643738",
+    "Html": "I have made a small little software as practice, where I used .wav files at first. They were way to big and using mp3 would shrink the files by up to 80%. Now, using the code displayed on the FAQ worked fine; <br />\n<pre><code>            IWavePlayer waveOutDevice;\n            AudioFileReader audioFileReader;\n            waveOutDevice = new WaveOut();\n            audioFileReader = new AudioFileReader(&quot;test.mp3&quot;);\n            waveOutDevice.Init(audioFileReader);\n            waveOutDevice.Play();</code></pre>\n\nHowever, changing the audioFileReader to; <br />\n<pre><code>            audioFileReader = new AudioFileReader(Properties.Resources.test);</code></pre>\n\nwould give an exception saying it cannot convert System.IO.UnmanagedMemoryStream to a string.\r<br />\nSo I went on Google and found some examples, which I could not get working and currently I have in my project this:<br />\n<pre><code>private void clickButton(object sender, RoutedEventArgs e)\n        {\n            var song = Properties.Resources.test;\n            WaveOut = new WaveOut();\n            StreamResourceInfo resource = Application.GetResourceStream(new Uri(&quot;test.mp3&quot;, UriKind.Relative));\n            WaveStream MainOutputStream = CreateInputStream(resource.Stream);\n\n        }\n        public WaveStream CreateInputStream(byte[] resource)\n        {\n            WaveChannel32 inputStream;\n\n            using (MemoryStream ms = new MemoryStream(resource))\n            {\n                WaveStream mp3Reader = new Mp3FileReader(ms);\n                inputStream = new WaveChannel32(mp3Reader);\n            }\n\n            return inputStream;\n        }</code></pre>\n\nIt did not work if I replaced test.mp3 with either the var &quot;song&quot;, or the Properties.Resources.test.\r<br />\nIt gives an exception on this line where it says resource.Stream cannot be converted from IO.Stream to Byte array.<br />\n<pre><code>WaveStream MainOutputStream = CreateInputStream(resource.Stream);</code></pre>\n\nHow would I go on solving this? I would very much prefer having the files inside the exe file for portability instead of having folders required.<br />\n",
+    "PostedDate": "2015-08-14T18:02:05.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441662",
+    "ThreadId": "643738",
+    "Html": "AudioFileReader is just a container class that uses Mp3FileReader, WaveFileReader etc. based on the filename,<br />\n[if filename.endswith(&quot;.mp3&quot;)] and so on....<br />\nSo, actually it doesn´t seem to support streams and you have 2 possibilities to choose:<br />\n<br />\n1) Copy the AudioFileReader.cs class from NAudio source and adjust it for stream support<br />\n2) Assign readers yourself, as I have done e.g. here: <a href=\"http://www.codeproject.com/Articles/990040/MultiWave-a-portable-multi-device-NET-audio-player\" rel=\"nofollow\">Url</a><br />\n<br />\nI´d recommend using option 1, as it is an easier approach for beginners. You also have to look up if your used readers can handle streams, e.g. Mp3FileReader can read from a stream.<br />\n",
+    "PostedDate": "2015-08-24T05:54:03.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

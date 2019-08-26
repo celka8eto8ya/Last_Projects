@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "606064",
+    "ThreadId": "256054",
+    "Html": "\r\n<p>Mark, it looks like you have done a great job exposing audio functionality to the .NET community. Almost everything else I have seen is C&#43;&#43; or uses DirectX.</p>\r\n<p>I'm new to audio and trying to figure out how to connect inputs, adding a background wave for example to the current mic input and playing them together in real-time.</p>\r\n<p>Would I use midiConnect somehow or mix&nbsp;into a stream then output that?</p>\r\n<p>Can one of you more experienced folks provide me some guidance on how I might use NAudio to accomplish&nbsp;this?</p>\r\n",
+    "PostedDate": "2011-05-02T12:48:56.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "608903",
+    "ThreadId": "256054",
+    "Html": "<p>For playing back audio that is being recorded, you need a BufferedWaveProvider. You are not likely to get particularly low latency though. For mixing things, there is WaveMixerStream32. I am hoping to make a mixer for WaveProviders soon too.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-07T02:59:29.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

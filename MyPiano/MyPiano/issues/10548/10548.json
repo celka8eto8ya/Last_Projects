@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "code in question no longer exists",
+    "ClosedDate": "2013-05-03T08:39:32.357-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "Great code base - thanks alot for the good work!!\n\nFound a small bug in WaveFormatConversionStream:\n<code>\n// we have been returned something that cannot be converted - a partial\n// buffer. We will increase the size we supposedly read, and zero out\n// the end.\nsourceBytesRead -= (sourceBytesRead % sourceStream.BlockAlign);\nsourceBytesRead += sourceStream.BlockAlign; //<- !!! THIS LINE IS INVALID - it will make the sourceBytesRead go beyond valid data. It can simply be removed\nsilenceBytes = SourceToDest(sourceStream.BlockAlign);\n</code>",
+    "LastUpdatedDate": "2013-05-03T08:39:32.357-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-08-27T13:41:29.783-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "(bug changeset 28539) Blockalign in WaveFormatConversionStream",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 10548
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

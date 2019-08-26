@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:04:56.563-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "F.Y.I. The MidiFileConverter project is missing missing from the NAudio-Source.zip.\r\n\r\nRegards",
+    "LastUpdatedDate": "2012-10-27T00:04:56.563-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-01-31T07:56:01.827-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "MidiFileConverter missing in NAudio-Source.zip",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16339
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for letting me know\n",
+      "PostedDate": "2012-01-31T08:27:41.043-08:00",
+      "Id": 55042
+    },
+    {
+      "Message": "I've updated the script that makes the source zip, so should be correct in next NAudio release",
+      "PostedDate": "2012-02-29T10:49:18.263-08:00",
+      "Id": 56823
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "731952",
+    "ThreadId": "287722",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I am basically trying to write a small utility to join MP3 files. I found some samples on Stackoverflow showing how to do it using NAudio:</p>\r\n<p><a href=\"http://stackoverflow.com/questions/1160888/how-do-i-merge-join-mp3-files-with-c\">http://stackoverflow.com/questions/1160888/how-do-i-merge-join-mp3-files-with-c</a></p>\r\n<p>This is the code from&nbsp;my application doing the job:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">var</span> path = Path.Combine(Path.GetDirectoryName(Files[0]) ?? <span style=\"color:#a31515\">&quot;&quot;</span>, <span style=\"color:#a31515\">&quot;joined.mp3&quot;</span>);\r\n<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> output = <span style=\"color:blue\">new</span> FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))\r\n{\r\n\t<span style=\"color:blue\">foreach</span> (<span style=\"color:blue\">string</span> file <span style=\"color:blue\">in</span> Files)\r\n\t{\r\n\t\t<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> reader = <span style=\"color:blue\">new</span> Mp3FileReader(file))\r\n\t\t{\r\n\t\t\t<span style=\"color:blue\">if</span> ((output.Position == 0) &amp;&amp; (reader.Id3v2Tag != <span style=\"color:blue\">null</span>))\r\n\t\t\t{\r\n\t\t\t\toutput.Write(reader.Id3v2Tag.RawData, 0, reader.Id3v2Tag.RawData.Length);\r\n\t\t\t}\r\n\t\t\tMp3Frame frame;\r\n\t\t\t<span style=\"color:blue\">while</span> ((frame = reader.ReadNextFrame()) != <span style=\"color:blue\">null</span>)\r\n\t\t\t{\r\n\t\t\t\toutput.Write(frame.RawData, 0, frame.RawData.Length);\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}\r\n</pre>\r\n</div>\r\n<p>It runs fine and I&nbsp;get a file with the expected file name and size, and tags taken from the first file. However when I play the joined file in Windows Media Player, the length seems to be roughly doubled (a littlebit less than double&nbsp;actually).\r\n If I jump to a position in the second half it just stops and jumps back to start. Up until then the file plays just fine. I tried a lot of different files and it seems to apply to all, so I don't believe this is related to the specific files.</p>\r\n<p>I found this discussion leading me to think it might be related to CBR vs. VBR:<br>\r\n<a href=\"http://naudio.codeplex.com/discussions/76928\">http://naudio.codeplex.com/discussions/76928</a><br>\r\nHowever I don't know if this still applies since the discussion on Stackoverflow is from 2010.</p>\r\n<p>Best regards,</p>\r\n<p>Hendrik</p>\r\n",
+    "PostedDate": "2012-01-28T03:19:54.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731955",
+    "ThreadId": "287722",
+    "Html": "<p>can you actually hear the whole file (i.e. both parts you concatenated)?</p>\r\n<p>Windows Media Player is probably using the the <a href=\"http://www.codeproject.com/Articles/8295/MPEG-Audio-Frame-Header#VBRHeaders\">Xing header</a> that appears at the start of many VBR files to work out duration. However, when you reposition, it realises it has calculated the total length wrong. The answer is to either strip out xing headers, or fix the one on the first file.</p>",
+    "PostedDate": "2012-01-28T03:27:37.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731977",
+    "ThreadId": "287722",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Thanks for the swift reply. Yes, I am able to hear both songs if I merge them. I noticed Windows Explorer gets the length right, while Media Player doesn't. I merged two songs with lengths of 4:01 and 4:29. Windows Explorer reports the length to be 8:31. Media Player playlist reports the length to be 16:30, but stops after 8:31.</p>\r\n<p>It might be the Xing header as suggested confusing Media Player. Is there a way handle Xing headers in NAudio; preferrably by editing it, alternatively by skipping it. Will it for example be a single Mp3Frame, that I could just skip?</p>",
+    "PostedDate": "2012-01-28T04:52:10.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731995",
+    "ThreadId": "287722",
+    "Html": "<p>I did some changes to try to find if there were any Xing header in the source files: According to the article in the link bytes on index&nbsp;4 thorugh&nbsp;7 of the raw frame data would then be either \"Xing\" or \"Info\" if decoded as ASCII. In that case I would just skip the entire frame since it should be an empty audio frame. I wasn't able to find that in any of the files, but all the sudden the length seems to be correct in Media Player (8:32 is close enough). Don't know what happened, maybe it was a caching problem inside Media Player. Will report back if the problem shows up again.</p>",
+    "PostedDate": "2012-01-28T06:38:32.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732002",
+    "ThreadId": "287722",
+    "Html": "<p>it might be that in the absence of a xing header, Windows Media Player guesses that this is a CBR file and estimates a duration based on the bitrate of the first frame.</p>",
+    "PostedDate": "2012-01-28T07:17:47.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215410",
+    "ThreadId": "287722",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\ncan you actually hear the whole file (i.e. both parts you concatenated)? Windows Media Player is probably using the the Xing header that appears at the start of many VBR files to work out duration. However, when you reposition, it realises it has calculated the total length wrong. The answer is to either strip out xing headers, or fix the one on the first file.<br />\n</blockquote>\nI am having some of the same issues.  I have concatenated the files together, and I have added an essentially blank XING header to the file.  With the blank XING header, Windows Media player reports the wrong length of file, and there are some other oddities.  My question is, how can I recreate a proper XING header?  I have confused myself greatly by reading the documentation on various sites, and I'm hoping there is a nice OO means to recreate the XING header and rebuild the toc in said header to properly display playback percentage and file length.<br />\n",
+    "PostedDate": "2014-02-26T18:52:50.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215855",
+    "ThreadId": "287722",
+    "Html": "concatenating MP3s by simply putting the frames one after the other is a hack that sort of works, but as you have discovered, doesn't really work for VBR files. I'd recommend converting to PCM, concatenating and then re-encoding to MP3 for the best results.<br />\n",
+    "PostedDate": "2014-02-27T14:10:24.643-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215859",
+    "ThreadId": "287722",
+    "Html": "It should work fine but you would need to create a new Xing header with the correct audio length etc..<br />\n",
+    "PostedDate": "2014-02-27T14:15:59.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

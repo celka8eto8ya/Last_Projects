@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "not a bug",
+    "ClosedDate": "2008-10-19T14:07:35.533-07:00",
+    "CommentCount": 2,
+    "Custom": "",
+    "Description": "At the end of these two methods, the dataChunkSize does not get correctly updated. Instead of:\n\n          dataChunkSize += (count * 2);\n\nit should say:\n\n          dataChunkSize += (count * 2 * data.Length);\n\nRegards\nDejan",
+    "LastUpdatedDate": "2008-10-19T14:07:35.533-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-08-27T13:34:43.23-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Bug in the WaveFileWriter.WriteData16 overloads",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7439
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for reporting, will update for the next version",
+      "PostedDate": "2008-09-03T15:29:02.867-07:00",
+      "Id": 41670
+    },
+    {
+      "Message": "having looked at this again, I don't think you are right. Count is the number of samples to write. 2 is the byte length of each sample.",
+      "PostedDate": "2008-10-19T14:06:47.817-07:00",
+      "Id": 41671
+    }
+  ]
+}

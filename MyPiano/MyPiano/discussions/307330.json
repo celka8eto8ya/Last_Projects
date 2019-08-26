@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "756879",
+    "ThreadId": "307330",
+    "Html": "\r\n<p>Hi all,</p>\r\n<p>I am developing a WPF application with the sound visualization of two audio files at the same time.<br>\r\nI am not able to have two instances of NAudio. Please help me to have two instances of the same..</p>\r\n<p>Thanks in advance...</p>\r\n",
+    "PostedDate": "2012-02-11T04:40:46.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "757060",
+    "ThreadId": "307330",
+    "Html": "<p>I'm not sure what you mean. What is going wrong?</p>",
+    "PostedDate": "2012-02-11T07:08:32.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

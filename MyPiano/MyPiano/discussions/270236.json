@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "662713",
+    "ThreadId": "270236",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<p style=\"margin:0in; font-family:Calibri; font-size:11pt\">Hello, I am working on a project that needs to take in a collection of WAV files (Mu-Law format) each with differing and unknown volume levels and somehow correct them to all have roughly the same volume\r\n level (which could be a target maximum volume or range of acceptable volume levels) when played. I have tried playing with the Volume setting and re-writing the louder audio data, however while it works for changing the volume I have no way of knowing the\r\n initial loudness of the audio and amplifying it accordingly.</p>\r\n<p style=\"margin:0in; font-family:Calibri; font-size:11pt\">&nbsp;</p>\r\n<p style=\"margin:0in; font-family:Calibri; font-size:11pt\">After some searching it seems that audio Dynamic Range Compression is what I need to implement to do what I want, however I am unsure of how to go about doing this with NAudio.</p>\r\n<p style=\"margin:0in; font-family:Calibri; font-size:11pt\">&nbsp;</p>\r\n<p style=\"margin:0in; font-family:Calibri; font-size:11pt\">What I am trying to find out is whether NAudio has any built-in functionality for performing Dynamic Range Compression or if anyone knows of any .NET Libraries out there with that capability.</p>\r\n<p style=\"margin:0in; font-family:Calibri; font-size:11pt\">&nbsp;</p>\r\n<p style=\"margin:0in; font-family:Calibri; font-size:11pt\">If anyone knows where I can find a Dynamic Range Compression algorithm that would also be of great help to me as well; there is a large amount of information on the process out there but unfortunately\r\n actual detailed descriptions with equations seem to be very elusive.</p>\r\n<p style=\"margin:0in; font-family:Calibri; font-size:11pt\">&nbsp;</p>\r\n<p style=\"margin:0in; font-family:Calibri; font-size:11pt\">Any help in this regard would be much appreciated!</p>\r\n",
+    "PostedDate": "2011-08-24T08:27:47.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "668015",
+    "ThreadId": "270236",
+    "Html": "<p>I have implemented a compressor in .NET in the <a href=\"http://skypefx.codeplex.com\">Skype Voice Changer project</a>. There is also the SimpleCompressorStream in NAudio (although that hasn't had much attention since it was first written)</p>",
+    "PostedDate": "2011-09-06T03:07:43.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1337061",
+    "ThreadId": "576236",
+    "Html": "Hi, I'm trying to write a simple Visual Basic program that will collect data on the audio playing on my computer and convert it to 8-16 interger/double/float channel values that I can send via USB COM to a microcontroller which will create an Audio Spectrum on an LED matrix. \r<br />\n<br />\nI have looked through the provided source code for the NAudio app examples but I don't know C# and I am having a hard time applying it to Visual Basic. \r<br />\n<br />\nCan someone help me out or link me to a similar project/example?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2014-12-24T13:41:39.743-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1337500",
+    "ThreadId": "576236",
+    "Html": "if you google for c# to vb.net converters you can find online converters that will turn c# examples into VB.NET. \r<br />\nTo get the samples, handle DataAvailable, and use BitConverter or WaveBuffer to get the 16 bit samples out of the provided byte array<br />\n",
+    "PostedDate": "2014-12-28T07:11:37.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1339104",
+    "ThreadId": "576236",
+    "Html": "Oh, awesome! Thanks alot<br />\n",
+    "PostedDate": "2015-01-05T06:48:54.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1120498",
+    "ThreadId": "467177",
+    "Html": "Dear experts,\r<br />\nSorry for this simple question, but I have just started NAudio , and have no idea to make it.\r<br />\nI want to play pcm file without header using the demo application ,but i got this error\r<br />\nNot a WAVE file - no RIFF header\r<br />\n<br />\nPlease help\r<br />\nThanks,<br />\n",
+    "PostedDate": "2013-11-08T07:39:11.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1120499",
+    "ThreadId": "467177",
+    "Html": "use RawSourceWaveStream, passing in a FileStream/MemoryStream with the raw data, and a WaveFormat structure that indicates the format of the raw data<br />\n",
+    "PostedDate": "2013-11-08T07:40:32.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1120530",
+    "ThreadId": "467177",
+    "Html": "dear Markheath, \r<br />\n<br />\nCan you please post few code (for me please).\r<br />\n<br />\nThanks for support <br />\n",
+    "PostedDate": "2013-11-08T08:37:44.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1121711",
+    "ThreadId": "467177",
+    "Html": "<pre><code>var rawStream = File.OpenRead(&quot;rawaudio.bin&quot;);\nvar waveFormat = new WaveFormat(16000, 16, 1); // must match the waveformat of the raw audio\nvar waveOut = new WaveOut();\nvar rawSource = new RawSourceWaveStream(rawStream, waveFormat);\nwaveOut.Init(rawSource);\nwaveOut.Play();</code></pre>\n\n",
+    "PostedDate": "2013-11-11T02:19:21.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1124705",
+    "ThreadId": "467177",
+    "Html": "works like magic.\r<br />\nThanks, :)<br />\n",
+    "PostedDate": "2013-11-16T13:42:10.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1211150",
+    "ThreadId": "467177",
+    "Html": "Nice but how it work if i want to sample in bvyte array and not in wave file?<br />\n",
+    "PostedDate": "2014-02-20T06:08:41.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213486",
+    "ThreadId": "467177",
+    "Html": "use a MemoryStream<br />\n",
+    "PostedDate": "2014-02-24T00:23:26.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "fixed in 1.5",
+    "ClosedDate": "2012-02-17T00:17:15.453-08:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Same problem with SLN, but fixable by setting x86 for compile type. It appears that the dll is compiled x86 but demos are Any, which causes assembly load failure. All output types should be set to x86 (or any, if external DLLs are 64 bit ok) for the bin distro.",
+    "LastUpdatedDate": "2017-12-11T15:05:51.43-08:00",
+    "PlannedForRelease": "NAudio 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-10-30T17:18:30.92-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Download doesn't work on x64",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16335
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "was fixed in NAudio 1.5 (now I finally have my own x64 PC to test with!)",
+      "PostedDate": "2012-02-17T00:17:04.557-08:00",
+      "Id": 56141
+    }
+  ]
+}

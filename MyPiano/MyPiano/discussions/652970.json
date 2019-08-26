@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1468159",
+    "ThreadId": "652970",
+    "Html": "There not many visual basic vb.net examples I can find...yet, I need the vb.net version...\r<br />\n<br />\nI am trying to play mp3 and i like to use a progress bar that moves along with the playing time. \r<br />\nAnd I would like to be able to use the same progress bar to skip tru the song.\r<br />\n<br />\nOn my form application I got this so far:\r<br />\nImports System.Data.OleDb\r<br />\nImports NAudio.Wave\r<br />\n<br />\n..\r<br />\n Public waveOut As WaveOut = New WaveOut\r<br />\n..<br />\n<pre><code>Public Sub Play_Sound(songname As String)\n   On Error Resume Next \n    Dim mp3Reader As Mp3FileReader = New Mp3FileReader(songname)\n\n    If waveOut.PlaybackState = PlaybackState.Playing Then\n        waveOut.Stop()\n        mp3Reader.Close()\n    Else\n        waveOut.Init(mp3Reader)\n        waveOut.Play()\n\n    End If\n        SongLengthlabel.Text = mp3Reader.TotalTime.ToString(&quot;hh\\:mm\\:ss&quot;)\n\nEnd Sub\n</code></pre>\n\n..\t\r<br />\nWhen I call this code, with the mp3's filename the song plays: Play_Sound(&quot;c:\\test.mp3&quot;)\r<br />\n<br />\nThan to test i put the following code under a button:<br />\n<pre><code>     Dim test\n    test = waveOut.GetPosition\n    MsgBox(test)\n\n</code></pre>\n\nNow the questions:<br />\n<ol>\n<li>\nthe getposition returns a large number what does this represent and how can i convert it to actual time.\r<br />\n the .ToString(&quot;hh\\:mm\\:ss&quot;) function like i used for the songlenthlabel, doesn't work here.<br />\n<ol>\n<li>\nHow can I move the position of a mp3 playing to another position...in other words how to use the progress bar.<br />\n</li>\n</ol>\n</li>\n</ol>\nI did find an example in c# but simply converting the code doesn't work for me..<br />\n<ol>\n<li>\nMaybe I am getting this all wrong and you know of a better way?<br />\n</li>\n</ol>\nThanks<br />\n",
+    "PostedDate": "2016-03-27T13:14:16.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468475",
+    "ThreadId": "652970",
+    "Html": "I recommend to retrieve position information rather from source than from hardware using this code:<br />\n<pre><code>'Current time:\nCurrentLenLabel.Text = New DateTime(mp3Reader.CurrentTime.Ticks).ToString(&quot;HH:mm:ss&quot;)\n\n'Total time:\nTotalLenLabel.Text = New DateTime(mp3Reader.TotalTime.Ticks).ToString(&quot;HH:mm:ss&quot;) </code></pre>\n\n",
+    "PostedDate": "2016-03-30T13:02:05.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468477",
+    "ThreadId": "652970",
+    "Html": "Yes, Freefall, but the problem is that I put the declaration of mp3reader in &quot;Public Sub Play_Sound(songname As String)&quot; \r<br />\nSo after exiting this sub...the instance mp3reader is no longer  accessable.<br />\n",
+    "PostedDate": "2016-03-30T13:16:30.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468480",
+    "ThreadId": "652970",
+    "Html": "What you search for, is an event that fires On playback position change. I use this code to raise a change when each sample is read:<br />\n<pre><code>'Declare on top:\nPublic WithEvents notify as NotifyingSampleProvider = Nothing\nPublic mp3Reader As Mp3FileReader = Nothing\n\n'In your playback code:\nPublic Sub Play_Sound(songname As String)\n\n    mp3Reader = New Mp3FileReader(songname)\n    notify = New NotifyingSampleProvider(mp3Reader.ToSampleProvider)\n\n    If waveOut.PlaybackState = PlaybackState.Playing Then\n        waveOut.Stop()\n        mp3Reader.Close()\n    Else\n        waveOut.Init(Notify)\n        waveOut.Play()\n    End If\n\nEnd Sub\n\n'Use the notify event to update your playback position with each processed sample.\n'This Event is the most accurate and fires at your Mp3FileReader´s samplerate (usually 44100 times per second).\n'For performance reasons you should better count for some samples till update,\n'or your Form will redraw the labels 44100 times per second (overkill cpu waste)\n\nPrivate SampleCounter as Integer = 0\nPrivate Sub notify_Sample(ByVal sender As Object, ByVal e As NAudio.Wave.SampleEventArgs)\n   SampleCounter += 1\n   \n   'For example wait 1024 samples till updating again.\n   if SampleCounter &gt;= 1024 then\n     \n     SampleCounter = 0\n\n     'Current time:\n     CurrentLenLabel.Text = New DateTime(mp3Reader.CurrentTime.Ticks).ToString(&quot;HH:mm:ss&quot;)\n\n     'Total time:\n     TotalLenLabel.Text = New DateTime(mp3Reader.TotalTime.Ticks).ToString(&quot;HH:mm:ss&quot;) \n\n   End If\nEnd Sub</code></pre>\n\n",
+    "PostedDate": "2016-03-30T13:38:34.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468593",
+    "ThreadId": "652970",
+    "Html": "Thanks Freefall, \r<br />\nPublicly declaring the mp3Reader does help me with some issues..thanks..However the code you give above is not working as the \r<br />\nPrivate Sub notify_Sample(.....) sub routine is never called uppon.. I put i breakpoint inside the sub to verify that it is not called uppon.\r<br />\nWhat am i missing?<br />\n",
+    "PostedDate": "2016-03-31T11:00:40.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468594",
+    "ThreadId": "652970",
+    "Html": "Ah sry, I forgot to add the handler there.<br />\n<br />\nChange this:<br />\n<pre><code>Private Sub notify_Sample(ByVal sender As Object, ByVal e As NAudio.Wave.SampleEventArgs)</code></pre>\n\nTo this:<br />\n<pre><code>Private Sub notify_Sample(ByVal sender As Object, ByVal e As NAudio.Wave.SampleEventArgs) handles notify.Sample</code></pre>\n\n",
+    "PostedDate": "2016-03-31T11:05:24.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468596",
+    "ThreadId": "652970",
+    "Html": "Thanks man! That fixed it... Thanks for your help, not many VB examples out there..most is C#<br />\n<br />\nIn addition to your code i was able to add a slider that follows the time progress<br />\n'to follow the the timeline with a moving slider<br />\nTrackPosition.Minimum = 0<br />\nTrackPosition.Maximum = mp3Reader.TotalTime.TotalSeconds<br />\nTrackPosition.Value = mp3Reader.CurrentTime.TotalSeconds<br />\n<br />\nThan....I run into the next question..<br />\nI can move the slider by hand to another position in time...how can i make the song that is playing follow..<br />\nI tried<br />\n<br />\nmp3Reader.Position = TrackPosition.Value<br />\nBut that just restarts the song from the beginning and it does not move in time <br />\nany suggestions?<br />\n<br />\n<br />\n** update ** I figured out it does work but the value i get from the slider is to low number....trackposition.value give a number in seconds or so  while the mp2reader.position gives ticks ..so its a conversion issue<br />\n",
+    "PostedDate": "2016-03-31T11:22:40.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468607",
+    "ThreadId": "652970",
+    "Html": "Got it al to work<br />\nhere is my working code.<br />\n<pre><code>'Declare on top:\nImports NAudio.Wave\nImports NAudio.Wave.SampleProviders\n'Declare on top in class mainapp ( for my case)\nPublic waveOut As WaveOut = New WaveOut\nPublic WithEvents notify as NotifyingSampleProvider = Nothing\nPublic mp3Reader As Mp3FileReader = Nothing\nPublic conversionTick_ms As Decimal 'need this for slider\n\nPublic Sub Play_Sound(songname As String)\n\n    mp3Reader = New Mp3FileReader(songname)\n    notify = New NotifyingSampleProvider(mp3Reader.ToSampleProvider)\n\n    If waveOut.PlaybackState = PlaybackState.Playing Then\n        waveOut.Stop()\n        mp3Reader.Close()\n    Else\n        waveOut.Init(Notify)\n        waveOut.Play()\n     conversionTick_ms = (mp3Reader.Position / mp3Reader.CurrentTime.TotalMilliseconds) 'need this for slider\n    End If\n\nEnd Sub\n\n'Use the notify event to update your playback position with each processed sample.\n'This Event is the most accurate and fires at your Mp3FileReader´s samplerate (usually 44100 times per second).\n'For performance reasons you should better count for some samples till update,\n'or your Form will redraw the labels 44100 times per second (overkill cpu waste)\n\nPrivate SampleCounter as Integer = 0\nPrivate Sub notify_Sample(ByVal sender As Object, ByVal e As NAudio.Wave.SampleEventArgs) handles notify.Sample\n   SampleCounter += 1\n   \n   'For example wait 1024 samples till updating again.\n   if SampleCounter &gt;= 1024 then\n     \n     SampleCounter = 0\n\n     'Current time:\n     CurrentLenLabel.Text = New DateTime(mp3Reader.CurrentTime.Ticks).ToString(&quot;HH:mm:ss&quot;)\n\n     'Total time:\n     TotalLenLabel.Text = New DateTime(mp3Reader.TotalTime.Ticks).ToString(&quot;HH:mm:ss&quot;) \n'trackposition is the name of the slider(trackbar)\n            TrackPosition.Minimum = 0\n            TrackPosition.Maximum = mp3Reader.TotalTime.TotalMilliseconds\n            TrackPosition.Value = mp3Reader.CurrentTime.TotalMilliseconds\n\n   End If\nEnd Sub\n\n'Than i added an event that runs when the position of the slider is changed manualy:\n    Private Sub Button6_Click_1(sender As Object, e As EventArgs) Handles Button6.Click\n       'before changing the position of the mp3, convert milliseconds to ticks... 1ms is approx 176.4 ticks\n        mp3Reader.Position = TrackPosition.Value * conversionTick_ms \n    End Sub\n\n</code></pre>\n\nThe one concern i have, is the conversion i have to make that converts the value of the slider ( ms) to ticks , in the last part of the code... maybe there is an easier way?<br />\n",
+    "PostedDate": "2016-03-31T13:09:08.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468625",
+    "ThreadId": "652970",
+    "Html": "Actually there is an easier way. But as it seems you want to try to program a full audio player, I recommend you look at the source code of <a href=\"http://www.codeproject.com/Articles/990040/MultiWave-a-portable-multi-device-NET-audio-player\" rel=\"nofollow\">mine</a>.<br />\n<br />\nAlthough the article is outdated by far (v61, newest version is v108), you find all the basics in there. Also written in VB .NET.<br />\n",
+    "PostedDate": "2016-03-31T17:09:02.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

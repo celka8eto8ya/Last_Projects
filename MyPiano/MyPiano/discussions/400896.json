@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "932896",
+    "ThreadId": "400896",
+    "Html": "\r\n<p>Bonjour,</p>\r\n<p>Is it possible to empty the buffer before a play, to avoid hearing before the samples after a Play / Pause / Change Position / Play.</p>\r\n<p><br>\r\nI wonder if there is a solution to the problem</p>\r\n<p>Merci, Manu</p>\r\n",
+    "PostedDate": "2012-10-26T03:04:38.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932897",
+    "ThreadId": "400896",
+    "Html": "<p>Stop clears the buffers, Pause doesn't, so call Stop instead of Pause if you need to reposition.</p>",
+    "PostedDate": "2012-10-26T03:06:42.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932901",
+    "ThreadId": "400896",
+    "Html": "<p>yes of course</p>\r\n<p>except that liberates the Stop Audio driver and depending on the audio cards play some more or less long.</p>",
+    "PostedDate": "2012-10-26T03:13:36.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932909",
+    "ThreadId": "400896",
+    "Html": "<p>If you use an AES or MADI connection, the slave may take 1 to 1.5 seconds before being synchronized to a first Play</p>",
+    "PostedDate": "2012-10-26T03:30:26.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "934413",
+    "ThreadId": "400896",
+    "Html": "<p>I have an app where I do this... &nbsp;Here's what I'm doing:</p>\r\n<ul>\r\n<li>Wait for the playback buffers to drain\r\n<ul>\r\n<li>You can do this by feeding empty buffers to NAudio for long enough to ensure silence to the speakers. &nbsp;No more than 150ms is required in most cases, but you can control it by setting the buffer size when you create the playback instance (WaveOut, WasapiOut, etc.).</li>\r\n</ul>\r\n</li>\r\n<li>Pause playback</li>\r\n<li>Seek source</li>\r\n<li>Resume playback</li>\r\n</ul>\r\n<p>My app actually double-buffers, so instead of \"Resume playback\", I actually fill my primary buffer and allow that to trigger the resume.</p>\r\n<p>The only downside is that the seek doesn't happen instantly. &nbsp;In practice, most of the delay is waiting for the decoder to seek, so it's a non-issue for me.</p>",
+    "PostedDate": "2012-10-30T14:08:36.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938033",
+    "ThreadId": "400896",
+    "Html": "<p>Hello,</p>\r\n<p>Thank you for your comment.</p>\r\n<p>I had a moment to consider this solution.</p>\r\n<p>I must find the time to implement it.</p>",
+    "PostedDate": "2012-11-07T09:10:00.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

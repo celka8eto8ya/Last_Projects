@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Closing this because it is a limitation of WASAPI Loopback Capture, not NAudio. Workaround is to play silence",
+    "ClosedDate": "2013-05-03T08:25:46.197-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "Description:\r\nWhen recording using WasapiLoopbackCapture, if all audio inputs go silent then the data available callback always returns 0 bytes recorded. This means that if you are recording to a file and you play one sound, it will record it, but then if you allow 10 seconds of silence in between and then play another sound, in the audio file the two sounds will appear right next to each other (without the 10 second silence).\r\n\r\nExpected:\r\nSilence should be included as data, even if it's empty data.\r\n\r\nRepro:\r\n1. Create a WasapiLoopbackCapture.\r\n2. Register a DataAvailable callback and print out bytes received in callback\r\n3. Call StartRecording\r\n4. Turn off all audio\r\nNote: Does not always occur, sometimes silence is recorded.\r\n\r\nOther:\r\nThe silence case was also mentioned here: http://naudio.codeplex.com/discussions/203605\r\nI looked into the code, it seems to be occurring in 'ReadNextPacket' where capture.GetNextPacketSize(); always returns 0 during silence, instead of returning a non-zero value and setting the silence flag. Not sure how to fix this :/",
+    "LastUpdatedDate": "2013-05-03T08:25:46.197-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-12-30T13:56:59.16-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "AsDesigned"
+    },
+    "Summary": "WasapiLoopbackCapture doesn't capture silence",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16383
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "yes, unfortunately this is how WASAPI loopback capture works. You could fool windows by playing a stream of silence throughout the duration of the capture. Alternatively, you'd need to timestamp captured audio and insert the silence yourself. It's very annoying but not really a bug in NAudio.",
+      "PostedDate": "2012-12-30T14:02:39.743-08:00",
+      "Id": 85067
+    },
+    {
+      "Message": "Ahh didn't know this was a feature :P\n\nThanks Mark! Feel free to close this bug then. I'll attempt the route of playing silence to the device, though I have had a not easily reproducible crash that occurred when playing audio to the same device that the loopback capture was using.",
+      "PostedDate": "2012-12-30T14:06:33.547-08:00",
+      "Id": 85069
+    },
+    {
+      "Message": "Making a WaveOut that plays silence works well thus far! Maybe that could be a feature of the WasapiLoopbackCapture?",
+      "PostedDate": "2012-12-30T14:11:53.883-08:00",
+      "Id": 85070
+    }
+  ]
+}

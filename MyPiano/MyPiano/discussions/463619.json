@@ -1,0 +1,138 @@
+[
+  {
+    "Id": "1112291",
+    "ThreadId": "463619",
+    "Html": "I'm trying to use NAudio to capture audio in an application compiled by VS2012 for .NET 4.0. I can compile and execute the capture demo with VS2012. But when I compile and run in my application, line 48 of MMDeviceEnumerator.cs throws &quot;System.InvalidCastException: Unable to cast object of type 'CoreAudioApi._MMDeviceEnumerator' to type 'NAudio.CoreAudioApi.Interfaces.MMDeviceEnumeratorComObject'&quot;:<br />\n<pre><code>_realEnumerator = new MMDeviceEnumeratorComObject() as IMMDeviceEnumerator;</code></pre>\n\nThe compiler and/or ReSharper is telling me &quot;Suspicious cast: there is no type in the solution which is inherited from both 'NAudio.CoreAudioApi.Interfaces.MMDeviceEnumeratorComObject' and 'NAudio.CoreAudioApi.Interfaces.IMMDeviceEnumerator'. The compiler says the same thing in the demo, yet it executes.\r<br />\n<br />\nAny suggestions?<br />\n",
+    "PostedDate": "2013-10-25T15:51:06.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113118",
+    "ThreadId": "463619",
+    "Html": "R# just thinks its as suspicious cast because MMDEviceEnumeratorComObject doesn't implement IMMDeviceEnumerator. That's just because it's COM.\r<br />\n<br />\nYou'll have to find the difference between the demo (which you say works) and your version. Is it the version of .NET? is one 64 bit and the other 32 bit? <br />\n",
+    "PostedDate": "2013-10-28T08:09:29.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113145",
+    "ThreadId": "463619",
+    "Html": "I find it ironic that the executable throws at exactly the same place as the compiler complains.\r<br />\n<br />\nI will look at your other suggestion.<br />\n",
+    "PostedDate": "2013-10-28T08:56:20.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113155",
+    "ThreadId": "463619",
+    "Html": "you get that warning for every single COM object you create and cast to an interface this way. Obviously the COM object does have to implement the interface you are casting it to, but that cannot be known at compile time. What version of Windows are you running on?<br />\n",
+    "PostedDate": "2013-10-28T09:05:44.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113162",
+    "ThreadId": "463619",
+    "Html": "I am running on Windows 7 Professional 64-bit. I am compiling with VS 2012 for x86 because our apps have to run on XP. This part of the project won't run on XP, of course, but we compile everything for 32 bit. I retargeted the demo to .NET 4.0 and it compiles and runs fine. Now I need to go see whether it is targeted to x86 or x64. I'll report that shortly.\r<br />\n<br />\nThanks for the help.<br />\n",
+    "PostedDate": "2013-10-28T09:18:04.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113185",
+    "ThreadId": "463619",
+    "Html": "Ok. I just went through both solutions. By the way, I downloaded NAudio 1.7 late last week to see if that would help, so that is the version I am using.\r<br />\n<br />\nIn the demo I made sure all components were targeted to .NET 4.0 and x86. It compiles and runs (wav capture, wasapi).\r<br />\nIn the app I also made sure that NAudio and the other components were targeted to .NET 4.0 and x86. They compile and and give the same exception as I initially reported.\r<br />\n<br />\nBy the way, in my app I am using <em>only</em> NAudio. Is there any possibility that is the cause?<br />\n",
+    "PostedDate": "2013-10-28T09:39:55.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113199",
+    "ThreadId": "463619",
+    "Html": "I'm not sure what you mean by using <em>only</em> NAudio.\r<br />\n<br />\nSo you're saying that if you make the NAudio WPF demo and the NAudio dll use .NET 4.0 it stops working? That would be strange since the WPF demo is already on .NET 4.0 and is set to x86 and I've had no problems myself with the MMEnumerator.<br />\n",
+    "PostedDate": "2013-10-28T10:04:19.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113202",
+    "ThreadId": "463619",
+    "Html": "Sorry if I wasn't clear. In the demo I made sure all components were targeted to .NET 4.0 and x86. It all compiles and runs (wav capture, wasapi) quite well. But after compiling NAudio into my app the same way (.NET 4.0 and x86), when I run the app the exception is thrown.<br />\n<br />\nI have been using the WinForms demo. I just tried compiling and running the WPF demo and it runs file also.<br />\n<br />\nIn my app, I don't need AudioFileInspector, MidiFileConverter, MixDiff, or NAudio.WindowsMediaFormat, so I am not compiling those. In my app, I am compiling only The NAudio project copied from the NAudio solution.<br />\n",
+    "PostedDate": "2013-10-28T10:09:39.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113209",
+    "ThreadId": "463619",
+    "Html": "I can't see why the same code would work in one place and not the other. There must be some other difference between the projects. Are you sure you've not modified anything about MMDeviceEnumeratorComObject or IMMDeviceEnumerator? <br />\n",
+    "PostedDate": "2013-10-28T10:14:16.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113212",
+    "ThreadId": "463619",
+    "Html": "This morning I deleted my copy of the NAudio folder from my project and copied it again from the downloaded version, and then added it back to the project and recompiled. So I'm pretty sure I haven't changed anything.<br />\n",
+    "PostedDate": "2013-10-28T10:15:56.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113223",
+    "ThreadId": "463619",
+    "Html": "This is the code I'm using that crashes. It never gets to the third line (foreach).<br />\n<pre><code>#if USE_NEW_USB_MIC_CAPTURE\n        var deviceEnum = new MMDeviceEnumerator();\n        var devices = deviceEnum.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active).ToList();\n        foreach (var device in devices)\n        {\n            logger.Trace(&quot;UsbMicrophone.ctor(): trying '{0}' vs '{1}'&quot;, device.FriendlyName, name);\n            if (Utilities.IsLeadingSubstringOf(name, device.FriendlyName))\n            {\n                _name = device.FriendlyName;\n                // TODO what else?\n                break;\n            }\n        }\n#endif</code></pre>\n\n",
+    "PostedDate": "2013-10-28T10:24:29.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113226",
+    "ThreadId": "463619",
+    "Html": "OK, one idea. In your app, could the cast be happening on a different thread from the thread that created the MMDeviceEnumeratorComObject? Put a breakpoint on both lines and see what thread you're on. The apartment threading model on a lot of the Windows media APIs can cause weird errors like this. You need to use objects on the thread on which they were created.<br />\n",
+    "PostedDate": "2013-10-28T10:25:44.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113230",
+    "ThreadId": "463619",
+    "Html": "I don't think there is a thread issue. At the moment, this is exactly the only place that NAudio is referenced in my app. Since I haven't been able to get past this point, I haven't implemented anything else. So this is the first call to the MMDeviceEnumerator(), which, if I understand the call, does the creating of the MMDeviceEnumeratorComObject.<br />\n",
+    "PostedDate": "2013-10-28T10:30:31.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113231",
+    "ThreadId": "463619",
+    "Html": "Well I'm afraid I'm out of ideas then. If you have one project that works and one that doesn't, then you can usually resolve the issue by slowly simplifying both projects until they have the absolute minimal code that compiles the problem code (take copies of both first). At some point one will either break or start working. If not, then there is still a difference you haven't taken into account.<br />\n",
+    "PostedDate": "2013-10-28T10:31:25.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2013-10-28T12:53:24.25-07:00"
+  },
+  {
+    "Id": "1113235",
+    "ThreadId": "463619",
+    "Html": "I'm a fan of that &quot;divide-and-conquer&quot; debug technique. I'll see what I can do to use it here. Unfortunately, my app is enormous (35 projects in the solution). But your suggestion makes a lot of sense, so I'll give it a go. Thanks for all your help. I might be back ... :) And of course I'll post the solution if I can identify one.<br />\n",
+    "PostedDate": "2013-10-28T10:37:24.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113344",
+    "ThreadId": "463619",
+    "Html": "YEA! Two thumbs up to your suggestion! I found the problem. Back when I was confused about CoreAudioAPI.dll I had added a raw copy of that to another project in the solution. Apparently that was causing conflict with NAudio. I removed that (and carefully deleted all of the copies of the DLL and all of the possible references thereto) and it magically works! So now I can move on to the real challenge -- capturing audio. But the demo looks like a pretty good model, so I'm not anticipating serious troubles going forward. \r<br />\n<br />\nThank you so much for your prompt help. You are a rarity on these discussion forums (or is that fora?)!<br />\n",
+    "PostedDate": "2013-10-28T12:53:17.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113588",
+    "ThreadId": "463619",
+    "Html": "great, glad you got it working<br />\n",
+    "PostedDate": "2013-10-29T04:43:09.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

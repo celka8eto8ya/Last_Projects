@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1356367",
+    "ThreadId": "582030",
+    "Html": "can I make  mp3 player for win ce 6.0 ? does naudio work on net compact framework 3.5 ?? sorry for my English) <br />\n",
+    "PostedDate": "2015-02-27T06:46:02.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1357197",
+    "ThreadId": "582030",
+    "Html": "I'm afraid I don't think it would work. Probably the best thing to try would be to take the NAudio source code and see if you can compile any of it for the compact framework.<br />\n",
+    "PostedDate": "2015-03-01T00:02:26-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358486",
+    "ThreadId": "582030",
+    "Html": "thank you so much!<br />\n",
+    "PostedDate": "2015-03-01T20:12:57.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

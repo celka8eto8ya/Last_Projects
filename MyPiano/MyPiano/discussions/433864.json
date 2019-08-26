@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1004261",
+    "ThreadId": "433864",
+    "Html": "I have previously created a IWaveProvider to convert streaming Mulaw to PCM and play the audio back.  I am now using the same provider to use a specific WaveFormat based on an RTSP describe value of L16/16000/2, which should be PCM 16 bit, 16000hz 2 channels.  So my WaveFormat is defined as follows:<br />\n<pre><code>waveFormat = new WaveFormat(16000,16,2);</code></pre>\n\nWhen I  use the AddSamples method, I am simply writing out the byte array directly to my circular buffer:<br />\n<pre><code>written = circularBuffer.Write(buffer, offset, count);</code></pre>\n\nHowever, on playback, it is definitely not the correct format.  Just wondering if I should be converting the incoming data before adding it to the circular buffer?<br />\n",
+    "PostedDate": "2013-02-20T14:09:02.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1004571",
+    "ThreadId": "433864",
+    "Html": "one way to diagnose problems like this, is to use the WaveFileWriter to create a WAV file. If it doesn't play back correctly, try different WAV formats until you hear it correctly. That will help you find out what waveformat you really have<br />\n",
+    "PostedDate": "2013-02-21T03:39:56.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1004855",
+    "ThreadId": "433864",
+    "Html": "The PCM data was streamed from the network and was big endian, after swapping the bytes to make it little endian, the audio played fine.  Saw that in another thread.<br />\n",
+    "PostedDate": "2013-02-21T11:54:26.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006513",
+    "ThreadId": "433864",
+    "Html": "great, glad you worked it out<br />\n",
+    "PostedDate": "2013-02-25T12:40:42.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1022404",
+    "ThreadId": "433864",
+    "Html": "Is there a way to convert Big Endian formatted received bytes from network to little endian for recording as wave file?\r<br />\n<br />\nI have to convert 512 bytes for each 16 ms interval from big endian to little endian for my recorder, and I wonder if cpu can handle this operation. \r<br />\n<br />\nMy incoming stream from network is 8Khz, 16 bit, stereo.\r<br />\n<br />\nI am searching if NAudio has an utility for handling this kind of problem.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2013-03-28T06:53:46.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1022497",
+    "ThreadId": "433864",
+    "Html": "nothing built in to NAudio. I'd just swap each pair of bytes in the incoming buffer before moving on. <br />\n",
+    "PostedDate": "2013-03-28T09:12:03.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "759086",
+    "ThreadId": "309251",
+    "Html": "\r\n<p>When playing a wave file NAudio gets the time (current position)&nbsp;from the file reader which is cool but has one drawback.</p>\r\n<p>For smooth playback it is better to have large buffers but that reduces the resolution of the current position (time).</p>\r\n<p>Could we raise an event in the player when passing each buffer to the sound card to calculate the current position?</p>\r\n<p>&nbsp;</p>\r\n<p>Cheers</p>\r\n<p>&nbsp;</p>\r\n<p>Max</p>\r\n",
+    "PostedDate": "2012-02-12T10:48:17.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "759394",
+    "ThreadId": "309251",
+    "Html": "<p>It's a good question and NAudio does not have a standardised solution for this yet. The WaveOut class has GetPosition, which will return the waveOutGetPosition (in bytes), which should allow you to calculate more accurately where we are up to. I think it returns the number of bytes played since the last waveOutReset function. I might change the public API in the future (e.g. to return a TimeSpan instead of a long), but let me know how you get on with it. To support other output drivers like DirectSound, Wasapi and ASIO would need quite different implementations (and with ASIO, you tend to be working at much lower latencies anyway).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-02-12T14:48:57.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "762389",
+    "ThreadId": "309251",
+    "Html": "<p>Thanks again Mark this project is so cool.</p>\r\n<p>I got it to work perfectly but there are a few things to consider</p>\r\n<p>While waveout.position returns the total number of bytes it has passed to the sound card you can&rsquo;t simply convert that to seconds and subtract that from the current time because it will not be accurate if you jump forward or backward in the audio file.</p>\r\n<p>To overcome this I made a class that inherits from your wavefilereader and&nbsp;gave it a public property BytesRead.</p>\r\n<p>Then override the Read function to count the totalbytes as they are read from the file</p>\r\n<p>Excuse my VB. ;-)</p>\r\n<p><span style=\"color: black; font-size: 10pt;\">&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">Public</span><span style=\"color: black; font-size: 10pt;\">&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">Overrides</span><span style=\"color: black; font-size: 10pt;\">&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">Function</span><span style=\"color: black; font-size: 10pt;\">&nbsp;Read(array()&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">As</span><span style=\"color: black; font-size: 10pt;\">&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">Byte</span><span style=\"color: black; font-size: 10pt;\">,&nbsp;offset&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">As</span><span style=\"color: black; font-size: 10pt;\">&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">Integer</span><span style=\"color: black; font-size: 10pt;\">,&nbsp;cout&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">As</span><span style=\"color: black; font-size: 10pt;\">&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">Integer</span><span style=\"color: black; font-size: 10pt;\">)&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">As</span><span style=\"color: black; font-size: 10pt;\">&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">Integer</span><span style=\"color: black; font-size: 10pt;\">&nbsp;</span></p>\r\n<p><span style=\"color: black; font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BytesRead&nbsp;+=&nbsp;count</span></p>\r\n<p><span style=\"color: black; font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">Return</span><span style=\"color: black; font-size: 10pt;\">&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">MyBase</span><span style=\"color: black; font-size: 10pt;\">.Read(array,&nbsp;offset,&nbsp;count)</span></p>\r\n<p><span style=\"color: black; font-size: 10pt;\">&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">End</span><span style=\"color: black; font-size: 10pt;\">&nbsp;</span><span style=\"color: blue; font-size: 10pt;\">Function</span></p>\r\n<p>&nbsp;</p>\r\n<p>So now I can subtract the number of bytes processed from the number of bytes read to give me a true position.</p>\r\n<p>I placed the following code into a timer to get a high resolution position display regardless of the size of the buffers being read from the file.</p>\r\n<p><span style=\"color: blue;\">Dim</span><span style=\"color: black;\">&nbsp;span&nbsp;</span><span style=\"color: blue;\">As</span><span style=\"color: black;\">&nbsp;</span><span style=\"color: #2b91af;\">TimeSpan</span><span style=\"color: black;\">&nbsp;=&nbsp;waveout1.CurrentTime</span></p>\r\n<p><span style=\"color: black;\">DisplayTime.Text&nbsp;=&nbsp;span.TotalSeconds&nbsp;-&nbsp;((wavereader.BytesRead&nbsp;-&nbsp;waveout1.GetPosition)&nbsp;/&nbsp;waveout1.WaveFormat.AverageBytesPerSecond)</span></p>\r\n<p>&nbsp;Thanks again for all of your work with Naudio I love it and I like to pass on my modifications whenever I think you can use them.</p>\r\n<p>Next step here might be for me&nbsp;to override the CurrentTime function to make it all a little more tidy.</p>\r\n<p>Cheers</p>\r\n<p>Max</p>",
+    "PostedDate": "2012-02-14T02:40:18.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "776155",
+    "ThreadId": "309251",
+    "Html": "<p>thanks Max, that is a good approach to override the WaveStream</p>",
+    "PostedDate": "2012-02-17T12:15:30.113-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

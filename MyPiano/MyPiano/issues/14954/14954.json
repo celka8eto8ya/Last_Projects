@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Released in NAudio 1.4",
+    "ClosedDate": "2011-05-27T14:00:37.613-07:00",
+    "CommentCount": 2,
+    "Custom": "",
+    "Description": "Take the demo program, use WASAPI, record a wave, then try to record again.\nNAudio will crash on line 35 of AudioClient.cs, since audioClientInterface becomes null when StopRecording is used (apparently).",
+    "LastUpdatedDate": "2011-05-27T14:00:37.613-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-12-23T19:33:44.483-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Crash when trying to record a second time from a same WASAPI input",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 14954
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Nevermind, I just noticed that only happens in the stable release.",
+      "PostedDate": "2010-12-23T19:40:29.797-08:00",
+      "Id": 41754
+    },
+    {
+      "Message": "yes, this one is fixed already. I'll hopefully find time to make a new NAudio release in the not too distant future",
+      "PostedDate": "2010-12-24T01:48:53.223-08:00",
+      "Id": 41755
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "556998",
+    "ThreadId": "243714",
+    "Html": "\r\n<p>Hello everyone,</p>\r\n<p>&nbsp;</p>\r\n<p>I am new to NAudio, so this can be a very basic question or many of you.</p>\r\n<p>&nbsp;</p>\r\n<p>I have a wav file and need to add n milliseconds of silence to the start and to add n milliseconds of silence to the end. How to proceed ?</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks in advance</p>\r\n<p>Alfonso Moreno</p>\r\n",
+    "PostedDate": "2011-01-28T10:31:54.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "558551",
+    "ThreadId": "243714",
+    "Html": "\r\n<p>make a new WaveStream derived class that in the Read method returns the right amount of silence at the end and beginning of the source stream.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-01T02:06:00.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "560345",
+    "ThreadId": "243714",
+    "Html": "\r\n<p>Thank you very much.</p>\r\n<p>&nbsp;</p>\r\n<p>Your suggestion took me to research a bit more then I found that the&nbsp;WaveOffsetStream is what I needed. I was surprised for the versatility of NAudio library.</p>\r\n<p>&nbsp;</p>\r\n<p>Regards</p>\r\n<p>Alfonso Moreno</p>\r\n",
+    "PostedDate": "2011-02-03T11:41:51.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1416513",
+    "ThreadId": "243714",
+    "Html": "Hi everyone, i wrote this funcions to do this.<br />\n<pre><code>    private void InsertSilence(WaveFileWriter writer, Double milliseconds)\n    {\n\n        Double avgBytesPerMillisecond = (Double)writer.WaveFormat.AverageBytesPerSecond / 1000F;\n\n        Int32 silenceSize = (Int32)(milliseconds * avgBytesPerMillisecond);\n        silenceSize = silenceSize - silenceSize % fileIn.WaveFormat.BlockAlign;\n\n        Byte[] silenceArray = new Byte[silenceSize];\n        writer.Write(silenceArray, 0, silenceArray.Length);\n\n    }</code></pre>\n\n",
+    "PostedDate": "2015-04-21T21:45:25.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

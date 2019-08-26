@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1202795",
+    "ThreadId": "528959",
+    "Html": "When the audio finishes and triggers OnPlaybackStopped, calling Play() again shortly after doesn't play the audio. \r<br />\n<br />\nTo get it going again you need to call Pause() then Play() again. The PlaybackState = Playing, but no audio and no audio position change.\r<br />\n<br />\nThis can be replicated in the NAudioWpfDemo.exe &gt; MediaFoundation Playback, and also when using ACM. Replicated with mp3, wav, and aac files.\r<br />\n<br />\nWorkaround:<br />\n<pre><code>        private void OnPlaybackStopped(object sender, StoppedEventArgs stoppedEventArgs)\n        {\n            Play();\n            Pause();\n        }   </code></pre>\n\n",
+    "PostedDate": "2014-02-05T00:07:57.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202797",
+    "ThreadId": "528959",
+    "Html": "hmm, could be <a href=\"https://naudio.codeplex.com/discussions/434085\" rel=\"nofollow\">this</a>. I meant to get that bugfix into NAudio 1.7 but never got round to it.<br />\n",
+    "PostedDate": "2014-02-05T00:11:39.82-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202801",
+    "ThreadId": "528959",
+    "Html": "Yep that fixed it, cant fault it whatever I do now.<br />\n<pre><code>                if (queued == 0)\n                {\n                    // we got to the end\n                    this.playbackState = PlaybackState.Stopped;\n\n                    callbackEvent.Set();          &lt;&lt;&lt;&lt;&lt;&lt;&lt; just added this line.\n                }</code></pre>\n\n",
+    "PostedDate": "2014-02-05T00:25:01.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202878",
+    "ThreadId": "528959",
+    "Html": "great, this fix is in now. thanks for reporting &amp; testing\r<br />\n<br />\nps I haven't forgotten about your pull request. Just need a bit of time to properly review it and think through implications of changing WaveFormatExtraData<br />\n",
+    "PostedDate": "2014-02-05T03:16:14.26-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202885",
+    "ThreadId": "528959",
+    "Html": "Ok no worries, thanks. NAudio doesn't seem to use it anywhere but I suppose others may be using it in their app, or it simply wasn't byte aligned properly all along, or MediaFoundation is extra picky.<br />\n",
+    "PostedDate": "2014-02-05T03:28:45.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

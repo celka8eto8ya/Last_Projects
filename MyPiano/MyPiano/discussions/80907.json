@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "277414",
+    "ThreadId": "80907",
+    "Html": "<p>I am trying to record an audio using NAUDIO library. I would like to pause the recording but there is no event available. Can someone let me know how to pause the audio recording.</p>",
+    "PostedDate": "2010-01-14T18:01:34.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "277503",
+    "ThreadId": "80907",
+    "Html": "<p>most applications are still capturing audio from the sound-card while you are in record-pause, they are just not writing it to file. So either do this, or stop recording when the user presses pause, and start again when they resume,.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-01-15T01:42:04.41-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1289941",
+    "ThreadId": "80907",
+    "Html": "is what you can give us an example\r<br />\nthank you<br />\n",
+    "PostedDate": "2014-08-14T02:46:02.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

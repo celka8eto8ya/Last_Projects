@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1229366",
+    "ThreadId": "540904",
+    "Html": "How get default audio recording device?<br />\n",
+    "PostedDate": "2014-04-02T02:24:11.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1230329",
+    "ThreadId": "540904",
+    "Html": "With WaveIn, it will use the default recording device (device 0)\r<br />\nSame with WasapiCapture - it chooses the default for you<br />\n",
+    "PostedDate": "2014-04-04T07:02:45.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

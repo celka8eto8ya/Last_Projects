@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1081863",
+    "ThreadId": "453737",
+    "Html": "Hi All,\r<br />\nI was wondering if anyone might have a simple example on how the cue reader works. Let's say I have a wav file, or a raw .DAT( 16bit Stereo) that has cues embedded in it. How could I read those cues and display them in a listbox, or something simple:\r<br />\nMessagebox.show(mycuelist)\r<br />\nI would be willing to make a small donation for an example.\r<br />\nThanks, Wyatt<br />\n",
+    "PostedDate": "2013-08-18T10:43:50.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082722",
+    "ThreadId": "453737",
+    "Html": "Try something like this:<br />\n<pre><code>using(var reader = new CueWaveFileReader(&quot;audio.wav&quot;))\n{\n   for(int n = 0; n &lt; reader.Cues.Count; n++)\n   {\n       var cue = reader.Cues[n];\n       Console.WriteLine(&quot;Cue {0} at position {1}&quot;, cue.Label, cue.Position);\n   }\n}</code></pre>\n\n",
+    "PostedDate": "2013-08-20T08:12:25.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083764",
+    "ThreadId": "453737",
+    "Html": "Thanks Mark. That worked to display in my listbox. I know your busy. Another question. How could I seek or skip  to next cue position or cue label?<br />\nOr wavestream.Position = cue.Label ?<br />\nSorry for the noob questions.<br />\nMany Thanks, Wyatt<br />\n",
+    "PostedDate": "2013-08-22T10:42:08.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085904",
+    "ThreadId": "453737",
+    "Html": "Good question. I don't know whether the cue positions are in bytes or samples. If samples you might need to multiply by 2 for 16 bit (and maybe by 2 again for stereo).<br />\n",
+    "PostedDate": "2013-08-28T12:19:08.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085907",
+    "ThreadId": "453737",
+    "Html": "This document describes how cues are stored:\r<br />\n<a href=\"http://www.sonicspot.com/guide/wavefiles.html#cue\" rel=\"nofollow\">http://www.sonicspot.com/guide/wavefiles.html#cue</a>\r<br />\n<br />\nthe NAudio cue support was actually a third party contribution so I don't know exactly how it works. It does seem that cues use byte offsets though so I would hope that <br />\n<pre><code>wavestream.Position = cue.Position</code></pre>\n\nought to do the right thing. The label is the name of the cue.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-08-28T12:29:24.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085973",
+    "ThreadId": "453737",
+    "Html": "I'm pretty sure it listed in samples. The only way I've found so far to skip to the next cue is using the code you provided above to put them in a listbox, and then:\r<br />\n<br />\n<code>Private wave As NAudio.Wave.WaveFileReader`\r<br />wave.Seek(wave.WaveFormat.AverageBytesPerSecond * cue.position \\44100, SeekOrigin.Begin)</code>`\r\n\r\nWould this way be accurate?\r<br />\nMore questions:\r<br />\n<br />\nHow could I display the cues from a rawstream (.DAT file from DDP fileset)\r<br />\nCould the third party person be contacted?\r<br />\n<br />\nThanks, Wyatt<br />\n",
+    "PostedDate": "2013-08-28T16:25:30.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1087388",
+    "ThreadId": "453737",
+    "Html": "hi, I'm afraid I have no idea how the .DAT files are formatted, so without that it would not be possible to extract the cues<br />\n",
+    "PostedDate": "2013-09-02T09:15:15.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1087458",
+    "ThreadId": "453737",
+    "Html": "Thanks Mark. \r<br />\nThe .DAT file  from a DDP fileset that I'm using for my player are always in the following format:\r<br />\nAudio format is 44100Hz, 16-bit, stereo<br />\n",
+    "PostedDate": "2013-09-02T14:24:17.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

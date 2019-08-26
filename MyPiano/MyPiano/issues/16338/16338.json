@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "hi,\r\ndunno if this is a current issue anymore or if it's really really the case at all in your software:\r\n\r\nusing the sf2 part of your software (the renoise tool \"sf2xrni\" uses it), the first sample (some left C-3) has 2 to incorrect additional values at the beginning, and probably all samples have it too but just go into the zero-padding of the previous one\r\n\r\nat least that's what the output of sf2xrni looked like\r\n\r\nwhen i made my own sf2 to xrni code, i did at first not read the 32 bit integer coming after the \"smpl\" chunk id, and i got the same result\r\ni changed my code to read a 32 bit chunk size after \"smpl\" and it a) seems to be the sample data size and doesn't break parsing b) the first sample is now correct",
+    "LastUpdatedDate": "2012-01-03T06:21:59.727-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-12-28T08:01:52.207-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "sf2 samples 4 bytes too early?",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16338
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "wow, has been many years since I worked on the sf2 code in NAudio. Possibly there is an issue.",
+      "PostedDate": "2012-01-03T06:21:59.727-08:00",
+      "Id": 51928
+    }
+  ]
+}

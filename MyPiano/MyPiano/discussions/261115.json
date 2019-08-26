@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "626629",
+    "ThreadId": "261115",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>is there any way to set specific second to start play from buffered stream?</p>\r\n",
+    "PostedDate": "2011-06-12T11:38:03.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "626821",
+    "ThreadId": "261115",
+    "Html": "<p>What is feeding into the buffered stream? You could just skip over a number of bytes before playing.</p>",
+    "PostedDate": "2011-06-13T03:35:08.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "626831",
+    "ThreadId": "261115",
+    "Html": "<p>I'm writing desktop app for soundcloud.com using their API's so feeding mp3 files into stream. I tried to skip stream before creating&nbsp;ReadFullyStream but it doesn't worked. It started from the begining.</p>",
+    "PostedDate": "2011-06-13T04:44:58.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "626834",
+    "ThreadId": "261115",
+    "Html": "<p>well if you are using the technique in the NAudio demo app for streaming MP3, then when you get the first MP3 frames, don't decode them and add them into the buffered provider. You'll know how long you've skipped by the number of samples in each frame.</p>",
+    "PostedDate": "2011-06-13T04:51:25.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

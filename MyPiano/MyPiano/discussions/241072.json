@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "546378",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>First of all, let me say that this is an awesome project!&nbsp; It's saving me months of work!</p>\r\n<p>I had built an application using the V 1.3 release of naudio and it was working very well.&nbsp; I updated to changeset 64823 and mp3 playback stopped working.&nbsp; I'm getting a &quot;Not a supported encoding&quot; exception from the DmoMediaType::SetWaveFormat\r\n method.&nbsp;</p>\r\n<p>Based on the change log and the demo app, I removed any PCM conversions and calls to BlockAlignReductionStream.&nbsp; I even tried putting them back to see if that would make a difference, but no-joy.&nbsp;</p>\r\n<p>I'm creating the input stream like this:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>                    <span style=\"color:blue\">Dim</span> mp3Reader <span style=\"color:blue\">As</span> WaveStream = <span style=\"color:blue\">New</span> Mp3FileReader(fileName)\r\n                                       inputStream = <span style=\"color:blue\">New</span> WaveChannel32(mp3Reader)\r\n\r\n</pre>\r\n</div>\r\n<p>Starting the playback like this:</p>\r\n<pre><div style=\"color:black; background-color:white\"><pre>                <span style=\"color:blue\">If</span> waveOutDevice <span style=\"color:blue\">Is</span> <span style=\"color:blue\">Nothing</span> <span style=\"color:blue\">Then</span>\r\n                    CreateWaveOut()\r\n                <span style=\"color:blue\">End</span> <span style=\"color:blue\">If</span>\r\n\r\n                waveOutDevice.Init(inputStream)\r\n                \r\n                timer1.Interval = 1000\r\n                timer1.AutoReset = <span style=\"color:blue\">True</span>\r\n                <span style=\"color:blue\">AddHandler</span> timer1.Elapsed, <span style=\"color:blue\">AddressOf</span> TimerHandler\r\n                waveOutDevice.Play()\r\n                timer1.Start()\r\n</pre>\r\n</div>\r\n</pre>\r\n<pre>The CreateWaveOut method looks like this:</pre>\r\n<pre><div style=\"color:black; background-color:white\"><pre>            <span style=\"color:blue\">Private</span> <span style=\"color:blue\">Sub</span> CreateWaveOut()\r\n                waveOutDevice = <span style=\"color:blue\">New</span> WasapiOut(AudioClientShareMode.<span style=\"color:blue\">Shared</span>, <span style=\"color:blue\">True</span>, 100)\r\n            <span style=\"color:blue\">End</span> <span style=\"color:blue\">Sub</span>\r\n</pre>\r\n</div>\r\n</pre>\r\n<pre><div style=\"color:black; background-color:white\">Again, this worked great using the 1.3 release, just not now with the latest change set.</div><div style=\"color:black; background-color:white\">Any help would be appreciated.</div><div style=\"color:black; background-color:white\">-John</div></pre>\r\n",
+    "PostedDate": "2011-01-09T15:21:12.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546479",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>that's very strange, because the WaveFormat of the input stream should be exactly the same as before (probably 44.1KHz IEEE float stereo). Can you double check what it is? Wasapi is much more fussy than WaveOut; you have to be playing at exactly the right\r\n frequency.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-09T23:31:45.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547022",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>Okay.&nbsp; I did some before and after breakpoints to get the formats you asked for.&nbsp; Right where I invoke the waveoutdevice.init method I checked the format under V1.3.&nbsp; I get the following:</p>\r\n<ul>\r\n<li>Encoding:&nbsp; IeeeFloat {3} </li><li>Channels:&nbsp; 2 </li><li>SampleRate:&nbsp; 44100 </li></ul>\r\n<p>&nbsp;</p>\r\n<p>I then replaced naudio with the latest change set and <span style=\"text-decoration:underline\">\r\nget the exact same thing</span>.&nbsp;&nbsp;So that looks normal.&nbsp;&nbsp;However, I put a break just before the &quot;Not a supported encoding&quot; exception in DmoMediaType::SetWaveFormat to take a look at the parameter &quot;waveFormat&quot;.&nbsp; It shows the following:</p>\r\n<ul>\r\n<li>Encoding:&nbsp; Extensible </li><li>Channels: 2 </li><li>SampleRate: 48000 </li></ul>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">&nbsp;</span></span></p>\r\n<p>&nbsp;</p>\r\n<p>Here's the method where the exception is being thrown:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>  <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n        <span style=\"color:gray\">///</span><span style=\"color:green\"> Sets this object up to point to a wave format</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;waveFormat&quot;&gt;</span><span style=\"color:green\">Wave format structure&lt;/param&gt;</span>\r\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> SetWaveFormat(WaveFormat waveFormat)\r\n        {\r\n            majortype = MediaTypes.MEDIATYPE_Audio;\r\n            <span style=\"color:blue\">switch</span> (waveFormat.Encoding)\r\n            {\r\n                <span style=\"color:blue\">case</span> WaveFormatEncoding.Pcm:\r\n                    subtype = AudioMediaSubtypes.MEDIASUBTYPE_PCM;\r\n                    bFixedSizeSamples = <span style=\"color:blue\">true</span>;\r\n                    <span style=\"color:blue\">break</span>;\r\n                <span style=\"color:blue\">case</span> WaveFormatEncoding.IeeeFloat:\r\n                    subtype = AudioMediaSubtypes.MEDIASUBTYPE_IEEE_FLOAT;\r\n                    bFixedSizeSamples = <span style=\"color:blue\">true</span>;\r\n                    <span style=\"color:blue\">break</span>;\r\n                <span style=\"color:blue\">case</span> WaveFormatEncoding.MpegLayer3:\r\n                    subtype = AudioMediaSubtypes.WMMEDIASUBTYPE_MP3;\r\n                    <span style=\"color:blue\">break</span>;\r\n                <span style=\"color:blue\">default</span>:\r\n                    <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> ArgumentException(<span style=\"color:#a31515\">&quot;Not a supported encoding&quot;</span>);\r\n            }\r\n            formattype = DmoMediaTypeGuids.FORMAT_WaveFormatEx;\r\n            <span style=\"color:blue\">if</span> (cbFormat &lt; Marshal.SizeOf(waveFormat))\r\n                <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> InvalidOperationException(<span style=\"color:#a31515\">&quot;Not enough memory assigned for a WaveFormat structure&quot;</span>);\r\n            <span style=\"color:green\">//Debug.Assert(cbFormat &gt;= ,&quot;Not enough space&quot;);</span>\r\n            Marshal.StructureToPtr(waveFormat, pbFormat, <span style=\"color:blue\">false</span>);\r\n        }\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Somewhere along the line something is changing.&nbsp; I don't see where that's happening in my code.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks for your help,</p>\r\n<p>&nbsp;</p>\r\n<p>-John</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-10T16:55:19.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547177",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>what is the WaveFormat of inputstream? Wasapi playback often has the 44.1/48kHz issue as it doesn't do SRC for you, and if you (say) play a DVD, your soundcard can switch to 48kHz, breaking 44.1kHz playback</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-11T01:54:47.613-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547399",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>It's an mp3 file&nbsp;and I'm using the mp3Reader class.&nbsp; Remember, it works under the 1.3 release, just not under the latest change set.&nbsp;</p>\r\n<p>Somewhere along the line, the encoding is changing from IEEE to &quot;Extensible&quot;.&nbsp; Is that normal?&nbsp; As far as I know, I'm not doing it in my code.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks again,</p>\r\n<p>&nbsp;</p>\r\n<p>-John</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-11T09:53:54.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547400",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>what is the WaveFormat of inputstream?</p>\r\n<p>what decoder is being used - ACM or DMO?</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-11T09:55:11.893-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547401",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>also, can you play MP3 with WASAPI using the NAudioDemo app?</p>\r\n",
+    "PostedDate": "2011-01-11T09:56:21.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547403",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>assuming you are using the ACM frame decompressor - the WaveFormat you are seeing is likely coming from the AcmFormatSuggest function:</p>\r\n<p>http://naudio.codeplex.com/SourceControl/changeset/view/64823#1678310</p>\r\n<p>what ACM codecs do you have installed that can decompress MP3?</p>\r\n",
+    "PostedDate": "2011-01-11T10:00:43.453-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547404",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>Sorry Mark.&nbsp; I know I'm being thick.&nbsp; I guess I'm not sure what you're asking.&nbsp; I don't believe I'm explicitly selecting a decoder in my code.&nbsp; Is there something I can look at in the debugger to get you that?&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Good idea on checking the demo app from the new change set.&nbsp;&nbsp;I should have thought of that before bugging you :)</p>\r\n<p>I'll do that and get back to you.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>-John</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-11T10:02:02.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547406",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>Looks like we both posted at the same time.&nbsp; I'll also look at the available codecs.</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-01-11T10:04:28.69-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547611",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>The demo application fails with the same error.&nbsp; A window titled &quot;Error initializing output&quot; with a message saying &quot;Not a supported encoding&quot; pops up.&nbsp; I've tried this with multiple mp3's and I get the same error.</p>\r\n<p>I also set a breakpoint at the DmoMediaType::SetWaveFormat method while running the\r\n<strong><span style=\"text-decoration:underline\">demo app </span></strong>to see if I can get some more info.&nbsp; Turns out it is called three times.&nbsp; Twice with the IEEE encoding, the third time with the extensible encoding.&nbsp;</p>\r\n<p>Again, while running the demo app, I also set a breakpoint in the Ac3Mp3Decompressor class you mentioned to see what AcmFormatSuggest returns.&nbsp; It returns &quot;16 bit PCM 44 kHz 2 Channels&quot;.&nbsp; I think that also confirms it's attempting to use the AcmMp3Frame\r\n decompressor.</p>\r\n<p>I've got the following codecs available on my machine:</p>\r\n<table>\r\n<tbody>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Microsoft IMA ADPCM CODEC</td>\r\n<td align=\"left\">0011</td>\r\n<td align=\"left\">imaadp32.acm</td>\r\n<td align=\"right\">6.1.7600.16385</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Microsoft CCITT G.711 A-Law and u-Law CODEC</td>\r\n<td align=\"left\">0007</td>\r\n<td align=\"left\">msg711.acm</td>\r\n<td align=\"right\">6.1.7600.16385</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Microsoft GSM 6.10 Audio CODEC</td>\r\n<td align=\"left\">0031</td>\r\n<td align=\"left\">msgsm32.acm</td>\r\n<td align=\"right\">6.1.7600.16385</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Microsoft ADPCM CODEC</td>\r\n<td align=\"left\">0002</td>\r\n<td align=\"left\">msadp32.acm</td>\r\n<td align=\"right\">6.1.7600.16385</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Fraunhofer IIS MPEG Layer-3 Codec (decode only)</td>\r\n<td align=\"left\">0055</td>\r\n<td align=\"left\">l3codeca.acm</td>\r\n<td align=\"right\">1.9.0.401</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Decode AC3 and DTS audio</td>\r\n<td align=\"left\">2001</td>\r\n<td align=\"left\">&nbsp;</td>\r\n<td align=\"right\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">LAME MP3 Codec v0.9.2 - 3.98.2</td>\r\n<td align=\"left\">0001</td>\r\n<td align=\"left\">LameACM.acm</td>\r\n<td align=\"right\">0.9.1.0</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">ACM</td>\r\n<td align=\"left\">Microsoft PCM Converter</td>\r\n<td align=\"left\">0001</td>\r\n<td align=\"left\">LameACM.acm</td>\r\n<td align=\"right\">0.9.1.0</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">DMO</td>\r\n<td align=\"left\">WMAudio Decoder DMO</td>\r\n<td align=\"left\">0160, 0161, 0162, 0163</td>\r\n<td align=\"left\">WMADMOD.DLL</td>\r\n<td align=\"right\">6.1.7600.16385</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">DMO</td>\r\n<td align=\"left\">WMAPro over S/PDIF DMO</td>\r\n<td align=\"left\">0162</td>\r\n<td align=\"left\">WMADMOD.DLL</td>\r\n<td align=\"right\">6.1.7600.16385</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">DMO</td>\r\n<td align=\"left\">WMSpeech Decoder DMO</td>\r\n<td align=\"left\">000A, 000B</td>\r\n<td align=\"left\">WMSPDMOD.DLL</td>\r\n<td align=\"right\">6.1.7600.16385</td>\r\n</tr>\r\n<tr>\r\n<td align=\"left\">DMO</td>\r\n<td align=\"left\">MP3 Decoder DMO</td>\r\n<td align=\"left\">0055</td>\r\n<td align=\"left\">mp3dmod.dll</td>\r\n<td align=\"right\">6.1.7600.16385</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p>&nbsp;</p>\r\n<p>Thanks again for the help.</p>\r\n<p>&nbsp;</p>\r\n<p>Regards,</p>\r\n<p>&nbsp;</p>\r\n<p>John</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-11T14:31:21.277-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547631",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>I think I may have found the problem.</p>\r\n<p>I went into the Sound control panel and looked at the default output device settings.&nbsp; The default format was set to 48 kHz 24 bits.&nbsp; I changed it to 44 kHz and the demo app started working!&nbsp; I'll re-integrate the latest change-set into my\r\n app and see what happens.&nbsp;&nbsp;&nbsp;How can I programatically deal with this sort of scenario?&nbsp; Also, is there a way to select from multiple sound cards on a machine using WASAPI.&nbsp; I know it can be done with the other output drivers, but the\r\n property to select the device doesn't exist in the WasapiOut class.</p>\r\n<p>Thanks again for the help and the hard work you've done on this project.&nbsp; It is truly an awesome piece of work!</p>\r\n<p>&nbsp;</p>\r\n<p>-John</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-11T15:06:17.817-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "548102",
+    "ThreadId": "241072",
+    "Html": "\r\n<p>Yes, it is very frustrating that WASAPI doesn't offer any sample rate / bit depth conversion for you like WaveOut does, making it less than useful for general purpose audio playback. Off the top of my head, I can't remember what the way to query available\r\n WASAPI devices is, but there should be a way, and there are wrappers in NAudio for most of the API now.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-12T09:08:17.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

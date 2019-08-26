@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1492715",
+    "ThreadId": "661369",
+    "Html": "I'd like to use NAudio for the following.  I'd like to pre-load a set of .wav files (maybe 10-20) at startup and have them all ready to be played.  Then, while the application is running, I'd like to play them at will.  My desire to pre-load them is to ensure the .wav files are fully loaded from disk into memory and that there's no I/O required when it comes time to play a given file.<br />\n<br />\nIs there a recommended way to do this with NAudio?  It appears to me that the WaveFileReader() isn't going to actually read the data until its asked to play it.<br />\n<br />\nAlso, IIRC, the docs seemed to suggest that the WaveOutEvent.Init() call was opening the sound card, which makes me wonder if its wise to create a whole bunch of those (1 for each file) ahead of time.<br />\n<br />\nBasically, I'm trying to figure out how to get all my sounds loaded in memory and ready to go and be able to trigger them on demand without worrying about any loading time.<br />\n<br />\nEDIT: It appears that you can only use a player (like WaveOutEvent) once.  After playing the sound file once, it doesn't do anything if you call Play() again.  So I guess the intent is that you create a new player each time?<br />\n<br />\nEDIT: The goal would be to play a given sound many times (possibly at a high rate) while the app is running, these are not one shot sounds<br />\n",
+    "PostedDate": "2017-02-15T07:07:39.563-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

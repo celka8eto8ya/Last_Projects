@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "864430",
+    "ThreadId": "366037",
+    "Html": "\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>Did I use the FFT in the right way? But it was so slow that all the GUI stucked <br>half way. Nota that I put DoFFT() in the wi_DataAvailable() handler. And actually,<br>I only had 64 samples for FFT, but it was really slow.<br><br>I wonder if there is someone kind enough to provide me some usage tips and examples.<br><br>       <span style=\"color:blue\">void</span> DoFFT(Int32[] samples)\r\n        {\r\n            fft = <span style=\"color:blue\">new</span> List&lt;Complex&gt;();\r\n            <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> i = 0; i &lt; samples.Length; &#43;&#43;i )\r\n            {\r\n                Complex c = <span style=\"color:blue\">new</span> Complex();\r\n                c.X = sample_lst[i];\r\n                c.Y = 0;\r\n                fft.Add(c);\r\n            }\r\n            AdjustFFT();\r\n\r\n            ffts = fft.ToArray();\r\n            FastFourierTransform.FFT(<span style=\"color:blue\">true</span>, ffts.Length, ffts);\r\n            \r\n        }\r\n        // Make FFT have power-of-2 elements.<br>        // And apply windowing to samples<br>       &nbsp;<span style=\"color:blue\">void</span> AdjustFFT()\r\n        {\r\n            <span style=\"color:blue\">int</span> i = 0;\r\n            <span style=\"color:blue\">double</span> c = 1;\r\n            <span style=\"color:blue\">for</span> (; c &lt; fft.Count; &#43;&#43;i)\r\n            {\r\n                c = Math.Pow(2.0,i*1.0);\r\n            }\r\n\r\n            <span style=\"color:blue\">int</span> d = (<span style=\"color:blue\">int</span>)c;\r\n            <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> k = fft.Count; k &lt; d; &#43;&#43;k)\r\n            {\r\n                Complex p = <span style=\"color:blue\">new</span> Complex();\r\n                p.X = 0;\r\n                p.Y = 0;\r\n                fft.Add(p);\r\n            }\r\n\r\n            <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> v = 0; v &lt; fft.Count; &#43;&#43;v)\r\n            {\r\n                Complex g = <span style=\"color:blue\">new</span> Complex();\r\n                g.X = (<span style=\"color:blue\">float</span>)(fft[v].X * FastFourierTransform.HannWindow(v, fft.Count));\r\n                g.Y = (<span style=\"color:blue\">float</span>)fft[v].Y;\r\n                fft[v] = g;\r\n            }\r\n\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-07-13T05:58:41.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "864564",
+    "ThreadId": "366037",
+    "Html": "<p>for an explanation of FFT with NAudio please see this article</p>\r\n<p>http://channel9.msdn.com/coding4fun/articles/AutotuneNET</p>",
+    "PostedDate": "2012-07-13T06:55:04.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

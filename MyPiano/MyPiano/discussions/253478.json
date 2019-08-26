@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "595596",
+    "ThreadId": "253478",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>When I attempt to play a 6-channel WAV file in the demo, I get a &quot;NoDriver calling acmFormatSuggest&quot; error. &nbsp;I traced it back to the AcmStream.SuggestPcmFormat call, and here's the difference between the suggestedFormat and compressedFormat:</p>\r\n<p>-<span> </span>compressedFormat<span> </span>{24 bit PCM: 48kHz 6 channels}<span>\r\n</span>NAudio.Wave.WaveFormat {NAudio.Wave.WaveFormatExtraData}</p>\r\n<p>&#43;<span> </span>[NAudio.Wave.WaveFormatExtraData]<span> </span>{24 bit PCM: 48kHz 6 channels}<span>\r\n</span>NAudio.Wave.WaveFormatExtraData<span> </span></p>\r\n<p><span>&nbsp;</span>averageBytesPerSecond<span> </span>864000<span> </span>int<span>\r\n</span></p>\r\n<p><span>&nbsp;</span>AverageBytesPerSecond<span> </span>864000<span> </span>int<span>\r\n</span></p>\r\n<p>BitsPerSample<span> </span>24<span> </span>int<span> </span></p>\r\n<p>bitsPerSample<span> </span>24<span> </span>short<span> </span></p>\r\n<p>BlockAlign<span> </span>18<span> </span>int<span> </span></p>\r\n<p>blockAlign<span> </span>18<span> </span>short<span> </span></p>\r\n<p>Channels<span> </span>6<span> </span>int<span> </span></p>\r\n<p>channels<span> </span>6<span> </span>short</p>\r\n<p><span></span>Encoding<span> </span>Extensible<span> </span>NAudio.Wave.WaveFormatEncoding<span>\r\n</span></p>\r\n<p>ExtraSize<span> </span>22<span> </span>int<span> </span></p>\r\n<p>extraSize<span> </span>22<span> </span>short<span> </span></p>\r\n<p>sampleRate<span> </span>48000<span> </span>int<span> </span></p>\r\n<p>SampleRate<span> </span>48000<span> </span>int<span> </span></p>\r\n<p>waveFormatTag<span> </span>Extensible<span> </span>NAudio.Wave.WaveFormatEncoding</p>\r\n<p>-<span> </span>suggestedFormat<span> </span>{16 bit PCM: 48kHz 6 channels}<span>\r\n</span>NAudio.Wave.WaveFormat</p>\r\n<p><span></span>averageBytesPerSecond<span> </span>576000<span> </span>int<span> </span>\r\n</p>\r\n<p>AverageBytesPerSecond<span> </span>576000<span> </span>int<span> </span></p>\r\n<p>BitsPerSample<span> </span>16<span> </span>int<span> </span></p>\r\n<p>bitsPerSample<span> </span>16<span> </span>short<span> </span></p>\r\n<p>BlockAlign<span> </span>12<span> </span>int<span> </span></p>\r\n<p>blockAlign<span> </span>12<span> </span>short<span> </span></p>\r\n<p>Channels<span> </span>6<span> </span>int<span> </span></p>\r\n<p>channels<span> </span>6<span> </span>short<span> </span></p>\r\n<p>Encoding<span> </span>Pcm<span> </span>NAudio.Wave.WaveFormatEncoding<span> </span>\r\n</p>\r\n<p>ExtraSize<span> </span>0<span> </span>int<span> </span></p>\r\n<p>extraSize<span> </span>0<span> </span>short<span> </span></p>\r\n<p>sampleRate<span> </span>48000<span> </span>int<span> </span></p>\r\n<p>SampleRate<span> </span>48000<span> </span>int<span> </span></p>\r\n<p>waveFormatTag<span> </span>Pcm<span> </span>NAudio.Wave.WaveFormatEncoding</p>\r\n<p>&nbsp;</p>\r\n<p>This call would suggest that it will always be 16-bit. &nbsp;I'll try passing in either a constant 24, or&nbsp;<span style=\"font-family:Consolas,'Courier New',Courier,monospace; white-space:pre\">compressedFormat.BitsPerSample.</span></p>\r\n<pre><span>WaveFormat</span>&nbsp;suggestedFormat&nbsp;=&nbsp;<span>new</span>&nbsp;<span>WaveFormat</span>(compressedFormat.SampleRate,&nbsp;16,&nbsp;compressedFormat.Channels);</pre>\r\n<p>&nbsp;</p>\r\n<p>Any thoughts? &nbsp;I'm able to play the file with appropriate sound coming through all 6 channels in WMP. &nbsp;Thanks in advance.</p>\r\n",
+    "PostedDate": "2011-04-11T17:17:07.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "595787",
+    "ThreadId": "253478",
+    "Html": "<p>NAudio doesn't have built-in support for 24 bit playback, or multi-channel playback, so it is no surprise that this doesn't play (it's because WaveChannel32 expects 16 bit input so it is trying to use ACM to convert 24 to 16). However, you could try a much simpler playback path, passing the output from the WavFileReader directly into WaveOut and see if WaveOut lets you play 24 bit 5.1 channel audio directly.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-04-12T02:46:34.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "596054",
+    "ThreadId": "253478",
+    "Html": "<p>No luck, made a really simple app and got back a InvalidParameter exception from waveOutOpen, with HResult of&nbsp;<span>&nbsp;</span>-2146233088. &nbsp;Is there any way around this, or will I need to look at using a different library? &nbsp;Your library is the best I've found in C#. &nbsp;Thanks for the help.</p>",
+    "PostedDate": "2011-04-12T09:57:49.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "596464",
+    "ThreadId": "253478",
+    "Html": "<p>it must be possible, although the WaveOut drivers might not support it (it may be the 24 bit that WaveOut is objecting to rather than the 5.1 - might be worth investigating if you can make the appropriate test file). Have you tried DirectSound or Wasapi?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-13T02:56:19.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "596465",
+    "ThreadId": "253478",
+    "Html": "<p>I should add, can you upload a small sample file somewhere, that I can use to do a bit of testing myself?</p>",
+    "PostedDate": "2011-04-13T02:57:02.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "596922",
+    "ThreadId": "253478",
+    "Html": "<p>Hey Mark,</p>\r\n<p>Thanks for the help so far. &nbsp;My work has been put on hold for the moment, so won't be able to test DirectSound or Wasapi anytime soon. &nbsp;I'll try to upload the sample file.</p>",
+    "PostedDate": "2011-04-13T18:02:29.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

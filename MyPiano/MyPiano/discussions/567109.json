@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1303567",
+    "ThreadId": "567109",
+    "Html": "Hi,\r<br />\n<br />\n  Am developing an one application by using Naudio Player. When i click the subform, the main player is just stop on that loading time. Is it possible to clear this this problem. if possible, Please give me a solution for that. Thank you.<br />\n",
+    "PostedDate": "2014-09-11T04:22:19.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1304910",
+    "ThreadId": "567109",
+    "Html": "Are you saying the audio stops playing altogether? If so, try using WaveOutEvent instead of WaveOut.<br />\n",
+    "PostedDate": "2014-09-15T11:21:38.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

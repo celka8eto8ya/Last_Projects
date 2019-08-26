@@ -1,0 +1,35 @@
+<div class="wikidoc">
+<h1>Audio Output </h1>
+<h2>Driver Selection</h2>
+<p>NAudio supports a number of Audio Output Drivers:</p>
+<p>1) WaveOut</p>
+<p>2) DirectSound</p>
+<p>3) WASAPI</p>
+<p>4) ASIO</p>
+<h2>Discussion</h2>
+<p>Each of these Audio Output Drivers have different Pro’s and Con’s and the following discussion of each approach is designed to help you make your selection.
+</p>
+<p>The common component for all of these audio driver outputs, is that NAudio does the wrapping of the low level DLL’s and COM objects for you so that you get a nice, clean, convenient .NET library that you can call and not have to worry about a bunch of PInvoke
+ code.</p>
+<h3>1) WaveOut</h3>
+<p>WaveOut is one of the oldest and most basic Audio Output Drivers available. You will find support for it on every OS that NAudio will run on. WaveOut is reliable and if your undertaking a project which just requires simple functionality such as read-file-and-play-it-out
+ (and you have a basic windows application) then this is a good choice for you.</p>
+<p>The WaveOut driver requires a call back handle for the audio to continue to play. Effectively the audio playback is tied to the UI thread of your application, which is why, when your declaring an instance using the WaveOut driver you need to pass in a Window
+ Handle. This has been simplified in the latter versions of NAudio so that the call back can be setup and done for you with very little code.
+</p>
+<p>The following snippets show the different ways to setup the WaveOut Device using the different Windowing and call back options:</p>
+<pre><span style="color:green">//WaveOut Setup - New Window
+</span><span style="color:#2b91af">WaveCallbackInfo </span>callbackInfo = <span style="color:#2b91af">WaveCallbackInfo</span>.NewWindow();           
+<span style="color:#2b91af">WaveOut </span>outputDevice = <span style="color:blue">new </span><span style="color:#2b91af">WaveOut</span>(callbackInfo);
+<font face="Calibri"></font></pre>
+<pre><span style="color:green">//WaveOut Setup - Function Call Back
+</span><span style="color:#2b91af">WaveCallbackInfo </span>callbackInfo = <span style="color:#2b91af">WaveCallbackInfo</span>.FunctionCallback();
+<span style="color:#2b91af">WaveOut </span>outputDevice = <span style="color:blue">new </span><span style="color:#2b91af">WaveOut</span>(callbackInfo);
+<font face="Calibri"></font></pre>
+<pre><span style="color:green">//WaveOut Setup – On a GUI Thread Only
+</span><span style="color:#2b91af">WaveOut </span>outputDevice = <span style="color:blue">new </span><span style="color:#2b91af">WaveOut</span>();
+<font face="Calibri"></font></pre>
+<h3>2) DirectSound </h3>
+<p>DirectSound is a latter Audio Output Driver than WaveOut but has still been around since the days of Windows NT. DirectSound is commonly associated with Games, as it is often referred to in conjunction with the rest of the DirectX library; which supports
+ DirectX3D, Direct Input etc. This Driver was designed to be fast, with a low latency. How this implementation is actually achieved on the more recent Windows OS’s is outside the scope of this discussion but it’s worth noting the roots of the library.</p>
+</div><div class="ClearBoth"></div>

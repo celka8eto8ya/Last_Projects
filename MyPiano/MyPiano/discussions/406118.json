@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "953477",
+    "ThreadId": "406118",
+    "Html": "\r\n<p>change</p>\r\n<p>Add Reader.Dispose :: otherwise play the same song ;-)</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> <span style=\"color:blue\">private</span> <span style=\"color:blue\">bool</span> TryOpenInputFile(<span style=\"color:blue\">string</span> file)\r\n {\r\n      <span style=\"color:blue\">bool</span> isValid = <span style=\"color:blue\">false</span>;\r\n            <span style=\"color:blue\">try</span>\r\n            {</pre>\r\n<pre>// Add\r\n\t\t<span style=\"color:blue\">if</span> (reader != <span style=\"color:blue\">null</span>)\r\n\t\t{\r\n\t\t\treader.Dispose();\r\n\t\t\treader = <span style=\"color:blue\">null</span>;\r\n\t\t}</pre>\r\n<pre>// change to reader2\r\n                <span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> reader2 = <span style=\"color:blue\">new</span> MediaFoundationReader(file))\r\n                {\r\n                    DefaultDecompressionFormat = reader2.WaveFormat.ToString();\r\n                    inputFile = file;\r\n                    isValid = <span style=\"color:blue\">true</span>;\r\n                }\r\n            }\r\n            <span style=\"color:blue\">catch</span> (Exception e)\r\n            {\r\n                MessageBox.Show(String.Format(<span style=\"color:#a31515\">&quot;Not a supported input file ({0})&quot;</span>, e.Message));\r\n            }\r\n            <span style=\"color:blue\">return</span> isValid;\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-12-09T01:21:54.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953774",
+    "ThreadId": "406118",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<p>thanks, have fixed this</p>\r\n",
+    "PostedDate": "2012-12-10T01:12:24.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

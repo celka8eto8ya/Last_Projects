@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1450834",
+    "ThreadId": "646956",
+    "Html": "Hello,\r<br />\n<br />\nI am working on a project where I am simulating the ground run of a jet engine.  For this, I'm playing various sounds using NAudio and they all work fine.  My problem is that when the engine is running and I adjust the throttle position I need to also adjust the amplitude and frequency of the EngineRunning sound.  Is there a way to do this in NAudio?  Failing that, is there a simple way to adjust the sound volume while it's playing?  I had a quick look into using WaveChannel32 and adjusting the volume through that but I couldn't seem to get it to work.  I am currently playing sounds using WaveOut and LoopStream as I need the sounds to keep playing until I change something in the simulation:<br />\n<pre><code>WaveFileReader mAudio = new WaveFileReader(mMap.GetFile(soundName));\nLoopStream loop = new LoopStream(mAudio);\nWaveOut mPlayer = new WaveOut(WaveCallbackInfo.FunctionCallback());\nmPlayer.Init(loop);\nmPlayer.Play();</code></pre>\n\nAny help would be greatly appreciated.\r<br />\n<br />\nMartin<br />\n",
+    "PostedDate": "2015-11-04T02:29:09.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1450853",
+    "ThreadId": "646956",
+    "Html": "A few bits of advice, first use <code>WaveOutEvent</code> instead of function callbacks which are prone to deadlocks. Second, you could use <code>AudioFileReader</code> which would give you a nice simple way to set the Volume. Note that the volume is not modified per sample, but per block of samples sent to the soundcard, so if you wanted to do gradual fades, it wouldn't be ideal. For that you'd want to create your own custom <code>ISampleProvider</code>.\r<br />\nYou can also adjust the volume on the WaveOut / WaveOutEvent directly.<br />\n",
+    "PostedDate": "2015-11-04T05:24:00.27-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1450858",
+    "ThreadId": "646956",
+    "Html": "Hey Mark,\r<br />\n<br />\nThanks for the quick response.\r<br />\n<br />\nI've adjusted my code per your advice and it successfully plays at half volume:<br />\n<pre><code>AudioFileReader mAudio = new AudioFileReader(mMap.GetFile(soundName));\nmAudio.Volume = 0.5f;\nLoopStream loop = new LoopStream(mAudio);\nWaveOutEvent mPlayer = new WaveOutEvent();\nmPlayer.Init(loop);\nmPlayer.Play();</code></pre>\n\nJust to clarify, is there any way to adjust the wav file amplitude or frequency?  My volume solution works but I think that being able to adjust these values according to the movement of the throttle would give me a more representative application.\r<br />\n<br />\nThanks,\r<br />\n<br />\nMartin<br />\n",
+    "PostedDate": "2015-11-04T05:54:30.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

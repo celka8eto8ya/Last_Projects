@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "628223",
+    "ThreadId": "261509",
+    "Html": "<p>I just found NAudio the other day and I've been playing with it.&nbsp; I have written a simple windows form program that has a load button (loads a specific .wav song), and buttons to play, pause, stop, fade the sound in (my own added functionality using timers and a gradually increasing volume), and fade the sound out.&nbsp; I also have a trackbar control to handle the volume.&nbsp; I created a wrapper class to put all the NAudio stuff in, as well as to add-on extra functionality like fade-in/out and event notifications when a sound starts or is paused.</p>\n<p>Okay, all said, that works fine.&nbsp; The program correctly loads, plays, pauses, stops, and fades in and out.&nbsp; The volume trackbar correctly reflects the volume level of the song being played.&nbsp; That much works, but I do have two problems.</p>\n<p>First, after&nbsp;I click the \"Load\" button to load the sound in and then do all the playing I want to (or not), when I exit the program I get the following popup error message: \"AcmStreamHeader dispose was not called at AcmStreamHeader.Finalize()\".&nbsp; This is one of those \"Abort, Retry, Ignore\" popups, but after a few seconds it disappears and the project terminates.&nbsp; (Note: The load functionality creates the DirectSoundOut and calls CreateInputStream... taken directly from the NAudio samples on the site.&nbsp; It also sets up event handlers for the defined events, but that probably doesn't matter.)</p>\n<p>In the class destructor, I make the following calls:</p>\n<div style=\"background-color: white; color: black;\">\n<pre>mainOutputStream.Close();\r\nmainOutputStream.Dispose();\r\nwaveOutDevice.Dispose();\r\n</pre>\n</div>\n<p>But I still get the error.&nbsp; This is the big one, and I'll ask the other question in another thread.&nbsp; Any idea why this is is happening and how I can stop it?</p>\n<p>I am running VS 10 on Windows 7 32-bit, and downloaded the source code for the latest NAudio.&nbsp;&nbsp;</p>\n<p><strong>UPDATE:</strong>&nbsp;I added a \"reload\" button that essentially re-inits the whole kit-and-kaboodle, and it sometimes causes this same error.&nbsp; Obviously there's something not getting disposed of correctly, but since I never once directly reference \"AcmStreamHeader\", it may well be inside the NAudio code somewhere.</p>",
+    "PostedDate": "2011-06-15T09:33:37.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "628326",
+    "ThreadId": "261509",
+    "Html": "<p>have answered your question on StackOverflow</p>",
+    "PostedDate": "2011-06-15T12:23:53.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

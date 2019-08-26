@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1007080",
+    "ThreadId": "434574",
+    "Html": "Does anyone have any example code of how to use an FFT on a live audio stream. I know I need to put the code into &quot;frames&quot; but don't know how to go about doing that. A simple example would help a lot.<br />\n",
+    "PostedDate": "2013-02-26T09:56:09.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007613",
+    "ThreadId": "434574",
+    "Html": "You can take a look at the NAudioDemo-Project. It contains a live-audio-stream demo. Take a look at the code how the audio gets decoded. \r<br />\nYou will find out that there is a BufferedWaveProvider which stores the decoded raw audio and serves it to the playback-callback(hmmm funny word combination :D). \r<br />\n<br />\nYou need to calculate the FFT somewhere between the BufferedWaveProvider and the SoundOut itself because when the audiodata are in the BufferedWaveProvider it won't make any difference whether you playback a file or live-audio-stream. So first implement the buffering and decoding of the audio stream itself. After that you can continue with taking a closer look at the WPF-Demo application. There you can find a sample visualisation using a fft.<br />\n",
+    "PostedDate": "2013-02-27T06:44:02.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008178",
+    "ThreadId": "434574",
+    "Html": "Thanks for the advice<br />\n",
+    "PostedDate": "2013-02-28T05:55:50.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

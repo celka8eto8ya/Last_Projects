@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "571887",
+    "ThreadId": "247513",
+    "Html": "\r\n<p>My final goal is to get low latency streaming audio from a device to my speakers.&nbsp; The device will be spitting out byte arrays.&nbsp; For now I am simulating the device by creating a sine wave and just trying to get it to play.&nbsp; In order to get\r\n the streaming to work I've read that I should use the BufferedWaveProvider class.&nbsp; Here is my attempt to use it below but I can't hear anything playing.</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>                WaveFormat waveFormat = <span style=\"color:blue\">new</span> WaveFormat(44100, 2);\r\n                BufferedWaveProvider bufferedWaveProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(waveFormat);\r\n                \r\n                <span style=\"color:green\">// Create a sine wave and add it to the buffer</span>\r\n                bufferedWaveProvider.AddSamples(CreateAudioBuffer(2000, 250), 0, 2000);\r\n                <span style=\"color:blue\">using</span> (IWavePlayer waveOut = <span style=\"color:blue\">new</span> WasapiOut(AudioClientShareMode.Exclusive, <span style=\"color:blue\">false</span>, 25))\r\n                {\r\n                    waveOut.Init(bufferedWaveProvider);\r\n                    waveOut.Play();\r\n                }\r\n<br>CreateAudioBuffer() just creates a sine wave, and that code seems to work fine so I won't post it here.  When I use a RawSourceWaveStream instead of a BufferedWaveProvider I can hear the sound.  Example below.<br><br><div style=\"color:black; background-color:white\"><pre>                <span style=\"color:blue\">using</span> (Stream ms = <span style=\"color:blue\">new</span> MemoryStream(2000))\r\n                {\r\n                    ms.Write(CreateAudioBuffer(2000, 250), 0, 2000);\r\n                    ms.Position = 0;\r\n                    WaveFormat waveFormat = <span style=\"color:blue\">new</span> WaveFormat(44100, 2);\r\n                    <span style=\"color:blue\">using</span> (WaveStream waveStream = <span style=\"color:blue\">new</span> RawSourceWaveStream(ms, waveFormat))\r\n                    {\r\n                        <span style=\"color:blue\">using</span> (IWavePlayer waveOut = <span style=\"color:blue\">new</span> WasapiOut(AudioClientShareMode.Exclusive, <span style=\"color:blue\">false</span>, 25))\r\n                        {\r\n                            waveOut.Init(waveStream);\r\n                            waveOut.Play();\r\n                            <span style=\"color:blue\">while</span> (waveOut.PlaybackState == PlaybackState.Playing)\r\n                            {\r\n                                System.Threading.Thread.Sleep(300);\r\n                            }\r\n                        }\r\n                    }\r\n                }\r\n</pre>\r\n</div>\r\nCan anyone see why the top example isn't working?  I've tried adding a while loop and a sleep call but that doesn't help any.  Am I even on the right track using BufferedWaveProvider to get streaming audio?<br></pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2011-02-24T18:19:00.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572031",
+    "ThreadId": "247513",
+    "Html": "<p>looks like you are playing barely 10ms of audio. Try filling a larger buffer for testing purposes.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-25T01:55:35.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572375",
+    "ThreadId": "247513",
+    "Html": "<p>Thanks Mark, I'm getting sound now, but not as much as I would expect.&nbsp; Here is the new code.&nbsp; It plays about 1 second of sound,</p>\r\n<p>but only because I'm looping 100 times.</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>                WaveFormat waveFormat = <span style=\"color: blue;\">new</span> WaveFormat(44100, 16, 2);\r\n                BufferedWaveProvider bufferedWaveProvider = <span style=\"color: blue;\">new</span> BufferedWaveProvider(waveFormat);\r\n\r\n                <span style=\"color: blue;\">using</span> (IWavePlayer waveOut = <span style=\"color: blue;\">new</span> WasapiOut(AudioClientShareMode.Exclusive, <span style=\"color: blue;\">false</span>, 2))\r\n                {\r\n                    waveOut.Init(bufferedWaveProvider);\r\n                    <span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; 100; i++)\r\n                    {\r\n                        bufferedWaveProvider.AddSamples(CreateAudioBuffer(176400), 0, 176400);\r\n                        \r\n                        <span style=\"color: blue;\">if</span> (waveOut.PlaybackState != PlaybackState.Playing)\r\n                            waveOut.Play();\r\n                    }\r\n                }\r\n</pre>\r\n</div>\r\n</p>\r\n<p>CreateAudioBuffer(176400) returns a byte array with 176400 elements, or in other words 176400 bytes.&nbsp;</p>\r\n<p>Lets say I want to play 1 second of cd quality sound.&nbsp; How many bytes would I have to create?&nbsp;</p>\r\n<p>I would assume that I need 176400 bytes to do this. My reasoning being cd quality sound plays 44,100</p>\r\n<p>16bit stereo samples a second.&nbsp; So take 44,100 and multiply by 2 for stereo and multiply by 2 for 16 bit</p>\r\n<p>and that is how I get 176,400.&nbsp; 176,400 = 44,100 * 2 * 2.&nbsp; When using a RawSourceWaveStream I get about</p>\r\n<p>second of sound when playing 176,400 bytes, which is what I would expect.&nbsp; But when I use BufferedWaveProvider,</p>\r\n<p>I only get about 1/100 of a second of sound.&nbsp; Any ideas why? Thanks again for the help!</p>",
+    "PostedDate": "2011-02-25T14:37:04.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573254",
+    "ThreadId": "247513",
+    "Html": "<p>is this a console aplication?</p>\r\n<p>if so you will need to ensure the thread playing audio is kept alive until it finishes playing</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-28T06:31:43.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573957",
+    "ThreadId": "247513",
+    "Html": "<p>For some reason, the latest release of NAudio doesn't have BufferedWaveProvider, so I can't try the above code. Any idea where it went or what replaced it?</p>",
+    "PostedDate": "2011-03-01T09:49:27.493-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573961",
+    "ThreadId": "247513",
+    "Html": "<p>Mark</p>\r\n<p>It is not a console app.&nbsp; I just added a button to your demo app, so its a windows form app.&nbsp; Another question I have is have you ever</p>\r\n<p>measured the latency of the wasapi wrapper.&nbsp; Using the BufferedWaveProvider class, and after a few changes, I am able to get it down</p>\r\n<p>to 38 ms.&nbsp; But I was hoping to get 10ms or so.&nbsp; I'm measuring the latency by connecting the output of a signal generator to both the pc and</p>\r\n<p>a scope, and then having the audio output of the pc go to the scope as well.&nbsp; In other words, I'm confident in my measured latency.</p>",
+    "PostedDate": "2011-03-01T10:00:11.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573964",
+    "ThreadId": "247513",
+    "Html": "<p>David</p>\r\n<p>If you go here http://naudio.codeplex.com/SourceControl/list/changesets and hit the download link on the right, you'll find the class under NAudio/Wave/WaveProviders/BufferedWaveProvider.cs</p>",
+    "PostedDate": "2011-03-01T10:02:27.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

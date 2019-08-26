@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "285494",
+    "ThreadId": "83068",
+    "Html": "<p>I am wanting to convert from an mp3 to a wave and store the result in a byte stream and send it over a network.</p>\r\n<p>In read one of your previous posts and you said to convert from &quot;PCM 44kHz Stereo to PCM 8kHZ mono. Then you can convert to A-law&quot;</p>\r\n<p>How do I do the last step? Converting to A-law?</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">using</span> (NAudio.Wave.Mp3FileReader mp3Reader = <span style=\"color:Blue\">new</span> NAudio.Wave.Mp3FileReader(fileName))\r\n{\r\n     <span style=\"color:Blue\">using</span> (NAudio.Wave.WaveStream pcmStream = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(mp3Reader))\r\n     {\r\n         <span style=\"color:#008000\">using</span><span style=\"color:#008000\"> (NAudio.Wave.WaveStream alawStream = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(pcmStream))</span>\r\n         {\r\n             buffer = <span style=\"color:Blue\">new</span> <span style=\"color:Blue\">byte</span>[alawStream.Length];\r\n             <span style=\"color:Blue\">int</span> byteRead = pcmStream.Read(buffer, 0, alawStream.Length);\r\n         }\r\n     }\r\n }\r\n</pre>\r\n</div>\r\n<p>The reason I am doing this is because I can't get NAudio to play every kind of mp3 and wave file (with varying sample rates). I need to store the byte streams of these audio files in a database and then send the stream across the network to play on a different computer. In a different implementation I managed to play all sorts of wave files but was only able to play 44khz mp3 files. I don't know why... I would prefer to not do any converting of files if possible...</p>\r\n<p>Thanks for your help!</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-02-03T13:54:43.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "416955",
+    "ThreadId": "83068",
+    "Html": "<p>you create a WaveFormatConversionStream like this</p>\r\n<p>new WaveFormatConversionStream(WaveFormat.CreateALawFormat(sourceStream.SampleRate, sourceStream.Channels), sourceStream)</p>\r\n<p>Mark</p>\r\n<p>ps sorry for the delayed reply, I have been swamped with requests for NAudio help recently</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-11T06:32:25.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "417565",
+    "ThreadId": "83068",
+    "Html": "<p>No problem. Thanks for the reply.</p>\r\n<p>How can I get the SampleRate and Channels from a sourceStream though?</p>",
+    "PostedDate": "2010-03-12T10:17:51.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "417582",
+    "ThreadId": "83068",
+    "Html": "<p>oops, sorry. these are properties of the WaveFormat property of the source stream</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-12T11:15:36.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

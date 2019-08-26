@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1452894",
+    "ThreadId": "647754",
+    "Html": "I have an application that plays mp3 or wav files using NAudio and overtime the unmanaged memory usage of my app consistently keeps growing. I have used a memory profiler and it appears the MSACM32.dll (Microsoft ACM Audio Filter) is the cause of the unmanaged memory growth. If I remove the audio playback code I do not see the unmanaged memory usage grow (My app also uses NAudio to record audio from 1 or more sound cards and that works fine). This is on a Windows 7 64-bit machine running 32-bit code.\r<br />\n<br />\nMy app plays lots of unique audio clips normally in the 30-60 second range. In the past 2 days it has played just over 10,000 mp3 files and MSACM32 is using 36MB of unmanaged memory and growing.\r<br />\nManaged Heap memory usage over that same 2 day time frame grew by 143KB and totals 3.8MB.\r<br />\n<br />\nI have tried various different code implementations to play the mp3 files always making sure any AudioFileReader and WaveOutEvent objects are disposed of and nothing seems to make a difference after many thousands of files.\r<br />\n<br />\nI'm currently using the &quot;Fire and Forget Audio Playback&quot; from <a href=\"http://mark-dot-net.blogspot.com/2014/02/fire-and-forget-audio-playback-with.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.com/2014/02/fire-and-forget-audio-playback-with.html</a>, but I'm still seeing the Unmanaged memory usage keep growing.\r<br />\n<br />\nAs a test instead of reading the mp3 or wav file with an AudioFileReader I used a SignalGenerator to generate a tone for a few seconds. The Unmanaged memory usage did not grow so that leaves me to believe the issue is in the AudioFileReader area.\r<br />\n<br />\nHas anyone ever ran into this issue playing back a large number of files?<br />\n",
+    "PostedDate": "2015-11-17T19:09:25.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453104",
+    "ThreadId": "647754",
+    "Html": "The nature of .NET is that it has a garbage collector. so just because memory is growing, doesn't necessarily mean there is a leak. \r<br />\nYou could try a simple test to see if it is the AudioFileReader by writing an app that repeatedly opens an MP3 file, reads it to the end, and disposes it. That would fairly quickly reveal if there is a memory leak in the ACM interop somewhere.<br />\n",
+    "PostedDate": "2015-11-18T23:47:50.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453241",
+    "ThreadId": "647754",
+    "Html": "The MSACM32.dll memory usage is Unmanaged so the .NET garbage collector will not manage that memory. It has to be explicitly allocated and freed by the code using it.\r<br />\n<br />\nAlso, when I take a memory snapshot the profiler triggers a full garbage collection before taking the snapshot. I just took another snapshot and MSACM32.dll is now using 73MB after 4 days.\r<br />\n<br />\nI will look into creating a test program, but that will take a few days due to my schedule.\r<br />\n<br />\nThanks for the response.<br />\n",
+    "PostedDate": "2015-11-19T19:36:56.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453453",
+    "ThreadId": "647754",
+    "Html": "If MSACM32.dll is the problem, then the problem is for sure in the MP3FileReader that uses ACM codecs installed on your OS.<br />\n<br />\nIf you can´t fix this unmanaged issue, you should give <a href=\"https://nlayer.codeplex.com/\" rel=\"nofollow\">https://nlayer.codeplex.com/</a> a chance, which is <strong>fully managed</strong>.<br />\n",
+    "PostedDate": "2015-11-21T14:54:15.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453527",
+    "ThreadId": "647754",
+    "Html": "are you definitely disposing all your <code>AudioFileReader</code> instances?<br />\n",
+    "PostedDate": "2015-11-23T01:36:59.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453712",
+    "ThreadId": "647754",
+    "Html": "Yes, all <code>AudioFileReader</code> are getting disposed of after they finish reading. I used the memory profiler to verify that there is only one <code>AudioFileReader</code> live instance when my application is playing audio. When no audio is playing there are no live instances of <code>AudioFileReader</code>.\r<br />\n<br />\nInstead of using <code>AudioFileReader</code> I switched to <code>MediaFoundationReader</code> and memory usage does not seem to be growing after two days. I do loose XP support, but that's not a huge issue. I will keep testing <code>MediaFoundationReader</code> and see if the memory usage grows.<br />\n",
+    "PostedDate": "2015-11-24T18:31:53.607-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

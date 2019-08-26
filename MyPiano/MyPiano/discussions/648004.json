@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1453675",
+    "ThreadId": "648004",
+    "Html": "Hi,<br />\n<br />\nI'm using NAudio WinRT <a href=\"https://github.com/naudio/NAudio\" rel=\"nofollow\">sample app</a> to play .wav file. On one PC it works fine, but on the other one, audio stops playing after few seconds. I've tried changing the .wav file but issue still persists. Any help will be appreciated.<br />\n",
+    "PostedDate": "2015-11-24T07:11:27.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

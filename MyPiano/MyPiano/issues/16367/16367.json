@@ -1,0 +1,71 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "Here is an audio generator to test the installation (Pink noise, white noise, Sweep, Sin, Square, Triangle, Sawtooth) with PhaseReverse.\nFrequency Fixed or variable.\nWaveforms and frequencies were correct with external software (SmaartLive7) and an oscilloscope.\n\n\nThere is nothing unusual in the calculation of waveforms.\n\nIntegration into NAudio a IWaveProvider or ISampleProvider.\n\nFiles Attachment: Class WaveGenerator.cs and complement for demo.\n\nI suspect that this class will not be used much but it just still be useful",
+    "LastUpdatedDate": "2012-11-24T00:35:23.617-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-10-24T14:55:37.51-07:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Generator",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16367
+  },
+  "FileAttachments": [
+    {
+      "FileId": 522648,
+      "FileName": "WaveGenerator.zip",
+      "DownloadUrl": ".\\522648"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Bonjour,\nMark, please change the \"Type Issue\" to Feature\nI have not respect the hierarchy. Sorry\nMerci",
+      "PostedDate": "2012-10-26T00:55:34.657-07:00",
+      "Id": 81058
+    },
+    {
+      "Message": "hi, I'm working on integrating this into the next NAudio. I've made a few changes, but mostly it looks like a really nice addition to the library so thanks very much",
+      "PostedDate": "2012-11-23T06:01:42.3-08:00",
+      "Id": 82918
+    },
+    {
+      "Message": "OK, it's in the libary (called \"SignalGenerator\") but I may have broken it in my attempts to \"fix\" it. I'll see if I can work out where the problem is",
+      "PostedDate": "2012-11-23T06:27:30.69-08:00",
+      "Id": 82921
+    },
+    {
+      "Message": "got it working, the demo had set the device number to 2. I've added a button that lets you save 20s worth of signal. Maybe a future update could add portamento to allow smooth changing of frequency (and also of gain)",
+      "PostedDate": "2012-11-23T06:52:40.957-08:00",
+      "Id": 82923
+    },
+    {
+      "Message": "hello,\nSorry for the selection of driver forgets, and sorry for your lost time because of this error on my part.\n\nIf I have some time to do an update to add portamento.\n\nthis is probably a good idea to add a procedure \"Save\" for some users\n\n:-)",
+      "PostedDate": "2012-11-24T00:35:23.617-08:00",
+      "Id": 82951
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1464949",
+    "ThreadId": "651878",
+    "Html": "Hi, Im using the NAudio driver in an multi-track loop application I'm building.\r<br />\nIncidentally, I'm using a customized class implementing ISampleProvider, which is a sort of combination of a pan provider and volume provider in the same class, and also adds a &quot;Normalizing&quot; factor to normalize the audio.\r<br />\n(Each track has its own instance of this &quot;CustomSampleProvider&quot;, and each is then added to a MixingSampleProvider, which is used to initialize a WaveOut which is then played.)\r<br />\n<br />\nEssentially, it all works fine, except for one little issue which is audible clicking sounds only when the values for volume or pan are changed (values being provided by a slider and rotating knob).\r<br />\nTo be clear, the clicks only occur while the slider or knob is being adjusted.  Once the new values are set, there is no more noise.\r<br />\n<br />\nI'm sure my PC is not the problem (my system is Win7 on a i7-2600 3.6GHz machine)\r<br />\nNow , I thought it might be my customized code, or something to do with the GUI, but then I tried using the NAudio FadeInOutSampleProvider as is, and I find I'm getting the same clicking during programmed fade ins/fade outs (for example, 2 seconds or longer).\r<br />\n<br />\nMy CustomSampleProvider Read method simply does this:<br />\n<pre><code>     buffer(System.Math.Max(System.Threading.Interlocked.Increment(outIndex), outIndex - 1)) = lpan * Me.sourceBuffer(n) * (m_volume * NormFactor)\n            buffer(System.Math.Max(System.Threading.Interlocked.Increment(outIndex), outIndex - 1)) = rpan * Me.sourceBuffer(n) * (m_volume * NormFactor)</code></pre>\n\n(in other words, nothing too fancy, just multiplying by a pan factor, volume factor and normalizing factor)\r<br />\n<br />\nAny ideas why the clicking occurs when the values are being changed?<br />\n\r<br />\nMichael<br />\n",
+    "PostedDate": "2016-02-28T21:46:35.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464981",
+    "ThreadId": "651878",
+    "Html": "Addendum:\r<br />\nDon't know if this is related, but I just found that I'm getting the same clicks if I move the form (WinForm) at all during playback.  Maybe it is a GUI issue...?<br />\n",
+    "PostedDate": "2016-02-29T03:46:42.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1465905",
+    "ThreadId": "651878",
+    "Html": "Perhaps it´s a latency issue<br />\n",
+    "PostedDate": "2016-03-07T06:00:34.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1465925",
+    "ThreadId": "651878",
+    "Html": "why are you doing interlocked increments in your Read method. Taking many thousands of locks every second is not going to perform well. I'd also copy the NormFactor into a local variable to save repeated property gets.<br />\n",
+    "PostedDate": "2016-03-07T07:29:42.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466205",
+    "ThreadId": "651878",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nwhy are you doing interlocked increments in your Read method. Taking many thousands of locks every second is not going to perform well. I'd also copy the NormFactor into a local variable to save repeated property gets.<br />\n</blockquote>\nUm, funny story behind that:-)\r<br />\nHaving borrowed the PanningSampleProvider, and not reading C# very well, I converted it to VB with Telerik which translated &quot;buffer[outIndex++] = &quot; to &quot;buffer(System.Math.Max(System.Threading.Interlocked.Increment(outIndex), outIndex - 1)) =&quot;\r<br />\n<br />\nAnyway, fixed that so my code is now simply:<br />\n<pre><code>For n As Integer = 0 To sourceSamplesRead - 1\n            buffer(outIndex) = lpan * Me.sourceBuffer(n) * (m_volume * NormFactor)\n            buffer(outIndex + 1) = rpan * Me.sourceBuffer(n) * (m_volume * NormFactor)\n            outIndex += 2\n        Next n</code></pre>\n\nTotally still getting those subtle glitches whenever I move the pan or volume knobs though :(\r<br />\n(Or move the form)\r<br />\nIncidentally, that NormFactor is just a variable, calculated only once when the user toggles Normalization on or off.<br />\n",
+    "PostedDate": "2016-03-09T02:40:16.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466457",
+    "ThreadId": "651878",
+    "Html": "If that glitch happens with moving the form or clicking gui elements I suppose you use WaveOut instead of WaveOutEvent.\r<br />\n<br />\nAnyway, why you work with two sample buffers (buffer and sourceBuffer)? Perhaps they are not in sync or the double copy takes too much cpu.\r<br />\n<br />\nI can just guess for the lack of details here.<br />\n",
+    "PostedDate": "2016-03-10T16:46:43.16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

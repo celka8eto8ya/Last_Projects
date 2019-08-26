@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "270585",
+    "ThreadId": "79028",
+    "Html": "<p>Hello,</p>\r\n<p>I have a problem with WaveFileReader. I'm trying to pass MemoryStream with recorded audio to WaveFileReader:</p>\r\n<p>\r\n<p><span style=\"font-size:x-small\">waveStream = </span><span style=\"color:#0000ff;font-size:x-small\"><span style=\"color:#0000ff;font-size:x-small\">new</span></span><span style=\"font-size:x-small\"> </span><span style=\"color:#2b91af;font-size:x-small\"><span style=\"color:#2b91af;font-size:x-small\">WaveFileReader</span></span><span style=\"font-size:x-small\">(inputStream);</span></p>\r\n</p>\r\n<p>And on this line I have Exception: The non-negative number is required. Parametre name: value. Can you tell me, where I was mistaken?</p>",
+    "PostedDate": "2009-12-24T06:18:22.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "274801",
+    "ThreadId": "79028",
+    "Html": "<p>WaveFileReader expects a WAV file header, not just recorded audio. Does your memory stream contain a correctly formatted WAV header?</p>",
+    "PostedDate": "2010-01-08T07:40:03.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "274838",
+    "ThreadId": "79028",
+    "Html": "<div style=\"color:Black;background-color:White\">\r\n<div style=\"color:Black;background-color:White\"><span style=\"color:#2b91af;font-size:x-small\"><span style=\"color:#2b91af;font-size:x-small\"><span style=\"color:#000000\"><span style=\"font-size:x-small\">\r\n<p><span style=\"color:black;font-size:10pt\" lang=EN-US>I so think, because at creation of object WaveFileWriter I set MemoryStream as argument.</span></p>\r\n<p><span style=\"color:blue;font-size:10pt\" lang=EN-US>var</span><span style=\"color:black;font-size:10pt\" lang=EN-US> writer = </span><span style=\"color:blue;font-size:10pt\" lang=EN-US>new</span><span style=\"color:black;font-size:10pt\" lang=EN-US> WaveFileWriter(inputStream, recordingFormat);</span></p>\r\n<p><span style=\"color:black;font-size:10pt\" lang=EN-US>It means that WaveFileWriter writes down a&nbsp;data from a microphone in MemoryStream. And after&nbsp;recording sound&nbsp;I try to read data from MemoryStream:</span></p>\r\n<p><span style=\"color:black;font-size:10pt\" lang=EN-US>&nbsp;</span><span style=\"color:blue;font-size:10pt\" lang=EN-US>var</span><span style=\"color:black;font-size:10pt\" lang=EN-US> waveStream = </span><span style=\"color:blue;font-size:10pt\" lang=EN-US>new</span><span style=\"color:black;font-size:10pt\" lang=EN-US> WaveFileReader(inputStream); </span></p>\r\n<p><span style=\"color:black;font-size:10pt\" lang=EN-US>As I have written earlier, here I have an exception.</span></p>\r\n<p><span style=\"color:black;font-size:10pt\" lang=EN-US>If I was mistaken, and MemoryStream does not contain&nbsp; WAV header, what you can suggest me to solve my problem, where and how I can&nbsp;get WAV header? And if I write down a sound in a file, no exceptions arise. What distinction of&nbsp;writing in a file and in a stream?</span></p>\r\n</span></span></span></span></div>\r\n</div>",
+    "PostedDate": "2010-01-08T09:03:03.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "274888",
+    "ThreadId": "79028",
+    "Html": "<p>do you set the inputStream position back to 0 before you call WaveFileReader?</p>",
+    "PostedDate": "2010-01-08T10:58:22.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "275063",
+    "ThreadId": "79028",
+    "Html": "<div style=\"color:Black;background-color:White\">\r\n<pre>Of cource yes,</pre>\r\n<pre>inputStream.Seek(0, SeekOrigin.Begin);\r\n</pre>\r\n<pre>Anyway, I can not understand defference between writing in a file and writing in a stream.</pre>\r\n</div>",
+    "PostedDate": "2010-01-08T23:11:11.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "275577",
+    "ThreadId": "79028",
+    "Html": "<p>I have written applications that do exactly what you are trying to do myself, so I'm not sure what exactly is going wrong.</p>\r\n<p>Are you able to discover which line of code within the NAudio source code you are getting the exception from? (does the stack trace go any deeper?)</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-01-11T02:10:55.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "481865",
+    "ThreadId": "79028",
+    "Html": "<p>Same thing here, I've recorded audio and put it in a MemoryStream&nbsp;</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>                <span style=\"color:blue\">try</span>\r\n                {\r\n                    waveInStream = <span style=\"color:blue\">new</span> WaveIn();\r\n                    ms = <span style=\"color:blue\">new</span> MemoryStream();\r\n                    writer = <span style=\"color:blue\">new</span> WaveFileWriter(ms, waveInStream.WaveFormat);\r\n\r\n                    waveInStream.DataAvailable += <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveInStream_DataAvailable);\r\n                    waveInStream.StartRecording();\r\n                    btnGravar.Text = <span style=\"color:#a31515\">&quot;STOP&quot;</span>;\r\n                    btnGravar.BackColor = Color.Gray;\r\n                }\r\n                <span style=\"color:blue\">catch</span> (Exception ex)\r\n                {\r\n                    MessageBox.Show(ex.Message, <span style=\"color:#a31515\">&quot;Erro!&quot;</span>,\r\n                        MessageBoxButtons.OK, MessageBoxIcon.Error);\r\n                }\r\n\r\n</pre>\r\n</div>\r\n<p>Later, after the user stops the record.</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>            <span style=\"color:blue\">if</span> (waveInStream != <span style=\"color:blue\">null</span>)\r\n            {\r\n                waveInStream.StopRecording();    \r\n\r\n                btnGravar.Text = <span style=\"color:#a31515\">&quot;REC&quot;</span>;\r\n                btnGravar.BackColor = Color.Red;\r\n\r\n                sfdSalvarArquivo.ShowDialog();\r\n            }\r\n\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>after, when the user selects where to save the file (.wav)</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>                FileStream fs = <span style=\"color:blue\">null</span>;\r\n                <span style=\"color:blue\">try</span>\r\n                {\r\n                    ms.Position = 0;\r\n                    fs = <span style=\"color:blue\">new</span> FileStream(sfdSalvarArquivo.FileName, FileMode.Create, FileAccess.Write);\r\n                    ms.WriteTo(fs);\r\n                    \r\n                }\r\n                <span style=\"color:blue\">catch</span> (Exception ex)\r\n                {\r\n                    <span style=\"color:blue\">throw</span> ex;\r\n                }\r\n                <span style=\"color:blue\">finally</span>\r\n                {\r\n                    <span style=\"color:blue\">if</span> (fs != <span style=\"color:blue\">null</span>)\r\n                    {\r\n                        fs.Close();\r\n                        fs.Dispose();\r\n                    }\r\n                    <span style=\"color:blue\">if</span> (waveInStream != <span style=\"color:blue\">null</span>)\r\n                    {\r\n                        waveInStream.Dispose();\r\n                        waveInStream = <span style=\"color:blue\">null</span>;\r\n                    }\r\n                    <span style=\"color:blue\">if</span> (writer != <span style=\"color:blue\">null</span>)\r\n                    {\r\n                        writer.Close();\r\n                        writer = <span style=\"color:blue\">null</span>;\r\n                    }\r\n\r\n                    ms.Close();\r\n                    ms.Dispose();\r\n                }\r\n\r\n</pre>\r\n</div>\r\n<p>The Stream is wrote in the file but I can't reproduce it.</p>\r\n<p>&nbsp;</p>\r\n<p>What I'm mistaking ?</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-08-18T07:04:04.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

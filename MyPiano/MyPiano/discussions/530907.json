@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1205884",
+    "ThreadId": "530907",
+    "Html": "I'm trying to record audio in my app, based upon the code found in the NAudio 1.7 Demo app. I have been able to get ASIO and WASAPI recording to work, but can't get waveIn to work.\r<br />\n<br />\nAlso, I can't get  waveIn recording to work for the NAudio 1.7 Demo app itself.  Neither the waveIn, or waveIn Event Callbacks seem to work on my system.\r<br />\n<br />\nThe recordings consist of complete silence.\r<br />\n<br />\nIs there something I need  to configure on my system to enable waveIn recording?\r<br />\n<br />\nI'm running on Windows 7 Prof.<br />\n",
+    "PostedDate": "2014-02-09T11:40:22.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206716",
+    "ThreadId": "530907",
+    "Html": "strange, are you sure you're recording from the correct device? what happens when you use the NAudioDemo app to record?<br />\n",
+    "PostedDate": "2014-02-11T02:08:16.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206914",
+    "ThreadId": "530907",
+    "Html": "Mark I tried recording with the NAudioDemo app using both waveIn &amp; waveIn Event CallBacks for all 4 of my devices. In all cases, the recordings consist of complete silence. I traced the code and noticed the following. * the waveIn.DeviceNumber is always\r<br />\n 0 (regardless of which device I choose) as set in public WaveIn(WaveCallbackInfo callbackInfo) { syncContext = SynchronizationContext.Current; if ((callbackInfo.Strategy == WaveCallbackStrategy.NewWindow || callbackInfo.Strategy == WaveCallbackStrategy.ExistingWindow)\r<br />\n &amp;&amp; syncContext == null) { throw new InvalidOperationException(&quot;Use WaveInEvent to record on a background thread&quot;); } this.DeviceNumber = 0; * I confirmed this with a break point in the OnDataAvailable routine ... sender.DeviceNumber = 0 The demo app does not\r<br />\n seem to specify a DeviceNumber for waveIn recording anywhere. Also (pardon my lack of C# skills), but I tried setting the DeviceNumber, as follows in the NAudioDemo app waveIn = new WaveIn(); waveIn.DeviceNumber = comboWasapiDevices.SelectedIndex; but I ran\r<br />\n into the following compiler error ... Error 2 'NAudio.Wave.IWaveIn' does not contain a definition for 'DeviceNumber' and no extension method 'DeviceNumber' accepting a first argument of type 'NAudio.Wave.IWaveIn' could be found (are you missing a using directive\r<br />\n or an assembly reference?) D:\\$MySoftware\\VBasicStuff\\$GuitarAmigo\\$NAudio 1.7\\CurrentSource\\naudio_b00972f58ca5\\NAudioDemo\\RecordingDemo\\RecordingPanel.cs 60 28 NAudioDemo It appears that IWaveIn does not provide a means for the caller to set the DeviceNumber.\r<br />\n Hope this helps &#43; thanks for your assist, &amp; for providing such a wonderful product. Regards Jim Bayne<br />\n",
+    "PostedDate": "2014-02-11T10:36:29.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206916",
+    "ThreadId": "530907",
+    "Html": "device 0 means use the default recording device\r<br />\nIWaveIn is a generic interface that all recording APIs implement, so DeviceNumber is not relevant to all of them. Create a concrete instance of WaveIn, and set the device number on that.<br />\n",
+    "PostedDate": "2014-02-11T10:38:48.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207559",
+    "ThreadId": "530907",
+    "Html": "That helped. Creating a WaveIn instance &#43; assigning the selected device # worked well. My app also had a problem concerning the order in which it created the WaveWriter and started listening to waveIn, but I sorted that out. I'm now in business and am\r<br />\n able to record using waveIn. Many thanks. Great product.<br />\n",
+    "PostedDate": "2014-02-12T14:03:49.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

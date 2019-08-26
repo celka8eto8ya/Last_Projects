@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1246402",
+    "ThreadId": "545645",
+    "Html": "I am trying to make a tone file and it is working. but it is not sounding the way I want it to sound. There is a low tone beat in the file. that I did not add to it. And I do not know why it is there.. here is my code: <br />\n<pre><code> wavefile = new WaveFileWriter(save1.FileName, tone.WaveFormat);\n                        double counter2 = 0;\n                        double Frequency3 = Convert.ToDouble(FREtx3.Text);\n                        double Amplitude3 = Convert.ToDouble(PeakTXT3.Text);\n                        Beat = Convert.ToDouble(isochronictxt.Text);\n                        if (Beat != 0)\n                        {\n                            Beat = (1 / Beat);\n                        }\n                        else\n                        {\n                            Beat = 0;\n                        }\n                        for (int n = 0; n &lt; time; n++)\n                        {\n                            if (counter2 &gt;= Beat)\n                            {\n                                for (int t = 0; t &lt; 10000; t++)\n                                {\n                                    wavefile.WriteSample(0F);\n                                    wavefile.WriteSample(0F);\n                                    \n                                }\n\n                                counter2 = 0;\n                            }\n                            else\n                            {\n                                wavefile.WriteSample((float)Math.Abs((Amplitude3 * Math.Sin((2 * Math.PI * n * Frequency3) / 44100))));\n                                wavefile.WriteSample((float)Math.Abs((Amplitude3 * Math.Sin((2 * Math.PI * n * Frequency3) / 44100))));\n                                counter2 = counter2 + (1D / 44100D);     \n                            }\n                        }\n                        wavefile.Flush();\n                        wavefile.Dispose();\n                        file.Add(save1.FileName);\n                    }</code></pre>\n\nwhere is that tone coming from ?\r<br />\n<a href=\"https://onedrive.live.com/redir?resid=CC8AF223519E2440!114&amp;authkey=!ADGTKdZEpF4F4Q4&amp;ithint=file%2c.wav\" rel=\"nofollow\">https://onedrive.live.com/redir?resid=CC8AF223519E2440!114&authkey=!ADGTKdZEpF4F4Q4&ithint=file%2c.wav</a>\r<br />\n<br />\nyou can download the song file there...\r<br />\nwhere is that lost tone coming from ??<br />\n",
+    "PostedDate": "2014-05-16T21:24:12.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248910",
+    "ThreadId": "545645",
+    "Html": "you are hearing the result of the code you have written. You're probably hearing artifacts of discontinuities. You probably want to fade the audio in and out rather than starting abruptly.<br />\n",
+    "PostedDate": "2014-05-23T07:23:32.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248920",
+    "ThreadId": "545645",
+    "Html": "how would I do that ?\r<br />\nwould it have a beat sound ?\r<br />\nwould it sound like this\r<br />\n<a href=\"http://mynoise.net/NoiseMachines/isochronicBrainwaveGenerator.php\" rel=\"nofollow\">http://mynoise.net/NoiseMachines/isochronicBrainwaveGenerator.php</a>\r<br />\n<br />\n?<br />\n",
+    "PostedDate": "2014-05-23T07:32:38.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249187",
+    "ThreadId": "545645",
+    "Html": "I cannot find anything on how to fade in and out\r<br />\n<br />\nso how can i do it ?<br />\n",
+    "PostedDate": "2014-05-24T07:38:54.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249297",
+    "ThreadId": "545645",
+    "Html": "ok I read up on it online and I tried it but it did not work<br />\nhere is my code<br />\n:<br />\n<pre><code>tone = new isochronicTone();\n            tone.SetWaveFormat(44100, 2); \n\n            double time = Convert.ToDouble(time2.Text) / 2.2675;\n            time = time * 50000D;\n            double Amplitude = Convert.ToDouble(Peaktxt.Text);\n            SaveFileDialog save1 = new SaveFileDialog();\n            save1.Filter = &quot;Wave file (*.wav)|*.wav;&quot;;\n            if (save1.ShowDialog() != DialogResult.OK) return;\n            WaveFileWriter wavefile;\n            wavefile = new WaveFileWriter(save1.FileName, tone.WaveFormat);\n            double counter3 = 0;\n            double tenp = 0;\n            double Ptemp = Peak3 - 0.001D;\n            int newcounter = 0;\n           \n            if (Beat3 != 0)\n            {\n                Beat3 = (1 / Beat3);\n                tenp = Beat3/(1D / 44100D);\n            }\n            else\n            {\n                Beat3 = 0;\n            }\n            for (int n = 0; n &lt; time; n++)\n            {\n                if (counter3 &gt;= Beat3 &amp;&amp; Beat3 != 0)\n                { \n                    for (int t = 0; t &lt; tenp; t++)\n                    {\n                        if (Ptemp &gt; 0.000005)\n                        {\n                            float temo = (float)(Ptemp * Math.Sin((((Math.PI * n * (Frequency3))/2) / 44100D)));\n                            wavefile.WriteSample(temo);\n                           wavefile.WriteSample(temo);\n                            n++;\n                            Ptemp = Ptemp - 0.001D;\n                            newcounter++;\n                        }\n                        else if ((tenp - newcounter) &lt;= 0 )\n                        {\n                        float temo = (float)(Ptemp * Math.Sin((((Math.PI * n * (Frequency3))/2) / 44100D)));\n                            wavefile.WriteSample(temo);\n                           wavefile.WriteSample(temo);\n                           n++;\n                         Ptemp = Ptemp + 0.001D;\n                        }\n                        else\n                        {\n                            wavefile.WriteSample(0F);\n                           wavefile.WriteSample(0F);\n                           n++;\n                        }\n                    }\n\n                    counter3 = 0;\n                }\n                else\n                {\n                    float temo = (float)(Peak3 * Math.Sin((((  Math.PI * n * (Frequency3))/2)/44100D)));\n                  wavefile.WriteSample(temo);\n                   wavefile.WriteSample(temo);\n                    counter3 = counter3 + (1D / 44100D);\n                    Ptemp = Peak3 - 0.001D;\n                    newcounter = 0;\n                }\n            } \n            wavefile.Flush();\n            wavefile.Dispose();\n           \n           if (waveout == null)\n            {\n                waveout = new WaveOut();\n                waveout.PlaybackStopped += onPlaybackStopped;\n            \n           }\n            \n            MixingSampleProvider mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100,2));\n               audioFileReader = new AudioFileReader(save1.FileName);\n               mixer.AddMixerInput((ISampleProvider)audioFileReader);\n               SampleToWaveProvider mixer3 = new SampleToWaveProvider(mixer);\n\n               try\n               {\n                   waveout.Init(mixer3);\n                   waveout.Play();\n                   timer1.Start();\n\n                   \n               }\n               catch\n               {\n                   MessageBox.Show(&quot; Error retry&quot;);\n                   waveout.Stop();\n                   waveout.Dispose();\n                   waveout = null;\n                   return;\n\n               }</code></pre>\n\nhere is how it sounds<br />\n<a href=\"https://onedrive.live.com/redir?resid=CC8AF223519E2440!119&amp;authkey=!AAFtwo79tic33IA&amp;ithint=file%2c.wav\" rel=\"nofollow\">https://onedrive.live.com/redir?resid=CC8AF223519E2440!119&authkey=!AAFtwo79tic33IA&ithint=file%2c.wav</a><br />\n<br />\nthe ticking is still there<br />\n",
+    "PostedDate": "2014-05-25T02:21:27.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249309",
+    "ThreadId": "545645",
+    "Html": "I tried to fade in and out to 0\r<br />\n<br />\nAm I doing it wrong?<br />\n",
+    "PostedDate": "2014-05-25T03:30:24.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249800",
+    "ThreadId": "545645",
+    "Html": "I got it to work<br />\n",
+    "PostedDate": "2014-05-26T16:19:05.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

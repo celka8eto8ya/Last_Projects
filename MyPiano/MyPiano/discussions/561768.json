@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1292046",
+    "ThreadId": "561768",
+    "Html": "When I try and convert a MP3 to WAV an strange behavior appears.<br />\nI am using the: <a href=\"https://naudio.codeplex.com/wikipage?title=Convert%20a%20MP3%20to%20WAV\" rel=\"nofollow\">https://naudio.codeplex.com/wikipage?title=Convert%20a%20MP3%20to%20WAV</a> <br />\nto change the MP3 to WAV<br />\n<br />\nThe duration of the audio in the MP3 is 5 hours 56 minutes and 12 seconds.<br />\nThe duration of the generated WAV is 5 hours 41 minutes and 41 seconds.<br />\n<br />\nThe WAV file is ~15 min shorter than the MP3. Is this a bug or by design? <br />\n<br />\nI make audio processing on the WAV and get a list of timestamps, this list should be in sync with the MP3 file. But due to the 15 min difference the timestamps does not match the MP3 audio.<br />\nIs there a way to have a timestamp I generated from the WAV and sync it to the MP3?<br />\n",
+    "PostedDate": "2014-08-21T05:55:42.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1292082",
+    "ThreadId": "561768",
+    "Html": "My MP3 files contains errors. I ran them through mp3val ( <a href=\"http://mp3val.sourceforge.net/index.shtml\" rel=\"nofollow\">http://mp3val.sourceforge.net/index.shtml</a> ) and it found a number of problems, when it fixed the problems I got the same length as my generated WAV file. <br />\n",
+    "PostedDate": "2014-08-21T07:11:12.543-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

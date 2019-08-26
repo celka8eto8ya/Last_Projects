@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1132852",
+    "ThreadId": "472206",
+    "Html": "I am trying to change from UDP to TCP and using a networkstream instead.<br />\nThis to prevent dropped packages, and always have a consistent flow.<br />\n<br />\nHowever, i don´t know how to achieve it.<br />\n<br />\nI know how to use a networkstream, but i don´t know how to read audio from it.<br />\n<br />\nwith UDP it´s quite simple:<br />\n<pre><code>                    ReceivedData = udpReceive.Receive(ref remoteIEP);\n                    waveProvider.AddSamples(ReceivedData, 0, ReceivedData.Length);\n</code></pre>\n\nit simply takes the package data and assume it´s audio data and, well use it.<br />\n<br />\nTCP works differently, but i don´t think it should be to hard to change it, it should just simply assume that all the data that arrives in the stream is Audio and play it, but i don´t know how to do it.<br />\n<br />\nHelp is appreciated.<br />\n<br />\n<br />\nEDIT:<br />\n<br />\nI actually got it working, however i still have the problem i thought i was going to get rid of.<br />\nThe audio buffer (waveprovider) is increasing so i eventually have to discard it, else the latency will go beyond control and probably a buffer overflow, though that would take extremely long time.<br />\n<br />\nMark could i ask you to test my application?<br />\nI can of course provide you the source code so you can build it yourself.<br />\nIt´s a very simple and it´s just the send/receive that is the problem i guess.<br />\nBut i just can´t figure it out, it just doesn´t make sense now that even TCP fails, which means it´s not a package drop.<br />\n",
+    "PostedDate": "2013-12-07T17:34:35.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1133364",
+    "ThreadId": "472206",
+    "Html": "Did some more tests, the fault seem to lie in the Recording.\r<br />\nMeaning Wasapi or something, and changing buffer can help a bit, but doesn´t cure it, even at 100ms.\r<br />\n<br />\nI tried using ASIO to record, and that is immune to the problem i am having, which is why i believe the problem lies there.\r<br />\nNot really sure what can be done, perhaps it can be optimized, or there is some fundamental problem.<br />\n",
+    "PostedDate": "2013-12-09T17:17:42.203-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1311910",
+    "ThreadId": "569423",
+    "Html": "Hi,\r<br />\n<br />\nCurrently, AsioOut class exposes 'ChannelOffset' property to select the channel. If we are playing a Stereo file with ChannelOffset as 4, the media will be played at Channel 4 and 5.\r<br />\nThe Stereo file will have Left and Right Channel which will play the media at Channel 4 and 5. So, whatever user specifies, right channel will be assigned to a channel incremented by 1.\r<br />\n<br />\nI need to provide the flexibility to the user to specify the channel number for both the Left and Right Channel. So, if user specifies 4 and 7, the left channel will play media at 4 and right channel at 7.\r<br />\n<br />\nIs there a way to achieve this using NAudio and specifically for ASIO soundcard ?\r<br />\nAny suggestion or workaround is welcome!<br />\n",
+    "PostedDate": "2014-10-09T09:25:06.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1313224",
+    "ThreadId": "569423",
+    "Html": "I have been able to play a stereo file at user defined channels using MultiplexingWaveProvider and creating a SilenceProvider.\r<br />\nNow, I need to control the channels individually. Consider, there are 5 channels and Channel 1, 3 and 5 has stream associated with it and channel 2 and 4 has silence.\r<br />\nI am looking for a solution wherein I want to start the media of Channel 1, 3 and 5 initially, and later at some point of time(suppose after 10 sec), there is a trigger for Channel 2, it should start playing the song without affecting the song at Channel 1, 3 and 5.\r<br />\n<br />\nI am able to achieve this by stopping/disposing the AsioOut instance whenever a trigger comes and replace the silence stream at Channel 2 with the valid Stream. New mixed stream is passed to Init() method and Play is called thereafter. \r<br />\nHowever, this brings a audible delay in the media When we Stop and recreate the AsioOut instance.\r<br />\n<br />\nIs there a better way to handle it through NAudio ?\r<br />\nKindly suggest a solution or workaround as my whole application is dependent on this scenario and if doesn't work, I need to look for other libraries and doesn't want to loose a wonderful NAudio library.\r<br />\n<br />\nLooking for a response!<br />\n",
+    "PostedDate": "2014-10-14T10:50:35.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

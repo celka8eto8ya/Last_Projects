@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1052666",
+    "ThreadId": "445968",
+    "Html": "Hi\r<br />\nI need to normalize audio (put volume in [1; -1] interval).\r<br />\n<br />\nSo I used code from Naudio demo, added few lines, and got the following:<br />\n<pre><code>using (var reader = new MediaFoundationReader(&quot;d:\\\\Projects\\\\audio.wma&quot;))\n{\n    ISampleProvider sp;\n    int sourceSamples;\n    if (reader.WaveFormat.Encoding == WaveFormatEncoding.Pcm)\n    {\n        if (reader.WaveFormat.BitsPerSample == 16)\n        {\n            sp = new Pcm16BitToSampleProvider(reader);\n            sourceSamples = (int) (reader.Length/2);\n        }\n        else if (reader.WaveFormat.BitsPerSample == 24)\n        {\n            sp = new Pcm24BitToSampleProvider(reader);\n            sourceSamples = (int) (reader.Length/3);\n        }\n        else\n        {\n            throw new ArgumentException(&quot;Currently only 16 or 24 bit PCM samples are supported&quot;);\n        }\n    }\n    else if (reader.WaveFormat.Encoding == WaveFormatEncoding.IeeeFloat)\n    {\n        sp = new WaveToSampleProvider(reader);\n        sourceSamples = (int) (reader.Length/4);\n    }\n    else\n    {\n        throw new ArgumentException(&quot;Must be PCM or IEEE float&quot;);\n    }\n    sampleData = new float[sourceSamples];\n    int n = sp.Read(sampleData, 0, sourceSamples);\n}\nfloat maxValue = 0.0f;\nfloat minValue = 0.0f;\nfor (var i = 1; i &lt; sampleData.Length; i++)\n{\n    if (sampleData[i] &gt; maxValue)\n    {\n        maxValue = sampleData[i];\n    }\n    else if (sampleData[i] &lt; minValue)\n    {\n        minValue = sampleData[i];\n    }\n}\nvar coef1Channel = 1/maxValue;\nvar coef2Channel = -1/minValue;\nfor (var i = 1; i &lt; sampleData.Length; i++)\n{\n    sampleData[i] = sampleData[i] &gt; 0 ? sampleData[i]*coef1Channel : \n                                                          sampleData[i]*coef2Channel;\n}\n}</code></pre>\n\nso after this audio volume is normalized. \r<br />\nBut I have 2 questions:<br />\n<ol>\n<li>How can I convert this bytes array back to ISampleProvider or to IWaveProvider?</li>\n<li>\nIs it possible to use MediaFoundationReader from stream instead of file?<br />\n</li>\n</ol>\nThanks for helping.<br />\n",
+    "PostedDate": "2013-06-04T07:59:08.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1063662",
+    "ThreadId": "445968",
+    "Html": "<ol>\n<li>you could put it into a MemoryStream and use a RawSourceWaveProvider</li>\n<li>I haven't implemented, but it might be possible to make use of the MFCreateSourceReaderFromByteStream API call to do this. You'd need to have some knowledge of how to do COM interop to try this though</li>\n</ol>\n",
+    "PostedDate": "2013-07-02T08:56:18.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

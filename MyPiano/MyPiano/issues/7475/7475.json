@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": "",
+    "Description": "I used the seek/position slider as a scratch fader (faster than would make any sense, just as a stress test) and by doing that in certain pattern I got:\n\nAn unhandled exception of type 'System.IndexOutOfRangeException' occurred in mscorlib.dll\nAdditional information: Probable I/O race condition detected while copying memory.\n\nI fixed this by wrapping the stream as follows:\n\nwavefilereader.cs:\nprivate Stream waveStream; //-filestream\n\n        public WaveFileReader(String waveFile)\n        {\n            waveStream = Stream.Synchronized(new FileStream(waveFile, FileMode.Open, FileAccess.Read));\n..",
+    "LastUpdatedDate": "2008-09-03T15:12:50.883-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-09-02T05:04:51.04-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "race condition in wav stream read",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7475
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "And incase you wonder where the error occurred:\r\n\r\n   at System.Buffer.InternalBlockCopy(Array src, Int32 srcOffset, Array dst, Int32 dstOffset, Int32 count)\r\n   at System.IO.FileStream.Read(Byte[] array, Int32 offset, Int32 count)\r\n   at NAudio.Wave.WaveFileReader.Read(Byte[] array, Int32 offset, Int32 count) in WaveFileReader.cs:line 200",
+      "PostedDate": "2008-09-02T05:07:18.947-07:00",
+      "Id": 41680
+    },
+    {
+      "Message": "thanks for reporting this, will look into fixing for the next version",
+      "PostedDate": "2008-09-03T15:12:50.883-07:00",
+      "Id": 41681
+    }
+  ]
+}

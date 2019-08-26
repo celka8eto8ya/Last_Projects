@@ -1,0 +1,114 @@
+[
+  {
+    "Id": "1023569",
+    "ThreadId": "438610",
+    "Html": "I'm trying to create a 10 band EQ (frequency based; beginning at 32hz, ending at 16khz). I found BiQuadFilter.PeakingEQ, but I cannot figure out what the &quot;q&quot; parameter is supposed to be.\r<br />\n<br />\nIs it the peak width? If so, what is the best way to implement? Overlapping peaks?\r<br />\n<br />\nIs PeakingEQ what I should be using or is there a better option?<br />\n",
+    "PostedDate": "2013-03-31T17:49:18.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1024433",
+    "ThreadId": "438610",
+    "Html": "I figured out what &quot;Q&quot; is: <a href=\"http://www.homemadehitshow.com/EQTips.htm\" rel=\"nofollow\">http://www.homemadehitshow.com/EQTips.htm</a>.\r<br />\n<br />\nThe BiQuadFilter class is private and seems to be... unused and forgotten. I decided to just create my own class to handle the peaking EQ. If anyone is interested (and I remember), I will post the code here.\r<br />\n<br />\nIf I remember to do it...<br />\n",
+    "PostedDate": "2013-04-02T12:23:53.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1025224",
+    "ThreadId": "438610",
+    "Html": "Hi, the BiQuadFilter isn't really part of the official NAUdio API. I'd like to rework it at some point and make it a bit easier to use. You are right - q controls the peak width, but I don't know what the &quot;standard&quot; way to overlap bands in a 10 band eq is.<br />\n",
+    "PostedDate": "2013-04-03T23:27:53.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1040580",
+    "ThreadId": "438610",
+    "Html": "Hi Robert,\r<br />\n<br />\nDid you create a 10-band EQ and have it work well with the nAudio library? I wouldn't mind having a copy if it is possible so I can use it with my program...\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-05-07T13:41:12.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1041999",
+    "ThreadId": "438610",
+    "Html": "Currently working on a generic (reusable by everyone) solution.<br />\n",
+    "PostedDate": "2013-05-10T10:34:42.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043658",
+    "ThreadId": "438610",
+    "Html": "Hi Robert,<br />\n<br />\nI have just completed a WPF prototype 10 band equaliser using yuvalnv's code on Google code as a starting point. The one thing I haven't quite got working yet is when you drag the thumb on a slider to keep the audio stream going.  At the moment I have to pause the play, set the new values then start the play again.  It's an inconvenience I would like to overcome.<br />\n<br />\nThinking one has to buffer the stream.<br />\n<br />\nJim. <br />\n<br />\nPS - Mark, would you have any thoughts or suggestions that would be helpful ?  Thanks.<br />\n",
+    "PostedDate": "2013-05-14T23:33:55.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043842",
+    "ThreadId": "438610",
+    "Html": "Hi James,\r<br />\n<br />\nI was able to modify the equalizer settings (BassTreble only using the Audacity effect as a baseline) while audio was playing. I was using the NAudio library and the bufferedWaveProvider coupled with the CircularBuffer to ensure continuous playback. The waveout device would then read from the last provider to playback the modified buffers.\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-05-15T05:38:05.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044109",
+    "ThreadId": "438610",
+    "Html": "Thanks Paul, that looks like the way to tackle it.<br />\n\r<br />\nWill be some modification to the way the WaveStream is handled.  I'm glad that we have Mark's mp3 streaming demo !\r<br />\n<br />\nJim  \r<br />\n",
+    "PostedDate": "2013-05-15T14:09:04.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044114",
+    "ThreadId": "438610",
+    "Html": "Hi James,\r<br />\n<br />\nIs there a way I could take a peek at the code. I am tasked to make a 27-band equalizer (similar to Audacity) and looking at a 10-band may help me along the way. We can take this offline if you wish, but don't know if there is a way to ping you without publishing my email address.\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-05-15T14:15:07.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044116",
+    "ThreadId": "438610",
+    "Html": "If you are making effects for NAudio, then I strongly recommend using ISampleProvider as your base class rather than WaveStream. It will make your life much simpler. I'm hoping to get some example effects into a future version of NAudio to show what I mean.<br />\n",
+    "PostedDate": "2013-05-15T14:17:15.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044143",
+    "ThreadId": "438610",
+    "Html": "Thanks Mark for the tip.<br />\n<br />\nAlso I will take this opportunity to thank you for a great piece of work :)<br />\n<br />\n brunp -  I'm happy to post some code up and how I tackled it a bit later.  The codes in a bit of a mess at the moment as I try to get it all working !  27 Band wow !  What frequency range are you wanting to cover with that ? <br />\nI thought 20-20,000Hz as standard but I have had to get somebody with younger ears to confirm some of my tests !  I can't hear that range now !<br />\n<br />\nJim<br />\n",
+    "PostedDate": "2013-05-15T15:38:44.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1047290",
+    "ThreadId": "438610",
+    "Html": "My calculations are working without causing any sound gaps, pops, or crackles; but I cannot hear the changes.\r<br />\n<br />\n16hz through 500khz at 5db with the high frequencies at -5db should sound like the music is being muffled.\r<br />\n<br />\n1000hz - 16000hz at 5db with low frequencies at -5db should sound tinny.\r<br />\n<br />\nFilterSampleProvider:<br />\n<pre><code>  public class FilterSampleProvider : ISampleProvider\n  {\n    private readonly BiQuadFilter[] _sampleFilters;\n    private readonly WaveFormat _waveFormat;\n    private readonly ISampleProvider _sampleProvider;\n\n    public WaveFormat WaveFormat { get { return _waveFormat; } }\n\n    public FilterSampleProvider(ISampleProvider source, BiQuadFilter[] filters)\n    {\n      _sampleFilters = filters;\n      _sampleProvider = source;\n      _waveFormat = _sampleProvider.WaveFormat;\n    }\n\n    public int Read(float[] buffer, int offset, int sampleCount)\n    {\n      var read = _sampleProvider.Read(buffer, offset, sampleCount);\n\n      var filterBuffer = new float[buffer.Length];\n\n      //cascade the filters\n      for (var j = _sampleFilters.Length; j-- &gt; 0; )\n      {\n        if (j == _sampleFilters.Length - 1)\n        {\n          filterBuffer = _sampleFilters[j].ProcessSample(buffer, offset, sampleCount);\n\n          continue;\n        }\n\n        filterBuffer = _sampleFilters[j].ProcessSample(filterBuffer, offset, sampleCount);\n      }\n\n      buffer = filterBuffer;\n\n      return read;\n    }\n  }\n</code></pre>\n\nI pre-calculate the coefficients when the dbGain or Q changes.\r<br />\n<br />\nBiQuadFilter.ProcessSample:<br />\n<pre><code>    public float[] ProcessSample(float[] buffer, int offset, int sampleCount)\n    {\n      //skip processing if gain is 0 or we are recalculating due to a Gain or Q change\n      if (_dbGain != 0f &amp;&amp; !_calcInProgress)\n      {\n        //if Gain or Q changes during this process, ReCalculate will wait. Prevents odd results.\n        _transformInProgress = true;\n\n        var current = new float[buffer.Length];\n\n        for (int i = 0; i &lt; sampleCount; i += 2)\n        {\n          if (_counter == _blockAlign)\n          {\n            _counter = 0;\n\n            Reset();\n          }\n\n          //Left channel\n          var left = (_biQuadLeft.A0 * buffer[offset + i] + _biQuadLeft.A1 * _biQuadLeft.X1 + _biQuadLeft.A2\n                          * _biQuadLeft.X2 - _biQuadLeft.A3 * _biQuadLeft.Y1 - _biQuadLeft.A4 * _biQuadLeft.Y1);\n\n          _biQuadLeft.X2 = _biQuadLeft.X1;\n          _biQuadLeft.X1 = buffer[offset + i];\n\n          _biQuadLeft.Y2 = _biQuadLeft.Y1;\n          _biQuadLeft.Y1 = double.IsNaN(left) ? 0 : left;\n\n          current[offset + i] = (float)_biQuadLeft.Y1;\n\n          //Right channel\n          var right = (_biQuadRight.A0 * buffer[offset + i + 1] + _biQuadRight.A1 * _biQuadRight.X1 + _biQuadRight.A2\n                            * _biQuadRight.X2 - _biQuadRight.A3 * _biQuadRight.Y1 - _biQuadRight.A4 * _biQuadRight.Y1);\n\n          _biQuadRight.X2 = _biQuadRight.X1;\n          _biQuadRight.X1 = buffer[offset + i + 1];\n\n          _biQuadRight.Y2 = _biQuadRight.Y1;\n          _biQuadRight.Y1 = double.IsNaN(right) ? 0 : right;\n\n          current[offset + i + 1] = (float)_biQuadRight.Y1;\n\n          _counter++;\n        }\n\n        _transformInProgress = false;\n\n        return current;\n      }\n\n      return buffer;\n    }\n\n    private void Reset()\n    {\n      _biQuadLeft.X1 = 0;\n      _biQuadLeft.X2 = 0;\n      _biQuadLeft.Y1 = 0;\n      _biQuadLeft.Y2 = 0;\n\n      _biQuadRight.X1 = 0;\n      _biQuadRight.X2 = 0;\n      _biQuadRight.Y1 = 0;\n      _biQuadRight.Y2 = 0;\n    }\n</code></pre>\n\n",
+    "PostedDate": "2013-05-22T11:02:46.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1050523",
+    "ThreadId": "438610",
+    "Html": "you can't reassign buffer in the Read method. You must write into the buffer you were passed<br />\n",
+    "PostedDate": "2013-05-30T02:40:14.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1081249",
+    "ThreadId": "438610",
+    "Html": "Hi Robert,\r<br />\n<br />\n   Have you done the 10 band Equalizer yet? Could I have a looked at the codes? \r<br />\n<br />\n   I think that 10 PeakingEQ biquad filters (time domain) may not get the effect as FFT filter does.\r<br />\n<br />\n   Have you got some results now, could you give some advice?\r<br />\n<br />\nMany Thanks<br />\n",
+    "PostedDate": "2013-08-16T00:30:24.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

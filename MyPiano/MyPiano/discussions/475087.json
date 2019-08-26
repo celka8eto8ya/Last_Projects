@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1138491",
+    "ThreadId": "475087",
+    "Html": "Hi,\r<br />\n<br />\nI'm using the WaveFileWriter to convert an mp3 to a wav file, however when I do this, the resulting wav is offset from the original by +2258 samples.  I can adjust for this by then trimming the resulting wav, but the offset isn't consistent across mp3s, and I can't seem to figure out how to calculate the offset.  Here's the code I'm using, and I get the same offset if I use the WaveMixerStream32 class.<br />\n<pre><code>            using (Mp3FileReader reader = new Mp3FileReader(mp3File))\n            {\n                WaveFileWriter.CreateWaveFile(outputFile, reader);\n            }</code></pre>\n\nAny way to remove the offset, or calculate it so I can trim the resulting wav?\r<br />\n<br />\nThanks,\r<br />\nAlan<br />\n",
+    "PostedDate": "2013-12-19T11:48:28.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140299",
+    "ThreadId": "475087",
+    "Html": "Try this:  Load the original wav file and the encoded mp3 file into <a href=\"http://audacity.sourceforge.net/\" rel=\"nofollow\">Audacity</a>.  If the silence is still there, your encoder is adding it.  If not, try <a href=\"http://nlayer.codeplex.com/\" rel=\"nofollow\">NLayer</a>'s ManagedMpegStream in place of Mp3FileReader above.  NLayer uses its own frame reader, so that should correct the issue.\r<br />\n<br />\nGood luck!<br />\n",
+    "PostedDate": "2013-12-20T06:53:50.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140360",
+    "ThreadId": "475087",
+    "Html": "Hmmm...thanks ioctILR, I've been loading the original mp3 and the resulting wav in Reaper to view the difference.<br />\n\r<br />\n I tried using the ManagedMpegStream instead of the Mp3FileReader; it still introduces silence in the resulting .wav, but only 1106 samples now.  Better, but still audible.  I also tried using the MediaFoundationReader, same result as Mp3FileReader.<br />\n",
+    "PostedDate": "2013-12-20T09:50:28.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140371",
+    "ThreadId": "475087",
+    "Html": "Try loading the <em>original</em> wav and the mp3 into Reaper...  I'll bet the offset happens there, too.<br />\n",
+    "PostedDate": "2013-12-20T10:07:21.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140425",
+    "ThreadId": "475087",
+    "Html": "I may not have access to the original wavs in some circumstances.  For instance I downloaded an mp3 from a &quot;music store&quot;, and the offset still gets introduced.  I'll play around a bit more with a full workflow, i.e. a known .wav, convert to .mp3 (currently using lame), confirm no offset introduced, then convert back to .wav with NAudio and determine if there's an offset.<br />\n",
+    "PostedDate": "2013-12-20T13:08:32.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140976",
+    "ThreadId": "475087",
+    "Html": "If the number of introduced silent samples is known, you could just skip over them. NAudio is using the ACM MP3 codec, so doesn't really have much control over what comes out. <br />\n",
+    "PostedDate": "2013-12-23T12:21:02.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

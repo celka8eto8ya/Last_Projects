@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "901307",
+    "ThreadId": "392238",
+    "Html": "\r\n<p>I have a timeline that allows the end user to add sound objects (tracks) to it. The sound objects can be placed / moved anywhere on the timeline. When playing the timeline, the timeline object itself knows when to instruct the sound object to play. The sound\r\n object consists of a class that contains the NAudio objects needed to play a sound file:</p>\r\n<p><span style=\"color:#0000ff\">Mp3FileReader / WaveFileReader</span><br>\r\n<span style=\"color:#0000ff\">WaveChannel32</span><br>\r\n<span style=\"color:#0000ff\">WaveOut</span></p>\r\n<p>When the timeline object calls WaveOut.play() everything works as expected but if WaveOut.Play() gets called after WaveOut.Stop() has been called previously- I get an error saying the &ldquo;Buffers already queued on play. If I replace WaveOut.Stop() with\r\n WaveOut.Pause() I don&rsquo;t receive the error.</p>\r\n<p>I&rsquo;m also having an issue getting multiple sounds to start at different times. For example, I have a sound on track 1 that starts at 5 seconds on the timeline and I have another sound on track 2 that starts at 2 seconds. The second track will play (sometimes\r\n stuttering) but the sound on track 1 will not play. If I set them to start at the same time, regardless where they are on the timeline, both will play fine.</p>\r\n<p>I looked at the samples and demos but things got a little convoluted with the custom controls getting in the way. I also looked at the source code and nothing stood out to me as to why the stop() functionality of the WaveOut object would cause it&rsquo;s\r\n play method to crash. As well, I didn&rsquo;t see where there would be a problem with using multiple WaveOut objects in one application. Maybe I&rsquo;m missing something?</p>\r\n<p>Any help would be greatly appreciated.</p>\r\n<p>Cheers,<br>\r\nDJ</p>\r\n",
+    "PostedDate": "2012-08-19T09:31:54.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "901576",
+    "ThreadId": "392238",
+    "Html": "<p>Ok, I've figured out how to get multiple WaveOuts to play at the same time regaurdless of when they are started. I had to convert them to the same WaveFormat. I'm using WaveFormatConversionStream and I have a few questions about this object. Here is the code I'm using:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>                    mp3Reader = <span style=\"color: blue;\">new</span> Mp3FileReader(fileName);\r\n                    \r\n                    WaveFormatConversionStream waveFormatConvStream = <span style=\"color: blue;\">new</span> WaveFormatConversionStream(<span style=\"color: blue;\">new</span> WaveFormat(44100, 1), mp3Reader);\r\n                    \r\n                    inputStream = <span style=\"color: blue;\">new</span> WaveChannel32(waveFormatConvStream);\r\n\r\n                    waveOut = <span style=\"color: blue;\">new</span> WaveOut(frmHndl);\r\n\r\n                    waveOut.DeviceNumber = deviceNo;\r\n</pre>\r\n<pre>                    waveOut.Init(inputStream);\r\n</pre>\r\n<pre>                    waveOut.PlaybackStopped += <span style=\"color: blue;\">new</span> EventHandler(waveOut_PlaybackStopped);\r\n</pre>\r\n<pre>                    waveOut.Volume = 1.0f;\r\n                    inputStream.Volume = 1.0f;\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Can I dispose of the WaveFormatConversionStream after I've passed it to my inputStream (WaveChannel32) or does it need to stay in memory?</p>\r\n<p>When I try to specify a sampleRate other than 16 I get an \"AcmNotPossible calling acmStreamOpen\" error. Is this dependent on the input files sample rate?&nbsp;</p>\r\n<p>My application is not an audio app, there will never be more than 3 - 4 sounds loaded at one time but the application is memory intensive so I need to use as little memory with these audio files as possible. I've converted them into a single channel (mono) for this purpose.</p>\r\n<p>Will the WaveFormatConversionStream with the format I've specified work on all files thrown at it or do I need to test every type of sampleRate - bitRate combinations, with mono and stereo?</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-08-20T08:35:10.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "901943",
+    "ThreadId": "392238",
+    "Html": "<p>I've managed to solve all of my issues on my own. For anyone who finds this post with the same issues:</p>\r\n<p>I'm using NAudio Version <span style=\"text-decoration: underline;\">1.5.4.0</span></p>\r\n<p>I was receiving the &ldquo;Buffers already queued on play\" error because I had an event handler hooked up to the \"waveOut_PlaybackStoped\" event. The handler pointed to a method that was meant to handle looping, when the file ended, I'd seek to the beginning of the file and restart the playback. The problem with this was that the event only fires when you've called the waveOut's Stop() method. Before I realized this was happening I used pause() instead of stop(), which bypassed the problem but created others with data being left in buffers when I un-paused as well as the &ldquo;Buffers already queued on play\" error. Removing the event handler and using the stop method fixed all these issues.</p>\r\n<p>When playing multiple streams at the same time, you'll need to convert them all to the same format. I used the \"WaveFormatConversionStream\" which cannot be disposed until you&rsquo;re done with all the other streams involved with playing, seeking, stopping, reading, etc...</p>\r\n<p>I also had issues with the seek method, I couldn&rsquo;t get accurate positioning. The stream's \"CurrentTime\" property works better. I also use the streams volume property to change the volume for each track. Both of these gave me the flexibility to change the position and volume of each stream instead of the waveOut object.</p>\r\n<p><br />Hope this helps someone else...</p>\r\n<p><br />Cheers,<br />DJ</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-08-21T06:15:45.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "904511",
+    "ThreadId": "392238",
+    "Html": "<p>Hi dj,</p>\r\n<p>how did you build the timeline component? Do you render the waveform for each seperate audio file first?</p>\r\n<p>Regards,</p>\r\n<p>Per</p>",
+    "PostedDate": "2012-08-27T03:33:16.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "904732",
+    "ThreadId": "392238",
+    "Html": "<blockquote style=\"padding-bottom: 0px; font-style: italic; margin: 0.25em 1em 0px; padding-left: 0.25em; padding-right: 0.25em; padding-top: 0px; border: #ccc 0.1em solid;\"><strong>percramer wrote:</strong><br />\r\n<p>Hi dj,</p>\r\n<p>how did you build the timeline component? Do you render the waveform for each seperate audio file first?</p>\r\n<p>Regards,</p>\r\n<p>Per</p>\r\n</blockquote>\r\n<p><br />Per - I built a custom reusable control (timeline obj). Since my app isn't an audio app and it's memory intensive for other objects, I had to limit the amout of memory used for audio and waveform data&nbsp;by sampling larger chunks. The control takes a list of audio&nbsp;peaks (ints) in it's constructor&nbsp;and renders these in the control's paint method. Depending on the zoom level, there is a calculation done to determin the X location of the line in a loop.</p>\r\n<p>Rendering (painting) waveform data uses a lot of memory so it's also important to note that the render loop has a check for visablity. Since the list of ints is in order, you can exit the loop after you reach a point where the line location is out of bounds of the viewable area of the control.</p>\r\n<p>&nbsp;</p>\r\n<p>Hope this helps,</p>\r\n<p>Dj</p>",
+    "PostedDate": "2012-08-27T12:43:34.4-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085569",
+    "ThreadId": "392238",
+    "Html": "I have a similar issue, I'm running in a Task the same code on multiple device. Every object is instanciate for each task offcourse.<br />\n<pre><code>private void RunSession(WaveOut WaveOut, WaveStream stream, string match) {\n      played.Add(match);\n      WSRConfig.GetInstance().logInfo(&quot;PLAYER&quot;, &quot;[&quot; + device + &quot;]&quot; + &quot;Start MP3 Player&quot;);\n\n      WaveOut.Init(stream);\n      WaveOut.Play();\n      while (stream.CurrentTime &lt; stream.TotalTime &amp;&amp; played.Contains(match)) {\n        Thread.Sleep(100);\n      }\n      WaveOut.Stop();\n      stream.Dispose();\n\n      WSRConfig.GetInstance().logInfo(&quot;PLAYER&quot;, &quot;[&quot; + device + &quot;]&quot; + &quot;End MP3 Player&quot;);\n      played.Remove(match);\n}</code></pre>\n\n<strong>2 questions:</strong><br />\n<br />\nThe code play correctly on device 0, but hang on device 1, it scratch on device 2 then stop. <br />\n<ul>\n<li>Any idea to play device 0 and 2 together ? It seems the 2 is stopped by 1 very weird</li>\n<li>Any idea how to understand device 1 not available ?</li>\n<li>\nIs device 0 always default device ?<br />\n</li>\n</ul>\nMy goal is to play a WaveStream to multiple WaveOut. In my example I have multiple WaveStream (to avoid conflict) but it seems not working.<br />\n<br />\nI also see an other answer about Multiplexer, but it seems to be (N in and 1 out) and I'd like (1 in and N out). Any sample code ?<br />\n",
+    "PostedDate": "2013-08-27T15:13:44.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085903",
+    "ThreadId": "392238",
+    "Html": "0 means the default device. What callback model are you using? You shouldn't need to use tasks at all.<br />\n",
+    "PostedDate": "2013-08-28T12:17:56.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085945",
+    "ThreadId": "392238",
+    "Html": "Yes after reading multiple answers it seems I should use something to dispatch audio between input/output without Task.<br />\n<ul>\n<li>I have 1 or more WaveStream (from file, memory stream, etc ...)</li>\n<li>\nI need to play on 1 or more device WaveOut at the same time<br />\n</li>\n</ul>\nWhat should I use for this pattern ? Any sample code ? (I only found multiple IN and 1 OUT but not multiple IN/OUT)\r<br />\n<br />\nRegards,\r<br />\nJp<br />\n",
+    "PostedDate": "2013-08-28T14:05:42.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085963",
+    "ThreadId": "392238",
+    "Html": "it's not something I've included in NAudio, but the basic approach would be to use a BufferedWaveProvider for each output.  You'd need to create a custom IWaveProvider whose Read method would either return data from the buffer if it was there, and if not, read more from the source stream and write the audio into <em>all</em> the buffers. So each output device could be at a slightly different point in time. \r<br />\n<br />\nI'd like to do a code sample, but it would take me a bit of time to write, so can't do it now.\r<br />\nTo be honest, it would be a lot easier if playing from file or memory stream to just open two WaveFileReaders, one for each output, and start each playing at the same time.<br />\n",
+    "PostedDate": "2013-08-28T14:51:30.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085966",
+    "ThreadId": "392238",
+    "Html": "Thanks,\r<br />\nAbout your last comment, it was what I did at first<br />\n<ul>\n<li>Create WaveFileReaders</li>\n<li>Create WaveOut</li>\n<li>Set the device number</li>\n<li>WaveOut.Init(stream);</li>\n<li>\nWaveOut.Play();<br />\n</li>\n</ul>\nI do it twice but it seems the first one play, then the second one. So I assume the code is synchronous ? So I use Task to made it asynchronous, but it do not work on both device\r<br />\n<br />\nI'll try BufferedWaveProvider <br />\n",
+    "PostedDate": "2013-08-28T15:29:34.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "447590",
+    "ThreadId": "213898",
+    "Html": "<p>Dear All,</p>\r\n<p>Is there a way to convert wma to wav or vox, in vb.net?</p>",
+    "PostedDate": "2010-05-26T05:30:06.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "447593",
+    "ThreadId": "213898",
+    "Html": "<p>NAudio does not have this capability. I would suggest calling a commandline tool like sox (<a href=\"http://sox.sourceforge.net/\">http://sox.sourceforge.net/</a>) or ffmpeg (<a href=\"http://www.ffmpeg.org/\">http://www.ffmpeg.org/</a>)</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-05-26T05:39:29.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

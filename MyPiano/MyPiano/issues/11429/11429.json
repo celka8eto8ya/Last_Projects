@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 6,
+    "Custom": "",
+    "Description": "Hello,\n\nCould you please release NAudio as an assembly with a strong name so it can be installed in the GAC by running gacutil -i NAudio.dll?\n\nThanks.",
+    "LastUpdatedDate": "2015-02-12T13:06:08.967-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-01-06T12:06:25.24-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Assembly with strong name",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 8,
+    "Id": 11429
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "it's not a bad idea. I'll bear it in mind for the next NAudio release",
+      "PostedDate": "2010-01-22T07:04:46.71-08:00",
+      "Id": 41712
+    },
+    {
+      "Message": "We'd like to release our application signed using strong names, but can't do this if NAudio isn't also strongly name.",
+      "PostedDate": "2011-07-27T04:40:30.017-07:00",
+      "Id": 41713
+    },
+    {
+      "Message": "Bump",
+      "PostedDate": "2013-02-25T09:52:00.24-08:00",
+      "Id": 91438
+    },
+    {
+      "Message": "I'm afraid I don't currently have any plans to do this. It seems to cause more problems than it solves (and I don't really want to start publishing two editions of NAudio). My recommendations if your company really really needs signed DLLs for some reason:\n1) sign it yourselves\n2) hire me to make a special signed version just for you ;)",
+      "PostedDate": "2013-02-25T11:11:50.84-08:00",
+      "Id": 91450
+    },
+    {
+      "Message": "There shouldn't be any problems, just open the project file in Visual Studio, in Properties find a Signing tab and create a new pair of keys, which should then be added to all projects - or to a common AssemblyInfo, if you have such one :-)\n\nJokes aside, it'd be really nice to have a signed version in order to avoid fetching the source code for recompilation/resigning... Nuget does the job of getting the library, I'd rather not intervene with it :-)",
+      "PostedDate": "2015-02-09T13:41:16.543-08:00",
+      "Id": 173824
+    },
+    {
+      "Message": "This is a [long-running debate](http://nuget.codeplex.com/discussions/247827) in the .NET development community. Unfortunately signing assemblies can cause as many problems as it solves.",
+      "PostedDate": "2015-02-12T13:06:08.967-08:00",
+      "Id": 174499
+    }
+  ]
+}

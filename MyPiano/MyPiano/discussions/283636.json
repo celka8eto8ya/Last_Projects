@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "714942",
+    "ThreadId": "283636",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm stuck with this simple task:</p>\r\n<p>- I have a memorystream containing raw data (ALaw compressed)</p>\r\n<p>- I want to play this memorystream as it is (I don't want to write it to the disk)</p>\r\n<p>How ho I do that?</p>\r\n",
+    "PostedDate": "2011-12-20T09:45:22.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

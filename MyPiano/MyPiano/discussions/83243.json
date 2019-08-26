@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "286187",
+    "ThreadId": "83243",
+    "Html": "<p>Can I commercialize a program that uses the libray NAudio? I do not modify NAudio's source code, only I use the library.</p>\r\n<p>Thank you.</p>\r\n<p>&nbsp;</p>\r\n<p>Nuria.</p>",
+    "PostedDate": "2010-02-05T04:53:42.137-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "286222",
+    "ThreadId": "83243",
+    "Html": "<p>Hi Nuria, the short answer is yes, so long as you understand and comply with the license:</p>\r\n<p>http://naudio.codeplex.com/license</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-02-05T05:48:35.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1202837",
+    "ThreadId": "528968",
+    "Html": "Hi there,\r<br />\nNAudio is a really great library and I like to use it a lot but something I'm trying to implement refuses to work all the time.\r<br />\nI have some sort of Mp3Player that contains a list of tracks.\r<br />\nEverything works fine so far but I would like to play the next track if another one finished playback.\r<br />\nMy approach was to handle WaveOut.PlaybackStopped and dispose my WaveOut and MediaFoundationReader instance and just reinitialize them.\r<br />\nUnfortunately that did not work.\r<br />\nWhile debugging I noticed that the debugger just gets to WaveOut.Dispose() and then continues to execute. I don't know if my WaveOut actually got disposed or not, the debugger just continues execution.\r<br />\n<br />\nAm I doing something wrong? How can I implement the wanted functionality?\r<br />\nI tried to look into NAudio's source code to check if there is anything I missed but either my skills are to bad to understand what is really happening or there isn't anything I'm doing wrong.\r<br />\n<br />\nThanks in advance :)<br />\n",
+    "PostedDate": "2014-02-05T01:49:13.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1203357",
+    "ThreadId": "528968",
+    "Html": "Yes you need to listen for the PlaybackStopped event, then clean up, and play the next song in your list.<br />\n",
+    "PostedDate": "2014-02-06T01:21:47.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

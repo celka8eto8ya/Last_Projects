@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "615704",
+    "ThreadId": "258349",
+    "Html": "\r\n<p>hi all</p>\r\n<p>i am capturing audio from sound card which is in he form of byte array i want to convert the bytes into mp3 bytes and transmit it over network where clients will receive these&nbsp; bytes and decompress these to wav and play it</p>\r\n<p>can NAudion help me in this????/</p>\r\n",
+    "PostedDate": "2011-05-19T23:44:45.11-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "615712",
+    "ThreadId": "258349",
+    "Html": "<p>NAudio cannot encode MP3. You would need to something like LAME for that. I think you can write to its stdin and read from its stdout to do on the fly compression. You can however use NAudio to receive MP3 over the network, decode and play it. See the example in the latest NAudioDemo code.</p>",
+    "PostedDate": "2011-05-19T23:56:57.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "615723",
+    "ThreadId": "258349",
+    "Html": "<p>thanks <a class=\"UserProfileLink\" href=\"http://www.codeplex.com/site/users/view/markheath\">markheath</a> for you rply</p>",
+    "PostedDate": "2011-05-20T00:20:27.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "Id": "955070",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>Hi Guys,</p>\r\n<p>I urgently need a function that can do the following:</p>\r\n<p>PlayTracks(string DeviceName, string[] output, string[] filenames)</p>\r\n<p>Output would be an array that specifies the output channel on a sound device.</p>\r\n<p>Filenames would be an array that contains the full paths to file names that need to be played.</p>\r\n<p>So the input arrays might be something like:</p>\r\n<p>Output [0]= &quot;1,3&quot; / Filenames[0]=&quot;c:\\Soundfiles\\File1.wav&quot;</p>\r\n<p>Output[1] = &quot;2,3&quot; / Filenames[1]=&quot;c:\\Soundfiles\\File2.wav&quot;</p>\r\n<p>Given this input, the function should do the following:</p>\r\n<p>Open &quot;file1.wav&quot;, and assign the left channel to output 1 on the specified device, and assign the right channel to output 3.</p>\r\n<p>Open &quot;file2.wav&quot;, and assign the left channel to channel 2 of the specified device, and assign the right channel to output 3.</p>\r\n<p>Once the channels are assigned, the audio should be played.</p>\r\n<p>Some notes:</p>\r\n<p>Playback must loop.</p>\r\n<p>Note how two input channels are assigned to output 3: This should be allowed, and should do a mixdown in real time.</p>\r\n<p>I have been struggling with this for a long time, and I just can't get it right. Some pointers will be very much appreciate, or alternatively if someone can give me a quotation for a function like that, then perhaps one of the specialists on here can do\r\n it for me.</p>\r\n<p>Thanks!</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-12T05:24:21.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955139",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>hi, NAudio has some pieces you will need. For example the MultiplexingSampleProvider does quite a bit of this (but no mixing - you'd want MixingSampleProvider). Looping would probably be best implemented with another wrapped layer on top of this.</p>\r\n<p>Also, what output driver model were you hoping to use? Is this aimed at a specific soundcard with multiple outputs?</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-12T07:50:43.31-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955192",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>Thank you for your reply Mark,</p>\r\n<p>I looked into MultiplexingWaveProvider and got it working, but then when I tried to do looping, it didn't work. I used the example for looping, which derives a class from WaveStream, but then I can't use the MultiplexingWaveProvider to create an instance\r\n of the LoopStream class. (Not the same types...)</p>\r\n<p>I also still don't know: if I assign two inputs to one output, if it will do real time mixdown or not. (I would think it would, but I haven't been able to test it yet). If it does, then I won't need the MixingSampleProvider.</p>\r\n<p>As for the output driver: I don't know which is the most correct, but so far I've tentatively decided on ASIOOut, because I read that it is the best way to access different outputs on a sound device.</p>\r\n<p>I will look at the sample providers instead of the wave providers, and see if that can perhaps sort out my problem...</p>\r\n<p>I guess I can only keep trying. In the mean time, if someone wants to create this function for me, please pm me with quotes...</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-12-12T09:25:31.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955194",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>For your needs, I'd be tempted to write my own LoopingSampleProvider which takes a delegate that can reset all the WaveFileReaders back to Position 0, and call that when the multiplexer reaches the end. The MultiplexingWaveProvider does not do mixing (it\r\n just patches inputs to outputs). It would be possible to make a mixing one though (probably adapting MultiplexingSampleProvider to have a grid of multipliers so every output can be a mix of every input).</p>\r\n<p>AsioOut is probably a good idea for multiple output soundcards. It does mean that your users will need an ASIO driver installed on their system.</p>\r\n<p>I do sometimes do bits of paid NAudio consultancy work, so if you do want to discuss a quote, you can get in touch via the contact link on my\r\n<a href=\"http://www.codeplex.com/site/users/view/markheath\">CodePlex user profile page</a>.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-12T09:32:47.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955216",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>Thank you again Mark, I will try a little bit with the &quot;sample instead of wave&quot; classes, and if I don't come right, I will contact you... (I'd hate to admit defeat though!)</p>\r\n<p>I think this might help someone else as I couldn't find a clear answer on this: If I have two inputs, let's say L and R, and I use one of the Multiplexing classes, and I mapped both of them to &quot;output 0&quot;: Will it generate an error? If not: What will happen?</p>\r\n",
+    "PostedDate": "2012-12-12T10:18:29.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955241",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>each output can only be connected to a single input</p>\r\n",
+    "PostedDate": "2012-12-12T11:19:57.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955395",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>Is there a way to get a sound card to perform it's own mixdown? Or is mixdown always performed on the PC?</p>\r\n",
+    "PostedDate": "2012-12-12T20:52:17.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955432",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>some types of output model (e.g. WaveOut) let you open the same device multiple times, and so Windows performs the mixing. But with ASIO, you can only open the device once and must mix yourself.</p>\r\n<p>It also depends if you need perfect syncrhonization. If you opened the soundcard twice, you'd have troubles keeping the two playback streams exactly in sync.</p>\r\n",
+    "PostedDate": "2012-12-12T23:56:58.677-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956818",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>I think I might have sorted out the mixing while multiplexing thing! Now I am looking for a way to loop the result. You wrote earlier:</p>\r\n<p style=\"padding-left:30px\">Looping would probably be best implemented with another wrapped layer on top of this.</p>\r\n<p>Could you please provide the noob a little bit more information just to get me going?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-12-17T01:34:51.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956852",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>you'd implement a waveprovider or sampleprovider that in its Read method, returning from the source provider. However, if the source provider's Read method returns 0, then you need to loop. If the source is a WaveStream, then you can loop by setting its\r\n Position to 0. However, if you are working with sample providers, then I'd have a delegate that I called back to reset the sources to the start.</p>\r\n<p>a very quick and dirty example, with a lambda being passed to the looper so it can request reposition to start</p>\r\n<p>var input1 = new WaveFileReader(...);<br>\r\nvar input2 = new WaveFileReader(...);<br>\r\nvar mixer = new YourMixingAndMultiplexingSamplePovider(input1, input2);<br>\r\nvar looper = new Looper(mixer, () =&gt; { input1.Position=0; input2.Position=0; });</p>\r\n",
+    "PostedDate": "2012-12-17T03:00:49.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967544",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>Thanks for taking the time to help me out. I am very confused about this (sorry)</p>\r\n<p>My structure is like this:</p>\r\n<p>I start out with a list of file names. From the filenames, I create an array of meteringsamplesproviders like so: (Note, this is just pseudo code, just to show what I am trying to do)</p>\r\n<p>MeteringSampleProvider[] SamplesBeforeMixdown&nbsp; = new MeteringSampleProvider(new AudioFileReader([FileNames.Count]));</p>\r\n<p>for(int n = 0; n&lt;FileNames.count;n++)</p>\r\n<p>{</p>\r\n<p>MeteringSampleProvider input = new MeteringSampleProvider(new AudioFileReader(FileNames[n]));</p>\r\n<p>SamplesBeforeMixdown[n] = input;</p>\r\n<p>}</p>\r\n<p>Then I pass the array to my MixingMultiplexingSampleProvider, like this:</p>\r\n<p>MixingMultiplexingSampleProvider sampleprovider = new MixingMultiplexingSampleProvider(SamplesBeforeMixdown, WaveOut.GetCapabilities(playbackDeviceNumber).Channels);</p>\r\n<p>Also, I made changes to the MeteringSampleProvide class in order to store offset / channels, so that I can link each sample provider in the array to a waveformpainter control. (I catch the StreamVolume event in order to draw the wave in the waveformpainter.\r\n So I till need to access the UI controls as well.</p>\r\n<p>I am completely confused now as to where/how I need to implement looping. I'm slightly new to this, so sorry for all the questions...</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-12-23T01:43:17.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967553",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>I created the following class:&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>    <span style=\"color:blue\">public</span> <span style=\"color:blue\">class</span> MyLoopingSampleProvider : ISampleProvider \r\n    {\r\n        AudioFileReader audiofilereader;\r\n\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n        <span style=\"color:gray\">///</span><span style=\"color:green\"> Initializes a new instance of MyLoopingSampleProvider</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;filename&quot;&gt;</span><span style=\"color:green\">the path to a sound file&lt;/param&gt;</span>\r\n\r\n        <span style=\"color:blue\">public</span> MyLoopingSampleProvider(<span style=\"color:blue\">string</span> filename)\r\n        {\r\n            audiofilereader = <span style=\"color:blue\">new</span> AudioFileReader(filename);\r\n        }\r\n\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n        <span style=\"color:gray\">///</span><span style=\"color:green\"> Reads samples from this sample provider</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;buffer&quot;&gt;</span><span style=\"color:green\">Sample buffer&lt;/param&gt;</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;offset&quot;&gt;</span><span style=\"color:green\">Offset into sample buffer&lt;/param&gt;</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;sampleCount&quot;&gt;</span><span style=\"color:green\">Number of samples desired&lt;/param&gt;</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;returns&gt;</span><span style=\"color:green\">Number of samples read&lt;/returns&gt;</span>\r\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">float</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\r\n        {\r\n            <span style=\"color:blue\">int</span> bytesread = 0;\r\n\r\n            bytesread = audiofilereader.Read(buffer, offset, count);\r\n\r\n            <span style=\"color:blue\">if</span> (bytesread == 0)\r\n            {\r\n                audiofilereader.Position = 0;\r\n                bytesread = audiofilereader.Read(buffer, offset, count);\r\n            }\r\n\r\n            <span style=\"color:blue\">return</span> bytesread; \r\n        }\r\n\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n        <span style=\"color:gray\">///</span><span style=\"color:green\"> WaveFormat</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n        <span style=\"color:blue\">public</span> WaveFormat WaveFormat\r\n        {\r\n            <span style=\"color:blue\">get</span> { <span style=\"color:blue\">return</span> audiofilereader.WaveFormat; }\r\n        }\r\n\r\n    }\r\n</pre>\r\n</div>\r\n&nbsp;\r\n<p>Not the Read function: When no bytes were returned, it will set the audiofilereader to 0, and just read again.</p>\r\n<p>Then I do like this: For each file in my input array, I'll create the MyLoopingSampleProvider. With the output, I create a meteringsampleprovider (For painting the input waves).</p>\r\n<p>With the array of meteringsampleproviders from above, I then create the mixingmultiplexingsampleprovider.</p>\r\n<p>The output from the mixingmultiplexingsampleprovider is then in turn used to create a meteringsampleprovicer (for painting the output waves).</p>\r\n<p>Finally tha last meteringsampleprovider is used for playing as a waveout.</p>\r\n<p>When I choose only one stereo wavefile as input, it plays twice, then stops. When I choose 2 stereo inputs, it plays 1 and a half times, then stops. When I choose 3 inputs, it plays once, but never repeats.</p>\r\n<p>When I play the MyLoopingSampleProvider directly, (iow without creating the metering and/or MixingMultiplexingSampleProvider it will loop correctly, with no problems.</p>\r\n<p>Am I at least on the right track with what I am doing?</p>\r\n<p>Will I be able to use this method for multiple files with different durations? What it needs to do is to keep playing until the longest sound has finished, then loop all of them at the same time. In other words, it should not loop a shorter file while a\r\n longer file is still playing.</p>\r\n<p>Any help will be very much appreciated!</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-12-23T03:10:21.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967672",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>Sort of, although if you look at the example code I showed earlier, the looper comes after the mixingmultiplexingsampleprovider. You have to do that if you want it to only loop after the longest file has played</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-23T11:36:08.82-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967757",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>I did that first, like you said, but the question then is, is how will I access the position property, since the metering sample provider doesn't have that.. (and the mixing sample provider is created with an array of metering sample providers..)</p>\r\n<div></div>\r\n",
+    "PostedDate": "2012-12-23T22:09:19.237-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "980676",
+    "ThreadId": "406515",
+    "Html": "\r\n<p>the example I showed above passes a delegate which has a closure around the two readers, allowing it to set their Position property to 0. That's how I would do it, but there are other ways to give your Looper access to the mixer inputs so it can reset their\r\n positions.</p>\r\n",
+    "PostedDate": "2012-12-27T00:25:28.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

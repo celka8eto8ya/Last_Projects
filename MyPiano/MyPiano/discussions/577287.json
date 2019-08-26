@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1340366",
+    "ThreadId": "577287",
+    "Html": "Hi,\r<br />\n<br />\nI was trying to use the example-code to play a .wav-file, but I got this strange error.\r<br />\n<br />\nHere is my code:<br />\n<pre><code>\n            int id = 2;//012            \n            var soundFile = &quot;test.wav&quot;;            \n                                             \n            using (var wfr = new WaveFileReader(soundFile)) \n\n            //the Error apears in this line\n            using (WaveChannel32 wc = new WaveChannel32(wfr) { PadWithZeroes = false }) \n            using (var audioOutput = \n                new DirectSoundOut(DirectSoundOut.Devices.ElementAt(id).Guid))\n            {\n                audioOutput.Init(wc);\n                audioOutput.Play();\n\n                while (audioOutput.PlaybackState != PlaybackState.Stopped)\n                {\n                    Thread.Sleep(20);\n                }\n\n                audioOutput.Stop();\n            }</code></pre>\n\nAm I missing something?\r<br />\n<br />\nRegards, Marc<br />\n",
+    "PostedDate": "2015-01-09T06:40:25.303-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340513",
+    "ThreadId": "577287",
+    "Html": "what is the WaveFormat of wc? You can only play waveformats supported by the soundcard you are using. Possibly an unusual sample rate or channel count in this instance? Or maybe even this device doesn't like to play floating point audio<br />\n",
+    "PostedDate": "2015-01-09T13:59:00.223-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

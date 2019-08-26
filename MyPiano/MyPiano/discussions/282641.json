@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "710858",
+    "ThreadId": "282641",
+    "Html": "\r\n<p>Hi, I play a wav file. How do I know, when it ends? I mean, I must do some action when playback is over, but user didn't stopped it manually.</p>\r\n",
+    "PostedDate": "2011-12-12T04:05:01.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710862",
+    "ThreadId": "282641",
+    "Html": "<p>the WaveOut class (and the others) have a PlaybackStopped event you can wait for</p>",
+    "PostedDate": "2011-12-12T04:17:57.077-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710874",
+    "ThreadId": "282641",
+    "Html": "<p>PlaybackStopped occurs only after Stop() method.</p>",
+    "PostedDate": "2011-12-12T04:59:00.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710879",
+    "ThreadId": "282641",
+    "Html": "<p>what version of NAudio are you using? It may well be different in the latest as I did some work on PlaybackFinished for 1.5 a while ago.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-12T05:25:30.56-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710896",
+    "ThreadId": "282641",
+    "Html": "<p>My version is 1.4. Is 1.5 stable?</p>",
+    "PostedDate": "2011-12-12T06:03:06.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710897",
+    "ThreadId": "282641",
+    "Html": "<p>1.5 isn't released yet, but will be very close to what is already in source control.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-12T06:04:08.463-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "711354",
+    "ThreadId": "282641",
+    "Html": "<p>So is there any way in 1.4 to check if playback is finished, or we just have to wait? :)</p>",
+    "PostedDate": "2011-12-13T03:28:55.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "711421",
+    "ThreadId": "282641",
+    "Html": "<p>easiest option is for you to get latest from source control and build your own version. lots of bug fixes and improvements since 1.4</p>",
+    "PostedDate": "2011-12-13T05:45:19.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1446107",
+    "ThreadId": "645520",
+    "Html": "Hello, I am a beginner in C # and in the library Naudio, I need some examples of realties for packing classes and methods Naudio in service Windows?<br />\nPlease tell me, how to use this method here <br />\n<pre><code>public void waveIn_DataAvailable (object sender, WaveInEventArgs e) </code></pre>\n\nin the method <br />\n<pre><code>protected override void OnStart(string[] args)</code></pre>\n\n",
+    "PostedDate": "2015-09-27T11:26:51.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446383",
+    "ThreadId": "645520",
+    "Html": "Well you would be best to use the WaveInEvent class if you are in a Windows service as there is no Windows message loop. But apart from that, the code will work exactly the same as shown in the NAudio demo application.<br />\n",
+    "PostedDate": "2015-09-29T11:39:15.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446410",
+    "ThreadId": "645520",
+    "Html": "Thank you, and now a little bit more, that for WaveInEvent class? Windows message loop?<br />\nI opened Naudio demo, but I do not know what it is possible to use, lots of files, help me please?<br />\n",
+    "PostedDate": "2015-09-29T13:04:17.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

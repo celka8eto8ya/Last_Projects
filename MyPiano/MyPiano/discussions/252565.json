@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "591931",
+    "ThreadId": "252565",
+    "Html": "\r\n<p>Hello, thanks for an awesome library. I'm using it in my open source project iSpy (<a href=\"http://www.ispyconnect.com\">camera security software</a>) - I have a problem where if I unplug the USB microphone whilst NAudio is monitoring it I get an exception\r\n (&quot;nodriver calling waveInPrepareHeader&quot;) - which is fine, but I can't see a way to catch and deal with the error... any ideas?</p>\r\n",
+    "PostedDate": "2011-04-05T04:57:24.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592773",
+    "ThreadId": "252565",
+    "Html": "<p>anybody there? :(</p>",
+    "PostedDate": "2011-04-06T07:03:04.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592848",
+    "ThreadId": "252565",
+    "Html": "<p>can you catch it in the application's unhandled exception handler?</p>\r\n<p>It is quite hard to deal with exceptions in callbacks as depending on your callback model you could be on a thread created by the audio device driver</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-06T08:17:11.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "593230",
+    "ThreadId": "252565",
+    "Html": "<p>hey mark, yes it is running on a different thread, would be good if there could be an error event I could attach to to process the error.. something like:<br /><br />waveIn.Error += new EventHandler(waveIn_Error);</p>\r\n<p><br />I can catch the error in the application at the program level but as ispy allows adding of multiple microphones i then have no way of knowing which one threw it...</p>\r\n<p>Thanks!</p>\r\n<p>Sean</p>",
+    "PostedDate": "2011-04-06T18:58:57.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "594511",
+    "ThreadId": "252565",
+    "Html": "<p>It's a good, although events like that can be a real pain to implement for all possible implementations of IWaveIn due to the wide variety of threading models available. I'll have a think about how it might be done in a future version. You can always take a copy of WaveIn and implement your own in the meantime.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-09T00:21:35.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "806460",
+    "ThreadId": "252565",
+    "Html": "<p>I'm running into the same problem.</p>\r\n<p>I'm using your (just added) WaveInEvent, and when I pull the plug of the Mic while recording I get a MMException \"NoDriver\" in WaveInPrepareHeader called in WaveInBuffer::Reuse().<br /><br />This exception is thrown in WaveInEvent's recording-thread so there is no way for me to catch it.<br />Letting it escalate to the application's Unhandled Exception handler is of no use since there's no way to keep running the program in that case - it has to exit.</p>\r\n<p>Am I correct in assuming there is no handling for unforeseen events like unplugged devices ?<br />Anyway, I'm fixing it locally by modifying the WaveInEvent's recording thread to handle the exception by flipping 'recording' to false, but I'd rather not work with locally modified versions of NAudio of course ;)</p>\r\n<p>Cheers,</p>\r\n<p>Lennart.</p>",
+    "PostedDate": "2012-03-06T12:57:23.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "806462",
+    "ThreadId": "252565",
+    "Html": "<p>My plan for the future (hopefully near future) is for the PlaybackStopped and RecordingStopped events to include a possible Exception. Then all IWavePlayer and IWaveIn implementations have an easy way of reporting exceptions back to the user.</p>",
+    "PostedDate": "2012-03-06T12:59:24.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "806631",
+    "ThreadId": "252565",
+    "Html": "<p>FYI I am successfully catching this in the unhandled exception handler and the application does continue working afterwards:<br /><br />private static void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)&nbsp; &nbsp; {&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>if (e.Exception.Message == \"NoDriver calling waveInPrepareHeader\")&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>//USB audio unplugged (typically the cause) - no other way to catch this exception in the volume level control due to limitation in NAudio&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {&nbsp;</p>\r\n<p>}</p>\r\n<p>}</p>",
+    "PostedDate": "2012-03-06T19:48:21.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "806848",
+    "ThreadId": "252565",
+    "Html": "<p>have checked in some code that will form part of the next version of NAudio. The PlaybackStopped and RecordingStopped events now contain an Exception property that you can examine to see why playback stopped</p>",
+    "PostedDate": "2012-03-07T05:44:06.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

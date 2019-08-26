@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "561730",
+    "ThreadId": "244913",
+    "Html": "\r\n<p>Hi!</p>\r\n<p>I am wondering on how to get information regarding the Time Domain. What I mean by this is the amplitude values at various points in time (or in other words, the raw data of the signal). Im stuck with this.</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2011-02-06T21:46:15.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569494",
+    "ThreadId": "244913",
+    "Html": "<p>You simply want to look at the raw samples. For 16 bit audio, every 2 bytes is a short representing amplitude.</p>",
+    "PostedDate": "2011-02-21T02:06:02.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569536",
+    "ThreadId": "244913",
+    "Html": "<p>Hi!</p>\r\n<p>Ive done it already thanks to your blog. Seems that there was very lots of useful info you posted there about tutorials for NAudio and now I am more comfortable with working with the streams and reading data.</p>\r\n<p>Thanks a lot!</p>",
+    "PostedDate": "2011-02-21T03:53:15.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

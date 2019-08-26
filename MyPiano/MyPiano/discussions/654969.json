@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1474415",
+    "ThreadId": "654969",
+    "Html": "IS there a way to read the mp3tags , including the cover art? ( VB.net)\r<br />\nwould like to retrieve the song name, artist, album and cover<br />\n",
+    "PostedDate": "2016-05-26T12:51:16.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1474422",
+    "ThreadId": "654969",
+    "Html": "not in NAudio I'm afraid. You should be able to find other libraries that can access metadata from MP3 files.<br />\n",
+    "PostedDate": "2016-05-26T13:21:04.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

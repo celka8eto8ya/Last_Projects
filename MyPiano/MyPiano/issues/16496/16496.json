@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I was facing an issue running NAudio on Windows XP 32 bit system. The number of channels reported for the input and output devices was -1.  I am using the WaveIn,WaveOut API's for audio recording and playback. The number of channels detected is fine on Windows7. Is there anyway to get the correct channel count on Windows XP 32bit system.",
+    "LastUpdatedDate": "2016-06-25T08:54:43.713-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-06-20T21:55:06.733-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Audio device channel count query returns incorrect value",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16496
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Sounds like it might be a driver issue. It's certainly not normal behaviour",
+      "PostedDate": "2016-06-25T08:54:43.713-07:00",
+      "Id": 200270
+    }
+  ]
+}

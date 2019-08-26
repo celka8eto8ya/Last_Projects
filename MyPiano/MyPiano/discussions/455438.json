@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1088054",
+    "ThreadId": "455438",
+    "Html": "my problem is to search a specific voice from many voice by help of a voice sample,wording of sample and searching may b different. Suppose we have a recording of meeting an i want to search only the voice of a specific person and i have a voice sample of that person\r<br />\ntool: c#\r<br />\nis there any help in naudio regarding thi??<br />\n",
+    "PostedDate": "2013-09-03T22:24:24.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1088117",
+    "ThreadId": "455438",
+    "Html": "what you want to do is actually an extremely difficult problem to solve. NAudio gives you access to the raw audio samples, but it does not include any speaker recognition algorithms. There are some commercial products that try to do this, but they are usually very expensive.<br />\n",
+    "PostedDate": "2013-09-04T01:32:07.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

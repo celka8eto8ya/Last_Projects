@@ -1,0 +1,51 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I am building a Windows Forms application that uses NAUDIO to record / play audio tracks.\r\n\r\nDuring testing on Windows 7 we disabled all input devices (mics) and tried to record some audio.\r\n\r\nThere was a path through the code that attempted to record via the default input in WaveIn mode.\r\n\r\n\"An unhandled exception of type 'NAudio.MmException' occured in NAudio.dll\r\nAditional information: BadDeviceId calling waveInOpen\r\n\r\nNAudio.MmException was unhandled\r\n  HResult=-2146233088\r\n  Message=BadDeviceId calling waveInOpen\r\n  Source=NAudio\r\n  StackTrace:\r\n       at NAudio.MmException.Try(MmResult result, String function) in c:\\Users\\mike\\Documents\\CSharp\\CommonProjects\\NAudio\\Wave\\MmeInterop\\MmException.cs:line 40\r\n       at NAudio.Wave.WaveIn.OpenWaveInDevice() in c:\\Users\\mike\\Documents\\CSharp\\CommonProjects\\NAudio\\Wave\\WaveInputs\\WaveIn.cs:line 185\r\n       at NAudio.Wave.WaveIn.StartRecording() in c:\\Users\\mike\\Documents\\CSharp\\CommonProjects\\NAudio\\Wave\\WaveInputs\\WaveIn.cs:line 198\r\n       at xxxxxxxxxxClient.Announcements.MicRecordingControl.OnBtnRecordClick(Object sender, EventArgs e) in c:\\Users\\mike\\Documents\\CSharp\\Applications\\xxxxxxxxxxClient\\xxxxxxxxxxClient\\Announcements\\MicRecordingControl.cs:line 237\r\n       at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\r\n       at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\r\n       at System.Windows.Forms.Control.WndProc(Message& m)\r\n       at System.Windows.Forms.ButtonBase.WndProc(Message& m)\r\n       at System.Windows.Forms.Button.WndProc(Message& m)\r\n       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\r\n       at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)\r\n       at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)\r\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)\r\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)\r\n       at xxxxxxxxxxClient.CPU.Run() in c:\\Users\\mike\\Documents\\CSharp\\Applications\\xxxxxxxxxxClient\\xxxxxxxxxxClient\\CPU.cs:line 83\r\n       at xxxxxxxxxxClient.Program.Main(String[] args) in c:\\Users\\mike\\Documents\\CSharp\\Applications\\xxxxxxxxxxClient\\xxxxxxxxxxClient\\Program.cs:line 27\r\n       at System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)\r\n       at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()\r\n       at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)\r\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)\r\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)\r\n       at System.Threading.ThreadHelper.ThreadStart()\r\n  InnerException: \r\n\r\n  Subsequently - if the application is restarted it will no longer play audio! Even if it is pre-recorded.\r\n  \r\n  The Windows Audio Mixer shows audio at the input but nothing at the output, while other inputs (applications) continue to function normally.\r\n  \r\n  Even a reboot of the computer will not clear the problem.\r\n  \r\n  Installing a new copy of the application will resolve the problem i.e. the new install works but the previous install continues to fail.\r\n  \r\n  I tried adding a mic back to the system and recording audio again from the failed application instance. This appears to have recovered the application.\r\n  \r\n  My question - is this a known behaviour of Windows 7? Is there a workaround or other solution that avoids reinstall or having to install a mic and attempt to record again from the same application?\r\n\r\n(Obviously I will eliminate the path through the code as well...)\r\n\r\n",
+    "LastUpdatedDate": "2014-07-17T08:39:13.97-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-06-16T14:57:23.037-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Audio path permanently lost to instance of an application",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16446
+  },
+  "FileAttachments": [
+    {
+      "FileId": 865163,
+      "FileName": "NAUDIO WaveInOpen exception.png",
+      "DownloadUrl": ".\\865163"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I'm not sure how NAudio could break the system this drastically. All we're doing is calling waveInOpen. Sounds more like a bad soundcard driver",
+      "PostedDate": "2014-07-17T08:39:13.97-07:00",
+      "Id": 152705
+    }
+  ]
+}

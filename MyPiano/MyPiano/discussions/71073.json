@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "242378",
+    "ThreadId": "71073",
+    "Html": "<p>Hello all,</p>\r\n<p>&nbsp;</p>\r\n<p>I was very happy to stumble across this class library, it looks great! I've downloaded the examples but I'm having a tough time figuring out where to get started. I'd really like to see an example...just a few lines...showing how to continuously loop wave data in a buffer. For example, let's assume I've precomputed a sine wave of frequency 500 Hz and stored the samples in a short[]. How then do I play this audio in a continuous loop? Thanks so much.</p>\r\n<p>&nbsp;</p>\r\n<p>-L</p>",
+    "PostedDate": "2009-10-05T19:20:24.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "243478",
+    "ThreadId": "71073",
+    "Html": "<p>Hi,</p>\r\n<p>have a look at these recent posts on my blog:</p>\r\n<p><a href=\"http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html\">http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html</a></p>\r\n<p><a href=\"http://mark-dot-net.blogspot.com/2009/10/looped-playback-in-net-with-naudio.html\">http://mark-dot-net.blogspot.com/2009/10/looped-playback-in-net-with-naudio.html</a></p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-08T08:13:58.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "243607",
+    "ThreadId": "71073",
+    "Html": "<p>Mark,</p>\r\n<p>I've looked at the October 10 post and this looks exactly like what I'm after, even the real-time wave modification part. Great stuff! Just to clarify: this seamlessly loops the sinewave until the user hits the button (StartStopSineWave), correct?</p>\r\n<p>-L</p>",
+    "PostedDate": "2009-10-08T13:55:03.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "243608",
+    "ThreadId": "71073",
+    "Html": "<p>Sorry, one more question in addition to the one posted above. Can someone point me to the instructions on how to acquire/build the latest NAudio from the source control so I can try this out? Thanks!</p>\r\n<p>&nbsp;</p>\r\n<p>-L</p>",
+    "PostedDate": "2009-10-08T14:13:10.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "243759",
+    "ThreadId": "71073",
+    "Html": "<p>Hi,</p>\r\n<p>it should be a continuous loop, although bear in mind that if you make sudden rather than gradual changes to the Frequency or Amplitude, then you could get a discontinuity in the output, which would possibly be audible as a click</p>\r\n<p>secondly, I am hoping to release a new NAudio real soon. However, to build from source, go to the <strong>Source Code</strong> tab above and in the top right corner, click <strong>Download </strong>under <strong>Latest Version</strong>. You should find NAudio.sln which you can open in visual studio and press build. You'll find the NAudio.dll in the bin/Debug folder under the NAudio project folder</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-09T00:31:16.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244030",
+    "ThreadId": "71073",
+    "Html": "<p>Mark,</p>\r\n<p>&nbsp;</p>\r\n<p>I'm a little confused over the usage of the &quot;Read&quot; methods in your Sine Wave example. &nbsp;I don't see anywhere in your code where they are explicitly being called...are these methods being called from within the WaveOut.Play() method? Is there documentation describing the IWaveProvider interface and the other classes that make up NAudio? Thanks so much.</p>\r\n<p>&nbsp;</p>\r\n<p>-L</p>",
+    "PostedDate": "2009-10-09T13:53:19.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244184",
+    "ThreadId": "71073",
+    "Html": "<p>yes, when you call Play on an IWavePlayer, it will call the Read method repeatedly whenever it needs to fill up a buffer. To find more documentation on NAudio, take a look at the NAudio category on my blog:</p>\r\n<p>http://mark-dot-net.blogspot.com/search/label/NAudio</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-10T07:57:18.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244748",
+    "ThreadId": "71073",
+    "Html": "<p>Hi Mark,</p>\r\n<p>&nbsp;</p>\r\n<p>I've implemented this and it's working perfectly...almost. I'm getting some pretty loud clicks whenever I change frequency &quot;on the fly&quot;. I'm using a trackbar that sets the new frequency every time I drag it around. I've tried changing the trackbar's Min/Max properties so that every scroll event causes a smaller jump in frequency, but it has no effect on the clicking noise. Is there some way to defeat or lessen this? I'm tantalizingly close to a perfect solution. Thanks in advance!</p>\r\n<p>&nbsp;</p>\r\n<p>-L</p>",
+    "PostedDate": "2009-10-12T10:03:16.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

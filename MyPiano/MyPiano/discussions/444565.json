@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1046999",
+    "ThreadId": "444565",
+    "Html": "Hi,\r<br />\nFirst of all, thank you for making such an easy to use audio library. As a rookie in programming, NAudio helps me a lot in my project.\r<br />\n<br />\nI need to record a mono signal from Line-in jack, the source is only connected to the tip(left channel) of the 3.5mm plug, while the ring(right channel) is unused. I use the following code, written in Visual Basic Express 2010, to record and save the signal to wave file.<br />\n<pre><code>Public WithEvents WaveIn As NAudio.Wave.WaveIn\nPublic WaveWriter As NAudio.Wave.WaveFileWriter\n    \nPrivate Sub ButtonRecord_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonRecord.Click\n        Dim NoOfChannel As Integer = 2\n        WaveIn = New Naudio.Wave.WaveIn\n        WaveIn.DeviceNumber = 0\n        WaveIn.WaveFormat = New NAudio.Wave.WaveFormat(96000, 8, NoOfChannel)\n        WaveWriter = New Wave.WaveFileWriter(&quot;Output.wav&quot;, WaveIn.WaveFormat)\n        WaveIn.StartRecording()\nEnd Sub\n\nPrivate Sub ButtonStop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonStop.Click\n        WaveIn.StopRecording()\n        WaveIn.Dispose()\n        WaveWriter.Close()\nEnd Sub\n\nPrivate Sub WaveIn_DataAvailable(ByVal sender As System.Object, ByVal e As WaveInEventArgs) Handles WaveIn.DataAvailable\n        WaveWriter.Write(e.Buffer, 0, e.BytesRecorded)\nEnd Sub</code></pre>\n\nAfter setting the record volume to a suitable level by Windows mixer, if I record in stereo format, NoOfChannel=2, I can get maximum amplitude from the left channel, each sample byte can swing all the way between 0 to 255, while each right channel sample byte stay at around 128. Since I only need the left channel, writing in stereo format double the file size which waste a lot of disk space.\r<br />\n<br />\nIf I record in mono format, NoOfChannel=1, the recorded amplitude is reduced by half, each sample byte can only swing between 64 and 192 approximately. I get the same result when using other audio recording program such as Audacity. It seems that when recording in mono format, the computer try to average the left and right signal, and since there is no signal applies to right channel, therefore the recorded amplitude is reduced by half. Even if I turn up the record volume, the recorded wave file shows clipping at level 64 and 192.\r<br />\n<br />\nI want to maintain maximum amplitude swing, but keep the filesize small. Is it possible to record the left channel signal only and write into mono format wave file?\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2013-05-22T03:24:47.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1052545",
+    "ThreadId": "444565",
+    "Html": "Solved.<br />\n<br />\nFrom ButtonRecord, set the WaveWriter format to mono, then change the WaveIn_DataAvailable as follow:<br />\n<pre><code>Private Sub WaveIn_DataAvailable(ByVal sender As System.Object, ByVal e As NAudio.Wave.WaveInEventArgs) Handles WaveIn.DataAvailable\n        For i = 0 To e.BytesRecorded / 2 - 1\n            e.Buffer(i) = e.Buffer(2 * i)     ' keep the left channel\n            ' or, e.Buffer(i)=e.Buffer(2*i+1), to keep the right channel\n        Next\n        WaveWriter.Write(e.Buffer, 0, e.BytesRecorded / 2)\nEnd Sub</code></pre>\n\n",
+    "PostedDate": "2013-06-04T03:22:08.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

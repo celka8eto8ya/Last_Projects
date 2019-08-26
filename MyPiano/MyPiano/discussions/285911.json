@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "724253",
+    "ThreadId": "285911",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>It seems that&nbsp; c&#43;&#43;&nbsp; has this object/capability (and in general AudioSession) but I cant see it in the naudio wrapper.</p>\r\n<p>Have I missed it or does it not exist. I guess I can have ago at rolling this is not!</p>\r\n<p>Thanks</p>\r\n<p>nick</p>\r\n",
+    "PostedDate": "2012-01-12T06:31:43.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724677",
+    "ThreadId": "285911",
+    "Html": "<p>yes, if it's not in the NAudio\\CodeAudioApi\\Interfaces folder, then it's not in NAudio. I mainly focussed on what was needed to get simple WASAPI playback and recording working.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-01-13T02:24:59.703-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724708",
+    "ThreadId": "285911",
+    "Html": "<p>Thanks for the reply.</p>\r\n<p>OK, so no inherrent reason. Just seems a big gap as sessions would seem to be quite key!</p>\r\n<p>It there an update on the way - or should I get coding?</p>\r\n<p>nick</p>",
+    "PostedDate": "2012-01-13T04:26:11.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724933",
+    "ThreadId": "285911",
+    "Html": "<p>Sorry, but no plans to do this myself at the moment. NAudio tends to get new features as and when I need them for something.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-01-13T11:45:21.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

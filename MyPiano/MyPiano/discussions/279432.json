@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "698074",
+    "ThreadId": "279432",
+    "Html": "\r\n<p>What is the purpose of MusicSampleProvider in the Drum Machine Demo in the latest source code?</p>\r\n<p>It is used by PatternSequencer to delay by number of samples but what is the exact idea?</p>\r\n",
+    "PostedDate": "2011-11-14T13:03:12.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

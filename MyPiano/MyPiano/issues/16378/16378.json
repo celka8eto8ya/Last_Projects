@@ -1,0 +1,51 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "proposed solution could cause problems elsewhere in NAudio, so no plan to fix this at the moment. Recommend not using BlockAlignReductionStream if you want to read large chunks",
+    "ClosedDate": "2013-05-03T08:34:50.997-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "The BlockAlignReductionStream uses a circular buffer to allow unaligned reading from an otherwise block aligned source stream. If the user tries to read more bytes than would fit in the circular buffer, the BlockAlignReductionStream only reads the amount that fits in the circular buffer, but internally advanced the input stream by the actual requested number of bytes. Future read requests will therefore miss a portion of the input stream.\r\n\r\nA simple fix would be to clamp the number of bytes read from the input stream to the size of the circular buffer. I could not find the svn url for the source tree or figure out where to submit a patch, so I just attached the modified source file.",
+    "LastUpdatedDate": "2013-05-03T08:34:50.997-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-12-10T10:57:51.41-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "AsDesigned"
+    },
+    "Summary": "BlockAlignReductionStream.Read cannot read large chunks.",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16378
+  },
+  "FileAttachments": [
+    {
+      "FileId": 561371,
+      "FileName": "BlockAlignReductionStream.cs",
+      "DownloadUrl": ".\\561371"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "BlockAlignReductionStream is not really designed to be called with large values in the count parameter of Read. The trouble with this solution is that Read could return less than the requested number of bytes even though the stream has not ended, which could cause partially complete buffers to get written to the soundcard.",
+      "PostedDate": "2013-01-03T07:37:19.16-08:00",
+      "Id": 85289
+    }
+  ]
+}

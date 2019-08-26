@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1032684",
+    "ThreadId": "440832",
+    "Html": "I've used MP3Gain to set all of my mp3s to 89db, but it sounds like it doesn't modify the mp3, but sets some kind of tag which NAudio doesn't appear to respect.  Anyone know how to handle this?<br />\n",
+    "PostedDate": "2013-04-18T13:18:31.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1032711",
+    "ThreadId": "440832",
+    "Html": "I have no idea how MP3Gain works, but NAudio simply passes on the MP3 frames to the ACM decompressor that comes with Windows.<br />\n",
+    "PostedDate": "2013-04-18T14:38:07.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1033044",
+    "ThreadId": "440832",
+    "Html": "Grass,\r<br />\n<br />\nYou are correct, MP3Gain uses ReplayGain, which is just a tag indicating how much to attenuate (or boost) the decoded audio to reach the specified average level.  The spec explains it pretty well (it's just some math), and at the end you should have a linear scaling factor (multiply each sample by scaling_factor to get the correct volume level).  Reading the ReplayGain tag is an exercise left to the reader (see the spec!).\r<br />\n<br />\nThe simplest way to support it is with a VolumeSampleProvider wrapper around the MP3 decoder.  Set the volume to the calculated scaling factor for each track and everything should &quot;just work&quot;.<br />\n",
+    "PostedDate": "2013-04-19T07:08:35.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

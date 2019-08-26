@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1206581",
+    "ThreadId": "531237",
+    "Html": "Hi All,\r<br />\nDoes anyone know what will happen if I give WaveOut a device number of a device that has frozen up (ie no longer communicating with windows). I can't test this myself because it's a remote user using a cheap USB soundcard that I suspect might be freezing up but can't be positive.\r<br />\n<br />\nDoes WaveOut default to DeviceNumber=0, the default windows playback device?\r<br />\n<br />\nThe code is basically like this. It's in a Try clause and does not throw an exception.\r<br />\n<br />\nWaveOut outputDevice  = new WaveOut()\r<br />\noutputDevice.DeviceNumber = 1;    // 1 = the frozen sound card device\r<br />\n<br />\nUsing NAudio 1.6\r<br />\nBTW, is there a What's New in NAudio 1.7 readme anywhere?<br />\n",
+    "PostedDate": "2014-02-10T15:53:41.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215874",
+    "ThreadId": "531237",
+    "Html": "Yes, WaveOut defaults to device 0.\r<br />\nRead the <a href=\"http://mark-dot-net.blogspot.co.uk/2013/10/naudio-17-release-notes.html\" rel=\"nofollow\">NAudio 1.7 release notes</a><br />\n",
+    "PostedDate": "2014-02-27T14:35:17.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216090",
+    "ThreadId": "531237",
+    "Html": "Thanks Mark. Good to know. His problem is gone now since he swapped out the soundcard. Hardware issue apparently. \r<br />\n<br />\nAnd thanks for the release notes link. Good stuff. I'm glad I upgraded.<br />\n",
+    "PostedDate": "2014-02-28T05:02:49.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

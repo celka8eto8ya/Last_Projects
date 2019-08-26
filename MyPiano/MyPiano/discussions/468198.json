@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1122146",
+    "ThreadId": "468198",
+    "Html": "dear Sir,\r<br />\nFirst , thanks for the great support in this forum. and thanks for the great control as well.\r<br />\n<br />\nCurrently , i am trying to get sound from serial port as byte. the format of the coming sound is 8KHz , 16 bit , 1 channel. I need to collect the sound and after serial port data is complete , it will save the data to a wav file (and to MP3 file later).\r<br />\nCurrently , i used this code\r<br />\n' 1---------------------------------------- initial declaration -------------------------\r<br />\n  Private Mywriter As WaveFileWriter  ' into class delclaration section\r<br />\n' 2----------------------------------------when need to start recording data from com port --<br />\n<pre><code> Mywriter = New WaveFileWriter(&quot;c:\\y1.wav&quot;, New WaveFormat())\n                AddHandler sPortSound.DataReceived, AddressOf PhoneSoundReceived</code></pre>\n\n' -3----------------------------------------------------- reading com port data ----------------\r<br />\n   Private Sub COMPortSoundReceived(ByVal sender As System.Object, ByVal e As System.IO.Ports.SerialDataReceivedEventArgs)<br />\n<pre><code>    Dim n As Integer = sPortSound.BytesToRead\n    Dim comBuffer As Byte() = New Byte(n - 1) {}</code></pre>\n\nsPortSound.Read(comBuffer, 0, n)<br />\n<pre><code>    If comBuffer.Length &gt; 0 Then\n        Mywriter.Write(comBuffer, 0, n)\n    End If</code></pre>\n\nend sub\r<br />\n' 4------------------------------- need to close recording and build file -------------------<br />\n<pre><code>                If Not IsNothing(Mywriter) Then\n                    Mywriter.Close()\n                    Mywriter = Nothing\n                End If\n\n\n</code></pre>\n\nproblem is that  is did not make part 4 , when closing the application , system crashes showing message &quot;&quot;Wavefilewriter was not disposed    at wavefilewriter.finalize() &quot;  , then this message disappears . However , the file is stored as pcm file (without header) , \r<br />\n<br />\nif I include section 4 , ie to close the wavefilewriter before close application , the program terminates easily without error , stored file is in wav format , , but the length is to much small , eg 0.5 second.\r<br />\n<br />\nplease advice.\r<br />\n<br />\nThanks, <br />\n",
+    "PostedDate": "2013-11-11T15:15:39.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1122443",
+    "ThreadId": "468198",
+    "Html": "You must dispose the WaveFileWriter only after you've received all your audio from the COM port and just before your program exits. Your WaveFormat in the WaveFileWriter constructor also needs to have the correct sample rate and channel count set.<br />\n",
+    "PostedDate": "2013-11-12T09:38:47.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1122484",
+    "ThreadId": "468198",
+    "Html": "Great ... Thanks man, works like charm\r<br />\nThanks for great control , and for the excellent support. :)<br />\n",
+    "PostedDate": "2013-11-12T11:12:56.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

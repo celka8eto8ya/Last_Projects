@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "133652",
+    "ThreadId": "40279",
+    "Html": "First of all, thank you for your excellent library NAudio for NET.<br>\r\n<br>\r\nI want to develop a application that can show the full view of waveform from MP3 and WAV files with horizontal zoom in and zoom out functions. A try to use your Waveformpainter GUI component by using your demo sample but this component display only the waveform according to the reading (display only the progression of playing). I try too the WaveViewer GUI component without success, i don't recognize the data (waveform) display on it. <br>\r\n<br>\r\nI don't find documentations regarding you components (using and/or class implementation), i suppose that is due to &quot;under development&quot; state of you library. <br>\r\n<br>\r\nCould you give me some help (example, tips or explanation) to release this...<br>\r\n<br>\r\nNote : I progarm in Visual Studio 2008 for C#<br>\r\n<br>\r\nThanks for your help...\r\n",
+    "PostedDate": "2008-11-19T06:44:40.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "135054",
+    "ThreadId": "40279",
+    "Html": "hi there,<br>\r\n<br>\r\nNAudio does not currently support a zoomable view of an entire WAV file. It is something I would like to add, but it is not currently at the top of the agenda. It is not that hard to implement, but to get something that is memory efficient and performs well is a little more tricky. I know a lot of the pro DAW apps create temporary &quot;peak&quot; files to optimise their drawing.<br>\r\n<br>\r\nMark<br>\r\n<br>\r\n",
+    "PostedDate": "2008-11-25T02:04:42.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "135474",
+    "ThreadId": "40279",
+    "Html": "Thanks for your answer Mark,<br>\r\n<br>\r\nIn fact i just want to create my own &quot;peak&quot; file and display by myself the waveform. For that i use parts of your library (i don't ask you to finish your promising project in one night :-)). After some empirical tests i found a solution to generate the usefull data for a &quot;peak waveform creation&quot; to hijack the NAudioDemo, but i have a last problem &quot;to complet my plan&quot; : <br>\r\n<br>\r\nIt's seem have a bug in your library to determine the exact lenght of mp3 files : the wavestream.lenght value is wrong, by consequence the total time duration display in screen is wrong too. For Wav files the wavestream.lenght is correct but not for mp3 files. The &quot;time quantity of error&quot; depends to the quality of MP3 encoding (kbps).<br>\r\n<br>\r\nI don't not if the error of &quot;.lenght&quot; is occured after this code : <br>\r\n<br>\r\n<span style=\"font-size:13px;color:#2b91af\">WaveStream</span><span style=\"font-size:13px\"> mp3Reader = </span><span style=\"font-size:13px;color:#0000ff\">new</span><span style=\"font-size:13px\"> </span><span style=\"font-size:13px;color:#2b91af\">Mp3FileReader</span><span style=\"font-size:13px\">(fileName);<br>\r\n<br>\r\nor after this one : <br>\r\n<br>\r\n</span><span style=\"font-size:13px;color:#2b91af\">WaveStream</span><span style=\"font-size:13px\"> pcmStream = </span><span style=\"font-size:13px;color:#2b91af\">WaveFormatConversionStream</span><span style=\"font-size:13px\">.CreatePcmStream(mp3Reader);<br>\r\n<br>\r\nCould you help me to find a solution to resolve this?<br>\r\n<br>\r\nThanks again for your help.<br>\r\n<br>\r\nYann</span>\r\n",
+    "PostedDate": "2008-11-26T02:58:25.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "641509",
+    "ThreadId": "40279",
+    "Html": "<p>Hi.</p>\r\n<p>&nbsp;</p>\r\n<p>Again, first of all thank for your work Mark.</p>\r\n<p>&nbsp;</p>\r\n<p>Yann,</p>\r\n<p>I  am also trying to create my own \"peak\" file, so I wanted to know if  you&nbsp; finally manage to do it; and if you would accept to give me some  advice.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks for your help.</p>",
+    "PostedDate": "2011-07-13T01:01:35.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "641547",
+    "ThreadId": "40279",
+    "Html": "<p>Hi,<br /><br />I have found a solution to&nbsp;manage&nbsp;my own \"peak\" file and my own waveform view, but it's not a&nbsp;standard management&nbsp;of \"peak\" data and waveform,&nbsp;it's too many specific&nbsp;of my program needs. A second and probably more important problem it is that my \"peak\" code and my waveform view code are not isolated in independant file code, and it would be too long to extract this code to the main code. It's why i can not give you a sample code like that. If i have time in the futur, i will extract \"peak\" and waveform generator in independant lib with more universal functions, but i have no plan this&nbsp;soon...<br /><br />I&nbsp;suggest you to use other source sample code&nbsp;like <a href=\"http://wpfsvl.codeplex.com/\">http://wpfsvl.codeplex.com/</a>&nbsp;, very good code to view full waveform of audio file. With this code you can easily hack your own \"peak\" file generator by filtering data used to visualize waveform... You can also use&nbsp;markheath's&nbsp;sample code NAudioDemo or NAudioWpfDemo to hack waveform view control with same technic as wpf sound visualisation library...</p>",
+    "PostedDate": "2011-07-13T02:41:46.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "695179",
+    "ThreadId": "40279",
+    "Html": "<p>Hi,</p>\r\n<p>&nbsp;</p>\r\n<p>Sorry, long time before answering.</p>\r\n<p>&nbsp;</p>\r\n<p>In the end, I did not need any peak file: my problem was that during the zoom, my application was very slow, but I discovered it was a different problem.</p>\r\n<p>Thank again for your help.</p>\r\n<p>(I still have some issues with the managing of the thread that deals with the sound reader, but I'll come to that later).</p>",
+    "PostedDate": "2011-11-08T01:20:57.297-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

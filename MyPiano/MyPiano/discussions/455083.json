@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1086963",
+    "ThreadId": "455083",
+    "Html": "I am trying to use wasapi exclusive mode in a WCF Service.  I am having problems with next audio file to play in exclusive mode.\r<br />\n<br />\n<strong>Shared mode:</strong>\r<br />\nPlays first source and then happily plays next source\r<br />\n<br />\n<strong>Exclusive mode:</strong>\r<br />\nPlays the first source and then will not continue with the next source.  I must IIS Reset to make it work again.\r<br />\n<br />\nAlso for some reason in a web service any call to Waveplayer.Dispose() causes an exception\r<br />\n<br />\nAny thoughts on how I can get the next audio source to play?\r<br />\n<br />\n<strong>Code:</strong><br />\n<pre><code>//Vars\npublic static IWavePlayer Waveplayer;\npublic static WaveStream FileWaveStream;\n\n//Audio function\npublic static void PlayFile(string fileNameToPlay, Int32 playIndex)\n{\n//File handling/error checking code removed for brevity\n Waveplayer = new WasapiOut(dev, wasapisSareMode, wasapiEventCallbacks, wasapiLatency);\n Waveplayer.PlaybackStopped += WaveplayerPlaybackStopped;\n\nFileWaveStream = new MediaFoundationReader(fileNameToPlay,\n                                 new MediaFoundationReader.\n                                 MediaFoundationReaderSettings\n                                 {\n                                         RepositionInRead = true,\n                                         RequestFloatOutput = false,\n                                         SingleReaderObject = false\n                                   });\n\n     if (FileWaveStream == null) break;\n     if (FileWaveStream.WaveFormat.Encoding != WaveFormatEncoding.Pcm)\n           {\n                 FileWaveStream = WaveFormatConversionStream.CreatePcmStream(FileWaveStream);\n                  FileWaveStream = new BlockAlignReductionStream(FileWaveStream);\n            }\n            Waveplayer.Init(FileWaveStream);\n            Waveplayer.Play();\n            Data.ContinuePlayingTracks = true;\n}\n\nprivate static void WaveplayerPlaybackStopped(object sender, StoppedEventArgs e)\n        {\n            if (!Data.ContinuePlayingTracks) return;\n\n            SetPlayIndex(+1);\n            PlayFile(Data.LstMedia[Data.PlayIndex].FullPath + @&quot;\\&quot; + Data.LstMedia[Data.PlayIndex].FileName, Data.PlayIndex);\n        }</code></pre>\n\n",
+    "PostedDate": "2013-08-31T13:23:53.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1087616",
+    "ThreadId": "455083",
+    "Html": "You need to dispose your WasapiOut before creating a new one. The original one is holding on to exclusive access.<br />\n",
+    "PostedDate": "2013-09-03T04:02:18.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1088525",
+    "ThreadId": "455083",
+    "Html": "I have added in a CloseWaveOut() function.  This works in exclusive mode via IIS on 2 of 3 computers I have tried it on.  It does not however work with my M2Tech EVO usb to spdif convertor.  In fact the only way to keep the EVO playing is to not call CloseWaveOut at all using shared mode.  Any call to CloseWaveOut and the EVO will not play again until I IIS reset.  This looks to be a driver issue with the EVO.  Very sad as I wrote this program specifically for my main stereo using the EVO.<br />\n<pre><code> private static void WaveplayerPlaybackStopped(object sender, StoppedEventArgs e)\n        {\n            if (!Data.ContinuePlayingTracks) return;\n            CloseWaveOut();\n\n            SetPlayIndex(+1);\n            PlayFile(Data.LstServerMedia[Data.PlayIndex].FullPath + @&quot;\\&quot; + Data.LstServerMedia[Data.PlayIndex].FileName, Data.PlayIndex);\n        }\npublic static void CloseWaveOut()\n        {\n            if (Waveplayer != null)\n            {\n                Waveplayer.Stop();                \n                Thread.Sleep(200);  // Let the _waveplayer threads finish and exit\n            }\n\n            if (FileWaveStream != null)\n            {\n                // this one really closes the file and ACM conversion\n                FileWaveStream.Dispose();                \n            }\n\n            if (Waveplayer == null) return;\n\n            Waveplayer.Dispose();\n            Waveplayer = null;\n        }\n</code></pre>\n\n",
+    "PostedDate": "2013-09-04T18:31:06.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

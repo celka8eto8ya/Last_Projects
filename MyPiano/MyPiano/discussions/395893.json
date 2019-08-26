@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "913940",
+    "ThreadId": "395893",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I had one project, which used this method. I don't have clue which version of NAudio was used in this project.</p>\r\n<p>But when I tried to check the source code of this method, I couldn't find this method from NAudio 1.5 release.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Could anyone let me know which version of release has this method? Why it is removed from current release?</p>\r\n<p>Thanks in advance!</p>\r\n",
+    "PostedDate": "2012-09-17T23:52:32.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "913978",
+    "ThreadId": "395893",
+    "Html": "<p>no idea when this was removed. I have no memory of it. You could always check the source control history. It's easily calculated using SampleCount and SampleRate</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-09-18T01:43:42.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "914009",
+    "ThreadId": "395893",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Sorry for rockie question. I just started audio programming. Don't really know the concepts yet. Could you please tell me how to use SampleCount and SampleRate to calculate to get the same value as FrameLengthMs() returned.</p>\r\n<p>Thanks!</p>",
+    "PostedDate": "2012-09-18T03:32:14.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "914011",
+    "ThreadId": "395893",
+    "Html": "<p>var milliseconds = (SampleCount * 1000.0) / SampleRate</p>",
+    "PostedDate": "2012-09-18T03:34:13.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "914073",
+    "ThreadId": "395893",
+    "Html": "<p>Works. Thanks again!</p>",
+    "PostedDate": "2012-09-18T05:51:46.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

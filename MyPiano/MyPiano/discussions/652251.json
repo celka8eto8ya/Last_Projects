@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1465920",
+    "ThreadId": "652251",
+    "Html": "Hi,<br />\nSo I'm implementing a filter to audio that I'm reading from a file. I got the filter part working, but now I need to play the filtered audio and write it into a new file and I'm not sure how to implement that part.<br />\n<br />\nHere's where I have my float buffer with the filtered samples.<br />\n<pre><code>    public float[] bandPassFilter(int totalSamples, float[] floatSamples, int sampleRate)\n    { \n        float centerFrequency = (2900 + 330) / 2;\n        float q = 0.71f;\n\n        BiQuadFilter filter = BiQuadFilter.BandPassFilterConstantPeakGain(sampleRate,centerFrequency, q);\n\n        float[] filteredSamples = new float[totalSamples];\n\n        for (int i=0; i&lt;totalSamples; i++)\n        {\n            filteredSamples[i] = filter.Transform(floatSamples[i]);\n        }\n\n        return filteredSamples;\n    }\n</code></pre>\n\nThanks.<br />\n<br />\nUPDATE:<br />\n<br />\nSo I found the write method and here it is how I'm using it<br />\n<pre><code>    public void getSound(int totalSamples, float[] floatSamples, int sampleRate, WaveFormat format)\n    {\n        float[] filteredSamples = bandPassFilter(totalSamples, floatSamples, sampleRate);\n\n        WaveFileWriter fileWriter = new WaveFileWriter(@&quot;C:\\DESTINATION.m4a&quot;, format);\n\n        fileWriter.WriteSamples(filteredSamples, 0, totalSamples);\n    }\n</code></pre>\n\nHowever, I do not get any sound out of it and my media player gives me an error.<br />\n<br />\nIf you could help me I would deeply appreciate it.<br />\n<br />\nThanks again<br />\n",
+    "PostedDate": "2016-03-07T07:07:21.18-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466458",
+    "ThreadId": "652251",
+    "Html": "Call &quot;WaveFileWriter.Dispose()&quot; after writing to update, finalize and close the wav file. m4a is also for sure the false extension, it should be &quot;.wav&quot;.<br />\n",
+    "PostedDate": "2016-03-10T16:50:53.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

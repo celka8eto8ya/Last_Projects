@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1297864",
+    "ThreadId": "564864",
+    "Html": "Hi!\r<br />\nI cant play WMA files via Direct Sound\r<br />\n<br />\nHere is my code\r<br />\n<br />\npublic static void PlayWMAFile(string filename)<br />\n<pre><code>    {\n        WaveStream pcm = WaveFormatConversionStream.CreatePcmStream(new WMAFileReader(filename));\n        stream = new BlockAlignReductionStream(pcm);\n\n        output = new NAudio.Wave.DirectSoundOut(200);\n        output.Init(stream);\n        output.Play();\n    }</code></pre>\n\n",
+    "PostedDate": "2014-09-01T11:43:16.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1298036",
+    "ThreadId": "564864",
+    "Html": "What's not working about your code? You shouldn't need the WaveFormatConversionStream or the BlockAlignReductionStream, since WMAFileReader returns PCM<br />\n<br />\nYou could alternatively try MediaFoundationReader<br />\n",
+    "PostedDate": "2014-09-02T01:46:38.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

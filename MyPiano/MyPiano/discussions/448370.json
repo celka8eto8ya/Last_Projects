@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1061801",
+    "ThreadId": "448370",
+    "Html": "Hi,<br />\n   When playing song in NAudio there is a small stuck(jerk) when minimize and maximize the application or any window in the system.<br />\n<br />\nIs there any problem with my system configuration.<br />\n<br />\nPlease tell the solution for that.<br />\n<br />\nThanks in Advance<br />\n<br />\nRegards,<br />\nHinshin<br />\n",
+    "PostedDate": "2013-06-26T23:48:02.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1061866",
+    "ThreadId": "448370",
+    "Html": "I think this happens because a garbage collection gets triggered. Are you working with low buffer sizes? Longer audio buffers may allow playback to continue uninterrupted<br />\n",
+    "PostedDate": "2013-06-27T02:21:40.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1061920",
+    "ThreadId": "448370",
+    "Html": "Hi,\r<br />\n   How i increase the buffer size.\r<br />\n<br />\nRegards,\r<br />\nHinshin<br />\n",
+    "PostedDate": "2013-06-27T04:24:24.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062348",
+    "ThreadId": "448370",
+    "Html": "Hi Sir, <br />\n<pre><code>   Please tell me How i increase the buffer size. \n\n</code></pre>\n\nThanks in Advance\r<br />\nRegards, \r<br />\nHinshin<br />\n",
+    "PostedDate": "2013-06-28T02:05:10.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062354",
+    "ThreadId": "448370",
+    "Html": "what output model are you using? Most of them contain a BufferSize property<br />\n",
+    "PostedDate": "2013-06-28T02:12:01.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1069974",
+    "ThreadId": "448370",
+    "Html": "Hi Sir,<br />\n<pre><code>    When I play song in NAudio Demo(Audio File Playback) and press minimize and maximize button continuously, it will stuck (small jerk) and it playing.\n</code></pre>\n\nThanks in Advance.\r<br />\nRegards,\r<br />\nHinshin <br />\n",
+    "PostedDate": "2013-07-18T05:00:09.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070002",
+    "ThreadId": "448370",
+    "Html": "As I said before, I think this is the garbage collector running, and interrupting playback. Not a lot can be done, except perhaps work with larger buffer sizes.<br />\n",
+    "PostedDate": "2013-07-18T05:44:50.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071205",
+    "ThreadId": "448370",
+    "Html": "Hi Sir,<br />\n<pre><code>   Thanks for your response, I was using WaveOut as output, please tell me, how to increase buffer size...\n</code></pre>\n\nWhat is the Average Buffer Size for WaveOut.<br />\nThanks &amp; Regards,<br />\nHinshin<br />\n",
+    "PostedDate": "2013-07-22T04:17:26.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1073396",
+    "ThreadId": "448370",
+    "Html": "you can get or set buffer size on the WaveOut object. It's a public property<br />\n",
+    "PostedDate": "2013-07-26T03:14:29.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1314113",
+    "ThreadId": "569995",
+    "Html": "I have  aquestion about the order of disposing wavein object and wavewriter objects using this object.\r<br />\n<br />\nWhich one is true and why? \r<br />\n<br />\nvoid stoprecording()\r<br />\n{\r<br />\nwavewriter.Close();\r<br />\nwavewriter.dispose();\r<br />\nWaveIn.StopRecording()\r<br />\nWaveIn.Dispose()\r<br />\n<br />\n}\r<br />\n<br />\nor\r<br />\n<br />\nvoid stoprecording()\r<br />\n{\r<br />\nWaveIn.StopRecording()\r<br />\nwaveIn.Dispose();\r<br />\nwavewriter.Close();\r<br />\nwavewriter.dispose();\r<br />\n}\r<br />\n<br />\nOr not important at all.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2014-10-16T13:59:53.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1314225",
+    "ThreadId": "569995",
+    "Html": "First thing I would do is the WaveIn.StopRecording(), just to be on the safe side, the rest doesn't really matter in which order you do.<br />\n",
+    "PostedDate": "2014-10-17T01:07:29.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

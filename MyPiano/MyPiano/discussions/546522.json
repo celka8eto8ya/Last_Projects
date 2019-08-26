@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1249419",
+    "ThreadId": "546522",
+    "Html": "Hello !\r<br />\n<br />\nI am currently trying to make a streaming player for this url : <a href=\"http://37.187.73.153:8080/live\" rel=\"nofollow\">http://37.187.73.153:8080/live</a>\r<br />\nIn Naudio demo sample, MP3 STreaming Panel, I copy the URL and I start reading. The sound is clear. Very perfect.\r<br />\n<br />\nBut in my WinForm App, I tried to make the same with my own code but the sound 'crackle'. \r<br />\n<br />\nBut when I copy/paste the code of MP3 Streaming of the demo, in my own application, the sound crackle too ...\r<br />\n<br />\nThe code is the same of the demo version and there is no problem.\r<br />\n<br />\nDo you have an idea ?\r<br />\n<br />\nThanks and sorry for my english !<br />\n",
+    "PostedDate": "2014-05-25T12:21:56.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1252430",
+    "ThreadId": "546522",
+    "Html": "No idea ? :(<br />\n",
+    "PostedDate": "2014-06-03T08:10:06.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

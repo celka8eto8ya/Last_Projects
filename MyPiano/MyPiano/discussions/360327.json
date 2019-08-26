@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "851590",
+    "ThreadId": "360327",
+    "Html": "\r\n<p>&nbsp; <span style=\"font-family:'Segoe UI','sans-serif'; color:black; font-size:14pt\">\r\nHi,</span></p>\r\n<p style=\"margin-left:0.5in\"><span style=\"font-family:'Segoe UI','sans-serif'; color:black; font-size:14pt\">We have a c# project in .Net framework 4.0. In the recording session, we create a multichannel WMA file (6-8 channels).\r\n<br>\r\nThe user should be able to play any channel (one or more) they want. How can I play only one specific channel from a multichannel WMA file or WAV using NAudio ?.</span></p>\r\n<p style=\"margin-left:0.5in\"><span style=\"font-family:'Segoe UI','sans-serif'; color:black; font-size:14pt\">I am using Window 7 and the NAudio version is 1.3</span></p>\r\n<p style=\"margin-left:0.5in\"><span style=\"font-family:'Segoe UI','sans-serif'; color:black; font-size:14pt\">Thanks in advance for your help!</span></p>\r\n",
+    "PostedDate": "2012-06-20T08:43:00.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "851997",
+    "ThreadId": "360327",
+    "Html": "<p>Read this article to understand how to route audio to different outputs:</p>\r\n<p>http://mark-dot-net.blogspot.co.uk/2012/01/handling-multi-channel-audio-in-naudio.html</p>\r\n<p>I'm not sure if the WMA support in NAudio will work with multi-channels. You'll just have to try it. Also, not all output driver models will support being opened with multiple channels.</p>\r\n<p>I also recommend updating to the very latest NAudio code.</p>",
+    "PostedDate": "2012-06-21T01:42:12.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

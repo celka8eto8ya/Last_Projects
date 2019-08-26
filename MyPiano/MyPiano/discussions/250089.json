@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "582008",
+    "ThreadId": "250089",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I'm trying to play a tone and change its frequency in realtime. For generating the tone I used the\r\n<a title=\"Sound Code: Playback of Sine Wave in NAudio\" href=\"http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html\" target=\"_blank\">\r\nSine Wave Tutorial</a> but changing the frequency while the tone is playing leads to a clipping. Can someone explain this?</p>\r\n<p>Is there a possibility to playback a wav or midi file and changing the pitch in realtime?</p>\r\n<p>Thanks in advance,</p>\r\n<p>Alex</p>\r\n",
+    "PostedDate": "2011-03-17T04:27:53.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "583851",
+    "ThreadId": "250089",
+    "Html": "<p>it is possible, but you'd have to write the code to do it yourself. NAudio doesn't have a built-in pitch shifting algorithm.</p>",
+    "PostedDate": "2011-03-21T10:14:29.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

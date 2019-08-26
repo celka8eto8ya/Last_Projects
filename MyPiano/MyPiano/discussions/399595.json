@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "927386",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>How to code circullar buffer to create a delay and used the wavein for micrcophone input and output to speaker?</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;public NAudio.Wave.WaveIn input = null;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public NAudio.Wave.DirectSoundOut waveout = null;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public NAudio.Wave.WaveInProvider wavein = null;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; private void button1_Click(object sender, EventArgs e)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveIn input = new NAudio.Wave.WaveIn();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; input.WaveFormat = new NAudio.Wave.WaveFormat(44100, 2);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IWaveProvider wavein = new NAudio.Wave.WaveInProvider(input);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveout = new NAudio.Wave.DirectSoundOut();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveout.Play();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;</p>\r\n<p>Any answer Guys? :) &nbsp;&nbsp;</p>\r\n",
+    "PostedDate": "2012-10-16T06:52:45.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "927992",
+    "ThreadId": "399595",
+    "Html": "<p>put the audio received into a BufferedWaveProvider and play from that.</p>",
+    "PostedDate": "2012-10-17T05:34:12.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948906",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>Hi all,</p>\r\n<p>I have seen this topic, and I have a question like the one above. here&nbsp;</p>\r\n<p>is my code;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> WaveIn sourceStream = <span style=\"color:blue\">null</span>;\r\n            <span style=\"color:blue\">private</span> WaveOut waveOut = <span style=\"color:blue\">null</span>;\r\n            <span style=\"color:blue\">private</span> BufferedWaveProvider bufferedWaveIn = <span style=\"color:blue\">null</span>;\r\n            <span style=\"color:blue\">public</span> WaveIn_WaveOut_TimeShift(<span style=\"color:blue\">int</span> deviceNumberIN, <span style=\"color:blue\">int</span> deviceNumberOUT, <span style=\"color:blue\">int</span> sampleRate)\r\n            {\r\n                sourceStream = <span style=\"color:blue\">new</span> WaveIn();\r\n                sourceStream.DeviceNumber = deviceNumberIN;\r\n                sourceStream.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat(sampleRate, WaveIn.GetCapabilities(deviceNumberIN).Channels);\r\n                sourceStream.DataAvailable += <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(sourceStream_DataAvailable);\r\n\r\n                bufferedWaveIn = <span style=\"color:blue\">new</span> BufferedWaveProvider(sourceStream);\r\n                bufferedWaveIn.BufferDuration = TimeSpan.FromSeconds(30);\r\n\r\n                waveOut = <span style=\"color:blue\">new</span> WaveOut();\r\n                waveOut.DeviceNumber = deviceNumberOUT;\r\n                waveOut.Init(waveIn);\r\n                \r\n            }\r\n            ~WaveIn_WaveOut_TimeShift()\r\n            {\r\n                Dispose();\r\n            }\r\n            <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Dispose()\r\n            {\r\n                <span style=\"color:blue\">if</span> (sourceStream != <span style=\"color:blue\">null</span>)\r\n                {\r\n                    sourceStream.StopRecording();\r\n                    sourceStream.Dispose();\r\n                    sourceStream = <span style=\"color:blue\">null</span>;\r\n                }\r\n                <span style=\"color:blue\">if</span> (waveOut != <span style=\"color:blue\">null</span>)\r\n                {\r\n                    waveOut.Stop();\r\n                    waveOut.Dispose();\r\n                    waveOut = <span style=\"color:blue\">null</span>;\r\n                }\r\n            }\r\n           \r\n            <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Start()\r\n            {\r\n                sourceStream.StartRecording();\r\n                waveOut.Play();\r\n            }\r\n            <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Stop()\r\n            {\r\n                sourceStream.StopRecording();\r\n            }\r\n            <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> sourceStream_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n            {\r\n                bufferedWaveIn.AddSamples(e.Buffer, 0, e.BytesRecorded);\r\n            }\r\n \r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>How can I add a delay of 15 second for example. I am routing waveIn to waveOut real time. I want to create a delay of n seconds on it.</p>\r\n",
+    "PostedDate": "2012-11-29T03:51:06.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948911",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>Implement an IWaveProvider that in its Read method, just returns empty buffers until a total of 15 * WaveFormat.AverageBytesPerSecond have been requested. Then start returning data from the BufferedWaveProvider.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-29T03:59:40.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948919",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>Sorry but I think that I could not define the question well.</p>\r\n<p>I am routing waveIn input to waveout device at real time.</p>\r\n<p>Then after&nbsp;I want to listen 15 seconds history so I want to roll back to 15 seconds back and listen history for 15 seconds. (I can loose real time data while listening history).&nbsp;</p>\r\n<p>I think that BufferedWaveProvider buffers the desired length of data with BufferDuration property. &nbsp;</p>\r\n<p>So in this case I only want BufferedWaveProvider to provide me a buffer (for waveOut device) that is from history of n seconds instead of latest.</p>\r\n<p>İs this possible?</p>\r\n",
+    "PostedDate": "2012-11-29T04:26:37.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948937",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>you'd need to make your own customised version of BufferedWaveProvider in order to do this.</p>\r\n",
+    "PostedDate": "2012-11-29T04:57:00.537-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948940",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>Ok.</p>\r\n<p>Thanks Mark.</p>\r\n",
+    "PostedDate": "2012-11-29T05:02:16.24-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949789",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>Hi Mark thank you for responding,&nbsp;</p>\r\n<p>I am newbie to this framework. kindly explain how to do it? your answer was &quot;<span>put the audio received into a BufferedWaveProvider and play from that.</span>&quot;</p>\r\n<p>I don't get it actually. please help me for this stuff.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-30T21:29:54.373-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "952362",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>in your code sample above, waveOut.Init should take the bufferedProivder not waveIn. That will mean you are playing from you buffered provider.</p>\r\n",
+    "PostedDate": "2012-12-06T09:11:00.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "952766",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>Hi Mark again,</p>\r\n<p>I have implemented my won BufferedWaveProvider as you said, and it was successfully worked. First of all thank you for your advice.</p>\r\n<p>I want to ask another question.</p>\r\n<p>I have multiple analog inputs and I have to sum all of these inputs to route the sum to other waveOut devices.</p>\r\n<p>I have created a list of bufferedwaveProviders that each element is serving for each wave input (recording). ( I have to have an ability to return back to n seconds in any time, so I have used bufferedWaveprovider with some editing)</p>\r\n<p>Now I can route one waveIn analog device to waveOut analog device with the help of this bufferredWaveProvider.</p>\r\n<p>And for summing the audios I have coded like the one below.&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> SumProviders(<span style=\"color:blue\">int</span> length)\r\n            {\r\n                <span style=\"color:blue\">byte</span>[] last = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[length];\r\n                <span style=\"color:blue\">byte</span>[] temp = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[length];\r\n                <span style=\"color:blue\">int</span> bytesPerSample = 4; \r\n                <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> index = 0; index &lt; bufferedWaveInProviders.Count; index++)\r\n                {\r\n                    <span style=\"color:green\">//read wave providers one by one</span>\r\n                    bufferedWaveInProviders[index].Read(temp, 0, length);\r\n                    <span style=\"color:green\">//add all...</span>\r\n                    <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> i = 0; i &lt; length / bytesPerSample; i++)\r\n                    {\r\n                        <span style=\"color:blue\">float</span> sampleTemp = BitConverter.ToSingle(temp, i * bytesPerSample);\r\n                        <span style=\"color:blue\">float</span> sampleLast = BitConverter.ToSingle(last, i * bytesPerSample);\r\n                        sampleLast = sampleLast + sampleTemp;\r\n                        <span style=\"color:blue\">byte</span>[] bytes = BitConverter.GetBytes(sampleLast);\r\n                        Array.Copy(bytes, 0, last, i * bytesPerSample, bytesPerSample);\r\n                    }\r\n                }\r\n                bufferedWaveForPlaying.AddSamples(last, 0, length);\r\n            }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>I am calling this function on sourceStream_DataAvailable event handler of my waveIn devices for each input.</p>\r\n<p>Here bufferedWaveForPlaying is the buffer that I have initilized my waveOut device with.&nbsp;</p>\r\n<p>Now I am hearing the mixed audio, but playing speed is too slow? What can be the problem?</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-07T01:15:18.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953458",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>if the play speed is too slow, check your waveformat. For example playing stereo audio as though it was mono can result in playback too slow.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-09T00:04:56.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954460",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>Hi Again,</p>\r\n<p>I have solved the problem by using WaveMixerStream32 class with some editing.</p>\r\n<p>Another question is I want to send this mixer's output from UDP port to somewhere. (as digital sound)</p>\r\n<p>I have implemented a thread and for each 1000ms, I am sending a block from mixer to udp port.</p>\r\n<p>&nbsp;</p>\r\n<p>For each 1000 ms;</p>\r\n<p>my thread is reading a block from mixer by mixer.Read(data,0,block_size)</p>\r\n<p>My block size is : waveformat.sampleRate * waveformat.BlockAlign&nbsp;</p>\r\n<p>An then send this data to udp port.</p>\r\n<p>&nbsp;</p>\r\n<p>On the server side I am receiving this data, but if I play the data, it is too noisy?</p>\r\n<p>What can be the problem?</p>\r\n<p>&nbsp;</p>\r\n<p>In adition to this: I have sent an existing wave file like this to udp port, and there is not any problem. &nbsp;I received and played at the server side. Also I have played the mixer's output by waveout device. The problem is about sending mixer's output by\r\n udp(catching mixer's output buffer)!</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-11T03:25:20.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954477",
+    "ThreadId": "399595",
+    "Html": "\r\n<p>I have solved the problem, thanks.</p>\r\n<p>I had to do a 32 to 16 conversion that I have forgetton before sending it from UDP.</p>\r\n",
+    "PostedDate": "2012-12-11T04:14:57.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

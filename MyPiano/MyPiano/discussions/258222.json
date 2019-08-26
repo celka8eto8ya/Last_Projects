@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "615145",
+    "ThreadId": "258222",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I've come here from a discussion about using DirectSound in C#. I want to rewrite my music database and player to not control a Winamp instance anymore but instead directly play back the music files. I have both MP3 and AAC&#43; files. If there is a DirectSound\r\n (or was it DirectShow?) codec installed (ffdshow should do), I guess that DirectSound could well be used to play back such files. But for the cross-fading part, I'd need to look into the file and analyse the samples to know when to fade and how fast. (You\r\n know, the kind of fading quality you get on the radio.)</p>\r\n<p>Does NAudio support such things? Can it play AAC&#43; files through a DirectShow codec and give me the samples so that I can fade two streams? The MP3 playback example looks very much MP3-specific. Or am I better off following the DirectSound path, not using\r\n NAudio?</p>\r\n",
+    "PostedDate": "2011-05-19T04:43:04.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "615179",
+    "ThreadId": "258222",
+    "Html": "<p>Hi,</p>\r\n<p>The codec support in NAudio is mainly based around ACM. I do have code that wraps DirectX Media Objects (DMOs), although using those is not so straightforward in NAudio. I don't know if DirectShow filters appear as DMOs though. I never did understand why Microsoft needed to invent so many codec APIs (there is also MFT), One day I hope NAudio will be able to utilise any codec found on your PC, but we are not there yet.</p>\r\n<p>As for cross-fading, there isn't a built-in component that does that - you would have to write it yourself. The next NAudio API has a new interface called ISampleProvider which will make implementing that type of code much simpler as you get the audio in a float[] array instead of byte[] array (although with the existing NAudio API you can access floating point samples quickly using the WaveBuffer class).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-19T05:57:15.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

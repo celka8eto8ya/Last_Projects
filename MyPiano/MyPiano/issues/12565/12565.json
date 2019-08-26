@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:23:07.523-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "While playing with your library (and the CoreAudioApi) I got an Exception while trying to access the ID-property.\r\nThe exceptionmessage was something like \"Too long string\" (I have only the german VS).\r\nI took a look and decided to try to add an explicit MarshalAs to GetId in IMMDevice.cs\r\n\r\nI changed\r\nint GetId(out string id);\r\nto\r\nint GetId([MarshalAs(UnmanagedType.LPWStr)] out string id);\r\nand this resolved my problem.",
+    "LastUpdatedDate": "2012-10-27T00:23:07.523-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-04-09T01:47:42.547-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "(I)MMDevice.ID throws MarshalDirectiveException",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12565
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "have checked in the suggested fix, thanks",
+      "PostedDate": "2010-04-15T09:07:38.583-07:00",
+      "Id": 41810
+    },
+    {
+      "Message": "work for me as well, please include this fix in next release",
+      "PostedDate": "2011-03-29T06:33:43.287-07:00",
+      "Id": 41811
+    },
+    {
+      "Message": "released in NAudio 1.6",
+      "PostedDate": "2012-10-27T00:23:01.9-07:00",
+      "Id": 81115
+    }
+  ]
+}

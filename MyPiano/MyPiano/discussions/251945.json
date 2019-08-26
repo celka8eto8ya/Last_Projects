@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "589335",
+    "ThreadId": "251945",
+    "Html": "<p>A have made player based on NAudioDemo example.</p>\n<p>When I click play button I want to start playing immediately and then start drawing the wave. I would like to visualize entire wave, not just the currently playing buffer.</p>\n<p>Well, my question is, how to read entire wavestream for visualization purposes while playing?</p>\n<p>A was thinking about my own class derived from wavestream, where I would read underlying wavestream to memory in constructor. Overriden Read() method would then read from memory, not underlying wavestream.</p>",
+    "PostedDate": "2011-03-31T02:14:41.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "590938",
+    "ThreadId": "251945",
+    "Html": "<p>that would work, although would require potentially a lot of memory. You could alternatively create a second WaveStream for the purposes of visualisation.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-03T09:11:52.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "591058",
+    "ThreadId": "251945",
+    "Html": "<p>I have an example of this in my WPF control library:&nbsp;http://wpfsvl.codeplex.com/</p>\r\n<p>I use a second WaveStream on a separate thread to achieve this result. The waveform can fill out as the song plays.</p>",
+    "PostedDate": "2011-04-03T19:48:34.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "591171",
+    "ThreadId": "251945",
+    "Html": "<p>My initial thought was to avoid encoding files twice but is seems that the performance loss is 'cheaper' than memory usage in this case.</p>\n<p>@jacobj: nice example, for now I will use what I have already done, because to rewrite yours compoment for my usage would be probably more difficult. I'm using bitmap to visualize waveform as it's faster and I don't need to stretch. I have troubles with very long songs,  it's causes OutOfMemoryException but I can split bitmaps, or potencionally use drawingcontext instead of writablebitmap.</p>",
+    "PostedDate": "2011-04-04T02:10:37.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "591183",
+    "ThreadId": "251945",
+    "Html": "<p>@jacobj - that looks a really nice project, thanks for sharing</p>",
+    "PostedDate": "2011-04-04T02:30:09.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

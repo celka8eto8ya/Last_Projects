@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "604581",
+    "ThreadId": "255653",
+    "Html": "\r\n<p>Hi - can NAudio be used to control music software such as FL Studio as a MIDI controller? Synthesizers in FL Studio can have their parameters controlled by a MIDI controller - e.g. when I hook up my MIDI keyboard controller I can use the knobs on it to control\r\n the synthesizer settings in FL Studio. How can a .NET app be recognized as a MIDI controller? I've developed a simple WPF application that uses MidiOut but it doesn't work... &nbsp;I'm sure I'm missing something. Here is what I've got so far:</p>\r\n<p>// only one device on my system, can I assume zero?<br>\r\nmidiOut = new MidiOut(0);&nbsp;</p>\r\n<p>// this code called whenever I change the value of a slider control...<br>\r\nvar message = MidiMessage.ChangeControl((int)MidiController.Modulation, myModulation, channelNumber);<br>\r\nthis.midiOut.Send(message.RawData);</p>\r\n<p>Any thoughts?</p>\r\n",
+    "PostedDate": "2011-04-28T19:44:36.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604687",
+    "ThreadId": "255653",
+    "Html": "<p>that should work, but MidiOut(0) will not send messages to your MIDI input device, so FL Studio will not receive it. You might need to use a MIDI loopback like <a href=\"http://www.midiox.com/myoke.htm\">MIDI Yoke</a> to connect the output of your WPF app to FL Studio. Alternally if you have a USB midi interface, connect the MIDI out to the MIDI in with a cable.</p>",
+    "PostedDate": "2011-04-29T01:27:05.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604845",
+    "ThreadId": "255653",
+    "Html": "<p>Sounds like Midi Yoke is what I'm looking for. I already have the USB midi interface working :) I'm only interested in writing my own controller. Thanks!</p>\r\n<p>-Mike</p>",
+    "PostedDate": "2011-04-29T07:27:03.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1450264",
+    "ThreadId": "646772",
+    "Html": "The WdlResamplingSampleProvider is created with const filterCount = 2.<br />\n<br />\nSince one filter has a filterorder of 2, it produces a transferfunction of order 2x2 = 4.<br />\nI have rebuild the filter in Matlab and the bodeplot would look like this:<br />\n<br />\n<a href=\"https://www.dropbox.com/s/dzxahfr5h5sqof1/BodeFilt2x2.jpg?dl=0\" rel=\"nofollow\">https://www.dropbox.com/s/dzxahfr5h5sqof1/BodeFilt2x2.jpg?dl=0</a><br />\n<br />\nFs = 44100 Hz<br />\nFsDown = 14700 Hz<br />\n<br />\nI think the filterorder is to slow. For example if you have a quantization of 16 bit, then a good antialiasing-filter should have an attenuation of 6.02 * N_QuantBit = 96dB.<br />\n<br />\nTo get this 96 dB, the correct filterCount would be 12.<br />\nThis would look like this:<br />\n<br />\n<a href=\"https://www.dropbox.com/s/tt0qln2lpe1v6sq/BodeFilt12x2.jpg?dl=0\" rel=\"nofollow\">https://www.dropbox.com/s/tt0qln2lpe1v6sq/BodeFilt12x2.jpg?dl=0</a><br />\n<br />\nI would suggest to calculate the dynamic filterCount in the constructor:<br />\n<br />\nint filterCount = (int) Math.Floor(6.02*source.WaveFormat.BitsPerSample/8)/2;<br />\nresampler.SetMode(true, filterCount, false);<br />\n<br />\nSo do I missed something or what is your opinion?<br />\n",
+    "PostedDate": "2015-10-29T03:36:49.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1450296",
+    "ThreadId": "646772",
+    "Html": "The NAudio code is a straightforward port of the original C++ code from the WDL library, used with permission. If you have questions about the implementation, I suggest you ask them over at the WDL forums on the cockos site.<br />\n",
+    "PostedDate": "2015-10-29T07:23:15.397-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1450299",
+    "ThreadId": "646772",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nThe NAudio code is a straightforward port of the original C++ code from the WDL library, used with permission. If you have questions about the implementation, I suggest you ask them over at the WDL forums on the cockos site.<br />\n</blockquote>\nYeah I know, they helped me out with some information about the filters.\r<br />\n<br />\nBut the filterCount is set by WdlResamplingSampleProvider and not the WDLResampler itself. So I thought it's kinda NAudio-thing. Anyway, I thought it would be interesting for you to know.<br />\n",
+    "PostedDate": "2015-10-29T07:33:32.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1450301",
+    "ThreadId": "646772",
+    "Html": "OK, thanks. I'll try to take another look at this.<br />\n",
+    "PostedDate": "2015-10-29T07:37:31.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

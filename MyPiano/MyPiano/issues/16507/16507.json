@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hello,\r\n\r\nI think it is impossible right now to read the samples of CD-Audio disc. \r\n\r\nI suggest to add the support for the AudioFileReader. ",
+    "LastUpdatedDate": "2017-01-28T08:11:50.593-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-01-20T01:26:55.513-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "support for CD-Audio in AudioFileReader",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16507
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I'm afraid this is not something I have plans to support in NAudio at the moment. I am happy to accept pull requests though",
+      "PostedDate": "2017-01-28T08:11:50.593-08:00",
+      "Id": 206286
+    }
+  ]
+}

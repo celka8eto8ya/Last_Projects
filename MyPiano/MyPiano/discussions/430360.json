@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "990050",
+    "ThreadId": "430360",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I would like to know if NAudio can read MIDI, and if it's possible read the values of each frequency (value of each signal) of this file</p>\r\n",
+    "PostedDate": "2013-01-21T17:06:56.94-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990290",
+    "ThreadId": "430360",
+    "Html": "\r\n<p>NAudio has classes to read MIDI events from standard MIDI files. MIDI events do not contain frequency information, but you can get the Note numbers from the Note On events.</p>\r\n",
+    "PostedDate": "2013-01-22T05:57:16.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990337",
+    "ThreadId": "430360",
+    "Html": "\r\n<p>Ok, and the read of MIDI file is like a WAV or MP3&nbsp;file ?? or is most complex ...&nbsp;Do iu have&nbsp;examples about it&nbsp;???</p>\r\n",
+    "PostedDate": "2013-01-22T07:21:01.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990339",
+    "ThreadId": "430360",
+    "Html": "\r\n<p>There is a MidiFileReader class you can use. <a href=\"http://midifilemapper.codeplex.com/\">\r\nMidiFileMapper</a> is an example of an application that uses it. You should probably also do some reading up on the difference between WAV and MIDI files, as they are very different.</p>\r\n",
+    "PostedDate": "2013-01-22T07:23:07.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

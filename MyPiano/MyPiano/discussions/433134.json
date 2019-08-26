@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1001145",
+    "ThreadId": "433134",
+    "Html": "Hello,guys I want to make a drum Machine like the one in the examples,but when I open the examples I have 640 errors, so I decided instead reapairing it and trying to modify it, to make my own.<br />\nSo actually what I did till now is to draw 4x4 matrix and each row is processed from timer which check each position every 100ms, I mean if the timer want to see the third row the value of the integer will be 300ms when I divide - 300/100 = 3 i get the index of the current row.<br />\nThen I have 4 wav files loaded and I add them to the mixer if some of the rectangles are clicked then I convert the 32bit mixer output to 16bit again and play it threw DirectSoundOut.<br />\nWhat I dont understand is why the  mixer is not mixing my inputs and how to play them more smoothly somehow ?<br />\n<pre><code> void AddToMixer(WaveFileReader file)\n        {\n            var toAdd = new WaveChannel32(file);\n            toAdd.PadWithZeroes = false;\n            toAdd.Volume = 1.0f;\n            mixer.AddInputStream(toAdd);\n        }</code></pre>\n\n",
+    "PostedDate": "2013-02-14T04:54:36.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1001742",
+    "ThreadId": "433134",
+    "Html": "well the drum machine demo is meant to show how I would go about approaching this problem. So long as you are reading from your mixer, it will read from each of its inputs.<br />\n",
+    "PostedDate": "2013-02-15T03:27:28.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1124726",
+    "ThreadId": "469336",
+    "Html": "I do a FFT to my input signal \r<br />\nbut now I am to display it with waveViewer1 \r<br />\n<br />\nbut I think I have to make a WaveFormat out of the array 1st?\r<br />\nis this so?\r<br />\nhow would I do this?<br />\n",
+    "PostedDate": "2013-11-16T13:55:46.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1124881",
+    "ThreadId": "469336",
+    "Html": "Dear Sir, \r<br />\n<br />\nI need to get FFT of my mp3 file. I need to get the amplitude  at a ceratain frequency. Can you please supply me with your code about how to implement FFT.\r<br />\nThanks for support.<br />\n",
+    "PostedDate": "2013-11-16T16:09:34.447-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1125834",
+    "ThreadId": "469336",
+    "Html": "do you know display raw float data in to a waveViewer1?<br />\n",
+    "PostedDate": "2013-11-17T21:13:28.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1125874",
+    "ThreadId": "469336",
+    "Html": "waveViewer displays waveforms, not FFTs. It's a very simple control, and will probably be removed from NAudio. For visualizations of FFTs, have a look at the demo in the WPF Demo source code. Also, if you are a Pluralsight subscriber I explain in detail how audio can be visualised in Module 7 of this course: <a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio</a><br />\n",
+    "PostedDate": "2013-11-18T00:21:48.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126142",
+    "ThreadId": "469336",
+    "Html": "Dear btb4198 , \r<br />\n<br />\nI need to make FFT for my mp3 file. Can you please write down the code you made for FFT . FFT is a very complex issue for me.\r<br />\nThanks for support.<br />\n",
+    "PostedDate": "2013-11-18T10:52:14.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126899",
+    "ThreadId": "469336",
+    "Html": "waleedmakarem,\r<br />\n<br />\nI am still working on my DSP class...\r<br />\nduring testing it work some times but not all the time<br />\n",
+    "PostedDate": "2013-11-19T22:27:03.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127501",
+    "ThreadId": "469336",
+    "Html": "Dear btb4198\r<br />\n<br />\nI am now trying to detect dtmf tone from wav file. I need to get the frequency. of a small wave file. just to get the 2 main peaks frequencies.\r<br />\ndoes your dsp class convert wav file, or mp3 file to frequancy array through fft.\r<br />\n<br />\nSorry , but i am really lost into FFT :(\r<br />\n<br />\nThanks for support\r<br />\n<br />\nWaleed<br />\n",
+    "PostedDate": "2013-11-21T04:57:22.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244563",
+    "ThreadId": "469336",
+    "Html": "waleedmakarem\r<br />\ndoes you still need an FFT?\r<br />\nI got minez to work a while ago..\r<br />\n<br />\nlet me know if you need one<br />\n",
+    "PostedDate": "2014-05-12T13:45:46.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

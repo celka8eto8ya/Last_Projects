@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "581825",
+    "ThreadId": "250041",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I am trying to use NAudio in conjunction with VST.NET so that I do not have to create every control that I want to use on my synthesizer from scratch. I have spent a while trying to get NAudio to register in the GAC, because when I add an NAudio component\r\n to my VST.NET GUI and then try to validate the outputted VST, I get an error that says &quot;Inner Exception: System.IO.FileNotFoundException: Could not load file or assembly 'NAudio ... ' or one of its dependencies. The system cannot find the file specified.</p>\r\n<p>I added the DLL to the references folder in my project, but I had to manually add the components into the toolbox in visual studio. NAudio works fine in a separate project that is simply a WFA and not connected with VST.NET in any way (as I can run the project\r\n and mess with the controls and return values), but I'd really like to get it connected to VST.NET. I tried rebuilding the NAudio project for x64, as I saw that was a problem with other people, but I got the same result.</p>\r\n<p>If&nbsp;you have any suggestions for me on what I could do, let me know. I'm trying to make this work for my senior project, and if I need to create the controls myself, I&nbsp;can, but I really want to see if I can get NAudio to work for me first.</p>\r\n<p>Thanks for your help in advance,</p>\r\n<p>Jake</p>\r\n",
+    "PostedDate": "2011-03-16T17:41:03.22-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "583849",
+    "ThreadId": "250041",
+    "Html": "<p>I've not got much experience with registering things in the GAC. You could try asking on StackOverflow</p>",
+    "PostedDate": "2011-03-21T10:13:35.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

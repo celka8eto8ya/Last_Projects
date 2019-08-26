@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1466311",
+    "ThreadId": "652357",
+    "Html": "I am doing MP3 playback using AudioFileReader and WaveOut.\r<br />\n<br />\nI am able to set AudioFileReader.Position in code while a song is playing, and it works great. The playback jumps to the new position and continues without missing a beat.\r<br />\n<br />\nHowever, if I call WaveOut.Pause(), then change AudioFileReader.Position, then call WaveOut.Resume(), the playback resumes, but the output is garbled. If I don't change the position in between the Pause() and Resume(), everything is fine.  It's only the specific case of Pause() -&gt; change Position -&gt; Resume() that cause the garbled playback.\r<br />\n<br />\nIs this a known bug, or am I doing something wrong?\r<br />\n<br />\n-Joe<br />\n",
+    "PostedDate": "2016-03-09T15:46:00.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466320",
+    "ThreadId": "652357",
+    "Html": "Try to resume with &quot;WaveOut.Play()&quot; instead of &quot;WaveOut.Resume()&quot;. I think this is might be an old WaveOut issue.<br />\n",
+    "PostedDate": "2016-03-09T17:31:59.197-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466325",
+    "ThreadId": "652357",
+    "Html": "That worked, thanks!  What is the difference between those two methods?<br />\n",
+    "PostedDate": "2016-03-09T18:46:34.28-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466454",
+    "ThreadId": "652357",
+    "Html": "Looking at the source the difference is, that &quot;WaveOut.Resume()&quot; is calling the native restart function without enqueueing buffers like &quot;WaveOut.Play()&quot;.<br />\n",
+    "PostedDate": "2016-03-10T16:04:46.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

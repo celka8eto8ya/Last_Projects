@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "481907",
+    "ThreadId": "223974",
+    "Html": "<p>I'm currently working on a project wherein I'm using NAudio to create the background music and voice tracks for a video as a single .wav file. I noticed that the latency can be set for playback devices, but I have not found where or even if that can also be acheived when writing to a file. The background music is all in .mp3 format and it gets rather choppy when mixed to the voice stream and rendered to a file. Any help is appreciated. (Note:&nbsp;Have been unable to&nbsp;read the tutorials as my workplace blocks all blog-type sites).</p>",
+    "PostedDate": "2010-08-18T08:16:11.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "481927",
+    "ThreadId": "223974",
+    "Html": "<p>It was decided that for the number of background music files that would be stored that .wav format would be fine as far as space was concerned, so the above is no longer an issue with my current project. (Still would be nice to know however.)</p>",
+    "PostedDate": "2010-08-18T09:00:59.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "489672",
+    "ThreadId": "223974",
+    "Html": "<p>latency refers to the amount of time between preparing samples for playback and actually playing them. it doesn't have any relevance to MP3 files.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-06T04:19:44.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

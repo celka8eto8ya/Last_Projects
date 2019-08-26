@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1130018",
+    "ThreadId": "471429",
+    "Html": "I have written an application to get audio off an external USB soundcard via the NAudio.WasapiCapture class and get audio back onto the soundcard via the NAudio.WasapiOut class. This soundcard has got two channels – left and right. Is there a way to specify in code which channel you are taking the audio from and which channel you are outputting the audio back onto the soundcard? So for instance would it be easy to specify taking audio off the left channel only and then outputting audio onto the right channel only? <br />\n",
+    "PostedDate": "2013-11-28T08:26:48.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130839",
+    "ThreadId": "471429",
+    "Html": "With Wasapi you record both channels, and then you can throw away audio from the channel you don't want.\r<br />\nAlso, when you play, open the soundcard in stereo, and use a MonoToStereoWaveProvider or even a MultiplexingWaveprovider to control what you are sending to each channel.<br />\n",
+    "PostedDate": "2013-12-02T03:22:38.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

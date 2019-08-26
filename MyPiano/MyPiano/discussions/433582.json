@@ -1,0 +1,122 @@
+[
+  {
+    "Id": "1003044",
+    "ThreadId": "433582",
+    "Html": "I'm currently building a visual application that will capture internal audio using NAudio and the WASAPI Loopback device.<br />\n<br />\nReferring to the code of your other .Net VoiceRecorder sample application, which allows you to display a real-time peak indicator through the Sample Aggregator mechanism. Now this code has been developed around one set WaveFormat (1 channel 16bit PCM @ 44.1KHz ) and seems to do the job nicely.<br />\n<br />\nI'm trying to adapt this approach to be used with uncertain format of WASAPI Loopback to display a peak value in my application, in my system preferences for the playback device (Win 7) my system is set to 2 channel 16bit @ 44.1KHz, but I don't seem to be having much luck getting this working correctly (the silent output wont sit at 0 for example).<br />\n<br />\nIn this situation is the WaveFormat returned by WasapiLoopbackCapture actually:<br />\n<br />\nAverageBytesPerSecond 352800<br />\nBitsPerSample 32<br />\nBlockAlign 8<br />\nChannels 2<br />\nExtensible<br />\nExtraSize 22<br />\nSampleRate 44100<br />\n<br />\nor is this just a generic format output by default?<br />\n<br />\nDo you have any advice/insights that would help in a situation like this?<br />\n<br />\nP.S. Anything I record using WASAPI Loopback to WAV cannot be played by any of the NAudio demos, an acmFormatSuggest exception is thrown. <br />\n<br />\nThanks,<br />\n<br />\nOllie<br />\n",
+    "PostedDate": "2013-02-18T13:54:40.303-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003101",
+    "ThreadId": "433582",
+    "Html": "After a bit of extra perseverance I have figured it out,\r<br />\n<br />\nAnd it's as simple as:<br />\n<pre><code> sample32 = BitConverter.ToSingle(buffer, index);</code></pre>\n\nWASAPI Loopback's buffer byte array at DataAvailable contains 32 bit single-precision floats (not 16 bit shorts), so to get a sample value between 1f and -1f you need to use the following code before SampleAggregator:<br />\n<pre><code>       void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            byte[] buffer = e.Buffer;\n            int bytesRecorded = e.BytesRecorded;\n            WriteToFile(buffer, bytesRecorded);\n\n            int bufferIncrement = (int)(this.waveIn.WaveFormat.BlockAlign / this.waveIn.WaveFormat.Channels);\n            int bitsPerSample = this.waveIn.WaveFormat.BitsPerSample;\n\n            for (int index = 0; index &lt; e.BytesRecorded; index += bufferIncrement)\n            {\n                float sample32 = 0;\n\n                if (bitsPerSample &lt;= 16) // Presume 16-bit PCM WAV\n                {\n                    short sample16 = (short)((buffer[index + 1] &lt;&lt; 8) | buffer[index + 0]);\n                    sample32 = sample16 / 32768f;\n                }\n                else if (bitsPerSample &lt;= 32) // Presume 32-bit IEEE Float WAV\n                {\n                    sample32 = BitConverter.ToSingle(buffer, index);\n                }\n                else\n                {\n                    throw new Exception(bitsPerSample + &quot; Bits Per Sample Is Not Supported!&quot;);\n                }\n\n                // Clip Sample - Prevents Issues Elsewhere\n                if (sample32 &gt; 1.0f)\n                    sample32 = 1.0f;\n                if (sample32 &lt; -1.0f)\n                    sample32 = -1.0f;\n\n                sampleAggregator.Add(sample32);\n            }\n        }</code></pre>\n\nHope this helps anyone else in future :)\r<br />\n<br />\nOllie<br />\n",
+    "PostedDate": "2013-02-18T16:24:07.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003418",
+    "ThreadId": "433582",
+    "Html": "yes, WASAPI normally works with 32 bit float. WAVEFORMATEXTENSIBLE is a bit of a pain to work with, but this seems to be Microsoft's preferred approach going forwards.<br />\n",
+    "PostedDate": "2013-02-19T06:10:11.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003727",
+    "ThreadId": "433582",
+    "Html": "Through my own testing of WASAPI capture, the whole process of writing to file on DataAvailable callback seems slightly unreliable, recording 2-3 minutes worth of audio through the loopback interface and there will be a couple of glitches in the wave file where moments of audio have been missed (&lt;500ms).\r<br />\n<br />\nI presume this is because the the DataAvailable callback hasn't been executed in time (or at all) for that 100ms worth of data.\r<br />\n<br />\nI have noticed that WaveIn allows you to supply a window handle for NAudio to post a message back, which might be more reliable. Is there a reason why this hasn't been implemented into the WASAPI classes?<br />\n",
+    "PostedDate": "2013-02-19T16:24:18.627-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003731",
+    "ThreadId": "433582",
+    "Html": "Do you think if a derivative of WasapiCapture.cs was created where if a WaveFileWriter was specified in advance, the whole write to file process was done immediately at the end of the ReadNextPacket function instead of at the start of the DataAvailable callback, this would workaround the issue?\r<br />\n<br />\nI'm presuming here though that NAudio is capturing those missing packets in the first place...\r<br />\n<br />\nCheers,\r<br />\n<br />\nOllie<br />\n",
+    "PostedDate": "2013-02-19T16:35:46.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003734",
+    "ThreadId": "433582",
+    "Html": "[Double Post]<br />\n",
+    "PostedDate": "2013-02-19T16:42:03.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003893",
+    "ThreadId": "433582",
+    "Html": "there is no windows callback becasue WASAPI does not have window callbacks like WaveOut/WaveIn does. NAudio is just a fairly thin wrapper around the WASAPI APIs. Perhaps audio is being missed because the DataAvailable event isn't being processed quickly enough. You could certainly experiment with your own copy of WasapiIn and see if writing and flushing after ReadNextPacket helps. Let us know how you get on.<br />\n",
+    "PostedDate": "2013-02-20T01:33:29.677-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1005786",
+    "ThreadId": "433582",
+    "Html": "I have been looking into this and it appears that when missed audio occurs, ReadNextPacket is also delayed more than normal (when a standard 50ms 'sleepMilliseconds' value is used), so this isn't an issue with a delay in handling the DataAvailable event, instead it happens much earlier.\r<br />\n<br />\nDuring this investigation I logged the Environment.TickCount at key points in the recording chain, as you can see from the below graphs, over a 3.5 minute recording of a song (as a common reference) at various points where the time between calls to ReadNextPacket exceeds 100ms. Beyond this level, noticeable losses can be seen in the written audio at these points, also the 'DataDiscontinuity' flag is raised by AudioCaptureClient.GetBuffer which suggests that the problem lies deeper within the WASAPI loopback capture process.\r<br />\n<br />\n<img src=\"https://dl.dropbox.com/u/14822/NAudio_DebugSample_DisconGraphs.png\" alt=\"Image\" />\r<br />\n<br />\nAny idea what might be holding things up and what might resolve/improve the issue?\r<br />\n<br />\nCheers,\r<br />\n<br />\nOllie<br />\n",
+    "PostedDate": "2013-02-23T17:41:30.31-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006222",
+    "ThreadId": "433582",
+    "Html": "well, Sleep isn't an accurate timer in Windows. Thread.Sleep means sleep for at least 50ms. So if it is taking longer than that to return, it indicates the system is busy doing other stuff. You could reduce the length of the sleep. Alternatively, WASAPI does support an event driven mode. I offer this as an option with WASAPI Out. I can't remember if I made it available for WASAPI in, but that might be a good thing to try. <br />\n",
+    "PostedDate": "2013-02-25T03:44:54.353-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006601",
+    "ThreadId": "433582",
+    "Html": "Is it possible to use the event driven mode with loopback capture?\r<br />\n<br />\nWorking through how you have implemented it in WasapiOut the audioClient can only be initialised with either AudioClientStreamFlags.EventCallback or AudioClientStreamFlags.Loopback, not both?<br />\n",
+    "PostedDate": "2013-02-25T16:17:23.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006838",
+    "ThreadId": "433582",
+    "Html": "they are flags, so you would OR them together<br />\n",
+    "PostedDate": "2013-02-26T03:04:17.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007291",
+    "ThreadId": "433582",
+    "Html": "That's ok, just double checking!\r<br />\n<br />\nI have tried to implement the event driven mode into WASAPI Capture (plus loopback), see my franken-code below. But for some reason WaitHandle.WaitAny under the DoRecording method never receives a response and always times-out (no matter how big the time-out is).\r<br />\n<br />\nAny idea why AudioClient isn't responding with events?\r<br />\n<br />\n<a href=\"https://dl.dropbox.com/u/14822/WASAPI/WasapiCaptureForFile.cs\" rel=\"nofollow\">https://dl.dropbox.com/u/14822/WASAPI/WasapiCaptureForFile.cs</a>\r<br />\n<a href=\"https://dl.dropbox.com/u/14822/WASAPI/WasapiLoopbackCaptureForFile.cs\" rel=\"nofollow\">https://dl.dropbox.com/u/14822/WASAPI/WasapiLoopbackCaptureForFile.cs</a>\r<br />\n<br />\nKind regards,\r<br />\n<br />\nOllie<br />\n",
+    "PostedDate": "2013-02-26T16:18:25.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007422",
+    "ThreadId": "433582",
+    "Html": "I'd check the Initialize parameters are right (there is a 0 that might need a different value) \r<br />\n<a href=\"http://msdn.microsoft.com/en-gb/library/windows/desktop/dd370875%28v=vs.85%29.aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-gb/library/windows/desktop/dd370875%28v=vs.85%29.aspx</a>\r<br />\nthere are some code samples here that might be useful:\r<br />\n<a href=\"http://msdn.microsoft.com/en-gb/library/windows/desktop/dd370844%28v=vs.85%29.aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-gb/library/windows/desktop/dd370844%28v=vs.85%29.aspx</a>\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-26T23:52:44.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007890",
+    "ThreadId": "433582",
+    "Html": "Just had a read of that top article, it seems to be initialised correctly (both values are 0), I have found this article about loopback capture:\r<br />\n<br />\n<a href=\"http://msdn.microsoft.com/en-gb/library/windows/desktop/dd316551(v=vs.85).aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-gb/library/windows/desktop/dd316551(v=vs.85).aspx</a>\r<br />\n<br />\nNot exactly sure what the implication is to the current method used regarding this statement:<br />\n<pre><code>A pull-mode capture client does not receive any events when a stream is initialized with event-driven buffering and is loopback-enabled. To work around this, initialize a render stream in event-driven mode. Each time the client receives an event for the render stream, it must signal the capture client to run the capture thread that reads the next set of samples from the capture endpoint buffer.</code></pre>\n\nLooking elsewhere on the web, others don't seem to think event-driven loopback capture is possible...\r<br />\n<br />\n<a href=\"http://blogs.msdn.com/b/matthew_van_eerde/archive/2008/12/16/sample-wasapi-loopback-capture-record-what-you-hear.aspx\" rel=\"nofollow\">http://blogs.msdn.com/b/matthew_van_eerde/archive/2008/12/16/sample-wasapi-loopback-capture-record-what-you-hear.aspx</a>\r<br />\n<br />\nOllie<br />\n",
+    "PostedDate": "2013-02-27T14:24:52.777-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1009156",
+    "ThreadId": "433582",
+    "Html": "That's interesting - it seems to suggest that you should play and record at the same time, and use the event from playback to trigger both your reading and writing threads<br />\n",
+    "PostedDate": "2013-03-02T00:02:22.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

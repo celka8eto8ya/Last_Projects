@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1040925",
+    "ThreadId": "442970",
+    "Html": "Hello Mark,\r<br />\n<br />\nI am trying to use naudio for a specific requirement in my current project. I am streaming RTP packets containing audio payloads over network via UDP. I want to convert these packets into wav format and write them into a wav file dynamically. I saw your code sample on Stack Overflow demonstrating how to convert RTP into wav. In my case if I store the entire RTP stream received over the network into a file and then use this file to generate a wav file using naudio APIs it works fine and creates a wav file that I can play. Here is the code that I am using:\r<br />\n<br />\n WaveFormat waveformat = WaveFormat.CreateMuLawFormat(8000, 1);  \r<br />\n<pre><code>        Stream tmpMemStream = new FileStream(@&quot;C:\\test11.txt&quot;, FileMode.Open, FileAccess.Read);\n        var reader = new RawSourceWaveStream(tmpMemStream, waveformat);\n        using (WaveStream convertedStream = WaveFormatConversionStream.CreatePcmStream(reader))\n        {\n            WaveFileWriter.CreateWaveFile(@&quot;C:\\output.wav&quot;, convertedStream);\n        }\n        tmpMemStream.Close();\n</code></pre>\n\nHowever I want to convert the RTP packets into PCM stream dynamically that is as soon as I receive each set of RTP packets and write them immediately to a wav file. I want to initially create the wav file and then keep appending data to it as I receive the new RTP packets. Can you please suggest any APIs in naudio that I can use to achieve this functionality.\r<br />\n<br />\nThank you for your time.\r<br />\n<br />\nRegards\r<br />\nSaleh<br />\n",
+    "PostedDate": "2013-05-08T08:57:06.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042744",
+    "ThreadId": "442970",
+    "Html": "You don't have to use CreateWaveFile. Instead just open a WaveFileWriter and call the Write method whenever you receive more PCM data. You'll have to handle extracting the audio from the RTP packets yourself though.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-05-13T03:53:56.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042876",
+    "ThreadId": "442970",
+    "Html": "Hello Mark,\r<br />\n<br />\nThank you for the reply.. I was able to modify your code to convert live RTP stream into WAV. I also used your CreatePcmStream method to convert the RTP packets into PCM stream and then dynamically wrote that PCM stream into a wav file updating the header everytime I write new data because in my case the requirement is to play the live WAV file as it gets generated.  At this point I have couple of questions if you can please provide some insight:\r<br />\n<br />\n1) The WAV file that I have generated is using the MuLaw WAV format i.e. WaveFormat.CreateMuLawFormat(8000, 1). Even though the WAV file is generated properly I get a clicking throughout the audio play. I verified that the RTP packets are received in proper sequence and none of them are lost. So I am getting a valid RTP stream. However while conversion to PCM something is happening and the WAV file plays with clicking sound throughout. On the other hand I have tried getting this same audio  file converted into WAV through another medium and it plays fine. When I compared the WAV headers here is the diff that I saw:\r<br />\n<br />\nThe correct WAV file header:\r<br />\nchannels: 2\r<br />\nsampleRate: 11025\r<br />\nfmtAvgBPS: 44100\r<br />\nfmtBlockAlign: 4\r<br />\nbitDepth: 16\r<br />\n<br />\nThe WAV file header generated using your code:\r<br />\nchannels: 1\r<br />\nsampleRate: 8000\r<br />\nfmtAvgBPS: 16000\r<br />\nfmtBlockAlign: 2\r<br />\nbitDepth: 16\r<br />\n<br />\nI believe the correct WAV file is generated in stereo mode with 2 channels. So I tried creating a new wavformat as follows:\r<br />\n<br />\nWaveFormat waveformat = new WaveFormat(44100, 16, 2);\r<br />\n<br />\nBut when I do this the stream is no longer converted into PCM and it is directly written into WAV file which is not a valid output. So is there any way I can improve the quality of my WAV file? Is there a way to create PCM stream using different WAV formats through your code? \r<br />\n<br />\n2) Also, what is the best way to convert RTP into WAV? Do we always have to go via the PCM route? What would be the best route in my case?\r<br />\n<br />\nThank you..\r<br />\n<br />\nRegards,\r<br />\nSaleh<br />\n",
+    "PostedDate": "2013-05-13T08:23:44.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042884",
+    "ThreadId": "442970",
+    "Html": "converting mu-law to PCM should not result in a change of sample rate or channel count. It simply should go from 8 bits per sample to 16 bits. \r<br />\n<br />\nI'm afraid I don't know about removing audio from RTP packets, but you must definitely not simply write the whole thing into your WAV file since it will contain additional data which is probably the cause of your clicking noise.<br />\n",
+    "PostedDate": "2013-05-13T08:31:05.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043552",
+    "ThreadId": "442970",
+    "Html": "You were right on money Mark. By removing the RTP headers from the RTP packets I am able to generate the PCM stream for MuLaw and write it to a WAV file which plays fine without the clicking noise. After going through your code I realized that currently your code only supports conversion of raw data into PCM stream for the G711 MuLaw and Alaw formats. Am I correct? If I want  to use other formats such as G729 etc. is there a way to modify your code and convert raw data for such formats into PCM stream? Any tips on that would be really helpful.\r<br />\n<br />\nThanks a lot..\r<br />\n<br />\nRegards\r<br />\nSaleh<br />\n",
+    "PostedDate": "2013-05-14T14:14:02.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043553",
+    "ThreadId": "442970",
+    "Html": "You can use any ACM codec installed on your machine, (or in NAudio 1.7 any Media Foundation Transform). Read my article here for an in-depth explanation of format conversion:\r<br />\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET</a><br />\n",
+    "PostedDate": "2013-05-14T14:18:23.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044639",
+    "ThreadId": "442970",
+    "Html": "Excellent article Mark. It took me a while to understand )).. A few questions after reading your article:\r<br />\n<br />\n1) NAudio will only be able to convert raw stream into PCM for ACM codecs or the ones supported by Media Foundation right? If I have a custom codec installed on my machine will ACM/MF be able to convert from that custom format into PCM? Also, I found an alternate way of generating the WAV file using your code and playing it in media player for MuLaw format. I extracted the payloads from RTP packets and stored them directly into WAV file without converting them into PCM and created the WAV header with Mulaw format information instead of PCM. I am able to play that WAV file in media player. So I believe if the correct codec is installed Media Player will automatically create the PCM stream based on the codec info in header and play it for us.  But again the question remains what will happen in case of custom codecs about which media player is unaware?\r<br />\n<br />\n2) Also, I want to write my audio in stereo format to a WAV file. I saw your code but it seems that stereo format writing is supported by NAudio only for PCM streams. If I want to write the MuLaw payloads in stereo format to a WAV file is there a way to do it using NAudio?\r<br />\n<br />\nThanks,\r<br />\nSaleh<br />\n",
+    "PostedDate": "2013-05-16T10:19:05.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1045234",
+    "ThreadId": "442970",
+    "Html": "If it is an ACM codec you must use WaveFormatConversionStream, and if it is a Media Foundation codec you use MediaFoundationReader. It can be a bit of a pain working with custom ACM codecs- you have to examine what WaveFormat they are expecting and pass that in. The NAudioDemo project does a fair bit of the work for you in showing the input and output formats. Windows Media Player can use ACM and Media Foundation codecs so as long as the format chunk in your WAV file is correct, it should play fine.\r<br />\n<br />\nThere is nothing stopping you putting stereo MuLaw into a WAV file. Just set up the WaveFormat with the correct values (MuLaw encoding, 2 channels, 8 bits per sample etc) and you should be fine. MuLaw is not normally stereo, since its main use is telephony<br />\n",
+    "PostedDate": "2013-05-17T10:59:38.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1047954",
+    "ThreadId": "442970",
+    "Html": "Finally I got the stereo format for MuLaw working. Now I am able to extract Rx, Tx payloads from RTP packets and write them into a wav file in stereo mode which plays fine in Media Player. I realized that some codecs that we support are DMO based, some are ACM and some are Media Foundation based. Trying to play around with your code and other options to figure out if I can support all the codecs that we have. I will keep you posted as go along on my conversion journey. Once again thanks a lot for your help and I can definitely say that without your NAudio library I would not have reached this far.\r<br />\n<br />\nRegards\r<br />\nSaleh<br />\n",
+    "PostedDate": "2013-05-23T13:48:39.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1097805",
+    "ThreadId": "442970",
+    "Html": "Hi Guys,\r<br />\n<br />\nI am trying to convert RTP communication of a SIP phone call to WAV but I am not sure where I am going wrong.\r<br />\n<br />\nI am creating a wav output as below.\r<br />\nwavOutput = new WaveFileWriter(&quot;WavFiles\\&quot; + myCall + &quot;.wav&quot;, new WaveFormat(8000,1)); \r<br />\n<br />\nThen as I get RTP packets I am writing them this wavOutput as below:<br />\n<pre><code>                for (int index = 12; index &lt; udpPacket.PayloadData.Length; index++)\n                {\n                    short pcm = ALawDecoder.ALawToLinearSample(udpPacket.PayloadData[index]); \n                    wavOutput.WriteByte((byte)(pcm &amp; 0xFF));\n                    wavOutput.WriteByte((byte)(pcm &gt;&gt; 8));\n                }\n</code></pre>\n\nIf I record only one side of conversation then this works fine. i.e. if I write packets only from either caller or Callee. I need to create a wav file with conversation from both sides.\r<br />\nI am probably making some really fundamental error. Can you please put me in correct direction.\r<br />\n<br />\nThanks\r<br />\nSwati.<br />\n",
+    "PostedDate": "2013-09-22T12:58:33.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098141",
+    "ThreadId": "442970",
+    "Html": "Hi,<br />\n<br />\nI have same problem with RX and TX I can record separately and mix them together after.<br />\n<pre><code> private void SampleReceivedRx(byte[] sample)\n        {\n            for (int index = 4; index &lt; sample.Length; index++)\n            {\n                short pcm = MuLawDecoder.MuLawToLinearSample(sample[index]);\n                writerRx.WriteByte((byte)(pcm &amp; 0xFF));\n                writerRx.WriteByte((byte)(pcm &gt;&gt; 8));\n            }\n        }\n\n private void SampleReceivedTx(byte[] sample)\n        {\n            for (int index = 4; index &lt; sample.Length; index++)\n            {\n                short pcm = MuLawDecoder.MuLawToLinearSample(sample[index]);\n                writerTx.WriteByte((byte)(pcm &amp; 0xFF));\n                writerTx.WriteByte((byte)(pcm &gt;&gt; 8));\n            }\n        }</code></pre>\n\nMixing after recording is finished.<br />\n<pre><code> var reader1 = new WaveFileReader(@&quot;C:\\temp\\salv\\mix\\RX_635155188857508256.wav&quot;);\n            var reader2 = new WaveFileReader(@&quot;C:\\temp\\salv\\mix\\TX_635155188857548298.wav&quot;);\n\n            var inputs = new List&lt;ISampleProvider&gt;();\n            inputs.Add(reader1.ToSampleProvider());\n            inputs.Add(reader2.ToSampleProvider());\n\n           \n var mixer = new MixingSampleProvider(inputs);\n                WaveFileWriter.CreateWaveFile16(@&quot;C:\\temp\\salv\\mix\\mixedsample.wav&quot;, mixer);</code></pre>\n\nHow to mix on the fly? I tried to use BufferedWaveProvider but no luck.<br />\n<br />\nThanks<br />\nVladimir<br />\n",
+    "PostedDate": "2013-09-23T11:04:44.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098986",
+    "ThreadId": "442970",
+    "Html": "mixing on the fly is tricky. I use bufferedwaveproviders for each input, and then only mix the number of samples available in both\r<br />\nIf there can be discontinuities in the signals it becomes even more complicated<br />\n",
+    "PostedDate": "2013-09-25T05:29:56.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

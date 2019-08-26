@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "472086",
+    "ThreadId": "221224",
+    "Html": "<p>Hi Mark,</p>\r\n<p>I'm trying to create a simple Type 0 Midifile (=one Track).&nbsp; I have tested the code that you posted&nbsp; a few years ago (http://naudio.codeplex.com/Thread/View.aspx?ThreadId=17633)</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp;\r\n<div style=\"color:black;background-color:white\">\r\n<pre>   MidiEventCollection collection = <span style=\"color:blue\">new</span> MidiEventCollection(0, 120);\r\n           collection.AddEvent(<span style=\"color:blue\">new</span> NoteOnEvent(0, 1, 60, 100, 150), 1);\r\n           collection.AddEvent(<span style=\"color:blue\">new</span> NoteOnEvent(15, 1, 64, 100, 150), 1);\r\n           collection.AddEvent(<span style=\"color:blue\">new</span> NoteOnEvent(30, 1, 67, 100, 150), 1);\r\n    \r\n           collection.PrepareForExport();\r\n           MidiFile.Export(txtFile.Text, collection);\r\n</pre>\r\n</div>\r\n</p>\r\n<p>But the resulting file does not produce any sound when played back in winamp. And other midi players won't even open it&nbsp; !&nbsp; (i'm using win7 64 bit, naudio 1.3.5)</p>\r\n<p>Can you help ?</p>\r\n<p>henrik</p>",
+    "PostedDate": "2010-07-24T06:03:44.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "479011",
+    "ThreadId": "221224",
+    "Html": "<p>MIDI files tend to have a bit more to them, such as specifying tempo, setting up patches etc. Use the audio file inspector to look at an existing MIDI file and see what is typically in there.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-08-11T02:57:29.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "479863",
+    "ThreadId": "221224",
+    "Html": "The problem seems to be that &quot;NoteOnEvent&quot; does not write the &quot;OffEvent&quot; to the file. If you use &quot;NoteEvent&quot; instead it works:\r\n<br>\r\n<br>\r\n\r\nThe following code produces a valid and playable Midi-File:\r\n\r\n<br>\r\n<br>\r\nMidiEventCollection collection = new MidiEventCollection(0, 120); \r\n<br>\r\ncollection.AddEvent(new NoteEvent(1, 1, MidiCommandCode.NoteOn,  60, 100), 0);<br>\r\ncollection.AddEvent(new NoteEvent(300, 1, MidiCommandCode.NoteOff, 60, 0), 0);<br>\r\n<br>\r\ncollection.PrepareForExport();<br>\r\n<br>\r\nMidiFile.Export(txtFile.Text, collection);<br>\r\n<br>\r\n\r\n<br>\r\nhenrik\r\n",
+    "PostedDate": "2010-08-12T12:17:15.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "529481",
+    "ThreadId": "221224",
+    "Html": "\r\n<p>Mrs. Heath,</p>\r\n<p>There seem to be a problem when I submit a tempo change in a midi collection. Is there an order in add midievents? Or do I have to add a tempo change on every instruments?</p>\r\n",
+    "PostedDate": "2010-12-01T07:26:41.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "530265",
+    "ThreadId": "221224",
+    "Html": "\r\n<p>I tryied to add tempo change to every tracks and the problem is remaining. The file is not exported correctly.</p>\r\n<p>Help! Please Mr. Heath!</p>\r\n",
+    "PostedDate": "2010-12-02T12:06:35.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "531084",
+    "ThreadId": "221224",
+    "Html": "\r\n<p>how are you adding the tempo change event?</p>\r\n<p>Again, I would recommed using AudioFileInspector to compare your MIDI file with one that works</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-04T04:15:04.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

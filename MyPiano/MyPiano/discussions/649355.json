@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1457295",
+    "ThreadId": "649355",
+    "Html": "I'm having a major problem with NAudio. I am currently using it to create audio effects, and sometimes my effects cause the audio to jump up to very high levels - above an amplitude of 1. Now in these instances, I expect that my audio will be automatically clipped to a value of 1 when it is saved to a WAV file, as this is what occurs in other audio applications. However, in NAudio, any samples that are exactly 1 or greater than one, end up being clipped to a value of -1. This is a very big problem. My current workaround is to set my application to automatically clip all samples at 0.99999 right before I save them. Perhaps I did something wrong, but I really think this is a critical issue.<br />\nThanks for your time.<br />\n<br />\nT<br />\n",
+    "PostedDate": "2015-12-27T18:34:47.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457332",
+    "ThreadId": "649355",
+    "Html": "what bit depth are you saving your WAV files in? If its floating point, no clipping is necessary at all. If its 16 bit, then your audio has to get coerced into the range supported by an Int16<br />\n",
+    "PostedDate": "2015-12-28T05:35:16.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457393",
+    "ThreadId": "649355",
+    "Html": "My app saves them back into the same format it loaded them in. In these recent cases, this has been 24bit files. How do I save to floating point? I didn't even know there was such a thing as a floating point WAV file.<br />\n",
+    "PostedDate": "2015-12-28T15:15:16.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457766",
+    "ThreadId": "649355",
+    "Html": "You can save a WAV file in any WaveFormat. What's converting back to 24 bit then?<br />\n",
+    "PostedDate": "2016-01-02T13:59:13.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457768",
+    "ThreadId": "649355",
+    "Html": "I just use the same WaveFormat object that I loaded the WAV file from. I'm just doing a few basic effects so the total samples doesn't change or anything. I looked up floating point and it seems I found my answer: 32bit is floating point.<br />\n",
+    "PostedDate": "2016-01-02T14:39:10.963-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

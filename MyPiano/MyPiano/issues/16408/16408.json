@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "with a format: 24 bit PCM, 48 kHz I get false from audioClient.IsFormatSupported.\r\nI see, that the signature not match:\r\nhttp://msdn.microsoft.com/en-us/library/windows/desktop/dd370876%28v=vs.85%29.aspx\r\nHRESULT IsFormatSupported(\r\n  [in]   AUDCLNT_SHAREMODE ShareMode,\r\n  [in]   const WAVEFORMATEX *pFormat,\r\n  [out]  WAVEFORMATEX **ppClosestMatch\r\n);\r\n\r\nbut in NAudio.CoreAudioApi.Interfaces.IAudioClient is defined:\r\n\r\n        [PreserveSig]\r\n        int IsFormatSupported(\r\n            AudioClientShareMode shareMode,\r\n            [In] WaveFormat pFormat,\r\n            [Out, MarshalAs(UnmanagedType.LPStruct)] out WaveFormatExtensible closestMatchFormat);\r\n\r\nit should be [In] WaveFormatExtensible pFormat.\r\nIt can be solved with:\r\n\r\nNAudio.CoreAudioApi.Interfaces.IAudioClient:\r\n        [PreserveSig]\r\n        int IsFormatSupported(\r\n            AudioClientShareMode shareMode,\r\n            [In] WaveFormatExtensible pFormat,\r\n            [Out, MarshalAs(UnmanagedType.LPStruct)] out WaveFormatExtensible closestMatchFormat);\r\n\r\nand in NAudio.CoreAudioApi.AudioClient\r\n       public bool IsFormatSupported(AudioClientShareMode shareMode, WaveFormat desiredFormat, out WaveFormatExtensible closestMatchFormat)\r\n        {\r\n            int hresult = audioClientInterface.IsFormatSupported(shareMode,\r\n                new WaveFormatExtensible(desiredFormat.SampleRate, desiredFormat.BitsPerSample, desiredFormat.Channels)\r\n                , out closestMatchFormat);\r\n\r\n",
+    "LastUpdatedDate": "2013-10-04T02:47:51.103-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-10-04T02:47:51.103-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "audioClient.IsFormatSupported: Problem with 24 bit",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16408
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

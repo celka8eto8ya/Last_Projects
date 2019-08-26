@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1318852",
+    "ThreadId": "571217",
+    "Html": "Hi,\r<br />\n<br />\nI try this to play multiple wave file parallel with ASIO:\r<br />\n<br />\ncreate a WaveFileReader for the first file,\r<br />\ncreate a WaveFileReader for the second file,\r<br />\ncall the WaveOut's Init function with the first WaveFileReader\r<br />\ncall the WaveOut's Init function with the second WaveFileReader\r<br />\ncall WaveOut's Play() with the first reader\r<br />\ncall WaveOut's Play() with the second reader\r<br />\n<br />\nfirst file routes to output 1 + 2 , second file routes t output 3 + 4\r<br />\n<br />\non a FA-66 Sound System with firewire it seems to run good, on a ESI Maya 44 USB soundsystem the second Wave runs about 100 ms later than the first.\r<br />\n<br />\nAny ideas to get that work better (I need it for 4 5- wave file in parallel ..)\r<br />\n<br />\nJurgen<br />\n",
+    "PostedDate": "2014-11-03T23:10:08.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1320960",
+    "ThreadId": "571217",
+    "Html": "You could try actually using AsioOut with a MultiplexingWaveProvider to combine the two WaveFileReaders into a single 4 channel stream.<br />\n",
+    "PostedDate": "2014-11-11T08:55:04.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

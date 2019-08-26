@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1071592",
+    "ThreadId": "450872",
+    "Html": "I see that WasapiCapture is available, but i have some questions about it.\r<br />\n<br />\n1: Is it possible to reduce latency (Maybe using Exclusive mode?)\r<br />\n2: I got a problem where my mic only records mono, or atleast only in the left channel (i can´t set waveformat, it says it´s not valid, but in wavein it works;S).\r<br />\n<br />\nWell guess that´s it, the thing i am most interested about is the latency though.\r<br />\nAs currently Wavein at 4ms buffer is the shit for me;P<br />\n",
+    "PostedDate": "2013-07-22T21:28:35.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072158",
+    "ThreadId": "450872",
+    "Html": "1) the latency isn't as easily configurable as I would like in the current WASAPI implementation, but if you examine the code, you'll see how it could be done.\r<br />\n2) microphone are usually mono. If you got stereo from waveIn it just meant that you got the same signal on both channels.\r<br />\n<br />\nAlso, for ultra low latencies, NAudio may not be the best bet, I'd probably create an unmanaged C++ component if having the lowest possible latency was important. Also I'd use ASIO if at all possible.<br />\n",
+    "PostedDate": "2013-07-24T01:38:01.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072165",
+    "ThreadId": "450872",
+    "Html": "Okay, well i probably woudln´t understand the code;P\r<br />\n<br />\nAnd yes, i solved it by using MonotoStereo, which is nicely implemented.\r<br />\n<br />\nProbably, but i have gotten pretty good results, and as bad as i am with programming NAudio is amazing, even a beginner like me can actually use it with good results.<br />\n",
+    "PostedDate": "2013-07-24T01:44:47.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072245",
+    "ThreadId": "450872",
+    "Html": "glad you are finding NAudio useful :)<br />\n",
+    "PostedDate": "2013-07-24T05:53:15.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

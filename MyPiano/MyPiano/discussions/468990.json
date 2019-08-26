@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1124182",
+    "ThreadId": "468990",
+    "Html": "I have a need to record the audio coming in from a web cam to the speakers and the audio from a mic together into a mp3 file.  (letting the mic listen to the open air speakers is not an option :)\r<br />\n<br />\nIs NAudio the right tool? (it seems so)\r<br />\n<br />\nWhat hardware do I need? (since it seems that a lot of h/w won't let you open both the audio out and mic as recording inputs at the same time)\r<br />\n<br />\nThank you for your time,\r<br />\nDave<br />\n",
+    "PostedDate": "2013-11-15T12:12:20.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1125961",
+    "ThreadId": "468990",
+    "Html": "You could possibly achieve this with NAudio, using WasapiLoopbackCapture to get the audio being played by your speakers, and then WaveIn or WasapiCapture to record the microphone. You'd then mix the two recordings together (e.g. using MixingSampleProvider), and then you'd need to pass the results through an MP3 encoder. LAME.exe is one of the easiest ways to do this.\r<br />\n<br />\nThis can all be done on the fly as well if needed, but it is a bit harder, so if you are new to audio programming and NAudio, I'd recommend you start by making two temporary files, mixing into another temporary wave file, and then converting that wave file to MP3.<br />\n",
+    "PostedDate": "2013-11-18T04:08:46.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

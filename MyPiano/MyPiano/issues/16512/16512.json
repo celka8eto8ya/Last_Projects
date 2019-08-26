@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "\r\nI have some 6-channel .WAV files and used oggenc to convert it to ogg.  After this conversion, the 6th channel was corrupted and not audible. I have tried SOX, FFMPEG, all got the same results.\r\n\r\nMaybe this is because the encoder assumes that 6 channels means a 5.1 surround audio and creates one Low Frequency Effect (LFE) channel. \r\n\r\nHow to avoid this? I need a 6-channel ogg file (without a LFE track). \r\nThanks for your help.",
+    "LastUpdatedDate": "2017-02-14T00:07:46.753-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-02-13T13:09:11.533-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Convert 6-channel .WAV file to .OGG issue.",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16512
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I'm afraid I don't know why this is - I don't really have any experience with surround audio. You are more likely to get an answer asking on the sox or ffmpeg forums.",
+      "PostedDate": "2017-02-14T00:07:46.753-08:00",
+      "Id": 206623
+    }
+  ]
+}

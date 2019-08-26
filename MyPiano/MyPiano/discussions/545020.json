@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1244130",
+    "ThreadId": "545020",
+    "Html": "I am trying to save a Wav file... but the program just stops on me ...<br />\n<pre><code>  private void saveFileToolStripMenuItem_Click(object sender, EventArgs e)\n        {\n            if (mixer2 == null)\n            {\n                MessageBox.Show(&quot;there is no information to genarate a file&quot;);\n                return;\n            }\n\n            SaveFileDialog save = new SaveFileDialog();\n            save.Filter = &quot;WAV file (*.wav)|*.wav;&quot;;\n            if (save.ShowDialog() != DialogResult.OK)\n            {\n                MessageBox.Show(&quot;File not written&quot;);\n                return;\n\n            }\n             WaveFileWriter.CreateWaveFile( save.FileName, mixer2);          \n        \n        }\n</code></pre>\n\nwhat am i doing wrong?<br />\n",
+    "PostedDate": "2014-05-11T12:52:47.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244544",
+    "ThreadId": "545020",
+    "Html": "does anyone know what I am doing wrong?<br />\n",
+    "PostedDate": "2014-05-12T13:17:09.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244547",
+    "ThreadId": "545020",
+    "Html": "are you getting an error?<br />\n",
+    "PostedDate": "2014-05-12T13:18:42.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244551",
+    "ThreadId": "545020",
+    "Html": "no, it just stops at the point.. the program   freezes up<br />\n",
+    "PostedDate": "2014-05-12T13:22:40.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244553",
+    "ThreadId": "545020",
+    "Html": "well you probably have a never-ending stream. You'll just fill up your hard disk. I'd recommend only passing something that actually ends in.\r<br />\nOr don't use CreateWaveFile, actually write audio to a WaveFileWriter yourself.<br />\n",
+    "PostedDate": "2014-05-12T13:24:56.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244554",
+    "ThreadId": "545020",
+    "Html": "I cannot click on anymore buttons<br />\n",
+    "PostedDate": "2014-05-12T13:25:17.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244559",
+    "ThreadId": "545020",
+    "Html": "i am making my own tones, and mix then with other files...\r<br />\nis that a way to add a timer ? so it will stop.\r<br />\nthis is what I am doing now:<br />\n<pre><code>{\n    public class BinauralBeats : WaveProvider32\n    {\n        int sample;\n        Boolean counter;\n       public BinauralBeats()\n        {\n            RightF = 500;\n            LeftF = 410; \n            Amplitude = 0.25f; // let's not hurt our ears  \n            counter = true;\n        }\n       public float RightF { get; set; }\n       public float Amplitude { get; set; }\n       public float LeftF { get; set; }\n       public override int Read(float[] buffer, int offset, int sampleCount)\n       {\n           int sampleRate = WaveFormat.SampleRate;\n           for (int n = 0; n &lt; sampleCount; n++)\n           {\n               if (counter == true)\n               {\n                   buffer[n + offset] = (float)(Amplitude * Math.Sin((2 * Math.PI * sample * RightF) / sampleRate));\n                   sample++;\n                   counter = false; \n                   if (sample &gt;= sampleRate) sample = 0;\n               }\n               else\n               {\n                   counter = true;\n                   buffer[n + offset] = (float)(Amplitude * Math.Sin((2 * Math.PI * sample * LeftF) / sampleRate));\n                   sample++;\n                   if (sample &gt;= sampleRate) sample = 0;\n\n               }\n           }\n           return sampleCount;\n          \n       }</code></pre>\n\nok is works if I  mex the files without adding a tone... so you are right the tones are not stop ...\r<br />\nhow can i add a time for them?\r<br />\nlike if  I only want them to play for 10s?<br />\n",
+    "PostedDate": "2014-05-12T13:36:19.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244780",
+    "ThreadId": "545020",
+    "Html": "markheath,\r<br />\n<br />\nhow do i use WaveFileWriter ? I do not see any examples ?\r<br />\nI need to have my tones stop a set time, how do i add that?<br />\n",
+    "PostedDate": "2014-05-13T05:14:43.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1245103",
+    "ThreadId": "545020",
+    "Html": "markheath, \r<br />\n<br />\nI am trying to save a file of the tone before I mix with the other files but I can seem to do it \r<br />\nthis is what i have now<br />\n<pre><code>\n                SaveFileDialog save1 = new SaveFileDialog();\n                save1.Filter = &quot;Wave file (*.wav)|*.wav;&quot;;\n                if(save1.ShowDialog() != DialogResult.OK) return;\n\n                WaveFileWriter wavefile = new WaveFileWriter(save1.FileName, sineWaveProvider.WaveFormat);\n                for(int i =0; i&lt; sineWaveProvider.buffer1.Length; i++)\n                {\n                wavefile.WriteSample(sineWaveProvider.buffer1[i]); \n                }\n                wavefile.Flush();</code></pre>\n\nbut the file empty\r<br />\nand so is the buffer...\r<br />\n<br />\nI make the tone before hand in sinewaveProvider \r<br />\nand i can play sinewaveProvider and I can mix it, but I can seem to write in to a file\r<br />\nwhy?\r<br />\nI made buffer public <br />\n<pre><code>using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing NAudio.Wave;\nusing NAudio;\n\nnamespace Isochronic_tones_generator\n{\n    public class SineWaveProvider32 : WaveProvider32\n{\n    int sample;\n    double f2;\n    public SineWaveProvider32()\n    {\n        Frequency = 1000;\n        Amplitude = 0.25f; // let's not hurt our ears     \n        Beat = 0;\n    }\n \n    public float Frequency { get; set; }\n    public float Amplitude { get; set; }\n    public float Beat { get; set; }\n    public float[] buffer1 { get; set; } \n\n    public override int Read(float[] buffer, int offset, int sampleCount)\n    {\n        int sampleRate = WaveFormat.SampleRate;\n        if (Beat == 0)\n        {\n            f2 = 0;\n        }\n        else\n        {\n            f2 = Frequency - Beat;\n        }\n        for (int n = 0; n &lt; sampleCount; n++)\n        {\n            buffer[n + offset] = (float)(Amplitude * Math.Sin((2 * Math.PI * sample * Frequency) / sampleRate)) + (float)(Amplitude * Math.Sin((2 * Math.PI * sample * f2) / sampleRate));\n            sample++;\n            if (sample &gt;= sampleRate) sample = 0;\n        }\n        buffer1 = buffer;\n        return sampleCount;\n    }\n}\n}\n</code></pre>\n\nthat should work right ?<br />\n",
+    "PostedDate": "2014-05-13T20:08:34.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

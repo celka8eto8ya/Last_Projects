@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1422851",
+    "ThreadId": "636693",
+    "Html": "Excuse me, could you help me please?\r<br />\nI need to play a wave with a custom format:<br />\n<pre><code>AverageBytesPerSecond   60638   int\nBitsPerSample   4   int\nBlockAlign  44  int\nChannels    2   int\nEncoding    Adpcm   NAudio.Wave.WaveFormatEncoding\nExtraSize   32  int\nSampleRate  44101   int</code></pre>\n\nHow I can do that? When I tried, I got errors:\r<br />\nAcmNotPossible calling acmStreamOpen\r<br />\nor\r<br />\n&quot;Unsupported source encoding&quot;\r<br />\n<br />\nCode:<br />\n<pre><code>WaveFormat format = ReadWaveFormat();\n\nbyte[] data = ReadData();\nMemoryStream ms = new MemoryStream(data, 0, data.Length, false);\nWaveStream waveStream = new RawSourceWaveStream(ms, format);\n\nSampleChannel sampleChannel = new SampleChannel(_waveStream , true); // error\nMeteringSampleProvider postVolumeMeter = new MeteringSampleProvider(sampleChannel);\n\nIWavePlayer wavePlayer = GetPlayer();\nwavePlayer.Init(sampleProvider);\nwavePlayer.Play();\n</code></pre>\n\n",
+    "PostedDate": "2015-05-04T17:42:00.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1424050",
+    "ThreadId": "636693",
+    "Html": "Hi, you could try this instead of SampleChannel:<br />\n<pre><code>SampleProvider = RawSourceWaveStream.ToSampleProvider();</code></pre>\n\nAlthough, this seems to be an ACM error which indicates that the Audio Compression Manager isn´t capable of your self-created waveformat and fails converting it.\r<br />\n<br />\nGreetz<br />\n",
+    "PostedDate": "2015-05-07T15:10:57.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1424796",
+    "ThreadId": "636693",
+    "Html": "<strong>Freefall wrote:</strong><br />\n<blockquote>\nHi, you could try this instead of SampleChannel:<br />\n<pre><code>SampleProvider = RawSourceWaveStream.ToSampleProvider();</code></pre>\n\nUnfortunately, not working.<br />\n<strong>ToSampleProvider:</strong><br />\n</blockquote>\n<pre><code>public static ISampleProvider ToSampleProvider(this IWaveProvider waveProvider)\n{\n    return SampleProviderConverters.ConvertWaveProviderIntoSampleProvider(waveProvider);\n}</code></pre>\n\n<strong>SampleChannel's constuctor:</strong><br />\n<pre><code>public SampleChannel(IWaveProvider waveProvider, bool forceStereo)\n{\n    ISampleProvider source = SampleProviderConverters.ConvertWaveProviderIntoSampleProvider(waveProvider);\n    ...</code></pre>\n\n<blockquote>\nAlthough, this seems to be an ACM error which indicates that the Audio Compression Manager isn´t capable of your self-created waveformat and fails converting it.<br />\nYes. And when I try to initialize WaveOut without SampleChannel I get error:<br />\n</blockquote>\n_waveOut.Init(_waveProvider);\r<br />\n// WaveOut: WaveBadFormat calling waveOutOpen\r<br />\n// DirectSound: (Localized message about non primitive data)\r<br />\n// WasAPI: Not a supported encoding Adpcm<br />\n",
+    "PostedDate": "2015-05-11T13:11:57.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1425183",
+    "ThreadId": "636693",
+    "Html": "You will need to use <code>WaveFormatConversionStream.CreatePcmStream</code> to convert to linear PCM before playing. However, you do need to make sure your <code>WaveFormat</code> matches the one ACM is expecting. You can use the NAudio demo application to scrutinize the details of your ACM codecs, or maybe more simply by using <code>AdpcmWaveFormat</code>.<br />\n",
+    "PostedDate": "2015-05-13T06:34:13.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-05-13T10:56:17-07:00"
+  },
+  {
+    "Id": "1425255",
+    "ThreadId": "636693",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nYou will need to use <code>WaveFormatConversionStream.CreatePcmStream</code> to convert to linear PCM before playing. However, you do need to make sure your <code>WaveFormat</code> matches the one ACM is expecting. You can use the NAudio demo application to scrutinize the details of your ACM codecs, or maybe more simply by using <code>AdpcmWaveFormat</code>.<br />\n</blockquote>\nYeahoo!\r<br />\n<code>WaveFormatConversionStream.CreatePcmStream(waveProvider)</code> is working! Thank you! \r<br />\n<br />\nP.S. <code>AdpcmWaveFormat</code> is unusable because it contains protected fields without public accessors. And some classes trying to marshal WaveFormat bypass Serialize method. =\\ Instead, I use <code>WaveFormat FromFormatChunk</code>. It works fine for me. (:<br />\n",
+    "PostedDate": "2015-05-13T10:56:05.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

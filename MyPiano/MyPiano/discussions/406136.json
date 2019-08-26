@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "953543",
+    "ThreadId": "406136",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>When i use the Stop() method, it pauses the MP3 but it doesn't Stop the MP3.</p>\r\n<p>I need to use the a method to stop the song and when i use the Play() method it starts from the begin of the MP3.</p>\r\n<p>I have implemented this MP3 reader:</p>\r\n<p>http://naudio.codeplex.com/wikipage?title=MP3</p>\r\n<p>But the last part CloseWaveOut() i have not implemented, i don't know if it is necessary.</p>\r\n<p>thanks a lot.</p>\r\n",
+    "PostedDate": "2012-12-09T07:39:11.537-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953769",
+    "ThreadId": "406136",
+    "Html": "\r\n<p>You also need to set Position to 0 on your Mp3FileReader</p>\r\n",
+    "PostedDate": "2012-12-10T01:03:08.31-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1334975",
+    "ThreadId": "575873",
+    "Html": "Hi,\r<br />\n<br />\nI have a little weird question.\r<br />\n<br />\nI am using a Bluetooth A2DP speaker that eat some 2-3 seconds audio before playing.\r<br />\n<br />\nI tried to add OffsetSampleProvider to delay the audio but it do not work (I assume it is too smart and skip blank)\r<br />\n<a href=\"http://mark-dot-net.blogspot.co.uk/2012/09/naudio-offsetsampleprovider.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.co.uk/2012/09/naudio-offsetsampleprovider.html</a>\r<br />\n<br />\nIs there a trick to send dummy audio to start the speaker before sending the real audio ?<br />\n",
+    "PostedDate": "2014-12-19T11:34:49.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1335090",
+    "ThreadId": "575873",
+    "Html": "Cool it works bug was on my side ! I also test with white noise using SignalGenerator<br />\n",
+    "PostedDate": "2014-12-20T01:44:55.317-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1337505",
+    "ThreadId": "575873",
+    "Html": "great, glad it's working for you now<br />\n",
+    "PostedDate": "2014-12-28T07:29:14.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

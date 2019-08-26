@@ -1,0 +1,146 @@
+[
+  {
+    "Id": "925418",
+    "ThreadId": "399013",
+    "Html": "\r\n<p>I want to take a wave file (in this example it is 1,536 Kbps, 48 KHz, 16 bit, 2 channel, PCM) and convert it to a wave file that is 64 Kbps, 8,000 Hz, 8 bits, 1 channel, ADPCM(CCITT) (U-Law).</p>\r\n<p>My current code is:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"white-space:pre\">\t</span>    openFileDialog openFileDialog = <span style=\"color:blue\">new</span> OpenFileDialog();\r\n            openFileDialog.Filter = <span style=\"color:#a31515\">&quot;Wave Files (*.wav)|*.wav|All Files (*.*)|*.*&quot;</span>;\r\n            openFileDialog.FilterIndex = 1;\r\n\r\n            <span style=\"color:blue\">if</span> (openFileDialog.ShowDialog() == DialogResult.OK)\r\n            {\r\n                fileName = openFileDialog.FileName;\r\n            }\r\n\r\n            WaveStream mainStream = <span style=\"color:blue\">new</span> WaveFileReader(fileName);\r\n\r\n            WaveFormat target = WaveFormat.CreateMuLawFormat(8000, 1);\r\n\r\n            WaveFormatConversionStream str = <span style=\"color:blue\">new</span> WaveFormatConversionStream(target, mainStream);\r\n\r\n            <span style=\"color:blue\">try</span>\r\n            {\r\n                WaveFileWriter.CreateWaveFile(<span style=\"color:#a31515\">@&quot;C:\\Users\\joshua\\Desktop\\test.wav&quot;</span>, str);\r\n            }\r\n            <span style=\"color:blue\">catch</span> (Exception ex)\r\n            {\r\n                MessageBox.Show(String.Format(<span style=\"color:#a31515\">&quot;{0}&quot;</span>, ex.Message));\r\n            }\r\n            <span style=\"color:blue\">finally</span>\r\n            {\r\n                str.Close();\r\n            }\r\n                \r\n            MessageBox.Show(<span style=\"color:#a31515\">&quot;File conversion complete!&quot;</span>);\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>If I do a standard format with WaveFormat test = new WaveFormat(8000, 8, 1); I get what I want but it is in PCM format and not U-Law. &nbsp;How can I get it to be in U-Law format?</p>\r\n",
+    "PostedDate": "2012-10-11T11:09:00.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "926343",
+    "ThreadId": "399013",
+    "Html": "<p>you need to go in two steps (two waveformatconversionstreams). First go to mono 8kHz 16bit, then go to mulaw</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-10-14T06:36:32.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483359",
+    "ThreadId": "399013",
+    "Html": "Mark,\r<br />\n<br />\nI am doing something similar.  I just got drafted to support our agency's IVR programming and I am learning Convergsys Interaction Composer and all the associated software that goes with their product.  I have to support two massive existing applications.  Right now I am having issues with calls recorded (I assume in PCM format) and compressing them to CCITT u-law 16 bit.  I can use Sound Forge 11 to compress the files manually, but I need to write a script to do so programmatically.  I discovered your project through an existing script we have in .NET, but it is not compressing the files properly.\r<br />\n<br />\nShould this compression be done in two steps as you mention here?  I assume the processing is all done in memory and the final output is the compressed file in mulaw?\r<br />\n<br />\nSorry, I'm really new at this, like just started looking at this last week.  Fortunately, I have a Pluralsight account so I've been watching your tutorials this weekend.  :)\r<br />\n<br />\nRandy<br />\n",
+    "PostedDate": "2016-09-10T11:31:00.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483403",
+    "ThreadId": "399013",
+    "Html": "I hope I get a response to this.\r<br />\n<br />\nI'm posting the existing code that compresses the wav files from one directory and saves them to another.<br />\n<pre><code>private static void compressWaveAndRename(string fileStart, string fileEnd)\n        //COMPRESSES THE FILES AND PUTS THEM INTO ULAW FORMAT FOR THE IVR TO BE ABLE TO PLAY\n        {\n            try\n            {\n                WaveFormat newFormat = WaveFormat.CreateMuLawFormat(8000, 1);\n                using (var strm = new RawSourceWaveStream(new WaveFileReader(fileStart), new WaveFormat(8000, 16, 1)))\n                {\n                    using (var conversionStream = new WaveFormatConversionStream(newFormat, strm))\n                    {\n                        WaveFileWriter.CreateWaveFile(fileEnd, conversionStream);\n                    }\n                }\n                System.IO.File.Move(fileStart, fileEnd);\n            }\n            catch (Exception e)\n            {\n                throw new Exception(e.Message);\n            }\n        }</code></pre>\n\nDo you see anything here that should be corrected?\r<br />\n<br />\nThanks,\r<br />\n<br />\nRandy<br />\n",
+    "PostedDate": "2016-09-11T13:05:41.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483405",
+    "ThreadId": "399013",
+    "Html": "You need to get rid of the <code>RawSourceWaveStream</code>. You're essentially applying a different <code>WaveFormat</code> to the audio in the file without converting it. \r<br />\nYou might need a few <code>WaveFormatConversionStream</code>s in a row - one to go mono, then to downsample, and finally to go to mulaw. This is because ACM codecs often are quite limited in the input and output formats they support.<br />\n",
+    "PostedDate": "2016-09-11T13:13:18.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483407",
+    "ThreadId": "399013",
+    "Html": "Thank you, this is existing code I need to modify.  I did not write it,\r<br />\nbut I am trying to learn how to fix it.  :)\r<br />\n<br />\nThank you for answering.\r<br />\n<br />\nRandy<br />\n",
+    "PostedDate": "2016-09-11T13:21:21.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483409",
+    "ThreadId": "399013",
+    "Html": "I forgot to mention that the input files are all\r<br />\n8,000kHz, 8 bit, mono recorded telephone\r<br />\nconversations that need to be converted to\r<br />\n16 bit mulaw.  That is the only way the\r<br />\nIVR software will play them back correctly.<br />\n",
+    "PostedDate": "2016-09-11T14:21:21.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483410",
+    "ThreadId": "399013",
+    "Html": "mu-law is 8 bit. If the original recording was 8 bit linear PCM, then going to mu-law doesn't really make much sense.<br />\n",
+    "PostedDate": "2016-09-11T14:24:17.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483411",
+    "ThreadId": "399013",
+    "Html": "I agree, but I'm not going to 8 bit, that is the format of the files that do not play correctly.\r<br />\nThey already exist in the playback folder but when the IVR software attempts to play\r<br />\nthem back it doesn't work.\r<br />\n<br />\nOne of our server admin pulled down a 16 bit file and it did play.  Still trying to figure\r<br />\nthat one out, and figure how exactly what format will work with the IVR engine.\r<br />\n<br />\nI have received very little training to support this, so I am learning as I go.  I do know if\r<br />\nI take the exist files and compress them in SoundForge they play correctly, and the template\r<br />\nI use is CCITT mulaw.  Manual conversion works, but the script does not.  I'm studying the\r<br />\ncode in the pluralsight courses to try to figure this out, as well as this discussion.<br />\n",
+    "PostedDate": "2016-09-11T14:46:41.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483412",
+    "ThreadId": "399013",
+    "Html": "Oh, btw, for some reason unknown to me, the company changed their\r<br />\nrecording software from  NICE to Qfiniti, some time before I arrived on \r<br />\nthe scene.  Not sure if that has an impact either.<br />\n",
+    "PostedDate": "2016-09-11T14:48:21.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483479",
+    "ThreadId": "399013",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nmu-law is 8 bit. If the original recording was 8 bit linear PCM, then going to mu-law doesn't really make much sense.<br />\n</blockquote>\nThe original recording is GSM 6.10, 8Khz, 16 bit, (bit rate 13Kbps), Mono\r<br />\n<br />\nFrom what I'm reading of what you posted on Code Project and above, I need to convert this twice?\r<br />\n<br />\nFirst from GSM to PCM, then to mulaw?\r<br />\n<br />\nThanks,\r<br />\n<br />\nRandy<br />\n",
+    "PostedDate": "2016-09-12T08:20:14.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483481",
+    "ThreadId": "399013",
+    "Html": "yes. Step 1 is GSM -&gt; PCM. Step 2 is PCM -&gt; mulaw<br />\n",
+    "PostedDate": "2016-09-12T08:34:05.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483482",
+    "ThreadId": "399013",
+    "Html": "Here is my solution:<br />\n<pre><code>WaveFormat newFormat = WaveFormat.CreateMuLawFormat(8000, 1);\n                using (var reader = new WaveFileReader(fileStart))\n                using (var converter = WaveFormatConversionStream.CreatePcmStream(reader))\n                {\n                    using(var encoder = new WaveFormatConversionStream(newFormat, converter))\n                    {\n                        WaveFileWriter.CreateWaveFile(fileEnd, encoder);\n                    }\n                }</code></pre>\n\n",
+    "PostedDate": "2016-09-12T08:34:33.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483483",
+    "ThreadId": "399013",
+    "Html": "yes, looks like that should work just fine.<br />\n",
+    "PostedDate": "2016-09-12T08:37:21.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483485",
+    "ThreadId": "399013",
+    "Html": "Thank you, Mark, appreciate the feedback.<br />\n",
+    "PostedDate": "2016-09-12T08:38:08.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483503",
+    "ThreadId": "399013",
+    "Html": "I must have miscalculated something.  This code does indeed create the PcmStream and it does create the new .wav\r<br />\nfile, but I went from having a file with a size of 400kb to a size over 5mb.  I must be missing a step or something.  :)<br />\n",
+    "PostedDate": "2016-09-12T09:49:38.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483565",
+    "ThreadId": "399013",
+    "Html": "The vendor of the voice engine software got back to me and said the application\r<br />\nmessages would need to be in the Format: CCITT u-law, 8,000 kHz, 8 bit, Mono.\r<br />\n<br />\nThe code above converts the PCM to 16 bit, so it looks like I need an additonal\r<br />\nstep to downsample(?) the PCM to 8 bit before the final conversion to muLaw.\r<br />\n<br />\nDoes that sound right?\r<br />\n<br />\nThanks,\r<br />\n<br />\nRandy<br />\n",
+    "PostedDate": "2016-09-13T06:03:24.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483936",
+    "ThreadId": "399013",
+    "Html": "yes, that's exactly right. By the way the file sizes you mentioned are exactly right for going from GSM (13kbps) to linear 16 bit pcm (128kbps) - there is a fivefold increase in size. The file will halve when you go to mu-law (64kbps)<br />\n",
+    "PostedDate": "2016-09-17T06:32:36.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

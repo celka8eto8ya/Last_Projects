@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1247712",
+    "ThreadId": "546049",
+    "Html": "Hi Mark,<br />\nIt's very urgent to me.<br />\nI have made a product using Naudio but when client testing on it low configuration machine sound splatter(shuttering).Can Naudio support lower configuration machine like:<br />\n<br />\nlow power Zotac (Intel Atom D2550, 1.86Ghz CPU, 4GB Ram, Win7).<br />\n<br />\nand (win8, 64bit,1.8 GHZ CPU) and this machine.<br />\n",
+    "PostedDate": "2014-05-20T23:00:48.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247849",
+    "ThreadId": "546049",
+    "Html": "it depends how much processing is required on the audio. Just playing a WAV file requires less CPU than decoding MP3 on the fly and processing it through effects. You can usually improve playback stability by increasing your buffer sizes.<br />\n",
+    "PostedDate": "2014-05-21T03:39:32.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

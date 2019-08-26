@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "573571",
+    "ThreadId": "247932",
+    "Html": "\r\n<p>I have data that was recorded from an accelerometer, and I'd like to play that back using NAudio. I'm still trying to figure out the basics and so am having a bit of trouble figuring out where I need to be looking. Does anyone have any suggestions of where\r\n to start? I have an array of floats which are the accelerometer values over time at about 20Khz, and I'd like to convert it to an audio waveform the user can listen to. Thanks.</p>\r\n",
+    "PostedDate": "2011-02-28T16:15:01.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574326",
+    "ThreadId": "247932",
+    "Html": "<p>have a look at this article: http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html</p>\r\n<p>you would replace the sine wave generation code with returning values from your array of floats</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-02T03:06:47.177-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

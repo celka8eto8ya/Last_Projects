@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1494693",
+    "ThreadId": "662226",
+    "Html": "Trying to implement UDP streaming audio in both directions from server to client.  I have a previous implementation that uses ASIO drivers as a COM object, from the work of Rob Philpot.  This is being used in a remote controlled ham radio site.  It works pretty good on the remote site as there is no GUI implemented so the  not existent GUI does not get in the way of the COM object.  But on the local site which is the main user interface there is a pretty complicated GUI and when it gets updated I get glitches in the audio streaming.  I've been trying to figure out on my own how to get around the eccentricities of COM objects.  When I came across NAudio I decided to give it a try.\r<br />\nI've got most of my original ASIO code converted over to using NAudio with a few exceptions.<br />\nI'm trying to figure out if I can just pump audio into the ASIO code implementation of NAudio using AsioOut.  Or do I need to first instantiate a WaveIn device as part of the signal chain.  I'm referencing the two Asio modules and the chat module in the NAudio Demo, but I'm getting a disconnect in my own mind as to how the proper implementation of the ASIO Record and Playback simultaneously would work.  Any takers??   Regards,  Karin <br />\n",
+    "PostedDate": "2017-03-26T14:58:55.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494739",
+    "ThreadId": "662226",
+    "Html": "Success..... I have the UDP streaming audio working in both directions.  I had some clean up work to do with regard to changing the floating point samples from the Asio interface to byte oriented samples so that I could use the default encoder and decoder in NAudio.  I was reading one of the other posts about the code in GetAsInterleavedSamples, and there was a comment there about having this code run a quick as possible.  In my older code not using NAudio I had to change the floating point samples over to shorts then run the encoder (Alaw) on the shorts get the bytes to send.  I want the network traffic to have the least possible overhead because of data caps on the internet ISP I'm using.  Another long story there.  Anyway the basic performance look OK with me.  I've got a lot of cleanup work to do on the code so I don't throw errors when closing the program, and the usual things that occur when you haven't thought out the error processing aspects of code.<br />\nI still need to check if the issues I have with the larger GUI base program will work with the NAudio implementation of ASIO.  Karin <br />\n",
+    "PostedDate": "2017-03-27T11:53:56.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

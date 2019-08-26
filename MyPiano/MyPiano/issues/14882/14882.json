@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "probably related to function callback, or dodgy soundcard drivers. Re-open if anyone else reports",
+    "ClosedDate": "2013-05-03T08:29:51.57-07:00",
+    "CommentCount": 3,
+    "Custom": "",
+    "Description": "Hello,\n\nI have an issue with NAudio: in simple application i'm playing for example wav file, and when I change system volume by draggin mixer manually in windows taskbar - application crashes. It doesn't throw an exception, but \"stops working\", even in debug mode.\n\nAnybody have simple issue and can help?\n\nI'm using DirectSoundOut or WaveOut (function callback).\nCode for loading wav file is pasted from one of NAudio samples.\n\n//Update: I'm using NAudio source code 63489\n\nI will really appreciate any feedback. Thanks.\n\nMike",
+    "LastUpdatedDate": "2013-05-03T08:29:51.57-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-12-14T02:51:44.65-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "CantReproduce"
+    },
+    "Summary": "Crash when changing windows mixer volume",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 14882
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "wow, what OS are you using, and what soundcard?",
+      "PostedDate": "2010-12-15T05:49:08.577-08:00",
+      "Id": 41750
+    },
+    {
+      "Message": "I'm having this issue on Win7 x86 and x64, both onboard soundcards. One of them is Gigabyte 5/3400 series chipset family high definition audio.",
+      "PostedDate": "2010-12-15T06:44:37.623-08:00",
+      "Id": 41751
+    },
+    {
+      "Message": "does it affect any other applications? what about if you use window callback instead of function callback?",
+      "PostedDate": "2010-12-16T06:28:54.97-08:00",
+      "Id": 41752
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "630141",
+    "ThreadId": "262042",
+    "Html": "\r\n<p>Dear reader,</p>\r\n<p><br>\r\nI will post my code without error checks and socket code to shorten the code.</p>\r\n<p>So for my first question i use waveProvider.AddSamples to play the audio back, but i also write it to a file, However i have no idea how to play back that file.<br>\r\nIs it even possible in this format?</p>\r\n<p>My second question is how can i record the Steoro mixer instead of the microphone (so the audio that would normally come out of the speakers).</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks allot for reading!</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Speaker out:</strong></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>codec = <span style=\"color:blue\">new</span> SpeexChatCodec(rate);\r\n\r\nwaveOut = <span style=\"color:blue\">new</span> WaveOut();\r\nwaveProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(codec.RecordFormat);\r\nwaveProvider.DiscardOnBufferOverflow = <span style=\"color:blue\">true</span>;\r\nwaveOut.Init(waveProvider);\r\nwaveOut.Play();\r\n\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> OnDataReceived(IAsyncResult asyn)\r\n{\r\n    <span style=\"color:green\">//Received data in byte[] b</span>\r\n    <span style=\"color:blue\">byte</span>[] decoded = codec.Decode(b, 0, b.Length);\r\n\r\n    <span style=\"color:blue\">if</span> (record)\r\n    {\r\n        fs = <span style=\"color:blue\">new</span> FileStream(<span style=\"color:blue\">string</span>.Format(<span style=\"color:#a31515\">&quot;{0}{1:yyyy-MM-dd_HH-mm-ss}.wav&quot;</span>, file, DateTime.Now), FileMode.Create);\r\n        fs.Write(decoded, 0, decoded.Length);\r\n    }\r\n\r\n    waveProvider.AddSamples(decoded, 0, decoded.Length);\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Microphone in:</strong></p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> WaveIn waveIn;\r\n<span style=\"color:blue\">private</span> INetworkChatCodec codec;                  \r\n\r\nwaveIn = <span style=\"color:blue\">new</span> WaveIn(WaveCallbackInfo.FunctionCallback());\r\nwaveIn.BufferMilliseconds = 50;\r\nwaveIn.DeviceNumber = device;\r\nwaveIn.WaveFormat = codec.RecordFormat;\r\nwaveIn.DataAvailable &#43;= waveIn_DataAvailable;\r\nwaveIn.StartRecording();\r\n\r\n<span style=\"color:blue\">void</span> waveIn_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n{\r\n<span style=\"color:green\">//Encode with Speex</span>\r\n<span style=\"color:blue\">byte</span>[] encoded = codec.Encode(e.Buffer, 0, e.BytesRecorded);\r\n<span style=\"color:green\">//Transmit encoded array</span>\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-06-20T09:25:18.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630143",
+    "ThreadId": "262042",
+    "Html": "<p>Answer to your first question is simple - just use the WaveFileWriter with codec.RecordFormat as the WaveFormat instead of FileStream</p>\r\n<p>Second question is more tricky since not all soundcards support this for WaveOut. Either you need to set your Record Mixer up to a \"What you hear\" option, or you need to use Wasapi loopback recording (not currently provided in NAudio, but example implementations are available if you search the forums).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-20T09:34:27.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630157",
+    "ThreadId": "262042",
+    "Html": "<p>Woow that was fast!</p>\r\n<p>Thanks mark! i had been messing around with, well other things that didn't make sense AT ALL.</p>\r\n<p>Cheers</p>",
+    "PostedDate": "2011-06-20T09:56:31.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

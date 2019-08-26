@@ -1,0 +1,122 @@
+[
+  {
+    "Id": "1199844",
+    "ThreadId": "527977",
+    "Html": "Hi, I'm new to Naudio. I created a wave form of a sound and I would like to insert a control into the wave form so that I can control the song that I playing. The control is most likely a seebar that will seek the song. What I mean is there will be a line in the wave form that indicate the progress of where the song is play till. When I drag that line forward to another part of the wave form, the song will auto seek till the part of the line located in the wave form.\r<br />\n<br />\nCan Naudio do it? Any guys feel free to comment. Hope your guys will understand what I saying. Thanks a lot.<br />\n",
+    "PostedDate": "2014-01-28T06:13:06.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200131",
+    "ThreadId": "527977",
+    "Html": "NAudio doesn't include a control like you describe, but the code samples that come with NAudio (NAudioDemo and NAudioWpfDemo) show how to render a waveform, so if you don't mind writing your own custom slider you could achieve what you are asking for. Probably the easiest approach would be a custom WPF control with a regular slider to reposition and the WaveForm drawn behind.<br />\n",
+    "PostedDate": "2014-01-28T13:22:47.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200228",
+    "ThreadId": "527977",
+    "Html": "Hi markheath, thanks for the reply. Would you mind to explain more what is NAudioWpfDemo about and what is the function that NAudioWpfDemo provided. I only have NAudioDemo  in hand and it do not show how to render a waveform. Thanks a lot.<br />\n",
+    "PostedDate": "2014-01-28T16:39:15.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200245",
+    "ThreadId": "527977",
+    "Html": "Download the NAudio source and have a look at this file specifically:<br />\n<br />\n<a href=\"https://naudio.codeplex.com/SourceControl/latest#NAudioWpfDemo/AudioPlaybackDemo/AudioPlaybackViewModel.cs\" rel=\"nofollow\">https://naudio.codeplex.com/SourceControl/latest#NAudioWpfDemo/AudioPlaybackDemo/AudioPlaybackViewModel.cs</a><br />\n<pre><code>        this.audioPlayback = new AudioPlayback();\n        audioPlayback.MaximumCalculated += audioGraph_MaximumCalculated;     &lt;&lt; follow this event function\n        audioPlayback.FftCalculated += audioGraph_FftCalculated;     &lt;&lt; and this one\n\n</code></pre>\n\nThe PolyLineGraph visualizer will show you how to draw the waveform in WPF, which you could port to Forms if that is what you are using.<br />\n",
+    "PostedDate": "2014-01-28T17:45:07.113-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200252",
+    "ThreadId": "527977",
+    "Html": "Thanks K24A3. I have tried the NAudio source that you mentioned. Yes the waveform in WPF is awesome. Do you know is that any way to have a control on the way form as I mentioned above? I wish the waveform is not only for visualization purpose. I would like to do something with the waveform like seek the song by dragging the waveform. Thanks a lot.<br />\n",
+    "PostedDate": "2014-01-28T18:35:08.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200256",
+    "ThreadId": "527977",
+    "Html": "its basically the same but instead of showing the wave form in realtime you would read the whole audio file in one go and draw the waveform to a canvas. use read instead of play, every chunk that is read you draw to the canvas at the current audio position offset until the whole canvas is filled from left to right<br />\n",
+    "PostedDate": "2014-01-28T19:21:40.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200263",
+    "ThreadId": "527977",
+    "Html": "Thanks K24A3. I roughly understand what you mean but it seems a bit complicated to implement. Any example or source code can let me reference? Thanks for your help.<br />\n",
+    "PostedDate": "2014-01-28T20:09:49.607-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200298",
+    "ThreadId": "527977",
+    "Html": "Well to start off with, this is how you get the samples from the audio file.<br />\n<pre><code>WaveStream waveStream;\nwaveStream = new AudioFileReader(_sFile);\n                \nWaveChannel32 waveformInputStream = new WaveChannel32(waveStream);\n\n// Setup stream sample callback        \nwaveformInputStream.Sample += waveStream_Sample;\n\nbyte[] readBuffer = new byte[1024];\nint read;\ndo\n{\n    read = waveformInputStream.Read(readBuffer, 0, readBuffer.Length);\n\n}while(read&gt;0);\n\n\nvoid waveStream_Sample(object sender, SampleEventArgs e)\n{\n    // L Sample as a float = e.Left\n    // R Sample as a float = e.Right\n    // Send this info to your waveform canvas. 1.0 is the highest peak \n}</code></pre>\n\n",
+    "PostedDate": "2014-01-28T23:08:27.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200304",
+    "ThreadId": "527977",
+    "Html": "Thanks for reply. I will try it later. By the way, the canvas you mean is the interface control of the waveform to be displayed out? Currently I display my waveform through waveviewer that provided by Naudio. Should I change the waveviewer into other form of control? Or it require any specific control to display the waveform?<br />\n",
+    "PostedDate": "2014-01-28T23:37:14.677-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200309",
+    "ThreadId": "527977",
+    "Html": "It may be best to create a new control. Google 'windows forms scrolling canvas' for some examples. Then use parts the drawing code in waveviewer to actually draw the waveform based on the sample data from the code above.<br />\n",
+    "PostedDate": "2014-01-28T23:52:05.18-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200337",
+    "ThreadId": "527977",
+    "Html": "you could also look at the voicerecorder.codeplex.com project I created. It shows a waveform that you can drag select a range over. It's not exactly what you are looking for but it might give you some more pointers in the right direction.<br />\n",
+    "PostedDate": "2014-01-29T01:23:29.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201906",
+    "ThreadId": "527977",
+    "Html": "Thx for the suggestion. I was busying these few days and now only continue my project. By the way, I have created a canvas but how to pass the left sample and right sample to the canvas? The canvas I have created only have the scroll bar control that are able to scroll through the waveform.<br />\n",
+    "PostedDate": "2014-02-02T21:10:42.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202030",
+    "ThreadId": "527977",
+    "Html": "The canvas is just a container or drawing surface for other objects such as rectangles and lines. The canvas is the parent, the lines and so forth are its children.<br />\n<br />\nImplement the sample code above, and draw a line for each sample from -1 to 1. For starters you could add up the L and R sample and then divide it by 2 (or times by 0.5 float).<br />\n<br />\nIf the sample is 1.0, the line would be say 100 pixels high max. If it is 0.2 it will be 20 pixels high, same for the negatives but in the opposite direction.<br />\n<br />\nNow if you were to draw a line for every single sample, your waveform will look very raw and zoomed in. You probably dont want that so you want each line to be say 1024 samples. Remember that one second of sound has typically 44100 L and R samples. So you would need to iterate through those 1024 samples and find the sample which has the highest value/volume, and use that as the height of the line. This is where an aggregator (sample collector/processor) comes in, it collect a bunch of samples and remembers the highest value, and sends it to the waveform about 10 times a second no matter how many samples it has collected. You can use the aggregator in the NAudio source as it is.<br />\n<br />\nIf you are still unsure, have a look at how voicerecorder.codeplex.com does it.<br />\n<br />\nAlso google &quot;Winforms add a line to a canvas&quot;<br />\n",
+    "PostedDate": "2014-02-03T05:44:50.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1203292",
+    "ThreadId": "527977",
+    "Html": "Ok. Sorry. I'm not that good in C#. I currently in the progress and try to implement what you wrote. Will let you know when I face any problems. Thanks for the help.<br />\n",
+    "PostedDate": "2014-02-05T21:07:11.293-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204400",
+    "ThreadId": "527977",
+    "Html": "Implementing a waveform visual from scratch can be complicated so you may want to go back a step and learn how a canvas works, and how sample collecting (SampleAggregator) works.<br />\n",
+    "PostedDate": "2014-02-07T08:29:42.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

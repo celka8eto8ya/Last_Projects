@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1343768",
+    "ThreadId": "578218",
+    "Html": "Is it possible to read wma file from memory stream like in Mp3FileReader? WMAFileReader accept only string. I just need to get TotalTime property of wma file from file upload.<br />\n",
+    "PostedDate": "2015-01-21T03:12:43.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1351951",
+    "ThreadId": "578218",
+    "Html": "Unfortunately this feature is not available at the moment. This class was contributed by someone else so I'm not sure how hard it would be to add opening from a stream<br />\n",
+    "PostedDate": "2015-02-12T13:36:15.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1351974",
+    "ThreadId": "578218",
+    "Html": "Briefly looking at the code, it is possible (via IStream), but I don't know how much would be involved in doing that.<br />\n",
+    "PostedDate": "2015-02-12T14:32:04.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

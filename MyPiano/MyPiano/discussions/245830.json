@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "565364",
+    "ThreadId": "245830",
+    "Html": "\r\n<p>Hi there,</p>\r\n<p>I'm trying to record the microphone channel on Windows 7.</p>\r\n<p>My output file &quot;test.wav&quot; is growing during the recording, but the file couldn't be played after stopping the record.</p>\r\n<p>I've tried it with all connected lines ( devices[0], devices[1] and so on...), but its's still not working.</p>\r\n<p>Heres my code:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> \t<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> buttonrec_Click(<span style=\"color:blue\">object</span> sender, RoutedEventArgs e)\r\n        {\r\n         \r\n            MMDeviceEnumerator deviceEnum = <span style=\"color:blue\">new</span> MMDeviceEnumerator();\r\n            MMDeviceCollection deviceCol = deviceEnum.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active);\r\n\r\n            Collection&lt;MMDevice&gt; devices = <span style=\"color:blue\">new</span> Collection&lt;MMDevice&gt;();\r\n            <span style=\"color:blue\">foreach</span> (MMDevice device <span style=\"color:blue\">in</span> deviceCol)\r\n            {\r\n                devices.Add(device);\r\n            }\r\n\r\n            <span style=\"color:green\">//0=Mic,1=Digital,2=digital,3=Mic,4=LineIn,</span>\r\n           <span style=\"color:green\">//MessageBox.Show(devices[0].ToString());</span>\r\n            \r\n            waveIn = <span style=\"color:blue\">new</span> WasapiCapture((MMDevice)devices[0]);\r\n            \r\n            \r\n            <span style=\"color:green\">//waveIn.WaveFormat = new WaveFormat(8000, 1);</span>\r\n            \r\n            writer = <span style=\"color:blue\">new</span> WaveFileWriter(<span style=\"color:#a31515\">@&quot;c:\\test\\test.wav&quot;</span>, waveIn.WaveFormat);\r\n\r\n            waveIn.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveIn_DataAvailable);\r\n            \r\n            waveIn.StartRecording();\r\n            waveIn.RecordingStopped &#43;= <span style=\"color:blue\">new</span> EventHandler(waveIn_RecordingStopped);\r\n        }\r\n\r\n        <span style=\"color:blue\">void</span> waveIn_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n        {\r\n            \r\n                \r\n                writer.WriteData(e.Buffer, 0, e.BytesRecorded);\r\n                <span style=\"color:blue\">int</span> secondsRecorded = (<span style=\"color:blue\">int</span>)(writer.Length / writer.WaveFormat.AverageBytesPerSecond);\r\n                <span style=\"color:blue\">if</span> (secondsRecorded &gt;= 60)\r\n                {\r\n                    StopRecording();\r\n                }    </pre>\r\n<pre>        }\r\n        \r\n\r\n        <span style=\"color:blue\">void</span> StopRecording()\r\n        {\r\n           \r\n            waveIn.StopRecording();\r\n\r\n        }\r\n       \r\n    \t <span style=\"color:blue\">void</span> waveIn_RecordingStopped(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n        {      \r\n           waveIn.Dispose();\r\n           waveIn = <span style=\"color:blue\">null</span>;\r\n           writer.Close();\r\n           writer = <span style=\"color:blue\">null</span>;\r\n                \r\n         }\r\n\r\n\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> button_stop_rec_Click(<span style=\"color:blue\">object</span> sender, RoutedEventArgs e)\r\n        {\r\n            <span style=\"color:blue\">try</span>\r\n            {\r\n                waveIn.StopRecording();\r\n                waveIn.Dispose();\r\n                waveIn = <span style=\"color:blue\">null</span>;\r\n                writer.Close();\r\n                writer = <span style=\"color:blue\">null</span>;\r\n            }\r\n            <span style=\"color:blue\">catch</span> (Exception ex)\r\n            {\r\n                Console.WriteLine(ex.ToString());\r\n            }\r\n        }\r\n</pre>\r\n<pre>Thanks for your advices and NAudio ;)</pre>\r\n<pre>Bj&ouml;rn</pre>\r\n</div>\r\n",
+    "PostedDate": "2011-02-13T04:38:45.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "568947",
+    "ThreadId": "245830",
+    "Html": "<p>I am trying to do the exact same thing, with the same result. Also running windows 7.</p>\r\n<p>I suspect that there is some problem with the WaveFormat used by WasapiCapture so I am trying to figure out how to get the data into a stream so that I can try to use the conversion stream on the data. Any ideas?</p>",
+    "PostedDate": "2011-02-19T05:33:50.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569524",
+    "ThreadId": "245830",
+    "Html": "<p>have a look at the NAudio demo project for an example of using WASAPI for recording</p>",
+    "PostedDate": "2011-02-21T03:27:33.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569761",
+    "ThreadId": "245830",
+    "Html": "<blockquote style=\"border: 0.1em solid #cccccc; font-style: italic; margin: 0.25em 1em 0pt; padding: 0pt 0.25em;\"><strong>markheath wrote:</strong><br />\r\n<p>have a look at the NAudio demo project for an example of using WASAPI for recording</p>\r\n</blockquote>\r\n<p>If you are refering to the Recording form, thats the one I did not get to work..</p>\r\n<p>However I found the device selection on WaveIn so I switched to it instead, not really problem solved, but problem gone at least.</p>\r\n<p>Thanks for a great lib</p>",
+    "PostedDate": "2011-02-21T11:24:47.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "609545",
+    "ThreadId": "245830",
+    "Html": "<p>Can you upload the whole project here? I am interested in trying this in Windows 7.</p>",
+    "PostedDate": "2011-05-09T07:10:10.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "609569",
+    "ThreadId": "245830",
+    "Html": "<p>I suspect the issue might be that WASAPI likes to use WAVEFORMATEXTENSIBLE for its headers. It will be PCM or IEEE under the hood though, so you could create your own standard WaveFormat to use. Can you upload a small portion of the WAV file created?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-09T07:37:07.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "610508",
+    "ThreadId": "245830",
+    "Html": "<blockquote style=\"border: 0.1em solid #cccccc; font-style: italic; margin: 0.25em 1em 0pt; padding: 0pt 0.25em;\"><strong>webideas wrote:</strong><br />\r\n<p>Can you upload the whole project here? I am interested in trying this in Windows 7.</p>\r\n</blockquote>\r\n<p>Assuming that it is my project you are looking for, you can download a .rar here</p>\r\n<p>http://www.filedropper.com/remotesound</p>\r\n<p>It is a client server setup which records sound on one machine and plays it on a remote host, feel free to use it however you like</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-05-10T13:11:18.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "610535",
+    "ThreadId": "245830",
+    "Html": "<p>Thanks for the link! There is a missing file, Converters.cs under RemoteSoundServer, so I cannot build it.</p>",
+    "PostedDate": "2011-05-10T13:46:58.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "610588",
+    "ThreadId": "245830",
+    "Html": "<p>Also, is this the same projects:&nbsp;http://www.codeproject.com/KB/cs/Streaming_wave_audio.aspx</p>",
+    "PostedDate": "2011-05-10T14:30:52.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "611192",
+    "ThreadId": "245830",
+    "Html": "<blockquote style=\"border: 0.1em solid #cccccc; font-style: italic; margin: 0.25em 1em 0pt; padding: 0pt 0.25em;\"><strong>webideas wrote:</strong><br />\r\n<p>Thanks for the link! There is a missing file, Converters.cs under RemoteSoundServer, so I cannot build it.</p>\r\n</blockquote>\r\n<p>http://www.filedropper.com/remotesound2</p>\r\n<p>Sorry about that, usual silly problem that one forgets to add files to the repository and since you are working alone on it no one notices</p>",
+    "PostedDate": "2011-05-11T12:45:39.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "611196",
+    "ThreadId": "245830",
+    "Html": "<blockquote style=\"border: 0.1em solid #cccccc; font-style: italic; margin: 0.25em 1em 0pt; padding: 0pt 0.25em;\"><strong>webideas wrote:</strong><br />\r\n<p>Also, is this the same projects:&nbsp;http://www.codeproject.com/KB/cs/Streaming_wave_audio.aspx</p>\r\n</blockquote>\r\n<p>Nice find, seems like the same idea but it looks like he spent more time on it</p>",
+    "PostedDate": "2011-05-11T12:48:04.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

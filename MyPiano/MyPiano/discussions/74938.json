@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "256468",
+    "ThreadId": "74938",
+    "Html": "<p>Hello, I'm interested in using ASIO or maybe WDM &nbsp;for low latency audio drivers but i have no idea how i go about doing this.</p>\r\n<p>I've looked at the NAudio Demo project but i can't find the ASIO implementation in it.</p>\r\n<p>Can someone give me a hand?</p>\r\n<p>Thanks,</p>\r\n<p>Malik</p>",
+    "PostedDate": "2009-11-12T13:03:05.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "256753",
+    "ThreadId": "74938",
+    "Html": "<p>Hi Malik,</p>\r\n<p>NAudio does not support WDM, and the ASIO support is currently experimental. The NAudioDemo project gives you the chance to choose ASIO playback on the playback form, but it doesn't currently work with all soundcards.</p>\r\n<p>As for low latency, the best you are likely to get with NAudio would be to use WASAPI. You have to also bear in mind that since all .NET applications use a garbage collector, you will never get the really low latencies you can use in C/C++</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-11-13T06:31:50.777-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "256798",
+    "ThreadId": "74938",
+    "Html": "<p>Ahh,&nbsp;<br>I didn't know for sure, but I had figured that since computers have gotten significantly faster since I started playing around with</p>\r\n<p>audio applications, that low-latency would be achievable in smaller apps. Being able to combie C++/C# code would be cool.</p>\r\n<p>But I'm not sure how to do that or even know if it'd make much of a difference, even tough i know it can be done.</p>\r\n<p>Malik</p>\r\n<p>&nbsp;</p>\r\n<p>-edit-</p>\r\n<p>besides, i don't necessarily need 11-4 ms latency :)</p>",
+    "PostedDate": "2009-11-13T08:03:34.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

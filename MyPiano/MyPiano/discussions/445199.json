@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1049593",
+    "ThreadId": "445199",
+    "Html": "Hi !\r<br />\n<br />\nI have problem with audio recording from WasapiLoopbackCapture, its record wav file with 32 bit depth even when i set in sound card to 16 bit. I need 16 bit to mix it dow with other wav file (of course with 16 bit depth) i can manage how to do this. Please help\r<br />\n<br />\nHere is a code part:<br />\n<pre><code>waveOut = new WasapiLoopbackCapture();\n...\nif (waveIn.WaveFormat.BitsPerSample == 32)\n{\n       flag_321 = true;\n}\n...\nwriter2 = new WaveFileWriter(Path.Combine(LocaloutputFolder, LocaloutputOut_wav), waveOut.WaveFormat);\n\nwaveOut.DataAvailable += new EventHandler&lt;WaveInEventArgs&gt;(OnDataAvailable1);\nwaveOut.StartRecording();\n\npublic static void OnDataAvailable1(object sender, WaveInEventArgs e)\n{\nif (writer2 != null)\n{\n    writer2.Write(e.Buffer, 0, e.BytesRecorded); &lt;--- I think i can change bit depth here but i can't manage how\n}\n}\n\n\n</code></pre>\n\n",
+    "PostedDate": "2013-05-28T06:32:28.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1050510",
+    "ThreadId": "445199",
+    "Html": "I discuss how to change bit depth in this article:\r<br />\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET</a><br />\n",
+    "PostedDate": "2013-05-30T02:10:27.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

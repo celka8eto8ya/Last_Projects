@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1422688",
+    "ThreadId": "636643",
+    "Html": "Hi,\r<br />\ni'm trying to use naudio library to listen headphone state (plugged/unplugged).\r<br />\nAt moment i've found only a class/method (MMDeviceEnumerator.cs) to check the headphone state, there is a way to use a listener in order to dispatch an event when the user plug or unplug the headphones ???? \r<br />\nThanks in advice,\r<br />\nRoberta.<br />\n",
+    "PostedDate": "2015-05-04T03:52:08.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

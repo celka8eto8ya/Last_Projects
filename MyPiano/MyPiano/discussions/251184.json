@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "586342",
+    "ThreadId": "251184",
+    "Html": "\r\n<p>I'm trying to feed my VU meter with level values.<br>\r\nBasically I'm using solution I've seen with ProcessData method from NAudioDemo, values I get are 0.0 or NaN. Where have I gone wrong?</p>\r\n<p>code:</p>\r\n<pre><div style=\"color:black; background-color:white\"><pre><span style=\"color:blue\">void</span> ProcessData(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\r\n {\r\n      <span style=\"color:blue\">int</span> index = 0, sampleCount = 0;\r\n      <span style=\"color:blue\">while</span> (index &lt; count)\r\n      {\r\n                <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> channel = 0; channel &lt; 2; channel&#43;&#43;)\r\n                {\r\n                    <span style=\"color:blue\">float</span> sampleValue = Math.Abs(BitConverter.ToSingle(buffer, offset &#43; index));\r\n                    <span style=\"color:blue\">if</span> (<span style=\"color:blue\">float</span>.IsNaN(sampleValue))\r\n                    {\r\n                        <span style=\"color:green\">//checj</span>\r\n                        Debug.WriteLine(<span style=\"color:#a31515\">&quot;Seronja =/&quot;</span>);\r\n                        <span style=\"color:blue\">continue</span>;\r\n                    }\r\n                    _maxSamples[channel] = Math.Max(_maxSamples[channel], sampleValue);\r\n                    index &#43;= 4;\r\n                }\r\n                sampleCount&#43;&#43;;\r\n              \r\n                <span style=\"color:blue\">if</span> (sampleCount &gt;= _sampleCount)\r\n                {\r\n                    OnVolumeNotification();\r\n                    sampleCount = 0;\r\n                    Array.Clear(_maxSamples, 0, _maxSamples.Length);\r\n                }            \r\n     }\r\n}\r\n<br><br>I call it during WaveIn.DataAvailable event. <br>WaveFormat is 44100,16,2.<br>Any ideas?</pre>\r\n</div>\r\n</pre>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-03-25T04:52:48.11-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "586904",
+    "ThreadId": "251184",
+    "Html": "<p>You are recording 16 bit so it should be BitConverter.ToShort instead.</p>\r\n<p>Divide by 32768.0f if you want to normalise to a -1.0f to 1.0f range</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-26T06:54:03.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

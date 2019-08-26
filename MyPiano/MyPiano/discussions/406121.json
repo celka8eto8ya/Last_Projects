@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "953487",
+    "ThreadId": "406121",
+    "Html": "\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">In MediafoundationReader.cs (CreateReader....)</span></pre>\r\n<pre><span style=\"color:green\"><br></span></pre>\r\n<pre><span style=\"color:green\">//var uri = new Uri(file);</span>\r\n\t\r\n\t\r\n<span style=\"color:green\">// Obsolete </span>\r\n<span style=\"color:green\">// var uri = new Uri(file,true)</span>\r\n\r\n\r\nUri nUrl = <span style=\"color:blue\">null</span>;\r\n<span style=\"color:blue\">string</span> str = <span style=\"color:#a31515\">&quot;&quot;</span>;\r\n<span style=\"color:blue\">if</span> (Uri.TryCreate(file, UriKind.Absolute, <span style=\"color:blue\">out</span> nUrl))\r\n{\r\n\tstr = nUrl.ToString();\r\n}\r\n<span style=\"color:blue\">else</span>\r\n{\r\n\tstr = nUrl.AbsoluteUri;\r\n}\r\n\r\n\t\t\t\r\nMediaFoundationInterop.MFCreateSourceReaderFromURL(str, <span style=\"color:blue\">null</span>, <span style=\"color:blue\">out</span> reader);\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-12-09T02:52:30.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954498",
+    "ThreadId": "406121",
+    "Html": "\r\n<p>I'm thinking that MediaFoundationReader should simply pass the file value straight through. This seems to work fine in my tests. This would allow it to be a URL or an absolute path and fixes the problem with accents in the filename.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-11T05:05:05.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954578",
+    "ThreadId": "406121",
+    "Html": "\r\n<p>Oh yeah, as usual your version is more simple.</p>\r\n",
+    "PostedDate": "2012-12-11T06:58:18.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

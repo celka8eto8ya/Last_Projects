@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "809746",
+    "ThreadId": "348449",
+    "Html": "\r\n<p>Hi there, In next few months I will try to do some declicking algorithms for coruppted wave files and I would like to use NAudio for reading and writing waves. So I would like to ask users of NAudio, whether there is any direct access for getting and setting\r\n individual samples of wave files in NAudio library. For example, I would like to open some wav file, then I would like to look on value of for example fifth sample on all channels as a float for instane. I would also like to know weather there is a way how\r\n to change these 5th samples and after that how can I save this modified outcome. Can you please help me and show me, how this can be performed. I hadn't find any documentation so far, is there any? Thank you.</p>\r\n",
+    "PostedDate": "2012-03-13T10:13:29.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810067",
+    "ThreadId": "348449",
+    "Html": "<p>Yes, NAudio is designed to give you access to the individual audio samples. However, there are lots of different audio formats (bit depths, compression types etc), so there is no one simple way that works for everything. The WaveFileReader class will give you access to the raw byte data. You can then convert each pair of bytes into 16 bit samples yourself, or take advantage of some of the NAudio helper classes to allow you to more easily work directly with 16 bit audio (assuming your audio is 16 bit). Then you use the WaveFileWriter class to write your modified audio back out to disk.</p>\r\n<p>If you want to deal with audio as floats, as you say, use the new AudioFileReader class which will return a ISampleProvider, which makes it very easy to examine the value of each sample as a float as it comes through the Read method. You would create your own ISampleProvider whose Read method reads from the source AudioFileReader and examines and modifies the audio:</p>\r\n<p>&nbsp;&nbsp; var reader = new AudioFileReader();</p>\r\n<p>&nbsp;&nbsp; var mySampleProvider = new MySampleProvider(reader);</p>\r\n<p>&nbsp;&nbsp; WaveFileWriter.CreateWaveFile(myWaveProvider, \"example.wav\");</p>\r\n<p>&nbsp;</p>\r\n<p>class MySampleProvider: ISampleProvider</p>\r\n<p>&nbsp;&nbsp; private int Read(float[] buffer, int offset, int count)</p>\r\n<p>{</p>\r\n<p>&nbsp;&nbsp; int samplesRead = source.Read(buffer, offset, count);</p>\r\n<p>&nbsp; // TODO: examine and optionally change the contents of buffer</p>\r\n<p>&nbsp;&nbsp; return samplesRead;</p>\r\n<p>}</p>",
+    "PostedDate": "2012-03-14T00:51:17.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

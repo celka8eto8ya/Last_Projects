@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "993107",
+    "ThreadId": "431121",
+    "Html": "\r\n<p>I'm reading a mp3-file and convert it to a WaveStream</p>\r\n<pre>Mp3FileReader mp3 = new Mp3FileReader(open.FileName);\nWaveStream pcm =WaveFormatConversionStream.CreatePcmStream(mp3);</pre>\r\n<p>Now I'd like to convert that stream to a double-array.</p>\r\n<p>I've read about WaveBuffer but have no idea how to use it for that purpose.</p>\r\n<p>Can you help me out?</p>\r\n",
+    "PostedDate": "2013-01-28T08:15:03.857-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993141",
+    "ThreadId": "431121",
+    "Html": "\r\n<p>I've answered your question on StackOverflow. Also, unless you are using a really old NAudio, no need for the WaveFormatConversionStream. Simply reading out of the Mp3FileReader will give you PCM. It is most likely 16 bit stereo, so you'd want to split out\r\n the channels before you do an FFT.</p>\r\n<p>WaveBuffer saves you using BitConverter. Simply bind a WaveBuffer to your byte array containing PCM samples, and then you can access each sample using the ShortBuffer property. But your FFT probably wants float/double anyway, so you still need to divide\r\n by 32,768 and put it into your separate left and right floating point arrays.</p>\r\n",
+    "PostedDate": "2013-01-28T09:03:31.897-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993145",
+    "ThreadId": "431121",
+    "Html": "\r\n<p>Thanks for the quick reply, Mark.</p>\r\n<p>How can I split the channels and why do I need it anyways?<br>\r\nMy FFT (the one by Lomont) asks for interleaved pairs of the real and immaginary parts.</p>\r\n<p>Up until now I thought the real part is the left channel and immaginary part is the right channel.</p>\r\n",
+    "PostedDate": "2013-01-28T09:12:21.58-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993147",
+    "ThreadId": "431121",
+    "Html": "\r\n<p>the left and right samples will be interleaved, so just throw every other one away if you only need to do the FFT of one channel. Audio is entirely real, so the imaginary component of the input signal will always be zero.</p>\r\n",
+    "PostedDate": "2013-01-28T09:13:39.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993154",
+    "ThreadId": "431121",
+    "Html": "\r\n<p>Ok, very well :)</p>\r\n<p>Is there an easy way to check whether the FFT worked correctly?</p>\r\n<p>Before applying the FFT I split the audio-material in chunks of 4096 bytes (to keep some kind of time-domain).</p>\r\n<p>I created a sine-wave at 100 Hz and looked after applying the FFT in the double-array whether I could find the high magnitude but I couldn't. To find the correct entry in the array I calculated the frequency-band of every array-entry (44100/4096 = 10,7Hz)\r\n and looked in the corresponding part of the array where I suspected to find the high magnitude of 100 Hz.</p>\r\n<p>I'm explaining this because I hope you see my error.</p>\r\n",
+    "PostedDate": "2013-01-28T09:20:30.277-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993542",
+    "ThreadId": "431121",
+    "Html": "\r\n<p>4096 is the number of bytes not the number of samples. To work out the bin sizes, N is the number of samples (i.e. complex numers)</p>\r\n",
+    "PostedDate": "2013-01-29T03:39:33.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993548",
+    "ThreadId": "431121",
+    "Html": "\r\n<p>I'm sorry, I don't quite get what you are trying to say. Can you explain it in a different way?</p>\r\n",
+    "PostedDate": "2013-01-29T03:43:38.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993549",
+    "ThreadId": "431121",
+    "Html": "\r\n<p>say you record 4096 bytes of audio. If it is 16 bit that means you have 2048 samples. If it is stereo, you have 1024 sample pairs (and you should only pass one channel in to the FFT). So your bin resolution is not 44100/4096 but 44100/1024.</p>\r\n",
+    "PostedDate": "2013-01-29T03:45:35.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "999575",
+    "ThreadId": "431121",
+    "Html": "Ah, I see.\r<br />\n<br />\nI think I'm already doing something wrong when reading the bytestream from the mp3-file. Can you confirm that instead of byte[8] I have to use byte[16] as buffer since I'm reading 16 bit audio?<br />\n<pre><code>using (Mp3FileReader mp3 = new Mp3FileReader(filename))\n            {\n                //Convert byte- to double-array\n                double[] real = new double[mp3.Length / 8];\n                byte[] buffer = new byte[8];\n                int read;\n                int count = 0;\n                \n                while ((read = mp3.Read(buffer, 0, buffer.Length)) &gt; 0)\n                {\n                    real[count] = BitConverter.ToInt16(buffer, 0) / 32768.0;\n                    count++;\n                }\n\n                //Seperate to mono\n                double[] mono = new double[real.Length / 2];\n                for (int i = 0; i &lt; real.Length; i += 2)\n                {\n                    mono[i / 2] = real[i];\n                }</code></pre>\n\n",
+    "PostedDate": "2013-02-11T07:04:40.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000032",
+    "ThreadId": "431121",
+    "Html": "no, a byte is 8 bits. So your 8 byte buffer is actually going to have space for 4 samples (left, right, left, right). So your code will end up with only a quarter of the samples in the input file.<br />\n",
+    "PostedDate": "2013-02-12T07:12:39.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000084",
+    "ThreadId": "431121",
+    "Html": "Ah, thanks.\r<br />\nI should've seen that.\r<br />\n<br />\nOne more question though (sorry for all the asking).\r<br />\nAfter applying my FFT (<a href=\"http://www.lomont.org/Software/Misc/FFT/LomontFFT.html\" rel=\"nofollow\">http://www.lomont.org/Software/Misc/FFT/LomontFFT.html</a>) a lot magnitude-values are negative.\r<br />\nAFAIK they should only be positive.\r<br />\n<br />\nAm I right on this?<br />\n",
+    "PostedDate": "2013-02-12T08:38:22.353-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000626",
+    "ThreadId": "431121",
+    "Html": "I am certainly not a DSP or FFT expert, but as I understand it, you calculate the magnitude of the FFT output by taking the square root of the sum of squares of the real and imaginary parts of the output, which will always be positive. The ouput is like coordinates, so you have to calculate phase and magnitude yourself.<br />\n",
+    "PostedDate": "2013-02-13T07:50:43.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

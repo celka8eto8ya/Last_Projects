@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1274060",
+    "ThreadId": "552007",
+    "Html": "First of all, Thanks to Mark and associated members of NAudio for making a wonderful library.\r<br />\nI am trying to play stereo wav file using Dante Virtual Soundcard (<a href=\"https://www.audinate.com/products/software/dante-virtual-soundcard\" rel=\"nofollow\">https://www.audinate.com/products/software/dante-virtual-soundcard</a>) and Dante Controller.\r<br />\nIn order to play media to different channels, I am setting &quot;ChannelOffset&quot; in the 'ASIO Direct Playback' of NAudio Demo application. The issue is, it plays at two channel. So, if I specify 4 in the ChannelOffset, Dante Controller and Mixer shows channel 4 and 5 as active.\r<br />\nHowever, If I play a Mono wav file, only one channel is shown as active which is correct.\r<br />\nAlso, If I play stereo file using 'Reaper'(<a href=\"http://www.reaper.fm/\" rel=\"nofollow\">http://www.reaper.fm/</a>) application, it plays at one channel.\r<br />\n<br />\nQuestions:\r<br />\n1- Is it the expected behaviour that a stereo file is played at two channel?\r<br />\n2- Is there a way in NAudio to play a stereo file to a single channel as in Reaper?\r<br />\n<br />\nThanks in advance!<br />\n",
+    "PostedDate": "2014-07-18T10:05:15.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "517415",
+    "ThreadId": "233572",
+    "Html": "\r\n<p>Hi, I'm interested in using naudio to play a segment of a wav file given a audioposition (TimeSpan) and duration (TimeSpan). &nbsp; Can I use naudio for this?</p>\r\n",
+    "PostedDate": "2010-11-04T17:17:21.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "517516",
+    "ThreadId": "233572",
+    "Html": "\r\n<p>have a look at the voicerecorder.codeplex.com project which uses NAudio to do exactly that</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-05T00:09:51.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

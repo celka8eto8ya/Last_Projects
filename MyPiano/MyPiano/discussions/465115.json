@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1116629",
+    "ThreadId": "465115",
+    "Html": "It seems all the demo start with wave file located in local computer or stream.\r<br />\n<br />\nCan we use NAudio to rip CD tracks to WAV files ?<br />\n",
+    "PostedDate": "2013-11-01T10:19:09.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1116637",
+    "ThreadId": "465115",
+    "Html": "I'm afraid NAudio doesn't provide any capabilities to rip a CD. You'd need to find another library to do that.<br />\n",
+    "PostedDate": "2013-11-01T10:37:07.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

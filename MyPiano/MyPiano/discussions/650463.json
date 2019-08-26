@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1460625",
+    "ThreadId": "650463",
+    "Html": "Hi all,\r<br />\n<br />\nI've created a big project using NAudio to handle VoiceOutput. So i created a WasapiOut instance for playing my Audiodata to the device. I set a latency Value of 20ms for reading my BufferedVoice Data. So all works fine.\r<br />\n<br />\nNow quite accidentally I noticed a CPU load over 25%. Now I downladed the NAudio Source Code and added it to my Project. Now I saw that my latency Value I have given to the WasapiOut class is overwriten in the Init method with the StreamLatency Value of the audioClient.\r<br />\nBut the StreamLatency in my case is 0. So there will be an endless loop querying the VoiceBuffer for new Data to playout. So I changed the line from<br />\n<pre><code>latencyMilliseconds = (int)(audioClient.StreamLatency / 10000);</code></pre>\n\nto<br />\n<pre><code>if (audioClient.StreamLatency &gt; 0)\n        latencyMilliseconds = (int)(audioClient.StreamLatency / 10000);</code></pre>\n\nand everything works fine.\r<br />\nBut I would like to know why this happens and if my approach is the correct way to resolve the issue. Did you ever had a StreamLatency of 0 with your devices. (It's a common USB Headset)\r<br />\n<br />\nBest regards<br />\n",
+    "PostedDate": "2016-01-25T16:15:36.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1460626",
+    "ThreadId": "650463",
+    "Html": "Sorry, you can close it. I didn't noticed that this have been changed already on github.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2016-01-25T16:19:16.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

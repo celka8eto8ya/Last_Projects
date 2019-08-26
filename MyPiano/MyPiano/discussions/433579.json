@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1003024",
+    "ThreadId": "433579",
+    "Html": "Is it possible? The number of channels that is returned is &quot;1&quot;, but it is still PCM audio and it appears that when I plug in the PanningSampleProvider, the output is complete garbage. I do not get any audio.\r<br />\n<br />\nSuggestions?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-18T13:14:55.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003030",
+    "ThreadId": "433579",
+    "Html": "panning sample provider takes a sample provider as an input. Sample providers are 32 bit float. Use Pcm16ToSampleProvider to get there<br />\n",
+    "PostedDate": "2013-02-18T13:32:01.42-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003087",
+    "ThreadId": "433579",
+    "Html": "I already have a Pcm16ToSampleProvider within the same provider within the provider chain, however, I will likely move it a little earlier and prior to passing the audio through the BassTreble provider I generated. I am not sure if order of provider's have an affect on audio, but I figure I will give that a try.\r<br />\n<br />\nOriginally, I had had the following chain:\r<br />\n<br />\n--&gt; BufferedWaveReader\r<br />\n--&gt; Pcm16ToSampleProvider\r<br />\n--&gt; BassTrebleProvider\r<br />\n--&gt; SampleToWaveProvider16 (I think that is the name, I don't have the code in front of me).\r<br />\n<br />\nThis set up works perfectly....and I placed the PanningSampleProvider inbetween the BaseTrebleProvider and the last one. I will test to see how the works moving it one step earlier.\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-18T15:29:50.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003419",
+    "ThreadId": "433579",
+    "Html": "for performance, I'd go with panning after basstreble, as panning will turn a mono input into a stereo output<br />\n",
+    "PostedDate": "2013-02-19T06:11:20.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003542",
+    "ThreadId": "433579",
+    "Html": "I think I have a feeling that once I send the audio through the PanningSampleProvider which then creates a stereo signal from a mono signal, I must use something other than SampleToWaveProvider16 which I assume only works with Mono inputs?<br />\n<br />\nWhat is the correct provider to convert it back into an appropriate WaveProvider?<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-19T09:36:06.243-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003554",
+    "ThreadId": "433579",
+    "Html": "SampleToWaveProvider16 should work just fine with stereo<br />\n",
+    "PostedDate": "2013-02-19T09:53:48.27-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003558",
+    "ThreadId": "433579",
+    "Html": "The output after passing the audio stream through the PanningSampleProvider (eliminating my BassTrebleProvider from the equation), is not yielding me any valuable results. I get silence and when I try to pan, it seems like the tempo was reduced significantly....\r<br />\n<br />\nNot sure why this would not work and I tried different panning strategies and no improvements. :-(\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-19T09:57:05.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003642",
+    "ThreadId": "433579",
+    "Html": "Found out more info....can't seem to use the MonoToStereoProvider either. Seems like the conversion process from the mono to stereo is not working as expected. Not sure if the audio format is off. \r<br />\n<br />\nWhen I open up the audio file in Audacity, I see Mono, 8000Hz, 32-bit float. Not sure if I am missing something because even when I use 32-bit version of the PCM to Sample Provider, I do not get clean audio....\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-19T12:49:04.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1004066",
+    "ThreadId": "433579",
+    "Html": "figured out my problem....had to do with using the incorrect waveformat object for my provider. Since I was encapsulating all these listed providers (from my earlier) post in a master IWaveProvider object, I was using the waveformat object of the bufferedWaveReader instead of the final provider, so the difference was that my player was looking at the provider assuming it was 1 channel vs the 2 channels that was generated from the PanningSampleProvider.<br />\n",
+    "PostedDate": "2013-02-20T07:54:54.18-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

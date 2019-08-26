@@ -1,0 +1,81 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-26T23:55:33.74-07:00",
+    "CommentCount": 6,
+    "Custom": null,
+    "Description": "In file: aiffFileReader.cs, function:ReadAiffHeader(), tenth statement (ignoring braces) reads:\r\n while (br.BaseStream.Position < br.BaseStream.Length)\r\n\r\nbut this crashes because some (but not all) aiff files have a padding of one byte; so the Position is one less than the Length, but NOT enough to be another Chunk. As a workaround, I did this:\r\n while ((br.BaseStream.Position + 1) < br.BaseStream.Length)\r\n\r\nbut a better solution may be:\r\n while ((br.BaseStream.Position + sizeof(AifChunk)) < br.BaseStream.Length)\r\n\r\nI realize this is a bit of a kluge, but these files play correctly in other media players, so some protection is warranted.\r\n\r\nJake",
+    "LastUpdatedDate": "2012-10-26T23:55:33.74-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-10-04T13:14:29.16-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "aiffFileReader crashes on padded files",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16364
+  },
+  "FileAttachments": [
+    {
+      "FileId": 500846,
+      "FileName": "06_Example B.aiff",
+      "DownloadUrl": ".\\500846"
+    },
+    {
+      "FileId": 500847,
+      "FileName": "Example of aiffFileReader glitch.jpg",
+      "DownloadUrl": ".\\500847"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "any chance you could attach a short example file that shows the problem?",
+      "PostedDate": "2012-10-04T14:15:11.463-07:00",
+      "Id": 78609
+    },
+    {
+      "Message": "Here is a I file that demonstrates the problem.\r\n\r\n",
+      "PostedDate": "2012-10-04T21:52:03.073-07:00",
+      "Id": 78643
+    },
+    {
+      "Message": "... also a snapshot of VS at the break-point that shows the problem. Look closely at the Autos window in the lower left.",
+      "PostedDate": "2012-10-04T21:53:08.12-07:00",
+      "Id": 78644
+    },
+    {
+      "Message": "It looks like giawa has already addressed this issue; see the very last bug fix mentioned in this post:\nhttp://naudio.codeplex.com/discussions/254145\n\nbut somehow the 'latest version' that he mentioned has not propagated to the naudio downloads.\n\nIn any event, I found the line of code that he used to address the problem, and I'm now using that in my workaround (rather than the kluge that I proposed).\n\nJake\n\n\n",
+      "PostedDate": "2012-10-05T13:56:27.61-07:00",
+      "Id": 78735
+    },
+    {
+      "Message": "OK, thanks for reporting. I'll update the NAudio code with those changes",
+      "PostedDate": "2012-10-05T14:27:58.94-07:00",
+      "Id": 78742
+    },
+    {
+      "Message": "have checked Giawa's fix in",
+      "PostedDate": "2012-10-05T14:48:06.04-07:00",
+      "Id": 78744
+    }
+  ]
+}

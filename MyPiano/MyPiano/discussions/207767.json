@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "425408",
+    "ThreadId": "207767",
+    "Html": "<p>Hi,</p>\r\n<p>I'm in need of a piano roll control with drag&amp;drop editing functionality that is based on WPF.</p>\r\n<p>I saw at the roadmap of NAudio that this is already planed and found the blog post about the WPF based piano roll control (http://mark-dot-net.blogspot.com/2008/06/creating-piano-roll-in-wpf-part-2.html).</p>\r\n<p>Is such a control still planed? If not, how would you guy build such a control (e.g. should one use bindings? how should drag&amp;drop be handled? - I'm a total newbie at WPF)?</p>",
+    "PostedDate": "2010-03-30T04:43:07.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425435",
+    "ThreadId": "207767",
+    "Html": "<p>I'm afraid I haven't done any more work on this since those blog posts. It certainly would be nice to have a WPF piano view control, although I still am not entirely sure I know how exactly it would be best achieved.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-30T05:58:16.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

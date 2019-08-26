@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1014492",
+    "ThreadId": "436438",
+    "Html": "Hi,\r<br />\nI am able to select the input device, eg. one of four microphones with the input deviceNumber:<br />\n<pre><code>sourceStream.WaveFormat = new WaveFormat(44100,   WaveIn.GetCapabilities(deviceNumber).Channels);</code></pre>\n\nBut how can I also select the output device (e.g. one of four speakers) ?<br />\n<pre><code>      public void StartMicro(int deviceNumber)\n      {\n         sourceStream = new WaveIn();\n         sourceStream.DeviceNumber = deviceNumber;\n         sourceStream.WaveFormat = new WaveFormat(44100,    WaveIn.GetCapabilities(deviceNumber).Channels);\n\n         waveIn = new WaveInProvider(sourceStream);\n         waveOut = new DirectSoundOut();\n         waveOut.Init(waveIn);\n\n         sourceStream.StartRecording();\n         waveOut.Play();\n      }</code></pre>\n\nRight now it takes only the default output device (speaker). I have chosen the DirectSoundOut Api for the output device because of less latency as against the WaveOut device. I have already the device number for my output device. But how can I select with the device number (index) the output device ?\r<br />\n<br />\nIt must be like this:<br />\n<pre><code>waveOut = new DirectSoundOut(outDeviceNumber);</code></pre>\n\nbut it doesn't work.\r<br />\n<br />\nRegards, \r<br />\nLestan<br />\n",
+    "PostedDate": "2013-03-13T04:25:18.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1017558",
+    "ThreadId": "436438",
+    "Html": "The NAudioDemo code shows how to select a specific DirectSoundOut device. You'd need to enumerate the output devices into a list, and then you can index that by output device number.<br />\n",
+    "PostedDate": "2013-03-19T03:11:14.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

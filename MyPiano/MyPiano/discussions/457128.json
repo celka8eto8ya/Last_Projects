@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1093337",
+    "ThreadId": "457128",
+    "Html": "Any thoughts on how to do this with naudio only?\r<br />\nSo the program listens when when the user stops for a second or the audio goes quiet stop and start a new wave file.<br />\n",
+    "PostedDate": "2013-09-16T16:20:25.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1093571",
+    "ThreadId": "457128",
+    "Html": "The WaveIn device should be always &quot;recording&quot;. Every buffer, you examine to decide if it contains sound or not. You'll need to write this algorithm yourself. Usually you are looking for samples that go above a certain threshold.\r<br />\nIf there is sound, open a WaveFileWriter and start writing into it, until you decide a buffer is silent and you should stop.<br />\n",
+    "PostedDate": "2013-09-17T08:06:46.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

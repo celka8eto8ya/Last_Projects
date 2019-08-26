@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1445121",
+    "ThreadId": "645238",
+    "Html": "Hello Mark,\r<br />\n<br />\nI´ve managed to work perfectly with your library so far (e.g. <a href=\"http://www.codeproject.com/Articles/990040/MultiWave-a-portable-multi-device-NET-audio-player\" rel=\"nofollow\">http://www.codeproject.com/Articles/990040/MultiWave-a-portable-multi-device-NET-audio-player</a>), many thanks again.\r<br />\n<br />\nStill the most annoying problem with clicking windows forms controlbox elements pausing sound output remains. Can you please fix this? I´ve tried all waveout callback methods without any success. To be compatible until win 95 I need the WaveOut winmm.dll way.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2015-09-20T09:00:38.343-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1445313",
+    "ThreadId": "645238",
+    "Html": "I'm pretty sure this is due to a garbage collection being triggered. I don't think there is anything that can be done about it I'm afraid.<br />\n",
+    "PostedDate": "2015-09-21T23:36:32.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1445376",
+    "ThreadId": "645238",
+    "Html": "Can you point my to any literature or tell me the keywords where I can start for fixing it?<br />\nThe issue can also be discovered when drop down list is opened. Thank you.<br />\n",
+    "PostedDate": "2015-09-22T07:02:04.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446378",
+    "ThreadId": "645238",
+    "Html": "Mark, I tested the CSCore IWavePlayers and none of them had this issue!!! Could you please fix NAudio according to their source?\r<br />\n<br />\nI really would like to stay working with your library.<br />\n",
+    "PostedDate": "2015-09-29T11:23:26.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446380",
+    "ThreadId": "645238",
+    "Html": "That's interesting. The CSCore library does share quite a bit of code with NAudio, and has some nice improvements on top. I'd be very glad to cooperate with them if they were willing to share their enhancements with us. I don't know in this case what changes they have that are helping out in this area. <br />\n",
+    "PostedDate": "2015-09-29T11:36:21.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446644",
+    "ThreadId": "645238",
+    "Html": "I don´t think they would share them, but it´s not forbidden to learn from their source.\r<br />\n<br />\nHow you implement it in Detail, is another question ;) So far I couldn´t figure out, what enhances their code. But I assume it´s a threading issue.<br />\n",
+    "PostedDate": "2015-10-01T00:37:52.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448745",
+    "ThreadId": "645238",
+    "Html": "<em>Push</em><br />\n",
+    "PostedDate": "2015-10-15T14:39:37.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

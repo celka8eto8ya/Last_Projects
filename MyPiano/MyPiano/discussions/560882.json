@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1289012",
+    "ThreadId": "560882",
+    "Html": "Hello !\r<br />\nI'm trying to create a wma file but i,m don't set a value for profile into WmaWriter function!\r<br />\n<br />\nHow to set value for profile?\r<br />\nor\r<br />\nWhat is profile?<br />\n<pre><code>WmaWriter ww = new WmaWriter(new FileStream(@&quot;C:\\mywma.wma&quot;,FileMode.Create),new WaveFormat(44100,2),profile);</code></pre>\n\n",
+    "PostedDate": "2014-08-11T13:49:31.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291694",
+    "ThreadId": "560882",
+    "Html": "Sorry, someone else submitted this part of NAudio, so I haven't used it myself. It is however a fairly thin wrapper around the Windows Media SDK. So with a bit of experimentation you ought to be able to get it working. The MSDN documetnation should give more information about profiles. It is basically about what bitrate you want to encode at.\r<br />\n<br />\nYou can also look into the MediaFoundationEncoder class which you might find easier to use, and there is a demo in the NAudio WPF demo.<br />\n",
+    "PostedDate": "2014-08-20T06:38:41.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

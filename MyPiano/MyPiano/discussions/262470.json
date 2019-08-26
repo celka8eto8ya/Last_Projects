@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "631725",
+    "ThreadId": "262470",
+    "Html": "\r\n<p>Hi All,</p>\r\n<p>How do I set the the&nbsp;volume to zero (mute) at repeated intervals in a wave file?</p>\r\n<p>If possible&nbsp;I would like to do this in memory and use the output&nbsp;as a base track for mixing with other wave files into a mix.</p>\r\n<p>To explain my objective: We building a basic online music mixer where the user selects a predefined base track. He can then mute this basetrack at specific points for N duration and repeated intervals. He can then add aditional loops (&lt;15 sec) on top\r\n of this base track to create his own mix. Simple in concept right?</p>\r\n<p>I got the mixer working but I just cant figure out how to create the muted sections on the basetrack.</p>\r\n<p>Any help would be much appreciated.</p>\r\n<p>Thanks in advance.</p>\r\n<p>Great library by the way. Cheers.</p>\r\n",
+    "PostedDate": "2011-06-23T03:27:04.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633146",
+    "ThreadId": "262470",
+    "Html": "<p>I'd just create a class deriving from IWaveProvider, that reads from your real WaveFile but during silence portions just fills the output buffer with zeroes in the Read method.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-26T07:53:49.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

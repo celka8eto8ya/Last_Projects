@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1220807",
+    "ThreadId": "538450",
+    "Html": "I noticed that files used for wave form display in WPF Demo (Audio Playback Demo) are not as yet replicated in NAdudio.Win8 like WaveOut.cs and respective. Is this subject to any limitations or still a work in progress and knowing its your part time project, can you comment of a timeline for its availability?<br />\n",
+    "PostedDate": "2014-03-09T12:21:03.903-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1220853",
+    "ThreadId": "538450",
+    "Html": "The WPF waveform display is not part of NAudio - it's just a demo of how you could implement waveform. So take the code and put it inside a Win8 app if you like. As for WaveOut, that will never be supported in WIn8 - you have to use WasapiOutRT instead.<br />\n",
+    "PostedDate": "2014-03-09T15:50:28.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1103534",
+    "ThreadId": "461127",
+    "Html": "Hi, \r<br />\n<br />\nI'm beginner to NAudio. I use NAudio for my simple audioredactor(using C#). I want to visualise mp3 and wav files like in this picture:\r<br />\n<img src=\"http://clip2net.com/s/5SQ4Ap\" alt=\"Image\" />\r<br />\n<a href=\"http://clip2net.com/s/5SQ4Ap\" rel=\"nofollow\">link to image</a>\r<br />\nwhat steps can i do for this?<br />\n",
+    "PostedDate": "2013-10-04T01:41:54.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105012",
+    "ThreadId": "461127",
+    "Html": "Have a look at the source code for the NAudio demo apps. They show various ways in which you can do visualisations<br />\n",
+    "PostedDate": "2013-10-08T07:16:33.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

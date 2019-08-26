@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1119560",
+    "ThreadId": "466757",
+    "Html": "Hi Team,\r<br />\n<br />\nI've used naudio.dll file inorder to do mixing in my asp.net application. I've took a single mp3 file and merged it with 2 wav files. Mixing is done but the output is not coming properly because the generated output is going too fast.<br />\nWhen discussed with my team they have told me that based on the bit rate of mp3 file the frequency should be set ...\r<br />\n<br />\nKindly help me how to set a frequency of mixer based on the bit rate of mp3 file...<br />\n",
+    "PostedDate": "2013-11-06T20:28:19.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1120032",
+    "ThreadId": "466757",
+    "Html": "You need to set the sample rate of the mixer to be the same as the sample rate of the MP3 files. Also, your WAV and MP3 files must be the same sample rate as each other.<br />\n",
+    "PostedDate": "2013-11-07T14:24:01.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Are there plans to support NAudio in a a Windows 8 Metro app? I cannot get NAudio to work in a Windows 8 Metro app with the Win8 consumer preview and Visual Studio 11 beta. \r\n\r\nFirst, NAudio has a dependency on System.Windows.Forms.dll, and when I add that reference to my project it usually crashes Visual Studio 11.\r\n\r\nSecond, if I can add the reference to System.Windows.Forms.dll without crashing Visual Studio 11, I get a compiler error: \"Cannot find type System.Resources.ResourceSet in module mscorlib.dll\"\r\n\r\n",
+    "LastUpdatedDate": "2012-10-05T15:11:29.01-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-04-06T09:53:35.09-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "support for Windows 8 / Metro",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 4,
+    "Id": 16346
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Metro is basically the same as WP7 and Silverlight. NAudio as far as I know accesses a number of Windows libraries, which isn't accessible in Metro (Which is why there isn't an NAudio library for Silverlight and WP7).",
+      "PostedDate": "2012-04-11T12:13:52.077-07:00",
+      "Id": 62144
+    },
+    {
+      "Message": "yes, I'd like to make Windows 8, WP7 and Silverlight versions of NAudio. Of course, the interop classes would not be useful, but there are still lots of useful utility classes that could be put to use on those platforms",
+      "PostedDate": "2012-04-16T00:41:56.657-07:00",
+      "Id": 62458
+    }
+  ]
+}

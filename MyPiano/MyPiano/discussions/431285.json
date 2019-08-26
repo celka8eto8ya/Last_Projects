@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "993689",
+    "ThreadId": "431285",
+    "Html": "Respected Sir, <br />\n<br />\nI am using waveIn to list down audio devices. <br />\n<br />\nbut if we stop audio service then waveIn.DeviceCount not giving proper count of audio devices. <br />\n<br />\n<br />\nalso if we run application and audio service was stopped then we are not getting any audio device list using waveIn and if we start it again then also we are not able to get audio device count.<br />\n<br />\nsir why this behave like this ?<br />\n",
+    "PostedDate": "2013-01-29T07:39:50.297-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994544",
+    "ThreadId": "431285",
+    "Html": "waveIn device count just returns the number of devices that Windows reports (using the <a href=\"http://msdn.microsoft.com/en-gb/library/windows/desktop/dd743844%28v=vs.85%29.aspx\" rel=\"nofollow\">waveInGetNumDevs</a> function). <br />\n",
+    "PostedDate": "2013-01-30T23:42:04.657-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "995135",
+    "ThreadId": "431285",
+    "Html": "Thanks for your valuable reply, <br />\n<br />\nYes sir, <br />\ni checked code and i found that WaveIn internally using waveInGetNumDevs function to retrieve audio device count.<br />\n<br />\nbut sir do we have any other way to get proper count and device list even if audio service stopped or running ?<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2013-02-01T04:52:16.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996021",
+    "ThreadId": "431285",
+    "Html": "No other way that I know of I'm afraid, unless you want to try using the MMDeviceEnum (part of CoreAudio API for Windows Vista and above)<br />\n",
+    "PostedDate": "2013-02-04T03:15:21.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996505",
+    "ThreadId": "431285",
+    "Html": "<strong>Sir You wrote:</strong><br />\n<blockquote>\n___waveIn device count just returns the number of devices that Windows reports (using the <a href=\"http://msdn.microsoft.com/en-gb/library/windows/desktop/dd743844%28v=vs.85%29.aspx\" rel=\"nofollow\">waveInGetNumDevs</a> function).___<br />\n</blockquote>\nSir,<br />\nBut how Windows showing audio device properly in audio settings dialog. why we are not able to enumerate it. is windows using any other library for it.<br />\n<br />\nSir,<br />\nif we use separate application domain only to load and unload NAudio Library and if we found that audio service is stopped then we can show an dialog to user to start audio service and according user action we can load NAidio Library in corresponding application domain [NAudio Domain ] and other domain will communicate with NAudio  Domain to enumerate audio device, also capture audio from device.. <br />\n<br />\nis it possible..??<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2013-02-04T22:34:11.22-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1001738",
+    "ThreadId": "431285",
+    "Html": "I'm not quite sure what you are asking, but the important thing to realise is that NAudio is simply calling Windows APIs when you ask it what devices there are. It doesn't change anything that Windows reports. Maybe there is another API, or a flag we can use in an existing API, but you would need to search MSDN for that answer. <br />\n",
+    "PostedDate": "2013-02-15T03:22:03.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

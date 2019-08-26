@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "685013",
+    "ThreadId": "276107",
+    "Html": "\r\n<p>I have an exception on convert MP3 file to 8 bit A-Law<br>\r\nHere is my code to convert<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#008080\">\r\nMp3FileReader </span>mp3reader = new <span style=\"color:#008080\">Mp3FileReader</span>(originalSound);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#008080\">\r\nWaveFormatConversionStream </span>convertStream = new <span style=\"color:#008080\">\r\nWaveFormatConversionStream</span>(WaveFormat.<span style=\"color:#008080\">CreateALawFormat</span>(8000, 1), mp3reader);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#008080\">\r\nWaveFileWriter</span>.CreateWaveFile(<span style=\"color:#800000\">@&quot;TempWav.wav&quot;</span>, pcmStream);<br>\r\n<br>\r\nWhen I convert MP3 <br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SampleRate : <span style=\"color:#800000\">\r\n8000</span><br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Channel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :\r\n<span style=\"color:#800000\">1</span><br>\r\nIt's will complete.<br>\r\n<br>\r\nBut when I convert MP3<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SampleRate : <span style=\"color:#800000\">\r\n48000</span><br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Channel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :\r\n<span style=\"color:#800000\">2</span><br>\r\n<br>\r\nI will get an <span style=\"color:#800000\">MmException -&gt; AcmNotPossible calling acmStreamOpen</span>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at <span style=\"color:#008080\">\r\nWaveFormatConversionStream </span>convertStream = new <span style=\"color:#008080\">\r\nWaveFormatConversionStream</span>(WaveFormat.<span style=\"color:#008080\">CreateALawFormat</span>(8000, 1), mp3reader);<br>\r\n<br>\r\nThanks for any help.</p>\r\n",
+    "PostedDate": "2011-10-16T22:02:00.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685083",
+    "ThreadId": "276107",
+    "Html": "<p>You need to do the conversion in two (and maybe 3) stages (use WaveFormatConversionStream). First go to 8kHz PCM, then go to A-Law.</p>",
+    "PostedDate": "2011-10-17T02:02:35.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

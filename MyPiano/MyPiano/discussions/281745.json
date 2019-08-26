@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "707124",
+    "ThreadId": "281745",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>when using NAudio in a WPF Apllication, for which host apis does it make sense to start each new playback in a new thread&nbsp; (Create the IWavePlayer, call Init(), and Play() ) ?</p>\r\n<p>I could see WASAPI already starts in a new thread, but whats with WaveOut, DirectSound and ASIO ? And for recording with WaveIn ?</p>\r\n<p>thanks</p>\r\n<p>henrik</p>\r\n",
+    "PostedDate": "2011-12-04T03:09:05.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "707504",
+    "ThreadId": "281745",
+    "Html": "<p>For DirectSound we create a thread. ASIO callbacks come from a thread controlled by the soundcard driver. WaveOut has several callback models. Window uses the GUI thread to handle callbacks, WaveOutEvent creates its own thread, and Function callbacks come on threads created by the driver.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-05T05:50:33.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

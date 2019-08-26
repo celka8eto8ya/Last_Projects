@@ -1,0 +1,146 @@
+[
+  {
+    "Id": "1202319",
+    "ThreadId": "528834",
+    "Html": "this is a video i uploaded to youtube\r<br />\n<br />\n<a href=\"http://www.youtube.com/watch?v=92UC_drDwB4&amp;feature=youtu.be\" rel=\"nofollow\">http://www.youtube.com/watch?v=92UC_drDwB4&feature=youtu.be</a>\r<br />\n<br />\nwhy is my input signal so noisy?\r<br />\n<br />\nI am doing\r<br />\n<br />\n44100 sampling rate\r<br />\n32768 samples at a time\r<br />\n<br />\nI have a filter in that i drop any Frequencies with a Magnitude less then 300000\r<br />\nthis is so I can cut out noise\r<br />\n<br />\nI am displaying 500 samples at a time \r<br />\n<br />\nhere in my code :<br />\n<pre><code> void Voice()\n        {\n\n            int deviceNumber = 0;\n            waveIn = new WaveIn();\n            waveIn.BufferMilliseconds = 250;\n            waveIn.DeviceNumber = deviceNumber;\n            waveIn.DataAvailable += waveIn_DataAvailable;\n            waveIn.WaveFormat = new WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(deviceNumber).Channels);\n            waveIn.StartRecording();\n        }\n\nvoid waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n           \n            PointPairList list = new PointPairList();\n            PointPairList list2 = new PointPairList();\n            byte[] buffer = e.Buffer;\n            int bytesRecorded = e.BytesRecorded;\n            points = new RollingPointPairList(32768/2);\n            buffer1 = new double[(32768/2)];\n    int tempint = 0;\n            for (int index = 0; index &lt; 32768; index += 2)\n            {\n\n                buffer1[tempint] = ((buffer[index + 1] &lt;&lt; 8) |\n                                      buffer[index + 0]);\n                \n                if (buffer1[tempint] &gt; 32767)\n                    buffer1[tempint] = buffer1[tempint] - 65536;\n\n                tempint++;\n\n            }\nect...\n</code></pre>\n\n",
+    "PostedDate": "2014-02-03T20:44:24.41-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202723",
+    "ThreadId": "528834",
+    "Html": "<a href=\"http://www.youtube.com/watch?v=KXMjYtAES_A\" rel=\"nofollow\">http://www.youtube.com/watch?v=KXMjYtAES_A</a>\r<br />\nok look that this youtube \r<br />\nsorry the video misses up at times, but you can see all the needed information\r<br />\nI changed the setting to my Mic...\r<br />\nand it looks a lot different ...\r<br />\nbut I do not know what is the best setting for the mic\r<br />\n<br />\nI am reading stereo audio data or mono?<br />\n",
+    "PostedDate": "2014-02-04T17:32:35.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1203040",
+    "ThreadId": "528834",
+    "Html": "oh i just check my mic setting and it is\r<br />\n2 channel, 16bit, 48000HZ(DVD Quality)\r<br />\n<br />\ndoes anyone know why my input is still so much noisy ?<br />\n",
+    "PostedDate": "2014-02-05T08:14:05.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1203043",
+    "ThreadId": "528834",
+    "Html": "oh i just check my mic setting and it is\r<br />\n2 channel, 16bit, 48000HZ(DVD Quality)\r<br />\n<br />\ndoes anyone know why my input is still so much noisy ?<br />\n",
+    "PostedDate": "2014-02-05T08:16:11.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1203044",
+    "ThreadId": "528834",
+    "Html": "oh i just check my mic setting and it is\r<br />\n2 channel, 16bit, 48000HZ(DVD Quality)\r<br />\n<br />\ndoes anyone know why my input is still so much noisy ?<br />\n",
+    "PostedDate": "2014-02-05T08:16:12.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1203051",
+    "ThreadId": "528834",
+    "Html": "well you could just have a noisy mix/preamp. Have you tried recording something in a different program, such as Audacity?<br />\n",
+    "PostedDate": "2014-02-05T08:18:14.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1203071",
+    "ThreadId": "528834",
+    "Html": "ok on my computer I have a program called sound recorder. I  just used it to record myself on the phone and I do hear some noise in background. It sounds like white noise... but at my job the heater is on... so it might be that ... also I cant hear the noise if i play it on my speakers, but I can hear it if I play it with my headphones<br />\n",
+    "PostedDate": "2014-02-05T08:35:10.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204366",
+    "ThreadId": "528834",
+    "Html": "You are using the onboard audio chip on the motherboard correct? The quality won't be that great, you will get noise from the PCI bus. You may want to invest in a dedicated sound card, but something decent such as the Auzentech range. <a href=\"http://www.auzentech.com/\" rel=\"nofollow\">http://www.auzentech.com/</a> <br />\nEDIT.....it appears their website expired. That's odd. Perhaps you can find an Auzen Prelude or similar at a good price.<br />\n",
+    "PostedDate": "2014-02-07T07:53:59.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204403",
+    "ThreadId": "528834",
+    "Html": "I think you are right about this \r<br />\n<br />\nbut there is  also something I think that might be the problem <br />\n<pre><code> for (int index = 0; index &lt; 2048; index += 2)\n            {\n\n                buffer1[tempint] = ((buffer[index + 1] &lt;&lt; 8) |\n                                      buffer[index + 0]);\n\n                if (buffer1[tempint] &gt; 2047)\n                    buffer1[tempint] = buffer1[tempint] - 4096;\n                \n                tempint++; \n\n            }</code></pre>\n\nok this code takes the input samples and tell if they are negative or positive\r<br />\nnow the microphone  is returning 2116 sampling but I am only using 2048 samples\r<br />\nso should that mean I should use<br />\n\r<br />\n  if (buffer1[tempint] &gt; 2047)\r<br />\n  buffer1[tempint] = buffer1[tempint] - 4232;\r<br />\n?<br />\n",
+    "PostedDate": "2014-02-07T08:34:42.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204421",
+    "ThreadId": "528834",
+    "Html": "Using the &lt;&lt; 8 shift and the OR mask doesn't look right. You are better off adding the two channels then divide by 2.\r<br />\n<br />\nI think you are approaching it the wrong way. Instead of processing the data as it comes in, send the data to an aggregator, then read the contents of the aggregator when needed.<br />\n",
+    "PostedDate": "2014-02-07T08:51:35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204434",
+    "ThreadId": "528834",
+    "Html": "K24A3\r<br />\n<br />\nso you are saying  ( buffer[index + 1] + buffer[index + 0]) / 2 ?\r<br />\nand then do a convert.toDouble ?\r<br />\nwhy / by 2?\r<br />\nand what about the negative numbers \r<br />\nsorry I am new to this, can you go in to a little more detail ?<br />\n",
+    "PostedDate": "2014-02-07T09:08:29.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204772",
+    "ThreadId": "528834",
+    "Html": "Is the input stream mono or stereo?<br />\n<br />\nIf you must use waveIn_DataAvailable instead of simply using an Aggregator as a SampleProvider, simply add the buffer bytes to an Aggregator<br />\n<br />\n<br />\nThen every 100ms or so, call aggregator.Read() to send the data to the graph. Or use the EventHandler in aggregator and tell the aggregator to raise the event every 100ms<br />\n",
+    "PostedDate": "2014-02-07T20:25:26.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204970",
+    "ThreadId": "528834",
+    "Html": "K24A3,<br />\n<br />\nthe input is  stereo<br />\nI did what you said, not the Aggregator stuff, but this :<br />\n<pre><code> waveIn.BufferMilliseconds = 12;\n\nect ....\n\n void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\nPointPairList list = new PointPairList();\n            PointPairList list2 = new PointPairList();\n            byte[] buffer = e.Buffer;\n            int bytesRecorded = e.BytesRecorded;\n            points = new RollingPointPairList(1024);        \n            buffer1 = new double[1024];             \n            int tempint = 0;\nfor (int index = 0; index &lt; 2048; index += 2)\n            {\n\n                 buffer1[tempint] = Convert.ToDouble((buffer[index + 1] + buffer[index + 0]) / 2D); \n                \n                tempint++; \n\n            }</code></pre>\n\nand this is how it looks now:<br />\n<a href=\"http://www.youtube.com/watch?v=b6wKFRY1mxw&amp;feature=youtu.be\" rel=\"nofollow\">http://www.youtube.com/watch?v=b6wKFRY1mxw&feature=youtu.be</a><br />\n<br />\nit is still Noisy and I this have to do <br />\n .Magnitude less then 30000<br />\n<br />\nIDK why it is not working...<br />\n",
+    "PostedDate": "2014-02-08T06:07:04.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1205447",
+    "ThreadId": "528834",
+    "Html": "Hold on, sorry I got confused earlier, I thought the buffer was an int buffer. That explains why you were shifting &lt;&lt; 8.\r<br />\n<br />\n<br />\nAnyway, assuming the WaveIn data is PCM, try this:\r<br />\n<br />\nfor(int n = 0; n &lt; buffer.Length; n+=2)\r<br />\n{\r<br />\n   intBuffer[n/2] = BitConverter.ToInt16(buffer, n);\r<br />\n}\r<br />\n<br />\nThat should give you a paired stereo array. Divide each int by 32768.0d to get a double sample. I dont know how that graph process the data but you may want to drop the Right channel and test it with just the Left channel, or mix them using (doubleL + doubleR) * 0.5d;\r<br />\n<br />\nIf the buffer contains IEEE data, use BitConverter.ToSingle() using a float array instead, cast to double<br />\n",
+    "PostedDate": "2014-02-09T00:19:32.433-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1205661",
+    "ThreadId": "528834",
+    "Html": "How would I know if the buffer contains IEEE data? Why to I have to convert it from byte to int ? I will lost data right ? Can't I just go byte to double ?<br />\n",
+    "PostedDate": "2014-02-09T06:15:53.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1205991",
+    "ThreadId": "528834",
+    "Html": "Check the Encoding value of the WaveIn WaveFormat.\r<br />\n<br />\nIf the audio was 8 bit then you could read each byte, but it is most likely 16bit which means each byte is half a sample which needs to be combined into an int.<br />\n",
+    "PostedDate": "2014-02-09T14:33:03.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207434",
+    "ThreadId": "528834",
+    "Html": "K24A3\r<br />\nsorry I do not know how to check the encoded value of wavein WaveFormat...\r<br />\nwhat do you mean by that ?\r<br />\nI know that there are 44100 bytes coming in at one time.\r<br />\nebuffer has:\r<br />\n[0]  0\r<br />\n[1]  0\r<br />\n[2]  0\r<br />\n[3]  0\r<br />\n[4]  225\r<br />\n[5] 255\r<br />\n[6]  0\r<br />\n[7]  0\r<br />\n[8]  0\r<br />\n[9]  0\r<br />\n[10]  0 \r<br />\n[11]  0\r<br />\n[12]  0\r<br />\n[13]  0\r<br />\n[14]  255\r<br />\n[15]  255\r<br />\n[16]  0\r<br />\netc...\r<br />\n<br />\nI do not know what that means<br />\n",
+    "PostedDate": "2014-02-12T10:11:47.84-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207579",
+    "ThreadId": "528834",
+    "Html": "That doesn't look like audio data to me.\r<br />\n<br />\nI suggest you try the sample aggregator instead of using DataAvailable.<br />\n",
+    "PostedDate": "2014-02-12T14:57:44.177-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

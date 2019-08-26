@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1056320",
+    "ThreadId": "446937",
+    "Html": "Is it possible to use NAudio to set the systems default playback device?\r<br />\n(Windows 7x64)\r<br />\n<br />\nBest regards, Tom<br />\n",
+    "PostedDate": "2013-06-13T04:15:35.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1056354",
+    "ThreadId": "446937",
+    "Html": "I'm afraid I don't know what the Windows API call to do this is, but if it is part of the Core Audio API, there is a decent chance that NAudio contains at least some of the interop to let you do this.<br />\n",
+    "PostedDate": "2013-06-13T05:41:15.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057484",
+    "ThreadId": "446937",
+    "Html": "If you are not able to find any information how to do that, I would recommend to use <a href=\"http://www.rohitab.com/apimonitor\" rel=\"nofollow\">http://www.rohitab.com/apimonitor</a> to take a look behind the scenes of the windows gui.<br />\n",
+    "PostedDate": "2013-06-16T15:16:27.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

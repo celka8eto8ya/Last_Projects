@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1004267",
+    "ThreadId": "433865",
+    "Html": "Hi,\r<br />\n<br />\nat first: please excuse my bad english.\r<br />\n<br />\nWe developed a commercial application which uses NAudio. But since we developed some custom sort of WaveProvider we need to access the internal class ASIODriver in NAudio.\r<br />\n<br />\nWould it be okay to make a custom build settings these ASIO classes to &quot;public&quot;?\r<br />\n<br />\nIf so, how should we name that assembly? I dont think it would be a good idea to name it also NAudio because of the slight modification. Should we rename the assembly to &quot;NAudio_mod&quot; (for example) to match license requirements?\r<br />\n<br />\nThanks for all replies in advance,\r<br />\nZ74<br />\n",
+    "PostedDate": "2013-02-20T14:48:51.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1004573",
+    "ThreadId": "433865",
+    "Html": "Hi, NAudio uses the Microsoft Public License (MS-PL), which is very permissive, and allows you to take the code and use it within your own commercial applications. It would be best if you change the assembly name slightly. If it is only one class you are changing, you might even find you can just copy the code for that class out and use it instead - NAudio is fairly loosely coupled. \r<br />\n<br />\nIf the changes you have made are not too specific to your particular application, you might want to consider sharing them here. If they would benefit other NAudio users, I could perhaps incorporate them into the core library.\r<br />\n<br />\nAnd if you want to share the a link to your commercial application, I'd be glad to reference it on the homepage of the NAudio project.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-21T03:43:25.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

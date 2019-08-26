@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1208731",
+    "ThreadId": "532044",
+    "Html": "I have an existing program that uses the .NET System.Media.SoundPlayer to play a wav file from a memory stream. The reason I need to do this is because the wav files are encrypted on the disk... I decrypt them to a memory stream and feed that stream to the player. It works fine.\r<br />\n<br />\nBut I'd rather use mp3's... they are smaller. I'm exploring NAudio as a solution, but can't figure out how to play an mp3 from the memory stream.\r<br />\n<br />\nThe code I am currently using to play the encrypted wav file is this:<br />\n<pre><code>        public void PlayEncMP3(String sourceFile)\n        {\n            FileStream input = new FileStream(sourceFile, FileMode.Open, FileAccess.Read);\n            DESCryptoServiceProvider cryptic = new DESCryptoServiceProvider();\n            cryptic.Key = ASCIIEncoding.ASCII.GetBytes(&quot;64BITKEY&quot;);\n            cryptic.IV = ASCIIEncoding.ASCII.GetBytes(&quot;64BIT_IV&quot;);\n\n            CryptoStream crStream = new CryptoStream(input, cryptic.CreateDecryptor(), CryptoStreamMode.Read);\n\n            MainPlayer = new SoundPlayer(crStream);\n            MainPlayer.Play();\n        }\n</code></pre>\n\nThis code works perfectly. It opens the encrypted wav file, decrypts it, and feeds the decrypted wav file as a memory stream to the player, which plays the wav file normally.\r<br />\n<br />\nNow, can I do that with the NAudio player? If so, how?<br />\n",
+    "PostedDate": "2014-02-15T05:56:51.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209385",
+    "ThreadId": "532044",
+    "Html": "Yes, Mp3FileReader supports System.IO.Stream\r<br />\n<br />\nWaveStream mp3stream = new Mp3FileReader(youriostream);<br />\n",
+    "PostedDate": "2014-02-17T04:44:04.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

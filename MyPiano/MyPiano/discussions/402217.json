@@ -1,0 +1,162 @@
+[
+  {
+    "Id": "937772",
+    "ThreadId": "402217",
+    "Html": "\r\n<p>Hello Mark,</p>\r\n<p>I'd like to use NAudio to play 5-, 4-, 3- and 2-bit/sample ADPCM (G.727), but as far as I see G.727 is not supported. Am I wrong with that assumption? Do you see any chance to play that files?</p>\r\n<p><br>\r\nBest regards</p>\r\n<p>Karsten</p>\r\n<p><br>\r\n&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-07T01:30:06.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "937777",
+    "ThreadId": "402217",
+    "Html": "<p>NAudio can use any ACM codec installed on your system. So if you have a G.727 ACM codec, you will be able to use it to decompress the audio. You would also need to create a WaveFormat with exactly the right parameters for the codec to pick it up.</p>",
+    "PostedDate": "2012-11-07T01:33:42.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "937898",
+    "ThreadId": "402217",
+    "Html": "<p>Hi Mark,</p>\r\n<p>thank you for your fast reply.</p>\r\n<p>I don't have a G.727 ACM codec installed, but me collegue gave me a dll where I can call a function to convert from G.727 to ALaw.</p>\r\n<p>The last hours I tried to write G727WaveStream which inherits WaveStream. In its Read() method I do the convertion. Unfortunately that does not work yet. Is the choosen path right or do I have to try a different approach?</p>\r\n<p><br />Ciao</p>\r\n<p>Karsten</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-11-07T05:24:36.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "937936",
+    "ThreadId": "402217",
+    "Html": "<p>Yes, that is a reasonable enough solution. WaveStream is a bit more complex to implement than IWaveProvider as it also suports repositioning</p>",
+    "PostedDate": "2012-11-07T06:22:14.18-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "937983",
+    "ThreadId": "402217",
+    "Html": "<p>Actually I need repositioning, but that task comes later. For now I would be happy if I understood, how to provide the correct settings to play that adpcm data.</p>\r\n<p>My G727WaveStream provides a WaveFormat which reflects the converted data (ALaw). That should be playable, but WaveOut.Init(g727WaveStream) throws \"WaveBadFormat calling waveOutOpen\".</p>\r\n<p>I have tried ALL formats, but all I got is the WaveBadFormat exception. Only when I use Pcm as encoding I don't get that exception, but the dll call hangs.</p>\r\n<p>You said the way is correct,&nbsp;so I don't&nbsp;understand what's the problem.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-11-07T07:49:01.303-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "937989",
+    "ThreadId": "402217",
+    "Html": "<p>You'll still need to use WaveFormatConversionStream.CreatePcmStream to go to PCM before you try playing.</p>",
+    "PostedDate": "2012-11-07T08:00:26.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940312",
+    "ThreadId": "402217",
+    "Html": "<p>Thank you very much. Your statements&nbsp;were very helpful. I had some problems calling the ADPCM.dll properly. But now it seems to work mostly.</p>\r\n<p>Unfortunately only mostly, because the library proccesses the G.727 data only in 512 byte blocks. This results in the following ALaw block sizes:</p>\r\n<p>2-bit: 2048&nbsp;bytes<br />3-bit: 1365&nbsp;bytes<br />4-bit: 1024&nbsp;bytes<br />5-bit: 819&nbsp;bytes</p>\r\n<p>The Read() method asks for a 2880 byte buffer to be filled. If I use 4-bit samples I process two blocks, fill 2048 bytes and return this 2048. But then the next Read() call asks for the remaining 832 bytes which are less than the library can process.</p>\r\n<p>That leaves me with two possibilities:<br />1.) Regulate NAudio to ask for the right buffer size<br />2.) Process three blocks, fill exactly 2880 bytes and buffer the remaining 192 bytes&nbsp;for the next time</p>\r\n<p>Is 1.) possible?</p>\r\n<p>Best wishes</p>",
+    "PostedDate": "2012-11-12T07:05:19.373-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940328",
+    "ThreadId": "402217",
+    "Html": "<p>WaveFormatConversionStream should use the BlockAlign parameter of the source stream to manage its read sizes. Make sure that is set to the correct block size.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-11-12T07:39:03.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940331",
+    "ThreadId": "402217",
+    "Html": "<p>As far as I understand BlockAlign should be 0.5...</p>\r\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>\r\n<p>However I will try different BlockAlignments affect the buffer size.</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-11-12T07:47:58.78-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940337",
+    "ThreadId": "402217",
+    "Html": "<p>No, BlockAlign is the number of bytes that must be read together. If you want to read blocks of 819 bytes, then BlockAlign should be 819</p>",
+    "PostedDate": "2012-11-12T07:57:00.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940347",
+    "ThreadId": "402217",
+    "Html": "<p>Now I understand! With a block align of 2048 I can process the blocks seemlessy now. Unfortunately that didn't fix the stumbling I experience. I will try further and keep you up to date.</p>\r\n<p>Ciao</p>",
+    "PostedDate": "2012-11-12T08:06:59.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940847",
+    "ThreadId": "402217",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>it seems that BlockAlign needs to be a divisor of 2880. Otherwise I get the mentioned stumbling. I will put up a minimalistic example...</p>\r\n<p><br>\r\nBye</p>\r\n",
+    "PostedDate": "2012-11-13T03:07:27.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940859",
+    "ThreadId": "402217",
+    "Html": "\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> Test()\r\n{\r\n\tWaveFormatEncoding tag = WaveFormatEncoding.ALaw;\r\n\t<span style=\"color:blue\">int</span> sampleRate = 19200;\r\n\t<span style=\"color:blue\">int</span> channels = 1;\r\n\t<span style=\"color:blue\">int</span> bitsPerSample = 8;\r\n\t<span style=\"color:blue\">int</span> blockAlign = 1024; <span style=\"color:green\">// (channels * bitsPerSample) / 8;</span>\r\n\t<span style=\"color:blue\">int</span> averageBytesPerSecond = (sampleRate * channels * bitsPerSample) / 8;\r\n\tWaveFormat format = WaveFormat.CreateCustomFormat(tag, sampleRate, channels, averageBytesPerSecond, blockAlign, bitsPerSample);\r\n\r\n\t<span style=\"color:blue\">string</span> filename = <span style=\"color:#a31515\">@&quot;C:\\Alaw_1Channel_8Bit_19200SamplesPerSec.asf&quot;</span>;\r\n\tFileStream filestream = <span style=\"color:blue\">new</span> FileStream(filename, FileMode.Open);\r\n\tRawSourceWaveStream alawStream = <span style=\"color:blue\">new</span> RawSourceWaveStream(filestream, format);\r\n\tWaveStream waveStream = WaveFormatConversionStream.CreatePcmStream(alawStream);\r\n\tIWavePlayer wavePlayer = <span style=\"color:blue\">new</span> WaveOut();\r\n\r\n\twavePlayer.Init(waveStream);\r\n\twavePlayer.Play();\r\n\r\n\tMessageBox.Show(<span style=\"color:#a31515\">&quot;Playing...&quot;</span>);\r\n\r\n\twavePlayer.Stop();\r\n\twavePlayer.Dispose();\r\n\twaveStream.Close();\r\n\talawStream.Close();\r\n\tfilestream.Close();\r\n}\r\n\r\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-11-13T03:24:10.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940877",
+    "ThreadId": "402217",
+    "Html": "\r\n<p>That is very odd, because blockAlign should be 1 for A-law. You can decompress each sample individually.</p>\r\n<p>Also, 19200 samples per second is a very odd wave sampling rate, and I'd be surprised if your soundcard plays it correctly.</p>\r\n",
+    "PostedDate": "2012-11-13T03:45:38.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941446",
+    "ThreadId": "402217",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>I fully agree that BlockAlign for A-law should be 1. But as far as I can see, it can be greater. In this short example I wanted to show what happens, if you use a BlockAlign 1024, which I use.</p>\r\n<p>I experience the same stumbling when I use a file with a SampleRate of 24000.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-14T00:19:32.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942106",
+    "ThreadId": "402217",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>do you think it is a calibration thing, or do you suggest to solve it differently?</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-15T05:37:46.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942661",
+    "ThreadId": "402217",
+    "Html": "\r\n<p>I'm not sure what you mean by &quot;stumbling&quot;. 24000 is also possibly not suppored by all soundcards. 22050 is more likely.</p>\r\n",
+    "PostedDate": "2012-11-16T03:17:06.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942691",
+    "ThreadId": "402217",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>I have PCM, aLaw and ADPCM2, 3, 4 & 5 data with sample rates of 8000, 12000, 16000 and 19200.\r\n<br>\r\nFor PCM and aLaw also 24000. My soundcard had never a problem with any of these sample rates. When I provided a wrong sample rate on purpose, it played it slowlier or faster.</p>\r\n<p>Have you tried the example? Of course you have to use the sample rate of your file.</p>\r\n<p>But please ignore this if you are busy. Today I solved that issue by providing exactly 2880 bytes. The rest is buffered for the next Read call. Now I have no problems.</p>\r\n<p><br>\r\nBest regards</p>\r\n<p>Karsten</p>\r\n",
+    "PostedDate": "2012-11-16T04:44:17.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "943167",
+    "ThreadId": "402217",
+    "Html": "\r\n<p>You can try wrapping your waveformatconversionstream in a blockalignreductionstream before passing it to waveout, which might help. I still can't understand why you'd need to change blockalign for a-law. I use a-law all the time with NAudio and have never\r\n needed to do that. Your file has an asf extension, which suggests to me that there is more than just raw audio in the file.</p>\r\n<p>As for sample rates, I suspect that windows is using another WaveFormatConversionStream under the hood to do SRC on the fly. This might account for some of the issues you have.</p>\r\n",
+    "PostedDate": "2012-11-17T01:00:23.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "943782",
+    "ThreadId": "402217",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>I am very thankful for all code and help you provided. Since thursday I am able to play that data flawlessly. So please understand that when we talk about that issue it is not to help me, but to improve NAudio. Let's not talk about my files, sample rates\r\n or headers. I want to inform you that I hear stumbling if I use a block align which is not a divider of 2880 (1024 for example). You may use this information or not, it is your choice.</p>\r\n<p><br>\r\nBye</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-19T00:18:09.273-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

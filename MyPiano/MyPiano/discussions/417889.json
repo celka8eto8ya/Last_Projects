@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "970561",
+    "ThreadId": "417889",
+    "Html": "\r\n<p>Hello. My english bad, sorry.</p>\r\n<p>I need help with my player.</p>\r\n<p>I have link &quot;http://cs5880.userapi.com/u9002353/audios/5080e5649b40.mp3&quot; (example)</p>\r\n<p>How i can play this track in real-time? &nbsp;(after 100-500ms? &#43;-)</p>\r\n<p>&nbsp;</p>\r\n<pre>private MemoryStream ms;\nprivate WaveOut waveOut;</pre>\r\n<p>It's first thread:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> stream = WebRequest.Create(url).GetResponse().GetResponseStream())\n            {\n                \n                <span style=\"color:blue\">byte</span>[] buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[1024*64];\n                <span style=\"color:blue\">int</span> read;\n                <span style=\"color:blue\">while</span> ((read = stream.Read(buffer, 0, buffer.Length)) &gt; 0)\n                {\n                    <span style=\"color:blue\">var</span> pos = ms.Position; \n                    ms.Position = ms.Length;\n                    ms.Write(buffer, 0, read);\n                    ms.Position = pos; \n                }\n\n</pre>\r\n</div>\r\n<p>Last thread:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>ms.Position = 0;\n            <span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> mp3FileReader = <span style=\"color:blue\">new</span> Mp3FileReader(ms))\n            <span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> waveFormatConv = WaveFormatConversionStream.CreatePcmStream(mp3FileReader))\n            <span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> blockAlignedStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(waveFormatConv))\n            {\n                waveOut = <span style=\"color:blue\">new</span> WaveOut();\n                waveOut.Init(blockAlignedStream);\n                waveOut.Play();\n                <span style=\"color:blue\">while</span> (!taskWaveStop)\n                {\n                    Thread.Sleep(1 0);\n                }\n            }\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>But id3tag always in random position. If position of tag &gt; my buffer, then i will be have random error.</p>\r\n<p>What i do?</p>\r\n",
+    "PostedDate": "2012-12-25T07:24:13.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "970799",
+    "ThreadId": "417889",
+    "Html": "\r\n<p>Look at the NAudioDemo application source code. There is an example of playing a streaming MP3 file using the AcmMp3FrameDecompressor and the BufferedWaveProvider.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-25T11:29:18.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "970824",
+    "ThreadId": "417889",
+    "Html": "\r\n<p>Also, can I ask where you saw the sample code that uses WaveFormatConversionStream and BlockAlignReductionStream? This has not been necessary for a very long time, but it seems everyone is still using it. If possible I'd like to update the documentation\r\n that is showing the use of this.</p>\r\n<p>thanks</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-25T11:51:05.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "970937",
+    "ThreadId": "417889",
+    "Html": "\r\n<p>Thanks!&nbsp;I'll try it.&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-25T13:45:49.63-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981084",
+    "ThreadId": "417889",
+    "Html": "\r\n<p>I used the code that you advised me. But i have problems again. This track&nbsp;&quot;http://cs5047.userapi.com/u4714757/audios/c95bbdffbee6.mp3&quot; is cbr.</p>\r\n<p>But all frames always different. </p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>frame = Mp3Frame.LoadFromStream(readFullyStream);\r\n</pre>\r\n</div>\r\n&nbsp;And error - &quot;AcmNotPossible calling acmStreamConvert&quot;\r\n<p></p>\r\n",
+    "PostedDate": "2012-12-27T20:20:49.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981641",
+    "ThreadId": "417889",
+    "Html": "\r\n<p>Please i need help. Why this code returns a random sample rate and channel? 8kHz stereo,48kHz mono,16kHz mono, 44,1kHz stereo,... ? But sound always has permanent sample rate and channel.</p>\r\n<p>Track has a image, this can affect?</p>\r\n",
+    "PostedDate": "2012-12-29T10:10:08.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981706",
+    "ThreadId": "417889",
+    "Html": "\r\n<p>I solved the problem. Just drop frames, which were randomly properties, and add those frames whose properties match more than 10 times.Maybe i someone &nbsp;help with the error &quot;AcmNotPossible calling acmStreamConvert&quot;.Sorry for bad english and bad code\r\n =)</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> StreamMP3(<span style=\"color:blue\">object</span> state)\n        {\n            fullyDownloaded = <span style=\"color:blue\">false</span>;\n            <span style=\"color:blue\">var</span> url = (<span style=\"color:blue\">string</span>) state;\n            webRequest = (HttpWebRequest) WebRequest.Create(url);\n            HttpWebResponse resp = <span style=\"color:blue\">null</span>;\n            <span style=\"color:blue\">try</span>\n            {\n                resp = (HttpWebResponse) webRequest.GetResponse();\n            }\n            <span style=\"color:blue\">catch</span> (WebException e)\n            {\n                <span style=\"color:blue\">if</span> (e.Status != WebExceptionStatus.RequestCanceled)\n                {\n                    ShowError(e.Message);\n                }\n                <span style=\"color:blue\">return</span>;\n            }\n            <span style=\"color:blue\">var</span> buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[16384*4]; <span style=\"color:green\">// needs to be big enough to hold a decompressed frame</span>\n            <span style=\"color:blue\">const</span> <span style=\"color:blue\">int</span> maxMatchedFrames = 10;\n            <span style=\"color:blue\">int</span> matchedFramesCount = 0;\n            <span style=\"color:blue\">int</span> sampleRate = 44100;\n            <span style=\"color:blue\">var</span> channelMode = ChannelMode.JointStereo;\n            <span style=\"color:blue\">bool</span> matchedFramesReady = <span style=\"color:blue\">false</span>;\n            IMp3FrameDecompressor decompressor = <span style=\"color:blue\">null</span>;\n            <span style=\"color:blue\">try</span>\n            {\n                <span style=\"color:blue\">using</span> (Stream responseStream = resp.GetResponseStream())\n                {\n                    <span style=\"color:blue\">var</span> readFullyStream = <span style=\"color:blue\">new</span> ReadFullyStream(responseStream);\n                    <span style=\"color:blue\">do</span>\n                    {\n                        <span style=\"color:blue\">if</span> (bufferedWaveProvider != <span style=\"color:blue\">null</span> &amp;&amp;\n                            bufferedWaveProvider.BufferLength - bufferedWaveProvider.BufferedBytes &lt;\n                            bufferedWaveProvider.WaveFormat.AverageBytesPerSecond/4)\n                        {\n                            Debug.WriteLine(<span style=\"color:#a31515\">&quot;Buffer getting full, taking a break&quot;</span>);\n                            Thread.Sleep(100);\n                        }\n                        <span style=\"color:blue\">else</span>\n                        {\n                            Mp3Frame frame = <span style=\"color:blue\">null</span>;\n                            <span style=\"color:blue\">try</span>\n                            {\n                                frame = Mp3Frame.LoadFromStream(readFullyStream);\n                                <span style=\"color:blue\">if</span> (frame == <span style=\"color:blue\">null</span>) \n                                    <span style=\"color:blue\">break</span>;\n                                <span style=\"color:blue\">if</span> (!matchedFramesReady)\n                                {\n                                    <span style=\"color:blue\">if</span> ((frame.SampleRate == sampleRate) &amp;&amp; (frame.ChannelMode == channelMode))\n                                    {\n                                        matchedFramesCount&#43;&#43;;\n                                        <span style=\"color:blue\">if</span> (matchedFramesCount == maxMatchedFrames)\n                                        {\n                                            matchedFramesReady = <span style=\"color:blue\">true</span>;\n                                        }\n                                    }\n                                    <span style=\"color:blue\">else</span>\n                                    {\n                                        sampleRate = frame.SampleRate;\n                                        channelMode = frame.ChannelMode;\n                                        matchedFramesCount = 0;\n                                    }\n                                }\n                            }\n                            <span style=\"color:blue\">catch</span> (EndOfStreamException)\n                            {\n                                fullyDownloaded = <span style=\"color:blue\">true</span>;\n                                <span style=\"color:blue\">break</span>;\n                            }\n                            <span style=\"color:blue\">catch</span> (WebException)\n                            {\n                                <span style=\"color:blue\">break</span>;\n                            }\n                            <span style=\"color:blue\">if</span> (!matchedFramesReady) <span style=\"color:blue\">continue</span>;\n                            <span style=\"color:blue\">if</span> (decompressor == <span style=\"color:blue\">null</span>)\n                            {\n                                WaveFormat waveFormat = <span style=\"color:blue\">new</span> Mp3WaveFormat(frame.SampleRate,\n                                                                          frame.ChannelMode == ChannelMode.Mono ? 1 : 2,\n                                                                          frame.FrameLength, frame.BitRate);\n                                decompressor = <span style=\"color:blue\">new</span> AcmMp3FrameDecompressor(waveFormat);\n                                bufferedWaveProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(decompressor.OutputFormat);\n                                bufferedWaveProvider.BufferDuration = TimeSpan.FromSeconds(10);\n                            }\n                            <span style=\"color:blue\">int</span> decompressed = decompressor.DecompressFrame(frame, buffer, 0);\t\t            <span style=\"color:blue\">if</span> (bufferedWaveProvider != <span style=\"color:blue\">null</span>)\n                            bufferedWaveProvider.AddSamples(buffer, 0, decompressed);\n                        }\n                    } <span style=\"color:blue\">while</span> (playbackState != StreamingPlaybackState.Stopped);\n                }\n            }\n            <span style=\"color:blue\">finally</span>\n            {\n                <span style=\"color:blue\">if</span> (decompressor != <span style=\"color:blue\">null</span>)\n                {\n                    decompressor.Dispose();\n                }\n            }\n        }\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-12-29T21:20:27.573-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "982680",
+    "ThreadId": "417889",
+    "Html": "\r\n<p>ehat like are you getting the ACM not possible error on? And what are the values of MP3WaveFormat at that point?</p>\r\n",
+    "PostedDate": "2013-01-03T07:20:38.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "983064",
+    "ThreadId": "417889",
+    "Html": "\r\n<p>Are you sure that your stream is a mp3 stream?</p>\r\n",
+    "PostedDate": "2013-01-04T07:33:26.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

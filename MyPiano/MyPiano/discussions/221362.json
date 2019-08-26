@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "472445",
+    "ThreadId": "221362",
+    "Html": "<p>Hey folks,</p>\r\n<p>&nbsp;</p>\r\n<p>I get the following exception &quot;Value does not fall within the expected range&quot; on certain client machines when calling Init(). I have no idea what the error &quot;The value does not fall within the expected range.&quot; On my development PC, the code executes just fine.</p>\r\n<p>&nbsp;</p>\r\n<p>The error happens at this line:</p>\r\n<p>waveOut.Init(waveProvider);</p>\r\n<p>&nbsp;</p>\r\n<p>waveProvider is a custom implementation of a wave provider class that extends the NAudio WaveStream object. This is found in the NSpeex audio library (WPF demo).</p>\r\n<p>&nbsp;</p>\r\n<p>Originally, I thought that this may fail due to the sound devices not being enabled and/or unmuted, but all devices were enabled and unmuted. The client machine in question is running Vista Ultimate, and this has been tested on other Vista machines without fail.</p>\r\n<p>&nbsp;</p>\r\n<p>The stack trace is below and is as follows. Thanks in advance!</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<pre>************** Exception Text **************\r\nSystem.ArgumentException: Value does not fall within the expected range.\r\n   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)\r\n   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHR(Int32 errorCode)\r\n   at NAudio.CoreAudioApi.AudioClient.Initialize(AudioClientShareMode shareMode, AudioClientStreamFlags streamFlags, Int64 bufferDuration, Int64 periodicity, WaveFormat waveFormat, Guid audioSessionGuid)\r\n   at NAudio.Wave.WasapiOut.Init(IWaveProvider waveStream)\r\n   at ElyteNetTest.ElyteVOIP..ctor() in C:\\Users\\Jimmy\\Documents\\Visual Studio 2008\\Projects\\EVPN\\ElyteNetTest\\ElyteVOIP.cs:line 144\r\n   at ElyteNetTest.netTests..ctor() in C:\\Users\\Jimmy\\Documents\\Visual Studio 2008\\Projects\\EVPN\\ElyteNetTest\\netTests.cs:line 29\r\n   at ElyteNetTest.Form1.button1_Click(Object sender, EventArgs e) in C:\\Users\\Jimmy\\Documents\\Visual Studio 2008\\Projects\\EVPN\\ElyteNetTest\\Form1.cs:line 176\r\n   at System.Windows.Forms.Control.OnClick(EventArgs e)\r\n   at System.Windows.Forms.Button.OnClick(EventArgs e)\r\n   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\r\n   at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)\r\n   at System.Windows.Forms.Control.WndProc(Message&amp; m)\r\n   at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)\r\n   at System.Windows.Forms.Button.WndProc(Message&amp; m)\r\n   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)\r\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)\r\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)</pre>\r\n</p>",
+    "PostedDate": "2010-07-25T19:48:34.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "479013",
+    "ThreadId": "221362",
+    "Html": "<p>what are the bufferDuration and periodicity values?</p>",
+    "PostedDate": "2010-08-11T02:58:04.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

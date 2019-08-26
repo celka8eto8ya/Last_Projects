@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "941295",
+    "ThreadId": "403102",
+    "Html": "\r\n<p>This is probably an error on my part. I'm calling Stop(), then Dispose(), then setting my asioOut instance to null all one line after the other. What do I have to do with callbacks to properly dispose of my asioOut instance?</p>\r\n<p>Here's the error message:</p>\r\n<p>A callback was made on a garbage collected delegate of type 'NAudio!NAudio.Wave.Asio.ASIOCallbacks&#43;ASIOAsioMessageCallBack::Invoke'. This may cause application crashes, corruption and data loss. When passing delegates to unmanaged code, they must be kept\r\n alive by the managed application until it is guaranteed that they will never be called.</p>\r\n",
+    "PostedDate": "2012-11-13T16:28:47.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941401",
+    "ThreadId": "403102",
+    "Html": "\r\n<p>I'd suggest waiting for the PlaybackStopped event to arrive before calling Dispose</p>\r\n",
+    "PostedDate": "2012-11-13T22:46:25.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941409",
+    "ThreadId": "403102",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>markheath wrote:</strong><br>\r\n<p>I'd suggest waiting for the PlaybackStopped event to arrive before calling Dispose</p>\r\n</blockquote>\r\n<p>That should do the trick. Thank you.</p>\r\n",
+    "PostedDate": "2012-11-13T23:13:45.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "832555",
+    "ThreadId": "354645",
+    "Html": "\r\n<p>Does this not exist anymore? It is in one of your tutorials but i cant seem to find it in the source. I tried instead to use ReadTag(System.IO.Stream stream) but i cant figure out what to pass it because it breaks when i pass what i think i should be passing.</p>\r\n<p>&nbsp;</p>\r\n<p>Please help. All im trying to do is retrieve the data in &nbsp;an mp3. For example the title, artist, album etc..</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n",
+    "PostedDate": "2012-05-05T12:06:17.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "832637",
+    "ThreadId": "354645",
+    "Html": "<p>Ok so i can get the RawData but now i dont know what is actually useful to me. So frustrating.</p>",
+    "PostedDate": "2012-05-06T00:54:38.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "833334",
+    "ThreadId": "354645",
+    "Html": "<p>NAudio is more focused on the audio part of MP3 than the tagging which is why the Id3v2Tag class is very basic. I would suggest using a C# ID3 tag library instead - there are a few of these about.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-05-08T02:29:45.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

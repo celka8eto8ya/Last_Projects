@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "504895",
+    "ThreadId": "230293",
+    "Html": "<p>Hello. :)</p>\r\n<p>I'm trying to create a simple audio visualization and I'm having trouble.</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre><span style=\"color:blue\">Dim</span> reader <span style=\"color:blue\">As</span> <span style=\"color:blue\">New</span> NAudio.Wave.Mp3FileReader(<span style=\"color:blue\">Me</span>.OpenFileDialog.FileName)\r\nwaveStream = <span style=\"color:blue\">New</span> BlockAlignReductionStream(WaveFormatConversionStream.CreatePcmStream(reader))\r\ninputStream = <span style=\"color:blue\">New</span> WaveChannel32(waveStream)\r\n<span style=\"color:blue\">AddHandler</span> inputStream.Sample, <span style=\"color:blue\">AddressOf</span> OnSample\r\nwaveOut = <span style=\"color:blue\">New</span> WaveOut()\r\nwaveOut.Init(waveStream)\r\n</pre>\r\n</div>\r\n</p>\r\n<p>I use that code when I open a file. It adds the handler for the Sample event, but it never gets called when I play a file. I hear audio, I just never get anything from the Sample event.</p>\r\n<p>Any ideas?</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2010-10-09T19:27:54.78-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "505006",
+    "ThreadId": "230293",
+    "Html": "<p>instead of waveOut.Init(waveStream), you need to use waveOut.Init(inputStream)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-10T05:46:11.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "505069",
+    "ThreadId": "230293",
+    "Html": "<p>Thank you!</p>\r\n<p>-X Enterprises</p>",
+    "PostedDate": "2010-10-10T11:09:44.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

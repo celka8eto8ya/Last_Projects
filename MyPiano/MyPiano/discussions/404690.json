@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "947452",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>Hi all,</p>\r\n<p>I must mix multiple wavein sources from different wavein devices for switching the output of mixer to another waveOut device.</p>\r\n<p>Also, I must mix udp source wave streams with wavein streams, too.</p>\r\n<p>First of all, I have decided to code the analog part like this below.</p>\r\n<p>public void LoadWaveInToMixer(int deviceNumberIN)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>{</p>\r\n<p><span style=\"white-space:pre\"></span>WaveIn ss = new WaveIn();&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>ss.DeviceNumber = deviceNumberIN; &nbsp; &nbsp; //always different device numbers &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>ss.WaveFormat = new WaveFormat(8000, 16, 2); &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>ss.StartRecording();&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>WaveInProvider wp = new WaveInProvider(ss);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>WaveProviderToWaveStream ws = new WaveProviderToWaveStream(wp);&nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>WaveChannel32 wc = new WaveChannel32(ws);</p>\r\n<p><span style=\"white-space:pre\"></span>mixer.AddInputStream(wc); &nbsp;//WaveMixerStream32 object</p>\r\n<p><span style=\"white-space:pre\"></span>if (mixer.InputCount == 1)&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>waveOutDevice.Init(mixer);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>waveOutDevice.Play();&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space:pre\"></span>}</p>\r\n<p>}</p>\r\n<p>&nbsp;</p>\r\n<p>My problem is if I add second waveIn device to the mixer(call this functon twice), I am getting and MMEXception (already allocated)</p>\r\n<p>I have set deviceNumberIN to different device numbers every time I call this function. I have collected devices present in the system at the beginning of the program.</p>\r\n<p>Thanks,</p>\r\n",
+    "PostedDate": "2012-11-27T00:09:03.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947615",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>what device IDs are you using? Do you definitely have two soundcards?</p>\r\n",
+    "PostedDate": "2012-11-27T05:07:41.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947673",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>No,&nbsp;I have one soundcard,&nbsp;but WaveIn.DeviceCount equals three. (deviceIDs 0,1,2, respectively)</p>\r\n<p>WaveIn.GetCapabilities(i).ProductName and is different for all. (Microphone1, Microphone2 and LineIn)</p>\r\n<p>Should I have to have more than one sound card for same time recording independently from two inputs?</p>\r\n<p>Also, another question: my requirement is to capture 16 analog sound inputs independently, and I am planning to purchase two sound cards with 8 wave-in channels each.</p>\r\n<p>Can't I capture these input channels independently using NAudio?</p>\r\n<p>Should I have to buy 16 sound cards? (That is impossible)</p>\r\n",
+    "PostedDate": "2012-11-27T06:14:49.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947696",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>Also, my problem exists with .NET Voice Recorder demo project. (for true understanding)</p>\r\n<p>If I execute&nbsp;VoiceRecorder.exe while an other instance is running, it crashes when I try to record.&nbsp;</p>\r\n<p>As you know, recording devices are listed at the startup screen.</p>\r\n<p>Three devices listed for recording device at the demo screen.(like my project)</p>\r\n<p>My test case is below:</p>\r\n<p>1)Run voicerecorder.exe</p>\r\n<p>2)Select first device (Microphone2)</p>\r\n<p>3)Start recording</p>\r\n<p>4)While first exe is running, run second voicerecorder.exe</p>\r\n<p>5)Select second device listed (Microphone1)</p>\r\n<p>6)Start recording</p>\r\n<p>7)Crash.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-27T06:50:29.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947701",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>It is completely down to your soundcard manufacturer's drivers whether they allow you to open the same device for recording more than once. Why would you need to in any case? They would record the same audio.</p>\r\n<p>If you have an 8 input soundcard, it again depends on the drivers as to whether it appears as several stereo cards, on one 8 input card. For this type of use, you'd probably be better off using WASAPI or ASIO than WaveIn.</p>\r\n",
+    "PostedDate": "2012-11-27T06:55:30.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947704",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>Thanks for your fast reply,</p>\r\n<p>&nbsp;</p>\r\n<p>My requirement is:</p>\r\n<p>Record 16 different/independent analog sounds by a standard PC + soundcards by using WinAPI.</p>\r\n<p>I think I must select the appropriate card for this. Do you have any advice or experience about this?</p>\r\n",
+    "PostedDate": "2012-11-27T07:01:52.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947783",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>You will have to do some research on the drivers that come with the soundcard. When you say WinAPI, so you mean the WaveIn functions? If so, the way the drivers present themselves to Windows will be crucial. Often multiple-input soundcards don't bother too\r\n much with making all their features available with the old waveIn functions as they expect you to be using ASIO, WDM or WASAPI.</p>\r\n",
+    "PostedDate": "2012-11-27T08:56:30.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948272",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>Hi again,</p>\r\n<p>I have changed the code and recorded from one input channel with WASAPI like RecordingPanel.cs. And then I have selected second microphone and recorded successfully with WASAPI. (changing deviceNumber on the second line below).</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>MMDeviceEnumerator deviceEnum = <span style=\"color:blue\">new</span> MMDeviceEnumerator(); //three devices listed\nMMDevice wspidevice = deviceEnum.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active)[deviceNumber];//changed this line for every other device, respectively 0,1,2\nwaveIn = <span style=\"color:blue\">new</span> WasapiCapture(wspidevice);\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>But again if I tried to record two inputs at the same time, same problem has been existed.</p>\r\n<p>I think the problem is regardless of the method or objects used (traditional WaveIn, or WASAPI can't work without the soundcard drivers' ability).</p>\r\n<p>The main problem is all about windows detection of souncards' channels. All input channels must be detected as a seperate device.&nbsp;</p>\r\n<p>Am I thinking true? Or in any case(regardless of the driver), if I use WASAPI, it should work?</p>\r\n<p>Thanks again.</p>\r\n",
+    "PostedDate": "2012-11-28T05:11:09.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948273",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>Windows won't present the channels as separate devices unless the soundcard driver has set it up that way. The best way is to capture all your soundcard inputs at once, and route the captured audio separately within your program.</p>\r\n",
+    "PostedDate": "2012-11-28T05:13:04.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948276",
+    "ThreadId": "404690",
+    "Html": "\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>MMDeviceEnumerator deviceEnum = <span style=\"color:blue\">new</span> MMDeviceEnumerator(); \r\nMMDevice wspidevice = DeviceEnum.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active) [deviceNumber];\r\nwaveIn = <span style=\"color:blue\">new</span> WasapiCapture(wspidevice);\r\nwaveIn.DataAvailable += OnDataAvailable;\r\nwaveWriter = <span style=\"color:blue\">new</span> WaveFileWriter(fileName, waveIn.WaveFormat);\r\n\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> OnDataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n            {\r\n                <span style=\"color:blue\">if</span> (waveWriter == <span style=\"color:blue\">null</span>) <span style=\"color:blue\">return</span>;\r\n                waveWriter.Write(e.Buffer, 0, e.BytesRecorded);\r\n                waveWriter.Flush();\r\n            }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>I think that routing will be done in OnDataAvailable event, by checking sender object? Am I true, or is there an another way to do that?</p>\r\n",
+    "PostedDate": "2012-11-28T05:20:11.503-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948277",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>yes, your samples will come in interleaved. (one sample for channel 1, one sample for channel 2, one sample for channel 3) etc</p>\r\n",
+    "PostedDate": "2012-11-28T05:22:07.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948278",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>Thanks a lot Mark. I will try.</p>\r\n",
+    "PostedDate": "2012-11-28T05:24:34.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948279",
+    "ThreadId": "404690",
+    "Html": "\r\n<p>so you could write code like this if you had an array of waveFileWriters one for each channel:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> OnDataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\n{\n    <span style=\"color:blue\">int</span> bytesPerSample = 2; //(<span style=\"color:blue\">for</span> 16 bit, <span style=\"color:blue\">set</span> to 4 <span style=\"color:blue\">for</span> <span style=\"color:blue\">float</span>)\n    <span style=\"color:blue\">int</span> offset = 0;\n    <span style=\"color:blue\">while</span> (offset &lt; e.BytesRecorded)\n    {\n        <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> n = 0; n &lt; channels; n&#43;&#43;) \n        {\n            waveFileWriter[n].Write(e.Buffer,offset,bytesPerSample);\n            offset &#43;= bytesPerSample;\n        }\n    }\n}\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-11-28T05:25:08.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

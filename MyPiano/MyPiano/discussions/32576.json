@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "108023",
+    "ThreadId": "32576",
+    "Html": "NAudio is definitely the solution to my .net&nbsp;project but where's the documentation? Without it, I don't know where to start.&nbsp;I'm new to audio coding.&nbsp;I need some samples in manipulating wave files (sampling, merging, splitting, etc.).&nbsp; Any help is appreciated. Thanks!\r\n",
+    "PostedDate": "2008-07-30T10:54:24.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "108182",
+    "ThreadId": "32576",
+    "Html": "hi there,<br>\r\n<br>\r\nI'm afraid there isn't a lot of documentation on NAudio at the moment (we haven't had that many users until recently!). Your best bet at the moment is to download the source code and look at how some of the demo applications work. You will also need to learn a bit about how audio sampling and WAV files work which will make things a lot clearer about how to do merging and splitting of WAV files. There are lots of resources on the internet that explain sampling and WAV files.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-07-31T02:00:37.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

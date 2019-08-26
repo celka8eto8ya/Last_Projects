@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "833561",
+    "ThreadId": "354958",
+    "Html": "<p>Hello. I'm trying to create a very simple WAV to WMA converter but I can't find any way of doing it. Are there any basic examples of using WmaWriter that I could read about?&nbsp;</p>\n<p>I've got the code below but it doesn't write the entire file (the end few seconds is chopped off). IT also doesn't let me seek but that's not too important.</p>\n<pre><div style=\"color: black; background-color: white;\"><pre>WaveFileReader wr = <span style=\"color: blue;\">new</span> WaveFileReader(<span style=\"color: #a31515;\">@\"C:\\mywav.wav\"</span>);\nWmaWriter ww = <span style=\"color: blue;\">new</span> WmaWriter(<span style=\"color: blue;\">new</span> FileStream(<span style=\"color: #a31515;\">@\"C:\\mywma.wma\"</span>,FileMode.Create),<span style=\"color: blue;\">new</span> WaveFormat(44100,2),profile);\n \n<span style=\"color: blue;\">byte</span>[] buff = <span style=\"color: blue;\">null</span>;\n\n<span style=\"color: blue;\">int</span> read = 0;\n\nbuff=<span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[wr.Length];\nread = wr.Read(buff,0,buff.Length);\n<span style=\"color: blue;\">while</span> ((read &gt; 0))\n{\nww.Write(buff,0,read);\nread = wr.Read(buff,0,buff.Length);\n}\n</pre>\n</div>\n</pre>",
+    "PostedDate": "2012-05-08T10:18:40.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "833681",
+    "ThreadId": "354958",
+    "Html": "<p>This has been solved. I needed to put the WmaWriter into a using block.</p>",
+    "PostedDate": "2012-05-08T15:17:29.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "833883",
+    "ThreadId": "354958",
+    "Html": "<p>glad you got it working</p>",
+    "PostedDate": "2012-05-09T01:56:06.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

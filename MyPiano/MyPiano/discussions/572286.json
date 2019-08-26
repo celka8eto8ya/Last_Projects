@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1322868",
+    "ThreadId": "572286",
+    "Html": "I know that NAudio is still in works to pass all validation issues.<br />\n<br />\nMy errors are:<br />\n<pre><code>Error Found: The supported APIs test detected the following errors:\n      API MFTranscodeGetAudioOutputAvailableTypes in mf.dll is not supported for this application type. NAudio.Win8.dll calls this API.\n      API MFTEnumEx in mfplat.dll is not supported for this application type. NAudio.Win8.dll calls this API.</code></pre>\n\nIs there some way to pass the validation somehow?<br />\nBasically I'm just using MediaFoundationReader and Pcm16BitToSampleProvider on my project.<br />\nSo I can get the array of bytes for the audio files.<br />\n<br />\nThanks in advance!<br />\n",
+    "PostedDate": "2014-11-17T01:38:39.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327081",
+    "ThreadId": "572286",
+    "Html": "I've published a new NAudio (1.7.2) to NuGet with an updated Win 8 store DLL. Hopefully this will pass WACK now. Let me know how you get on with it.<br />\n",
+    "PostedDate": "2014-11-28T09:12:32.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1328026",
+    "ThreadId": "572286",
+    "Html": "Thanks so much!\r<br />\nWill check it out! <br />\n",
+    "PostedDate": "2014-12-02T06:17:43.74-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

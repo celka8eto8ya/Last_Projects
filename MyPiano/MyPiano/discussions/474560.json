@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1137655",
+    "ThreadId": "474560",
+    "Html": "Dear Sir, <br />\nI am trying to read a mp3 file , then  saving it again to wav ( actually , i try to record a phone call , at the same time , I play sound to the phone. The total phone call will include both  what I record &amp; what I play). I tried to below code (to make question simple) , but the file length should be the same as source , eg 11 sec. , but it records teh file which is 60 seconds. the sound is very slooooooow , ie , when i use external audio application to play the sound faster , i get the same sound. What is wrong.<br />\n<pre><code>Dim Mywriter As WaveFileWriter\n        Mywriter = New WaveFileWriter(&quot;E:\\Debug\\Audio\\General\\mmmm.wav&quot;, New WaveFormat(8000, 16, 1))\n\n        Dim sf As New Mp3FileReader(&quot;E:\\Debug\\Audio\\General\\intro.mp3&quot;)\n        Dim fileByte(sf.Length) As Byte\n\n        sf.Read(fileByte, 0, sf.Length)\n        Mywriter.Write(fileByte, 0, sf.Length - 1)  \n\n        Mywriter.Close()</code></pre>\n\nThanks,<br />\n",
+    "PostedDate": "2013-12-18T10:12:33.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1137754",
+    "ThreadId": "474560",
+    "Html": "first point , the file is 2 channel, and I need to get the average of the 2 channels. How.. Does I need to write my own function , or Naudio supports it.<br />\nThe question will be ... How can I re-sample any mp3 file to  16 bit , 1 channel , 8000 HZ.<br />\n<br />\nThanks, <br />\n",
+    "PostedDate": "2013-12-18T12:07:46.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1137896",
+    "ThreadId": "474560",
+    "Html": "I managed it .. thanks <br />\n<pre><code> Private Function ReadMP3toGSMFormat(ByVal sfile As String) As Byte()\n        Dim reader As New Mp3FileReader(sfile)\n        Dim ssd As New WaveFormat(8000, 16, 1)\n        Dim sConveter As New WaveFormatConversionStream(ssd, reader)\n        \n        Dim buffer As Byte() = New Byte(4) {}\n\n        Dim memoryStream As New IO.MemoryStream()\n        Dim vreader As Integer = sConveter.Read(buffer, 0, buffer.Length)\n        While vreader &lt;&gt; 0\n            memoryStream.Write(buffer, 0, vreader)\n            vreader = sConveter.Read(buffer, 0, buffer.Length)\n        End While\n\n        reader = Nothing\n        ssd = Nothing\n        sConveter = Nothing\n\n        Return memoryStream.ToArray()\n\n\n    End Function</code></pre>\n\n",
+    "PostedDate": "2013-12-18T15:06:28.273-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

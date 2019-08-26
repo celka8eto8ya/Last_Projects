@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Trying to create a universal Windows 8/WP8 app, but I can't add Naudio package to WP8.1 project.\r\nIs WP8 unsupported? Will it be supported anytime soon?",
+    "LastUpdatedDate": "2014-06-12T04:29:16.223-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-06-05T17:39:34.393-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Not available for Windows Phone 8 projects?",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16444
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "See http://social.msdn.microsoft.com/Forums/de-DE/92974f6b-2b44-4586-912e-b9cebb3ef18b/works-the-wasapi-interface-under-phone-81-under-c?forum=wpdevelop",
+      "PostedDate": "2014-06-12T03:09:57.32-07:00",
+      "Id": 149473
+    },
+    {
+      "Message": "I'd love to add WP8.1 support, but time is limited at the moment. Hopefully it will be easier now that we've added WinStore support as I understand that the WP8.1 API is getting  much closer to the Windows Store one.",
+      "PostedDate": "2014-06-12T04:29:16.223-07:00",
+      "Id": 149479
+    }
+  ]
+}

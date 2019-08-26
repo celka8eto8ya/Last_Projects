@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "  \r\nHi Mark, I appreciate your hard work in upgrading NAudio with Media Foundation Transform. With your latest version, when I was trying to convert wav file to mp3 using media foundation, the following exception  'No suitable MP3 encoders available' has occurred. I have both lame and fraunhofer mp3 codecs installed on my pc with windows 7 os(x86). Previously I did the same task with Acm (i.,e. using NAudio 1.6 version) and Lame, it was wokring fine with no codecs issue. Any help is greatly appreciated.\r\n\r\n```\r\nprotected void Page_Load(object sender, EventArgs e)\r\n{                           \r\n      using (var reader = new MediaFoundationReader(\"\\\\track.wav\"))\r\n      {         \r\n           MediaFoundationEncoder.EncodeToMp3(reader, \"\\\\outputfile.mp3\", 192000);\r\n       }\r\n  }\r\n\r\n```",
+    "LastUpdatedDate": "2013-11-11T02:20:50.873-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-11-08T00:55:28.91-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Exception When Calling MediaFoundationEncoder.EncodeToMp3",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16413
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "NAudio can only use what encoders are installed on your machine. The MediaFoundationEncoder class only uses Media Foundation codecs, not ACM codecs. So it is likely that your MP3 encoders are ACMs not MFTs. Use the NAudio demo apps to explore what codecs you actually have installed on your computer.",
+      "PostedDate": "2013-11-11T02:20:50.873-08:00",
+      "Id": 122606
+    }
+  ]
+}

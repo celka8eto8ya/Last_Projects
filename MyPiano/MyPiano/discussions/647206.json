@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1451653",
+    "ThreadId": "647206",
+    "Html": "Hello,\r<br />\n<br />\nI'm facing some audio freeze because of Garbage Collection.\r<br />\n<br />\nI'm thinking of create another process that will be in charge to play the audio.\r<br />\nThe idea is to use Event to manage basic function such as Play, Pause, Stop, and, in order to know the audio position or some data about the audio file to play a non persistant Memory Shared File.\r<br />\n<br />\nDoe's someone have tried this ? Do you think this can be achieved ?\r<br />\n<br />\nMy application is time sensitive and I really need to know the current position of the audio file with precision (100 ms of delay would be acceptable). How many time it should take to write and read this data in Memory Shared File ?\r<br />\n<br />\nThank you<br />\n",
+    "PostedDate": "2015-11-10T13:57:19.297-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1451834",
+    "ThreadId": "647206",
+    "Html": "Done, \r<br />\n<br />\nNo more audio freeze because of the Garbage Collector and I retrieve current position approximatively every 50ms...\r<br />\nIf you are facing this problem, external process is your solution...<br />\n",
+    "PostedDate": "2015-11-11T11:29:40.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-11-11T11:29:44.51-08:00"
+  }
+]

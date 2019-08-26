@@ -1,0 +1,71 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "Here is the code\r\n\r\n Dim dscount As Integer = 0\r\n dscount = DirectSoundOut.Devices.Count()\r\n\r\ndscount value is 8.  the correct value is 4.\r\nif i see in watch window and evaluate expression \" DirectSoundOut.Devices.Count() \" then it gives integer and value 4.\r\n\r\nWhat is wrong?",
+    "LastUpdatedDate": "2016-09-08T14:32:37.73-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-08-11T06:55:32.6-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "DirectSoundOut.Devices.Count() returns wrong value",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16497
+  },
+  "FileAttachments": [
+    {
+      "FileId": 1600614,
+      "FileName": "naudioBug20160811.png",
+      "DownloadUrl": ".\\1600614"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "WaveOut.DeviceCount works correct!",
+      "PostedDate": "2016-08-11T06:58:36.67-07:00",
+      "Id": 203521
+    },
+    {
+      "Message": "Here is a code section with watch window. ",
+      "PostedDate": "2016-08-11T07:09:17.757-07:00",
+      "Id": 203522
+    },
+    {
+      "Message": "how do you know what the correct value should be? Maybe directsound thinks there are 8 devices?\n\nWhat happens if you do\nDirectSoundOut.Devices.ToList().Count",
+      "PostedDate": "2016-08-11T08:14:25.377-07:00",
+      "Id": 203526
+    },
+    {
+      "Message": "markheath: \nIf i run \n\ndscount = DirectSoundOut.Devices.Count() \n\n3 times\nit gives different result. thats the problem.\n(no sound card removed, or installed meanwhile)\n",
+      "PostedDate": "2016-09-06T04:18:18.723-07:00",
+      "Id": 203906
+    },
+    {
+      "Message": "Sorry, I can't reproduce this. Have you tried it on different computers? Or with different soundcards installed?",
+      "PostedDate": "2016-09-08T14:32:37.73-07:00",
+      "Id": 203980
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1219535",
+    "ThreadId": "538052",
+    "Html": "Hi ..\r<br />\nI have 2 different wav files:\r<br />\nD1.wav: \r<br />\n<br />\n<a href=\"http://download.wavetlan.com/SVV/Media/HTTP/WAV/Media-Convert/Media-Convert_test2_PCM_Mono_VBR_8SS_48000Hz.wav\" rel=\"nofollow\">Download D1 HERE</a>\r<br />\n<br />\nEncoding:IeeeFloat\r<br />\nChannels:1\r<br />\nSampleRate:44100\r<br />\nAverageBytesPerSecond:176400\r<br />\nBlockAlign:4\r<br />\nBitsPerSample:32\r<br />\nExtraSize:0\r<br />\n<br />\nD2.wav: \r<br />\n<br />\n<a href=\"http://www.kozco.com/tech/piano2.wav\" rel=\"nofollow\">Download D2 HERE</a>\r<br />\n<br />\nEncoding:IeeeFloat\r<br />\nChannels:2\r<br />\nSampleRate:48000\r<br />\nAverageBytesPerSecond:384000\r<br />\nBlockAlign:8\r<br />\nBitsPerSample:32\r<br />\nExtraSize:0\r<br />\n<br />\nand iam using the following code to play them:\r<br />\n....<br />\n<pre><code>private DirectSoundOut waveOut;\nAudioFileReader AudioFile;\n\nthis.AudioFile = new AudioFileReader(audioFilePath);\nthis.waveOut = new DirectSoundOut(this.deviceGuid);\nthis.postVolumeMeter = new MeteringSampleProvider(this.AudioFile);\nthis.postVolumeMeter.StreamVolume += OnPostVolumeMeter;\nwaveOut.PlaybackStopped += WaveOutPlaybackStopped;\nthis.waveOut.Init(new SampleToWaveProvider(this.postVolumeMeter));</code></pre>\n\nNow iam reading the AudioFile.Totaltime.TotalMilliseconds D1 is 20742 (but it is in fact only 10seconds long)\r<br />\nwhere the second file D2 is reporting 6307.0 which is correct...\r<br />\n<br />\nDo you know where the problem is ? and how would I correct it so I can display the real totaltime of both files ..\r<br />\n<br />\nAny ideas ?\r<br />\n<br />\nthanks in advance<br />\n",
+    "PostedDate": "2014-03-05T08:48:54.797-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239507",
+    "ThreadId": "538052",
+    "Html": "This was a bug with AudioFileReader and mono files that was <a href=\"https://naudio.codeplex.com/SourceControl/changeset/7cf138da0f0a\" rel=\"nofollow\">fixed</a> a while back. <br />\n",
+    "PostedDate": "2014-04-29T12:24:11.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249660",
+    "ThreadId": "538052",
+    "Html": "Hi Mark,\r<br />\n<br />\niam using the newest naudio (version 1.7)...\r<br />\nso what do you think iam doing wrong ?<br />\n",
+    "PostedDate": "2014-05-26T07:19:02.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1250785",
+    "ThreadId": "538052",
+    "Html": "the fix is in 1.7.1, available on nuget<br />\n",
+    "PostedDate": "2014-05-29T03:07:17.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1251855",
+    "ThreadId": "538052",
+    "Html": "Wow ..thanks a lot<br />\n",
+    "PostedDate": "2014-06-02T01:02:49.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1461467",
+    "ThreadId": "650726",
+    "Html": "Hello, I'm new to NAudio, i'm doing project to be able to play an audio from t1 to t4 and then jump to t7 to t11 without lagging ,\r<br />\ni'm being able to do that if i minimize the latency but that is creating a problem with time the wav start buzzing , here is the code that i'm using;\r<br />\n<br />\nto determine the position i'm using this\r<br />\n  private long GetBitPosition(double time)<br />\n<pre><code>    {\n        var bitPosition = (long)(WaveFormat.BlockAlign * WaveFormat.SampleRate * time);\n        return (bitPosition);\n\n    }\n</code></pre>\n\nand than in the reading i'm doing the following\r<br />\n public override int Read(byte[] buffer, int offset, int count)<br />\n<pre><code>    {\n         int bytesRead = 0;\n\n        bytesRead = sourceStream.Read(buffer, offset ,count);\n     var upperBound = (Position + count);\n     if (upperBound &gt;= _endBitPosition)\n        {       \n                    if (EnableLooping)\n                    {\n                        if (Math.Abs(_startBitPosition - sourceStream.Position) &gt; count) \n                            sourceStream.Position = _startBitPosition;\n\n                        if (tmpEnd != null)\n                        {\n                            EndSample = tmpEnd.Value;\n                            OnPlayNext();\n                        }\n                        else\n                            OnPlayLoop();\n                    }\n                    else\n                    {\n                        sourceStream.Position = sourceStream.Length;\n                        OnPlayEnded();\n                    }\n        }\n</code></pre>\n\nthis is working fine if my buffer is small but with that i'm getting buzzes after 3 min of playing,\r<br />\nplease it will be well appreciated if someone can help me , i used waveout and wasapi and asio out, but no luck <br />\n",
+    "PostedDate": "2016-01-30T07:38:00.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1461944",
+    "ThreadId": "650726",
+    "Html": "make sure your repositions are block aligned (using the <code>BlockAlign</code> property of the <code>WaveFormat</code>)<br />\n",
+    "PostedDate": "2016-02-04T06:31:42.663-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

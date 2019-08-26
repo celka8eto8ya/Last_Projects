@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "492525",
+    "ThreadId": "226942",
+    "Html": "<p>Hi Mark,</p>\r\n<p>I've been using NAudio for the past few days playing with converting some old audio files, to newer formats that are still supported on newer machines, ipods and ipads.&nbsp; The file that I'm originally working with is in the below format:</p>\r\n<p>Original Encoding: WAVE_FORMAT_MSG723<br>Original SampleRate: 8000<br>Original BitsPerSample: 0<br>Original Channels: 1<br>Original Block Align Channels: 24<br>Original Bits per Second: 8</p>\r\n<p><br>I can succesfully convert it to a basic uncompressed wav file, and convert it to a new format, but the new format is approximately 10x larger in terms of disk space then the original file.<br>New Encoding: ALaw<br>New SampleRate: 8000<br>New BitsPerSample: 8<br>New Channels: 1<br>New Block Align Channels: 1<br>New Bits per Second: 8000</p>\r\n<p>I've been playing with format settings, and I continue to receive errors even when trying to convert the uncompressed basic PCM file back to the original format described above.&nbsp; The error that I'm receiving is: NAudio.MmException: AcmNotPossible calling acmStreamOpen.&nbsp; Ultimately my objective is to get a wav file in a newer format with a  similar bitspersecond rate of the original file.&nbsp; The original file  shows (in windows explorer) with a bitrate of 6kbps. The ALaw format  used above, has a BitPerSecond rate of 64kbps. I thought just dividing  the SampleRate by 10 would result in the smaller kbps that I wanted, however i receive the above error.</p>\r\n<p>What am I doing wrong?&nbsp; Sample test code below.</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre> <span style=\"color:blue\">private</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> ConvertAudio(<span style=\"color:blue\">string</span> inputFileName)\r\n        {\r\n            WaveFileReader wr = <span style=\"color:blue\">new</span> WaveFileReader(inputFileName);\r\n            WaveStream ns = WaveFormatConversionStream.CreatePcmStream(wr);\r\n            <span style=\"color:green\">//WaveFormat wf = WaveFormat.CreateALawFormat(800, 1); // This doesn't work</span>\r\n            <span style=\"color:green\">//WaveFormat wf = WaveFormat.CreateALawFormat(8000, 1);  // This works</span>\r\n            WaveFormat wf = WaveFormat.CreateCustomFormat(WaveFormatEncoding.WAVE_FORMAT_MSG723,8000,1,8,24,0);\r\n            WaveFormatConversionStream fs = <span style=\"color:blue\">new</span> WaveFormatConversionStream(wf, ns);\r\n            WaveFileWriter.CreateWaveFile(<span style=\"color:#a31515\">@&quot;C:\\Recompressed.wav&quot;</span>, fs);\r\n         }\r\n</pre>\r\n</div>\r\n</p>\r\n<p>Thanks for your assistance,</p>\r\n<p>Mike</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-09-12T12:16:33.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "492698",
+    "ThreadId": "226942",
+    "Html": "<p>ACM codecs can only typically convert to one of a set of allowed output formats. A-law simply isn't very efficient, so it will use more disk space than GSM. An 800Hz sample rate would be pretty useless in any case, as almost all the interesting frequencies (i.e. everything above 400Hz) would be filtered out.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-13T03:46:43.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

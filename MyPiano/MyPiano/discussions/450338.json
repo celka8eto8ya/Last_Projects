@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1069555",
+    "ThreadId": "450338",
+    "Html": "Okay so i have a voice chat application, which currently use Directsound without NAudio, it just uses well, stuff, not sure as i am not good at this.\r<br />\n<br />\nBut either way, i want to change how it sends data, and playback the recieved data, and use NAudio instead.\r<br />\n<br />\nSo here is the send command:<br />\n<pre><code> private void Send()\n        {\n        \n            try\n            {\n                //The following lines get audio from microphone and then send them \n                //across network.\n                \n                captureBuffer = new CaptureBuffer(captureBufferDescription, capture);\n                //if (sourceList.InvokeRequired)\n                //{\n                //    sourceList.Invoke(new MethodInvoker(Send));\n\n                //}\n                //if (sourceList.SelectedItems.Count == 0) return;\n                //int deviceNumber = sourceList.SelectedItems[0].Index;\n                //sourceStream = new NAudio.Wave.WaveIn();\n                //sourceStream.DeviceNumber = deviceNumber;\n                //sourceStream.WaveFormat = new NAudio.Wave.WaveFormat(48000, NAudio.Wave.WaveIn.GetCapabilities(deviceNumber).Channels);\n                CreateNotifyPositions();\n                \n                \n\n                captureBuffer.Start(true);\n\n                bool readFirstBufferPart = true;\n                int offset = 0;\n\n                \n                \n                sourceStream.BufferMilliseconds = 200;\n                \n               \n                MemoryStream waveStream = new MemoryStream();\n                string tempFile = &quot;F:/Desktop/VoiceChat/NAudio.wav&quot;;\n                waveWriter = new NAudio.Wave.WaveFileWriter(waveStream, sourceStream.WaveFormat);\n                sourceStream.DataAvailable +=new EventHandler&lt;NAudio.Wave.WaveInEventArgs&gt;(sourceStream_DataAvailable);\n                int halfBuffer = bufferSize;\n                MemoryStream memstream = new MemoryStream(halfBuffer);\n               // waveOut.Init(waveIn);\n                sourceStream.StartRecording();\n              // waveOut.Play();\n                \n                \n               bStop = false;\n                while (!bStop)\n                {\n\n\n\n                    autoResetEvent.WaitOne();\n                    waveStream.Seek(0, SeekOrigin.Begin);\n                    captureBuffer.Read(offset, waveStream, halfBuffer, LockFlag.None);\n                    readFirstBufferPart = !readFirstBufferPart;\n                    offset = readFirstBufferPart ? 0 : halfBuffer;\n\n                    //TODO: Fix this ugly way of initializing differently.\n\n                    //Choose the vocoder. And then send the data to other party at port 1550.\n\n\n                    byte[] dataToWrite = waveStream.GetBuffer();\n                    udpClient.Send(dataToWrite, dataToWrite.Length, otherPartyIP.Address.ToString(), 1550);\n\n                }</code></pre>\n\nAnd here is the recieve:<br />\n<pre><code>    private void Receive()\n        {\n            try\n            {\n\n                bStop = false;\n                IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);\n\n                while (!bStop)\n                {\n                    //Receive data.\n                    byte[] byteData = udpClient.Receive(ref remoteEP);\n\n                    //G711 compresses the data by 50%, so we allocate a buffer of double\n                    //the size to store the decompressed data.\n                    //byte[] byteDecodedData;\n                    //new byte[byteData.Length];\n\n                    //Decompress data using the proper vocoder.\n\n                    //byteDecodedData = new byte[byteData.Length];\n                    //byteDecodedData = byteData; \n\n                    \n\n                    //Play the data received to the user.\n                    playbackBuffer = new SecondaryBuffer(playbackBufferDescription, device);\n                    //NAudio.Wave.WaveFileWriter.CreateWaveFile(&quot;hej&quot;,byteData);\n                    waveIn2 = new NAudio.Wave.WaveInProvider(sourceStream2);\n                    waveplay = new NAudio.Wave.WaveBuffer(byteData);\n                    waveIn2.Read(waveplay, 0, byteData.Length);\n                    waveOut2.Init(waveIn2);\n                    waveOut2.Play();\n                    //playbackBuffer.Write(0, byteData, LockFlag.None);\n                    //playbackBuffer.Play(0, BufferPlayFlags.Default);\n\n\n                }\n            }</code></pre>\n\nRecieve is currently not functioning as i am trying to use NAudio for playback, but i have no idea how to do it:S\r<br />\n<br />\nIt seems like the Send part works though, but i think it sends to much data so the buffer runs out.\r<br />\n<br />\n<br />\nAll help is much appreciated, and please bear with me.<br />\n",
+    "PostedDate": "2013-07-17T07:48:40.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071284",
+    "ThreadId": "450338",
+    "Html": "I would suggest looking at the NAudioDemo source code. In particular the network chat demo which does exactly what you are trying to do.<br />\n",
+    "PostedDate": "2013-07-22T06:29:45.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071561",
+    "ThreadId": "450338",
+    "Html": "I have actually got it working:)\r<br />\n<br />\nThough it has some optimization problems.\r<br />\n<br />\n<br />\nOne thing is, if i want to change the input device when the chat is active, it will cause a delay getting added, and it never goes away.\r<br />\n<br />\nAny recommendations what to do when to change input device?\r<br />\n<br />\nAs currently, i am doing this:<br />\n<pre><code> if (connect == true)\n            {\n\n                sourceStream.StopRecording();\n                sourceStream = new WaveIn();\n                sourceStream.WaveFormat = new NAudio.Wave.WaveFormat(48000, 16, 2);\n                sourceStream.DeviceNumber = waveInDevice;\n                Sendv2();\n   \n            }</code></pre>\n\nWhere Sendv2() is just so it goes back into sending.\r<br />\n<br />\n<br />\nBut can the way to change the device be improved, or is that the way to go?<br />\n",
+    "PostedDate": "2013-07-22T17:49:25.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072161",
+    "ThreadId": "450338",
+    "Html": "Changing the device will inevitably introduce some delay, unless you open the new one concurrently and only close the old one once the new one has returned its first buffer of audio.<br />\n",
+    "PostedDate": "2013-07-24T01:41:01.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072168",
+    "ThreadId": "450338",
+    "Html": "I think i actually solved it, the problem was that i forgot to set the sourceStream.Buffermilliseconds = (what i wanted).\r<br />\nIt changed to 100ms as default.\r<br />\n<br />\nAnd i also added Waveprovider (which is played when the data is recieved) .ClearBuffer();\r<br />\n<br />\nSo i reset the sourceStream and clear the buffer.\r<br />\n<br />\nNot sure if it´s the best way to do it, but it works:)<br />\n",
+    "PostedDate": "2013-07-24T01:46:36.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

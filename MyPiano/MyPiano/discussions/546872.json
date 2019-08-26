@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1250685",
+    "ThreadId": "546872",
+    "Html": "Im having an issue using MixingSampleProvider inside a chat client application. After the chat client has been up and receiving audio for about 30 seconds, the MixingSampleProvider class throws an InvalidOperationException claiming &quot;Too many mixer inputs&quot;. Its very possible I flooded the classes' maxInputs = 1024 limit as I set the recording buffer to 10 ms before that data is sent away. However, I tried 50 ms and 200 ms and still no luck.<br />\n<br />\nWhen the form loads...<br />\n<pre><code>        private void Messenger_Load(object sender, EventArgs e)\n        {\n            comboBoxCodecs.SelectedIndex = 2;\n            comboBoxCodecs.Enabled = false;\n            selectedCodec = ((CodecComboItem)comboBoxCodecs.SelectedItem).Codec;\n            mixingProvider = new MixingSampleProviderOverride(WaveFormat.CreateIeeeFloatWaveFormat(selectedCodec.RecordFormat.SampleRate, selectedCodec.RecordFormat.Channels));\n            mixingProvider.ReadFully = true;                                                //allows for the stream to send silence, waveOut will not stop automatically\n            sampleProvider = new SampleToWaveProvider(mixingProvider);\n            waveOut = new WaveOut();\n            //waveOut.Init(mixingProvider);\n            waveOut.Init(sampleProvider);\n            waveOut.Play();\n            ThreadPool.QueueUserWorkItem(StartRecieve, null);\n        }</code></pre>\n\nThe code to recreate the audio signal is as follows; I removed the other cases for simplicity<br />\n<pre><code>private void ProcessBytes(object state)\n        {\n            var senderThreadState = (SenderThreadState)state;\n\n            Data msgReceived = new Data(senderThreadState.EncodedBytes);\n\n            switch (msgReceived.cmdCommand)\n            {\n                case Command.Audio:\n                    if (msgReceived.messageContents != null)\n                    {\n                        waveProvider = new BufferedWaveProvider(selectedCodec.RecordFormat);\n                        byte[] decoded = new byte[1024];\n                        decoded = selectedCodec.Decode(msgReceived.messageContents, 0, msgReceived.messageContents.Length);\n                        waveProvider.AddSamples(decoded, 0, decoded.Length);\n                        mixingProvider.AddMixerInput(waveProvider);\n                    }\n                    break;\n            }\n        }</code></pre>\n\nAny Sugestions?<br />\n",
+    "PostedDate": "2014-05-28T18:09:12.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273607",
+    "ThreadId": "546872",
+    "Html": "don't keep making new BufferedWaveProviders. Just have one for each person you receive audio for.<br />\n",
+    "PostedDate": "2014-07-17T08:56:42.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

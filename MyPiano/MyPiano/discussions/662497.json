@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1495378",
+    "ThreadId": "662497",
+    "Html": "DirectSoundOut::GetPosition() seems to be useless.<br />\n<br />\nBecause you need to have access from the same thread you have created on.<br />\nOtherwise an E_NO_INTERFACE exception occured. You create a private thread here - so no chance to use it.<br />\n<br />\nNot easy to fix this, but to fire an event at the beginning and/or end of your while loop in the seperate thread would be helpful. (Give me the chance to cache it)<br />\n<br />\nEDIT: An option for the thread priority should be helpful because i have problems when some system steps interupts the audio player a bit(thats why i use direct sound - just click on context desktop menu/refresh cause a hang in Naudio::waveout device)<br />\n<br />\n*Sebastian<br />\n",
+    "PostedDate": "2017-04-11T00:31:05.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495422",
+    "ThreadId": "662497",
+    "Html": "I fix it by modifing the NAudio sourcecode in DirectSoundOut.cs<br />\n<ul>\n<li>do check for IWaveProvider.Init has been called before thread want create</li>\n<li>give easy access to IDirectSoundBuffer properties from another thread</li>\n<li>spend some diagnostic properties and playback event from origin thread</li>\n<li>\nmake sure thread will be destroyed if ThreadProc cause an exception<br />\n</li>\n</ul>\nDo you care for pull requests?\r<br />\n<br />\n*Sebastian<br />\n",
+    "PostedDate": "2017-04-12T06:43:39.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496293",
+    "ThreadId": "662497",
+    "Html": "Mark includes pull requests on github, codeplex remains just for discussions.<br />\n",
+    "PostedDate": "2017-05-11T12:18:23.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

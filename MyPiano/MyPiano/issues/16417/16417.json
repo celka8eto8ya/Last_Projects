@@ -1,0 +1,56 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Hi.\r\nI'm creating MIDI files in my program and the time signature is just completely wrong.  I do this:\r\n\r\nTracks.AddEvent(new TimeSignatureEvent((long)AbsoluteTime, TimeSigNum, TimeSigDen, 24, 8), 0);\r\n\r\nwhere TimeSigNum would be 4 and TimeSigDen would also be 4.\r\nAs far as I know, the MIDI clock is 24 so that's how many ticks in a metronome tick there would be, and if my math is right, there are 8 32nd notes in a quarter note.  Yes?\r\n\r\nBut if you open the file in Sonar or Acid, it shows up as 4/16\r\n\r\nSetting it to 4/2 results in 4/4, and 4/8 shows up as 4/256\r\n\r\nWhy does it do whatever to the denominator?\r\n\r\nOr am I doing something else wrong?\r\n\r\n(My PPQN is 96, if that makes any difference.)(Attached is the MIDI file, if you want to look inside.  It should be 4/4)\r\n",
+    "LastUpdatedDate": "2013-11-19T07:18:22.453-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-11-17T07:44:21.18-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Time Signature Problems",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16417
+  },
+  "FileAttachments": [
+    {
+      "FileId": 759087,
+      "FileName": "Victoria III.mid",
+      "DownloadUrl": ".\\759087"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "The denominator is a negative power of two:  2 represents a quarter-note, 3 represents an eighth-note, etc. \nSo 4/2 is what you want.",
+      "PostedDate": "2013-11-19T05:52:59.617-08:00",
+      "Id": 123501
+    },
+    {
+      "Message": "See?  I knew it had to be me.  ;)\n\nThanks.  \n\nThat'll teach me to look on a Stanford page for info about MIDI events.  Silly college people never mentioned the negative power part, they just said use the regular numbers.\n\nSad that a guy on a personal RoadRunner page got it right (even though I missed it the first time around).\n\nDan",
+      "PostedDate": "2013-11-19T07:18:22.453-08:00",
+      "Id": 123507
+    }
+  ]
+}

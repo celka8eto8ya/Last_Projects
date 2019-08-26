@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1305942",
+    "ThreadId": "567790",
+    "Html": "-- Nevermind. Found it.  There's Win8 examples and demo's in the source.  Yay!  I guess just the web has some dated info on the status of it.<br />\n<hr />\nI loaded up nugget NAudio into a store app framework hoping to update an audio utility I'd done as an old-style app.<br />\n<br />\nA lot of functions are translated over, but not WaveFileReader, which is kind of fundamental.<br />\n<br />\nIs there a work around? Most of the blog posts about the Win8 source code library seem to be a couple years old. Figured most of the translation kinks were worked out by now.<br />\n<br />\nI didn't find any Win8 demo code to run either.  Maybe I'm not looking in the right places. <br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2014-09-18T07:20:26.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305960",
+    "ThreadId": "567790",
+    "Html": "Yeah, not had a lot of time to do NAudio windows 8 store work I'm afraid. There is a very simple demo app though if you download the latest source code (from the Source Code tab above). The issue with WaveFileReader is MS decided to completely reinvent all their file IO classes for store apps, so I'd need to rework the class. It's fairly standalone though, so I'd recommend taking your own copy of the WaveFileReader code, and modifying it for Win8.<br />\n",
+    "PostedDate": "2014-09-18T07:58:22.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

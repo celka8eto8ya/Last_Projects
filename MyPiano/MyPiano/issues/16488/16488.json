@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi,\r\n\r\nI wrote a proxy that must manage a microphone (with WaveIn) and players Wav / PCM (with BufferedWaveProvider).\r\nEverything works fine and I can manage up to 7 wav streams simultaneously) except that when you physically unplug the speakers, my class, based BufferedWaveProvider, remains silent until you restart the computer.\r\n\r\nIs this normal behavior ?\r\n\r\nExcuse my broken English\r\n\r\nBest regards\r\nRGO",
+    "LastUpdatedDate": "2016-01-26T01:48:15.507-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-01-22T13:50:24.007-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveIn and BufferedWaveProvider ! ",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16488
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "well are you getting any RecordingStopped or PlaybackStopped events? You might need to recreate waveout devices.",
+      "PostedDate": "2016-01-26T01:48:15.507-08:00",
+      "Id": 195824
+    }
+  ]
+}

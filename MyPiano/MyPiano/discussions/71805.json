@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "245021",
+    "ThreadId": "71805",
+    "Html": "<p>How to port this excellent library to Compact.NET?</p>",
+    "PostedDate": "2009-10-13T04:45:24.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "245028",
+    "ThreadId": "71805",
+    "Html": "<p>Hi dbl007,</p>\r\n<p>I have never used Compact.NET so I have no idea what would be involved. I suspect the main sticking point would be whether you can P/Invoke the same APIs. If so, there is a good chance it will port across.</p>\r\n<p><br>Mark</p>",
+    "PostedDate": "2009-10-13T05:21:19.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "245366",
+    "ThreadId": "71805",
+    "Html": "<p>Hi Mark,</p>\r\n<p>.NET Compact Framework is a .NET environment that supports building and running managed applications on Windows mobile device. I will try to compile NAudio library source on this framework, test it out and report results in this forum.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-13T19:57:45.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "245399",
+    "ThreadId": "71805",
+    "Html": "<p>Hi dbl007</p>\r\n<p>I will be interested to hear how you get on. I used to do Windows CE programming about 10 years ago, but that was before .NET came out</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-13T23:20:14.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "259408",
+    "ThreadId": "71805",
+    "Html": "<p>Hi</p>\r\n<p>some news on this topic ?</p>\r\n<p>I tried to compile NAudio on compact.net framework (for windows mobile), but without success....</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-21T13:32:07.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

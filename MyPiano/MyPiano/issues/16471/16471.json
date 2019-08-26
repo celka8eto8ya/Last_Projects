@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "In WinRT, files are better identified by a StorageFile object rather than a path string. This is due to the reasons that 1. non-conventional file systems (such as cloud drives) are supported and 2. file access rights are much more restrictive compared to desktop applications. E.g. trying to open an arbitrary file on the file system usually causes a UnauthorizedAccessException. However, if that same file was obtained by a FileOpenPicker control, it is possible to open that file - but only by using the obtained StorageFile object.\r\n\r\nIt would be great if the MediaFoundationReader supports that, too. I.e. just supply a StorageFile instead of a path to its constructor. A viable alternative would be to open the file in the App and to supply some IRandomAccessStream instead,",
+    "LastUpdatedDate": "2016-09-27T13:58:02.197-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-03-07T05:55:01.933-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "[Window Store Apps] Construct MediaFoundationReader from StorageFile",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16471
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Yes, would be a good addition. you may find the AudioGraph API in UWP already gives you what you need.",
+      "PostedDate": "2016-09-27T13:58:02.197-07:00",
+      "Id": 204362
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1237262",
+    "ThreadId": "543135",
+    "Html": "Hi <br />\n<br />\nI have NAudio playing audio from my main Form1, meaning all audio is playing from the primary Thread, but is there a way to Playback audio on a separate Thread (not using backgroundworker) and be able to control Pause, Stop, etc?,<br />\n<br />\nHere is the only facts I know:<br />\n<ul>\n<li>\nThis thread will have to remain open clearly for the time of the playback, otherwise the audio will be terminated. <br />\n</li>\n</ul>\nPlease help.<br />\nThanks.<br />\n",
+    "PostedDate": "2014-04-23T14:29:21.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237267",
+    "ThreadId": "543135",
+    "Html": "yes, use WaveOutEvent<br />\n",
+    "PostedDate": "2014-04-23T14:38:21.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237317",
+    "ThreadId": "543135",
+    "Html": "I just changed it to WaveOutEvent, not sure if I'm doing this right though, the Thread starts when I click on buttonPlay, the Thread ends immediately right after it starts, unless I use Sleep for a few seconds, but this is not a problem, what I'm concern is that the audio keeps on playing even when the Thread is finished, is that accurate?, I mean, isn't the audio suppose to stop when the thread is closed?<br />\n<pre><code>using System.Data;\nusing System.Drawing;\nusing System.Linq;\nusing System.Text;\nusing System.Threading;\nusing System.Threading.Tasks;\nusing System.Windows.Forms;\nusing NAudio;\nusing NAudio.Wave;\n\nnamespace NAudioTest\n{\n    public partial class Form1 : Form\n    {\n\n        public Form1()\n        {\n            InitializeComponent();\n        }\n\n        public WaveOutEvent waveOutDevice;\n        AudioFileReader audioFileReader;\n\n        Thread t;\n        \n        private void buttonPlay_Click(object sender, EventArgs e)\n        {\n            if (waveOutDevice == null)\n            {\n                    t = new Thread(startThread);\n                    t.Start();              \n            }            \n        }\n\n\n        private void startThread()\n        {\n            waveOutDevice = new WaveOutEvent();\n            audioFileReader = new AudioFileReader(@&quot;C:\\Audio\\Give Your Heart A Break.mp3&quot;);\n            waveOutDevice.Init(audioFileReader);\n            waveOutDevice.Play();\n            Thread.Sleep(3000);\n        }\n\n        private void buttonStop_Click(object sender, EventArgs e)\n        {\n            t.Abort();  \n            if (waveOutDevice != null)\n            {\n                waveOutDevice.Stop();\n            }\n            if (waveOutDevice != null)\n            {\n                waveOutDevice.Dispose();\n                waveOutDevice = null;\n            }\n        }\n\n        private void buttonCheckThread_Click(object sender, EventArgs e)\n        {\n            if (t.IsAlive)\n            {\n                MessageBox.Show(&quot;Is Alive&quot;);\n            }\n            else if (t == null)\n            {\n                MessageBox.Show(&quot;Is Null&quot;);\n            }\n            else\n            {\n                MessageBox.Show(&quot;Other&quot;);\n            }\n        }\n\n    }\n\n}\n</code></pre>\n\n",
+    "PostedDate": "2014-04-23T16:46:40.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237422",
+    "ThreadId": "543135",
+    "Html": "You don't need to create the thread yourself, WaveOutEvent will do it for you when you call play.<br />\n",
+    "PostedDate": "2014-04-24T01:34:39.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-04-24T09:18:43.047-07:00"
+  },
+  {
+    "Id": "1237536",
+    "ThreadId": "543135",
+    "Html": "Oh I see. Thank you. \r<br />\n<br />\nAnd do you know if I can use WaveOutEvent with DirectSound?, or WaveOutEvent is already like the only driver output plugin available for this scenario?<br />\n",
+    "PostedDate": "2014-04-24T06:39:50.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237543",
+    "ThreadId": "543135",
+    "Html": "No, DirectSound works the same - it creates a thread. So you can use it instead.<br />\n",
+    "PostedDate": "2014-04-24T06:48:18.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237552",
+    "ThreadId": "543135",
+    "Html": "Got it, thank you. Cheers!<br />\n",
+    "PostedDate": "2014-04-24T06:58:48.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1243595",
+    "ThreadId": "544844",
+    "Html": "Hi, i am recording audio every 3min &amp; uplaoding it to google drive, there is a sleep of 8sec between stop &amp; start but sometimes app crashes &amp; show fault module name is ntdll.dll then I attached debugger &amp; found problem is in NAudio. What i am doing wrong?\r<br />\n<br />\nI am on Windows 7 64bit .net 4  &amp; its 32bit app\r<br />\n<br />\npeudocode:\r<br />\n<br />\nwhile(true)\r<br />\n{\r<br />\nstartmic record (by waveinevent)\r<br />\nsleep(3min)\r<br />\nstopmic record\r<br />\nsleep(8sec)\r<br />\n}<br />\n",
+    "PostedDate": "2014-05-09T10:38:30.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248949",
+    "ThreadId": "544844",
+    "Html": "what's the stack trace?<br />\n",
+    "PostedDate": "2014-05-23T08:27:09.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

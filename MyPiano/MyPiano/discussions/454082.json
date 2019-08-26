@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1083138",
+    "ThreadId": "454082",
+    "Html": "When calling wave16.Read below, I get the error &quot;Must read complete blocks&quot;. Have been fiddling with this for a few hours and not managed to find a resolution. Can anybody help me out please?<br />\n<pre><code>WaveStream conversionStream = WaveFormatConversionStream.CreatePcmStream(rdr);\nMediaFoundationResampler resampler = new MediaFoundationResampler(conversionStream, new WaveFormat(44100, 1));\nresampler.ResamplerQuality = 60;\n\nWaveFileWriter.CreateWaveFile(&quot;tempConverted.wav&quot;,resampler);\nWaveFileReader tmpReader = new WaveFileReader(&quot;tempConverted.wav&quot;);\n\nmainBuffer = new byte[tmpReader.Length];\nWave16ToFloatProvider wave16 = new Wave16ToFloatProvider(tmpReader);\nwave16.Read(mainBuffer, 0, (int)tmpReader.Length);\nfinalFmt = wave16.WaveFormat;</code></pre>\n\n",
+    "PostedDate": "2013-08-21T07:53:40.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085433",
+    "ThreadId": "454082",
+    "Html": "what is the value of tmpReader.Length? It needs to be a multiople of wave16.WaveFormat.BlockAlign, which is likely to be 2 in your case. I would also recommend reading in smaller blocks, of say a second at a time, rather than trying to convert an entire file in one go.<br />\n",
+    "PostedDate": "2013-08-27T08:14:16.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

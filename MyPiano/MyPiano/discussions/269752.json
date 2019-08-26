@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "660811",
+    "ThreadId": "269752",
+    "Html": "\r\n<p>Is there a way to obtain the audio buffer data from a Wave file read from WaveFileReader? I would like to eventually save it to a file.</p>\r\n",
+    "PostedDate": "2011-08-19T15:20:38.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "660830",
+    "ThreadId": "269752",
+    "Html": "<p>I assumed that to do so was</p>\r\n<p>&nbsp;</p>\r\n<p>byte[] buffer = new byte[wave.Length];</p>\r\n<p>wave.Read(buffer, 0, (int)wave.Length);</p>\r\n<p>&nbsp;</p>\r\n<p>However, is wave.length the length of the audio data buffer, or is it the length in respect to duration? If not duration, how can I get the duration?</p>",
+    "PostedDate": "2011-08-19T16:49:16.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "675363",
+    "ThreadId": "269752",
+    "Html": "<p>the length is measured in bytes of audio data, so this will work. Usually you would read through a WAV file in smaller chunks.</p>",
+    "PostedDate": "2011-09-22T08:57:50.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

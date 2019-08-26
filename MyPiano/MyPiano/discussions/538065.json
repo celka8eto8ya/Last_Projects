@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1219608",
+    "ThreadId": "538065",
+    "Html": "Hi!\r<br />\n<br />\nMy goal is to play wave file in exclusive mode. I think. I just don't want any other application to interrupt my wave. \r<br />\nFrom discussions in the past on this project I noticed sample rate, channels and format may be important. My wave is 22050 hz, 2 channels and IeeeFloat format.\r<br />\n<br />\nThis is a part of my code:<br />\n<pre><code>        waveOut = new WasapiOut(AudioClientShareMode.Exclusive, false, 300);</code></pre>\n\n(...)<br />\n<pre><code>        private void OnWaveOutPlaybackStopped(object sender, NAudio.Wave.StoppedEventArgs e)\n        {\n            log.Debug(&quot;Odtwarzanie pliku wav zakończone&quot;);\n\n            waveOut.Stop();\n            waveStream.Close();\n            waveStream.Dispose();\n            waveReader.Close();\n            waveReader.Dispose();\n        }\n\n        private void PlayVoiceMessage()\n        {\n            if (File.Exists(m_waveFile))\n            {\n                try\n                {\n                    waveReader = new WaveFileReader(m_waveFile);\n                    waveStream = new WaveChannel32(waveReader);\n                    string strFormat = waveStream.WaveFormat.ToString();\n                    string strSampleRate = waveStream.WaveFormat.SampleRate.ToString();\n                    string strChannels = waveStream.WaveFormat.Channels.ToString();\n                    waveOut.PlaybackStopped += new EventHandler&lt;NAudio.Wave.StoppedEventArgs&gt;(OnWaveOutPlaybackStopped);\n                    waveOut.Init(waveStream);\n                    waveOut.Play();\n                    \n                    log.Info(&quot;Odtwarzanie pliku wav rozpoczęte&quot;);\n                }\n                catch (Exception e)\n                {\n                    string sMsg = String.Format(&quot;Błąd odtwarzania! w {0}. Przyczyna: {1}.\\nŚcieżka {2}&quot;, e.Source, e.Message, e.StackTrace);\n                    log.Error(sMsg);\n                }\n            }\n            else\n            {\n                log.Error(&quot;Plik Wav nie istnieje&quot;);\n            }\n        }\n</code></pre>\n\nMy code catch the exception in the &quot;waveOut.Init(waveStream);&quot; line.\r<br />\nThe error message is: Can't find a supported format to use.\r<br />\n<br />\nWhat kind of problem is with this file?<br />\n",
+    "PostedDate": "2014-03-05T11:23:43.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223575",
+    "ThreadId": "538065",
+    "Html": "WASAPI exclusive mode is very fussy about what formats it will work in. It's almost certainly the sample rate that's the issue here. Upsample to 44.1kHz<br />\n",
+    "PostedDate": "2014-03-17T09:17:12.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1224270",
+    "ThreadId": "538065",
+    "Html": "Thanks for an answer. I changed sample rate and it works now.\r<br />\n<br />\nMy source of wave is MS Speech. <br />\n<pre><code>                            reader = new SpeechSynthesizer();\n                            reader.SelectVoice(AppSettings.VoiceName);\n                            reader.SetOutputToWaveFile(m_waveFile,\n                                new System.Speech.AudioFormat.SpeechAudioFormatInfo(44100, AudioBitsPerSample.Eight, AudioChannel.Mono)\n                            );\n                            reader.Speak(MyMessage);\n                            reader.Dispose();\n                            reader = null;\n</code></pre>\n\nInteresting part is in my playback method<br />\n<pre><code>                    waveReader = new WaveFileReader(m_waveFile);\n                    waveStream = new WaveChannel32(waveReader);\n                    string strFormat = waveStream.WaveFormat.ToString();\n                    string strSampleRate = waveStream.WaveFormat.SampleRate.ToString();\n                    string strChannels = waveStream.WaveFormat.Channels.ToString();\n                    string sMsg = String.Format(&quot;Format: {0}, samplerate: {1}, channels: {2}.&quot;, strFormat, strSampleRate, strChannels);\n                    log.Debug(sMsg);</code></pre>\n\nMaybe it is a TTS error but above code logs:\r<br />\n<br />\n&quot;Format: IeeeFloat, samplerate: 44100, channels: <strong>2</strong>.&quot;\r<br />\n<br />\nTwo channels while IrfanView and Winamp show 1 channel.<br />\n",
+    "PostedDate": "2014-03-18T22:49:40.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1224432",
+    "ThreadId": "538065",
+    "Html": "WaveChannel32 turns mono into stereo<br />\n",
+    "PostedDate": "2014-03-19T07:38:38.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

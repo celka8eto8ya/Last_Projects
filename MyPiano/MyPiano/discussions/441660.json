@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1036020",
+    "ThreadId": "441660",
+    "Html": "Hey all! I am currently participating in a project that involves Message Brokers, and one of the projects that use such is Simultaneous Audio and Video Streaming. In order for my audio data to be transferred and processed to the Messaging System, in which I am using ActiveMQ, It must be transformed to an object. The point in my code that performs this is here:\r<br />\n<br />\nprivate void button2_Click(object sender, EventArgs e)<br />\n<pre><code>{\n    stream = new NAudio.Wave.WaveIn();\n    stream.DeviceNumber = 0;\n    stream.WaveFormat = new NAudio.Wave.WaveFormat(44100, 1);\n    stream.DataAvailable += new EventHandler&lt;NAudio.Wave.WaveInEventArgs&gt;(anyue);\n    stream.StartRecording();\n}\n\nprivate void anyue(object sender, NAudio.Wave.WaveInEventArgs e)\n{     \n    e.buffer // How to extract raw audio data here?\n}\n</code></pre>\n\nMy question is, how do you extract raw data from the buffer and transform it into an object? Thanks! Sample codes will be greatly helpful! I owe you a lot! <br />\n",
+    "PostedDate": "2013-04-26T04:11:05.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036400",
+    "ThreadId": "441660",
+    "Html": "Try the WaveIn event handler DataAvailable like this:<br />\n<pre><code>stream.DataAvailable += WaveIn_DataAvailable;\n\n private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n// use WaveInEventArgs to access the buffer\n// maybe use a MemoryStream\n}</code></pre>\n\n",
+    "PostedDate": "2013-04-26T22:06:20.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

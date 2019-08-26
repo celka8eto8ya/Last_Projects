@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:28:33.247-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Like the topic says, there is misspelling in WaveIn: the property \"BufferMillisconds\" should spelled \"BufferMilliseconds\".\r\nNothing easier to fix ;-)",
+    "LastUpdatedDate": "2012-10-27T00:28:33.247-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-11-19T11:06:47.657-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Misspelling in WaveIn: BufferMillisconds",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 10968
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "has been fixed and checked in. thanks for reporting",
+      "PostedDate": "2009-11-22T12:38:59.317-08:00",
+      "Id": 41807
+    }
+  ]
+}

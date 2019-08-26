@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "252895",
+    "ThreadId": "73944",
+    "Html": "<p>I was trying out this library, and I ran into a problem with mono mp3s.&nbsp;&nbsp;An exception is thrown when playing them: NAudio.MmException: AcmNotPossible calling acmStreamConvert.</p>\r\n<p>The code I was using is:</p>\r\n<p>WaveChannel32 waveChannel32 = new WaveChannel32(new BlockAlignReductionStream(WaveFormatConversionStream.CreatePcmStream(new Mp3FileReader(fileName))));<br>IWavePlayer player = new WaveOut();<br>player.Init(waveChannel32);<br>player.Play();</p>\r\n<p>The stack trace:<br>&nbsp;NAudio.MmException: AcmNotPossible calling acmStreamConvert<br>&nbsp;&nbsp; at NAudio.MmException.Try(MmResult result, String function)<br>&nbsp;&nbsp; at NAudio.Wave.Compression.AcmStreamHeader.Convert(Int32 bytesToConvert, Int32&amp; sourceBytesConverted)<br>&nbsp;&nbsp; at NAudio.Wave.Compression.AcmStream.Convert(Int32 bytesToConvert, Int32&amp; sourceBytesConverted)<br>&nbsp;&nbsp; at NAudio.Wave.WaveFormatConversionStream.Read(Byte[] array, Int32 offset, Int32 count)<br>&nbsp;&nbsp; at NAudio.Wave.BlockAlignReductionStream.Read(Byte[] buffer, Int32 offset, Int32 count)<br>&nbsp;&nbsp; at NAudio.Wave.WaveChannel32.Read(Byte[] destBuffer, Int32 offset, Int32 numBytes)<br>&nbsp;&nbsp; at NAudio.Wave.WaveOutBuffer.OnDone()<br>&nbsp;&nbsp; at NAudio.Wave.WaveOut.Play()</p>\r\n<p>I noticed Mp3FileReader hardcodes the number of channels to 2, even though Mp3Frame correctly identifies the mp3 as mono.&nbsp; Changing Mp3FileReader line 65 as follows allows mono mp3s to play without a problem.</p>\r\n<p>waveFormat = new Mp3WaveFormat(sampleRate, mp3Frame.ChannelMode == ChannelMode.Mono ? 1 : 2, frameLengthInBytes, bitRate);</p>\r\n<p>- Scott Fleischman</p>",
+    "PostedDate": "2009-11-03T09:01:33.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "252964",
+    "ThreadId": "73944",
+    "Html": "<p>thanks for reporting this. I have a bit of a backlog of NAudio stuff to deal with, but I will try to get round to adding your fix asap</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-11-03T12:31:29.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "416993",
+    "ThreadId": "73944",
+    "Html": "<p>checked in (finally!)</p>\r\n<p>thanks again</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-11T07:25:37.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

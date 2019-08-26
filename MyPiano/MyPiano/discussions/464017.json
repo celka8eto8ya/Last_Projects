@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1113466",
+    "ThreadId": "464017",
+    "Html": "Hi, \r<br />\nI am trying to make network chat application, that I was capturing the sound using wasapiloopback, and trying to playback, I was using the BufferedWaveProvider to add samples when the DataAvailable fires of the capture, it works fine on a Windows7 64 bit OS, however it always give &quot;Buffer full&quot; expception when I tried on Windows8 64 OS, any idea about why this happens?\r<br />\n<br />\nanother question I had is that as I am new to NAudio, how can I compress the sound captured from the WasapiLoopback, and then send it over the network.<br />\n",
+    "PostedDate": "2013-10-28T21:36:37.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113585",
+    "ThreadId": "464017",
+    "Html": "well what is playing from the BufferedWaveProvider? If you keep adding stuff but not removing it, it will fill it up.\r<br />\n<br />\nTo get you started on NetworkChat, have a look at the source code for the Network Chat demo in the NAudioDemo project. I'm also very close to releasing an NAudio tutorial video series on Pluralsight which includes a module on streaming audio.<br />\n",
+    "PostedDate": "2013-10-29T04:41:32.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113696",
+    "ThreadId": "464017",
+    "Html": "Thanks, Mark.\r<br />\n<br />\nI get the playback working by changing the project configuration and target from Any CPU to x86.\r<br />\n<br />\nHere is the piece of my code.\r<br />\nthe Format is  -- 32 bit PCM: 44kHz 2 channels wBitsPerSample:32 dwChannelMask:3 subFormat:00000003-0000-0010-8000-00aa00389b71 extraSize:22\r<br />\n<br />\nso My question is how can I encode and decode the buffer? thanks a lot<br />\n<pre><code>            DirectSoundOut dsOut = null;\n            BufferedWaveProvider provider = null;\n        WasapiLoopbackCapture loopback = new WasapiLoopbackCapture();\n        var format = loopback.WaveFormat;\n            provider = new BufferedWaveProvider(format);\n            dsOut = new DirectSoundOut(1000);\n            loopback.DataAvailable += loopback_DataAvailable;\n            dsOut.Init(provider);\n            loopback.StartRecording();\n            dsOut.Play();\n\nvoid loopback_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            //provider.AddSamples(decoded, 0, decoded.Length);\n            provider.AddSamples(e.Buffer, 0, e.BytesRecorded);\n        }</code></pre>\n\n",
+    "PostedDate": "2013-10-29T08:07:25.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1114949",
+    "ThreadId": "464017",
+    "Html": "Has anyone has the same requirement to encode/decode the data recorded by wasapiloopack?<br />\n",
+    "PostedDate": "2013-10-31T02:06:58.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1116567",
+    "ThreadId": "464017",
+    "Html": "first convert from the 32 bit floating point samples to 16 bit ones, then you can use ACM codecs to encode the audio.<br />\n",
+    "PostedDate": "2013-11-01T09:10:05.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1120735",
+    "ThreadId": "464017",
+    "Html": "Thanks, I did exactly what you said, and you it worked well, thanks.<br />\n",
+    "PostedDate": "2013-11-08T23:44:30.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

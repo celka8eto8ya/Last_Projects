@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1130604",
+    "ThreadId": "471613",
+    "Html": "In the NetworkChatDemo is an example of streaming the microphone over the network . But how about streaming an mp3? I've created 2 windows form application (C# 4.5) one is the server (a UDP server for dealing with packet and other stuff ) and one is the client application . Now from client I want to open an mp3 send it to the server and server send it to other clients connected (this part is done . I can easily broadcast the data received to all clients connected). How can I do the first part (the client one) ? Until now I have something like this on my mind: <br />\n<ul>\n<li>open mp3 file via Mp3FileReader</li>\n<li>\nat this step I don't know what to do. -&gt; I think I need to do something with  a buffer like while playing the mp3 file, store data to a buffer then encode it and send encoded data to the server .<br />\n</li>\n</ul>\nI followed your courses on pluralsight but .. I can't understand them in all of their mean. I'am an 18 years old programmer who is at the beginning of his career :) So if you could help me I will really appreciate your effort.<br />\n",
+    "PostedDate": "2013-12-01T00:11:09.273-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130857",
+    "ThreadId": "471613",
+    "Html": "There is another demo showing how to play MP3 radio. It doesn't use Mp3FileReader as that is only for files where you can reposition. Instead you parse out individual Mp3Frames and pass them through the AcmMp3FrameDecompressor and then into a BufferedWaveProvider<br />\n",
+    "PostedDate": "2013-12-02T03:49:14.703-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1132721",
+    "ThreadId": "471613",
+    "Html": "Can someone help me with an example of how to broadcast mp3 file through UDP or explain me how to do it ?<br />\n",
+    "PostedDate": "2013-12-07T01:41:42.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1133191",
+    "ThreadId": "471613",
+    "Html": "I'am trying something like this but I don't know why my buffer contains only 0 values : <br />\n<pre><code>        private byte[] audioBuffer;\n        private WaveStream waveStream;\n\n        private void FillTheBufferToSend() {\n            audioBuffer = new byte[16384 * 4];\n            long nrOfBytesToRead = waveStream.Length;\n            while (nrOfBytesToRead &gt; 0) {\n                int readedBytes = waveStream.Read(audioBuffer,0,audioBuffer.Length);\n                SendAudio();\n                nrOfBytesToRead -= readedBytes;\n            }\n        }\n\n        private void SendAudio() {\n            //the codec used is UncompressedPcmChatCodec from NetworkChatDemo\n            byte[] encodedData = codec.Encode(audioBuffer, 0, audioBuffer.Length); \n            udp.send(encodedData);\n        }\n\n        private void btnOpenFile_Click(object sender, EventArgs e) {\n            OpenFileDialog file = new OpenFileDialog();\n            file.Filter = &quot;MP3 Files(*.mp3)|*.mp3&quot;;\n            if (file.ShowDialog() != DialogResult.OK) return;\n\n            waveStream = new NAudio.Wave.Mp3FileReader(file.FileName);\n        }</code></pre>\n\nWhy does my audioBuffer contains only 0 values?<br />\n",
+    "PostedDate": "2013-12-09T09:11:27.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1133601",
+    "ThreadId": "471613",
+    "Html": "An overview of what I'am trying to do is posted here : <a href=\"http://stackoverflow.com/questions/20476850/broadcasting-audio-c-sharp\" rel=\"nofollow\">http://stackoverflow.com/questions/20476850/broadcasting-audio-c-sharp</a><br />\n",
+    "PostedDate": "2013-12-10T06:20:19.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1136127",
+    "ThreadId": "471613",
+    "Html": "You need to get buffer in wav and convert this with lame.dll. You can't use mp3 function of naudio because this is only for decoding. For this your buffer is even 0. Best way is get raw wave buffer and before send to socket you can convert this with lame.dll, open source mp3 encoder/decoder<br />\n",
+    "PostedDate": "2013-12-15T07:57:00.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1136169",
+    "ThreadId": "471613",
+    "Html": "I was thinking that using a codec will do the work ? I mean ... what does codec.Encode do ? (I think that codec encodes my PCM data from waveStream and store it into the audioBuffer , right) ? <br />\n",
+    "PostedDate": "2013-12-15T08:48:25.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1137958",
+    "ThreadId": "471613",
+    "Html": "no, encode returns an encoded buffer.<br />\n",
+    "PostedDate": "2013-12-18T16:37:34.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

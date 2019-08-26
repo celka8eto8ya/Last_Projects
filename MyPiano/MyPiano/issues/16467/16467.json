@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "does currently naudio have interop/wrapper on Voice Capture DSP for Window Media Foundation, \r\n\r\nhttps://msdn.microsoft.com/en-us/library/windows/desktop/ff819492(v=vs.85).aspx",
+    "LastUpdatedDate": "2015-02-07T00:17:36.39-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-02-05T19:23:26.953-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "media foundation dsp support",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16467
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "sadly not but a wrapper would be a nice addition. Shame its only exposed as a DMO rather than an MFT, which may limit the platforms it can be used on",
+      "PostedDate": "2015-02-07T00:17:36.39-08:00",
+      "Id": 173700
+    }
+  ]
+}

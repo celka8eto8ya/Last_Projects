@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "441575",
+    "ThreadId": "212285",
+    "Html": "<p>After closing my app i`ve got this error .How can i solve it?((</p>",
+    "PostedDate": "2010-05-11T09:34:06.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "441949",
+    "ThreadId": "212285",
+    "Html": "<p>You probably haven't disposed your WaveOut object before exiting the application</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-05-12T03:06:55.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

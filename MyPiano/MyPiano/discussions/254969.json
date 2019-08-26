@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "601619",
+    "ThreadId": "254969",
+    "Html": "\r\n<p>Seeking the stream position in&nbsp;IWavePlayer and it's inheritors when playing<br>\r\nis wished.</p>\r\n",
+    "PostedDate": "2011-04-22T10:18:36.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602352",
+    "ThreadId": "254969",
+    "Html": "<p>The reason why we don't have this is because a lot of IWaveProvider implementors are not inherently repositionable, and making it support reposition requires a cascade effect of repositioning all the way down the audio pipeline. It is easier to simply reposition at either the mixer stage, or at the file reader stage for playing a single file.</p>",
+    "PostedDate": "2011-04-25T03:34:44.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

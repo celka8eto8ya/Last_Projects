@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1445687",
+    "ThreadId": "645415",
+    "Html": "Hello,\r<br />\n<br />\nI'm using the MixingSampleProvider and the code goes like this:<br />\n<ul>\n<li>I create two BufferedWaveProviders</li>\n<li>I create two SampleChannels with the BufferedWaveProviders as initial parameter</li>\n<li>\nThen create the MixingSampleProvider with the two SampleChannels<br />\n</li>\n</ul>\nFor this test I'm feeding data only to the first BufferedWaveProvider.<br />\n<ol>\n<li>\nWhen I'm using the WasapiCapture's data (DataAvailable event) and feed it to one of the BufferedWaveProviders than everything works ok.<br />\n</li>\n<li>\nWhen I'm using a slightly modified WasapiCapture, where I have changed internal parameter so that the audioBufferMillisecondsLength is 20 instead of the default 100 (I saw this modification in a discussion thread here), than after a few seconds of good sound, the MixingSampleProvider gives back silence (the received buffers are filled with 0s).<br />\n</li>\n</ol>\nHow can I make this to work? If I don't use the MixingSampleProvider I get good quality sound out of the SampleChannel. So something in the MixingSampleProvider goes wrong.\r<br />\n<br />\nThanks in advance,\r<br />\nIsti<br />\n",
+    "PostedDate": "2015-09-24T02:07:29.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446391",
+    "ThreadId": "645415",
+    "Html": "That's strange. <code>MixingSampleProvider</code> should keep reading from inputs until it gets back a 0 from the <code>Read</code> method. But <code>BufferedWaveProvider</code> always returns data, and I don't think that <code>SampleChannel</code> would stop either.<br />\n",
+    "PostedDate": "2015-09-29T12:03:19.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446681",
+    "ThreadId": "645415",
+    "Html": "Actually the MixingSampleProvider doesn't stop reading, it is just that the buffer is full of 0s.<br />\n",
+    "PostedDate": "2015-10-01T05:58:10.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446768",
+    "ThreadId": "645415",
+    "Html": "Yes, but is that because it thinks all its inputs have finished, or is one of its inputs returning 0's? Easiest thing is for you to copy the MixingSampleProvider code into your own project and debug step through the Read method to work out what is happening differently.<br />\n",
+    "PostedDate": "2015-10-01T14:00:52.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446814",
+    "ThreadId": "645415",
+    "Html": "The input is not returning 0s (I have debuged that), the MixingSampleProvider makes all 0s out of it, that's why is all silent.<br />\n",
+    "PostedDate": "2015-10-02T03:08:17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1447597",
+    "ThreadId": "645415",
+    "Html": "Ok, I found the reason for this problem. The problem appears when I'm using the default WasapiCapture as well.<br />\n<br />\nThe reason for the problem is that in the MixingSampleProvider  (line 147) the sampleRead becomes 0, although the sourceBuffer has elements in it, and so the &quot;sources.RemoveAt(index)&quot; (line 163) is called and after that whenever I read from the MixingSampleProvider I get 0 bytes back. <br />\n<br />\nAs it turns out this happens because the BufferedWaveProvider's Read function returns 0. After a bit of debbugging it seems that the circularBuffer is null when the read is done.<br />\n<br />\nAny idea why this happens? Can this be because the BufferedWaveProvider is wrote and read from different threads?<br />\n",
+    "PostedDate": "2015-10-08T00:41:22.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

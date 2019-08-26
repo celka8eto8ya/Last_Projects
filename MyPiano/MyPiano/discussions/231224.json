@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "508478",
+    "ThreadId": "231224",
+    "Html": "<p>Hi,</p>\r\n<p>i am a (possibly)&nbsp;new NAudio-user....really cool work!</p>\r\n<p>But i miss a function to play a sound on a specific sound-device (i have 4 soundcards).</p>\r\n<p>I saw things like &quot;WaveOutCapabilities&quot;...and i choose the device i want....but i dont understand how can i use this to play a sound -on- this device.</p>\r\n<p>I'll hope, that someone can help me :)</p>",
+    "PostedDate": "2010-10-17T09:09:22.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "509231",
+    "ThreadId": "231224",
+    "Html": "<p>you can change the WaveOut device number. 0 is the default.</p>",
+    "PostedDate": "2010-10-19T02:23:38.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

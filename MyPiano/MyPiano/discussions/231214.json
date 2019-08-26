@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "508442",
+    "ThreadId": "231214",
+    "Html": "<p>Hi,</p>\r\n<p>recently I discovered a flaw with NAudio. When I try to access the MMDevice.ID property an System.Runtime.InteropServices.MarshalDirectiveException is thrown (Message: &quot;Marshaler restriction: Excessively long string.&quot;). After some googling I'm stuck because I cannot find a failure in the NAudio COM interop definition. May this be caused by a buggy sounddriver? However it fails with any audio endpoint installed in my system. Is there a possibility to work around accessing the devices ID? Basically I only want to access the devices ID to determine which one of the devices the deviceenumerator returned is actually my default device.</p>\r\n<p>Your help is greatly appreciated</p>\r\n<p>Stefan Hoffmeister</p>",
+    "PostedDate": "2010-10-17T06:37:13.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588228",
+    "ThreadId": "231214",
+    "Html": "<p>Solution is here:</p>\r\n<p>http://naudio.codeplex.com/workitem/12565</p>",
+    "PostedDate": "2011-03-29T07:13:06.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

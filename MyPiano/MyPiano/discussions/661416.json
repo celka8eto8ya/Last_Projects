@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1492821",
+    "ThreadId": "661416",
+    "Html": "I can't get the visual basic volume meter to work\r<br />\nI'm using windows 8 and 10 with visual studio 2013 and tried this code \r<br />\nafter adding the reference naudio.dll and naudio core api to the project :<br />\n<pre><code>Imports NAudio\n Imports NAudio.CoreAudioApi\n\n Public Class Form1\n Private de As New MMDeviceEnumerator\n\n Private volume As Double\n Private volumelast As Double\n Private change As Double\n\n\n\n\n\n Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick\n Dim device As MMDevice = de.GetDefaultAudioEndpoint(DataFlow.Capture, Role.Multimedia)\n volume = device.AudioMeterInformation.MasterPeakValue * 100\n\n Label1.Text = volume\n End Sub\n End Class </code></pre>\n\nI only get the value 0 in the label, and yes the mic is set as the default audio device.<br />\n",
+    "PostedDate": "2017-02-16T23:44:59.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1492822",
+    "ThreadId": "661416",
+    "Html": "also yes the timer is set to true<br />\n",
+    "PostedDate": "2017-02-16T23:46:34.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493596",
+    "ThreadId": "661416",
+    "Html": "If I remember correctly, MasterPeakValue is the OUTPUT sample of the mixer. Not the INPUT of a microphone or any other input device.<br />\n",
+    "PostedDate": "2017-03-04T11:52:11.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

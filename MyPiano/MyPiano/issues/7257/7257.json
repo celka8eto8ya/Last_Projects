@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 7,
+    "Custom": "",
+    "Description": "When I connect to a machine via remote desktop, the WaveOut playback fails with a MmException: WaveBadFormat calling waveOutOpen. The callstack is:\n\n\tNAudio.dll!NAudio.MmException.Try(NAudio.MmResult result = WaveBadFormat, string function = \"waveOutOpen\") Line 40\tC#\n \tNAudio.dll!NAudio.Wave.WaveOut.Init(NAudio.Wave.WaveStream waveStream = {NAudio.Wave.WaveChannel32}) Line 100 + 0xe bytes\tC#\n \tNAudioDemo.exe!NAudioDemo.AudioPlaybackForm.buttonPlay_Click(object sender = {Play}, System.EventArgs e = {System.EventArgs}) Line 84 + 0x18 bytes\tC#\n\nThe playback works fine when I'm directly logged in on that same machine.\n\nWhen using remote desktop, sounds from other application are correctly sent over the network to the client machine. So it not a general problem with sounds in a remote session.\n\nDoes anybody know what is going on here and if there is a fix?",
+    "LastUpdatedDate": "2013-11-21T12:27:46.217-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-08-09T00:19:37.05-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveOut playback fails in a remote desktop session",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 7257
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "what WaveFormat are you using in the WaveOutOpen call?",
+      "PostedDate": "2008-08-11T13:38:48.587-07:00",
+      "Id": 41664
+    },
+    {
+      "Message": "I'm simply start the NAudioDemo project as provided, choose WAV Playback, press the play button, and choose a file. When calling MmException.Try(result,\"waveOutOpen\"); in WaveOut.Init, the WaveFormat of waveStream is set to IeeeFloat (32bit/44.1 kHZ).\r\n\r\nAgain, this works locally but not over a remote desktop session.\r\n\r\nThanks for helping!",
+      "PostedDate": "2008-08-12T07:17:12.553-07:00",
+      "Id": 41665
+    },
+    {
+      "Message": "Have you been able to reproduce this issue?",
+      "PostedDate": "2008-08-25T03:13:23.32-07:00",
+      "Id": 41666
+    },
+    {
+      "Message": "Hi dradovic, I am afraid I haven't had a chance to reproduce this issue. Why not try 16 bit audio? There is a 32 to 16 bit conversion stream in NAudio if you need it",
+      "PostedDate": "2008-09-03T15:26:49.633-07:00",
+      "Id": 41667
+    },
+    {
+      "Message": "Same issue here. Tried to use 16 bit WaveStream instead of WaveChannel32. WaveInterop.waveOutOpen returns a different result: NoDriver",
+      "PostedDate": "2011-02-14T23:10:03.51-08:00",
+      "Id": 41668
+    },
+    {
+      "Message": "@daniel_s I've been trying to reproduce the NoDriver error as other people have reported it, but my tests so far have been successful. What OS are you remote desktoping from and to?",
+      "PostedDate": "2012-02-29T10:48:36.95-08:00",
+      "Id": 56822
+    },
+    {
+      "Message": "OK, it seems that NoDriver happens when you RDP into a machine that doesn't have a soundcard installed. Not a lot I can do to fix this.",
+      "PostedDate": "2012-03-01T01:47:25-08:00",
+      "Id": 56895
+    }
+  ]
+}

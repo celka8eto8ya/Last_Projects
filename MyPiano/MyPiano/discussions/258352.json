@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "615718",
+    "ThreadId": "258352",
+    "Html": "\r\n<p>When I pause, stop, or play after pausing or stopping I get a clearly discernable pop. What could cause this?</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-05-20T00:13:47.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "615719",
+    "ThreadId": "258352",
+    "Html": "<p>what output driver mode are you using?</p>\r\n<p>It may simply be that when you stop, the audio is not at a zero-crossing, which results in a small pop or click. Some media players insert very short fade-ins and fade-outs to work around this issue.</p>",
+    "PostedDate": "2011-05-20T00:17:11.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "656338",
+    "ThreadId": "258352",
+    "Html": "<p>Oops, I didn't realize it was that long since I've had time to work on this project.</p>\r\n<p>I'm using wasapi as the output driver.</p>\r\n<p>I tried fading the audio in over &lt;10ms, maybe I'm doing it wrong, but it doesn't sound right at all.</p>",
+    "PostedDate": "2011-08-11T00:22:59.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "697127",
+    "ThreadId": "258352",
+    "Html": "<p>I have the same problem: fading in and out works, but doesn't remove the ticking noises - in fact it adds more.</p>",
+    "PostedDate": "2011-11-11T10:36:40.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "698318",
+    "ThreadId": "258352",
+    "Html": "<p>to debug problems like this, it is often worth sending your audio to a WAV file with the WavFileWriter. Then you can use an audio editor program to see if the pops are in the audio you are generating or whether it is due to playback problems (e.g. using too low a latency)</p>",
+    "PostedDate": "2011-11-15T03:11:50.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

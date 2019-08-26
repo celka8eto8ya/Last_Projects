@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1211085",
+    "ThreadId": "533088",
+    "Html": "Hi, I juste want to resample but only CreateWaveFile work and i dont want a wave file<br />\nbye [] data  = From64String(&quot;----- string encoded ---&quot;);<br />\n MemoryStream fs = new MemoryStream(data);<br />\n<pre><code>      var baseDir = AppDomain.CurrentDomain.BaseDirectory;\n\n      using (var wfr = new WaveFileReader(fs))\n      {\n          var outputFormat = new WaveFormat(8000, 16, 1);\n          using (var pcmStream = new WaveFormatConversionStream(outputFormat, wfr))\n          {\n              using (var ms = new MemoryStream())\n              {\n                  var bytesRead = -1;\n                  while (bytesRead != 0)\n                  {\n                      var buffer = new byte[pcmStream.WaveFormat.AverageBytesPerSecond];\n                      bytesRead = pcmStream.Read(buffer, 0, pcmStream.WaveFormat.AverageBytesPerSecond);\n\n\n                      ms.Write(buffer, 0, bytesRead);\n                   }\n\n                   program.WaveHeaderIN(ms.GetBuffer());\n                  ms.Position = 0;\n                  RawSourceWaveStream RawStram = new RawSourceWaveStream(ms, outputFormat);\n\n                  System.IO.File.WriteAllBytes(@&quot;Desktop\\waveConvertBy.wav&quot;, ms.GetBuffer());\n                  // to make a real wav file...\n\n                  ms.Position = 0;\n                  WaveFileWriter.CreateWaveFile(Path.Combine(\\Desktop\\output.wav&quot;), RawStram);\n                  Console.WriteLine(&quot;wavefile length: &quot; + RawStram.Length);\n\n              }\n          }\n      }\n</code></pre>\n\nms.getBUffer  is not a wav file when i play it. there is another way to put RawSourcewave stream into byte? or memory Stream?<br />\nthanks<br />\n",
+    "PostedDate": "2014-02-20T04:17:59.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215867",
+    "ThreadId": "533088",
+    "Html": "I'm not really sure what you're trying to achieve. Use CreateWaveFile to make a WAV file, or just use a FileStream if you only need the raw data.\r<br />\nNAudio WaveStreams never return a WAV header from their Read method, just raw audio.<br />\n",
+    "PostedDate": "2014-02-27T14:24:33.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

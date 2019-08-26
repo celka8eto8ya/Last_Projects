@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1070780",
+    "ThreadId": "450673",
+    "Html": "Hello,<br />\n<br />\nI use this code in vb.net :<br />\n<pre><code>    If Micro Is Nothing Then\n        Micro = New WaveIn\n        Micro.BufferMilliseconds = 50\n        Micro.WaveFormat = New WaveFormat(8000, 1)\n        Dim recordingFormat As New WaveFormat(8000, 1)\n        Micro.NumberOfBuffers = 1\n        Micro.StartRecording()\n    End If\n</code></pre>\n\nWhen I looked at the memory space used by my application, I see that this space is permanently increasing (+8K every sec). <br />\nMy opinion is that the buffer is not deleted+written at each cycle but everything is recorded in memory.<br />\n<br />\nIs there any solution to prevent this phenomena ?<br />\n",
+    "PostedDate": "2013-07-20T04:49:28.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071254",
+    "ThreadId": "450673",
+    "Html": "Don't try to use WaveIn with only 1 buffer. You need at least two. \r<br />\nAlso, are you familiar with the way the garbage collector works in .NET?\r<br />\nWaveIn does not store historical recorded data anywhere.<br />\n",
+    "PostedDate": "2013-07-22T05:46:48.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

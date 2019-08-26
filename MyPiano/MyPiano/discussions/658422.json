@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1485105",
+    "ThreadId": "658422",
+    "Html": "My application has a list of available files that it can play according to a sequence or a user may manually select and play files. I would like to have the UI show the total playing time for each file and so far the only way I can see to get this is to create a wave provider object, get the Total Time property, and then dispose of the wave provider.\r<br />\n<br />\nI guess I could keep the wave provider open ready for the user to play it, however there could be many files in a set and this seems overly resource wasteful.\r<br />\n<br />\nAny other ways of getting this total file time?\r<br />\nThanks,\r<br />\nSid<br />\n",
+    "PostedDate": "2016-10-02T09:33:33.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485109",
+    "ThreadId": "658422",
+    "Html": "You could use WinAPi Codepack Shell to request the duration detected by windows<br />\n",
+    "PostedDate": "2016-10-02T12:12:50.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

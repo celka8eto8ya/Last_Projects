@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1025974",
+    "ThreadId": "439214",
+    "Html": "Is it possible to record the input and output at the same time as one stream? I am using Sipek to make calls I would like to record. I haven't been succesful in recording 2 input devices in 1 stream. I am using the WasapiLoopbackCapture to record what the other is saying. And I can record what I am saying.\r<br />\n<br />\nBut I would really like to have one stream, could anyone provide a clue how to do something like that?<br />\n",
+    "PostedDate": "2013-04-05T03:15:23.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1027274",
+    "ThreadId": "439214",
+    "Html": "I don't think you can do this as one step. My approach has been to mix together the two recorded streams into one file.<br />\n",
+    "PostedDate": "2013-04-08T08:08:21.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1028280",
+    "ThreadId": "439214",
+    "Html": "Thanks Mark. I guess I'll make a stereo mixed stream<br />\n",
+    "PostedDate": "2013-04-10T01:37:45.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

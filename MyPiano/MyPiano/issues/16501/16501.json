@@ -1,0 +1,91 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 9,
+    "Custom": null,
+    "Description": "Our dictation software hangs on NAudio call as described below. This has been tried to get fixed for ages but no luck. Hope you can help!\r\n \r\n \r\nHang happens in WaveIn.cs in CloseWaveInDevice() function, line 336 WaveInterop.waveInClose(waveInHandle), that row is in bold below.\r\n \r\n   private void CloseWaveInDevice()\r\n        {\r\n \r\n            if (waveInHandle == IntPtr.Zero) return;\r\n            _logger.Log(LogLevel.Debug, () => \"close wavein\");\r\n            \r\n            MmException.Try(WaveInterop.waveInStop(waveInHandle), \"waveInStop\");\r\n \r\n            MmException.Try(WaveInterop.waveInReset(waveInHandle), \"waveInReset\");\r\n            \r\n            if (buffers != null)\r\n            {\r\n                _logger.Log(LogLevel.Debug, () => \"close wavein, buffers=\" + buffers.Length.ToString());\r\n                for (int n = 0; n < buffers.Length; n++)\r\n                {\r\n                    _logger.Log(LogLevel.Debug, () => \"buffers[\" + n + \"] dispose call\");\r\n                    buffers[n].Dispose();\r\n                    _logger.Log(LogLevel.Debug, () => \"buffers[\" + n + \"] disposed\");\r\n                }\r\n                buffers = null;\r\n            }\r\n            _logger.Log(LogLevel.Debug, () => \"buffers disposed, try to close waveIn\");\r\n               var result = WaveInterop.waveInClose(waveInHandle);\r\n            _logger.Log(LogLevel.Debug, () => \"waveInClose result: \" + result.ToString());\r\n \r\n            waveInHandle = IntPtr.Zero;\r\n            //  _logger.Log(LogLevel.Debug, () => \"close wavein method end\");\r\n        }\r\n \r\n \r\nWaveInClose is called every time recording is paused to control recording led on Olympus DR-2X00 mic. \r\n \r\nwaveInClose is from winmm library ->\r\n  [DllImport(\"winmm.dll\")]\r\n  public static extern MmResult waveInClose(IntPtr hWaveIn);\r\n \r\nmsdn -> https://msdn.microsoft.com/en-us/library/dd743840(v=vs.85).aspx\r\n \r\nProblem is that it doesn't return error code -> it just never returns from this function in this case.\r\n \r\nattached is a debug log from the software. It hangs on the last row.\r\n\r\n-Juha\r\n",
+    "LastUpdatedDate": "2016-10-25T12:09:19.277-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-09-09T02:44:32.17-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Dictation recorder hangs on waveInClose",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16501
+  },
+  "FileAttachments": [
+    {
+      "FileId": 1605815,
+      "FileName": "debug.txt",
+      "DownloadUrl": ".\\1605815"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "attachement",
+      "PostedDate": "2016-09-09T02:45:03.277-07:00",
+      "Id": 204001
+    },
+    {
+      "Message": "what sort of application are you writing (winforms/wpf?)\ntry to make all calls to your waveIn on the same thread\nAlso try with WaveInEvent instead, see if that improves things",
+      "PostedDate": "2016-09-09T07:00:02.427-07:00",
+      "Id": 204014
+    },
+    {
+      "Message": "Hi,\n\nsorry for late reply!\n\nApplication is wpf type and all calls are made in main thread. We tried WaveInEvent and it did change the behavior according to the logs but doesn’t look like an improvement though. Hang happens just same way. Now logs look like this when hang happens:\n \n2016-09-22 15:14:33.9678  - RUN TEST 83\n2016-09-22 15:14:33.9678  - slider stop \n2016-09-22 15:14:33.9678  - pause called, recording False, statusStop\n2016-09-22 15:14:33.9678  - slider stop method end\n2016-09-22 15:14:34.4688  - slide REC\n2016-09-22 15:14:34.4688  - RecButtonPushed, e.IsPushed: True _controller.IsRecording: False\n2016-09-22 15:14:34.4688  - RecButtonPushed, e.IsPushed = true, so start recording\n2016-09-22 15:14:34.4728  - pause called, recording False, statusStop\n2016-09-22 15:14:34.4728  - Process recording\n2016-09-22 15:14:34.4728  - Start rec\n2016-09-22 15:14:34.4728  - record called, status Stop\n2016-09-22 15:14:34.4728  - record called. status = Stop\n2016-09-22 15:14:34.4728  - capture start\n2016-09-22 15:14:34.4988  - capture method end\n2016-09-22 15:14:34.4988  - record capture called, status = Record\n2016-09-22 15:14:34.4988  - slide REC method end\n2016-09-22 15:14:34.6598  - OnDataAvailable start method, IsCapturing: True _insertMode: False\n2016-09-22 15:14:34.6608 Reuse WaveInBuffer\n2016-09-22 15:14:34.6608 Reuse WaveInBuffer : waveInUnprepareHeader\n2016-09-22 15:14:34.6608 Reuse WaveInBuffer : waveInPrepareHeader\n2016-09-22 15:14:34.6608 Reuse WaveInBuffer : waveInAddBuffer\n2016-09-22 15:14:34.7598  - OnDataAvailable start method, IsCapturing: True _insertMode: False\n2016-09-22 15:14:34.7598 Reuse WaveInBuffer\n2016-09-22 15:14:34.7598 Reuse WaveInBuffer : waveInUnprepareHeader\n2016-09-22 15:14:34.7598 Reuse WaveInBuffer : waveInPrepareHeader\n2016-09-22 15:14:34.7598 Reuse WaveInBuffer : waveInAddBuffer\n2016-09-22 15:14:34.8598  - OnDataAvailable start method, IsCapturing: True _insertMode: False\n2016-09-22 15:14:34.8598 Reuse WaveInBuffer\n2016-09-22 15:14:34.8598 Reuse WaveInBuffer : waveInUnprepareHeader\n2016-09-22 15:14:34.8598 Reuse WaveInBuffer : waveInPrepareHeader\n2016-09-22 15:14:34.8628 Reuse WaveInBuffer : waveInAddBuffer\n2016-09-22 15:14:34.9598  - OnDataAvailable start method, IsCapturing: True _insertMode: False\n2016-09-22 15:14:34.9598 Reuse WaveInBuffer\n2016-09-22 15:14:34.9598 Reuse WaveInBuffer : waveInUnprepareHeader\n2016-09-22 15:14:34.9598 Reuse WaveInBuffer : waveInPrepareHeader\n2016-09-22 15:14:34.9598 Reuse WaveInBuffer : waveInAddBuffer\n2016-09-22 15:14:35.0598  - OnDataAvailable start method, IsCapturing: True _insertMode: False\n2016-09-22 15:14:35.0598 Reuse WaveInBuffer\n2016-09-22 15:14:35.0598 Reuse WaveInBuffer : waveInUnprepareHeader\n2016-09-22 15:14:35.0598 Reuse WaveInBuffer : waveInPrepareHeader\n2016-09-22 15:14:35.0598 Reuse WaveInBuffer : waveInAddBuffer\n2016-09-22 15:14:35.1598  - OnDataAvailable start method, IsCapturing: True _insertMode: False\n2016-09-22 15:14:35.1598 Reuse WaveInBuffer\n2016-09-22 15:14:35.1598 Reuse WaveInBuffer : waveInUnprepareHeader\n2016-09-22 15:14:35.1598 Reuse WaveInBuffer : waveInPrepareHeader\n2016-09-22 15:14:35.1598 Reuse WaveInBuffer : waveInAddBuffer\n2016-09-22 15:14:35.2598  - OnDataAvailable start method, IsCapturing: True _insertMode: False\n2016-09-22 15:14:35.2598 Reuse WaveInBuffer\n2016-09-22 15:14:35.2598 Reuse WaveInBuffer : waveInUnprepareHeader\n2016-09-22 15:14:35.2598 Reuse WaveInBuffer : waveInPrepareHeader\n2016-09-22 15:14:35.2598 Reuse WaveInBuffer : waveInAddBuffer\n2016-09-22 15:14:35.3598  - OnDataAvailable start method, IsCapturing: True _insertMode: False\n2016-09-22 15:14:35.3598 Reuse WaveInBuffer\n2016-09-22 15:14:35.3628 Reuse WaveInBuffer : waveInUnprepareHeader\n2016-09-22 15:14:35.3628 Reuse WaveInBuffer : waveInPrepareHeader\n2016-09-22 15:14:35.3628 Reuse WaveInBuffer : waveInAddBuffer\n2016-09-22 15:14:35.4598  - OnDataAvailable start method, IsCapturing: True _insertMode: False\n2016-09-22 15:14:35.4598 Reuse WaveInBuffer\n2016-09-22 15:14:35.4598 Reuse WaveInBuffer : waveInUnprepareHeader\n2016-09-22 15:14:35.4598 Reuse WaveInBuffer : waveInPrepareHeader\n2016-09-22 15:14:35.4598 Reuse WaveInBuffer : waveInAddBuffer\n2016-09-22 15:14:35.4598  - slide REC\n2016-09-22 15:14:35.4598  - RecButtonPushed, e.IsPushed: False _controller.IsRecording: True\n2016-09-22 15:14:35.4598 v.2.7.0.0 - RecButtonPushed, e.IsPushed = false, so rec slider released, stop recording\n2016-09-22 15:14:35.4718  - Stopping recording\n2016-09-22 15:14:35.4718  - status StoppingRecord\n2016-09-22 15:14:35.4718  - slide REC method end\n2016-09-22 15:14:35.4718  - callback rec stop\n2016-09-22 15:14:35.4718  - wave_in start disposing\n\nBR,\n-Juha",
+      "PostedDate": "2016-09-26T05:05:11.727-07:00",
+      "Id": 204295
+    },
+    {
+      "Message": "Actually the change in logs with WaveInEvent was just about logging. Now that logging is similar for that event it looks just as it did with WaveInClose. What else could be checked?",
+      "PostedDate": "2016-09-27T01:56:27.087-07:00",
+      "Id": 204331
+    },
+    {
+      "Message": "When are you calling this? Are you making sure you've waited for recording to completely finish before disposing the wavein instance?",
+      "PostedDate": "2016-09-27T02:22:43.883-07:00",
+      "Id": 204332
+    },
+    {
+      "Message": "Hi, thanks for the suggestion! Please specify what do you mean by \"when are you calling this\". What would be needed besides code snippet abowe? Recording really should be finished before disposing even tried it now with slight delay before dispose, no change.",
+      "PostedDate": "2016-10-25T00:00:48.607-07:00",
+      "Id": 204820
+    },
+    {
+      "Message": "I mean, when are you calling CloseWaveInDevice? Is it when the user clicks a button? Or on a timer? Or after recording a certain amount of audio? etc\n\nNormally you would call StopRecording, and then wait for the RecordingStopped event to fire before disposing your WaveIn",
+      "PostedDate": "2016-10-25T00:34:01.833-07:00",
+      "Id": 204822
+    },
+    {
+      "Message": "Ok, it is called when user clicks (actually slides) a button of professional dictation usb-recorder, Olympus or Philips. There are these situations when hanging does not happen even with desktop which usually have the issue: 1. using generic audio for recording 2. running the app in similar Windows image but in top of Virtualbox (just a test case).\n\nDo you still think there could be issue with disposing before recording stop?",
+      "PostedDate": "2016-10-25T01:04:06.497-07:00",
+      "Id": 204824
+    },
+    {
+      "Message": "well hanging almost always comes from two calls into the driver from different threads, or from a callback within a callback. If you're getting it with WaveOutEvent though I can't see how that would happen. Is there a really simple repro you can set up?",
+      "PostedDate": "2016-10-25T12:09:19.277-07:00",
+      "Id": 204831
+    }
+  ]
+}

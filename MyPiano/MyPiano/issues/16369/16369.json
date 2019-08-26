@@ -1,0 +1,80 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 8,
+    "Custom": null,
+    "Description": "I'm currently migrating my application to 64-bit and whenever I'm trying to dispose the WaveOut class, I'm getting an \"AccessVoilationException\" with the message \"Attempted to read or write protected memory. This is often an indication that other memory is corrupt.\"\r\n\r\nStacktrace:\r\n\r\n   at NAudio.Wave.WaveInterop.waveOutClose(IntPtr hWaveOut)\r\n   at NAudio.Wave.WaveOut.Dispose(Boolean disposing)\r\n   at NAudio.Wave.WaveOut.Dispose()\r\n\r\nI've tested this with version 1.5 and 1.6 of NAudio, it only happens when I compile my application for 64-bit, 32-bit works fine.\r\n\r\nSmall codepiece where it happens:\r\n\r\nif (wavePlayer != null)\r\n{\r\n    this.wavePlayer.Stop();\r\n     this.wavePlayer.Dispose(); //AccessViolationException\r\n}\r\n\r\nInitialization of the WaveOut class:\r\nthis.wavePlayer = new WaveOut(WaveCallbackInfo.FunctionCallback());\r\n\r\nI've also tried it with the new WaveOutEvent class in NAudio, but the problem persists.",
+    "LastUpdatedDate": "2012-10-29T04:31:40.667-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-10-27T09:16:46.147-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "AccessViolationException when disposing WaveOut in a 64-bit application",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16369
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Whoooops, I checked it a second time, WaveOutEvent doesn't has the problem, I think this can be closed!",
+      "PostedDate": "2012-10-27T09:25:00.313-07:00",
+      "Id": 81125
+    },
+    {
+      "Message": "Ok, I'm really sorry, but with the WaveOutEvent class, the exception is now thrown only sometimes",
+      "PostedDate": "2012-10-27T09:32:37.923-07:00",
+      "Id": 81126
+    },
+    {
+      "Message": "what OS and soundcard are you using?",
+      "PostedDate": "2012-10-27T10:03:27.18-07:00",
+      "Id": 81130
+    },
+    {
+      "Message": "I knew I forgot to mention something... \n\nI'm using Windows 7 64-bit, Soundcard is the built in of my Asus N56-VZ (hm, where do I find the specific model?), but the exception occurs on all of my 3 computers (also with Win7 64-bit)",
+      "PostedDate": "2012-10-27T10:45:56.427-07:00",
+      "Id": 81131
+    },
+    {
+      "Message": "OK, what is the simplest code that reproduces this problem? Are you using any decoders (e.g. playing MP3 or other compressed formats)? Do you need to play for a certain length of time for it to happen etc?",
+      "PostedDate": "2012-10-27T11:14:09.427-07:00",
+      "Id": 81132
+    },
+    {
+      "Message": "I have a hard time reproducing this with a simple piece of code. It seems that there is some multithreading involved that causes this issue. Yes, I'm using the Mp3FileReader.\nAs for your last question, it happend always when the song has finished and I disposed the wavePlayer, but as I said, I think it has to do with multithreading.\n\nIs the WaveOut class even threadsafe? That would mean that this issue is my fault. :)",
+      "PostedDate": "2012-10-29T04:05:53.983-07:00",
+      "Id": 81181
+    },
+    {
+      "Message": "If you have any interest in digging through my source code, this commit fixed the problem in my application:\nhttps://github.com/flagbug/Espera/commit/2580ab6c61036a125176e17245e624c65466c75e",
+      "PostedDate": "2012-10-29T04:07:23.907-07:00",
+      "Id": 81182
+    },
+    {
+      "Message": "With the WaveOut class, I strongly advise against using function callbacks, and using windows messages. In this scenario, you create the WaveOut object on your GUI thread, and all work should happen on the GUI thread (including filling the buffer). With WaveOutEvent, a separate background thread is created for the purposes of filling the buffers up. However, if possible, it marshalls the PlaybackStopped event to the GUI thread. ",
+      "PostedDate": "2012-10-29T04:31:40.667-07:00",
+      "Id": 81184
+    }
+  ]
+}

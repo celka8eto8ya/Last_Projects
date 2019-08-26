@@ -1,0 +1,85 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:14:02.017-07:00",
+    "CommentCount": 9,
+    "Custom": null,
+    "Description": "Hello,\r\n\r\nI am new to using Naudio\r\n\r\nI am using Naudio in a very simple windows service which keeps playing selected songs. I have around 5 one second clips in my selection. The service seems to run without any problem for a while. But around about 4 hour and 45 minute period I keep getting the following error\r\n\r\n   NAudio.MmException: UnspecifiedError calling waveOutOpen\r\n   at NAudio.Wave.WaveOut.Init(IWaveProvider waveProvider)\r\n\r\nI really don't know how to trouble shoot the problem with this information\r\n\r\nHere is the function that plays the audio files\r\n\r\n        private void playFile (string fileFullPath)\r\n        {\r\n            using (IWavePlayer waveout = new WaveOut(WaveCallbackInfo.FunctionCallback()))\r\n            {\r\n                WaveStream outputStream = createInputStream(fileFullPath);\r\n\r\n                int duration = getSoundDurationinMiliSeconds(fileFullPath);\r\n\r\n                try\r\n                {\r\n                    Logger.Log(Level.Verbose, \"Now playing song -> \" + fileFullPath);\r\n                    waveout.Init(outputStream); // THE EXCEPTION IS POINTING TO THIS LINE\r\n\r\n                    waveout.PlaybackStopped += new EventHandler(waveout_PlaybackStopped);\r\n\r\n                    mIsPlaying = true;\r\n                    waveout.Play();\r\n\r\n\r\n                    if (fileFullPath.ToLower().EndsWith(\".mp3\") || fileFullPath.ToLower().EndsWith(\".wma\"))\r\n                    {\r\n                        while (waveout.PlaybackState == PlaybackState.Playing && mIsPlaying)\r\n                        {\r\n                            Thread.Sleep(100);\r\n                        }\r\n                    }\r\n\r\n                    else if (fileFullPath.ToLower().EndsWith(\".wav\"))\r\n                    {\r\n                        Thread.Sleep(duration + 100);\r\n                    }\r\n\r\n                    waveout.Stop();\r\n                }\r\n                catch (Exception ex)\r\n                {\r\n                    Logger.Log(Level.Error, \"Error Occur while playing file \" + fileFullPath  + \"    \" + ex.ToString());\r\n                    Thread.Sleep(5000);\r\n                }\r\n                finally\r\n                {\r\n                    outputStream.Close();\r\n                    outputStream.Dispose();\r\n                    waveout.Dispose();\r\n                    waveout.PlaybackStopped -= waveout_PlaybackStopped;\r\n                }\r\n            }\r\n        }",
+    "LastUpdatedDate": "2014-02-15T00:28:43.417-08:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-07-23T05:32:19.51-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudio.MmException: UnspecifiedError calling waveOutOpen",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16284
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Hello Again,\r\nOver the weekend I tried another test case where I ran my service with 2 four second long clips. The service ran fine for almost 22 hours before giving me the same error. So, could it be that the  waveout.Init(outputStream) call could be made certain number of times?\r\nNot sure if this is relevant but thought you guys would be interested to know about it.\r\n",
+      "PostedDate": "2011-07-25T07:27:29.743-07:00",
+      "Id": 41797
+    },
+    {
+      "Message": "Are you using the latest NAudio code? Perhaps you could try it with a different type of callback (e.g. the new WaveOutEvent callback model).",
+      "PostedDate": "2011-07-26T01:35:17.307-07:00",
+      "Id": 41798
+    },
+    {
+      "Message": "Hello Mark,\r\n\r\nThanks a lot for your reply.\r\n\r\nI just got the latest code  and using the NAudio.dll from there. Just to be 100% certain – you want me to use \r\n\r\nIWavePlayer waveout = new WaveOutEvent()\r\n\r\nInstead of \r\n\r\nIWavePlayer waveout = new WaveOut(WaveCallbackInfo.FunctionCallback())\r\n\r\n\r\nIf yes – I have made that change and will update you if the exception happens again\r\n\r\nIF not – could you kindly tell me the change the requires to be made.\r\n\r\nThanks,\r\n\r\nHasib\r\n",
+      "PostedDate": "2011-07-26T06:45:20.117-07:00",
+      "Id": 41799
+    },
+    {
+      "Message": "Yes, that's right. Function callbacks have always been slightly susceptible to strange errors (although I have done some more bugfixing on them for 1.5). WaveOutEvent is a good alternative because it should be able to run in a Windows service since it creates a background thread. ",
+      "PostedDate": "2011-07-26T07:40:18.427-07:00",
+      "Id": 41800
+    },
+    {
+      "Message": "Hello Mark,\r\n\r\nThe same playlist that was crashing after approximately 5 hours is still going strong after 36 hours. So, I would say that you suggestion is working. I will consider my issue as resolved for the time being. \r\n\r\nThanks a lot for your help.\r\n\r\nHasib\r\n",
+      "PostedDate": "2011-07-27T13:11:44.84-07:00",
+      "Id": 41801
+    },
+    {
+      "Message": "glad its working. Did you use WaveOutEvent in the end, or just the bugfixed function callbacks?",
+      "PostedDate": "2011-07-28T02:49:17.393-07:00",
+      "Id": 41802
+    },
+    {
+      "Message": "I just used WaveOutEvent and that seems to be working.",
+      "PostedDate": "2011-07-28T07:00:22.763-07:00",
+      "Id": 41803
+    },
+    {
+      "Message": "Fix is to use WaveOutEvent instead of Function callbacks",
+      "PostedDate": "2012-10-05T15:05:37.447-07:00",
+      "Id": 78748
+    },
+    {
+      "Message": "I have the sam error with WaveOutEvent and have no clue what it was. At the end (month later) I figure it out. I have 4 USB soundcards on one USB hub. I checked with USB Device Tree Viewer and program reported error for soundcard - not enough bandwidth.",
+      "PostedDate": "2014-02-15T00:28:43.417-08:00",
+      "Id": 133650
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1002339",
+    "ThreadId": "433407",
+    "Html": "Hi all,\r<br />\n<br />\nI've been reading through the source and demos and I'm looking for a few things.  I may just be missing them, so if I am can you point me in the right direction?<br />\n<ol>\n<li>ASIO recording with mixer playback.  i.e.  multiple samples played while recording.</li>\n<li>\nDirectX recording... ok, basically the same thing as the ASIO question.  I don't see any DX recording at all.<br />\n</li>\n</ol>\nExcellent API you've developed.\r<br />\n<br />\nThanks,\r<br />\nTony <br />\n",
+    "PostedDate": "2013-02-16T21:48:45.293-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002678",
+    "ThreadId": "433407",
+    "Html": "ASIO recording is a fairly new addition. I usually use the BufferedWaveProvider to playback while recording. However, the ASIO model is quite unique, and it would be nicer if NAudio had the support to let you process the in buffer, and write to the out buffer all within a single callback.\r<br />\n<br />\nDirectX recording isn't done. I mostly recommend people use WaveIn &amp; WaveOut as they are the best tested and most mature parts of the framework. The current DirectSound implementation was contributed by someone else and I have had very little to do with it.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-18T00:33:56.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

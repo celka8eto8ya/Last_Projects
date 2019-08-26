@@ -1,0 +1,96 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 10,
+    "Custom": null,
+    "Description": "Hello\r\n\r\nI have a 24 bits per sample / 192kHz sound board and I am using the Wasapi Loopback Capture method to get data from it.\r\n\r\nWhen I print out the capabilities of the board, it shows 32 bits per sample instead of 24 bits per sample...\r\n\r\n```\r\n        private void button2_Click(object sender, EventArgs e)\r\n        {\r\n            waveIn = new WasapiLoopbackCapture();\r\n            waveIn.DataAvailable += OnDataAvailable;\r\n            waveIn.RecordingStopped += OnRecordingStopped;\r\n            waveIn.StartRecording();\r\n\r\n            Console.WriteLine(waveIn.WaveFormat.BitsPerSample);\r\n            Console.WriteLine(waveIn.WaveFormat.AverageBytesPerSecond);\r\n            Console.WriteLine(waveIn.WaveFormat.Channels);\r\n            Console.WriteLine(waveIn.WaveFormat.SampleRate);\r\n            Console.WriteLine(waveIn.WaveFormat.Encoding);\r\n        }\r\n```\r\n\r\nWhich prints out...\r\n\r\n```\r\n32\r\n1536000\r\n2\r\n192000\r\nExtensible\r\n```\r\n\r\nIf I check the e.Buffer data that the callback delivers, I see that most of the bytes have data indeed, but I was hoping to see 3 bytes with data and then an empty byte (24 bits and a spare byte), but all bytes have data.\r\n\r\nSo, how should I merge those bytes and in which order?\r\n\r\nThe Audio Board specs are:\r\n\r\nRealtek Semiconductor Corp.\r\nAudio driver 6.0.1.5919\r\nDirectX 11.0\r\nALC889A\r\n\r\nThanks!",
+    "LastUpdatedDate": "2014-08-24T10:20:22.997-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-07-14T19:13:41.657-07:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Wrong BitsPerSample with WasapiLoopbackCapture",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16401
+  },
+  "FileAttachments": [
+    {
+      "FileId": 704559,
+      "FileName": "24bitspersample.png",
+      "DownloadUrl": ".\\704559"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "WASAPI loopback capture is capturing the audio format of the Windows mixing engine, which will be IEEE float 32 bit. The bit depth your soundcard is operating at has nothing to do with this - it could be 16 or 24 bit.",
+      "PostedDate": "2013-07-15T06:34:40.73-07:00",
+      "Id": 106044
+    },
+    {
+      "Message": "Hello Mark, thanks for your reply.\n\nThe object names of the WaveFormat object were misleading.\n\nOK, the data I am getting is a float variable. In what order should I merge the 4 bytes to form a float? Little endian or big endian?\n\nRegards",
+      "PostedDate": "2013-07-15T18:36:03.897-07:00",
+      "Id": 106122
+    },
+    {
+      "Message": "This code is working.\n\n```\n                Int32 sample_count = e.BytesRecorded / (waveIn.WaveFormat.BitsPerSample / 8);\n                Single[] data = new Single[sample_count];\n\n                for (int i = 0; i < sample_count; ++i)\n                {\n                    data[i] = BitConverter.ToSingle(e.Buffer, i * 4);\n                }\n```",
+      "PostedDate": "2013-07-15T19:52:20.217-07:00",
+      "Id": 106128
+    },
+    {
+      "Message": "I forgot to mention that data[] contains the left and right channels, make sure to separate them in your application.\n\nThis is a test app that I am working on...\n\nhttp://youtu.be/RhOX0fU3beg",
+      "PostedDate": "2013-07-21T11:28:44.043-07:00",
+      "Id": 106846
+    },
+    {
+      "Message": "nice video :)",
+      "PostedDate": "2013-07-22T03:33:07.477-07:00",
+      "Id": 106893
+    },
+    {
+      "Message": "Linketo,\n\nwhat do you mean by \" ata[] contains the left and right channels, make sure to separate them in your application.\"\n\nwhy do you have to separate them?\nhow would you separate them?",
+      "PostedDate": "2014-02-19T15:30:40.963-08:00",
+      "Id": 134123
+    },
+    {
+      "Message": "the samples are interleaved left, right, left, right. So bytes 0,1,2,3 are left sample, 4,5,6,7 are a right sample, and so on.",
+      "PostedDate": "2014-02-20T00:40:05.767-08:00",
+      "Id": 134166
+    },
+    {
+      "Message": "Yeap, as Mark says the samples come in that way. This is the function I used to sum both channels into one signal.\n\n```\n        /// <summary>\n        /// This is called when audio samples are ready\n        /// </summary>\n        /// <param name=\"sender\"></param>\n        /// <param name=\"e\"></param>\n        void OnDataAvailable(object sender, WaveInEventArgs e)\n        {\n            Int32 sample_count = e.BytesRecorded / (waveIn.WaveFormat.BitsPerSample / 8);\n            Single[] data = new Single[sample_count];\n\n            for (int i = 0; i < sample_count; ++i)\n            {\n                data[i] = BitConverter.ToSingle(e.Buffer, i * 4);\n            }\n\n            int j = 0;\n            Audio_Samples = new Double[sample_count / 2];\n            for (int sample = 0; sample < data.Length; sample += 2)\n            {\n                Audio_Samples[j] = (Double)data[sample];\n                Audio_Samples[j] += (Double)data[sample + 1];\n                ++j;\n            }\n\n            Data_Available = true;\n        }\n```",
+      "PostedDate": "2014-02-20T17:37:18.3-08:00",
+      "Id": 134268
+    },
+    {
+      "Message": "Does your fft have a lot of noisy low  frequencies ?",
+      "PostedDate": "2014-02-23T11:22:07.763-08:00",
+      "Id": 134512
+    },
+    {
+      "Message": "Yeah, but those values are completely expected.",
+      "PostedDate": "2014-08-24T10:20:22.997-07:00",
+      "Id": 156851
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1122265",
+    "ThreadId": "468226",
+    "Html": "Could NAudio be used to convert a radio-stream to PCM samples, in real-time?<br />\nI've seen documentation and questions regarding conversion of local audio-files, but did not find reference to <em>real-time</em> conversion of an <em>online</em> (radio) stream.<br />\n<br />\nI'm actually interested in calculating audio-signal's power (e.g. in dB or other volume-level units) over the last <strong>X</strong> seconds.<br />\n<br />\n<em>My current interest is in a ShoutCAST/MP3 stream.</em><br />\n<br />\nYour assistance would be much obliged.<br />\n",
+    "PostedDate": "2013-11-12T02:07:34.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1122440",
+    "ThreadId": "468226",
+    "Html": "hi, have a read of my blog post here about streaming MP3: <a href=\"http://mark-dot-net.blogspot.co.uk/2011/05/how-to-play-back-streaming-mp3-using.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.co.uk/2011/05/how-to-play-back-streaming-mp3-using.html</a>\r<br />\nNAudio does not decode Shoutcast at the moment.\r<br />\nTo calculate power, you'd examine the PCM sample values after decompressing, and perform your own calculations.<br />\n",
+    "PostedDate": "2013-11-12T09:32:22.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

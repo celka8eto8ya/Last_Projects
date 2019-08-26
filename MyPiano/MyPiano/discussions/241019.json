@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "546191",
+    "ThreadId": "241019",
+    "Html": "\r\n<div id=\"x_ctl00_ctl00_MasterContent_Content_PostRepeater_ctl00_BodyDiv\">\r\n<p>Hello. I just tried to use following method to generate sound wave in different frequencies.</p>\r\n<p style=\"padding-left:60px\"><span style=\"color:#0000ff\">class SineWaveOscillator : WaveProvider16</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp; {</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; double phaseAngle;</span><br>\r\n<br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public SineWaveOscillator(int sampleRate) :</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; base(sampleRate, 1)</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br>\r\n<br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public double Frequency { set; get; }</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public short Amplitude { set; get; }</span><br>\r\n<br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public override int Read(short[] buffer, int offset,</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int sampleCount)</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span><br>\r\n<br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (int index = 0; index &lt; sampleCount; index&#43;&#43;)</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; buffer[offset &#43; index] =</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (short)(Amplitude * Math.Sin(phaseAngle));</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; phaseAngle &#43;=</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2 * Math.PI * Frequency / WaveFormat.SampleRate;</span><br>\r\n<br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (phaseAngle &gt; 2 * Math.PI)</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; phaseAngle -= 2 * Math.PI;</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return sampleCount;</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp; }</span></p>\r\n<p style=\"padding-left:90px\"><span style=\"color:#0000ff\">public void soundPlay()</span><br>\r\n<span style=\"color:#0000ff\">{</span><br>\r\n<span style=\"color:#0000ff\">WaveOut w = new WaveOut();</span><br>\r\n<span style=\"color:#0000ff\">SineWaveOscillator s = new SineWaveOscillator(44100);</span><br>\r\n<span style=\"color:#0000ff\">s.frequency=1000;</span><br>\r\n<span style=\"color:#0000ff\">s.amplitude=8192;</span><br>\r\n<span style=\"color:#0000ff\">w.Init(s);</span><br>\r\n<span style=\"color:#0000ff\">w.Play();</span><br>\r\n<span style=\"color:#0000ff\">}</span></p>\r\n<p style=\"padding-left:60px\"><span style=\"color:#0000ff\"><br>\r\n</span></p>\r\n<p>It seems OK but I still have a problem. How can I output this wave to only one channel, left channel or right channel?</p>\r\n<p>Thank you a lot.</p>\r\n</div>\r\n",
+    "PostedDate": "2011-01-09T04:08:08.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546638",
+    "ThreadId": "241019",
+    "Html": "\r\n<p>make it a stereo WaveProvider and every other sample should be zero (samples go left channel followed by right channel)</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-10T05:44:57.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546771",
+    "ThreadId": "241019",
+    "Html": "\r\n<p>You mean sample in buffer[] is like [left, right, left, right, left...]?</p>\r\n<p>I correct the program like following, but the sound turns to be <span>not constant, like dudududududu...Why?<br>\r\n</span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"color:#0000ff\">for (int index = 0; index &lt; sampleCount; index&#43;=2)</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; buffer[offset &#43; index] =</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (short)(Amplitude * Math.Sin(phaseAngle));</span></p>\r\n<p><span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; buffer[offset &#43; index&#43;1] =</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (short)(Amplitude * Math.Sin(phaseAngle));</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; phaseAngle &#43;=</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2 * Math.PI * Frequency / WaveFormat.SampleRate;</span><br>\r\n<br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (phaseAngle &gt; 2 * Math.PI)</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; phaseAngle -= 2 * Math.PI;</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>\r\n",
+    "PostedDate": "2011-01-10T08:15:49.933-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546772",
+    "ThreadId": "241019",
+    "Html": "\r\n<p>you also need to make the output stereo:</p>\r\n<p><span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public SineWaveOscillator(int sampleRate) :</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; base(sampleRate, 2)</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span><br>\r\n<span style=\"color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>\r\n",
+    "PostedDate": "2011-01-10T08:16:53.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546781",
+    "ThreadId": "241019",
+    "Html": "\r\n<p>it has already been changed to 2 but it sounds like dududududu...</p>\r\n",
+    "PostedDate": "2011-01-10T08:24:20.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546787",
+    "ThreadId": "241019",
+    "Html": "\r\n<p>strange. I would output a bit of it to a WAV file and examine it with a WAV reader to see what is going on.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-10T08:31:01.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546788",
+    "ThreadId": "241019",
+    "Html": "\r\n<p>It's OK. My fault. Some old method was not deleted.</p>\r\n<p>solved. Thank you a lot.</p>\r\n",
+    "PostedDate": "2011-01-10T08:33:29.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

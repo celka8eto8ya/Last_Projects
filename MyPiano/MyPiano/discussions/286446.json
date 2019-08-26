@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "726529",
+    "ThreadId": "286446",
+    "Html": "<p>Hello.</p>\n<p>&nbsp;</p>\n<p>I've been searching for the better part of a week for this now and I see nothing, anywhere, showing me if and/or how I can do this using NAudio.</p>\n<p>I guess my question would be: Can it be done? If so, can someone point me in the right direction?</p>\n<p>I've searched Google for hours, CodePlex, old blogs, et cetera... nothing. It is of course ENTIRELY possible I've missed something somewhere or my search terms have just not been the best, but so many hours of looking.</p>\n<p>Also, there is a problem with the recording example (which I tried to use to detect if sound is playing) given on a blog and on this forum. When you fire up the example, it errors out with a message about the wav already being used, so it cannot access it.  Is that example just extremely old or is something else wrong? The sample program works fine, but building it and running it myself produces that problem.</p>\n<p>Anyway, thanks in advance for any insight.</p>",
+    "PostedDate": "2012-01-17T09:32:27.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "726531",
+    "ThreadId": "286446",
+    "Html": "<p>NAudio comes with a project called NAudioDemo, that shows how to implement a peak meter during playback, as well as how to record. Have a play with the demo application, and then browse the source code for NAudioDemo (available here), to see how it is implemented.</p>",
+    "PostedDate": "2012-01-17T09:36:33.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "726542",
+    "ThreadId": "286446",
+    "Html": "<p>Thanks for a quick reply.</p>\r\n<p>I will give it another look (can't compile any of it, it gives tons of errors VS 2010) and reply back if I find a solution.</p>",
+    "PostedDate": "2012-01-17T09:48:06.94-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "726569",
+    "ThreadId": "286446",
+    "Html": "<p>Okay... found what I needed.</p>\r\n<p>Any hints on how to make this work globally instead of just with a file? I'd like to see the peak meter for every sound that plays... I am thinking just setting up a record session for the system's wave device or stereo mix device?</p>\r\n<p>Onward!</p>",
+    "PostedDate": "2012-01-17T10:18:14.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "726618",
+    "ThreadId": "286446",
+    "Html": "<p>A good place to look for peak metering on a recording stream is my voicerecorder.codeplex.com app. It's WPF, but the principle is essentially the same.</p>",
+    "PostedDate": "2012-01-17T11:34:38.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "832175",
+    "ThreadId": "286446",
+    "Html": "<p>Hello,</p>\r\n<p>I have create my own application and i have to add volume meter in my application when an audio is playing, i used ur code but it was not working... Can u please help me where are u getting value for the&nbsp;amplitude????</p>\r\n<p>Thanks in advance...</p>",
+    "PostedDate": "2012-05-04T06:03:37.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "833315",
+    "ThreadId": "286446",
+    "Html": "<p>that project uses a MeteringWaveProvider that examines the samples as they come through the Read method and raises events with peak values</p>",
+    "PostedDate": "2012-05-08T01:46:21.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

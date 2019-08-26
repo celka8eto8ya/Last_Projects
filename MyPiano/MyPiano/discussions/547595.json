@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1253042",
+    "ThreadId": "547595",
+    "Html": "I am attempting to hear a mixed stream using WaveMixerStream32.\r<br />\nWhen the form loads it creates the mixer<br />\n<pre><code>        private void Messenger_Load(object sender, EventArgs e)\n        {\n            comboBoxCodecs.SelectedIndex = 2;\n            comboBoxCodecs.Enabled = false;\n            selectedCodec = ((CodecComboItem)comboBoxCodecs.SelectedItem).Codec;\n            mixer = new WaveMixerStream32();\n            mixer.AutoStop = false;\n            waveOut = new WaveOut();\n            waveOut.Init(mixer);\n            waveOut.Play();\n            ThreadPool.QueueUserWorkItem(StartRecieve, null);\n        }</code></pre>\n\nWhen Audio is received...<br />\n<pre><code>        if (msgReceived.messageContents != null)\n        {\n        byte[] decoded = new byte[1024];\n        decoded = selectedCodec.Decode(msgReceived.messageContents, 0, msgReceived.messageContents.Length);\n        Stream audioStream = new MemoryStream(decoded);\n        RawSourceWaveStream rawStream = new RawSourceWaveStream(audioStream, selectedCodec.RecordFormat);\n        WaveChannel32 rawStream32 = new WaveChannel32(rawStream);\n        mixer.AddInputStream(rawStream32);\n        }</code></pre>\n\nWhat Am I doing wrong? All I hear is silence. I am positive sound is being received as I can play without using a mixer; and decoded contains pcm values.<br />\n",
+    "PostedDate": "2014-06-04T14:46:15.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1256942",
+    "ThreadId": "547595",
+    "Html": "can you try with MixingSampleProvider instead. ( use rawStream.ToSampleProvider as the input)\r<br />\nWaveMixerStream32 is quite an old class and I'm not sure how well it works if you try to add inputs on the fly.<br />\n",
+    "PostedDate": "2014-06-17T01:42:31.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1266059",
+    "ThreadId": "547595",
+    "Html": "<pre><code>byte[] decoded = new byte[4096];\ndecoded = selectedCodec.Decode(msgReceived.messageContents, 0, msgReceived.messageContents.Length);\nStream audioStream = new MemoryStream(decoded);\nRawSourceWaveStream rawStream = new RawSourceWaveStream(audioStream, selectedCodec.RecordFormat);\nrawStream.Position = 0;\nMSMixer.AddMixerInput(rawStream.ToSampleProvider());\n//WaveChannel32 rawStream32 = new WaveChannel32(rawStream);\n//rawStream32.Position = 0;\n//MSMixer.AddMixerInput(rawStream32);</code></pre>\n\nCurrently receiving an argument exception when using rawStream.ToSampleProvider()<br />\n&quot;All mixer inputs must have the same WaveFormat&quot;<br />\n<br />\nNot positive what you want me to do here, I tried the code commented out, which worked, but the audio was incredibly choppy; After some time I received an error saying &quot;to many mixer inputs&quot;.<br />\n<br />\nThoughts?<br />\n-Ryan<br />\n",
+    "PostedDate": "2014-07-15T15:50:11.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273557",
+    "ThreadId": "547595",
+    "Html": "if you are receiving small blocks of audio on the fly, then I would recommend using a BufferedWaveProvider rather than a RawSourceWaveStream.\r<br />\nThe all mixer inputs must have the same waveformat means what it says. How did you set up your mixer in the first place?<br />\n",
+    "PostedDate": "2014-07-17T07:26:55.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1274974",
+    "ThreadId": "547595",
+    "Html": "Okay I follow the waveformat issue. Here is how the mixer is setup.<br />\n<pre><code>MSMixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(selectedCodec.RecordFormat.SampleRate, 1));\nMSMixer.ReadFully = true;\nwaveOut = new WaveOut();\nwaveOut.Init(MSMixer);\nwaveOut.Play();</code></pre>\n\nI believe im missing one last thing; How to turn the mixed ieee float back to the recorded format? All Im hearing is blipping, which I assume, represents the time in between packets.\r<br />\n<br />\nHere are the newest changes. <br />\n<pre><code>byte[] decoded = new byte[4096];\ndecoded = selectedCodec.Decode(msgReceived.messageContents, 0, msgReceived.messageContents.Length);\nBufferedWaveProvider bufferedWave = new BufferedWaveProvider(WaveFormat.CreateIeeeFloatWaveFormat(selectedCodec.RecordFormat.SampleRate, 1));\nbufferedWave.AddSamples(decoded, 0, decoded.Length);\nMSMixer.AddMixerInput(bufferedWave);</code></pre>\n\nI also tried ToSampleProvider as well however still heard only blipping.<br />\n<pre><code>MSMixer.AddMixerInput(bufferedWave.ToSampleProvider());</code></pre>\n\nThanks for your help by the way, everything here is really cool.\r<br />\n-Ryan<br />\n",
+    "PostedDate": "2014-07-21T17:46:43.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278434",
+    "ThreadId": "547595",
+    "Html": "Only add the buffered wave provider to your mixer once (assuming you have one continuous stream of incoming audio). Then decode all audio and write it into the same bufferedWaveProvider. \r<br />\nAlso, I suspect your selectedCodec is not decoding to IEEE float. Set the BufferedWaveprovider up with the exact output format of the decoder, and then turn your buffered wave provider into a sampleProvider with ToSampleProvider before adding it as a mixer input.<br />\n",
+    "PostedDate": "2014-07-28T09:27:51.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2012-10-27T00:28:57.903-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Please make the PlaybackStopped event to be a reliable way to determine when plaback is over.",
+    "LastUpdatedDate": "2012-10-27T00:28:57.903-07:00",
+    "PlannedForRelease": "NAudio 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-10-05T13:43:46.543-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "PlaybackStopped event not raised when playing mp3 is finished",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 7,
+    "Id": 10726
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "For PlaybackStopped to work you need the WaveProvider to actually stop providing data. If you are using WaveChannel32 then it will emit zeroes never-endingly (unless you set PadWithZeroes to false).",
+      "PostedDate": "2010-11-07T12:38:06.85-08:00",
+      "Id": 41709
+    },
+    {
+      "Message": "NAudio 1.5 will raise PlaybackStopped for all output models. However, if you pass in a never-ending stream, it will never end (no surprises there).\r\nIt will also do its best to make the PlaybackStopped event safe to use by calling it on the GUI thread. See my blog post for more details:\r\nhttp://mark-dot-net.blogspot.com/2011/05/naudio-and-playbackstopped-problem.html",
+      "PostedDate": "2011-05-27T13:23:11.887-07:00",
+      "Id": 41710
+    }
+  ]
+}

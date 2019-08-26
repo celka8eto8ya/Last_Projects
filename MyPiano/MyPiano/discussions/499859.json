@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1168458",
+    "ThreadId": "499859",
+    "Html": "I'd like to get all available audio encoders in MF as a name/description of the codec.<br />\nHow does one enumerate all available audio encoders in NAudio?<br />\n<br />\nI tried the code below but ToString() isn't overridden, can I use GetGUID() to get the string? Or is this the wrong method?<br />\n<pre><code>                foreach(IMFActivate ia in MediaFoundationApi.EnumerateTransforms(MediaFoundationTransformCategories.AudioEncoder))\n                {\n                     _listEncoders.Add(ia.ToString());\n                    _listEncoders.Add(ia.GetGUID(???));\n                }</code></pre>\n\n",
+    "PostedDate": "2014-01-15T03:13:59.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1168535",
+    "ThreadId": "499859",
+    "Html": "have a look at the <a href=\"https://naudio.codeplex.com/SourceControl/latest#NAudioWpfDemo/EnumMediaFoundationTransforms/EnumMftViewModel.cs\" rel=\"nofollow\">code in the WPF demo</a> - it shows getting information on all encoders, decoders and transforms.<br />\n",
+    "PostedDate": "2014-01-15T03:42:49.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1168589",
+    "ThreadId": "499859",
+    "Html": ":facepalm: forgot about the examples, I really need to fix the NAudio source compile errors. Thanks Mark.<br />\n",
+    "PostedDate": "2014-01-15T04:01:14.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1496661",
+    "ThreadId": "663052",
+    "Html": "Hi All,\r<br />\n<br />\nPlease help me how to do fastforwarding and rewind using naudio.<br />\n",
+    "PostedDate": "2017-05-23T00:41:18.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496707",
+    "ThreadId": "663052",
+    "Html": "You can do that with adjustable resampling. E.g. use WDLResamplingSampleProvider and modify the Output SampleRate while playing.<br />\n",
+    "PostedDate": "2017-05-24T12:02:42.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Please include IPolicyConfig.cs and PolicyConfigClient.cs to get support for read & write the default device format of an MMDevice.\r\nIn shared mode this format will be use to capture the data.\r\nSo it can checked & set programmaticaly:\r\n                    var device = (MMDevice)comboWasapiDevices.SelectedItem;\r\n\r\n                   var polycfgclient = new PolicyConfigClient();\r\n                    WaveFormatExtensible fmt = polycfgclient.GetDeviceFormat(device.ID);\r\n                    int RequiredBitsPerSample = 24;\r\n                    int RequiredSampleRate = 48000;\r\n                    if ((fmt.BitsPerSample != RequiredBitsPerSample) || (fmt.SampleRate != RequiredSampleRate))\r\n                    {\r\n                        fmt = new WaveFormatExtensible(RequiredSampleRate, RequiredBitsPerSample, fmt.Channels);\r\n                        polycfgclient.SetDeviceFormat(device.ID, fmt, fmt);\r\n                    }\r\n-----------------\r\nIPolicyConfig.cs\r\n-----------------\r\nusing System;\r\nusing System.Runtime.InteropServices;\r\nnamespace NAudio.CoreAudioApi.Interfaces\r\n{\r\n    [Guid(\"f8679f50-850a-41cf-9c72-430f290290c8\"),\r\n    InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]\r\n    internal interface IPolicyConfig\r\n    {\r\n        [PreserveSig]\r\n        int GetMixFormat(string pszDeviceName, out IntPtr ppFormat);\r\n\r\n        [PreserveSig]\r\n        int GetDeviceFormat(string pszDeviceName, int bDefault, out IntPtr ppFormat);\r\n\r\n        [PreserveSig]\r\n        int ResetDeviceFormat(string pszDeviceName);\r\n\r\n        [PreserveSig]\r\n        int SetDeviceFormat(string pszDeviceName, IntPtr pEndpointFormat, IntPtr MixFormat);\r\n\r\n        [PreserveSig]\r\n        int GetProcessingPeriod(string pszDeviceName, bool bDefault, IntPtr pmftDefaultPeriod, IntPtr pmftMinimumPeriod);\r\n\r\n        [PreserveSig]\r\n        int SetProcessingPeriod(string pszDeviceName, IntPtr pmftPeriod);\r\n\r\n        [PreserveSig]\r\n        int GetShareMode(string pszDeviceName, IntPtr pMode);\r\n\r\n        [PreserveSig]\r\n        int SetShareMode(string pszDeviceName, IntPtr mode);\r\n\r\n        [PreserveSig]\r\n        int GetPropertyValue(string pszDeviceName, bool bFxStore, IntPtr key, IntPtr pv);\r\n\r\n        [PreserveSig]\r\n        int SetPropertyValue(string pszDeviceName, bool bFxStore, IntPtr key, IntPtr pv);\r\n\r\n        [PreserveSig]\r\n        int SetDefaultEndpoint(string pszDeviceName, Role role);\r\n\r\n        [PreserveSig]\r\n        int SetEndpointVisibility(string pszDeviceName, bool bVisible);\r\n    }\r\n}\r\n\r\n-----------------\r\nPolicyConfigClient.cs \r\n-----------------\r\nusing System;\r\nusing System.Runtime.InteropServices;\r\nusing NAudio.CoreAudioApi;\r\nusing NAudio.CoreAudioApi.Interfaces;\r\nusing NAudio.Wave;\r\n\r\n\r\nnamespace NAudio.CoreAudioApi\r\n{\r\n    [ComImport, Guid(\"870AF99C-171D-4F9E-AF0D-E63DF40C2BC9\")]\r\n    internal class _PolicyConfigClient\r\n    {\r\n    }\r\n\r\n    public class PolicyConfigClient\r\n    {\r\n        private readonly IPolicyConfig _PolicyConfig = new _PolicyConfigClient() as IPolicyConfig;\r\n\r\n        public void SetDefaultEndpoint(string devID, Role eRole)\r\n        {\r\n            Marshal.ThrowExceptionForHR(_PolicyConfig.SetDefaultEndpoint(devID, eRole));\r\n        }\r\n\r\n         [DllImport(\"ole32.dll\")]\r\n        public static extern void CoTaskMemFree(IntPtr ptr);\r\n\r\n        public WaveFormatExtensible GetDeviceFormat(string devID)\r\n        {\r\n            WaveFormatExtensible result=null;\r\n  \r\n                IntPtr ppFormat = IntPtr.Zero;\r\n                try\r\n                {   //bdefault: \r\n                    //if bdefault!=0 get the Default Format (see  Button restore Default in Control panel), mostly 44100 kHz, 16 bit \r\n                    Marshal.ThrowExceptionForHR(_PolicyConfig.GetDeviceFormat(devID, 0, out  ppFormat));\r\n                    result = (WaveFormatExtensible)Marshal.PtrToStructure(ppFormat, typeof(WaveFormatExtensible));\r\n                }\r\n                finally\r\n                {\r\n                    CoTaskMemFree(ppFormat);\r\n                }\r\n            return result;\r\n        }\r\n\r\n        public void SetDeviceFormat(string devID, WaveFormatExtensible EndpointFormat, WaveFormatExtensible MixFormat)\r\n        {\r\n            IntPtr pEndpointFormat = IntPtr.Zero;\r\n            IntPtr pMixFormat = IntPtr.Zero;\r\n            try\r\n            {\r\n                pEndpointFormat = Marshal.AllocHGlobal(Marshal.SizeOf(EndpointFormat));\r\n                Marshal.StructureToPtr(EndpointFormat, pEndpointFormat, false);\r\n                pMixFormat = Marshal.AllocHGlobal(Marshal.SizeOf(MixFormat));\r\n                Marshal.StructureToPtr(MixFormat, pMixFormat, false);\r\n                Marshal.ThrowExceptionForHR(_PolicyConfig.SetDeviceFormat(devID, pEndpointFormat, pMixFormat));\r\n            }\r\n            finally\r\n            {\r\n                Marshal.FreeHGlobal(pEndpointFormat);\r\n                Marshal.FreeHGlobal(pMixFormat);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "LastUpdatedDate": "2013-10-04T06:42:43.39-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-10-04T06:16:51.763-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WASAPI:  GetDeviceFormat, SetDeviceFormat",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16410
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

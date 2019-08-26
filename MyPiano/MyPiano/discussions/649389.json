@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1457395",
+    "ThreadId": "649389",
+    "Html": "Before to try develop a voice chat with your sample (Network Chat), I decided to test it before.\r<br />\n<br />\nOn IPAdress, if I put 127.0.0.1 or my own IP, it works fine. But if I put a IP from any computer. It sends me back: &quot;The requested address is not valid in its context&quot;.\r<br />\n<br />\nNow the question: The sample code is ready for connect with another computer? Or only the Server IP?<br />\n",
+    "PostedDate": "2015-12-28T18:27:33-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457765",
+    "ThreadId": "649389",
+    "Html": "Ah yes, if you look in the <code>NetworkChatPanel</code> at the <code>Connect</code> method, you'll see the following line:<br />\n<pre><code>udpListener.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);</code></pre>\n\nThis allows us to connect to 127.0.0.1 for test purposes, but possibly also stops us connecting to another one. Try commenting it out and seeing what happens.<br />\n",
+    "PostedDate": "2016-01-02T13:58:03.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1458082",
+    "ThreadId": "649389",
+    "Html": "I commented this line and the same happens.<br />\n",
+    "PostedDate": "2016-01-05T09:54:31.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

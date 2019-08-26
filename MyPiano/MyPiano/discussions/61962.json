@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "210340",
+    "ThreadId": "61962",
+    "Html": "<p>hi~ i wanna convert G729 wave file to PCM file, but it failed.<br>my code:<br><span style=\"font-size:x-small;color:#008000\"><span style=\"font-size:x-small;color:#008000\">NAudio.Wave.WaveFileReader reader1 = new WaveFileReader(webpath);&nbsp;&nbsp;&nbsp;&nbsp; // where webpath is the link of file in G729 (compression code = 0x0083)<br><br>after ran it, error of&nbsp;\r\n<p><span> invalid waveformat structure received as below:<br></span>\r\n<h1>Server Error in '/Chart' Application. \r\n<hr size=1>\r\n</h1>\r\n<h2><em>Invalid WaveFormat Structure</em></h2>\r\n<span style=\"font-family:Arial, Helvetica, Geneva, SunSans-Regular, sans-serif\"><strong>Description: </strong>An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code. <br><br><strong>Exception Details: </strong>System.ApplicationException: Invalid WaveFormat Structure<br><br><strong>Source Error:</strong> <br><br></span></p>\r\n</span></span></p>\r\n<table border=0 width=\"100%\" bgcolor=\"#ffffcc\">\r\n<tbody>\r\n<tr>\r\n<td><code>\r\n<pre>Line 28:          *******file.***********************************************\r\nLine 29:          ***********************************************************/\r\n<span style=\"color:#ff0000\">Line 30:            NAudio.Wave.WaveFileReader reader1 = new WaveFileReader(webpath);\r\n</span>Line 31:            NAudio.Wave.WaveStream convertedStream = WaveFormatConversionStream.CreatePcmStream(reader1);\r\nLine 32:            WaveFileWriter.CreateWaveFile(output, convertedStream);</pre>\r\n</code></td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p><span style=\"color:#000000\">&nbsp;</span><br><span style=\"color:#444444\">why would it happen and is there any method to slove this??<br>thx</span><br><br></p>",
+    "PostedDate": "2009-07-09T03:02:30.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "210630",
+    "ThreadId": "61962",
+    "Html": "<p>I don't think that format is supported. Have you tried debugging with a copy of the NAudio code to see where the actual error is generated? There is a large repository available for you to work with to pin point the error you are looking at; i.e. which line in NAudio is actually throwing the exception rather than what your implementation debug message is generating.</p>\r\n<p>Cheers,<br>OpenSebJ</p>",
+    "PostedDate": "2009-07-09T16:20:26.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

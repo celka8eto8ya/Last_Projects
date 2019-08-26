@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1259012",
+    "ThreadId": "549450",
+    "Html": "You can save audio that is being recorded by the microphone on its input line or in these formats directly without having to save them as wav and then convertilos. Any suggestions.<br />\n",
+    "PostedDate": "2014-06-23T12:01:47.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260962",
+    "ThreadId": "549450",
+    "Html": "yes, this can be done, but it is a bit more tricky to implement correctly as you have to pull audio through the codec at the right speed according to how much is available. NAudio does let you work at a lower level with MFTs or ACM codecs. See the Network Chat codec for an example of some encoding on the fly. For MP3, one simple technique is to use LAME.exe with the input coming from stdin.<br />\n",
+    "PostedDate": "2014-06-29T15:26:15.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

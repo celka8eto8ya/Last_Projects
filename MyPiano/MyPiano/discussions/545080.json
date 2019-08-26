@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1244326",
+    "ThreadId": "545080",
+    "Html": "I've got a very simple script that opens up a mic in 8khz mono and plays it back live using the default wave out device. The live playback starts off with a 100ms delay which gradually increases until the bufferedwaveprovider hits its limit at 5 seconds and starts chopping off the sound. I've done some digging and it seems that the mic is returning around 8.7khz instead of 8khz - it's about 9% out. The same goes if it's stereo or 11khz or 44khz it is always returning around 9% more samples than i've asked it to. Any ideas on whats going on here? Other mics are working fine. Is there a way to tell naudio to drop extra bytes? I'm thinking of writing some code to work out how many bytes should have arrived based on the waveformat and the time since recording but i'm hoping there is something better i can do about it... Thanks!<br />\n",
+    "PostedDate": "2014-05-12T05:26:09.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244548",
+    "ThreadId": "545080",
+    "Html": "are you making sure you only use BytesRecorded from the record buffer? It may not be full<br />\n",
+    "PostedDate": "2014-05-12T13:19:25.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244621",
+    "ThreadId": "545080",
+    "Html": "Yeah i'm using BytesRecorded<br />\n",
+    "PostedDate": "2014-05-12T17:36:16.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244636",
+    "ThreadId": "545080",
+    "Html": "This is a code snippet and a debug log of bytes recorded against time. In about 24 seconds there is about 5 seconds of drift (stereo 8khz).  I've tried updating the drivers - no change. My code works fine with every other mic i've got, it's just this one that is doing this... :(<br />\n<pre><code>WaveOutProvider.AddSamples(e.Buffer, 0, e.BytesRecorded);\ndouble s = (DateTime.Now - d).TotalSeconds;\nl += e.BytesRecorded;\nDebug.WriteLine(l + &quot; bytes in &quot; + s + &quot; seconds, should be &quot; + RecordingFormat.AverageBytesPerSecond * s);\n\n</code></pre>\n\n6400 bytes in 0 seconds, should be 0<br />\n12800 bytes in 0.1899942 seconds, should be 6079.8144<br />\n19200 bytes in 0.3699188 seconds, should be 11837.4016<br />\n25600 bytes in 0.5507787 seconds, should be 17624.9184<br />\n32000 bytes in 0.7398712 seconds, should be 23675.8784<br />\n38400 bytes in 0.9205609 seconds, should be 29457.9488<br />\n44800 bytes in 1.1098386 seconds, should be 35514.8352<br />\n51200 bytes in 1.2898699 seconds, should be 41275.8368<br />\n57600 bytes in 1.4698369 seconds, should be 47034.7808<br />\n64000 bytes in 1.6598577 seconds, should be 53115.4464<br />\n70400 bytes in 1.8396003 seconds, should be 58867.2096<br />\n76800 bytes in 2.0209052 seconds, should be 64668.9664<br />\n83200 bytes in 2.2095396 seconds, should be 70705.2672<br />\n89600 bytes in 2.3901385 seconds, should be 76484.432<br />\n96000 bytes in 2.5798551 seconds, should be 82555.3632<br />\n102400 bytes in 2.7596933 seconds, should be 88310.1856<br />\n108800 bytes in 2.9402036 seconds, should be 94086.5152<br />\n115200 bytes in 3.1311376 seconds, should be 100196.4032<br />\n121600 bytes in 3.3097883 seconds, should be 105913.2256<br />\n128000 bytes in 3.490824 seconds, should be 111706.368<br />\n134400 bytes in 3.6878024 seconds, should be 118009.6768<br />\n140800 bytes in 3.8694716 seconds, should be 123823.0912<br />\n147200 bytes in 4.0512218 seconds, should be 129639.0976<br />\n153600 bytes in 4.2397046 seconds, should be 135670.5472<br />\n160000 bytes in 4.4195177 seconds, should be 141424.5664<br />\n166400 bytes in 4.6099075 seconds, should be 147517.04<br />\n172800 bytes in 4.7897568 seconds, should be 153272.2176<br />\n179200 bytes in 4.9694643 seconds, should be 159022.8576<br />\n185600 bytes in 5.165522 seconds, should be 165296.704<br />\n192000 bytes in 5.3504647 seconds, should be 171214.8704<br />\n198400 bytes in 5.5298852 seconds, should be 176956.3264<br />\n204800 bytes in 5.7198466 seconds, should be 183035.0912<br />\n211200 bytes in 5.8997902 seconds, should be 188793.2864<br />\n217600 bytes in 6.095821 seconds, should be 195066.272<br />\n224000 bytes in 6.2696751 seconds, should be 200629.6032<br />\n230400 bytes in 6.449901 seconds, should be 206396.832<br />\n236800 bytes in 6.6398729 seconds, should be 212475.9328<br />\n243200 bytes in 6.8196846 seconds, should be 218229.9072<br />\n249600 bytes in 6.9998903 seconds, should be 223996.4896<br />\n256000 bytes in 7.1897871 seconds, should be 230073.1872<br />\n262400 bytes in 7.3700361 seconds, should be 235841.1552<br />\n268800 bytes in 7.5606351 seconds, should be 241940.3232<br />\n275200 bytes in 7.7398071 seconds, should be 247673.8272<br />\n281600 bytes in 7.9198517 seconds, should be 253435.2544<br />\n288000 bytes in 8.1093336 seconds, should be 259498.6752<br />\n294400 bytes in 8.2904094 seconds, should be 265293.1008<br />\n300800 bytes in 8.4694794 seconds, should be 271023.3408<br />\n307200 bytes in 8.6598484 seconds, should be 277115.1488<br />\n313600 bytes in 8.8397238 seconds, should be 282871.1616<br />\n320000 bytes in 9.0208821 seconds, should be 288668.2272<br />\n326400 bytes in 9.2102379 seconds, should be 294727.6128<br />\n332800 bytes in 9.3897564 seconds, should be 300472.2048<br />\n339200 bytes in 9.5798372 seconds, should be 306554.7904<br />\n345600 bytes in 9.760284 seconds, should be 312329.088<br />\n352000 bytes in 9.9392159 seconds, should be 318054.9088<br />\n358400 bytes in 10.1298321 seconds, should be 324154.6272<br />\n364800 bytes in 10.3092271 seconds, should be 329895.2672<br />\n371200 bytes in 10.4902509 seconds, should be 335688.0288<br />\n377600 bytes in 10.6803177 seconds, should be 341770.1664<br />\n384000 bytes in 10.8598256 seconds, should be 347514.4192<br />\n390400 bytes in 11.0503002 seconds, should be 353609.6064<br />\n396800 bytes in 11.2301473 seconds, should be 359364.7136<br />\n403200 bytes in 11.4099873 seconds, should be 365119.5936<br />\n409600 bytes in 11.5998191 seconds, should be 371194.2112<br />\n416000 bytes in 11.779818 seconds, should be 376954.176<br />\n422400 bytes in 11.9608183 seconds, should be 382746.1856<br />\n428800 bytes in 12.1497941 seconds, should be 388793.4112<br />\n435200 bytes in 12.3293626 seconds, should be 394539.6032<br />\n441600 bytes in 12.5191871 seconds, should be 400613.9872<br />\n448000 bytes in 12.699736 seconds, should be 406391.552<br />\n454400 bytes in 12.8798323 seconds, should be 412154.6336<br />\n460800 bytes in 13.0695828 seconds, should be 418226.6496<br />\n467200 bytes in 13.249805 seconds, should be 423993.76<br />\n473600 bytes in 13.4307711 seconds, should be 429784.6752<br />\n480000 bytes in 13.6203873 seconds, should be 435852.3936<br />\n486400 bytes in 13.800538 seconds, should be 441617.216<br />\n492800 bytes in 13.9956524 seconds, should be 447860.8768<br />\n499200 bytes in 14.1796563 seconds, should be 453749.0016<br />\n505600 bytes in 14.3598805 seconds, should be 459516.176<br />\n512000 bytes in 14.5494961 seconds, should be 465583.8752<br />\n518400 bytes in 14.7292077 seconds, should be 471334.6464<br />\n524800 bytes in 14.9102068 seconds, should be 477126.6176<br />\n531200 bytes in 15.0991844 seconds, should be 483173.9008<br />\n537600 bytes in 15.279711 seconds, should be 488950.752<br />\n544000 bytes in 15.4704074 seconds, should be 495053.0368<br />\n550400 bytes in 15.6498545 seconds, should be 500795.344<br />\n556800 bytes in 15.8299593 seconds, should be 506558.6976<br />\n563200 bytes in 16.0200381 seconds, should be 512641.2192<br />\n569600 bytes in 16.199943 seconds, should be 518398.176<br />\n576000 bytes in 16.3798931 seconds, should be 524156.5792<br />\n582400 bytes in 16.5694744 seconds, should be 530223.1808<br />\n588800 bytes in 16.7497735 seconds, should be 535992.752<br />\n595200 bytes in 16.9405927 seconds, should be 542098.9664<br />\n601600 bytes in 17.1276657 seconds, should be 548085.3024<br />\n608000 bytes in 17.2997713 seconds, should be 553592.6816<br />\n614400 bytes in 17.4896675 seconds, should be 559669.36<br />\n620800 bytes in 17.6697454 seconds, should be 565431.8528<br />\n627200 bytes in 17.8569968 seconds, should be 571423.8976<br />\n633600 bytes in 18.040488 seconds, should be 577295.616<br />\n640000 bytes in 18.2196551 seconds, should be 583028.9632<br />\n646400 bytes in 18.4101213 seconds, should be 589123.8816<br />\n652800 bytes in 18.5896585 seconds, should be 594869.072<br />\n659200 bytes in 18.7718426 seconds, should be 600698.9632<br />\n665600 bytes in 18.9593882 seconds, should be 606700.4224<br />\n672000 bytes in 19.1396891 seconds, should be 612470.0512<br />\n678400 bytes in 19.319336 seconds, should be 618218.752<br />\n684800 bytes in 19.5096263 seconds, should be 624308.0416<br />\n691200 bytes in 19.6895821 seconds, should be 630066.6272<br />\n697600 bytes in 19.8795076 seconds, should be 636144.2432<br />\n704000 bytes in 20.0596346 seconds, should be 641908.3072<br />\n710400 bytes in 20.2396446 seconds, should be 647668.6272<br />\n716800 bytes in 20.4296666 seconds, should be 653749.3312<br />\n723200 bytes in 20.6096784 seconds, should be 659509.7088<br />\n729600 bytes in 20.7896846 seconds, should be 665269.9072<br />\n736000 bytes in 20.9876601 seconds, should be 671605.1232<br />\n742400 bytes in 21.1696856 seconds, should be 677429.9392<br />\n748800 bytes in 21.3506874 seconds, should be 683221.9968<br />\n755200 bytes in 21.5397015 seconds, should be 689270.448<br />\n761600 bytes in 21.7196796 seconds, should be 695029.7472<br />\n768000 bytes in 21.9126226 seconds, should be 701203.9232<br />\n774400 bytes in 22.0996039 seconds, should be 707187.3248<br />\n780800 bytes in 22.2692751 seconds, should be 712616.8032<br />\n787200 bytes in 22.4599574 seconds, should be 718718.6368<br />\n793600 bytes in 22.6397117 seconds, should be 724470.7744<br />\n800000 bytes in 22.8207054 seconds, should be 730262.5728<br />\n806400 bytes in 23.0190936 seconds, should be 736610.9952<br />\n812800 bytes in 23.1908857 seconds, should be 742108.3424<br />\n",
+    "PostedDate": "2014-05-12T18:43:12.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244704",
+    "ThreadId": "545080",
+    "Html": "it could be a soundcard driver issue. Are you using WaveIn? It's likely that your mic is actually capturing audio at 44.1kHz and the driver is resampling it. Try capturing at 44.1kHz or 48kHz and seeing if that drifts<br />\n",
+    "PostedDate": "2014-05-13T01:07:21.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1245180",
+    "ThreadId": "545080",
+    "Html": "yeah i've tried that, all rates have the exact same level of drift, stereo/mono makes no difference either. Is it possible that the mic is actually returning some weird custom samplerate? Any way to find out what rates the device driver claims to support?<br />\n",
+    "PostedDate": "2014-05-14T02:15:33.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248925",
+    "ThreadId": "545080",
+    "Html": "try with WasapiCapture and see if that improves things<br />\n",
+    "PostedDate": "2014-05-23T07:39:52.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "501638",
+    "ThreadId": "229444",
+    "Html": "<p>Hi,</p>\r\n<p>I'm trying to use to microphones to locate the position of the source by using the TDOA algorithm (<span id=search style=\"visibility:visible\">Time-Difference-Of-Arrival), basically I compare the two captured buffers and find out the delay between each other in &quot;samples&quot; and then calculate the distance based on the sample rate.</span></p>\r\n<p><span style=\"visibility:visible\">Is it possible to capture the audio at exactly the same time? the onDataAvailable approach is pretty handy, but I guess it doesn't capture the audio on two devices at exactly the same time.<br></span></p>",
+    "PostedDate": "2010-10-03T03:21:40.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "506179",
+    "ThreadId": "229444",
+    "Html": "<p>the easiest way is to use a stereo soundcard and attach two microphones - one to the left channel and one to the right. That way your audio should be recorded in perfect synchronization. For more microphones, you proabably need to get a pro soundcard with multiple inputs, and NAudio may not be your best choice since ASIO support is very rudimentary.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-12T11:20:07.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

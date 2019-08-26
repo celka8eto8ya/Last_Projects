@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1342380",
+    "ThreadId": "577808",
+    "Html": "I know we can't use NAudio in windows store app projects but is it in progress to have this beautiful capability in near future or is there any alternative to draw video waveform in windows store apps?<br />\n",
+    "PostedDate": "2015-01-15T13:51:59.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1342383",
+    "ThreadId": "577808",
+    "Html": "hi, NAudio does have a Windows Store app assembly, so you can use it. The WPF demo project included in the NAudio source code also shows a way of drawing waveforms with XAML, although I have not yet tried porting this to Windows Store.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2015-01-15T13:53:46.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1342839",
+    "ThreadId": "577808",
+    "Html": "Thank you for your response. If there is any video tutorial of how to use this assembly in windows store apps please link for me. Your job is great and I really appreciate your work.<br />\n",
+    "PostedDate": "2015-01-16T23:13:47.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1343369",
+    "ThreadId": "577808",
+    "Html": "Hi,<br />\nI tried to see how could I use NAudio in Windows store app by running demo but there was no waveform drawing<br />\n<br />\n&quot;Nothing to see here yet, please be patient while we enable Windows Store app support in NAudio&quot;<br />\n<br />\nBut windowsform and wpf versions work perfectly.<br />\nYour work helps me a lot as I'm new to programming.<br />\nIt will be very great to have Windows store app support.<br />\n<br />\nHow could I have array of samples from a media file? I referenced NAudio.Win8.dll but I don't know how to get array of samples from it.<br />\n",
+    "PostedDate": "2015-01-19T14:56:04.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1345042",
+    "ThreadId": "577808",
+    "Html": "Use MediaFoundationReader in Windows 8 Store apps, and the Read method will get you access to the samples. If you use the ToSampleProvider extension method, then Read will fill a float array instead of a byte array.<br />\n",
+    "PostedDate": "2015-01-22T01:51:51.923-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1345113",
+    "ThreadId": "577808",
+    "Html": "Thanks a lot for your help and beside I found this great tutorial <a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">here</a> from you.<br />\n<br />\nI couldn't imaging there is a detailed tutorial about how to work with audio and media. Rarely seen this kind of explanation even in books.<br />\n<br />\nI'm at the first steps of understanding the world of programming and you provided a wide sight for me as you made tools for working with media which attracts my consideration to it's details and how scientists like you probe the world of technology.<br />\n<br />\nBy knowing details of media, working with it become simpler and more enjoyable.<br />\nHope everyone understands value of what you are doing for us.<br />\n",
+    "PostedDate": "2015-01-22T07:07:12.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1345166",
+    "ThreadId": "577808",
+    "Html": "I tried your advice in this way:<br />\n<pre><code> async private void Button_Click(object sender, RoutedEventArgs e)\n    {\n        FileOpenPicker picker = new FileOpenPicker();\n        picker.FileTypeFilter.Add(&quot;*&quot;);\n        picker.ViewMode = PickerViewMode.Thumbnail;\n        picker.SuggestedStartLocation = PickerLocationId.Desktop;\n        var file = await picker.PickSingleFileAsync();\n        if (file == null) return;\n\n        float[] floatArrayOfMediaFile = null;\n\n        // Here I have an error when MediaFoundationReader tries to read from path. Image of error is below\n        using (var reader = new MediaFoundationReader(file.Path.ToString())) \n        {\n            var fileRead = reader.ToSampleProvider();\n            // Here I want to fill float array but I don't know how but I tried this\n            fileRead.Read(floatArrayOfMediaFile, 10, 44100);\n        }\n}\n</code></pre>\n\nError:<br />\nAn exception of type 'System.UnauthorizedAccessException' occurred in NAudio.Win8.DLL but was not handled in user code<br />\n<br />\nAdditional information: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))<br />\n<br />\non the line:<br />\n<pre><code> MediaFoundationInterop.MFCreateSourceReaderFromURL(file, null, out reader);\n\n</code></pre>\n\nHere is the image of error<br />\n<a href=\"http://www.uplooder.net/img/image/52/24dbf7f99f122b87868a2698d97c4642/ErrorReading.jpg\" rel=\"nofollow\">http://www.uplooder.net/img/image/52/24dbf7f99f122b87868a2698d97c4642/ErrorReading.jpg</a><br />\n<img src=\"http://www.uplooder.net/img/image/52/24dbf7f99f122b87868a2698d97c4642/ErrorReading.jpg\" alt=\"Image\" /><br />\n<br />\n<br />\nI've searched for this error and found out (if I'm correct) on referring to the UI thread from another thread this error happens. But I've no idea how to manipulate my codes to prevent this error.<br />\n",
+    "PostedDate": "2015-01-22T10:01:16.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1345591",
+    "ThreadId": "577808",
+    "Html": "Is there any possible partial changing in my code which could give me a float array of a video file?<br />\n",
+    "PostedDate": "2015-01-25T00:47:24.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1346436",
+    "ThreadId": "577808",
+    "Html": "Is this error from my code? or it's because of not yes support for windows store?<br />\n",
+    "PostedDate": "2015-01-27T12:55:58.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1351976",
+    "ThreadId": "577808",
+    "Html": "hi, Windows Store is quite restrictive in what it will let you access. I've not had a lot of time to get to grips with it myself yet, so I'm afraid I can't tell you off the top of my head an easy way to get around this.<br />\n",
+    "PostedDate": "2015-02-12T14:38:07.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

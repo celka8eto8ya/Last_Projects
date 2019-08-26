@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "316144",
+    "ThreadId": "109099",
+    "Html": "<p>Hey, I ve been playing around with this set of libraries and cant figure out how to&nbsp;get the input level coming in from the sound card.&nbsp;&nbsp;Ive set up the WaveIn properly (I hope) and cant seem to find how to get the input level.</p>\r\n<p>Im a complete noob in programing and am just playing around to see what it can do.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks John</p>\r\n<p>&nbsp;</p>\r\n<p>NVM I figured it out</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<pre>        void waveIn_DataAvailable(object sender, WaveInEventArgs e)\r\n        {\r\n            byte[] buffer = e.Buffer;\r\n            int bytesRecorded = e.BytesRecorded;\r\n            label11.Text = (sample32.ToString());\r\n            volumeMeter1.Amplitude = sample32;\r\n            for (int index = 0; index &lt; e.BytesRecorded; index += 2)\r\n            {\r\n                short sample = (short)((e.Buffer[index + 1] &lt;&lt; 8) | e.Buffer[index + 0]);\r\n                sample32 = sample / 32768f;  \r\n            }\r\n            label12.Text = (buffer.ToString());\r\n        }</pre>\r\n<p>.</p>",
+    "PostedDate": "2010-02-20T23:14:40.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 6,
+    "Custom": null,
+    "Description": "Using NAudio 1.6.0.0\r\n\r\nWhen the code below is running in a console application under Windows Embedded Standard 8, it doesn't raise the \"PlaybackStopped\" event.\r\nThe exact same application works fine under Windows 7 (haven't tested it under \"normal\" Windows 8).\r\n\r\nI also tried to change the wavePlayer to the following (with the given result):\r\n- DirectSoundOut: Plays the sound, doesn't raise the event\r\n- WaveOut: Doesn't play the sound at all\r\n- WaveOutEvent: Plays the sound, doesn't raise the event\r\n- AsioOut: Plays the sound, doesn't raise the event\r\n\r\nI also tried (after reading some postings on StackOverflow) to use the WaveChannel32 (with padding disabled) in many of the above situations (including DirectSoundOut) and none resulted in the event being fired.\r\n\r\n```\r\n    internal class FileItem : ItemBase\r\n    {\r\n        private readonly IWavePlayer wavePlayer;\r\n        private readonly WaveStream reader;\r\n\r\n        private bool disposed;\r\n\r\n        public FileItem(string fileName)\r\n        {\r\n            this.fileName = fileName;\r\n            this.wavePlayer = new  new DirectSoundOut();\r\n            this.reader = new AudioFileReader(fileName);\r\n            this.wavePlayer.Init(this.reader);\r\n            this.wavePlayer.PlaybackStopped += this.WavePlayerOnPlaybackStopped;\r\n        }\r\n\r\n        public override void Start()\r\n        {\r\n            this.wavePlayer.Play();\r\n        }\r\n\r\n        public override void Stop()\r\n        {\r\n            this.wavePlayer.Stop();\r\n        }\r\n\r\n        public override void Dispose()\r\n        {\r\n            if (this.disposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            this.disposed = true;\r\n            ThreadPool.QueueUserWorkItem(\r\n                s =>\r\n                    {\r\n                        this.wavePlayer.PlaybackStopped -= this.WavePlayerOnPlaybackStopped;\r\n                        this.wavePlayer.Stop();\r\n                        this.reader.Dispose();\r\n                        this.wavePlayer.Dispose();\r\n                    });\r\n        }\r\n\r\n        private void WavePlayerOnPlaybackStopped(object sender, StoppedEventArgs e)\r\n        {\r\n            this.RaiseCompleted(EventArgs.Empty);\r\n        }\r\n    }\r\n```\r\n(Code simplified to focus on real issue; might not compile \"as is\")",
+    "LastUpdatedDate": "2014-02-24T00:14:38.483-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-01-27T04:12:06.537-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "PlaybackStopped event is not fired in Windows Embedded Standard 8",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16429
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Tested with NAudio 1.7.0.15 - issue stays the same.",
+      "PostedDate": "2014-01-27T04:39:46.257-08:00",
+      "Id": 131680
+    },
+    {
+      "Message": "I'm surprised NAudio works at all on Windows Embedded Standard. \nYour result for WaveOut not playing is expected - the default callback model uses windows messages, and there is no message loop in a console app.\nI can't quite understand why there is no event raised. Maybe something funny is going on with the SynchronizationContext, which I use to try to raise the PlaybackStopped on the GUI thread if there is one (obviously there isn't in your case, so it should just raise it from the background thread of the output device).",
+      "PostedDate": "2014-01-27T05:11:43.3-08:00",
+      "Id": 131684
+    },
+    {
+      "Message": "Thanks for your quick reply (and sorry for my delay).\nIn general, Windows Embedded Standard is very close to the regular Windows release, so to me it wasn't surprising at all that NAudio works (most APIs are available in this OS).\nDo you have any suggestions how we could debug this? What information could we collect to give you a chance of helping us tracking down this issue. (The problem is, I can't remote debug onto that machine for several reasons, but I can write log files).",
+      "PostedDate": "2014-02-06T01:40:42.477-08:00",
+      "Id": 132803
+    },
+    {
+      "Message": "I'm afraid I don;t really know what is going on. I'd investigate whether there is an issue raising events via SyncContext in Windows Embedded Standard, since that is what NAudio is doing (you can view the code). \nIf you can't debug directly, I'd take a copy of WaveOutEvent source code and put some logging statements in, to see if it is trying to raise PlaybackStopeed.",
+      "PostedDate": "2014-02-10T08:55:25.67-08:00",
+      "Id": 133110
+    },
+    {
+      "Message": "So, I've done some testing (as you suggested recompiling the NAudio code with some logging).\n\nTurns out that this console application has an invisible Window to capture some messages (like user logout, ...). But even having that in a simplified sample application didn't cause the issue.\n\nIn our application somehow there was the WindowsFormsSynchronizationContext available on the thread where we created the WaveOut (but that wasn't on the same thread the WinForm was running!). If I manually set the synchronization context to null on that thread, everything works like a charm.\n\nSince this only happens in this weird case and only under Windows Embedded Standard 8, I think you can close this issue and forget about it.\n\nThanks again for your help!",
+      "PostedDate": "2014-02-21T04:57:53.85-08:00",
+      "Id": 134315
+    },
+    {
+      "Message": "Glad you got to the bottom of this, and thanks for sharing what the issue was",
+      "PostedDate": "2014-02-24T00:14:38.483-08:00",
+      "Id": 134545
+    }
+  ]
+}

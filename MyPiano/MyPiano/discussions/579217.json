@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1348184",
+    "ThreadId": "579217",
+    "Html": "I'm doing some voice recognition work, but in the System.Speech .NET libraries, there are only two relevant options: SetInputToDefaultAudioDevice, or SetInputToAudioStream. Since a lot of users don't have the correct audio device set in Windows, I can't really rely on the first one.\r<br />\n<br />\nSo, I have two options:\r<br />\n<br />\nA) Find a way to set the Default Audio Device for them from a list of devices. Is this possible in NAudio?\r<br />\nB) Find a way to configure any device into a standard .NET AudioStream, which I have no idea how to do.\r<br />\n<br />\nAny ideas, guys? Thanks in advance.<br />\n",
+    "PostedDate": "2015-02-02T03:05:47.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1348231",
+    "ThreadId": "579217",
+    "Html": "The Windows WASAPI APIs are probably the best way to access these. NAudio exposes these APIs with the MMDeviceEnumerator.\r<br />\n<br />\nI'm not sure exactly what you mean by the second question. Might be best to ask on a forum where people know about the System.Speech libraries.<br />\n",
+    "PostedDate": "2015-02-02T05:41:40.497-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1348469",
+    "ThreadId": "579217",
+    "Html": "Thanks, Mark! I'll take a look at those APIs tomorrow.<br />\n",
+    "PostedDate": "2015-02-02T18:52:21.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1348470",
+    "ThreadId": "579217",
+    "Html": "Well, it looks like I can't change the default recording device by design from Microsoft. There appear to be a few hacky/unsupported/internal API stuff that might do it, but it all seems difficult and dodgy and not uniform across versions of windows.\r<br />\n<br />\nOn the second option, I don't know, I don't really want to be constantly shifting data into a MemoryBuffer and using that.\r<br />\n<br />\nIs there at least a way I can programmatically open up the &quot;Recording Devices&quot; control panel window from NAudio/WASAPI? = P<br />\n",
+    "PostedDate": "2015-02-02T19:17:47.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1348921",
+    "ThreadId": "579217",
+    "Html": "yeah there is a way of opening it, you don't need NAudio to do it though. <br />\n<pre><code>Process.Start(&quot;control.exe&quot;, &quot;mmsys.cpl,,1&quot;)</code></pre>\n\nA bit ugly, but gets the job done<br />\n",
+    "PostedDate": "2015-02-04T06:03:54.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "574233",
+    "ThreadId": "248094",
+    "Html": "<p>Hey.<br />I'm trying to use NAudio to get the sound loudness from the mic, is there a simple way to measure this?<br />I would be really happy if I was able to get the \"loudness\" back as an integer.</p>\n<p>Basically I want to achieve the same type of thing that MSN messenger does in its sound controls where they have a bar representing the sound level comming in from the mic.</p>\n<p><a href=\"http://img849.imageshack.us/img849/3905/example.png\">http://img849.imageshack.us/img849/3905/example.png</a></p>\n<p>&nbsp;</p>\n<p>Thanks</p>",
+    "PostedDate": "2011-03-01T23:40:36.613-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574322",
+    "ThreadId": "248094",
+    "Html": "<p>have a look at the .NET Voice Recorder application for an example of using NAudio to do this:</p>\r\n<p>http://voicerecorder.codeplex.com</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-02T03:04:48.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

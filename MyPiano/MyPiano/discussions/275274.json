@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "681893",
+    "ThreadId": "275274",
+    "Html": "<p>Hi,</p>\n<p>as you see in the title i cant convert alaw to pcm.</p>\n<p>the alaw format is 8000,24 bits, stereo</p>\n<p>and i tried to convert to any &nbsp;pcm format (8000, 16/24, stereo/mono) always in the&nbsp;SuggestPcmFormat method i get this exception.</p>\n<p>i dont sure but i think it works form me once...</p>\n<p>any suggestion?</p>\n<p>here the code</p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">            var</span> file = File.OpenRead(fileName);\n            <span style=\"color: blue;\">var</span> len = file.Length;\n            <span style=\"color: blue;\">var</span> buf = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[len];\n            file.Read(buf, 0, (<span style=\"color: blue;\">int</span>)len);\n            WaveStream stream = <span style=\"color: blue;\">new</span> RawSourceWaveStream(<span style=\"color: blue;\">new</span> MemoryStream(buf), f);\n            <span style=\"color: blue;\">if</span> (readerStream.WaveFormat.Encoding != WaveFormatEncoding.Pcm)\n            {\n                readerStream = WaveFormatConversionStream.CreatePcmStream(readerStream); // dont work\n                readerStream = <span style=\"color: blue;\">new</span> BlockAlignReductionStream(readerStream);\n            }\n</pre>\n</div>",
+    "PostedDate": "2011-10-09T14:50:10.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685198",
+    "ThreadId": "275274",
+    "Html": "<p>I don't think the Windows provided ACM converters can do 24 bit audio. However, there is some 24 bit audio support in the very latest NAudio source code you can experiment with (see the NAudioDemo app which can play 24 bit audio for a code sample)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-10-17T07:40:12.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

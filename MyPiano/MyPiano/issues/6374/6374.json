@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "got this working now, so the old Managed DirectX wrappers should probably be obsoleted",
+    "ClosedDate": "2008-06-22T01:24:03.187-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "Need to get all the COM objects created on the same thread. Same technique as for the DMOResampler in WASAPI should work fine",
+    "LastUpdatedDate": "2008-06-22T01:24:03.187-07:00",
+    "PlannedForRelease": "1.2 Beta",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-06-16T14:50:36.68-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Native DirectSound to work in STAThread",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 6374
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

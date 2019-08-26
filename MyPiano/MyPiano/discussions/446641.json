@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1055208",
+    "ThreadId": "446641",
+    "Html": "Hello, \r<br />\n<br />\nI need to convert a stream of linear data (<strong>48khz, 16 bits per sample and 1 channel</strong>) recieved at one machine through a multicast connection  to <strong>G711</strong> or <strong>G729</strong> format, in order to encapsulate and sent to another machine using RTP protocol. \r<br />\n<br />\nI would need to do that conversion online, it means, while I am receiving the raw data, convert some amount of data and send again with the new format.\r<br />\n<br />\nCould it be achieved easyly with NAudio library?\r<br />\n<br />\nThanks and best regards,\r<br />\n<br />\nEnric<br />\n",
+    "PostedDate": "2013-06-10T23:18:41.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1055832",
+    "ThreadId": "446641",
+    "Html": "NAudio can encode audio using any codec on your machine. Windows comes with a G711 encoder and there is also one built into NAudio. Please read my article here for a thorough overview of format conversion in NAudio:\r<br />\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET</a>\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-06-12T06:41:40.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

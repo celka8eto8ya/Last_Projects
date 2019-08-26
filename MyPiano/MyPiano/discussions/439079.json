@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1025322",
+    "ThreadId": "439079",
+    "Html": "Hi,\r<br />\n<br />\nI would like to use NAudio to play a wave file from an URL. Every time I use<br />\n<pre><code>            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);\n            HttpWebResponse resp = (HttpWebResponse)webRequest.GetResponse();\n            var responseStream = resp.GetResponseStream()\n            WaveStream readerStream = new WaveFileReader(responseStream);</code></pre>\n\nIt fails on reading wave header. What am I doing wrong?\r<br />\nHere is the test Wave file I'm trying to play:\r<br />\n<a href=\"http://www.nch.com.au/acm/11k16bitpcm.wav\" rel=\"nofollow\">http://www.nch.com.au/acm/11k16bitpcm.wav</a>\r<br />\n<br />\nThanks for any help.<br />\n",
+    "PostedDate": "2013-04-04T04:19:38.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1025331",
+    "ThreadId": "439079",
+    "Html": "For streaming audio you really need to use a BufferedWaveProvider  and write audio data into that as it arrives. WaveFileReader is unlikely to work because it expects to be able to reposition within the stream which you can't do with a network stream. WAV is a very poor choice of format for streaming audio, but if you really must use it, I'd probably write my own custom code to read the format chunk and then find the data chunk, copying everything in that to the BufferedWaveProvider.<br />\n",
+    "PostedDate": "2013-04-04T04:44:47.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

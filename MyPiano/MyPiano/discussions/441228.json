@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1034283",
+    "ThreadId": "441228",
+    "Html": "the volume of the sound that is captured by WasapiLoopbackCapture and rendered by WaveOut is lower than the original sound (from speaker) How to increse that volume?<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2013-04-22T20:27:15.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1035655",
+    "ThreadId": "441228",
+    "Html": "Well the loopback capture should come in at the volume that was sent to the speaker. If it isn't loud enough on playback then you'd either have to boost the device volume level, or increase the sample values as they come through the audio pipeline.<br />\n",
+    "PostedDate": "2013-04-25T07:26:49.06-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

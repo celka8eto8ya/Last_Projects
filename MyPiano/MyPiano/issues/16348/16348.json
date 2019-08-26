@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "closed issue - see comments",
+    "ClosedDate": "2012-09-26T06:24:29.533-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "I have a thread (in VB.NET 4.0) that is designed to play audio.  This thread is part of a Windows Service.  I'm trying to do real simple play the wav file, then go on and play the next one in the queue sort of thing if there is one.  I've used the Wave.IWavePlayer object to do this.\r\n\r\nThe problem I am having is it will work for a while then either get in a state where it says it is playing but stays at position 0.  Or alternatively it will crash my entire service.  I'm using 1.5.4.  Obviously it is a Windows Service so lacks in the user interface department which might be causing its own issues.  Any help you can provide would be greatly appreciated.  As a side note, I have starting using NAudio instead of the standard My.Computer.Audio.Play() because Windows 7 has somehow prevented Windows Services from playing audio (worked fine on XP), but the NAudio library seems to get me around that restriction.\r\n\r\nHere is the relevant parts of the class:\r\n\r\nPrivate WithEvents _Player As NAudio.Wave.IWavePlayer\r\n\r\nPublic Sub New()\r\n      _Player = New NAudio.Wave.DirectSoundOut(100)\r\nEnd Sub\r\n\r\nPrivate Sub PlayWAV(byval wavFile as String)\r\n     Try\r\n                        Dim stream As NAudio.Wave.WaveChannel32\r\n                        Dim mp3Reader As NAudio.Wave.WaveStream = Nothing\r\n                        Dim wavReader As NAudio.Wave.WaveStream = Nothing\r\n\r\n                        If (wfile.EndsWith(\".mp3\")) Then\r\n                            mp3Reader = New NAudio.Wave.Mp3FileReader(wfile)\r\n                            stream = New NAudio.Wave.WaveChannel32(mp3Reader)\r\n                        ElseIf (wfile.EndsWith(\".wav\")) Then\r\n                            wavReader = New NAudio.Wave.WaveFileReader(wfile)\r\n                            stream = New NAudio.Wave.WaveChannel32(wavReader)\r\n                        Else\r\n                            stream = Nothing\r\n                        End If\r\n\r\n                        If Not _Player Is Nothing Then\r\n                            If Not stream Is Nothing Then\r\n                                SendStatus(_ClassName & \".\" & methodName & \": stream.CanRead = \" & stream.CanRead.ToString)\r\n                                SendStatus(_ClassName & \".\" & methodName & \": stream.WaveFormat = \" & stream.WaveFormat.ToString)\r\n                                SendStatus(_ClassName & \".\" & methodName & \": stream.TotalTime = \" & stream.TotalTime.ToString)\r\n                                SendStatus(_ClassName & \".\" & methodName & \": stream.Length = \" & stream.Length)\r\n                                SendStatus(_ClassName & \".\" & methodName & \": player.PlaybackState = \" & _Player.PlaybackState.ToString)\r\n\r\n                                ' NOTE: Might want to make sure player has stopped before re-initing it?\r\n\r\n                                _Player.Init(stream)\r\n                                Thread.Sleep(100)\r\n                                _Player.Play()\r\n                                SendStatus(_ClassName & \".\" & methodName & \": Play Started\")\r\n                                Thread.Sleep(100)\r\n                                logTimer = logTimerReload - 1\r\n                                While _Player.PlaybackState = NAudio.Wave.PlaybackState.Playing\r\n                                    'SendStatus(_ClassName & \".\" & methodName & \": PlaybackState = \" & player.PlaybackState.ToString)\r\n                                    'SendStatus(_ClassName & \".\" & methodName & \": Position = \" & stream.Position)\r\n                                    'SendStatus(_ClassName & \".\" & methodName & \": CurrentTime = \" & stream.CurrentTime.ToString)\r\n                                    If stream.Position > stream.Length Then\r\n                                        Exit While\r\n                                    End If\r\n                                    If stream.CurrentTime > stream.TotalTime Then\r\n                                        Exit While\r\n                                    End If\r\n                                    If _IsCancelled = True Then\r\n                                        Exit While\r\n                                    End If\r\n                                    Thread.Sleep(100)\r\n                                    If logTimer > 1 Then\r\n                                        logTimer -= 1\r\n                                    Else\r\n                                        logTimer = logTimerReload\r\n                                        If stream.Position = 0 Then\r\n                                            SendStatus(_ClassName & \".\" & methodName & \": WARNING - Not playing. Still at position 0. Aborting..\")\r\n                                            Log(LogFile.WarningLog, _ClassName & \".\" & methodName & \": WARNING - Not playing. Still at position 0. Aborting..\")\r\n                                            Exit While\r\n                                        Else\r\n                                            SendStatus(_ClassName & \".\" & methodName & \": Playing - \" & stream.Position & \"/\" & stream.Length & \", \" & stream.CurrentTime.ToString & \"/\" & stream.TotalTime.ToString)\r\n                                        End If\r\n                                    End If\r\n                                End While\r\n\r\n                                ' Make sure player stops correctly\r\n                                Thread.Sleep(100)\r\n                                SendStatus(_ClassName & \".\" & methodName & \": player.PlaybackState = \" & _Player.PlaybackState.ToString)\r\n                                If _Player.PlaybackState <> NAudio.Wave.PlaybackState.Stopped Then\r\n                                    _Player.Stop()\r\n                                    SendStatus(_ClassName & \".\" & methodName & \": Stop issued\")\r\n\r\n                                    logTimer = logTimerReload - 1\r\n                                    While _Player.PlaybackState <> NAudio.Wave.PlaybackState.Stopped\r\n                                        Thread.Sleep(100)\r\n                                        If _IsCancelled = True Then\r\n                                            Exit While\r\n                                        End If\r\n                                        If logTimer > 1 Then\r\n                                            logTimer -= 1\r\n                                        Else\r\n                                            logTimer = logTimerReload\r\n                                            SendStatus(_ClassName & \".\" & methodName & \": Waiting for stop (\" & _Player.PlaybackState.ToString & \")\")\r\n                                        End If\r\n                                    End While\r\n                                    SendStatus(_ClassName & \".\" & methodName & \": Stopped or Cancelled\")\r\n                                    Thread.Sleep(100)\r\n                                End If\r\n\r\n                                ' Clean-up\r\n                                stream.Close()\r\n                                stream.Dispose()\r\n                                stream = Nothing\r\n\r\n                                If Not mp3Reader Is Nothing Then\r\n                                    mp3Reader.Close()\r\n                                    mp3Reader.Dispose()\r\n                                    mp3Reader = Nothing\r\n                                End If\r\n                                If Not wavReader Is Nothing Then\r\n                                    wavReader.Close()\r\n                                    wavReader.Dispose()\r\n                                    wavReader = Nothing\r\n                                End If\r\n                            Else\r\n                                Log(LogFile.WarningLog, _ClassName & \".\" & methodName & \": Unable to create stream.  Most likely unsupported file type (\" & System.IO.Path.GetExtension(wfile) & \")\")\r\n                                SendStatus(_ClassName & \".\" & methodName & \": Unable to create stream.  Most likely unsupported file type (\" & System.IO.Path.GetExtension(wfile) & \")\")\r\n                            End If\r\n                        Else\r\n                            Log(LogFile.WarningLog, _ClassName & \".\" & methodName & \": Player is Nothing\")\r\n                            SendStatus(_ClassName & \".\" & methodName & \": Player is Nothing\")\r\n                        End If\r\n   Catch ex As Exception\r\n        LogError(ex.message)\r\n   End Try\r\nEnd Sub",
+    "LastUpdatedDate": "2012-09-26T06:24:29.533-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-04-12T15:46:01.49-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Wave.IWavePlayer.Play() - Crashing or says its playing but stays at position 0",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16348
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Sorry, probably should have put this in the Discussions section.",
+      "PostedDate": "2012-04-12T16:33:38.547-07:00",
+      "Id": 62330
+    },
+    {
+      "Message": "have you tried creating a new player when you play a new file?",
+      "PostedDate": "2012-04-16T00:49:17.58-07:00",
+      "Id": 62459
+    },
+    {
+      "Message": "I believe I got it working.  I switched to using the WaveEventOut (instead of IWavePlayer) based on some comments I saw you make in the discussion board.  Additionally yeah, I switched from using a global variable to a local one so the WaveEventOut is created each time it play a file.  I also had to throw some Thread.Sleeps (pauses) in the end to give it enough time to recover.  Thanks.  It is definitely working and allowing me to get around me problem.",
+      "PostedDate": "2012-04-16T09:30:50.233-07:00",
+      "Id": 62492
+    }
+  ]
+}

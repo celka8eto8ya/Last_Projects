@@ -1,0 +1,51 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hello,\nHere is a modified version of MediaFounfationReader.\n\nModification for operation with WASAPI, ASIO, WaveOutEvent\n\nI added an option :: The output format (WaveFormat) is PCM or IEEE\n\nCompatible with the version NAudio 569799226a61\n\nThis version is still a prototype!",
+    "LastUpdatedDate": "2012-12-04T05:24:00.113-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-11-28T01:05:42.52-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "MediaFoundation Output Format Float",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 16375
+  },
+  "FileAttachments": [
+    {
+      "FileId": 552501,
+      "FileName": "MediaFoundationReader_Th.cs",
+      "DownloadUrl": ".\\552501"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "thanks, these changes will be integrated shortly\n",
+      "PostedDate": "2012-12-04T04:46:34.08-08:00",
+      "Id": 83510
+    }
+  ]
+}

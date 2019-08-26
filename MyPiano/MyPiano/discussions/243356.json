@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "555547",
+    "ThreadId": "243356",
+    "Html": "\r\n<p>HI,</p>\r\n<p>I'm trying to convert an mp3 file to A-Law format (8bit, 8khz, mono). I'm making this in three steps:</p>\r\n<p>Fisrt convert mp3 to pcm format, next convert pcm to 8khz, 8bit mono pcm format, and now I'm trying to convert to a-law using this:</p>\r\n<p><span style=\"color:#0000ff\">WaveStream law = new WaveFormatConversionStream(WaveFormat.CreateALawFormat(tmp.WaveFormat.SampleRate, tmp.WaveFormat.Channels), tmp);</span></p>\r\n<p>When program execute this line I get this exception: <strong>AcmNotPossible calling acmStreamOpen</strong></p>\r\n<p>Please help me.<strong><br>\r\n</strong></p>\r\n<p>My conversion stages code:</p>\r\n<p>using (Mp3FileReader reader = new Mp3FileReader(SelectedFile.Text))<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(reader))<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveFormat f = new WaveFormat(8000, 8, 1);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveStream tmp = new WaveFormatConversionStream(f, pcmStream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveStream law = new WaveFormatConversionStream(WaveFormat.CreateALawFormat(tmp.WaveFormat.SampleRate, tmp.WaveFormat.Channels), tmp);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>Regrds,</p>\r\n<p>Maciek</p>\r\n",
+    "PostedDate": "2011-01-26T06:12:45.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555548",
+    "ThreadId": "243356",
+    "Html": "\r\n<p>the first conversion should be to 16 bit PCM.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-26T06:15:33.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

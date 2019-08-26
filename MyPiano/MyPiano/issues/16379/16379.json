@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "Please change the NAudio.WindowsMediaFormat.NSSBuffer class Read and Write methods. Under load you will get an OverflowException such as this:\n\nSystem.OverflowException: Arithmetic operation resulted in an overflow.\n   at System.IntPtr.ToInt32()\n   at NAudio.WindowsMediaFormat.NSSBuffer.Read(Byte[] buffer, Int32 offset, Int32 count)\n   at NAudio.WindowsMediaFormat.WmaStream.Read(Byte[] buffer, Int32 offset, Int32 count)\n\nThe change should check the system architecture and perform the correct casting to an integer type like so:\n\nIntPtr src;\nif (IntPtr.Size == 8) {\n\tsrc = (IntPtr)(m_BufferPtr.ToInt64() + m_Position);\n}\nelse {\n\tsrc = (IntPtr)(m_BufferPtr.ToInt32() + m_Position);\n}\n\nI have tested this change and it does fix this exception.\n\nPlease see MSDN at http://msdn.microsoft.com/en-us/library/system.intptr.toint32.aspx for details on this exception as it reads: OverflowExceptions will occur on a 64-bit platform. The value of this instance may be too large or too small to be represented as a 32-bit signed integer.\n\nThanks for such an amazing library. :)",
+    "LastUpdatedDate": "2012-12-19T09:32:43.807-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-12-19T08:08:11.717-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudio.WindowsMediaFormat.NSSBuffer IntPtr.ToInt32() OverflowException",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16379
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for reporting this. In fact, there is probably a simpler fix - you ought to be able to use ToInt64 on both architectures. If you get a chance to test this let me know.",
+      "PostedDate": "2012-12-19T08:57:56.703-08:00",
+      "Id": 84613
+    },
+    {
+      "Message": "I'm afraid I do not have any 32-bit machines anymore, but I feel like that might work as well. :P",
+      "PostedDate": "2012-12-19T09:04:42.993-08:00",
+      "Id": 84614
+    },
+    {
+      "Message": "I've committed the fix that just uses ToInt64.",
+      "PostedDate": "2012-12-19T09:32:20.713-08:00",
+      "Id": 84616
+    }
+  ]
+}

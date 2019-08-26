@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "206255",
+    "ThreadId": "60857",
+    "Html": "<p>I've been messing with the WaveInStream object and it's DavaAvailable event. Just for kicks, it draws the spectrum instead of saving it to a file. Once I did that, I realized that it only calls the DataAvailable method once a second (-ish). There doesn't seem to be a way to have it update more often. If it listens for a second, followed by my processing (right now just for displaying it's spectrum), then the delay is very obvious. Anyway to speed this up? Subclass? Subtle change to your API? Anything?</p>",
+    "PostedDate": "2009-06-27T14:26:24.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "206290",
+    "ThreadId": "60857",
+    "Html": "<p>Hi, I've been making some enhancements to recording recently that should get checked in soon. The idea is that the wave in device will not be opened until you call StartRecording, which will mean you are able to set the number of buffers (currently three) and the size of each buffer (currently 100ms in the WaveIn class, the WaveInStream is now obsolete and used a second I think).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-06-27T23:15:39.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "206301",
+    "ThreadId": "60857",
+    "Html": "<p>I found a quick fix, not sure if it's worth putting in the final project, but it works for my current needs.&nbsp;I changed the signature of the WaveInStream constructor from:</p>\r\n<p>public WaveInStream(int deviceNumber, WaveFormat desiredFormat, System.Windows.Forms.Control callbackWindow)</p>\r\n<p>to:</p>\r\n<p>public WaveInStream(int deviceNumber, WaveFormat desiredFormat, System.Windows.Forms.Control callbackWindow, float SecondsToRecordBeforeCallback)</p>\r\n<p>The new variabls ONLY apperance in your code is changing:</p>\r\n<p>int bufferSize = desiredFormat.AverageBytesPerSecond;</p>\r\n<p>to:</p>\r\n<p>int bufferSize = (int)(desiredFormat.AverageBytesPerSecond * SecondsToRecordBeforeCallback);</p>\r\n<p>I have to admit that it probably won't be an even division because it's rounding down (truncating the decimal completely). For Example: .1 seconds * AverageBytesPerSecond may actually return enough bytes for .099 seconds or something, but to my best understanding, it won't drop information.</p>",
+    "PostedDate": "2009-06-28T01:07:27.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "206487",
+    "ThreadId": "60857",
+    "Html": "<p>hi, your changes will work fine for your purposes. I have checked the new WaveIn class in, which also has a way of adjusting the buffer size.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-06-29T01:15:14.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

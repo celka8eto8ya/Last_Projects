@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "444159",
+    "ThreadId": "212980",
+    "Html": "<p>Hi there,<br><br>Is there any way to change the source to monitor the main audio source (i.e. picking up windows sounds, music playing by other applications etc.)?<br><br>I've had a good look around the code, but even in the WPF application I can't see where the source is being set to &quot;Microphone&quot;.<br><br>Thanks!<br>Josh&nbsp;</p>",
+    "PostedDate": "2010-05-18T00:39:22.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "445077",
+    "ThreadId": "212980",
+    "Html": "<p>I've tried the tutorial below:<br><br><a href=\"http://opensebj.blogspot.com/2009/04/naudio-tutorial-5-recording-audio.html\">http://opensebj.blogspot.com/2009/04/naudio-tutorial-5-recording-audio.html<br></a><br>But when I try the &quot;Record all sounds on my computer&quot; button in the example program, I only get the microphone recorded.<br><br>Is it possible to record all sounds with NAudio? Are there any gotchas that might prevent me from recording everything?<br><br>Thanks for the project though, awesome effort!&nbsp;</p>",
+    "PostedDate": "2010-05-19T12:09:58.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "445266",
+    "ThreadId": "212980",
+    "Html": "<p>By the way I'm using Windows 7, in case that makes a difference!</p>",
+    "PostedDate": "2010-05-20T00:03:01.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "445778",
+    "ThreadId": "212980",
+    "Html": "<p>I'm afraid that there is no easy way to do this with NAudio at the moment. Many soundcard drivers do allow you to configure their output as an input, so it is possible to record everything, but it can require the user to pull up the recording mixer (in XP). On Windows 7, things are a little different, so you might need to experiment a bit more. It is possible that the new CoreAudio can be used to do this, but I haven't tried it yet. Sorry I can't be more helpful, but this kind of thing tends to require a lot of trial and error in my experience.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-05-21T03:06:38.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "445794",
+    "ThreadId": "212980",
+    "Html": "<p>Hi Mark - really appreciate your reply!</p>\r\n<p>I found this code in C++ from Matthew Van Eerde this morning:<br><a href=\"http://blogs.msdn.com/matthew_van_eerde/archive/2008/12/16/sample-wasapi-loopback-capture-record-what-you-hear.aspx\"><br>http://blogs.msdn.com/matthew_van_eerde/archive/2008/12/16/sample-wasapi-loopback-capture-record-what-you-hear.aspx</a></p>\r\n<p>The compiled executable he provides does exactly what I want using WASAPI - so by that margin it <em>must</em>&nbsp;somehow be possible in C# with the right PInvokes etc.<br><br>Only trouble is I'm not so hot on my C++ anymore... haven't touched it for about 6 years! In fairness reading the C++ isn't the problem; it's figuring out how to get the code to compile in VS that always stumps me!</p>",
+    "PostedDate": "2010-05-21T03:53:30.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "445796",
+    "ThreadId": "212980",
+    "Html": "<p>yes, there are WASAPI wrappers in NAudio. Have a go with this class, which someone contributed but I haven't got round to testing yet. It's basically a few modifications to the existing Wasapi capture</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<pre>    /// \r\n    /// Audio Capture using Wasapi\r\n    /// See http://msdn.microsoft.com/en-us/library/dd370800%28VS.85%29.aspx\r\n    /// \r\n    public class WasapiLoopbackCapture : IWaveIn\r\n    {\r\n        private const long REFTIMES_PER_SEC = 10000000;\r\n        private const long REFTIMES_PER_MILLISEC = 10000;\r\n        private volatile bool stop;\r\n        private byte[] recordBuffer;\r\n        private Thread captureThread;\r\n        private AudioClient audioClient;\r\n        private int bytesPerFrame;\r\n\r\n        /// \r\n        /// Indicates recorded data is available \r\n        /// \r\n        public event EventHandler DataAvailable;\r\n\r\n        /// \r\n        /// Indicates that all recorded data has now been received.\r\n        /// \r\n        public event EventHandler RecordingStopped;\r\n\r\n        /// \r\n        /// Initialises a new instance of the WASAPI capture class\r\n        /// \r\n        public WasapiLoopbackCapture() :\r\n            this(GetDefaultCaptureDevice())\r\n        {\r\n        }\r\n\r\n        /// \r\n        /// Initialises a new instance of the WASAPI capture class\r\n        /// \r\n        /// &lt;param name=&quot;captureDevice&quot; /&gt;Capture device to use\r\n        public WasapiLoopbackCapture(MMDevice captureDevice)\r\n        {\r\n            this.audioClient = captureDevice.AudioClient;\r\n        }\r\n\r\n        /// \r\n        /// Recording wave format\r\n        /// \r\n        public WaveFormat WaveFormat\r\n        {\r\n            get\r\n            {\r\n                return audioClient.MixFormat;\r\n            }\r\n            set\r\n            {\r\n                throw new Exception(&quot;Setting of Wave Format not supported for loopback device !&quot;);\r\n            }\r\n        }\r\n\r\n        /// \r\n        /// Gets the default audio capture device\r\n        /// \r\n        /// The default audio capture device\r\n        public static MMDevice GetDefaultCaptureDevice()\r\n        {\r\n            MMDeviceEnumerator devices = new MMDeviceEnumerator();\r\n            return devices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);\r\n        }\r\n\r\n        private void InitializeCaptureDevice()\r\n        {\r\n            long requestedDuration = REFTIMES_PER_MILLISEC * 100;\r\n\r\n            audioClient.Initialize(AudioClientShareMode.Shared,\r\n                AudioClientStreamFlags.Loopback,\r\n                requestedDuration,\r\n                0,\r\n                WaveFormat,\r\n                Guid.Empty);\r\n\r\n            int bufferFrameCount = audioClient.BufferSize;\r\n            bytesPerFrame = WaveFormat.BlockAlign;\r\n            recordBuffer = new byte[bufferFrameCount * bytesPerFrame];\r\n            Debug.WriteLine(string.Format(&quot;record buffer size = {0}&quot;, recordBuffer.Length));\r\n        }\r\n\r\n        /// \r\n        /// Start Recording\r\n        /// \r\n        public void StartRecording()\r\n        {\r\n            InitializeCaptureDevice();\r\n            ThreadStart start = delegate { this.CaptureThread(this.audioClient); };\r\n            this.captureThread = new Thread(start);\r\n\r\n            Debug.WriteLine(&quot;Thread starting...&quot;);\r\n            this.stop = false;\r\n            this.captureThread.Start();\r\n        }\r\n\r\n        /// \r\n        /// Stop Recording\r\n        /// \r\n        public void StopRecording()\r\n        {\r\n            if (this.captureThread != null)\r\n            {\r\n                this.stop = true;\r\n\r\n                Debug.WriteLine(&quot;Thread ending...&quot;);\r\n\r\n                // wait for thread to end\r\n                this.captureThread.Join();\r\n                this.captureThread = null;\r\n\r\n                Debug.WriteLine(&quot;Done.&quot;);\r\n\r\n                this.stop = false;\r\n            }\r\n        }\r\n\r\n        private void CaptureThread(AudioClient client)\r\n        {\r\n            Debug.WriteLine(client.BufferSize);\r\n            int bufferFrameCount = audioClient.BufferSize;\r\n\r\n            // Calculate the actual duration of the allocated buffer.\r\n            long actualDuration = (long)((double)REFTIMES_PER_SEC *\r\n                             bufferFrameCount / WaveFormat.SampleRate);\r\n            int sleepMilliseconds = (int)(actualDuration / REFTIMES_PER_MILLISEC / 2);\r\n\r\n            AudioCaptureClient capture = client.AudioCaptureClient;\r\n            client.Start();\r\n\r\n            try\r\n            {\r\n                Debug.WriteLine(string.Format(&quot;sleep: {0} ms&quot;, sleepMilliseconds));\r\n                while (!this.stop)\r\n                {\r\n                    Thread.Sleep(sleepMilliseconds);\r\n                    ReadNextPacket(capture);\r\n                }\r\n\r\n                client.Stop();\r\n\r\n                if (RecordingStopped != null)\r\n                {\r\n                    RecordingStopped(this, EventArgs.Empty);\r\n                }\r\n            }\r\n            finally\r\n            {\r\n                if (capture != null)\r\n                {\r\n                    capture.Dispose();\r\n                }\r\n                if (client != null)\r\n                {\r\n                    client.Dispose();\r\n                }\r\n\r\n                client = null;\r\n                capture = null;\r\n            }\r\n\r\n            System.Diagnostics.Debug.WriteLine(&quot;stop wasapi&quot;);\r\n        }\r\n\r\n        private void ReadNextPacket(AudioCaptureClient capture)\r\n        {\r\n            IntPtr buffer;\r\n            int framesAvailable;\r\n            AudioClientBufferFlags flags;\r\n            int packetSize = capture.GetNextPacketSize();\r\n            int recordBufferOffset = 0;\r\n            //Debug.WriteLine(string.Format(&quot;packet size: {0} samples&quot;, packetSize / 4));\r\n\r\n            while (packetSize != 0)\r\n            {\r\n                buffer = capture.GetBuffer(out framesAvailable, out flags);\r\n\r\n                int bytesAvailable = framesAvailable * bytesPerFrame;\r\n\r\n                //Debug.WriteLine(string.Format(&quot;got buffer: {0} frames&quot;, framesAvailable));\r\n\r\n                // if not silence...\r\n                if ((flags &amp; AudioClientBufferFlags.Silent) != AudioClientBufferFlags.Silent)\r\n                {\r\n                    Marshal.Copy(buffer, recordBuffer, recordBufferOffset, bytesAvailable);\r\n                }\r\n                else\r\n                {\r\n                    Array.Clear(recordBuffer, recordBufferOffset, bytesAvailable);\r\n                }\r\n                recordBufferOffset += bytesAvailable;\r\n                capture.ReleaseBuffer(framesAvailable);\r\n                packetSize = capture.GetNextPacketSize();\r\n            }\r\n            if (DataAvailable != null)\r\n            {\r\n                DataAvailable(this, new WaveInEventArgs(recordBuffer, recordBufferOffset));\r\n            }\r\n        }\r\n\r\n        /// \r\n        /// Dispose\r\n        /// \r\n        public void Dispose()\r\n        {\r\n            StopRecording();\r\n        }\r\n    }</pre>\r\n</p>",
+    "PostedDate": "2010-05-21T04:00:05.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "445797",
+    "ThreadId": "212980",
+    "Html": "<p>Fantastic, thanks Mark! I'll give that a go and report back on here how I get on.</p>",
+    "PostedDate": "2010-05-21T04:03:41.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "445798",
+    "ThreadId": "212980",
+    "Html": "<p>p.s. Enjoy the sun this weekend in Southampton; I live in Brighton - gotta love those coastal cities in the Summer!</p>",
+    "PostedDate": "2010-05-21T04:11:32.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "445803",
+    "ThreadId": "212980",
+    "Html": "<p>yes, nice living on the south coast. good .net developer community here too, and from the sounds of it in Brighton too</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-05-21T04:21:44.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "470539",
+    "ThreadId": "212980",
+    "Html": "<p>I tested the code when I wrote it so it should work ;)</p>",
+    "PostedDate": "2010-07-21T11:59:03.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

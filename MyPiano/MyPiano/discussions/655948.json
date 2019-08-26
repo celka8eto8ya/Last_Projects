@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1477474",
+    "ThreadId": "655948",
+    "Html": "Hi there,\r<br />\nI am new to C# and naudio.  Currently i want to build a signal processing program. The capture frequency is 8K Hz.\r<br />\nIs there any way to capture the sound and store it in an array?\r<br />\nAny one can show me a sample of capturing the first 8000 samples and store it in an int array?<br />\n",
+    "PostedDate": "2016-06-28T06:20:41.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1484450",
+    "ThreadId": "655948",
+    "Html": "You can use <code>WaveIn</code> to record audio. In the <code>DataAvailable</code> event handler you'd get the captured audio in a byte array. I'd recommend writing audio to a <code>MemoryStream</code> as you get it and then later you can read out of that memory stream, converting each pair of bytes into a short (assuming you recorded at 16 bit)<br />\n",
+    "PostedDate": "2016-09-22T11:28:30.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

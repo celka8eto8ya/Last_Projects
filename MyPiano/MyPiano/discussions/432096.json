@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "996901",
+    "ThreadId": "432096",
+    "Html": "Hello,\r<br />\n<br />\nI've been working on expanding the Network Chat demo to allow multiple clients to connect to the host computer and voice chat.  Seeing that I need to keep track of the clients and the audio data sent over, I created a Client struct that keeps track of who the client is and their BufferedWaveProvider object data.\r<br />\n<br />\nFor the host, I add their BufferedWaveProvider object to a MixingSampleProvider, which then I used that to create a IWaveProvider object.  Finally, I used the IWaveProvider for my WaveOut object and use that to play audio.\r<br />\n<br />\nFor my Recieve method that I'm using to obtain audio data, I check to see whether or not the data came from the host or another client.  If it's from the host, I just add the data to the host's BufferedWaveProvider object.  Otherwise, I need to check to see if the client is connecting to the host IP for the first time.  If it is, I create a new Client object with it's own BufferedWaveProvider object and add it to my MixingSampleProvider.  Finally, I pull the correct Client object based on its IP address, add the data to its BufferedWaveProvider, and then update the BufferedWaveProvider so that it has the added sample data.\r<br />\n<br />\nWhen I applied this logic to actual code and tested it, the audio from the host's mic works correctly.  When a client connects to the host's IP from another computer, the audio gets choppy.  I can hear what's being said from the client, but it's delayed by a few seconds.\r<br />\n<br />\nPerhaps my logic isn't correct when trying to receive and play what's been sent over by clients.  What could be causing the choppy audio?\r<br />\n<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-02-05T13:06:53.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "999587",
+    "ThreadId": "432096",
+    "Html": "choppy audio is usually because you can't fill the bufferedwaveprovider fast enough. Maybe your netwrok connection is not good enough. You also might need to allow some buffering time to give smoother playback.<br />\n",
+    "PostedDate": "2013-02-11T07:19:20.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "999752",
+    "ThreadId": "432096",
+    "Html": "For testing purposes, I'm using LAN for sending audio between multiple clients.  Is there a way to delay the audio while waveOut.Play() is active?  Maybe it's expecting all audio to be available to play and since my Receiver() method is adding the data to the bufferedwaveproviders (either client or host) that it can't keep up.  What I would like to do is have the audio be delayed until a certain percentage of the data is filled in the bufferedwaveprovider.<br />\n",
+    "PostedDate": "2013-02-11T14:25:07.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "999857",
+    "ThreadId": "432096",
+    "Html": "one cheat to avoid having to pause while the buffer fills is to stick a couple of seconds of silence into it whenever it empties.<br />\n",
+    "PostedDate": "2013-02-11T23:58:10.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000827",
+    "ThreadId": "432096",
+    "Html": "Is it also possible to check the buffer to see if a certain percentage of it is filled before playing the audio?  For example, if a client's bufferedwaveprovider isn't 25% - 75% filled, then the waveOut is paused and once I received sufficient data I can resume playing.<br />\n",
+    "PostedDate": "2013-02-13T14:02:25.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002865",
+    "ThreadId": "432096",
+    "Html": "you can ask the BufferedWaveProvider how much data it has queued. This is how the Network streaming demo works - goes into auto-pause when there is not enough..<br />\n",
+    "PostedDate": "2013-02-18T08:38:07.963-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006415",
+    "ThreadId": "432096",
+    "Html": "Can this also work if I have more than one client connected to the server?  As long as one client has enough data in their bufferedwaveprovider, I should be able to have waveOut play the audio while still collecting data from other clients.  I'm thinking all I would have to do is create a while loop to find a client that has sufficient data and then play the audio.  Would that be sufficient or do you think there's more to it than that?<br />\n",
+    "PostedDate": "2013-02-25T08:55:23.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006511",
+    "ThreadId": "432096",
+    "Html": "well if you're mixing them with a MixingSampleProvider, then you need to create an intermediate stream between the BufferedWaveProvider and the Mixer so that it can return 0s in its Read method while buffering is still working. The mixer will always try to read out of all the inputs so they have to return something.<br />\n",
+    "PostedDate": "2013-02-25T12:40:16.78-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007096",
+    "ThreadId": "432096",
+    "Html": "Are there any samples from the naudio demos that deal with adding intermediate streams?  I'm confused how adding another stream would work if I've already added a client's waveprovider to the MixingSampleProvider.<br />\n",
+    "PostedDate": "2013-02-26T10:13:30.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008481",
+    "ThreadId": "432096",
+    "Html": "Can I at least show you the pseudocode for my Receiver() method so that I can explain where I'm at with obtaining the data from clients and trying to fill each client's BufferedWaveProvider and adding them to the MixingSampleProvider?<br />\n",
+    "PostedDate": "2013-02-28T14:17:43.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1009154",
+    "ThreadId": "432096",
+    "Html": "you can make a class that inherits from ISampleProvider or IWaveProvider and in its Read method you can either read from a source provider or just return 0s if there isn't enough buffered audio in the source<br />\n",
+    "PostedDate": "2013-03-01T23:57:41.68-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

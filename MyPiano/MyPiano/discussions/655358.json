@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1475531",
+    "ThreadId": "655358",
+    "Html": "Hello, I'd like to know how to get or calculate the bitrate in kbps of a mp3-mediafile. I Need the information to display it in the media-panel<br />\n",
+    "PostedDate": "2016-06-08T23:27:47.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482543",
+    "ThreadId": "655358",
+    "Html": "MP3 files consist of MP3 frames, each of which has its own bitrate. In constant bitrate file (CBR) all frames have the same bitrate, but you can also get variable bitrate MP3s (VBR). If you have the whole file, you can calcualte the bitrate by dividing the number of bytes by the total number of seconds (and MP3FileReader can give you the duration). \r<br />\n<br />\nMp3FileReader also has a Mp3WaveFormat property which contains AverageBytesPerSecond. If you multiply that by 8, you get Average bits per second. And divide by 1000 to get kbps.<br />\n",
+    "PostedDate": "2016-08-31T13:28:59.22-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

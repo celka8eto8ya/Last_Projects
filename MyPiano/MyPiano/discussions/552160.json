@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1274368",
+    "ThreadId": "552160",
+    "Html": "Hello,\r<br />\n<br />\ni'm currently using NAudio together with WPF Sound Visualization Library (<a href=\"https://wpfsvl.codeplex.com/\" rel=\"nofollow\">https://wpfsvl.codeplex.com/</a>). FFT is calculated by a sample aggregator which is provided in the WPF Sound Visualization Library source code. The spectrum works well, but it seems volume dependent. When the NAudio player is muted, the spectrum s not displayed.\r<br />\n<br />\nIs there a way to make FFT calculation independent of the volume?<br />\n",
+    "PostedDate": "2014-07-19T13:44:25.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278436",
+    "ThreadId": "552160",
+    "Html": "Yes, you need to move the FFT calculation earlier in your signal chain, before the volume control is applied. The NAudio demo shows a similar concept where the waveform visualisation is drawn before the volume, but the volume meter visualisation is drawn after volume is applied.<br />\n",
+    "PostedDate": "2014-07-28T09:30:28.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

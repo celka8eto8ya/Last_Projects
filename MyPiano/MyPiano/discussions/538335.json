@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1220446",
+    "ThreadId": "538335",
+    "Html": "I am trying to mix multiple .mp2 files into a .mp3 using your library and naudio.lame<br />\n<pre><code>        using (var reader1 = new Mp3FileReader(&quot;file1.mp2&quot;))\n        using (var reader2 = new Mp3FileReader(&quot;file2.mp2&quot;))\n        {\n            var inputs = new List&lt;ISampleProvider&gt;() {\n    reader1.ToSampleProvider(),\n    reader2.ToSampleProvider(),\n};\n            var mixer = new MixingSampleProvider(inputs);\n\n            using (var writer = new LameMP3FileWriter(&quot;abc.mp3&quot;, mixer.WaveFormat, 128))\n                mixer.CopyTo(writer);\n</code></pre>\n\nmixer does not have a CopyTo since it is not a stream...how can I go from MixingSampleProvider to a stream with a CopyTo() function.\r<br />\n<br />\nMy code is based upon what is found here: <a href=\"https://github.com/Corey-M/NAudio.Lame\" rel=\"nofollow\">https://github.com/Corey-M/NAudio.Lame</a><br />\n",
+    "PostedDate": "2014-03-07T12:59:06.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1220855",
+    "ThreadId": "538335",
+    "Html": "You don't have to use CopyTo - you can just read in a loop out of your mixer and write to the LameMP3FileWriter. You might want to use a SampleToWaveProvider16 to get back to 16 bit PCM and to be able to read as a byte array instead of float<br />\n",
+    "PostedDate": "2014-03-09T15:52:00.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "555470",
+    "ThreadId": "243336",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm having a problem when disposing of NAudio objects (waveplayer, wavestream etc.). &nbsp;I get an &quot;Assertion Failed&quot; popup window with the message &quot;AcmStreamHeader dispose was not called&quot;. This happens only when I play MP3 sources (from a Stream object)\r\n and otherwise works fine with WAVs. I can reproduce the error either by playing multiple instances in succession or after I close the application, in which case the popup appears only momentarily and closes on its own.</p>\r\n<p>My code is such that only one WavePlayer and WaveStream are active at any one time and I dispose and recreate in between successive playing. I also ensure that the objects are disposed on closing of the play dialog form.</p>\r\n<p>I should also point out that I create intermediate streams to normalise to PCM format and 16bit sample depth where needed, hence these would presumably create other wavestream instances that I don't explicitly dispose.</p>\r\n<p>Could you please direct me on which objects I should keep track of and dispose (and in which order)?</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>\r\n<p><strong>EDIT:</strong> Turns out I had a bug and was not disposing the wavestream. Apparently it is sufficient to dispose the one that is fed to the WavePlayer object.</p>\r\n",
+    "PostedDate": "2011-01-26T02:53:01.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

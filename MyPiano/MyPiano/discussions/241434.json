@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "547968",
+    "ThreadId": "241434",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>in my application i use a a socket connection between 2 pcs to transfer audio datat (speex encoded). The transmission and decpding works very well but sometimes</p>\r\n<p>during playback i have small gaps, in this case the playback buffer is zero filled. I am using BufferedWaveProvider for playback.</p>\r\n<p>How can i avoid this? This happens also when i buffer more data.</p>\r\n<p>The Waveformat is 8000 kHz, 16 bit, mono.</p>\r\n<p>Thanks...</p>\r\n<p>Tobias</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-12T05:12:55.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547972",
+    "ThreadId": "241434",
+    "Html": "\r\n<p>I forgot to metion that the callback function for playing audio is called and not enough bytes are available... so the rest is filled with zeros...</p>\r\n",
+    "PostedDate": "2011-01-12T05:14:42.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "548594",
+    "ThreadId": "241434",
+    "Html": "\r\n<p>if there aren't enough bytes queued in the BufferedWaveProvider there is not much you can do - you simply are not providing data fast enough for playback. Possibly you could 'pause' playback (i.e. play a bit more silence) whenever you don't have enough data\r\n buffered (e.g. 1 seconds worth).</p>\r\n",
+    "PostedDate": "2011-01-13T03:14:53.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "548598",
+    "ThreadId": "241434",
+    "Html": "\r\n<p>Yes there are missing some bytes which (approx. 500 bytes of PCM data (8000 hHz, 16 bit, mono) in 10 seconds. Bute when the silence (0 bytes) are played... i hear a clicking noise from the pseakers. Is it possibel to fill these bytes with audio data which\r\n &quot;fits&quot; to the data played before?</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-01-13T03:21:39.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "548600",
+    "ThreadId": "241434",
+    "Html": "\r\n<p>you need a brief fade-in/fade-out. Over the course of a few samples (16 bit, so byte pairs), move towards zero.</p>\r\n",
+    "PostedDate": "2011-01-13T03:23:55.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555404",
+    "ThreadId": "241434",
+    "Html": "\r\n<p>I have another question...</p>\r\n<p>Is it poosible to use waveout buffer (which are send to the sound card) with dynamic sizes? Now each read does return the same datasize. Is it possible to fill them dynamically?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-01-25T23:33:36.547-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "556190",
+    "ThreadId": "241434",
+    "Html": "\r\n<p>you could, although it would render the &quot;latency&quot; time unreliable. You'd probably have to create your own custom version of WaveOut to do it</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-27T05:18:11.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

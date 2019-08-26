@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1248528",
+    "ThreadId": "546272",
+    "Html": "Hi Mark,\r<br />\nJust came across this bug. When an audiofile is playing (mp3 or wav doesnt matter) and i press down on the close, maximize or minimize button (without letting go) the sound pauses playing.\r<br />\n<br />\nThis is quite annoying. I use waveout api and audiofilereader.\r<br />\n<br />\nAnyways, it's a bug from NAudio I'm afraid :(\r<br />\n<br />\nCould you fix this?<br />\n",
+    "PostedDate": "2014-05-22T11:15:42.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1314891",
+    "ThreadId": "570227",
+    "Html": "Hello, i'm a newbie (really a newbie, just learn C# ~2 weeks). I'm developing CW demodulation program using NAudio library. I'm trying to read data that saved in WaveInProvider buffer ang display it on textbox. Can I read it? if I can how i can do that?\r<br />\n<br />\nI'm doing this because i want to verify that the buffer has some data. The data taken from input device (stereo mix/ microphone). For now I have create a loopback program from input device.\r<br />\n<br />\nThank you do much<br />\n",
+    "PostedDate": "2014-10-20T01:04:34.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1315285",
+    "ThreadId": "570227",
+    "Html": "To record audio, use WaveIn and handle DataAvailable.\r<br />\nThere will be a lot of data, too much to fit into a textbox. But in the event args for DataAvailable you can find out how many bytes were recorded, and examine the raw sample data.<br />\n",
+    "PostedDate": "2014-10-21T03:56:51.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1315556",
+    "ThreadId": "570227",
+    "Html": "Thank you for the reply mark. Now i can see the data from loopback. How to integrate the FFT function?\r<br />\n<br />\nI have search on google and try every solution. But somehow the data can't go into FFT function and the complex[] result always zero although there is a data captured by loopback. I'm using sampleAggregator too.\r<br />\n<br />\nThank you so much<br />\n",
+    "PostedDate": "2014-10-21T22:32:18.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1316121",
+    "ThreadId": "570227",
+    "Html": "Hi, I'm afraid the SampleAggregator in the WPF NAudio Demo is the only example of doing this I have available. Are you playing the sample aggregator? The audio does need to be pulled through it or FFTs won't be calculated.<br />\n",
+    "PostedDate": "2014-10-23T14:36:05.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1316893",
+    "ThreadId": "570227",
+    "Html": "Hi, mark. yes I play with the SampleAggregator. Now I can do FFT and visualize the result using ZedGraph. I want to ask about the FFT result. I'm getting three same reult value in one time for one sample point. Is it possible? or there is something wrong with my program?<br />\n<br />\nand one more, i want to put the FFT result into 3 seperate buffer so while the first buffer processed by a function, the result will fill the second and third buffer. After the first buffer finished, the second buffer will go into the function and so on. Is it better to use time based buffer like buffer for 100ms or using buffer with the same size of fft length and send to the function after it filled up?<br />\n<br />\nand what is the size of e.buffer from WaveInEventArgs? can i change the size of the buffer?<br />\n<br />\nthank you so much. <br />\n",
+    "PostedDate": "2014-10-27T18:33:54.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1318501",
+    "ThreadId": "570227",
+    "Html": "Hi mark, now i'm trying to put the equalizer from the wpf demo to my program. But i can't put the setPeakingEq method from BiQuadFilter. Are you using different library for the demo?<br />\n<br />\nAnd can someone please explain about gow to change IWaveIn to ISampleProvider/IWaveProvider?<br />\n",
+    "PostedDate": "2014-11-02T21:55:47.817-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1319009",
+    "ThreadId": "570227",
+    "Html": "Don't know if this helped you, but this is how i implemented EQ:\r<br />\n<br />\n<strong>EqualizerSampleProvider</strong><br />\n<pre><code>/// &lt;summary&gt;\n    /// Basic example of a multi-band eq\n    /// uses the same settings for both channels in stereo audio\n    /// Call Update after you've updated the bands\n    /// Potentially to be added to NAudio in a future version\n    /// &lt;/summary&gt;\n    internal class EqualizerSampleProvider : ISampleProvider\n    {\n        private readonly ISampleProvider sourceProvider;\n        private readonly EqualizerBand[] bands;\n        private readonly BiQuadFilter[,] filters;\n        private readonly int channels;\n        private readonly int bandCount;\n        private bool updated;\n\n        public EqualizerSampleProvider(ISampleProvider sourceProvider, EqualizerBand[] bands)\n        {\n            this.sourceProvider = sourceProvider;\n            this.bands = bands;\n            channels = sourceProvider.WaveFormat.Channels;\n            bandCount = bands.Length;\n            filters = new BiQuadFilter[channels, bands.Length];\n            CreateFilters();\n        }\n\n        private void CreateFilters()\n        {\n            for (int bandIndex = 0; bandIndex &lt; bandCount; bandIndex++)\n            {\n                var band = bands[bandIndex];\n                for (int n = 0; n &lt; channels; n++)\n                {\n                    if (filters[n, bandIndex] == null)\n                        filters[n, bandIndex] = BiQuadFilter.PeakingEQ(sourceProvider.WaveFormat.SampleRate, band.Frequency, band.Bandwidth, band.Gain);\n                    else\n                        filters[n, bandIndex].SetPeakingEq(sourceProvider.WaveFormat.SampleRate, band.Frequency, band.Bandwidth, band.Gain);\n                }\n            }\n        }\n\n        public void Update()\n        {\n            updated = true;\n            CreateFilters();\n        }\n\n        public WaveFormat WaveFormat { get { return sourceProvider.WaveFormat; } }\n\n        public int Read(float[] buffer, int offset, int count)\n        {\n            int samplesRead = sourceProvider.Read(buffer, offset, count);\n\n            if (updated)\n            {\n                CreateFilters();\n                updated = false;\n            }\n\n            for (int n = 0; n &lt; samplesRead; n++)\n            {\n                int ch = n % channels;\n\n                for (int band = 0; band &lt; bandCount; band++)\n                {\n                    buffer[offset + n] = filters[ch, band].Transform(buffer[offset + n]);\n                }\n            }\n            return samplesRead;\n        }\n    }</code></pre>\n\n<strong>EqualizerBand</strong><br />\n<pre><code>public class EqualizerBand\n    {\n        private float frequency;\n        private float gain;\n        private float bandwidth;\n\n\n        public event EventHandler Updated;\n\n        public float Frequency\n        {\n            get { return this.frequency; }\n            set\n            {\n                this.frequency = value;\n\n                OnUpdated();\n            }\n        }\n\n        public float Gain\n        {\n            get { return this.gain; }\n            set\n            {\n                this.gain = value;\n\n                OnUpdated();\n            }\n        }\n\n        public float Bandwidth\n        {\n            get { return this.bandwidth; }\n            set\n            {\n                this.bandwidth = value;\n\n                OnUpdated();\n            }\n        }\n\n\n        private void OnUpdated()\n        {\n            if (Updated != null)\n            {\n                Updated(this, EventArgs.Empty);\n            }\n        }\n    }</code></pre>\n\nequalizerBands = new EqualizerBand[]<br />\n<pre><code>                {\n                    new EqualizerBand {Bandwidth = 0.8f, Frequency = 100, Gain = 0},\n                    new EqualizerBand {Bandwidth = 0.8f, Frequency = 200, Gain = 0},\n                    new EqualizerBand {Bandwidth = 0.8f, Frequency = 400, Gain = 0},\n                    new EqualizerBand {Bandwidth = 0.8f, Frequency = 800, Gain = 0},\n                    new EqualizerBand {Bandwidth = 0.8f, Frequency = 1200, Gain = 0},\n                    new EqualizerBand {Bandwidth = 0.8f, Frequency = 2400, Gain = 0},\n                    new EqualizerBand {Bandwidth = 0.8f, Frequency = 4800, Gain = 0},\n                    new EqualizerBand {Bandwidth = 0.8f, Frequency = 9600, Gain = 0},\n                };\n</code></pre>\n\nwaveToSample = new WaveToSampleProvider(waveChannel);\r<br />\nequalizerSampleProvider = new EqualizerSampleProvider(waveToSample, equalizerBands);<br />\n",
+    "PostedDate": "2014-11-04T07:10:04.177-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1053236",
+    "ThreadId": "446117",
+    "Html": "Is there a way to write the function EnumerateTransforms in MediaFoundation /MediaFoundationHelpers without using MFTEnumEx in MediaFoundation/MediaFoundationInterop?  <br />\n",
+    "PostedDate": "2013-06-05T11:42:54.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1053468",
+    "ThreadId": "446117",
+    "Html": "not that I know of, but there is a way to get at transcoders in the Windows RT API (I'm assuming this is why you want to avoid MFTEnumEx)\r<br />\n<a href=\"http://msdn.microsoft.com/en-us/library/windows/apps/windows.media.transcoding.mediatranscoder.aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-us/library/windows/apps/windows.media.transcoding.mediatranscoder.aspx</a>\r<br />\n<br />\nSo basically, I don't think you can enumerate them, but you might still be able to use them<br />\n",
+    "PostedDate": "2013-06-06T02:30:38.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

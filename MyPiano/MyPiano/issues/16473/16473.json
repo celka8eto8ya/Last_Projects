@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "naudio 1.7.3, WaveFileWriter class, \r\nmethod override void Write(byte[] data, int offset, int count)\r\n            if (outStream.Length + count > UInt32.MaxValue)\r\n                throw new ArgumentException(\"WAV file too large\", \"count\");\r\nthis causes drammatical performance degradation (checking stream length) for byte by byte writing, especially when output stream is located at network location.\r\nSomeone who uses Write() shall be conscious of file system limitations, IMHO this is not good place to do this, it should be before use of Write() method ",
+    "LastUpdatedDate": "2015-03-25T03:48:20.233-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-03-25T03:46:52.547-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "performance degradation at WaveFileWriter.Write () ",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16473
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

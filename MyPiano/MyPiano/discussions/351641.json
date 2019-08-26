@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "821472",
+    "ThreadId": "351641",
+    "Html": "\r\n<p>When using the NAudioWPFDemo, and subsequently code I've created based on it, I have an issue as follows:</p>\r\n<ul>\r\n<li>Load a file </li><li>Play the file </li><li>Stop playback mid file </li></ul>\r\n<p>Now if I play another sound file, via the app, or even just clicking the volume mixer in Windows to play the system bell, I'll hear a burst of the audio from the previous clip.</p>\r\n<p><br>\r\nIt seems that when the playback is stopped the current buffer isn't flushed?</p>\r\n<p>Is this an issue specific to my audio card/driver, or is this a bug in the code?&nbsp;</p>\r\n",
+    "PostedDate": "2012-04-09T01:21:19.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "824241",
+    "ThreadId": "351641",
+    "Html": "<p>that's odd. Under the hood, waveOutReset should get called, which is supposed to clear out all internal buffers. Could be a dodgy soundcard driver. Is it a cheap usb headset / built in audio? What OS are you using?</p>",
+    "PostedDate": "2012-04-16T00:44:32.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "824361",
+    "ThreadId": "351641",
+    "Html": "<p>Thanks for the response.&nbsp;&nbsp; It's on a notebook (IDT 92HD73C1 Audio) running Windows 7 x64.&nbsp; It happens after a stop/pause.</p>\r\n<p>I just tried on another PC (also Win 7 x64) and it doesn't have this issue.&nbsp; The user of the app I've written hasn't complained either, so perhaps I'll just put it down to the poor inbuilt sound card driver.</p>",
+    "PostedDate": "2012-04-16T05:20:03.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

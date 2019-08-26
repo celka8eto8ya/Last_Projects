@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "1060627",
+    "ThreadId": "448098",
+    "Html": "Hey guys,\r<br />\n<br />\nNew problem for you here today xD. So what I want to do is capture both the speaker audio and microphone audio and save that data in a single WAV file. Is it possible to stream it directly to this to one audio file using Naudio? or do i have to record them seperately and merge them together? Either way is fine. The idea is that these two different sources of audio, when put together form a conversation. so I am not looking to concatenate, but I am looking to merge or layer them on top of each other.\r<br />\n<br />\nThanks in advance for the response!\r<br />\n<br />\nSincerely,\r<br />\nSicariuxs<br />\n",
+    "PostedDate": "2013-06-24T16:42:10.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1060881",
+    "ThreadId": "448098",
+    "Html": "you would need to mix the two recordings together afterwards. If the two recordings were both continuous, of the same sample rate, and started at exactly the same time, then this would be relatively straightforward. I'd use the MixingSampleProvider to mix them, and convert down to 16 bit to write to a file afterwards.<br />\n",
+    "PostedDate": "2013-06-25T06:29:44.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1061122",
+    "ThreadId": "448098",
+    "Html": "I'm kind of having a hard time implementing this, could you show an example or link one? <br />\n<br />\nAlso out of curiosity, is it at all possible to read in the two audio files as I am writing them? to sort of simulate it being writing to one file on the fly? This way the user doesn't have to wait after making the recording for the two files to merge.<br />\n<br />\nthanks,<br />\nSicariuxs<br />\n",
+    "PostedDate": "2013-06-25T15:58:16.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062008",
+    "ThreadId": "448098",
+    "Html": "here's a simple code snippet that will work with the alpha release of NAudio 1.7 (get it on NuGet). The two input files must have the same sample rate and channel count for this to work<br />\n<pre><code>using(var reader1 = new WaveFileReader(&quot;file1.wav&quot;))\nusing(var reader2 = new WaveFileReader(&quot;file2.wav&quot;))\n{\n    var inputs = new List&lt;ISampleProvider&gt;() {\n        reader1.ToSampleProvider(),\n        reader2.ToSampleProvider(),\n    };\n    var mixer = new MixingSampleProvider(inputs);\n    WaveFileWriter.CreateWaveFile16(&quot;mixed.wav&quot;, mixer);\n}</code></pre>\n\n",
+    "PostedDate": "2013-06-27T08:01:02.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062009",
+    "ThreadId": "448098",
+    "Html": "... and yes, mixing on the fly can be done with the MixingSampleProvider, with BufferedWaveProviders as the input, but the code sample would be a little more convoluted to write and I don't have an example to hand at the moment.<br />\n",
+    "PostedDate": "2013-06-27T08:02:05.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062165",
+    "ThreadId": "448098",
+    "Html": "the function &quot;ToSampleProvider()&quot; doesn't seem to pop for me. is there any specific namespace i need from Naudio maybe?<br />\n",
+    "PostedDate": "2013-06-27T13:41:36.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062167",
+    "ThreadId": "448098",
+    "Html": "that's in the latest alpha of NAudio 1.7. Under the hood its just calling SampleProviderConverters.ConvertWaveProviderIntoSampleProviderso use that instead.<br />\n",
+    "PostedDate": "2013-06-27T13:47:40.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062190",
+    "ThreadId": "448098",
+    "Html": "Hmmm  The only one that pops up for me is &quot;SampleProviderConverterBase&quot; and there is no &quot;ConvertWaveProviderIntoSampleProviderso&quot; under there. Sorry I'm sort of new to C#, What am i doing wrong here xD?<br />\n",
+    "PostedDate": "2013-06-27T14:42:04.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062195",
+    "ThreadId": "448098",
+    "Html": "ohh okay. so i installed the naudio 1.7 alpha 05 version, and i have that function now. but now i get an error &quot;Unsupported source encoding&quot;. this happens once it reaches the list of ISampleProvider. Any ideas?<br />\n",
+    "PostedDate": "2013-06-27T14:54:58.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1062206",
+    "ThreadId": "448098",
+    "Html": "okay so i found out that the two files that i have been trying to mix together have different wave bit depths. one is 16 and the other is 32.<br />\n<br />\nSo what i did was change the one of my voice to 32 bit as well.<br />\n<br />\nbut i still have the same problem...<br />\n<br />\nBut i found out using the demo application &quot;Audio File Inspector&quot; that there are some differences in the audio files but i don't know how to change these differences. I'll post them below.<br />\n<br />\nMy Voice:<br />\nOpening C:\\Users\\Stefano\\Desktop\\input\\06-27-2013\\06-27-2013[15.53.14].wav<br />\nPcm 44100Hz 2 channels 32 bits per sample<br />\nExtra Size: 0 Block Align: 8 Average Bytes Per Second: 352800<br />\nWaveFormat: 32 bit PCM: 44kHz 2 channels<br />\nLength: 2214912 bytes: 00:00:06.2780000 <br />\n<br />\nMy Speakers using WasapiLoopbackCapture class:<br />\nOpening C:\\Users\\Stefano\\Desktop\\output\\06-27-2013\\06-27-2013[15.53.14].wav<br />\nExtensible 44100Hz 2 channels 32 bits per sample<br />\nExtra Size: 22 Block Align: 8 Average Bytes Per Second: 352800<br />\nWaveFormat: 32 bit PCM: 44kHz 2 channels<br />\nLength: 2192848 bytes: 00:00:06.2160000 <br />\nChunk: fact, length 4<br />\nBA 2E 04 00 <br />\n<br />\n<br />\nAny ideas how to change the Second one to be like the first?<br />\n<br />\nThanks,<br />\nSicariuxs<br />\n",
+    "PostedDate": "2013-06-27T15:32:04.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1063168",
+    "ThreadId": "448098",
+    "Html": "I can never remember whether the WASAPI loopback capture is 32 bit int or 32 bit floating point. I think its the former. but check the SubFormat property (should be either AudioMediaSubtypes.MEDIASUBTYPE_IEEE_FLOAT or AudioMediaSubtypes.MEDIASUBTYPE_PCM)\r<br />\n<br />\nIf it is 32 bit int, use Pcm32BitToSampleProvider, and if it is 32 bit float use WaveToSampleProvider<br />\n",
+    "PostedDate": "2013-07-01T06:54:03.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

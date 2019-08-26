@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Second constructor in CueList file is missing the initialization of the cues member.\n\"private List<Cue> cues = new List<Cue>();\"\n\nThis produces a null reference exception when trying to use the CueWaveFileReader.\n\nI suggest you initialize the list inline instead.\n\nNAudio-Source\\NAudio\\Wave\\WaveStreams\\CueList.cs, line 92\nfrom\nprivate List<Cue> cues;\nto\nprivate List<Cue> cues = new List<Cue>();",
+    "LastUpdatedDate": "2012-12-04T05:32:51.853-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-11-19T02:27:25.85-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NullReference exception with CueList",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16373
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thank's for reporting, I've made the fix",
+      "PostedDate": "2012-12-04T05:32:51.853-08:00",
+      "Id": 83517
+    }
+  ]
+}

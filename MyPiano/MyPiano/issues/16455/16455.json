@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Normally you'd expect Stop() to stop playback and seek to the beginning, but it doesn't.\r\nIn the following code:\r\n```\r\n_myWaveOut = new DirectSoundOut(device);\r\n_myAudioFileReader = new AudioFileReader(path);\r\n_myWaveOut.Init(_myAudioFileReader);\r\n_myWaveOut.Play();\r\n// ...\r\n_myWaveOut.Stop();\r\n_myWaveOut.Play();\r\n// ...\r\n```\r\nAfter Play() is called for the second time, the file starts playing from the position it was at when Stop() was called. Please change this so it starts playing from the start like it should.",
+    "LastUpdatedDate": "2015-01-05T21:26:44.287-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-10-17T06:24:33.42-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveOut.Stop() pauses playback instead of stopping",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 2,
+    "Id": 16455
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "waveOut.Stop simply stops your device from playing audio. It has no idea what it is playing. It might not be an audio file - it might be synthesized music, or streamed audio over a network. So it is not possible for it to \"seek to the beginning\". ",
+      "PostedDate": "2014-11-11T09:30:22.313-08:00",
+      "Id": 164504
+    }
+  ]
+}

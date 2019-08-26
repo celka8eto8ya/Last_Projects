@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1259362",
+    "ThreadId": "549566",
+    "Html": "ok I convert my WaveProviderbuffers to Waverstreams \r<br />\nI  use that to make  a WaveChannel32.\r<br />\nand I set PadWithZeroes = false, but the the stop event is still not being called .\r<br />\n<br />\nside note If i play without a file or an file with an effect without a tone in WaveProviderbuffers, the stop event is called, so that does work.\r<br />\n<br />\nWhat am I missing?<br />\n<pre><code> WaveProviderToWaveStream wptws = new WaveProviderToWaveStream(Sinebuffer, Sinebuffer.BufferLength);\n                WaveChannel32 temp = new WaveChannel32(wptws);\n                temp.PadWithZeroes = false;\n                mixer.AddMixerInput(temp);</code></pre>\n\nthe tone does stop playing at the time I set, but the stop event is still not being called <br />\n",
+    "PostedDate": "2014-06-24T12:43:41.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-06-26T11:03:56.427-07:00"
+  },
+  {
+    "Id": "1259440",
+    "ThreadId": "549566",
+    "Html": "markheath is there something else doing PadWithZeroes?\r<br />\nis something else adding zero that I do not know about?\r<br />\nif so can you please tell me here I should turn it off?<br />\n",
+    "PostedDate": "2014-06-24T17:00:39.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1259441",
+    "ThreadId": "549566",
+    "Html": "i was looking at the source code for WaveProviderbuffer and it say\r<br />\n/// &lt;summary&gt;<br />\n<pre><code>/// Provides a buffered store of samples\n/// Read method will return queued samples or fill buffer with zeroes\n/// Now backed by a circular buffer\n</code></pre>\n\nso does that mean that after the my samples are done it will start adding zeros?\r<br />\nif so how do I stop it ?<br />\n",
+    "PostedDate": "2014-06-24T17:10:00.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1259494",
+    "ThreadId": "549566",
+    "Html": "Yes, BufferedWaveProvider always returns the number of bytes asked for in Read, with extra silence if needed. The reason it works this way is it is intended for playing audio that comes in over the network or from a microphone and so there may be small gaps in available data to play. If your source is originally from a file, BufferedWaveProvider shouldn't be used.\r<br />\n<br />\nBut it's really easy though to make your own that works how you want. Just copy the code from BufferedWaveProvider and change the Read method.\r<br />\n<br />\nMaybe it can be an optional feature for a future NAudio<br />\n",
+    "PostedDate": "2014-06-24T23:29:30.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260139",
+    "ThreadId": "549566",
+    "Html": "so I redid my classes and they all inherit  from waveform now. I removed  BufferedWaveProvider  and  i have this in all my classes :\r<br />\n if (n2 &gt;= Bufferlength &amp;&amp; stopflag == false)<br />\n<pre><code>        {\n            Dispose();\n            return 0;\n        }</code></pre>\n\nbufferlength have the number of samples need for the time frame I am looking for\r<br />\nand it you use \r<br />\nDispose();\r<br />\nand then return 0;\r<br />\nthe program will call the onPlaybackStopped event\r<br />\nso it will pay the tone I make and stop at the need time.\r<br />\n<br />\n thank for the help<br />\n",
+    "PostedDate": "2014-06-26T11:03:50.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "When I using ResamplerDmoStream and selecting Anything except WaveOutput (e.g. WASAPI, DirectSound) I've getting below exception:\r\nUnable to cast COM Object 'NAudio.DMO.ResamplerMediaComObject' to interface type 'Naudio.Dmo.IMediaObject' ...",
+    "LastUpdatedDate": "2012-12-04T05:25:07.147-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-11-19T04:55:59.357-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Exception on Resampling",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16374
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "this is because you are using it from a different thread than the one it was created on. For NAudio 1.7 I'm hoping to come up with some better ways to handle this type of thing",
+      "PostedDate": "2012-12-04T05:25:07.147-08:00",
+      "Id": 83516
+    }
+  ]
+}

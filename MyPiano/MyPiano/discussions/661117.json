@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1492138",
+    "ThreadId": "661117",
+    "Html": "I'm using WaveChannel32's pan property to try to control the panning during playback (the audio source is stereo and the channels are being added to a Mixer for playback).<br />\nWhen pan=0, the result is as expected but any inbetween value (-1 &gt; n &lt; 0 or 0 &gt; n &lt; 1) the result is not the expected smooth transition.<br />\nAny suggestions?<br />\n",
+    "PostedDate": "2017-02-03T00:11:42.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

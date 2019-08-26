@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "694159",
+    "ThreadId": "278408",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I am pretty new to NAudio. I am trying to figure out if NAudio can help me read notes, timing between notes and change the tempo of .mid file. I am using C# so that shouldn't be a problem. The important thing for me is to change the tempo .mid file at realtime.</p>\r\n<p>Thanks for your help!</p>\r\n",
+    "PostedDate": "2011-11-04T16:38:56.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "701260",
+    "ThreadId": "278408",
+    "Html": "<p>NAudio can read MIDI files, and you can find the tempo event and change it. You could even insert other tempo changes into a file. However, I am not quite sure what you mean by changing the tempo in realtime. That is the job of a sequencer.</p>",
+    "PostedDate": "2011-11-21T07:53:48.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

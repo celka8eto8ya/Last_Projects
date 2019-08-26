@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1461768",
+    "ThreadId": "650859",
+    "Html": "Hello, I m very lost using this great lib.\r<br />\n<br />\nI have  4 buttons.\r<br />\nWhen i click to a button, it plays sound using WaveOut.\r<br />\n<br />\nI m playing a background sound too using another Wave out.\r<br />\n<br />\nI m trying to record only sounds produce clicking button (like a piano)\r<br />\n<br />\nSomeone can guides or help me with this issue please ?<br />\n",
+    "PostedDate": "2016-02-03T03:49:39.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1461936",
+    "ThreadId": "650859",
+    "Html": "one approach is to use just one <code>WaveOut</code> whose input is a <code>MixingSampleProvider</code>. Then whenever you click the button, you add a new input to that <code>MixingSampleProvider</code>. Then you could use a <code>SavingWaveProvider</code> approach I discuss here to save the audio.\r<br />\nYou'd need to make sure not to create a huge file though, and stop writing to WAV once the sounds were complete<br />\n",
+    "PostedDate": "2016-02-04T06:19:05.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462212",
+    "ThreadId": "650859",
+    "Html": "I m trying using MixingSampleProvider and BufferedWaveProvider but i need to play (listen) when I add to MixingSampleProvider\r<br />\n<br />\nDo you have something like a BufferedMixingSampleProvider ?<br />\n",
+    "PostedDate": "2016-02-05T15:15:46.89-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462218",
+    "ThreadId": "650859",
+    "Html": "Is it possible to combine 4 BufferedWaveProvider into a mixingsampleprovider ? or something like this ?<br />\n",
+    "PostedDate": "2016-02-05T15:33:53.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466089",
+    "ThreadId": "650859",
+    "Html": "Yes, put them through a WaveToSampleProvider and then they can be added to a MixingSampleProvider assuming they all share a common format<br />\n",
+    "PostedDate": "2016-03-08T07:44:31.63-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

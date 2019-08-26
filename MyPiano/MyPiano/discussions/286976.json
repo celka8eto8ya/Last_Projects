@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "728826",
+    "ThreadId": "286976",
+    "Html": "\r\n<p>Hello, I'd like to know if it theres a way to get the autocorrelator/pitch using &#65279;WaveIn or/and its &#65279;DataAvailable event? Im study the VoiceRecorder project and i could only view the pitch when the recorded file is being read( on &#65279;AutoTuneUtils class). Is\r\n it possible to get the pitch in realtime?&nbsp;Thank you..</p>\r\n",
+    "PostedDate": "2012-01-21T18:24:54.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "729878",
+    "ThreadId": "286976",
+    "Html": "<p>this was done for performance reasons as the autocorrelator is not particularly quick. However there is no reason why you couldn't pass samples into it as they arrived through DataAvailable.</p>",
+    "PostedDate": "2012-01-24T05:20:15.203-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730402",
+    "ThreadId": "286976",
+    "Html": "<p>Can you give me example how to get autocorrelator/fft detectpitch on dataavailable?i checked the voicerecorder project. but it opens a wav file and passes to IWaveProvider. What i need is getting the pitch from a microphone in realtime. Thanks in advance.</p>",
+    "PostedDate": "2012-01-25T03:37:27.827-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731408",
+    "ThreadId": "286976",
+    "Html": "<p>I am also interested on this...</p>",
+    "PostedDate": "2012-01-26T17:45:48.253-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731462",
+    "ThreadId": "286976",
+    "Html": "<p>Well all that is needed is to make sure you have the right number of samples. Because of the use of FFT, you need a power of two. So you could set up your buffer sizes carefully so that each DataAvailable has exactly the right number of samples, or you could use a CircularBuffer and when you have enough pass a chunk of samples into the AutoCorrelator. Use Buffer.BlockCopy to go from byte[] to float[] (assuming you are recording in mono)</p>",
+    "PostedDate": "2012-01-26T23:14:24.943-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,105 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:14:31.737-07:00",
+    "CommentCount": 13,
+    "Custom": null,
+    "Description": "I've created own wav recording class using WaveIn, based on example from WavRecording demo. It was working perfectly when i was testing my class in the GUI application.\r\nWhen I moved my code, without any change, to the console application or to the library, then it stopped working.\r\nI've notticed that DataAvailable is never launched in these cases, so the buffer is never dumped to the wav file.\r\nOnly wav header is written to the output wav file. \r\n\r\nI am working under Win7 x64. I compile code with .NET Framework target 3.5, Any CPU configuration.",
+    "LastUpdatedDate": "2012-10-27T00:14:31.737-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-06-17T07:21:50.263-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveIn class - DataAvailable is not raised when class is used in Console Application",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 7,
+    "Id": 16131
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "It's because you are using Window callbacks on a thread without a windows message loop. You should try using function callbacks instead, although I have never tested WaveIn using them myself.",
+      "PostedDate": "2011-06-17T13:03:31.83-07:00",
+      "Id": 41784
+    },
+    {
+      "Message": "Function callback works well in WaveOut, but when I used in WaveIn, wave in reset causes app freezing, i've finally used wasapi for recording, but sorry, it is strange for me that any usage of wavein cannot manage with all capture devices in console app. Yes i know now, i should put my posts in \"discussions\" first. ",
+      "PostedDate": "2011-06-17T18:47:11.557-07:00",
+      "Id": 41785
+    },
+    {
+      "Message": "NAudio is just a spare time project and the things it can do are things that at some point or other I have needed it to do. I'll put this on my todo list though. Function callbacks with WaveOut have proved very hard to get right, and in NAudio 1.5 I am introducing event callbacks instead. I might look into doing the same for WaveIn.",
+      "PostedDate": "2011-06-18T00:40:08-07:00",
+      "Id": 41786
+    },
+    {
+      "Message": "Thousands of people are appreciate that you share this project, i do not want to complain at all, it is nice to hear that you plan implement event callbacks. Thanks. ",
+      "PostedDate": "2011-06-18T03:36:17.383-07:00",
+      "Id": 41787
+    },
+    {
+      "Message": "Same issue. Spent a lot of time debugging. Maybe throw an exception on StartRecording() if windows message thread is not running?\nThanks for the source btw, nice work. :)\n\nConfirmed that this is the issue by adding this line to the end of Program.cs:\nApplication.Run(new Form());",
+      "PostedDate": "2011-11-19T11:55:44.357-08:00",
+      "Id": 49249
+    },
+    {
+      "Message": "Same issue here in my console app. I had a hunch it had something to do with the message pump, got here by Googling \"WaveIn message thread\".\nHas anyone already tried the function callbacks to solve this ?",
+      "PostedDate": "2012-03-06T00:35:52.98-08:00",
+      "Id": 57161
+    },
+    {
+      "Message": "I've just checked in WaveInEvent, which uses event callbacks. You can try using this. Will be officially part of NAudio 1.6",
+      "PostedDate": "2012-03-06T05:20:28.06-08:00",
+      "Id": 57175
+    },
+    {
+      "Message": "Jesuschristonapogostick Mark, you're fast ! I'll try it tonight, cheers !",
+      "PostedDate": "2012-03-06T06:56:12.16-08:00",
+      "Id": 57180
+    },
+    {
+      "Message": "Hi Mark, I've just tested and confirmed it works using WaveInEvent..",
+      "PostedDate": "2012-03-06T11:29:57.713-08:00",
+      "Id": 57196
+    },
+    {
+      "Message": "glad to hear it, its a class I should have made a while ago. Long-term the plan is for WaveIn to automatically work out what the best mode is depending on whether you are in a GUI app or not",
+      "PostedDate": "2012-03-06T12:01:35.923-08:00",
+      "Id": 57198
+    },
+    {
+      "Message": "One workaround is to put a do loop after the call to StartRecording and include the following - note the done flag is set in the event:\nDo\n   Thread.Sleep(100)\n   Windows.Forms.Application.DoEvents()\nLoop Until done\n",
+      "PostedDate": "2012-03-13T05:52:32.303-07:00",
+      "Id": 57610
+    },
+    {
+      "Message": "I'll close this issue for the next NAudio as the WaveInEvent class will now work on background threads. Possibly I'll make the WaveIn constructor throw an exception if the SynchronizationContext is null as well.",
+      "PostedDate": "2012-09-26T05:04:37.737-07:00",
+      "Id": 77779
+    },
+    {
+      "Message": "WaveIn will warn you if you are trying to use windowed callbacks on a non gui thread. WaveInEvent is the recommended approach for this scenario.",
+      "PostedDate": "2012-10-06T03:49:27.897-07:00",
+      "Id": 78795
+    }
+  ]
+}

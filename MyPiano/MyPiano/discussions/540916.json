@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1229420",
+    "ThreadId": "540916",
+    "Html": "Hi ! Have been using Naudio to play sound simultaneously in two devices. I want to know if i could differentiate in between USB and other sound cards. What i am trying to achieve is to play sound only on the native speaker and the headset chosen (and not all other USB headsets).<br />\n",
+    "PostedDate": "2014-04-02T05:07:39.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1230362",
+    "ThreadId": "540916",
+    "Html": "I'm afraid I don't know of a way to discover this. It may be that something in the WASAPI <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/dd371395(v=vs.85).aspx\" rel=\"nofollow\">IMMDevice property store</a> might provide this information.<br />\n",
+    "PostedDate": "2014-04-04T07:50:04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

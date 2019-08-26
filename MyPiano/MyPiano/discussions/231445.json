@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "509234",
+    "ThreadId": "231445",
+    "Html": "<p>Hello</p>\r\n<p>Have some code like that</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>WaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(source);\r\n<span style=\"color:blue\">byte</span>[] AllTrack = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[mp3Reader.Length];\r\nmp3Reader.Read(AllTrack, 0, (<span style=\"color:blue\">int</span>)mp3Reader.Length);\r\nWaveFileWriter LoopedWave = <span style=\"color:blue\">new</span> WaveFileWriter(File.Create(<span style=\"color:#a31515\">&quot;c:\\\\1.wav&quot;</span>), mp3Reader.WaveFormat);\r\nLoopedWave.WriteData(AllTrack, 0, AllTrack.Length);\r\nLoopedWave.Close();\r\n</pre>\r\n</div>\r\n<p>and in LoopedWave.Close() catch divide by zero in</p>\r\n<p>protected virtual void Dispose(bool disposing)</p>\r\n<p>in string</p>\r\n<p>w.Write((int)((dataChunkSize * 8) / format.BitsPerSample));</p>\r\n<p>(format.BitsPerSample == 0;)</p>\r\n<p>I doing something wrong or what?</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-10-19T02:31:38.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "517248",
+    "ThreadId": "231445",
+    "Html": "\r\n<p>looks like you are trying to put MP3 into a WAV file. While it is possible, it is not exactly a normal thing to do. If you need to convert to WAV, then look at the WaveFormatConversionStream</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-04T12:10:36.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

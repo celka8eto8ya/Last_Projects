@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "933216",
+    "ThreadId": "400962",
+    "Html": "\r\n<p>Hi, I'm trying a simple program, which will record audio, starting and stopping at intervals.</p>\r\n<p>However, in some cases I'm seeing a Windows error message with the following text:</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<pre>************** Exception Text **************\r\nSystem.NullReferenceException: Object reference not set to an instance of an object.\r\n   at NAudio.Wave.WaveIn.Callback(IntPtr waveInHandle, WaveMessage message, IntPtr userData, WaveHeader waveHeader, IntPtr reserved)\r\n   at NAudio.Wave.WaveWindow.WndProc(Message&amp; m)\r\n   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)\r\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)\r\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)</pre>\r\n<p></p>\r\n<p>This is happening when I try to start recording, however, the recording actually is done without issues. &nbsp;Sometimes I can stop/restart a couple of times with no problems, but typically once this happens, it pops up again every time I start recording\r\n again.</p>\r\n<p>In my code, I run, at the beginning of the program (WPF, for the record) I do:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>waveInStream.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat(16000, 2);</pre>\r\n<pre>waveInStream.BufferMilliseconds = 1000;\r\nwaveInStream.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(SendCaptureSamples);\r\n\r\n</pre>\r\n</div>\r\n<p>Then, when I want to start recording I do:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>RecFileName = getFileName(System.IO.Path.GetTempPath(), <span style=\"color:#a31515\">&quot;au&quot;</span>);\r\n<span style=\"color:blue\">try</span>\r\n{\r\n    writer = <span style=\"color:blue\">new</span> WaveFileWriter(RecFileName, waveInStream.WaveFormat);\r\n}\r\n<span style=\"color:blue\">catch</span> (Exception ex)\r\n{\r\n    <span style=\"color:green\">// Log error</span>\r\n    writer = <span style=\"color:blue\">null</span>;\r\n}\r\n<span style=\"color:blue\">if</span> (writer != <span style=\"color:blue\">null</span>)\r\n{\r\n    <span style=\"color:blue\">try</span>\r\n    {\r\n        waveInStream.StartRecording();\r\n    }\r\n    <span style=\"color:blue\">catch</span> (Exception e)\r\n    {\r\n        <span style=\"color:green\">// Log error</span>\r\n    }\r\n}\r\n\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>My event handler is:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> SendCaptureSamples(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n{\r\n  <span style=\"color:blue\">if</span> (writer != <span style=\"color:blue\">null</span>)\r\n  {\r\n    <span style=\"color:blue\">try</span>\r\n    {\r\n\twriter.Write(e.Buffer, 0, e.BytesRecorded);\r\n    }\r\n    <span style=\"color:blue\">catch</span> (Exception ex)\r\n    {\r\n\t<span style=\"color:green\">// Log error</span>\r\n    }\r\n  }\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;And, when I want to stop recording:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">try</span>\r\n{\r\n    waveInStream.StopRecording();\r\n    writer.Flush();\r\n    writer.Close();\r\n    writer.Dispose();\r\n}\r\n<span style=\"color:blue\">catch</span> (Exception e)\r\n{\r\n    <span style=\"color:green\">// Log error</span>\r\n}\r\n\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>What bothers me is that the recording happens just fine, but the error dialog is pretty annoying. &nbsp;</p>\r\n<p>&nbsp;I apologize if this seems like a dumb question, but I can't seem to be able to figure out what's going on :(</p>\r\n<p>If anybody can help me fix my code, or, at least set up NAudio so these exceptions get handled silently, it will be greatly appreciated.</p>\r\n",
+    "PostedDate": "2012-10-26T21:20:33.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "933234",
+    "ThreadId": "400962",
+    "Html": "<p>what version of NAudio are you using?</p>",
+    "PostedDate": "2012-10-26T23:52:32.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "933371",
+    "ThreadId": "400962",
+    "Html": "\r\n<p>I use NuGet.&nbsp; First tries were with v1.5, but now I've updated to v1.6.</p>\r\n<p>Just to be clear, my program doesn't crash, and the recordings work fine, but I get this annoying dialog, which I'd want to get rid of.</p>\r\n<p>Also, in case it's relevant, this is in Windows 7 (Ultimate and Home Premium), I'm using VS 2012 and I'm targetting .NET v4.0 (Client Profile).&nbsp;</p>\r\n<p>Thanks for any help.</p>\r\n",
+    "PostedDate": "2012-10-27T15:48:46.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "936077",
+    "ThreadId": "400962",
+    "Html": "<p>not sure what is causing this, I'll try to reproduce if possible. It is possibly related to http://naudio.codeplex.com/workitem/16347</p>",
+    "PostedDate": "2012-11-03T09:09:00.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "943084",
+    "ThreadId": "400962",
+    "Html": "\r\n<p>Thanks,&nbsp; it doesn't seem like there has been any progress in the bug report you listed.&nbsp;</p>\r\n<p>&nbsp;Is there anything I can do to help? What I'm working on is a simple tool to help friends and family and while not critical, it is pretty annoying to have that Windows diag pop up every now and then.</p>\r\n<p>Since nothing seems to be working, I imagine I could simply either check for null, or reset something to get rid of this?</p>\r\n",
+    "PostedDate": "2012-11-16T17:12:16.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "943156",
+    "ThreadId": "400962",
+    "Html": "\r\n<p>Yes, you could do a null check, although I can't understand what is causing it to be null. What callback model are you using.</p>\r\n<p>Alternatively, you could try using WaveInEvent instead, which may be more reliable.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-16T23:31:02.197-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944573",
+    "ThreadId": "400962",
+    "Html": "\r\n<p>Well, I really put all the NAudio-related code in my original post.&nbsp; I admit I simply tried to follow the tutorials listed here (which point to a blog).&nbsp; Not sure what &quot;callback model&quot; I use, but, the code is:<br>\r\n</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>waveInStream.DataAvailable += <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(SendCaptureSamples);\r\n\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>So sounds like I should look into WaveInEvent then, instead of DataAvailable.&nbsp; I certainly can try that, do you have a pointer to either an example or any other doc I can check?</p>\r\n",
+    "PostedDate": "2012-11-20T07:04:00.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944577",
+    "ThreadId": "400962",
+    "Html": "\r\n<p>No, your original post is missing where where you create waveInStream. Somewhere in your code there should be a line that starts with waveInStream =</p>\r\n<p>what is on the other side of the equals statement?</p>\r\n<p>try changing it to waveInStream = new WaveInEvent();</p>\r\n",
+    "PostedDate": "2012-11-20T07:07:29.933-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944617",
+    "ThreadId": "400962",
+    "Html": "\r\n<p>Ah, of course, you're right.&nbsp; I had that in the declarations:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        WaveIn waveInStream  = <span style=\"color:blue\">new</span> WaveIn();\r\n</pre>\r\n</div>\r\nI can change that, is there anything else I'd need to change? Again, if this is already documented somewhere else, just point me there.\r\n<p></p>\r\n<p>Thanks for the help!</p>\r\n",
+    "PostedDate": "2012-11-20T07:58:49.857-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944625",
+    "ThreadId": "400962",
+    "Html": "\r\n<p>No, just change that and see if it helps. Only thing to note is that now the DataAvailable event will be coming in on a background thread, so don't try to write to the GUI without doing a BeginInvoke on your form.</p>\r\n",
+    "PostedDate": "2012-11-20T08:01:54.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948018",
+    "ThreadId": "400962",
+    "Html": "\r\n<p>Ok, initial tests with the suggested change seem to indeed have solved the problem.</p>\r\n<p>I'll keep testing, but it's very promising!</p>\r\n<p>Thanks for the help and keep up with the good work!</p>\r\n",
+    "PostedDate": "2012-11-27T15:56:26.56-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

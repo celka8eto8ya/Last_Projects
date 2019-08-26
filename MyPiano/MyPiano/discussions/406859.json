@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "956451",
+    "ThreadId": "406859",
+    "Html": "\r\n<p>Hello everyone,</p>\r\n<p>I observed that using NAudio.CoreAudioApi.MMDevice.ID property we can uniquely identify the audio capture device. But I cannot create an instance of WaveIn using MMDevice. The only way to associate WaveIn object with the audio capture device is its device\r\n index. But device index may change if we plug/unplug audio capture device.</p>\r\n<p>Using MMDevice we can create an instance of WasapiCapture and capture audio from it but is not supported on XP.</p>\r\n<p>I want to preserve the selected audio device ID somewhere (like database) so that my application can capture audio from that device when it launches for the next time. Is there any solution?</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2012-12-15T05:20:00.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956590",
+    "ThreadId": "406859",
+    "Html": "\r\n<p>hello,</p>\r\n<p>Saving the driver name.Recall of the application or driver do a search type:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\"><br></span></pre>\r\n<pre><span style=\"color:blue\"><pre>// Save CurrentDriverName\nstring CurrentDriverName = WaveIn.GetCapabilities(Convert.ToInt16(idCurrent)).ProductName</pre>\n<br></span></pre>\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">int</span> SearchByName(<span style=\"color:blue\">string</span> drivername)\n{\n\t<span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> id = 0; id &lt; WaveIn.DeviceCount; id&#43;&#43;)\n\t{\n\t\t<span style=\"color:blue\">if</span> (drivername == WaveIn.GetCapabilities(Convert.ToInt16(id)).ProductName)\n\t        <span style=\"color:blue\">return</span> id;\n\t}\n\n\t<span style=\"color:blue\">return</span> -1; <span style=\"color:green\">// erreur </span>\n}\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-12-15T23:43:45.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956591",
+    "ThreadId": "406859",
+    "Html": "\r\n<p>May be that Mark can add this type of feature in WaveIn, WaveOut, ...</p>\r\n",
+    "PostedDate": "2012-12-15T23:49:51.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956753",
+    "ThreadId": "406859",
+    "Html": "\r\n<p>Hi Manu,</p>\r\n<p>Thanks for your reply. I thought of using ProductName but I doubt that it may give incorrect result if two or more devices have same name. Is it possible that two devices can have same name? I am going to try plugging two web cams (of exactly same model)\r\n if those become available for me. I'll post my observation later...</p>\r\n",
+    "PostedDate": "2012-12-16T21:01:29.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956769",
+    "ThreadId": "406859",
+    "Html": "\r\n<p>The WaveIn/WaveOut APIs are particularly poor for this and may not be able to tell the difference between two instances of the same soundcard. I'd remember the name and the device id, and so if the device with the same id still has the same name, you can\r\n assume that things haven't changed since the last run of the program.</p>\r\n",
+    "PostedDate": "2012-12-16T22:49:54.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956772",
+    "ThreadId": "406859",
+    "Html": "\r\n<p>I found one more problem for me! Actually I am going to record the captured video and audio in a WMV file. For which I need to know few properties of the audio format like bits per sample, sample rate, etc.. I am getting these properties using MMDevice.AudioClient.MixFormat\r\n but again this will not work on XP! What could be the solution?</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2012-12-16T23:28:12.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956774",
+    "ThreadId": "406859",
+    "Html": "\r\n<p>Normally, &quot;productName&quot; is increment of &quot;(1) .. (2).&quot; but this is not guaranteed.</p>\r\n<p>It's like MIDI interfaces.</p>\r\n<p>I had a computer with twice the same &quot;ProductName&quot; (microphone) of two different manufacturers, so I added the property ManufacturerID for ProductId and distinguished.</p>\r\n",
+    "PostedDate": "2012-12-16T23:36:20.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956775",
+    "ThreadId": "406859",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>PPavan wrote:</strong><br>\r\n<p>I found one more problem for me! Actually I am going to record the captured video and audio in a WMV file. For which I need to know few properties of the audio format like bits per sample, sample rate, etc.. I am getting these properties using MMDevice.AudioClient.MixFormat\r\n but again this will not work on XP! What could be the solution?</p>\r\n<p>Thanks.</p>\r\n</blockquote>\r\n<p>&nbsp;</p>\r\n<p>Complement the properties in &quot;WaveInCapabilities.cs&quot;, and make public the SupportedFormats.<br>\r\nYou have all the opportunities Audio card after you Choose your currency format.</p>\r\n<p>Must remain cautious about this option because some drivers do not respect this option.</p>\r\n",
+    "PostedDate": "2012-12-16T23:40:33.317-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

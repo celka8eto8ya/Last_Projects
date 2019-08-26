@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "987958",
+    "ThreadId": "429869",
+    "Html": "\r\n<p>Hi Everyone,</p>\r\n<p>I have to implement a sound recorder, that activates with sound and deactivates with silence. It is known as voice activated switch.</p>\r\n<p>Is there anyone that has implemented this kind of algorithm before?</p>\r\n<p>I have finished normal sound recording function, and for this time I have to implement this.</p>\r\n<p>I have used NAudio library for all sound operations.</p>\r\n<p>I will specify the level of sound that will be accepted and the software will wait for this level for start recording, then after if the level decreases below that level, apllication should save this part as a .wav file, and again starts to wait for the\r\n next sound, and it will continue like this.</p>\r\n<p>If someone can help me, I will be appreciated.</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2013-01-17T00:37:05.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989514",
+    "ThreadId": "429869",
+    "Html": "\r\n<p>You start recording and every time you receive a buffer of audio, you examine the samples to find the maximum value (using BitConverter.ToInt16 to get sample values if it is 16 bit, and Math.Abs to get the absolute value of those samples). If the maximum\r\n value goes above a pre-decided value, then you go into &quot;record&quot; mode, and write the buffer to disk. If the maximum sample is below the threshold you go out of record mode and stop writing to disk. You may want to wait for a certain number of buffers of silence\r\n in a row before you stop recording depending on your needs.</p>\r\n",
+    "PostedDate": "2013-01-20T23:11:16.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

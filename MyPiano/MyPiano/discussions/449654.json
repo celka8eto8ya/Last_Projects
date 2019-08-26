@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1066916",
+    "ThreadId": "449654",
+    "Html": "I want to use NAudio to playback multiple SoundFont tracks in parallel (basically an 8-Track MIDI File) and I wonder if it is feasible for that task or if SoundFonts are more intended as a &quot;Save to WAV as a build process&quot; thing?\r<br />\n<br />\nThis is mainly intended for Desktop-Mode Windows Vista/7/8, but if it were working in Windows-8-Store apps as well, that would be icing.<br />\n",
+    "PostedDate": "2013-07-11T00:58:24.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1067197",
+    "ThreadId": "449654",
+    "Html": "Certainly this is feasible in realtime.  You'll have to write the wavetable synthesis logic, but most of the rest of the plumbing is available in NAudio already.  I would suggest implementing WaveProvider32 and having 8 instances of a custom ISampleProvider inside it to render each &quot;track&quot; or &quot;channel&quot; of audio.  You'll also need to mix the channels inside the WaveProvider32.\r<br />\n<br />\nYou should probably seriously consider whether you need a &quot;MIDI-like&quot; implementation or just a simple mixing audio file player (which could support WAV, <a href=\"http://nlayer.codeplex.com\" rel=\"nofollow\">MP1 / MP2 / MP3</a>, or <a href=\"http://nvorbis.codeplex.com\" rel=\"nofollow\">Vorbis</a> with minimal code on your part).<br />\n",
+    "PostedDate": "2013-07-11T12:15:41.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

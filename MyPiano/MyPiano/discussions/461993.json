@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1106787",
+    "ThreadId": "461993",
+    "Html": "how can i shift the frequency of wav file while playing . <br />\n",
+    "PostedDate": "2013-10-12T18:55:50.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1106970",
+    "ThreadId": "461993",
+    "Html": "It's not simple, but <a href=\"http://www.dspdimension.com/admin/pitch-shifting-using-the-ft/\" rel=\"nofollow\">here's</a> an article (with included C code) that describes how to do it...\r<br />\n<br />\nGood luck!<br />\n",
+    "PostedDate": "2013-10-13T19:16:11.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

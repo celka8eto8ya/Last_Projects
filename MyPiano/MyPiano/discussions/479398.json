@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1144931",
+    "ThreadId": "479398",
+    "Html": "I am trying to learn how to use Naudio .And I have written this code below <br />\n   private void button1_Click(object sender, EventArgs e)<br />\n<pre><code>    {\n\n        OpenFileDialog open = new OpenFileDialog();\n        open.Filter = &quot;Wav Files(*.wav)|*.wav&quot;;\n        if (open.ShowDialog() != DialogResult.OK) return;\n        DisposeWave();\n        wave = new NAudio.Wave.WaveFileReader(open.FileName);\n        output=new  NAudio.Wave.DirectSoundOut  ();\n\n\n        output.Init(new NAudio.Wave.WaveChannel32(wave));\n         output.Play();\n\n\n    }\n</code></pre>\n\n.And  It worked yesterday.Today .I want to  take a look once more and rewrite that code and added  Naudio again  using nuget (because of deepfreeze ).Then When I run I get this exception <br />\n<br />\nCould not load type 'NAudio.Wave.WaveFileReader' from assembly 'naudio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.<br />\n<br />\nright here <br />\n Application.Run(new Form1());<br />\n<br />\n.I dont understand what changed in one day .And I have no idea what can i do <br />\n",
+    "PostedDate": "2014-01-03T01:08:38.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1145044",
+    "ThreadId": "479398",
+    "Html": "perhaps your NAudio assembly is not in the right place? Its also a bit odd that the message says V1.0 - what version of NAudio did you actuallu install with nuget?<br />\n",
+    "PostedDate": "2014-01-03T07:52:10.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1145174",
+    "ThreadId": "479398",
+    "Html": "Only one version is available and its 1.7 Thats very funny . after you asked what verson am i using .I have decided to reinstall Naudio and it works  now.But  I did same  things threee times before  started this thread. do you have any idea what could be the reason<br />\n",
+    "PostedDate": "2014-01-03T10:18:44.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1145277",
+    "ThreadId": "479398",
+    "Html": "Sorry, I've not seen that error before. Maybe something went wrong during the NuGet install<br />\n",
+    "PostedDate": "2014-01-03T11:12:12.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1146845",
+    "ThreadId": "479398",
+    "Html": "thank you . But this kind of funny thing only happens to me .As programmer  are you having such event that you cant explain  .Its very discouraging .PLZ share your opinion <br />\n",
+    "PostedDate": "2014-01-03T22:30:43.32-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

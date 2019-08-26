@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1124877",
+    "ThreadId": "469475",
+    "Html": "Dear Sir, \r<br />\nSorry for my bad question , but Kindly , I need your support to provide sample code to read Mp3 file &gt;&gt; get FFT results. I need to get the amplitude at a certain frequency , , eg get amplitude at 3KHz.  I really appreciate if you can write some code .\r<br />\n<br />\nThanks so much for your support :) .<br />\n",
+    "PostedDate": "2013-11-16T16:07:40.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1125958",
+    "ThreadId": "469475",
+    "Html": "There are lots of examples of NAudio and FFT. You'd use AudioFileReader to easily get the samples as floating point, then pass them through the FFT class. You really will need to learn a few things about how FFTs work first though, and this can take some time as they are a more advanced mathematical technique.\r<br />\n<br />\nI write a bit about FFT with NAudio in this article: <a href=\"http://channel9.msdn.com/coding4fun/articles/AutotuneNET\" rel=\"nofollow\">http://channel9.msdn.com/coding4fun/articles/AutotuneNET</a>\r<br />\n<br />\nAlso, the visualisation module in my PluralSight course (not free I'm afraid), explains more about FFTs <a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio</a>\r<br />\n<br />\n<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-11-18T03:59:49.467-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

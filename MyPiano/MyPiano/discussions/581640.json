@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1354975",
+    "ThreadId": "581640",
+    "Html": "To begin tell them that my English is not very good but try to explain my problem.\r<br />\n<br />\nI'm working with NAudio library to process audio in C # .Net.\r<br />\n<br />\nI'm recording an audio file (WAV) and then process the data without any problem this way.<br />\n<pre><code>        WaveChannel32 wave = new WaveChannel32(new WaveFileReader(rutaWav));\n        arch = new StreamWriter(rutaCsv);\n\n        byte[] buffer = new byte[16384];\n\n        int read = 0;\n\n        objS.iniTiempo();\n        while (wave.Position &lt; wave.Length)\n        {\n            read = wave.Read(buffer, 0, 16384);\n\n            for (int i = 0; i &lt; read / 4; i++)\n            {\n                double val = BitConverter.ToSingle(buffer, i * 4);\n               objS.Escenario(val);\n               arch.WriteLine(val); // CSV file just to check the data\n            }\n        }\n        arch.Close();\n\n</code></pre>\n\nMy problem is that I need to do the same but instead of reading a WAV file I read the same data directly from the microphone.\r<br />\n<br />\nThen edit the code when I write the wav file in the following way.<br />\n<pre><code>    ficheroOndaSalidaEscenario.Write(e.Buffer, 0, e.BytesRecorded);\n    for (int i = 0; i &lt; e.BytesRecorded/4 ; i++)\n    {\n           double val = BitConverter.ToSingle(e.Buffer, i*4);\n           arch_dinamico.WriteLine(val); // // CSV file just to check the data\n    }</code></pre>\n\nBut the result is not the same as reading the WAV file, I searched for information for many days and still not find the answer please if anyone knows how to solve my problem appreciate your help\r<br />\n<br />\n<br />\nSorry for my bad English<br />\n",
+    "PostedDate": "2015-02-23T11:12:19.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354988",
+    "ThreadId": "581640",
+    "Html": "What WaveFormat are you recording in? If it's 16 bit then you can't use BitConverter.ToSingle - you'll need to use ToInt16 as the samples will be shorts.<br />\n",
+    "PostedDate": "2015-02-23T12:00:16.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1360171",
+    "ThreadId": "581640",
+    "Html": "thank you very much<br />\n",
+    "PostedDate": "2015-03-05T10:11:41.523-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

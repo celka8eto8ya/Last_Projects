@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1448301",
+    "ThreadId": "646153",
+    "Html": "Hello! I'm new to this subject, so please forgive if my question sounds silly, i want to mix multiple Inputs using MixingSampleProvider and get it played. How can i use the MixingSampleProvider to get to an output like WaveOut or DirectSoundOut?\r<br />\n<br />\nAnd is it possible to add/replace/delete the Mixer Inputs while playing?<br />\n",
+    "PostedDate": "2015-10-13T05:36:32.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448885",
+    "ThreadId": "646153",
+    "Html": "There is a <code>SampleToWaveProvider</code> helper class to turn it into an <code>IWaveProvider</code> so you can pass it to <code>Init</code> on your <code>WaveOut</code> or <code>DirectSoundOut</code>. The latest NAudio code has helper extensions that will do this automatically.\r<br />\n<br />\nAnd yes, you can add and remove mixer inputs on the fly.<br />\n",
+    "PostedDate": "2015-10-17T02:32:14.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1452953",
+    "ThreadId": "646153",
+    "Html": "Thank you!\r<br />\n<br />\nI managed to do what i wanted - It's great to see how much dedication you put in this project!\r<br />\n<br />\nOne more question - I want to play/pause different channels on their own, is that possible with the MixingSampleProvider?<br />\n",
+    "PostedDate": "2015-11-18T05:24:36.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453102",
+    "ThreadId": "646153",
+    "Html": "that's a bit more tricky. You'd want to create a custom pausing sampleprovider that  returns silence from the Read method while a channel is paused. That way the mixing sample provider can keep reading from all its inputs, but will get silence from the paused ones. <br />\n",
+    "PostedDate": "2015-11-18T23:39:27.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

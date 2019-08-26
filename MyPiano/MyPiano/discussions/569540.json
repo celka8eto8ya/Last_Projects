@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1312380",
+    "ThreadId": "569540",
+    "Html": "Hello,\r<br />\nIs it possible to convert 3gpp file (audio) uploaded through smartphones to mp3 file format? <br />\n",
+    "PostedDate": "2014-10-11T01:29:27.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1312773",
+    "ThreadId": "569540",
+    "Html": "hi, I'm afraid this isn't something directly supported by NAudio. You'd need to decode the 3gp to PCM and then convert to MP3 as a secondary step. You may be able to find utilities that can do this on the web for free.\r<br />\n<br />\nMark\r<br />\n<br />\nPlease note that this thread is likely to get replies from spammers. I will be deleting replies that are blatant adverts for commercial software.<br />\n",
+    "PostedDate": "2014-10-13T07:11:10.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1312776",
+    "ThreadId": "569540",
+    "Html": "Thanks Mark. \r<br />\n<br />\nCan you provide some link for such utilities ? \r<br />\n<br />\nRegards\r<br />\nIndra <br />\n",
+    "PostedDate": "2014-10-13T07:20:39.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

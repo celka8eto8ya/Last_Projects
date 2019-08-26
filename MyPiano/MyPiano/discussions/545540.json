@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1246082",
+    "ThreadId": "545540",
+    "Html": "I am trying to record whatever i hear from Sound card. \r<br />\nExample, I am playing one wave file using player and also talking from External microphone. \r<br />\nI would like to record both of them together.\r<br />\n<br />\nCould you please help me in this?<br />\n",
+    "PostedDate": "2014-05-16T04:59:53.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248924",
+    "ThreadId": "545540",
+    "Html": "Look into WasapiLoopbackCapture to record whatever is playing.\r<br />\nYou'd need to record the microphone at the same time and mix it in afterwards<br />\n",
+    "PostedDate": "2014-05-23T07:39:13.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

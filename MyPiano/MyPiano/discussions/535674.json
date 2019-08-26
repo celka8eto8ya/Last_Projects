@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1215236",
+    "ThreadId": "535674",
+    "Html": "I just downloaded the latest version of Naudio and I'm going to upgrade my program from using the AudioFileReader to using the MediaFoundationReader.\r<br />\nThe problem seems to the that I cannot use the FadeInOutSampleProvider with the MediaFoundationReader. Does anyone know how to use these two together?<br />\n",
+    "PostedDate": "2014-02-26T10:08:37.297-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215278",
+    "ThreadId": "535674",
+    "Html": "Just do &quot;ToSampleProvider&quot; on the MediaFoundationReader, and then you can chain it into FadeInOutSampleProvider<br />\n",
+    "PostedDate": "2014-02-26T11:21:21.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215562",
+    "ThreadId": "535674",
+    "Html": "Ah! Thank you.<br />\n",
+    "PostedDate": "2014-02-27T03:49:35.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

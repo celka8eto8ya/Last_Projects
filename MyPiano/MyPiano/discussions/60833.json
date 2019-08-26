@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "206138",
+    "ThreadId": "60833",
+    "Html": "<p>Hi</p>\r\n<p>This Naudio is so cool!</p>\r\n<p>But i am fond that in project home page ,there is a snapshot about Naudio demo,which contain</p>\r\n<p>a visualisation spectrum, but when i download the codes,i found any code to do these?</p>\r\n<p>My question is that: How to use Naudio to draw visualisation spectrum? Is there any interface ?</p>\r\n<p>Does it can support realtime drawing?</p>\r\n<p>&nbsp;</p>\r\n<p>Best regards</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-06-26T21:33:51.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "206739",
+    "ThreadId": "60833",
+    "Html": "<p>Have a look at the source code for the NAudioDemo project, which will show you how to do this</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-06-29T12:38:53.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "271852",
+    "ThreadId": "79412",
+    "Html": "<p>The Stop method of WaveOut will hang on the&nbsp;waveOutReset(hWaveOut) call&nbsp;when using a callback function. This is because in the callback function it tries to queue another buffer which attempts to lock waveOutLock - causing a deadlock. To resolve the problem, move the statement &quot;playbackState = PlaybackState.Stopped&quot; to before the &quot;lock (waveOutLock)&quot; statement in WaveOut.Stop().</p>\r\n<p><span style=\"font-size:x-small\">\r\n<p>Note: When calling waveOutReset&nbsp;queued buffers are returned during the call to waveOutReset. This is not a problem when using a callback window.</p>\r\n<p>One other problem identified: If you intend using the SPEEX codec for playing back SPEEX encoded wave files, you may need to increase the default size of the extraData array in WaveFormatExtraData. The default size is 100 bytes but the codec I use requires&nbsp;more (120 works fine for me). This stops an array bounds exception that you would otherwise get.</p>\r\n</span></p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-12-30T14:31:42.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "271951",
+    "ThreadId": "79412",
+    "Html": "<p>the waveOut hanging on Stop with function callbacks is a longstanding issue with certain audio chipsets (SoundMAX in particular). However, you may have run into another issue, so I will have a look into your suggestion when I get a chance.</p>\r\n<p>also thanks for the SPEEX extra size suggestion. I'll look into that too.</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-12-31T04:09:14.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423618",
+    "ThreadId": "79412",
+    "Html": "<p>hi Matt69, I just had a chance to revisit this on a system that exhibits this problem and you are exactly right. I will check in your fix shortly</p>\r\n<p>thanks</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-25T08:00:40.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "621020",
+    "ThreadId": "259689",
+    "Html": "<p>Hi,</p>\n<p>i'm trying to use MIDI interface of NAudio and came across a little problem. When i press a key on the master keyboard, MessageReceived event fires up with the CommandCode NoteOn, but when i release the key it fires with NoteOn again.</p>\n<p>Previously i wondered already about an exception which came up, cause the event couldn't be converted to NoteOnEvent, which really was (or should be) NoteOff.</p>\n<p>Is it a bug in NAudio? Or should i check against velocity?</p>\n<p>&nbsp;</p>\n<p>Edit: I searched a little bit and came across aftertouch and this thread from stackoverflow&nbsp;<a href=\"http://stackoverflow.com/questions/3306866/why-is-there-a-velocity-parameter-for-note-off-events\">http://stackoverflow.com/questions/3306866/why-is-there-a-velocity-parameter-for-note-off-events</a>. It sheds some light for me on this topic.</p>\n<p>&nbsp;</p>\n<p>Thanks in advance</p>\n<p>Andrej</p>",
+    "PostedDate": "2011-05-31T14:10:52.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621025",
+    "ThreadId": "259689",
+    "Html": "<p>Lots of MIDI keyboards send a note on with a velocity of 0 to mean note off (it requires less bytes being sent as it can be sent as a MIDI follow-on message). I suspect that is what you are seeing.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-31T14:17:03.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621029",
+    "ThreadId": "259689",
+    "Html": "<p>Thanks for fast reply.</p>\r\n<p>&nbsp;</p>\r\n<p>What would you suggest to process events? Maybe you know a good site which explains such things and what they are good for? I never really used aftertouch and a couple of other exotic features before, but trying to get back into sound processing and would like to experiment with such features of my keyboard (there is more in that thing, than the first look reveals).&nbsp;</p>",
+    "PostedDate": "2011-05-31T14:27:12.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621033",
+    "ThreadId": "259689",
+    "Html": "<p>well to do anything from NAudio would require you to either write or host a software synthesizer. Neither is a particularly easy task although I am in the process of writing some very basic demos for the next version of NAudio. What do you actually want to achieve?</p>",
+    "PostedDate": "2011-05-31T14:42:25.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "622406",
+    "ThreadId": "259689",
+    "Html": "<p>Hi,</p>\r\n<p>sorry for the late reply, but i had a lot of work-related stuff to do.&nbsp;</p>\r\n<p>Yes i'm trying to make a simple synth. Less for production, but rather for playing around with DSP and modular approach. It's especially about continuous data processing and parrallel programming.</p>\r\n<p>For a couple of years now i wanted to create node-based application, just type into google if you don't know what i mean. Sometimes i lack time for this or even passion for programming at evenings, cause i'm already software developer in my job. Now i found both of it and wanted try it out. Maybe you have some pointer on modular data processing. I suppose in C# i have to use Object for plain data and cast or rather box/unbox it. In C++ i think it's void-poiner and casting.</p>",
+    "PostedDate": "2011-06-03T02:00:09.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "623353",
+    "ThreadId": "259689",
+    "Html": "<p>the next version of NAudio will hopefully contain some better examples for synth type applications. I'm already working on a drum machine and there will be a new interface called ISampleProvider which is intended to make it simpler to build modular effects paths. In the current version of NAudio the WaveBuffer class allows you to effectively do void pointer casting between arrays of bytes, shorts or floats as necessary.</p>",
+    "PostedDate": "2011-06-06T01:37:43.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

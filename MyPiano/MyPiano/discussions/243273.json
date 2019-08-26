@@ -1,0 +1,154 @@
+[
+  {
+    "Id": "555257",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Is it possible to play a WMA audio source from a stream with NAudio? I seem to be able to do this with WAV and MP3 using WaveFileReader(stream) and MP3FileReader(stream) respectively. However, there seems to be no equivalent for WMA.</p>\r\n<p>Regards</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2011-01-25T14:30:05.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555316",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>Hi Colin,</p>\r\n<p>Actually it is possible - there is a new class (added about a month ago) named&nbsp;<strong>WMAFileReader</strong></p>\r\n<p>This is how I use it in Practice# and it works fine:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>            <span style=\"color:blue\">else</span> <span style=\"color:blue\">if</span> (fileExt == WMAExtension)\r\n            {\r\n                m_waveReader = <span style=\"color:blue\">new</span> WMAFileReader(filename);\r\n                <span style=\"color:blue\">if</span> (m_waveReader.WaveFormat.Encoding != WaveFormatEncoding.Pcm)\r\n                {\r\n                    m_waveReader = WaveFormatConversionStream.CreatePcmStream(m_waveReader);\r\n                    m_waveReader = <span style=\"color:blue\">new</span> BlockAlignReductionStream(m_waveReader);\r\n                }\r\n                <span style=\"color:blue\">if</span> (m_waveReader.WaveFormat.BitsPerSample != 16)\r\n                {\r\n                    <span style=\"color:blue\">var</span> format = <span style=\"color:blue\">new</span> WaveFormat(m_waveReader.WaveFormat.SampleRate,\r\n                       16, m_waveReader.WaveFormat.Channels);\r\n                    m_waveReader = <span style=\"color:blue\">new</span> WaveFormatConversionStream(format, m_waveReader);\r\n                }\r\n\r\n                m_waveChannel = <span style=\"color:blue\">new</span> WaveChannel32(m_waveReader);\r\n            }\r\n\r\n</pre>\r\n<pre>Hope this helps,</pre>\r\n<pre>Yuval</pre>\r\n<pre>Author of Practice# - <span style=\"font-family:'Segoe UI','Microsoft Sans Serif',Arial,Geneva,sans-serif; white-space:normal\"><a href=\"http://code.google.com/p/practicesharp\">http://code.google.com/p/practicesharp</a></span></pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2011-01-25T18:19:25.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555454",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>Thanks for your help.</p>\r\n<p>I have followed the discussion threads and I am aware that you implemented a WMAFileReader and that Mark eventually incorporated this in NAudio. Still, I cannot find it in the NAudio 1.3 assembly!</p>\r\n<p>I also looked at your original implementation and unfortunately I cannot use it as it is as I need to stream the WMA file from memory rather than directly from disk. To this purpose, the Mp3 and Wav file readers have a constructor that accepts an object\r\n of type Stream, so I can pass a MemoryStream containing the audio resource. Actually.. I could do a bit of a hack by saving the stream to a temporary file and supply its URL for playback, but I would rather not do this as I would need to keep track of the\r\n temp files and delete them eventually.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-26T02:19:56.78-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555514",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>No problem - glad to help.</p>\r\n<p>Mark put WMAFileReader in NAudio.WindowsMediaFormat assembly, not in the core NAudio assembly.</p>\r\n<p>Also, I'm not sure if the compiled versions have it, but if you get the latest sources from SVN, then the file is there.</p>\r\n<p>&nbsp;</p>\r\n<p>Regd. Memory Streams - Yes, I see your point. WMAFileReader is missing the stream constructor.</p>\r\n<p>Well, this 'hack' your purposed is not the most elegant one, but it will save you coding time.</p>\r\n<p>If you want to solve it properly, then you could add a constructor for streams (just like WAV and MP3 File Readers have one).</p>\r\n<p>WMA playback is done by using the Microsoft Windows Media Format API, in particular IWMSyncReader:</p>\r\n<p><a href=\"http://msdn.microsoft.com/en-us/library/dd798576(v=vs.85).aspx\">http://msdn.microsoft.com/en-us/library/dd798576(v=vs.85).aspx</a>&nbsp;</p>\r\n<p>The current implementation of WMAFileReader uses Open() method, but there is another method there named OpenStream():</p>\r\n<p><a href=\"http://msdn.microsoft.com/en-us/library/dd798598(v=vs.85).aspx\">http://msdn.microsoft.com/en-us/library/dd798598(v=vs.85).aspx</a></p>\r\n<p>&quot;The&nbsp;<strong>OpenStream</strong>&nbsp;method opens a stream for reading.&quot;</p>\r\n<p>I'm not saying it's trivial, but if you provide your .NET memory stream as a COM IStream object, then WMA playback should work&nbsp;theoretically, with some other minor modifications to WMAFileReader.</p>\r\n<p>&nbsp;</p>\r\n<p>HTH,</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2011-01-26T04:48:12.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555586",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>I'd rather not try to customize the NAudio code for this as I would have to redo the changes on every release of the library. The temp file hack is beginning to look more viable! :)</p>\r\n<p>I can eventually eliminate the hack, if and when, a Stream-based constructor is implemented for WMAFileStream.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks once again.</p>\r\n",
+    "PostedDate": "2011-01-26T06:59:35.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555608",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>Collin,</p>\r\n<p>I have no time to implement it, but just to finish my last reply.<br>\r\nThis is the Microsoft IStream interface definition:</p>\r\n<p><a href=\"http://msdn.microsoft.com/en-us/library/aa380034(v=vs.85).aspx\">http://msdn.microsoft.com/en-us/library/aa380034(v=vs.85).aspx</a></p>\r\n<p>There is a wrapper in .NET for this interface:</p>\r\n<p><a href=\"http://msdn.microsoft.com/en-us/library/system.runtime.interopservices.comtypes.istream(v=VS.80).aspx\">http://msdn.microsoft.com/en-us/library/system.runtime.interopservices.comtypes.istream(v=VS.80).aspx</a></p>\r\n<p><a href=\"http://msdn.microsoft.com/en-us/library/aa380034(v=vs.85).aspx\"></a>&nbsp;And here's an article I found about .NET and IStream implementation (you will need a new class - e.g. WMAStreamWrapper):</p>\r\n<p><a href=\"http://hl7connect.blogspot.com/2010/04/c-implementation-of-istream.html\">http://hl7connect.blogspot.com/2010/04/c-implementation-of-istream.html</a></p>\r\n<p>&nbsp;</p>\r\n<p>I'm sure it is doable.</p>\r\n<p>&nbsp;</p>\r\n<p>BTW: there is one more option.. don't use WMA (COM) and move to using FLAC which is open source and better quality (though bigger in size).</p>\r\n<p>It too has support for streaming.&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-26T07:43:16.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555610",
+    "ThreadId": "243273",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>colinvella wrote:</strong><br>\r\n<p>I'd rather not try to customize the NAudio code for this as I would have to redo the changes on every release of the library. The temp file hack is beginning to look more viable! :)</p>\r\n<p>I can eventually eliminate the hack, if and when, a Stream-based constructor is implemented for WMAFileStream.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks once again.</p>\r\n</blockquote>\r\n<p>You don't have to redo the changes - you do it once, send it to Mark, he would take the changes in, and you just contributed to NAudio and the open source community!</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2011-01-26T07:45:06.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555614",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>Thanks for all the pointers, I'll consider an implementation, although unfortunately my time is rather limited.</p>\r\n<p>Regarding the audio format, for my application I am required to support only WAV, MP3 and WMA for the time being.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-26T07:52:43.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555942",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>I have tried implementing a Stream-based WmaFileReader as follows:</p>\r\n<ul>\r\n<li>Implemented class <strong>ComStreamWrapper </strong>to wrap a <strong>Stream </strong>\r\nwithin an <strong>IStream</strong> </li><li>Implemented class <strong>WmaStream2 </strong>by cloning <strong>WmaStream </strong>\r\nand adding a constructor accepting a <strong>Stream</strong>. Internally, the <strong>\r\nStream </strong>parameter is wrapped in <strong>ComStreamWrapper </strong>and passed to\r\n<strong>IWMSyncReader.OpenStream()</strong> </li><li>Implemented class <strong>WmaFileReader2 </strong>by cloning <strong>WmaFileReader</strong>, replacing refs to\r\n<strong>WmaStream </strong>by <strong>WmaStream2 </strong>and added constructors that accept\r\n<strong>Stream</strong> params. Internally they are identical to the filename ctors except that the internal&nbsp;<strong>WmaStream2\r\n</strong>instance is constructed by passing the <strong>Stream</strong> parameter.\r\n</li></ul>\r\n<p>The new stream implementation seems to work up till<strong> IWavePlayer.Init()</strong>&nbsp;and the properties such as TotalTime, wave format etc. within<strong> WmaFileReader2</strong> seem to make sense.&nbsp;However the code fails somewhere deep within\r\n<strong>IWavePlayer.Play()</strong> (I'm using <strong>WaveOut </strong>implementation). The error is a null reference expetion and it seems to point to a method\r\n<strong>GetNextSample()</strong> but I couldn't follow further.</p>\r\n<p>I have attached the sources of the new classes above:&nbsp;<a title=\"http://www.mediafire.com/file/ds4b5v69tc6c33j/Audio.zip\" href=\"http://www.mediafire.com/file/ds4b5v69tc6c33j/Audio.zip\" target=\"_blank\">http://www.mediafire.com/file/ds4b5v69tc6c33j/Audio.zip</a>&nbsp;hoping\r\n that you may perhaps assist.</p>\r\n<p>Assuming the error can be resolved, the intention of classes <strong>WmaStream2\r\n</strong>and <strong>WmaFileReader2 </strong>is to replace the original <strong>WmaStream\r\n</strong>and <strong>WmaFileReader</strong>&nbsp;classes since they essentially just add constructors to accept\r\n<strong>Stream</strong> params.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-26T15:40:50.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555952",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>I'll try to run these classes in my NAudioWMA Test application.</p>\r\n<p>But it could take some time to debug this 'adapter'.</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2011-01-26T16:14:50.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555957",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>I managed to play a WMA Memory Stream - simply read a WMA file as bytes into a MemoryStream.</p>\r\n<p>&nbsp;</p>\r\n<pre><span style=\"white-space:pre\">\t\t</span>MemoryStream memoryStream = new MemoryStream();\r\n                using ( FileStream infile = new FileStream(fileName, FileMode.Open, FileAccess.Read) )\r\n                {\r\n                    while (infile.Position &lt; infile.Length)\r\n                    {\r\n                        byte data = (byte) infile.ReadByte();\r\n                        memoryStream.WriteByte( data );\r\n                    }\r\n                }\r\n                memoryStream.Position = 0;\r\n                readerStream = new WMAFileReader2(memoryStream);</pre>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>It crashed on ComStreamWrapper.Seek:</p>\r\n<p>&nbsp;</p>\r\n<pre>  public void Seek(long dlibMove, int dwOrigin, System.IntPtr plibNewPosition)\r\n    {\r\n        int newPosition = (int)m_stream.Seek(dlibMove, (SeekOrigin)dwOrigin);\r\n\r\n       <strong> if (plibNewPosition != IntPtr.Zero)</strong>\r\n        {\r\n            Marshal.WriteInt32(plibNewPosition, newPosition);\r\n        }\r\n    }</pre>\r\n<p>&nbsp;</p>\r\n<p>I don't &nbsp;know why, yet, but the&nbsp;<span style=\"font-family:Consolas,'Courier New',Courier,monospace; white-space:pre\">plibNewPosition pointer came in as NULL (Zero). But working with COM in the past that wouldn't be a surprise or the first time..</span></p>\r\n<p><span style=\"font-family:Consolas,'Courier New',Courier,monospace\"><span style=\"white-space:pre\">So I added a quick protection check - if it comes as NULL I simply don't write the new position back.</span></span></p>\r\n<p><span style=\"font-family:Consolas,'Courier New',Courier,monospace\"><span style=\"white-space:pre\">The audio plays very well..!</span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-family:Consolas,'Courier New',Courier,monospace\"><span style=\"white-space:pre\">There is a problem however with Seeks - My test application crashed (in the same Seek() method) when trying to see to a constant CurrentTime (it works fine with\r\n a file input):</span></span></p>\r\n<p><span style=\"font-family:Consolas,'Courier New',Courier,monospace\"><span style=\"white-space:pre\">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(mainOutputStream as WaveChannel32).CurrentTime = new TimeSpan(0, 0, 20);</span></span></p>\r\n<p>Haven't had much time to debug it, but it seems that the conversion of Time Span to memory stream position is incorrect. The&nbsp;<span style=\"font-family:Consolas,'Courier New',Courier,monospace; white-space:pre\">dlibMove parameter comes in with a huge\r\n value, which is much bigger than the memory stream length.</span></p>\r\n<p><span style=\"font-family:Consolas,'Courier New',Courier,monospace\"><span style=\"white-space:pre\">So I leave this to you for now..</span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-family:Consolas,'Courier New',Courier,monospace\"><span style=\"white-space:pre\">Yuval</span></span></p>\r\n<p><span style=\"font-family:Consolas,'Courier New',Courier,monospace\"><span style=\"white-space:pre\"><br>\r\n</span></span></p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-26T16:46:18.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "556083",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>Yuval, you're a star! :)</p>\r\n<p>I'll amend my own copy with your null test. Hopefully Mark can incorporate the\r\n<strong>Stream</strong> constructors in the original <strong>WmaFileReader</strong> and\r\n<strong>WmaStream</strong> classes.</p>\r\n<p>&nbsp;</p>\r\n<p>Regarding using the <strong>CurrentTime </strong>property's setter, I'm not 100% sure, but I think it is indeed a bug. The implementation of this setter essentially converts the\r\n<strong>TimeSpan </strong>input from continuous time to discreet sample time and calls the\r\n<strong>Position </strong>property's setter with the computed sample index. However, apparently this value must be rounded to the nearest\r\n<strong>BlockAlign </strong>value. In fact within my own application I had to bypass the\r\n<strong>CurrentTime</strong>&nbsp;property setter by implementing my own&nbsp;continuous&nbsp;time - discrete sample time conversion outside of NAudio (with\r\n<strong>BlockAlign </strong>rounding) and pass the value directly to the <strong>\r\nPosition</strong> property setter. &nbsp;Here's my application code below:</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<pre>// skip to different times via trackbar control</pre>\r\n<pre>private void OnTrackBarTimeScroll(object objSender, EventArgs eventArgs)</pre>\r\n<pre>{</pre>\r\n<pre>    // compute position in sample domain</pre>\r\n<pre>    long nNewPosition = (m_trackBarTime.Value * m_waveStream.Length) / m_trackBarTime.Maximum;</pre>\r\n<pre><br></pre>\r\n<pre>    // align new pos to BlockAlign and assign to WaveStream Position</pre>\r\n<pre>    nNewPosition -= nNewPosition % m_waveStream.BlockAlign;</pre>\r\n<pre>    m_waveStream.Position = nNewPosition;</pre>\r\n<pre><br></pre>\r\n<pre>    // display new CurrentTime value\r\n    m_lblCurrentTime.Text = m_waveStream.CurrentTime.ToString(@&quot;hh\\:mm\\:ss&quot;);</pre>\r\n<pre>}</pre>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-27T01:00:50.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "556172",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>On a somewhat related note there seems to be a problem with the TotalTime property of the WmaFileStream. It seems to be returning a longer time by a factor of more than 100% (a 3-second WMA file is reported as being about 7 seconds long). The CurrentTime\r\n property on the other hand appears far more accurate.</p>\r\n",
+    "PostedDate": "2011-01-27T04:58:49.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "556188",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>TotalTime works fine for me with files and memory streams, please take a look at a test application I wrote for WMA (before the code was submitted to Mark):</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/source/browse/#svn%2Ftrunk%2FTests%2FNAudioWMA\">http://code.google.com/p/practicesharp/source/browse/#svn%2Ftrunk%2FTests%2FNAudioWMA</a></p>\r\n",
+    "PostedDate": "2011-01-27T05:16:29.963-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "556201",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>The problem could be with the WMA file in question. For example, this file (<a title=\"http://www.mediafire.com/file/a8a4tafp71x809e/Ringtone%2001.wma\" href=\"http://www.mediafire.com/file/a8a4tafp71x809e/Ringtone%2001.wma\" target=\"_blank\">http://www.mediafire.com/file/a8a4tafp71x809e/Ringtone%2001.wma</a>)\r\n plays a short melody twice when I try it in Windows Media Player (duration about 7 seconds) but with NAudio it only plays &quot;once&quot; for about half the time, during which, the Position property of the underlying Stream (the wrapped within WaveStream) spans from\r\n beginning till end (Stream.Length). In Windows Media Player on the other hand, it plays the sound &quot;twice&quot;, reflecting the TotalTime value reported by WmaFileStream. I am beginning to wonder if the WMA format supports some form of looping or repetition meta-data.&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-27T05:39:22.463-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "556235",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>I downloaded the file and played it both in my Test application (mentioned above) and Practice# - Both played the melody twice for 7 seconds...</p>\r\n<p>Not sure what the problem is.</p>\r\n<p>It could be your application.</p>\r\n",
+    "PostedDate": "2011-01-27T06:23:59.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "556252",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>I think I found what the problem is, although I'm still not close to a proper solution:</p>\r\n<p>In my playback interface, I wanted to implement a means of detecting when the sound terminates (to enable/disable Play/Pause/Stop buttons and so on).</p>\r\n<p>Attempt 1: I first tried binding to the IWavePlayer's PlaybackStopped event, but this is not working properly and the event is never triggered.</p>\r\n<p>Attempt 2: Next, I set up a timer to poll for the IWavePlayer's PlayBackState property. Again, this property is not updated correctly for all media types and in many cases it never switches from &quot;Playing&quot; to &quot;Stopped&quot;.</p>\r\n<p>Attempt 3: I finally decided to poll the underlying Stream's (and later, WaveStream's) Position and trigger the end of play when the stream's position reaches it's Length (within a tollerance based on BlockAlign as it does not always reach the very end in\r\n some cases).</p>\r\n<p>The last approach seemed to work reasonably well, and I could also map the stream's position to that of a an interactive playback slider control (the slider sometimes jumps to an initial offset due to the audio file's header size in the stream). However,\r\n when I tried playing Ringtone0.wma, this approach fails because the file seems to have an instruction to repeat the audio stream twice, thus my UI terminates playback prematurely as soon as the stream's position reaches the end of the stream. In hind-sight,\r\n I should probably base my checks on CurrentTime and ElapsedTime.</p>\r\n<p>&nbsp;I'll keep you posted :)</p>\r\n<p>&nbsp;</p>\r\n<p><strong>EDIT:</strong>&nbsp;Using CurrentTime and ElapsedTime solved the problem.. but only up to an extent - some audio files never quite reach the end of the song length, sometimes by a span of 2 or 3 seconds! I kind of solved this by keeping track of\r\n successive values of CurrentTime from one Timer tick to the next, and if this becomes constant, I assume that the end has been reached. This is working well so far.</p>\r\n<p>There is only one pending problem, at least as far as my app is concerned: it is not possible to change the WaveStream position (even with BlockAlign rounding) in WmaFileReader2 as it causes a crash within the Seek method of WmaStream2, particularly during\r\n th invocation of the line:</p>\r\n<p>m_reader.SetRange(SampleTime, 0);</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-27T06:52:07.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "556494",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>The solution has to be event driven - any kind of polling is really not the right way to do it due to latency issues.</p>\r\n<p>&nbsp;</p>\r\n<p>As for the Seek error - I know, that is exactly what I described in a previous reply.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-27T12:57:27.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "556558",
+    "ThreadId": "243273",
+    "Html": "\r\n<p>Regarding the PlaybackStopped event not working.. I just found out what the problem was thanks to a recorded issue (<a href=\"http://naudio.codeplex.com/workitem/10726\">http://naudio.codeplex.com/workitem/10726</a>). Prior to playing, I was wrapping the wave\r\n stream in a WaveChannel32 that, by defaut, has property PadWithZeros set to true. This causes the stream to yield zeros ad infinitum and never trigger the PlaybackStopped &nbsp;event. The solution was to set PadWithZeros to false. I have now switched back\r\n to the event system and just use polling to track playback progress over time.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-27T15:22:03.94-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

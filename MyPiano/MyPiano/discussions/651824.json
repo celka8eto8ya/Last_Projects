@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1464783",
+    "ThreadId": "651824",
+    "Html": "Hello,\r<br />\nI am looking to just edit the Title and Album Artist of an existing .wma file programmatically in C# or VB.net.\r<br />\n<br />\nAny help would be appreciated.\r<br />\n<br />\nThanks\r<br />\nDavid<br />\n",
+    "PostedDate": "2016-02-26T19:25:05.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468041",
+    "ThreadId": "651824",
+    "Html": "Unfortunately this is not a feature of NAudio, but I think you can do this with the Windows shell object. <br />\n",
+    "PostedDate": "2016-03-26T03:19:27.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

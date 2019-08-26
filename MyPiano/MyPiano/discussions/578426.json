@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1345307",
+    "ThreadId": "578426",
+    "Html": "Hi all,\r<br />\n<br />\nI have following problem using a BufferedWaveProvider.\r<br />\nThe BufferedWaveProvider is filled with Data every time I receive Data through Network Connection. Now i add the received Data to the WSAPI Render every time my internal timer Event occours. (for example every 20ms). This is done because the received Data is Buffered with an additional JitterWaveProvider. So I need this recourring event.\r<br />\n<br />\nBut this is not very stable since the processing time for taking the new data and put it to the output device is different in each case so the Thread.Sleep(20) will sometimes be too long.\r<br />\n<br />\nIs there an other possibility to fetch the Data instead of put it to the renderer. An event such as &quot;PlaybackFinishedNeedMoreData&quot; from the WSAPI Renderer would be nice. Is there anything existing? What's the best approach?\r<br />\n<br />\nRegards,\r<br />\nMeisterM<br />\n",
+    "PostedDate": "2015-01-23T03:26:59.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354469",
+    "ThreadId": "578426",
+    "Html": "What does JitterWaveProvider do? So long as you are getting data in real-time, you should just add it to BufferedWaveProvider directly. If you want to build up some backlog, pause playback until enough data has built up in the buffer.<br />\n",
+    "PostedDate": "2015-02-20T13:16:17.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

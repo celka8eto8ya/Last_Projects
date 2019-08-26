@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudioDemo",
+      "DisplayName": "NAudioDemo"
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:26:47.48-07:00",
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "I'm getting an error when trying to run the WPF Demo application in debug or release mode. I checked the latest copy of NAudio and built successfully on VS2008 Professional. When I start a new instance of the debugger for the NAudioWpfDemo project if fails with the error message noted below. It doesn't break anywhere specific in the code but if I set a break point in the MainWindow constructor I can trace it to a specific line, noted below also. It seems to break when trying to create a new AudioGraph object. Oh and I'm running on Win7 64-bit. Any idea of what the issue may be?\r\n\r\nError Message:\r\nCannot create instance of 'MainWindow' defined in assembly 'NAudioWpfDemo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'. Exception has been thrown by the target of an invocation.  Error in markup file 'MainWindow.xaml'.\r\n\r\nTrace:\r\n> public MainWindow()\r\n> viewModel = new ControlPanelViewModel(this.waveForm, this.analyzer); \r\n> public ControlPanelViewModel(IWaveFormRenderer waveFormRenderer, SpectrumAnalyser analyzer)\r\n> this.audioGraph = new AudioGraph();  // It breaks stepping into or over this line.",
+    "LastUpdatedDate": "2012-10-27T00:26:47.48-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-02-09T05:33:25.047-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Error Starting WPF Demo",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 11736
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Update: I changed the build configuration to target x64 (instead of \"Any CPU\"), recompiled and it seems to work properly.",
+      "PostedDate": "2010-02-09T06:12:34.89-08:00",
+      "Id": 41716
+    },
+    {
+      "Message": "I know exactly what the issue is - just go to the property page of the NAudioWpfDemo project, on the Build tab and set the platform target to x86.  The NAudio project is correctly set this way, but when .NET tries to load it into an x64 process it fails to load.  This corrects the issue (just played and .mp3 with it after making this fix!)\r\n\r\nI also dropped and added the project reference, but I don't believe it is necessary, just mentioning on the off chance it is.\r\n\r\nHTH,\r\nRichard",
+      "PostedDate": "2010-03-24T11:41:24.89-07:00",
+      "Id": 41717
+    },
+    {
+      "Message": "Adding add'l comment to say: bdorman - that doesn't work for me, I got the same load exception for \"Any CPU\" as for x64... it had to be x86 to work. ",
+      "PostedDate": "2010-03-24T11:43:21.32-07:00",
+      "Id": 41718
+    },
+    {
+      "Message": "I've done a check-in today which hopefully will mean that we don't need the NAudio DLL (or calling applications) to be set to x86 any more. However, I don't have an x64 system of my own to test on so I'll have to wait a bit to see if it works",
+      "PostedDate": "2010-03-25T08:59:30.66-07:00",
+      "Id": 41719
+    }
+  ]
+}

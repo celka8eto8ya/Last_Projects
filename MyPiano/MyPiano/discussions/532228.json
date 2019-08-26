@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1209199",
+    "ThreadId": "532228",
+    "Html": "Hi,\r<br />\nSorry for troubling you again. Can I know that is that any possible way to plot a frequency and covariance graph using Naudio library? If possible can show me some code example? Thanks a lot.<br />\n",
+    "PostedDate": "2014-02-16T19:40:39.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209383",
+    "ThreadId": "532228",
+    "Html": "NAudio can supply the raw samples so yes you can send the data to any kind of audio visualizer.<br />\n<br />\nHave a look at the WPF sample in the NAudio source.<br />\n",
+    "PostedDate": "2014-02-17T04:42:31.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209392",
+    "ThreadId": "532228",
+    "Html": "Hi K24A3, thx for the reply. Which samples do show the plotting frequency and covariance graph? Can you tell me so that I can study it. Thx a lot.<br />\n",
+    "PostedDate": "2014-02-17T04:59:31.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209395",
+    "ThreadId": "532228",
+    "Html": "Download the source and have a look at the NAudioWPFDemo, it sends the samples to a waveform visualizer.\r<br />\n<br />\nUse the SampleAggregator to collect the samples on the fly and send the collection to your visualizer at the specified interval.<br />\n",
+    "PostedDate": "2014-02-17T05:03:07.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209398",
+    "ThreadId": "532228",
+    "Html": "As far as I know the frequency plotting and covariance graph is not demoed in the samples, you'll need to provide this yourself.\r<br />\n<br />\nBut you got the basics covered, for any visualizer you need sample data and possibly FFT functionality, which is supported in NAudio.<br />\n",
+    "PostedDate": "2014-02-17T05:14:23.993-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209404",
+    "ThreadId": "532228",
+    "Html": "Can I know any FFT function can be used in Naudio? How many FFT functionality does Naudio have?<br />\n",
+    "PostedDate": "2014-02-17T05:33:14.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209484",
+    "ThreadId": "532228",
+    "Html": "By the way, the graph shown in the demo one is a moving graph. All I want is just plot a static line on the graph and display the value of x and y axis. Do Naudio provide the function that I want? How to implement it?<br />\n",
+    "PostedDate": "2014-02-17T07:57:46.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209486",
+    "ThreadId": "532228",
+    "Html": "NAudio is not a graphics library. You have to write your own visualisation code, but you can copy examples from the demos. They show how you can calculate FFT in NAudio. <br />\n",
+    "PostedDate": "2014-02-17T08:00:05.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

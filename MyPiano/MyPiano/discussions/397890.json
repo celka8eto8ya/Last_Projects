@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "921258",
+    "ThreadId": "397890",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>How are you?</p>\r\n<p>I came here because i need to implement the goertzel's algorithm (<a href=\"http://en.wikipedia.org/wiki/Goertzel_algorithm\">http://en.wikipedia.org/wiki/Goertzel_algorithm</a>) for the sounds that are captured by the microphone.</p>\r\n<p>I have read the tutorials and compiled them with my VS2010 and, rigth now, i can take audio from the mic and playing it on the speakers... I can't find how could i convert the sound to an array of float in order to apply the algorithm.</p>\r\n<p>&nbsp;</p>\r\n<p>Any ideas?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-10-03T07:13:50.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "922894",
+    "ThreadId": "397890",
+    "Html": "<p>Assuming you are recording in 16 bit, every two bytes is a sample.. Use BitConverter.ToInt16 to get those samples. Then, to get a float value, you would normally divide by 32,768f to get it into the range +/- 1.0</p>",
+    "PostedDate": "2012-10-06T11:56:26.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

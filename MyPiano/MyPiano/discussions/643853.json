@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1440929",
+    "ThreadId": "643853",
+    "Html": "I am new in NAudio. I am doing this first time, I am not getting for to retrieve only graph for a given .wav file, give me some direction so i can do it easy.\r<br />\n<br />\nplease help me out..\r<br />\n<br />\nthank<br />\n",
+    "PostedDate": "2015-08-18T03:44:23.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441011",
+    "ThreadId": "643853",
+    "Html": "i need only Audio graph on inputing .wav file.\r<br />\nAny one know please guide me or sent that code<br />\n",
+    "PostedDate": "2015-08-18T22:31:33.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443171",
+    "ThreadId": "643853",
+    "Html": "Read my article, which describes that:<br />\n<br />\n<a href=\"http://www.codeproject.com/Articles/990040/MultiWave-a-portable-multi-device-NET-audio-player\" rel=\"nofollow\">http://www.codeproject.com/Articles/990040/MultiWave-a-portable-multi-device-NET-audio-player</a><br />\n",
+    "PostedDate": "2015-09-04T04:32:48.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

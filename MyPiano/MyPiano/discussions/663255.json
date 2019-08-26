@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1497090",
+    "ThreadId": "663255",
+    "Html": "I should say upfront that I don't expect this is genuinely an naudio problem - but I'm stumped.\r<br />\n<br />\nMy app records the user's voice in discrete phrases, and they can optionally play back their recorded voice, and re-record phrases they are not happy with.\r<br />\n<br />\nWhen the app (re)records a phrase, it simply deletes the existing phrase with a call to IO.File.Delete, which normally works fine.\r<br />\n<br />\nHowever, if I have played back the phrase first, the call to IO.File.Delete fails with &quot;System.UnauthorizedAccessException: Access to the path &lt;filename&gt; is denied.&quot;\r<br />\n<br />\nExamining with Process Explorer shows, as expected, that only my app has a file handle to the sound file in question.\r<br />\n<br />\nSo, it seems as if the NAudio.Wave.AudioFileReader isn't letting go of the file - even though I explicitly dispose and set the object to nothing when I finish playing the phrase.\r<br />\n<br />\nAm I missing something?  Is there a step I should be taking to explicitly release the file?\r<br />\n<br />\nAny advice very gratefully received!\r<br />\n<br />\nThanks,\r<br />\nAaron<br />\n",
+    "PostedDate": "2017-06-16T08:44:32.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

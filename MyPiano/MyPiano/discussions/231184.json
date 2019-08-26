@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "508356",
+    "ThreadId": "231184",
+    "Html": "<p>Hi,</p>\r\n<p>I just started using NAudio - it is really great.</p>\r\n<p>I'm trying to read an MP3 file into memory as a whole buffer, perform some dynamic (UI driven) processing in a loop and then let BufferedWaveProvider play it.</p>\r\n<p>My plan is to use BufferedWaveProvider queuing mechanism and to add samples to the queue on the fly.</p>\r\n<p>The MP3 I'm using is 44000, 32 bit, 2 channel.</p>\r\n<p>This is my test code - It compiles and runs but sounds terrible - very noisy. I guess it is due to some format conversion, but not sure what exactly. Maybe the float to byte conversion?</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <span style=\"color:blue\">private</span> IWaveProvider CreateBufferedWaveProvider(<span style=\"color:blue\">string</span> filename)\r\n        {\r\n            WaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(filename);\r\n            WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(mp3Reader);\r\n            WaveStream blockAlignedStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(pcmStream);WaveChannel32 waveChannel = <span style=\"color:blue\">new</span> WaveChannel32(blockAlignedStream);\r\n\r\n            WaveFormat format = <span style=\"color:blue\">new</span> WaveFormat(waveChannel.WaveFormat.SampleRate, waveChannel.WaveFormat.BitsPerSample, waveChannel.WaveFormat.Channels);\r\n            BufferedWaveProvider inputProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(format);\r\n\r\n            <span style=\"color:blue\">byte</span>[] buffer1 = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[waveChannel.WaveFormat.SampleRate];\r\n            <span style=\"color:blue\">int</span> bytesRead;\r\n\r\n            <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> i = 0; i &lt; 100; i++)\r\n            {\r\n                bytesRead = waveChannel.Read(buffer1, 0, waveChannel.WaveFormat.SampleRate);\r\n                inputProvider.AddSamples(buffer1, 0, bytesRead );\r\n            }\r\n\r\n            waveChannel.Dispose();\r\n            blockAlignedStream.Dispose();\r\n            pcmStream.Dispose();\r\n            mp3Reader.Dispose();\r\n\r\n            <span style=\"color:blue\">return</span> inputProvider;\r\n        }\r\n</pre>\r\n</div>\r\n</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>",
+    "PostedDate": "2010-10-16T18:18:11.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508403",
+    "ThreadId": "231184",
+    "Html": "<p>I'm not very acquainted with the BufferedWaveProvider, but it might be due to the latency of whatever IWavePlayer you are using, if you are even using one. If I set it too low, I get playback like that.</p>",
+    "PostedDate": "2010-10-17T02:49:08.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508437",
+    "ThreadId": "231184",
+    "Html": "<p>Thanks for trying to help!</p>\r\n<p>Well, it wasn't the latency but I found the problem:</p>\r\n<p>It was the float to byte conversion after all - I created a wave format that was not IeeeFloat but the actual data was.</p>\r\n<p>So I changed these rows:</p>\r\n<pre>&nbsp;&nbsp;&nbsp; WaveFormat format = <span style=\"color:blue\">new</span> WaveFormat(waveChannel.WaveFormat.SampleRate, waveChannel.WaveFormat.BitsPerSample, waveChannel.WaveFormat.Channels); <br>&nbsp;&nbsp;&nbsp; BufferedWaveProvider inputProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(format);<br><br>into this row: (The wave format is simply passed from the channel)<br>&nbsp;&nbsp;&nbsp; BufferedWaveProvider inputProvider = new BufferedWaveProvider(waveChannel.WaveFormat);<br><br>And now it works fine.<br><br>Thanks,<br>Yuval<br></pre>",
+    "PostedDate": "2010-10-17T05:59:46.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

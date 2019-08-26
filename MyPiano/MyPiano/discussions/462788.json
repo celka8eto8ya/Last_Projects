@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1109453",
+    "ThreadId": "462788",
+    "Html": "Hi mark,\r<br />\nI have a problem on a project.I want to only Increase low bit section.I use Threshold, attack time,Release Time,ratio.I change low bit section using this four compressor value. If this possible please help me.!!<br />\n",
+    "PostedDate": "2013-10-18T22:22:02.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112067",
+    "ThreadId": "462788",
+    "Html": "you need a dynamic range compression algorithm. NAudio does include a class called SimpleCompressor, but you'd need to wrap that into an ISampleProvider yourself to include it more easily in a signal chain. This is something I hope to do in a future version of NAudio.<br />\n",
+    "PostedDate": "2013-10-25T05:50:14.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

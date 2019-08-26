@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1490379",
+    "ThreadId": "660376",
+    "Html": "in audacity there a pan  you can put it all the right to the right speaker or to the left speaker...<br />\nhow do I do that with Naudio ?<br />\n<br />\nI tried<br />\n waveout = new WaveOut();<br />\n<pre><code>        WaveChannel32 temp = new WaveChannel32(BBeats);\n        temp.PadWithZeroes = false;\n        temp.Pan = 100;\n        waveout.Init(temp);\n        waveout.Play();\n\n</code></pre>\n\nbut it did not work <br />\n<br />\nin Audacity you can set pan to only play from the right or the left speaker..<br />\nhow can i do that in Naudio ? <br />\n",
+    "PostedDate": "2016-12-28T18:06:41.747-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491306",
+    "ThreadId": "660376",
+    "Html": "Pan property is of float type. in this case it is used from -1.0f(left) to +1.0f (right).<br />\n",
+    "PostedDate": "2017-01-18T12:10:34.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "732792",
+    "ThreadId": "287929",
+    "Html": "\r\n<p>I apologize if this turns out to be a repeat question, but I tried doing a search for this and couldn't find an answer.</p>\r\n<p>I am currently using DirectSoundOut to play sounds from specific devices based on a user's selection. A concern came up that I'm not sure how to address. &nbsp;Is there a way to check whether a specific output device is already playing something?</p>\r\n",
+    "PostedDate": "2012-01-30T11:29:58.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "733449",
+    "ThreadId": "287929",
+    "Html": "<p>You can have many instances of DirectSoundOut playing sound simultaneously in your own application, and Windows will mix it in with any sounds being played by other applications. You can write your own code to keep track of what you are playing, but there is no easy way to find out if other applications are playing something (although I think some of the WASAPI APIs can do this).</p>",
+    "PostedDate": "2012-01-31T12:35:35.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "734879",
+    "ThreadId": "287929",
+    "Html": "<p>Thank you for the reply. &nbsp;You are correct in your assessment that I was hoping to find out whether other applications are playing something. I shall have to delve into those WASAPI APIs to see what I can find.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks again.</p>",
+    "PostedDate": "2012-02-01T08:42:08.82-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

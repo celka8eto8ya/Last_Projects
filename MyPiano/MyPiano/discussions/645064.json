@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1444747",
+    "ThreadId": "645064",
+    "Html": "Hi Mark, et al,\r<br />\nI'm migrating my app up to .NET Framework 4.5.2 (or maybe .NET 4.6). NAudio compiles fine for 4.5.2 and the app runs as expected in early testing. I'm just wondering if anyone has compiled NAudio to target .NET 4.6 and whether there are any known issues with NAudio libraries on that version.\r<br />\n<br />\nThese are the two dlls I use.\r<br />\nNAudio.dll\r<br />\nNAudio.WindowsMediaFormat.dll<br />\n",
+    "PostedDate": "2015-09-17T05:30:00.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1444910",
+    "ThreadId": "645064",
+    "Html": "Update: I did go ahead and recompile the two dlls above to target .Net 4.6 and they compiled successfully with VS2015. Testing them now and they seem to perform as expected. If I find any issues I'll report them here. But it's all good so far. :-)  \r<br />\n",
+    "PostedDate": "2015-09-18T03:12:01.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1444911",
+    "ThreadId": "645064",
+    "Html": "yes, there should be no issue. And you shouldn't need to recompile. The released binaries will work just fine with newer versions of the .NET framework<br />\n",
+    "PostedDate": "2015-09-18T03:25:12.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-18T05:26:49.897-07:00"
+  },
+  {
+    "Id": "1444928",
+    "ThreadId": "645064",
+    "Html": "Ok, thanks Mark.<br />\n",
+    "PostedDate": "2015-09-18T05:27:30.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

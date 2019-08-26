@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "680041",
+    "ThreadId": "274773",
+    "Html": "<p>Hi mark,&nbsp;</p>\n<p>I wrote a nice application with your lib, thank you!</p>\n<p>I have a few issues</p>\n<p>1. Now I use WaveOut with NewWindow with desired lantency = 300. (My application wrote in wpf .net 4 and run on WinXP). my GUI thread need to do hard work to paint the waveform and the fft and sometimes the sound and the displaying arent smooth. can you  tell me please if its better for me to use another IWavePlayer (maybe Asio)? or WaveOut with EventCallback?</p>\n<p>2. A part of my req is to decrease the volume or mute (not the windows volume but the player) but i want to keep showing the waveform and the fft. there is way to do that? (i use WaveChannel32)</p>\n<p>I'll really appreciate&nbsp;your answer</p>",
+    "PostedDate": "2011-10-04T15:38:18.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683121",
+    "ThreadId": "274773",
+    "Html": "<p>For performance, you would be best looking at ways of optimising the waveform and FFT drawing code.</p>\r\n<p>To keep showing the waveform, you must base the drawing and FFT on the samples before you adjust their volume. I am working on making this easier to do for the next version of NAudio.</p>",
+    "PostedDate": "2011-10-12T06:30:26.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683285",
+    "ThreadId": "274773",
+    "Html": "<p>change desired lantency to about 100 - 150. You will see it looks like much better.</p>",
+    "PostedDate": "2011-10-12T10:52:54.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "684908",
+    "ThreadId": "274773",
+    "Html": "<p>edited</p>",
+    "PostedDate": "2011-10-16T13:15:42.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685056",
+    "ThreadId": "274773",
+    "Html": "<p>thanks for the answers.</p>\r\n<p>can you tell me please when the next version will release?</p>",
+    "PostedDate": "2011-10-17T00:49:54.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685073",
+    "ThreadId": "274773",
+    "Html": "<p>most of the code for NAudio 1.5 is done, so you can try it out by getting the latest source code. I've been too busy to work on NAudio over the last few months, so it depends when I next get some free time to do a release</p>",
+    "PostedDate": "2011-10-17T01:41:14.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

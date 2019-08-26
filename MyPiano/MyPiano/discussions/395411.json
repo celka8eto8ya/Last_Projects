@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "912191",
+    "ThreadId": "395411",
+    "Html": "\r\n<p>i've been using this code base for a simple metronome app i'm working on.</p>\r\n<p>couple things i did to make it useful for my application..</p>\r\n<p>1.&nbsp; i had also updated the patternsequencer to smooth out tempo changes. nice to see the recent updates to that code, so i'm switching over to the official code base for this.</p>\r\n<p>2. i have no use for the hardcoded stepsPerBeat = 4, so i've hardcoded to 1.&nbsp; To make the code reuseable that should be a property</p>\r\n<p>3. I added an event to patternsequencer to pass up an event when a sample is written to drive GUI updates.&nbsp; The delay really isnt necessary given the buffering/sample size, but at least in my imagination it seems to provide a tighter gui update.</p>\r\n<pre>mixerInputs.Add(sampleProvider);\nFireSequencerEvent(currentStep, 1000 * sampleProvider.DelayBy / this.drumKit.WaveFormat.SampleRate);</pre>\r\n<p>this event needs to be visible to drum machine clients, which i made visible by making some things public, but it should be passed up.</p>\r\n<p>4. I modded DrumKit to use my own samples..&nbsp; Maybe a constructor to allow samples to be passed in an array would open this up.</p>\r\n<p>5. I modded SampleSource with a method to allow one to be created from a stream - have embedded wav in the resx</p>\r\n",
+    "PostedDate": "2012-09-13T06:35:07.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917039",
+    "ThreadId": "395411",
+    "Html": "<p>hi, glad you're finding it useful. It's not strictly part of the NAudio library, but I'll bear your suggestions in mind next time I work on it. 2 &amp; 5 are great ideas, and 4 was always planned anyway (the goal was to eventually support loading from SF2 files). As for 3, that can be a little more dangerous, as it would involve raising an event from within a soundcard buffer callback, something that I try to avoid in NAudio as many people don't understand the performance implications - your event handler needs to return as quickly as possible.</p>",
+    "PostedDate": "2012-09-24T23:38:27.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917320",
+    "ThreadId": "395411",
+    "Html": "<p>yea 3 is purpose built in a way i can control what happens - just kicks off a task on threadpool or invokes on guithread.&nbsp; i also tried using an independent timer but the synchronization would drift under load.&nbsp;&nbsp; thx though, it works great tailored for this app.</p>",
+    "PostedDate": "2012-09-25T08:40:32.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

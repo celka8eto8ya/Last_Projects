@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1273630",
+    "ThreadId": "551848",
+    "Html": "I would like to make some basic operations on samples and i've created a simple test code - it should get the samples from AudioFileReader to float array and write it back to different audio file, using WaveFileWriter.WriteSamples(). However the output seems damaged (i can hear clipping/distortion). Moreover, the length of the files are different (as the message box in my code shows), anyone knows what seems to be the case of this behaviour?<br />\n<br />\nHere's fragment of my code:<br />\n<pre><code>            /*... load waveReader ... */\n\n            float[] buffer = new float[waveReader.Length];\n            \n            waveReader.Read(buffer, 0, buffer.Length);\n\n            SaveFileDialog saveDialog = new SaveFileDialog();\n            saveDialog.Filter = &quot;Wave File|*.wav;*&quot;;\n            saveDialog.Title = &quot;Save Audio Output&quot;;\n            if (saveDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) \n            return;\n\n            NAudio.Wave.WaveFileWriter writer = new \n                      NAudio.Wave.WaveFileWriter(saveDialog.FileName, \n                      watermarkReader.WaveFormat);\n\n            writer.WriteSamples(buffer, 0, buffer.Length);\n            \n            MessageBox.Show(&quot;source: &quot; + waveReader.Length + &quot;, copy: &quot; + writer.Length, &quot;INFO&quot;);</code></pre>\n\n&amp;#43 is 'plus' sign <br />\n",
+    "PostedDate": "2014-07-17T09:47:51.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278437",
+    "ThreadId": "551848",
+    "Html": "What is the WaveFormat of the watermarkReader?<br />\n",
+    "PostedDate": "2014-07-28T09:32:17.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1279514",
+    "ThreadId": "551848",
+    "Html": "it's IEEE float (i use AudioFileReader for both waveReader and watermarkReader) - i found out that when i divide 'count'  by 4, when writing it:<br />\n<pre><code>writer.WriteSamples(buffer, 0, buffer.Length/4); </code></pre>\n\ni get desired length of the file. The problem is the output is still louder - isn't always clipping, but when the input is loud enough - it clips. I would like to get the same volume as the input file... I also tried to create custom ISampleProvider and write it there but i was getting various exceptions so i gave up with this idea.<br />\n",
+    "PostedDate": "2014-07-31T04:04:30-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1279727",
+    "ThreadId": "551848",
+    "Html": "when you read into a float array you are specifying the number of samples, not bytes. You should also check the return value of Read and use that instead of buffer.Length/4.\r<br />\nWhat is the original file format of the file you are reading? Is waveReader an AudioFileReader?<br />\n",
+    "PostedDate": "2014-07-31T13:45:17.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1279868",
+    "ThreadId": "551848",
+    "Html": "i used both .wav and .mp3  as the original file format, result is the same.<br />\nwaveReader is an AudioFileReader.<br />\n<blockquote>\nYou should also check the return value of Read and use that instead of buffer.Length/4. <br />\n</blockquote>\ncould you explain how? because i tried to do something like this:<br />\n<pre><code>int count = 4;\nwhile (count!=0{\n            count = waveReader.Read(buffer, 0, count);\n}</code></pre>\n\nbut it creates silence<br />\n",
+    "PostedDate": "2014-08-01T01:29:19.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1279871",
+    "ThreadId": "551848",
+    "Html": "you'd usually read a second or two at a time. Read out from waveReader, and then write to waveWriter, then repeat until you've reached the end.\r<br />\n<br />\n<br />\nsome psuedo-code:<br />\n<pre><code>float[] buffer = new float[waveReader.WaveFormat.SampleRate * 2];\nint read = 0;\ndo\n{\n    read = waveReader.Read(buffer, 0, buffer.Length);\n    // perform any processing here\n    writer.WriteSamples(buffer, 0, read );\n} while (read &gt; 0);</code></pre>\n\n",
+    "PostedDate": "2014-08-01T01:39:45.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-08-01T03:44:23.933-07:00"
+  },
+  {
+    "Id": "1279878",
+    "ThreadId": "551848",
+    "Html": "Thank you, that works but i still have a problem with clipping - output is louder then input - what might be the problem here? And it ocurrs for both mp3 and wav files.<br />\n<br />\nEDIT: ok, i divided the samples in buffer by 2 and it looks like it has the same volume (or at least close to it). Thank you once again :)<br />\n",
+    "PostedDate": "2014-08-01T01:53:19.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1280268",
+    "ThreadId": "551848",
+    "Html": "OK, that's strange that the samples are doubling in volume. Maybe its some kind of mono/stereo issue?\r<br />\nif you pass an audioFileReader straight into WaveFileWriter.CreateWaveFile16 does that also double the volume?<br />\n",
+    "PostedDate": "2014-08-01T15:33:31.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1284406",
+    "ThreadId": "551848",
+    "Html": "no, the volume is the same<br />\n",
+    "PostedDate": "2014-08-04T00:23:17.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1284452",
+    "ThreadId": "551848",
+    "Html": "hmm strange. I don't really use WriteSamples myself. Maybe there is an odd bug in there somewhere. <br />\n",
+    "PostedDate": "2014-08-04T02:20:39.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

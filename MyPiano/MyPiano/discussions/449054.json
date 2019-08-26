@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1064479",
+    "ThreadId": "449054",
+    "Html": "Having used a/this following youtube example for using Naudio, Sourcelist, suddenly didn't work after transfering the code into another VIsual Studio-solution:<br />\n<pre><code>     List&lt;NAudio.Wave.WaveInCapabilities&gt; sources = new List&lt;NAudio.Wave.WaveInCapabilities&gt;();\n        for (int i = 0; i &lt; NAudio.Wave.WaveIn.DeviceCount; i++)\n        {\n            sources.Add(NAudio.Wave.WaveIn.GetCapabilities(i));\n        }\n\n        SourceList.Items.Clear();\n\n        foreach (var source in sources)\n        {\n            ListViewItem item = new ListViewItem(source.ProductName);\n            item.SubItems.Add(new ListViewItem.ListViewSubItem(item, source.Channels.ToString()));\n                SourceList.Items.Add(item);\n        }\n</code></pre>\n\n<ul>\n<li>\n- <br />\n</li>\n</ul>\nNow the error-message in the thread subject appears.\r<br />\n<br />\n/br Thomas Due, DK<br />\n",
+    "PostedDate": "2013-07-04T03:21:40.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1064494",
+    "ThreadId": "449054",
+    "Html": "that just means you have no variable or field called SourceList. SourceList isn't part of NAudio, and so you'll need to copy more of the code from the demo if you want this to work.<br />\n",
+    "PostedDate": "2013-07-04T04:08:28.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1064542",
+    "ThreadId": "449054",
+    "Html": "I found the error myself (sourcelist is a renamed listView-component)<br />\n",
+    "PostedDate": "2013-07-04T06:07:46.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1064544",
+    "ThreadId": "449054",
+    "Html": "Yes, Mark .... thx (again my typical bad overview-capabilities haunts me :-/ )<br />\n",
+    "PostedDate": "2013-07-04T06:08:41.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

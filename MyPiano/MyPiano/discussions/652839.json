@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1467784",
+    "ThreadId": "652839",
+    "Html": "First, this is NOT a question about sample rate conversion. It is about programmatically selecting the sample rate and bit depth of a USB sound device as one could do manually through the Windows sound dialog on the Advanced tab (see jpeg). I have a need to create a .NET app that, hopefully, could use naudio to play wav files using wasapi and be able to switch the sample rate before playing the next wav file. I would also like to be able to select a USB device from the list of available devices, as the USB devices themselves will be added and removed from the list of available devices (by means such as changing the device product ID done by a separate process that's already worked out).<br />\n<br />\nIs it possible to do this with naudio? If not, does anyone know any way to do this?<br />\n<br />\n<img src=\"http://imgur.com/G3YIpu2\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2016-03-23T07:26:31.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468039",
+    "ThreadId": "652839",
+    "Html": "If you open a WASAPI device in exclusive mode then you can specify the sample rate the device uses.\r<br />\nI don't know any other way to do this, but maybe if you browse the WASAPI documentation you can find something.<br />\n",
+    "PostedDate": "2016-03-26T03:16:34.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

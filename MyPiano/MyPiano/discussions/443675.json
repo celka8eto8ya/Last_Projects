@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1043660",
+    "ThreadId": "443675",
+    "Html": "I can play Mp3 just fine from the example in the Documentation. However, Is it possible to update the Volume to the IWavePlayer via the WaveChannel32 while it is playing?? I was gong to write a handler from the + - keys on the keyboard or I am wasting time?<br />\n",
+    "PostedDate": "2013-05-14T23:39:03.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043676",
+    "ThreadId": "443675",
+    "Html": "Yes, if you keep hold of the instance of WaveChannel32. It might be easier for you to use the AudioFileReader which has a Volume property. Note that there is a difference between adjusting volume at the sample level (which is what WaveChannel32 and AudioFileReader do) and adjusting volume at the device level (which is what WaveOut.Volume does for instance). Not all output driver models support changing device volume.<br />\n",
+    "PostedDate": "2013-05-15T00:09:21.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044171",
+    "ThreadId": "443675",
+    "Html": "Ahh interesting.. I will experiment with all options. I am using this with XNA for a game prototype. I am using XNA's default audio library to handle UI and game sounds, but I needed something else to allow users to customize their soundtrack and NAudio seems to be doing great in that aspect. I will post my results.<br />\n",
+    "PostedDate": "2013-05-15T17:46:00.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044328",
+    "ThreadId": "443675",
+    "Html": "works pretty good! There is a little bit of a clipping noise when increasing volume but its not bad. One thing I noticed (or maybe its my ears) is that past a volume of 5 there seems to be no noticeable difference. It seems to take float values between 0.0 and 10.0 but again anything after 5 seems the same volume.<br />\n",
+    "PostedDate": "2013-05-16T01:19:44.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044329",
+    "ThreadId": "443675",
+    "Html": "the difference between 5x and 10x should be 6dB, which is the same as the difference between 1x and 2x. However, by the time you've amplified that much, clipping may be reducing any further gains. A dynamic range compressor is really what you want for significant volume boosts.<br />\n",
+    "PostedDate": "2013-05-16T01:22:17.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044349",
+    "ThreadId": "443675",
+    "Html": "Ok cool, that explains it. Since really this is being used as my BackGroundMusic player... I will create a proper ratio of volume values between 0 and 5 simulated visually as 0-9, and use the last volume values between 5.1 and 10 as simulated visually as 9-10... that way volume GUI slider will appear to operate much more properly to the user.<br />\n",
+    "PostedDate": "2013-05-16T01:57:05.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "225344",
+    "ThreadId": "66332",
+    "Html": "<p>Hi.</p>\r\n<p>I have worked audio player with your library. But, I have a big problem.</p>\r\n<p>Additional Metering_Stream Notification event&nbsp;occurs&nbsp;irregularly after Pause() method is executed.</p>\r\n<p>I hope this is fixed.</p>\r\n<p>Thank you.</p>",
+    "PostedDate": "2009-08-19T02:45:37.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "226828",
+    "ThreadId": "66332",
+    "Html": "<p>Why is this a problem for you? This is the nature of multithreaded applications. Sometimes you will get notifications after you have pressed pause. There is no easy way around this.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-08-23T09:05:47.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "228312",
+    "ThreadId": "66332",
+    "Html": "<p>Thank you for your reply.</p>\r\n<p>I'll look for a workaround.</p>",
+    "PostedDate": "2009-08-27T02:39:16.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

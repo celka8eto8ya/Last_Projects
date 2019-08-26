@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "908694",
+    "ThreadId": "394493",
+    "Html": "\r\n<p>I have been working on an audio player based on tutorials from OpenSebj and NAudio and right now I'm trying to put together a mixer that will mix large wave streams.</p>\r\n<p>The wave files are in MuLaw format and I converted them to PCM via WaveFileConversionStream.CreatePcmStream</p>\r\n<p>See the code below:</p>\r\n<p>&nbsp;<a></a><span style=\"color:blue\">public</span> AudioSample(<span style=\"color:blue\">string</span> fileName)<br>\r\n{<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; file_name = fileName;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveStream file_stream = <span style=\"color:blue\">\r\nnew</span> WaveFileReader(file_name);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:blue\">if</span> (file_stream.WaveFormat.Encoding != WaveFormatEncoding.Pcm &amp;&amp; file_stream.WaveFormat.Encoding != WaveFormatEncoding.IeeeFloat)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; file_stream = WaveFormatConversionStream.CreatePcmStream(file_stream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; file_stream = <span style=\"color:blue\">\r\nnew</span> BlockAlignReductionStream(file_stream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; offset_stream = <span style=\"color:blue\">new</span> WaveOffsetStream(file_stream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; channel_stream = <span style=\"color:blue\">new</span> WaveChannel32(offset_stream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; muted = <span style=\"color:blue\">false</span>;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; volume = 1.0f;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n<br>\r\n}</p>\r\n<p>The problem I'm having is here:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mixer = new WaveMixerStream32();</p>\r\n<p>The wave file is 10 mins long and the playback is extremely fast. While debugging I noticed<br>\r\nAfter the PCM conversion, the WaveMixerStream32() converts to IeeeFloat. <br>\r\nSo I go from MuLaw --&gt; PCM --&gt; IeeeFloat. I believe this is where I'm getting the alvin &amp; the chipmunks<br>\r\nsuper fast playback from. If this is the case I believe I can fix it by modifying the WaveChannel32 class<br>\r\nso that it doesn't convert to IeeeFloat, but I wanted to make sure I was on the right track.</p>\r\n<p>Any helpful insight would be very much appreciated.</p>\r\n",
+    "PostedDate": "2012-09-05T07:37:53.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908739",
+    "ThreadId": "394493",
+    "Html": "<p>the whole point of WaveChannel32 is to convert to IeeeFloat. If you just want to play the audio directly, there is no need for the WaveOffsetStream, WaveChannel32, or WaveMixerStream32. Also, those tutorials are very old. It would be better to look at the NAudioDemo source code for examples of how to do playback.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-09-05T09:07:01.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908791",
+    "ThreadId": "394493",
+    "Html": "<p>Thanks for the quick reply!</p>\r\n<p>I have looked through the source code, and I'm not actually trying to do a direct playback. I am eventually going to add features that allow me to speed up and slow down playback and I don't think this can be done without buffers.</p>\r\n<p>My goal at this point is the ability to mix say 10 audio files and play them back simultaneously. I've looked through the MixDiff project and doesn't seem to do this currently.</p>\r\n<p>Any other advice or tips on how I could accomplish this?</p>",
+    "PostedDate": "2012-09-05T10:18:37.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909209",
+    "ThreadId": "394493",
+    "Html": "<p>Just wanted to update this thread. I resolved the issue and it seems I wasn't disposing the DirectSound device which resulted in the fast playback. Again, thanks for the help.</p>",
+    "PostedDate": "2012-09-06T08:32:06.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909627",
+    "ThreadId": "394493",
+    "Html": "<p>glad you got it working in the end</p>",
+    "PostedDate": "2012-09-07T07:10:11.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

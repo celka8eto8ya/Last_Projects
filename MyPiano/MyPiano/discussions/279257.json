@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "697498",
+    "ThreadId": "279257",
+    "Html": "<p>I'm using NAudio 1.4 and I want to record a fix duration of microphon input while some audio is playing in the background.</p>\n<p>The audio plays some signals (metronom clicks) to which user must react (play a note on an instrument).&nbsp; Playing and recording is started at the same time.</p>\n<p>The problem is that the recorded audio is always \"shifted\" forward (between 50 and 120 milliseconds) == beginning too early</p>\n<p>-&gt; the instrument hits are not sync with the metronom clicks, although the were played excact the same time( the first instrument sound should start at 0 millisec but it starts between 50 and 120 millisec).</p>\n<p>-&gt; Therefore this timespan is missing at the end of the file, as I'm recording a fix length. If it was always the same timespan, I could handle it, but it seems to be random (let's assume that the mic input always starts at the same time (i'm currrently simulating the input by just placing the mic before my pc speaker, so basically i'm just recoding the metronom clicks itself...)</p>\n<p>The following code (extract) gets executed in one new thread:</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre><div style=\"color: black; background-color: white;\"><pre><br />wavePlayer.Play(); <span style=\"color: green;\">// wavePlyer is IWavePlayer</span><br /><br /><br /><span style=\"color: green;\">// I'm using the (modified) class \"AudioRecorder\" that is provided in the NAudio Demo:</span><br /><br />WaveFileWriter writer = <span style=\"color: blue;\">new</span> WaveFileWriter(waveFileName, recordingFormat);<br />recordingState = RecordingState.Recording;<br /><br /></pre>\n</div>\n<br /><br /></pre>\n&nbsp; Any idea ? How to do accurate&nbsp; full duplex recording -&gt; keep sync with WaveIn stream and WaveOut stream?</div>\n<p>&nbsp;</p>\n<p>henrik</p>",
+    "PostedDate": "2011-11-13T02:05:02.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "700543",
+    "ThreadId": "279257",
+    "Html": "<p>simplified: When I' recording (via mic) what my speakers are playing I would expect the first non-zero sound samples in the recorded stream to be approx at position 0 (millisec), but not at 50-100 millisec - Given that playing and recording is started at the same  time and that the non-zero sound in the play stream is starting at position 0.</p>",
+    "PostedDate": "2011-11-19T02:32:59.663-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

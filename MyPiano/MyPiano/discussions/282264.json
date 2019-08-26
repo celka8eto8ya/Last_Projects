@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "709336",
+    "ThreadId": "282264",
+    "Html": "\r\n<p>Hi, can someone tell me how to use WaveViewer? I don't think I'm using it properly.</p>\r\n<p>I want to record voice and show its waveform while recording. Now I am using waveFormPainter, but this control &quot;erases&quot; waveform while scrolling.<br>\r\nSo I want to use waveViewer which I think shows all the wave and scrollbar if needed(?).</p>\r\n<p>So far I'm doing something like VoiceRecorder. While recording, I'm showing the waveform using WaveFormPainter. When recording is finished I want to show all the wave in WaveViewer. Unfortunately VoiceRecorder is WPF application(and my is windows form) and\r\n it doesn't use WaveViewer.</p>\r\n<p>So now I'm adding every read buffer to memory stream:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> input_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n{   \r\n    <span style=\"color:green\">//some code here</span>\r\n\r\n    memStream.Write(e.Buffer, 0, e.BytesRecorded);\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>and then after the recording is stopped I do something like that:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>rawSource = <span style=\"color:blue\">new</span> RawSourceWaveStream(memStream, input.WaveFormat);\r\nwaveViewer.WaveStream = rawSource;\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>The wave is showed, but... I noticed some things. This waveform was completely different than this one in waveFormPainter. I noticed that this is connected with SamplesPerPixel property of WaveViewer. So I tried some values and it occured that 2048 gives\r\n me rather the same waveform(why?). BUT. When this wave form is longer than control width it is being scaled I thing, so it looks completely different again ;)<br>\r\nI expected WaveViever to give me the same waveform as waveFormPainter and scrollbar if needed. So am I doing something wrong, or just this control works like that?</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-12-08T07:16:54.777-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710845",
+    "ThreadId": "282264",
+    "Html": "<p>they do both use slightly different ways of drawing the waveform. There is no reason why you couldn't make a WPF one that uses the same tehcnique as waveFormPainter (which just draws vertical lines representing the loudest sample out of the samples for that pixel).</p>",
+    "PostedDate": "2011-12-12T03:37:56.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

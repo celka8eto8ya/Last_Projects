@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1278314",
+    "ThreadId": "554388",
+    "Html": "I have written some code that uses WaveIn and works ok. Now I want to change it so I get the audio from the Microphone via WasapiCapture. The main reason is that with WaveIn, the name of the device is cut down to 32 bytes, which is not acceptable for my application. <br />\n<br />\nNow my problem is that all the code is written using sampleRate 8000 with 16bit and 1 channel and the WasapiCapture's WaveFormat is samplerate 44100 with 32bit and 2 channel. I have seen that I cannot change the WasapiCapture's WaveFormat. So I need to somehow convert the audio data runtime. <br />\n<br />\nDo you know any good way to do it?<br />\n",
+    "PostedDate": "2014-07-28T02:15:26.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278438",
+    "ThreadId": "554388",
+    "Html": "try this\r<br />\n<br />\n//on create wasapicapture<br />\n<pre><code>        Stop_all_input_devices();   //(custom) if some is input device is open, stop and dispose it\n        wsc = new WasapiCapture(temp_from_enumerated_devices.wasapi_mmdevice);\n        wsc.WaveFormat = new WaveFormat(44100, 2); //set wasapi mode to 16 bit stereo\n        wsc.ShareMode = AudioClientShareMode.Shared;\n        wsc.DataAvailable += OnRecordingDataAvailable;\n        wsc.StartRecording();\n\n</code></pre>\n\nWaveFormatConversionStream mic_converter_if_wasapi = new WaveFormatConversionStream(new WaveFormat(8000, 1), name_of_your_bufferedwaveprovider_used_in_OnRecordingDataAvailable)\r<br />\n<br />\nthen in pipeline read mic_converter_if_wasapi instead of bufferedprovider<br />\n",
+    "PostedDate": "2014-07-28T09:39:02.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278698",
+    "ThreadId": "554388",
+    "Html": "Thanks for you reply, however I have a slight problem with it. Until now I didn't use any buffer, what I have received through DataAvailable I was sending it onward. That is why I would ask, what kind of buffered wave provider do you suggest, because the WaveFormatConversionStream requires a WaveStream not an IWaveProvider.<br />\n",
+    "PostedDate": "2014-07-29T04:52:15.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278715",
+    "ThreadId": "554388",
+    "Html": "Well I managed to do it. What helped, besides your comment, is the following link:\r<br />\n<a href=\"http://mark-dot-net.blogspot.ro/2014/07/input-driven-resampling-with-naudio.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.ro/2014/07/input-driven-resampling-with-naudio.html</a>\r<br />\n<br />\nI have been trying the method described in the link, but I had exception errors, it couldn't find a suitable converter codec. However using the line from above  wsc.WaveFormat = new WaveFormat(44100, 2);\r<br />\nit can now find a converter and works perfectly.<br />\n",
+    "PostedDate": "2014-07-29T05:14:50.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1278757",
+    "ThreadId": "554388",
+    "Html": "Ok and on my previous note, if someone need output driven using WaveFormatConversion this should also work<br />\n<pre><code>    public class ConverterProviderToWaveStream : WaveStream\n    {\n        public IWaveProvider source;\n        //public BufferedWaveProvider source;   //alternative\n        public bool reached_end = false;\n        private object sourceLock = new object();\n\n        public WaveFormat WaveFormat\n        {\n            get;// { return this.WaveFormat; }\n            set;// { this.WaveFormat = var; }\n        }\n        //public WaveFormat WaveFormat { get { return this.WaveFormat; } }\n\n        public ConverterProviderToWaveStream(IWaveProvider sourceStream)\n        //public ConverterProviderToWaveStream(BufferedWaveProvider sourceStream)   //alternative\n        {\n            this.source = sourceStream;\n            WaveFormat = source.WaveFormat;\n        }\n\n        //public override long Length\n        //{\n            //get { return source.Length; }\n        //}\n        //public override long Position\n        //{\n        //get { return source.Position; }\n        //set { lock (sourceLock) { source.Position = value; } }\n        //}\n\n        public int Read(byte[] buffer, int offset, int count)\n        {\n            int read;\n            //int available_bytes = source.BufferedBytes;   //alternative\n            lock (sourceLock)\n            {\n                try\n                {\n                    read = source.Read(buffer, offset, count);\n                    //read = source.Read(buffer, offset, available_bytes);  //alternative if source is BufferedWaveProvider and you dont want silence inserted\n                }\n                catch\n                {\n                    read = 0;\n                }\n            }\n            if (read &lt;= 0) reached_end = true; else reached_end = false;//alternative\n            return read;\n        }\n    }\n\n\n            WaveFormatConversionStream converter = new WaveFormatConversionStream(new WaveFormat(8000, 1), new ConverterProviderToWaveStream(MicBufferedWaveProvider));\n            int read = converter.Read(my_8000_16_mono_buf, 0, count_that_you_need_to_calculate_first);//you might need to be carefull when calculating count based on MicBufferedWaveProvider.BufferedBytes and reduce it by few samples due to different block align\n            //then num read form my_8000_16_mono_buf send to where you want</code></pre>\n\n",
+    "PostedDate": "2014-07-29T06:47:26.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

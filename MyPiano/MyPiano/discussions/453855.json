@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1082304",
+    "ThreadId": "453855",
+    "Html": "When I try to shift the audio balance between the left and right speaker, I don't seem to fully get rid of the audio from the side that is not supposed to get any audio. There seems to be a bleed effect of sorts to the opposite speaker. \r<br />\n<br />\nI still do hear the balance shift between the left and right speaker and I do see that the array element for the speaker not getting audio is set to 0. \r<br />\n<br />\nJust wondering if this could be a sound card issue or perhaps poor headphones that have some sort of cross-over issues.\r<br />\n<br />\nPlease and thank you.\r<br />\nPaul<br />\n",
+    "PostedDate": "2013-08-19T11:34:41.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082619",
+    "ThreadId": "453855",
+    "Html": "The pan strategy should have a multiplier for 0 for right channel if you pan all the way left. So if the audio coming out of the PanningSampleProvider is correctly zeroing all the right-hand samples, then it must be something strange going on with the playback.\r<br />\nTry feeding the panned audio into a WAV file and looking in Audacity or an audio file editor to check that your panning really is silencing one channel.<br />\n",
+    "PostedDate": "2013-08-20T04:09:57.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130805",
+    "ThreadId": "453855",
+    "Html": "Hi,\r<br />\n<br />\nI have a problem like this. \r<br />\n<br />\nI have set one channel of the wave file to zero while playing, but I hear a little sound exactly same as the other channel that is not touched.\r<br />\n<br />\nI am not sure if I have problem or not, because if I listen the file while playing, I could not heard the little sound with some speakers, but I can hear it with other speakers.\r<br />\n<br />\nI am sure that my manipulation is true, because I have recorded the file and have analyzed it in Audacity. (One channel is zero after manipulation)\r<br />\n<br />\nMy question is:\r<br />\n<br />\n1) Is Panning equal to setting one channel bytes to zero? \r<br />\n2) Can it be a sound card or speaker problem? (cross-talk effect ,etc.)<br />\n",
+    "PostedDate": "2013-12-02T01:31:00.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130854",
+    "ThreadId": "453855",
+    "Html": "If the saved file has silence on the channel, then is is likely some kind of cross-talk is going on with some of our speakers.<br />\n",
+    "PostedDate": "2013-12-02T03:44:12.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

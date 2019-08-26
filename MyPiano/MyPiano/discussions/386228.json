@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "887350",
+    "ThreadId": "386228",
+    "Html": "\r\n<p>Hello,&nbsp;</p>\r\n<p>I have been looking at this project on and off for the past few months and havent figured out how to mix 2 MP3 files (i.e. play them at the same time).</p>\r\n<p>Can you provide a really brief example of how to do so? I did look at the MixingSampleProvider in the demo but still couldnt figure it out.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,&nbsp;<br>\r\nAndrew&nbsp;</p>\r\n",
+    "PostedDate": "2012-07-22T17:40:48.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893046",
+    "ThreadId": "386228",
+    "Html": "<p>1. create an AudioFileReader for each MP3 file</p>\r\n<p>2. then add them as inputs to MixingSampleProvider (AddMixerInput)</p>\r\n<p>3. Use SampleToWaveProvider or SampleToWaveProvider16 to convert back to an IWaveProvider to enable playback using</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-07-30T06:52:12.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

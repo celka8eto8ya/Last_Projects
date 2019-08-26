@@ -1,0 +1,17 @@
+diff -r e1a677786346 NAudio/Mixer/MixerControl.cs
+--- a/NAudio/Mixer/MixerControl.cs	Wed Mar 06 10:22:07 2013 +0000
++++ b/NAudio/Mixer/MixerControl.cs	Fri Mar 08 12:46:47 2013 +0100
+@@ -181,7 +181,12 @@
+ 				mixerControlDetails.cbDetails = mixerControl.Metrics.customData;
+ 			}
+ 			// from the structs sample in MSDN (see MyPerson2)
+-			IntPtr buffer = Marshal.AllocCoTaskMem(mixerControlDetails.cbDetails * mixerControlDetails.cChannels);
++		    var detailsSize = mixerControlDetails.cbDetails * mixerControlDetails.cChannels;
++            if ((mixerControl.fdwControl & MixerInterop.MIXERCONTROL_CONTROLF_MULTIPLE) != 0)
++            {
++                detailsSize *= (int)mixerControl.cMultipleItems;
++            }
++		    IntPtr buffer = Marshal.AllocCoTaskMem(detailsSize);
+       		// To copy stuff in:
+       		// Marshal.StructureToPtr( theStruct, buffer, false );
+ 			mixerControlDetails.paDetails = buffer;

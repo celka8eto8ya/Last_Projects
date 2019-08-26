@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "994407",
+    "ThreadId": "431480",
+    "Html": "Hello Mark Heath.<br />\n<br />\nFirst I want to thank you and your helpers for this great Sound Lib. You probably made the only full .NET Sound lib with that many functions :) Well, I have to come to my question now:<br />\n<br />\nI set the NAudio.dll reference, set up the imports and declared a new NAudio.Wave.WaveOut<br />\nobject. Then I init the ogg stream to it and start the playback. How can I implement A FFT Spectrum of the stream now, which winforms element should I use to Display that? I saw you support that in the dsp class. Any short usage example would be great. Full Code:<br />\n<pre><code>Imports NVorbis\nImports NAudio\n\nPublic Class Form1\n\n    Dim stream As System.IO.UnmanagedMemoryStream\n    Dim waveOut = New NAudio.Wave.WaveOut()\n\n    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click\n        stream = My.Resources.Test1 '// This is a ogg file, it is only named as Wave file to get a stream ;)\n        Dim OggStreamReader = New NVorbis.NAudioSupport.VorbisWaveReader(stream)\n        waveOut.Init(OggStreamReader)\n        waveOut.play()\n    End Sub\nEnd Class\n</code></pre>\n\nYou can download the full Project from my public ftp here if you want to take a look into the full Project: <a href=\"ftp://www.untergrund.net/users/Freefall/News%20Section/NVorbis%26NAudioTest.rar\" rel=\"nofollow\">ftp://www.untergrund.net/users/Freefall/News%20Section/NVorbis%26NAudioTest.rar</a><br />\n",
+    "PostedDate": "2013-01-30T14:44:41.317-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994536",
+    "ThreadId": "431480",
+    "Html": "Hi, I explain how to use FFT in NAudio in <a href=\"http://channel9.msdn.com/coding4fun/articles/AutotuneNET\" rel=\"nofollow\">this article</a>. Be warned that it if you are new to audio DSP, it can take a while to understand how to use FFT. If you want to visualise the FFT with a spectrum analyser, there is a great NAudio example in <a href=\"http://wpfsvl.codeplex.com/\" rel=\"nofollow\">this project</a>.<br />\n",
+    "PostedDate": "2013-01-30T23:04:23.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994738",
+    "ThreadId": "431480",
+    "Html": "Thanks for your quick reply. Well, it seems wpfsvl is a good way to go, but I have 2 problems now:\r<br />\n<br />\n1) Wpfsvl needs .Net Framework 4.0 and I don´t want to have to install it on my computers.\r<br />\n<br />\n2) There is a example project showing the usage of NAudio with it, but source code or guides for the compiled NAudio example are not provided  :-Y . That makes me angry, it wouldn´t be that much work to include the example project source code ...\r<br />\n<br />\n=&gt; So this seems to be a dead end. Could <strong>you</strong> please release an example of using FFT with NAudio? Would be fantastic!! I would be your biggest fan then :) It should only show the basic functions, I don´t need a full example. I don´t want to steal your spare time you know :)<br />\n",
+    "PostedDate": "2013-01-31T08:11:46.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994752",
+    "ThreadId": "431480",
+    "Html": "1) I don't see why wpfsvl needs .NET 4.0. You should be able to recompile it to .NET 3.5. \r<br />\n2) The code is available <a href=\"http://wpfsvl.codeplex.com/SourceControl/changeset/view/16372#18142\" rel=\"nofollow\">here</a>\r<br />\n<br />\nMy example of how to use FFT with NAudio is the one in the article I linked above. \r<br />\n<br />\nFor another, perhaps simpler example, look at the WPFDemo that comes with NAudio. It contains a class called SampleAggregator which is calculating the FFTs, and SpectrumAnalyser draws them (but it doesn't look nearly as good as the one in wpfsvl)\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-01-31T08:20:50.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994771",
+    "ThreadId": "431480",
+    "Html": "Ok, so if I try to compile with .NET Framework 3.5 I get various errors listed:<br />\n<pre><code>Fehler  1   &quot;System.Windows.Controls.Canvas&quot; enthält keine Definition für &quot;CacheMode&quot;, und es konnte keine Erweiterungsmethode &quot;CacheMode&quot; gefunden werden, die ein erstes Argument vom Typ &quot;System.Windows.Controls.Canvas&quot; akzeptiert. (Fehlt eine Using-Direktive oder ein Assemblyverweis?) C:\\Users\\Freefall\\Desktop\\WFPSVL\\WPFSVL\\Source\\WPFSoundVisualizationLibrary\\WaveForm Timeline\\WaveformTimeline.cs   714 28  WPFSoundVisualizationLib\nFehler  2   Der Typ- oder Namespacename &quot;BitmapCache&quot; konnte nicht gefunden werden. (Fehlt eine Using-Direktive oder ein Assemblyverweis?)  C:\\Users\\Freefall\\Desktop\\WFPSVL\\WPFSVL\\Source\\WPFSoundVisualizationLibrary\\WaveForm Timeline\\WaveformTimeline.cs   714 44  WPFSoundVisualizationLib\nFehler  3   Der Typ- oder Namespacename &quot;BitmapCache&quot; konnte nicht gefunden werden. (Fehlt eine Using-Direktive oder ein Assemblyverweis?)  C:\\Users\\Freefall\\Desktop\\WFPSVL\\WPFSVL\\Source\\WPFSoundVisualizationLibrary\\WaveForm Timeline\\WaveformTimeline.cs   920 13  WPFSoundVisualizationLib\nFehler  4   Der Typ- oder Namespacename &quot;BitmapCache&quot; konnte nicht gefunden werden. (Fehlt eine Using-Direktive oder ein Assemblyverweis?)  C:\\Users\\Freefall\\Desktop\\WFPSVL\\WPFSVL\\Source\\WPFSoundVisualizationLibrary\\WaveForm Timeline\\WaveformTimeline.cs   920 42  WPFSoundVisualizationLib\nFehler  5   &quot;System.Windows.Controls.Canvas&quot; enthält keine Definition für &quot;CacheMode&quot;, und es konnte keine Erweiterungsmethode &quot;CacheMode&quot; gefunden werden, die ein erstes Argument vom Typ &quot;System.Windows.Controls.Canvas&quot; akzeptiert. (Fehlt eine Using-Direktive oder ein Assemblyverweis?) C:\\Users\\Freefall\\Desktop\\WFPSVL\\WPFSVL\\Source\\WPFSoundVisualizationLibrary\\WaveForm Timeline\\WaveformTimeline.cs   920 69  WPFSoundVisualizationLib\n</code></pre>\n\nIt seems that &quot;CacheMode&quot;  is not a member of &quot;System.Windows.Controls.Canvas&quot;. I don´t need to reference that taglib-sharp.dll, right? Any suggestions?<br />\n",
+    "PostedDate": "2013-01-31T08:56:19.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994773",
+    "ThreadId": "431480",
+    "Html": "it's a new property in .NET 4 to help optimise drawing. Just delete any lines of code that set it.<br />\n",
+    "PostedDate": "2013-01-31T08:59:18.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994783",
+    "ThreadId": "431480",
+    "Html": "Ok good. All errors resolved an I compiled with .Net Framework 3.5. SO far so good. But the example project still shows &quot;some&quot; error messages:<br />\n<pre><code>Fehler  1   Der Name &quot;InitializeComponent&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   19  13  Sample_NAudio\nFehler  2   Der Name &quot;StopButton&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   24  51  Sample_NAudio\nFehler  3   Der Name &quot;PlayButton&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   25  51  Sample_NAudio\nFehler  4   Der Name &quot;PauseButton&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   26  52  Sample_NAudio\nFehler  5   Der Name &quot;repeatStartTimeEdit&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   27  58  Sample_NAudio\nFehler  6   Der Name &quot;repeatStopTimeEdit&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   28  56  Sample_NAudio\nFehler  7   Der Name &quot;spectrumAnalyzer&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   30  13  Sample_NAudio\nFehler  8   Der Name &quot;waveformTimeline&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   31  13  Sample_NAudio\nFehler  9   Der Name &quot;albumArtPanel&quot; ist im aktuellen Kontext nicht vorhanden.  C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   57  37  Sample_NAudio\nFehler  10  Der Name &quot;albumArtPanel&quot; ist im aktuellen Kontext nicht vorhanden.  C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   61  37  Sample_NAudio\nFehler  11  Der Name &quot;albumArtPanel&quot; ist im aktuellen Kontext nicht vorhanden.  C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   70  29  Sample_NAudio\nFehler  12  Der Name &quot;albumArtPanel&quot; ist im aktuellen Kontext nicht vorhanden.  C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   75  25  Sample_NAudio\nFehler  13  Der Name &quot;clockDisplay&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   79  21  Sample_NAudio\nFehler  14  Der Name &quot;DefaultThemeMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   114 13  Sample_NAudio\nFehler  15  Der Name &quot;DefaultThemeMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   115 13  Sample_NAudio\nFehler  16  Der Name &quot;ExpressionDarkMenuItem&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   116 13  Sample_NAudio\nFehler  17  Der Name &quot;ExpressionDarkMenuItem&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   117 13  Sample_NAudio\nFehler  18  Der Name &quot;ExpressionLightMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   118 13  Sample_NAudio\nFehler  19  Der Name &quot;ExpressionLightMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   119 13  Sample_NAudio\nFehler  20  Der Name &quot;DefaultThemeMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   126 13  Sample_NAudio\nFehler  21  Der Name &quot;DefaultThemeMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   127 13  Sample_NAudio\nFehler  22  Der Name &quot;ExpressionDarkMenuItem&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   128 13  Sample_NAudio\nFehler  23  Der Name &quot;ExpressionDarkMenuItem&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   129 13  Sample_NAudio\nFehler  24  Der Name &quot;ExpressionLightMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   130 13  Sample_NAudio\nFehler  25  Der Name &quot;ExpressionLightMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   131 13  Sample_NAudio\nFehler  26  Der Name &quot;DefaultThemeMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   140 13  Sample_NAudio\nFehler  27  Der Name &quot;DefaultThemeMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   141 13  Sample_NAudio\nFehler  28  Der Name &quot;ExpressionDarkMenuItem&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   142 13  Sample_NAudio\nFehler  29  Der Name &quot;ExpressionDarkMenuItem&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   143 13  Sample_NAudio\nFehler  30  Der Name &quot;ExpressionLightMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   144 13  Sample_NAudio\nFehler  31  Der Name &quot;ExpressionLightMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   145 13  Sample_NAudio\nFehler  32  Der Name &quot;DefaultThemeMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   154 13  Sample_NAudio\nFehler  33  Der Name &quot;DefaultThemeMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   155 13  Sample_NAudio\nFehler  34  Der Name &quot;ExpressionDarkMenuItem&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   156 13  Sample_NAudio\nFehler  35  Der Name &quot;ExpressionDarkMenuItem&quot; ist im aktuellen Kontext nicht vorhanden. C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   157 13  Sample_NAudio\nFehler  36  Der Name &quot;ExpressionLightMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   158 13  Sample_NAudio\nFehler  37  Der Name &quot;ExpressionLightMenuItem&quot; ist im aktuellen Kontext nicht vorhanden.    C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   159 13  Sample_NAudio\nFehler  38  Der Name &quot;FileText&quot; ist im aktuellen Kontext nicht vorhanden.   C:\\Users\\Freefall\\Desktop\\Source\\Sample_NAudio\\MainWindow.xaml.cs   188 17  Sample_NAudio</code></pre>\n\nAnd I recognized that there are no userforms and toolbox elements existing in the example. I think the example was not completely provided ....<br />\n",
+    "PostedDate": "2013-01-31T09:13:12.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994790",
+    "ThreadId": "431480",
+    "Html": "Or are the xaml files the winforms? I´m confused :S I´m a VB programmer...<br />\n",
+    "PostedDate": "2013-01-31T09:15:32.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996024",
+    "ThreadId": "431480",
+    "Html": "XAML files are used with WPF, not winforms<br />\n",
+    "PostedDate": "2013-02-04T03:23:48.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996306",
+    "ThreadId": "431480",
+    "Html": "And how should it then help me to get a winforms spectrum Display with NAudio? Unfortunately your demo app sc can´t be compiled due to .net  and VS Version Problems: I use VS 2008, .NET 3.5 and I can´t get along with the wpf things.<br />\n",
+    "PostedDate": "2013-02-04T12:07:08.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996562",
+    "ThreadId": "431480",
+    "Html": "I'm afraid I haven't got an example of drawing spectrum in WinForms. You'd need to do it using the Graphics object in the Paint method.<br />\n",
+    "PostedDate": "2013-02-05T01:46:25.943-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997190",
+    "ThreadId": "431480",
+    "Html": ":( Too bad. I have no clue how to start... I thought that you would have an exmple for winforms as you provide the dsp class. Would be fantastic if you would show the usage with an winforms example!<br />\n",
+    "PostedDate": "2013-02-06T03:26:44.223-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

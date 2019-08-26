@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1227262",
+    "ThreadId": "540310",
+    "Html": "Hey,\r<br />\n<br />\nIts an excellent library to use in projects... I've a query, Can i save Mp3 Stream file? If yes how to implement it. I mean Should I store raw stream that is coming through internet or should I save it frame by frame... If some one already has implemented it kindly help me out.<br />\n",
+    "PostedDate": "2014-03-27T03:17:11.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1227289",
+    "ThreadId": "540310",
+    "Html": "if you're receiving MP3 data over the network, you could just save the raw stream straight to disk. The MP3 file format is very robust against problems such as incomplete frames. <br />\n",
+    "PostedDate": "2014-03-27T04:34:51.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1227308",
+    "ThreadId": "540310",
+    "Html": "<h1>markheath thank you very much for helping. If you can provide working example Naudio + Your suggestion</h1>\nThanks in advance.<br />\n",
+    "PostedDate": "2014-03-27T05:12:57.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1227311",
+    "ThreadId": "540310",
+    "Html": "By the way I've done it thanks...<br />\n",
+    "PostedDate": "2014-03-27T05:18:04.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

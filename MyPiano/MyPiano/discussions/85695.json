@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "291877",
+    "ThreadId": "85695",
+    "Html": "<p>I have an mp3 that pulls up in Audacity as a 32 bit float.&nbsp; When I load it with the WaveStream, the TotalTime parameter is twice as long as the actual music file due to the increased bit depth.&nbsp; Is there a way to check the bit depth of the file and adjust the TotalTime parameter accordingly?&nbsp; If I save the mp3 using Audacity as a 16 bit file, NAudio reports the time correctly when I load it into the WaveStream.&nbsp; It seems that it is treating any mp3 as a 16 bit mp3.&nbsp; Thanks in advance for the help!</p>\r\n<p>Ryan</p>",
+    "PostedDate": "2010-02-17T13:33:05.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "387346",
+    "ThreadId": "85695",
+    "Html": "<p>Hi Ryan,</p>\r\n<p>TotalTime is not particularly reliable with MP3s, especially if they are VBR when it is complete guesswork. This aspect of the library probably needs to be re-thought. It was originally written when dealing with telephony audio formats whose length can be accurately calculated.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-02-25T01:40:10.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "408640",
+    "ThreadId": "85695",
+    "Html": "<p>Thanks for the response.&nbsp; I found another open source C# class that seems to pull out the mp3 specifics very well.&nbsp; Not sure if you have looked at it yet, but it might be possible to integrate what they have done into Naudio.&nbsp; Link is&nbsp;<a href=\"http://developer.novell.com/wiki/index.php/TagLib_Sharp\">http://developer.novell.com/wiki/index.php/TagLib_Sharp</a>.&nbsp; Naudio is a great tool and has been very helpful.&nbsp; I have been able to display the whole audio waveform without playback, but now I am working on displaying a color spectrogram from the FFT results.&nbsp; Having a lot of trouble with that, but hopefully will get something soon.&nbsp; Any tips or hints would be very helpful. :)</p>\r\n<p>Ryan</p>",
+    "PostedDate": "2010-02-26T07:14:02.373-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413622",
+    "ThreadId": "85695",
+    "Html": "<p>thanks Ryan, let us know how you get on. I have only done some very basic stuff with FFT in NAudio so far.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-03T03:40:52.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574577",
+    "ThreadId": "85695",
+    "Html": "<p>Ryan, I'm also trying to figure out how to display an FFT plot. Have you made any progress? If you have any pointers that would be great. Thanks.</p>",
+    "PostedDate": "2011-03-02T11:48:12.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

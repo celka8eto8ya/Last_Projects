@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "911957",
+    "ThreadId": "395362",
+    "Html": "\r\n<p>I've just started trying out NAudio and was able to read in my MP3 file and then break it up into some smaller chunks that I saved back out to disk. &nbsp;I've got a lot to learn about audio data but I was successful in doing this much so far (with some\r\n help from some example code).</p>\r\n<p>What I'd like to be able to do is add X seconds of silence to my MP3 - at the start or end of the MP3 file for a project I'm working on with my kids.&nbsp;</p>\r\n<p>My initial approach was that I'd construct an MP3Frame object and thought that perhaps it would suffice to create a zero-filled data block of the appropriate size and then write that frame out before/after our music clip. &nbsp;But there's no public constructor\r\n for MP3Frame (unless I missed something here) and so I'm assuming that's not the way to go about this.</p>\r\n<p>I need to spend more time looking through the docs and example code on this but if someone's done something like this, I would appreciate some tips. &nbsp;Not looking for you to write my code for me, just some direction.</p>\r\n<p>I was thinking I might be able to use MP3Frame.LoadFromStream() and then adjust the frame's properties to accomplish this.</p>\r\n<p>Ideas?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Matt</p>\r\n",
+    "PostedDate": "2012-09-12T19:34:54.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "912008",
+    "ThreadId": "395362",
+    "Html": "<p>hi Matt,</p>\r\n<p>You have two options. First, you use NAudio to add silence to the beginning (see for example the OffsetSampleProvider I recently added), and then convert the whole thing back to MP3 using LAME.exe.</p>\r\n<p>Second, you could convert a short blank WAV file to MP3, and extract one frame from that to use as your \"silence\" MP3 frame. Then you could insert multiple instances of that at the start and end of your MP3.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-09-12T23:14:34.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1416516",
+    "ThreadId": "395362",
+    "Html": "Hi Matt,<br />\n<br />\nI wrote a function to insert the silence in file.<br />\n<br />\nI hope that it can help you.<br />\n<pre><code>    private void InsertSilence(WaveFileWriter writer, Double milliseconds)\n    {\n\n        Double avgBytesPerMillisecond = (Double)writer.WaveFormat.AverageBytesPerSecond / 1000F;\n\n        Int32 silenceSize = (Int32)(milliseconds * avgBytesPerMillisecond);\n        silenceSize = silenceSize - silenceSize % fileIn.WaveFormat.BlockAlign;\n\n        Byte[] silenceArray = new Byte[silenceSize];\n        writer.Write(silenceArray, 0, silenceArray.Length);\n\n    }</code></pre>\n\n",
+    "PostedDate": "2015-04-21T21:49:05.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

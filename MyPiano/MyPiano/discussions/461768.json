@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1105969",
+    "ThreadId": "461768",
+    "Html": "Hi,\r<br />\n<br />\nI'm able to convert an .m4a file from an iPhone (presumably ALAC codec) on my Windows 7 computer using the latest version of NAudio (1.7), but when trying to run the same code on Windows Server 2008 R2 I get the following error:\r<br />\n<br />\nException from HRESULT: 0xC00D5212\r<br />\n<br />\nI believe this means I'm missing the ALAC codec on the server, I have tried installing QuickTime but no luck.\r<br />\n<br />\nSo, does anyone know if this exception is a result of a missing codec, and has anyone had any luck installing this on a server?\r<br />\n<br />\nHere's the code:<br />\n<pre><code>        WaveStream waveStream = new MediaFoundationReader(filePath);\n        WaveFileWriter.CreateWaveFile(wavOutputPath, waveStream);\n\n</code></pre>\n\nThanks, love the library!\r<br />\nAlan<br />\n",
+    "PostedDate": "2013-10-10T05:51:50.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105983",
+    "ThreadId": "461768",
+    "Html": "have you tried installing the &quot;Desktop Experience&quot; component of Windows Server? That seems to have the codecs in. I don't know if the MP4 one is included.<br />\n",
+    "PostedDate": "2013-10-10T06:36:23.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2013-10-11T07:37:47.487-07:00"
+  },
+  {
+    "Id": "1106240",
+    "ThreadId": "461768",
+    "Html": "Thanks Mark!  I did have the Desktop Experience installed, but after your suggestion I checked again and there was a hotfix, that when applied, installed the necessary codecs and my code was able to run.   Here's the hotfix I installed:\r<br />\n<br />\n<a href=\"http://support.microsoft.com/kb/2483177\" rel=\"nofollow\">http://support.microsoft.com/kb/2483177</a>\r<br />\n<br />\nThanks again!\r<br />\nAlan<br />\n",
+    "PostedDate": "2013-10-10T19:28:15.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2013-10-11T07:38:12.433-07:00"
+  }
+]

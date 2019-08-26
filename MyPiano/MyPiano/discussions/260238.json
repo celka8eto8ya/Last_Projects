@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "623137",
+    "ThreadId": "260238",
+    "Html": "\r\n<p>Here is some code that works, but not the way I want it to:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>WaveFormat waveFormat = WaveFormat.CreateMuLawFormat(Sample.IsStereo ? Sample.Hertz * 2 : Sample.Hertz, 1); <span style=\"color:green\">// can't decode stereo mu law???</span>\r\n\r\n<span style=\"color:blue\">var</span> reader = <span style=\"color:blue\">new</span> EgoWaveStream(EncodedTrack, waveFormat, Sample.StartBytes, Sample.EndBytes);\r\n\r\nDecodedTrack = WaveFormatConversionStream.CreatePcmStream(reader);\r\n</pre>\r\n</div>\r\nI'm having double the rate because if I try to play the file in stereo an &quot;AcmNotPossible calling acmFormatSuggest&quot; exception is raised in Wave.Compression.AcmStream.SuggestPcmFormat().\r\n<p></p>\r\n<p>The only unusual aspect of this is EgoWaveStream, which is a simple override of WaveStream that doesn't look for a file header and only reads the file between StartByte and EndByte. It does not cause any problems when I'm playing back PCM however, so I doubt\r\n it's an issue with mu law files either.</p>\r\n<p>Is stereo mu-law conversion possible? The files *are* stereo; I can play them back just fine in other programs.</p>\r\n",
+    "PostedDate": "2011-06-05T06:19:17.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "623357",
+    "ThreadId": "260238",
+    "Html": "<p>If the built-in ACM doesn't support stereo a-law (which is what AcmNotPossible means), then you either need to stick with the trick you are doing now (which will work fine since mu-law decoding is stateless) or write a splitter stream to make two mono streams and a combiner stream afterwards. Alternatively, in the next NAudio there is a fully managed mu-law codec, so you could build your code around that if you prefer (look in the latest NAudio source code)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-06T01:40:34.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "623799",
+    "ThreadId": "260238",
+    "Html": "<p>Thanks, the new decoder does the trick.</p>\r\n<p>Here is my code (from my WaveStream inheritor) for future readers:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">public</span> <span style=\"color: blue;\">override</span> <span style=\"color: blue;\">int</span> Read(<span style=\"color: blue;\">byte</span>[] buffer, <span style=\"color: blue;\">int</span> offset, <span style=\"color: blue;\">int</span> count)\r\n{\r\n\t<span style=\"color: blue;\">int</span> TotalBytesRead = 0;\r\n\r\n\t<span style=\"color: blue;\">byte</span>[] DecodedBuffer = buffer;\r\n\t<span style=\"color: blue;\">if</span> (IsMuLaw)\r\n\t{\r\n\t\tcount /= 2;\r\n\t\tbuffer = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[count];\r\n\t}\r\n\r\n\t<span style=\"color: green;\">// read compressed data</span>\r\n\r\n\t<span style=\"color: blue;\">if</span> (IsMuLaw)\r\n\t{\r\n\t\t<span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; TotalBytesRead; i++)\r\n\t\t{\r\n\t\t\t<span style=\"color: blue;\">byte</span>[] Decoded = BitConverter.GetBytes(NAudio.Codecs.MuLawDecoder.MuLawToLinearSample(buffer[i]));\r\n\t\t\t<span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> j = 0; j &lt; 2; j++)\r\n\t\t\t\tDecodedBuffer.SetValue(Decoded[j], (i*2) + j);\r\n\t\t}\r\n\t\tbuffer = DecodedBuffer;\r\n\t\tTotalBytesRead *= 2;\r\n\t}\r\n\r\n\t<span style=\"color: blue;\">return</span> TotalBytesRead;\r\n}\r\n</pre>\r\n</div>\r\n<p>It's not very extensible, but that's okay for me. Presumably the new decoder will replace ye olde ACM eventually?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-06-06T15:48:49.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "624989",
+    "ThreadId": "260238",
+    "Html": "<p>ACM decoding support will always stay in the product as it can do more than just mu-law. However, I might package up the A/MuLaw decoder into a WaveStream in the future for ease of use.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-08T14:30:57.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "632465",
+    "ThreadId": "260238",
+    "Html": "<p>The inevitable happened. Here's a properly-implemented MuLaw conversion stream. Unlike WaveConversionStream you don't need to specify a format, and both WaveStreams and WaveProviders are handled.</p>\n<p>If you want to add this to NAudio Mark, it's yours. :-)</p>\n<p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span>\n<span style=\"color: gray;\">///</span><span style=\"color: green;\"> Processes MuLaw files without any use of ACM (which can't handle stereo).</span>\n<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;/summary&gt;</span>\n<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">class</span> MuLawConversionStream : WaveStream\n{\n\tIWaveProvider input;\n\tWaveStream input_stream { <span style=\"color: blue;\">get</span> { <span style=\"color: blue;\">return</span> input <span style=\"color: blue;\">as</span> WaveStream; } } <span style=\"color: green;\">// For Length/Position</span>\n\tWaveFormat output_format;\n\t<span style=\"color: blue;\">byte</span>[] internal_buffer;\n\n\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">override</span> WaveFormat WaveFormat { <span style=\"color: blue;\">get</span> { <span style=\"color: blue;\">return</span> output_format; } }\n\n\t<span style=\"color: blue;\">public</span> MuLawConversionStream(IWaveProvider input)\n\t{\n\t\t<span style=\"color: blue;\">if</span> (input.WaveFormat.Encoding != WaveFormatEncoding.MuLaw &amp;&amp; input.WaveFormat.Encoding != WaveFormatEncoding.Pcm)\n\t\t\t<span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> InvalidDataException(<span style=\"color: #a31515;\">\"Input stream must be MuLaw or PCM.\"</span>);\n\n\t\t<span style=\"color: blue;\">this</span>.input = input;\n\n\t\t<span style=\"color: blue;\">if</span> (input.WaveFormat.Encoding == WaveFormatEncoding.MuLaw)\n\t\t\toutput_format = <span style=\"color: blue;\">new</span> WaveFormat(input.WaveFormat.SampleRate, input.WaveFormat.Channels);\n\t\t<span style=\"color: blue;\">else</span>\n\t\t\toutput_format = WaveFormat.CreateMuLawFormat(input.WaveFormat.SampleRate, input.WaveFormat.Channels);\n\t}\n\n\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">int</span> Encode(<span style=\"color: blue;\">byte</span>[] input, <span style=\"color: blue;\">int</span> offset, <span style=\"color: blue;\">int</span> in_count, <span style=\"color: blue;\">byte</span>[] output)\n\t{\n\t\t<span style=\"color: blue;\">if</span> (output.Length &lt; in_count / 2)\n\t\t\t<span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> IndexOutOfRangeException(String.Format(<span style=\"color: #a31515;\">\"Output buffer not large enough ({0} should be &gt;= {1}).\"</span>, output.Length, offset + (in_count/2) ));\n\n\t\t<span style=\"color: blue;\">if</span> (in_count % 2 != 0)\n\t\t\t<span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> InvalidDataException(<span style=\"color: #a31515;\">\"Got a half-sample from input source\"</span>);\n\n\t\t<span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; in_count; i += 2) <span style=\"color: green;\">// Increment by 2: 16-bit data</span>\n\t\t\toutput[ offset + (i/2) ] = NAudio.Codecs.MuLawEncoder.LinearToMuLawSample(BitConverter.ToInt16(input, i));\n\n\t\t<span style=\"color: blue;\">return</span> in_count / 2;\n\t}\n\n\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">int</span> Decode(<span style=\"color: blue;\">byte</span>[] input, <span style=\"color: blue;\">int</span> offset, <span style=\"color: blue;\">int</span> in_count, <span style=\"color: blue;\">byte</span>[] output)\n\t{\n\t\t<span style=\"color: blue;\">if</span> (output.Count() &lt; in_count * 2)\n\t\t\t<span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> IndexOutOfRangeException(String.Format(<span style=\"color: #a31515;\">\"Output buffer not large enough ({0} should be &gt;= {1}).\"</span>, output.Length, offset + (in_count*2) ));\n\n\t\t<span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; in_count; i++)\n\t\t{\n\t\t\t<span style=\"color: blue;\">byte</span>[] DecodedShort = BitConverter.GetBytes(NAudio.Codecs.MuLawDecoder.MuLawToLinearSample(input[i]));\n\t\t\t<span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> j = 0; j &lt; 2; j++)\n\t\t\t\toutput.SetValue(DecodedShort[j], offset + (i*2) + j);\n\t\t}\n\n\t\t<span style=\"color: blue;\">return</span> in_count * 2;\n\t}\n\n\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">override</span> <span style=\"color: blue;\">int</span> Read(<span style=\"color: blue;\">byte</span>[] buffer, <span style=\"color: blue;\">int</span> offset, <span style=\"color: blue;\">int</span> count)\n\t{\n\t\t<span style=\"color: blue;\">if</span> (input.WaveFormat.Encoding == WaveFormatEncoding.MuLaw)\n\t\t{\n\t\t\t<span style=\"color: blue;\">if</span> (internal_buffer == <span style=\"color: blue;\">null</span> || internal_buffer.Length != count / 2)\n\t\t\t\tinternal_buffer = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[count / 2];\n\n\t\t\t<span style=\"color: blue;\">int</span> bytes_read = input.Read(internal_buffer, 0, count / 2);\n\t\t\t<span style=\"color: blue;\">return</span> Decode(internal_buffer, offset, bytes_read, buffer);\n\t\t}\n\t\t<span style=\"color: blue;\">else</span>\n\t\t{\n\t\t\t<span style=\"color: blue;\">if</span> (internal_buffer == <span style=\"color: blue;\">null</span> || internal_buffer.Length != count * 2)\n\t\t\t\tinternal_buffer = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[count * 2];\n\n\t\t\t<span style=\"color: blue;\">int</span> bytes_read = input.Read(internal_buffer, 0, count * 2);\n\t\t\t<span style=\"color: blue;\">return</span> Encode(internal_buffer, offset, bytes_read, buffer);\n\t\t}\n\t}\n\n\t<span style=\"color: blue;\">protected</span> <span style=\"color: blue;\">override</span> <span style=\"color: blue;\">void</span> Dispose(<span style=\"color: blue;\">bool</span> disposing)\n\t{\n\t\t<span style=\"color: blue;\">if</span> (input_stream != <span style=\"color: blue;\">null</span>)\n\t\t\tinput_stream.Dispose();\n\t\t<span style=\"color: blue;\">base</span>.Dispose(disposing);\n\t}\n\n\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">override</span> <span style=\"color: blue;\">long</span> Length\n\t{\n\t\t<span style=\"color: blue;\">get</span>\n\t\t{\n\t\t\t<span style=\"color: blue;\">if</span> (input_stream != <span style=\"color: blue;\">null</span>)\n\t\t\t{\n\t\t\t\t<span style=\"color: blue;\">if</span> (input.WaveFormat.Encoding == WaveFormatEncoding.MuLaw)\n\t\t\t\t\t<span style=\"color: blue;\">return</span> input_stream.Length * 2;\n\t\t\t\t<span style=\"color: blue;\">else</span>\n\t\t\t\t\t<span style=\"color: blue;\">return</span> input_stream.Length / 2;\n\t\t\t}\n\t\t\t<span style=\"color: blue;\">else</span>\n\t\t\t\t<span style=\"color: blue;\">return</span> 0;\n\t\t}\n\t}\n\n\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">override</span> <span style=\"color: blue;\">long</span> Position\n\t{\n\t\t<span style=\"color: blue;\">get</span>\n\t\t{\n\t\t\t<span style=\"color: blue;\">if</span> (input_stream != <span style=\"color: blue;\">null</span>)\n\t\t\t{\n\t\t\t\t<span style=\"color: blue;\">if</span> (input.WaveFormat.Encoding == WaveFormatEncoding.MuLaw)\n\t\t\t\t\t<span style=\"color: blue;\">return</span> input_stream.Position * 2;\n\t\t\t\t<span style=\"color: blue;\">else</span>\n\t\t\t\t\t<span style=\"color: blue;\">return</span> input_stream.Position / 2;\n\t\t\t}\n\t\t\t<span style=\"color: blue;\">else</span>\n\t\t\t\t<span style=\"color: blue;\">return</span> 0;\n\t\t}\n\t\t<span style=\"color: blue;\">set</span>\n\t\t{\n\t\t\t<span style=\"color: blue;\">if</span> (input_stream != <span style=\"color: blue;\">null</span>)\n\t\t\t{\n\t\t\t\t<span style=\"color: blue;\">if</span> (input.WaveFormat.Encoding == WaveFormatEncoding.MuLaw)\n\t\t\t\t\tinput_stream.Position = value / 2;\n\t\t\t\t<span style=\"color: blue;\">else</span>\n\t\t\t\t\tinput_stream.Position = value * 2;\n\t\t\t}\n\t\t\t<span style=\"color: blue;\">else</span>\n\t\t\t\t<span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> InvalidOperationException(<span style=\"color: #a31515;\">\"Wave input does not support Position.\"</span>);\n\t\t}\n\t}\n}\n</pre>\n</div>\n</p>",
+    "PostedDate": "2011-06-24T05:34:35.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633077",
+    "ThreadId": "260238",
+    "Html": "<p>Here is example utilization if needed.</p>\r\n<pre style=\"font-family: consolas;\"><span style=\"color: #000000;\">&nbsp;using&nbsp;(var&nbsp;reader&nbsp;=&nbsp;new&nbsp;WaveFileReader(fileToProcess))</span><br /><span style=\"color: #000000;\">&nbsp;using&nbsp;(var&nbsp;converter&nbsp;=&nbsp;new&nbsp;MuLawConversionStream(reader))</span><br /><span style=\"color: #000000;\">&nbsp;{</span><br /><span style=\"color: #000000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveFileWriter.CreateWaveFile(outputFile,&nbsp;converter);</span><br /><span style=\"color: #000000;\">&nbsp;}</span></pre>",
+    "PostedDate": "2011-06-25T21:43:10.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633098",
+    "ThreadId": "260238",
+    "Html": "<p>thanks for providing this. There are a couple of minor issues that would need to be fixed before including with NAudio:</p>\r\n<p>1. The 'offset' parameter of the Read method is not being observed. This usually doesn't matter because it is 0, but there are occasions when it can be non-zero.</p>\r\n<p>2. The WaveFormat method should not create a new object each time, and the Read method should avoid creating new buffers each time as we try to create no new objects in Read to avoid giving the garbage collector any work to do during playback. I usually create the waveFormat in the constructor, and reuse buffers I create in the Read method if they are long enough (Read almost always gets called with the same value in count every time)</p>\r\n<p>3. You should use the Length property to get the number of elements in an array, rather than Count() which is a LINQ extension method (NAudio is compatible back to .NET 2 so it doesn't use LINQ)</p>\r\n<p>4. NAudio follows the naming convention where private variable names &amp; parameter names are lower cased</p>\r\n<p>thanks</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-26T01:19:59.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633119",
+    "ThreadId": "260238",
+    "Html": "<p>I've made your changes in the post above. Not 100% sure what you meant by not observing the offset, but I think I've got it now.</p>",
+    "PostedDate": "2011-06-26T03:52:07.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633134",
+    "ThreadId": "260238",
+    "Html": "<p>thanks, there's still a couple of bugs with offset in there. Your internal_buffer doesn't need an offset, so reading into it can should use an offset of 0:</p>\r\n<pre><span style=\"color: blue;\">int</span> bytes_read = input.Read(internal_buffer, 0, count / 2);</pre>\r\n<p>then, in your Encode and Decode methods, you must copy count samples. Your loops run for count-offset samples.</p>\r\n<pre><span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; in_count; i++)<br /></pre>\r\n<p>Offset is only used when writing into the buffer variable that was passed into the Read method, so in for example in the encode method:</p>\r\n<pre>output[offset + i / 2] = NAudio.Codecs.MuLawEncoder.LinearToMuLawSample(BitConverter.ToInt16(input, i));<br /><br /></pre>",
+    "PostedDate": "2011-06-26T06:36:42.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "633143",
+    "ThreadId": "260238",
+    "Html": "<p>Seems I didn't understand the purpose of offset at all! Edited the post again.</p>",
+    "PostedDate": "2011-06-26T07:30:29.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636229",
+    "ThreadId": "260238",
+    "Html": "<p>cool, looks good now.</p>",
+    "PostedDate": "2011-07-01T14:22:58.78-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

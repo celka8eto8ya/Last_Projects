@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1091677",
+    "ThreadId": "456664",
+    "Html": "Hello Community,\r<br />\nDuring development with NAudio i was wondering which API is internally used by the WaveIn and WaveOut commands. I suppose its MME. Am I right?? \r<br />\n<br />\nCheers\r<br />\nJan\r<br />\n<br />\nP.S. \tI'd also appreciate it, if someone of you could provide me some information about the internals of the Windows Audio Stack (especially Win7) I already googled that, but maybe there are better references.<br />\n",
+    "PostedDate": "2013-09-12T04:59:57.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1091702",
+    "ThreadId": "456664",
+    "Html": "yes it uses MME, There's not a lot out there about Windows audio stack. Read about WASAPI on MSDN is probably your best option<br />\n",
+    "PostedDate": "2013-09-12T05:49:51.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

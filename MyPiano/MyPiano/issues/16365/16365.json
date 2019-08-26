@@ -1,0 +1,71 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-26T23:55:12.38-07:00",
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "Hello,\r\nI do not understand why the properties NumberOfInputChannel NumberofOutputChannel ASIO drivers and was always zero while the function getChannels is correct.\r\nSo I added a few lines in the class ASIOOut, function InifromName, \r\nand I added two property CapacityNumberOfOutputChannels ,CapacityNumberOfInputChannels \r\n\r\nprivate void initFromName(String driverName)\r\n        {\r\n            // Get the basic driver\r\n            ASIODriver basicDriver = ASIODriver.GetASIODriverByName(driverName);\r\n\r\n\t\t\t///////////////////////////////////////////// Add Channels Number\r\n\t\t\tint nbchannelin;\r\n\t\t\tint nbchannelout;\r\n\t\t\tbasicDriver.getChannels(out nbchannelin, out nbchannelout);\r\n\r\n\t\t\tCapacityNumberOfInputChannels = nbchannelin;\r\n\t\t\tCapacityNumberOfOutputChannels = nbchannelout;\r\n                        ////////////////////////////////////////////// End Add\r\n            // Instantiate the extended driver\r\n            driver = new ASIODriverExt(basicDriver);\r\n            this.ChannelOffset = 0;\r\n        }\r\n\r\npublic int CapacityNumberOfOutputChannels { get; private set; }\r\npublic int CapacityNumberOfInputChannels { get; private set; }\r\n\r\nthere is little to be another way for these parameters!",
+    "LastUpdatedDate": "2012-10-26T23:55:12.38-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-10-22T15:08:02.62-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "ASIO number of channels",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 16365
+  },
+  "FileAttachments": [
+    {
+      "FileId": 522523,
+      "FileName": "AsioDirectPanel AsioRecordingPanel.zip",
+      "DownloadUrl": ".\\522523"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I did the test with a SoundCard maudio Profire610 is the modification works",
+      "PostedDate": "2012-10-22T15:10:50.547-07:00",
+      "Id": 80701
+    },
+    {
+      "Message": "good idea, I might use different names though, perhaps DeviceInputChannels and DeviceOutputChannels",
+      "PostedDate": "2012-10-23T00:19:28.7-07:00",
+      "Id": 80726
+    },
+    {
+      "Message": "Yes why not",
+      "PostedDate": "2012-10-23T00:52:20.23-07:00",
+      "Id": 80728
+    },
+    {
+      "Message": "OK, there is DeviceInputChannelCount and DeviceOutputChannelCount available now. Let me know if they work for you.",
+      "PostedDate": "2012-10-23T22:57:08.117-07:00",
+      "Id": 80863
+    },
+    {
+      "Message": "Yes,\r\nit works (version ec57bec7b310)\r\n\r\nI tested with two soundcard on the same port (MAudio Profire 2626 + MAudio Profire 610) and it tells me the correct number of input and output.\r\n\r\nI changed demonstrations ASIO Direct Playback and ASIO Recording for testing.\r\n\r\nFiles are available Packs",
+      "PostedDate": "2012-10-24T01:08:36.293-07:00",
+      "Id": 80869
+    }
+  ]
+}

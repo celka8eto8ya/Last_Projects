@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "639787",
+    "ThreadId": "264505",
+    "Html": "\r\n<p>I have been wading through some of the discussions here about streaming and mixing, and I think I'm stuck at the lack of a Mixer that handles IWaveProviders.</p>\r\n<p>I am writing a library that records voice data via a WaveIn and sends it out over UDP. On the receiving end, I get these UDP packets and pass the payloads into my implementation of a BuferedWaveProvider, which would get sent to a WaveOut. Since I need to\r\n have multiple people talking at once, I have looked through the examples and used a WaveMixerStream32:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">// Playback Mixer pipeline</span>\r\n<span style=\"color:blue\">internal</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">readonly</span> WaveFormat MIX_FMT = <span style=\"color:blue\">new</span> WaveFormat(22050, 1);\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">readonly</span> WaveMixerStream32 _mixer = <span style=\"color:blue\">new</span> WaveMixerStream32();\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">readonly</span> WaveOut _out = <span style=\"color:blue\">new</span> WaveOut() { NumberOfBuffers = 3 };\r\n</pre>\r\n</div>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">// Initialize the output mixer</span>\r\n<span style=\"color:green\">//_out.DeviceNumber = _playDev.Index;</span>\r\n_out.DeviceNumber = -1;\r\n_out.Volume = (PlayVolume / 100f);\r\n_mixer.AutoStop = <span style=\"color:blue\">false</span>;\r\n_out.Init(_mixer);\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Where things get hairy is when I start getting some data and need to add a stream to the WaveMixerStream32. Since it can't accept an IWaveProvider, I've written a WaveStream implementation that wraps my CircularBuffer, and converts it to a common format\r\n as described above, like so:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>CircularBuffer buf = <span style=\"color:blue\">new</span> CircularBuffer(_fmt.AverageBytesPerSecond * 5);\r\nWaveStream ws = <span style=\"color:blue\">new</span> WaveStreamBufferWrapper(_fmt, _buf);\r\nWaveStream cws = <span style=\"color:blue\">new</span> WaveFormatConversionStream(VoiceClient.MIX_FMT, ws);\r\nWaveChannel ch32 = <span style=\"color:blue\">new</span> WaveChannel32(cws);\r\n_mixer.AddInputStream(ch32);\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>I see that my BufferedWaveProvider is getting written to, but its Read() method is never called. There appears to be data if I call ws.TotalTime, but interestingly ch32.TotalTime is 0:00 (is that why the MixerStream never calls Read?)&nbsp;</p>\r\n<p>Is there a proper way to convert an IWaveProvider into a WaveStream? I seem to be doing it wrong.</p>\r\n<p>Cheers!</p>\r\n<p>Luke</p>\r\n",
+    "PostedDate": "2011-07-08T22:30:06.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "639930",
+    "ThreadId": "264505",
+    "Html": "<p>hi Luke,</p>\r\n<p>I saw you also asked this on StackOverflow, so I answered there</p>\r\n<p>http://stackoverflow.com/questions/6636142/wavemixerstream32-and-iwaveprovider/6637056#6637056</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-09T13:02:26.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

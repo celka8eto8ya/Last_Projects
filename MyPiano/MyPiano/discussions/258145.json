@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "614885",
+    "ThreadId": "258145",
+    "Html": "\r\n<p>Hi all.&nbsp;</p>\r\n<p>I am developing a WAV stream player. Wav stream has been converted from MP3 file using NAudio. But when I try to stop the player I got some random exception. I copied some of my codes below.</p>\r\n<p>&nbsp;</p>\r\n<p>1. Creating WAV stream from MP3 file</p>\r\n<pre><span>WaveFormatConversionStream</span>&nbsp;conversionStream = <span>new</span>&nbsp;<span>WaveFormatConversionStream</span>(<span>new</span>&nbsp;<span>WaveFormat</span>(22050,&nbsp;16,&nbsp;1),&nbsp;<span>WaveFormatConversionStream</span>.CreatePcmStream(mp3File));</pre>\r\n<pre><br></pre>\r\n<pre>2. Reading it into short array. Because in my music player I am using short[] to play and visualize it.</pre>\r\n<pre><pre><span>public</span>&nbsp;<span>int</span>&nbsp;Read(<span>short</span>[]&nbsp;buffer,&nbsp;<span>int</span>&nbsp;readSize)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>byte</span>[]&nbsp;byteBuffer&nbsp;=&nbsp;<span>new</span>&nbsp;<span>byte</span>[buffer.Length&nbsp;*&nbsp;2];\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>int</span>&nbsp;r;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>if</span>&nbsp;((r&nbsp;=&nbsp;conversionStream.Read(byteBuffer,&nbsp;0,&nbsp;readSize&nbsp;*&nbsp;2))&nbsp;!=&nbsp;0)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Buffer</span>.BlockCopy(byteBuffer,&nbsp;0,&nbsp;buffer,&nbsp;0,&nbsp;byteBuffer.Length);\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>return</span>&nbsp;r&nbsp;/&nbsp;2;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</pre>\r\n<pre><br></pre>\r\n<pre>3. Filling my buffer in player in music player class</pre>\r\n<pre><pre><span>while</span>&nbsp;((readSize&nbsp;==&nbsp;reader.Read(readBuffer,&nbsp;readSize))) // reader is my MP3toWavConverter. The read function returns the wav stream chunk.\r\n<span style=\"white-space:pre\">\t</span>readBuffer.CopyTo(waveBuffer,&nbsp;offset); // here waveBuffer is used for playing music</pre>\r\n<pre><br></pre>\r\n<pre>4. Preparing and playing stream</pre>\r\n<pre><pre><span style=\"white-space:pre\">\t\t</span>hHeaderData&nbsp;=&nbsp;<span>GCHandle</span>.Alloc(waveBuffer,&nbsp;<span>GCHandleType</span>.Pinned);\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;waveHeader.lpData&nbsp;=&nbsp;hHeaderData.AddrOfPinnedObject();\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;waveHeader.dwBufferLength&nbsp;=&nbsp;length;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;waveHeader.dwFlags&nbsp;=&nbsp;0;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//////////////////////////////////////</pre>\r\n<pre><span><span style=\"white-space:pre\">\t\t</span>WinMM</span>.waveOutPrepareHeader(hWaveOut,&nbsp;<span>ref</span>&nbsp;waveHeader,&nbsp;<span>Marshal</span>.SizeOf(waveHeader));</pre>\r\n<pre><pre><span><span style=\"white-space:pre\">\t</span>       WinMM</span>.waveOutWrite(hWaveOut,&nbsp;<span>ref</span>&nbsp;waveHeader,&nbsp;<span>Marshal</span>.SizeOf(waveHeader));\r\n</pre>\r\n<pre><br></pre>\r\n<pre>5. WinMM.waveOutReset(hWaveOut); // BOOM. RANDOM ERROR</pre>\r\n<pre>I can play, pause, open and close WAV stream. But when I try to stop the music player, this function gives random exception. I searched the internet and found out buffering is causing this. is there anything I should be careful about NAUDIO when I try to use it with unmanaged DLLs? How to manage my buffers in NAudio?</pre>\r\n<pre><br></pre>\r\n<pre><br></pre>\r\n<br></pre>\r\n<br></pre>\r\n<br></pre>\r\n<br></pre>\r\n",
+    "PostedDate": "2011-05-18T14:10:26.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614888",
+    "ThreadId": "258145",
+    "Html": "<p>can you post the exception.ToString()</p>",
+    "PostedDate": "2011-05-18T14:12:48.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614907",
+    "ThreadId": "258145",
+    "Html": "<p>Hi Mark.</p>\r\n<p>The application just crashes down. This is unhandled exception and just opens the Just In time debugger for me.&nbsp;</p>\r\n<p>I suspect I am not handling the resources correctly. How do I manage my resources when I use NAudio with the unmanaged libraries such as WinMM.dll? I could play WAV file without using NAudio. It worked completely fine.&nbsp;</p>",
+    "PostedDate": "2011-05-18T14:33:14.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614908",
+    "ThreadId": "258145",
+    "Html": "<p>NAudio already contains wrappers for WinMM.dll. Just create a WaveOut object and pass your conversion stream into it in the Init method. Then call Play()</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-18T14:35:26.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614912",
+    "ThreadId": "258145",
+    "Html": "<p>But the thing is I am using this stream for playing and drawing graph for the same time. When I use WaveOut.Play() method it changes the Position. So I can`t draw the correct graph.&nbsp;</p>",
+    "PostedDate": "2011-05-18T14:42:26.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614917",
+    "ThreadId": "258145",
+    "Html": "<p>Well the code in NAudio WaveOut and WaveBuffer classes represents my best efforts at safely wrapping the WinMM APIs. I would suggest looking at the source code of those classes and seeing if you can use any of the ideas.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-18T14:46:03.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "614919",
+    "ThreadId": "258145",
+    "Html": "<p>OK. Thank you Mark.&nbsp;</p>",
+    "PostedDate": "2011-05-18T14:48:36.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

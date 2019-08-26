@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1447291",
+    "ThreadId": "645875",
+    "Html": "Hi,<br />\n<br />\nI searched for an answer, but I did not find any. <br />\n<br />\nThe problem:<br />\nI have a situation where I must play a WAV-file that may be still being written to. Part of the problem I solved (by opening the file using a Stream instead of a file, because the WAV file is obviously locked by another process).<br />\nHowever, I now can access the file, but I only can play the portion that was available when opening the file. I want the length to be dynamic, it has to shift in time. <br />\n<br />\nSo here's my question:<br />\nHow do I update the 'TotalTime' of the Wave object to reflect the current length? I can set some timer in order to do the refresh, but how do I trigger a refresh in the Wave object?<br />\n<br />\nIf anyone could give me a direction to a solution. It would help me a lot.<br />\n",
+    "PostedDate": "2015-10-06T07:17:06.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1447987",
+    "ThreadId": "645875",
+    "Html": "Hi, do you want to record from web stream and play the stream at the same time? Or do you only want to write &quot;what you listen&quot; when playing back a file?<br />\n<br />\nYour approach isn´t clear to me. So I will show you both:<br />\n<br />\nFor case 1#: Look at the NAudio radio streaming demo<br />\nFor case 2#: Use SavingWaveProvider<br />\n",
+    "PostedDate": "2015-10-10T04:17:16.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448135",
+    "ThreadId": "645875",
+    "Html": "Thank you for your reply but it is neither of those options.\r<br />\nLet me be a bit more specific.\r<br />\n<br />\nSome process is writing a WAV file somewhere on a network drive. I do not have any control over that process, so I must take this for a fact.\r<br />\nBut I need to be able to play this file already, while it is being written to.\r<br />\nI have managed to do this, but I can only play the portion that was available when I opened the file. But since the recording is still in progress, the actual length of the file is larger. When I then re-open the file again, I can play a larger portion, but again, up 'till the moment I re-opened the file.  However, that is of course no option, for it would create a hickup in the sound being played.\r<br />\n<br />\nSo my question again: Can I dynamically change the 'end point' of the WaveFileReader object? Or is there some other mechanism I should use?\r<br />\n<br />\nThe code I'm using at this moment is this:<br />\n<pre><code>Stream stream = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);\n          m_waveReader = new WaveFileReader(stream);</code></pre>\n\nOr should I use some other stream somehow? <br />\n",
+    "PostedDate": "2015-10-12T00:42:48.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448180",
+    "ThreadId": "645875",
+    "Html": "Okay, looks like a general filestream problem. You could perhaps use this approaches:\r<br />\n<br />\n<a href=\"http://stackoverflow.com/questions/3817477/simultaneous-read-write-a-file-in-c-sharp\" rel=\"nofollow\">http://stackoverflow.com/questions/3817477/simultaneous-read-write-a-file-in-c-sharp</a>\r<br />\n<a href=\"http://stackoverflow.com/questions/11627276/c-sharp-read-and-write-to-file-at-the-same-time\" rel=\"nofollow\">http://stackoverflow.com/questions/11627276/c-sharp-read-and-write-to-file-at-the-same-time</a>\r<br />\n<br />\nAnother option could be to handle that the file got enlarged (event or sth) and then just re-create the filestream. Ofc, that would restart playback and some delay; you would have to jump to the last known position then.\r<br />\n<br />\nAnyway this is not a NAudio issue and therefore you would have to find a solution yourself. Just copy the WaveFileReader class and modify it.<br />\n",
+    "PostedDate": "2015-10-12T06:51:29.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448193",
+    "ThreadId": "645875",
+    "Html": "You're right (of course).\r<br />\n<br />\nThanks for pointing me the direction!<br />\n",
+    "PostedDate": "2015-10-12T07:49:23.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

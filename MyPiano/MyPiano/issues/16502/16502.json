@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi Mark\r\n\r\nThanks for providing the library! First I thought, that my problem was simple: I have 4 different Audio Files, that I want to play on a multichannel soundcard. Each file has to go to a separate Audio out. I manage to do this one time, the playback stopped event handler doesn't work, the disposing doesn't work, destroying all the objects and building them up again doesn't work. I don't know what to do...\r\n\r\nI need to playback all the files every hour or so... Is there a simple way to do this?\r\n\r\nThank you very much in advance.\r\n\r\nBr\r\nRomy",
+    "LastUpdatedDate": "2016-09-17T07:13:42.497-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-09-12T07:16:58.53-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Play 4 different wav files over ASIO on 4 stereo channels",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16502
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "With ASIO, you open all the outputs at once. So all 8 channels. And then you provide 8 channel audio as the input. And NAudio has two helper classes for this purpose - `MultiplexingWaveProvider` and `MultiplexingSampleProvider` that glue together stereo files and send them to the appropriate output. Check out [my blog post](http://markheath.net/post/handling-multi-channel-audio-in-naudio) on how to use them.\n",
+      "PostedDate": "2016-09-17T07:13:42.497-07:00",
+      "Id": 204125
+    }
+  ]
+}

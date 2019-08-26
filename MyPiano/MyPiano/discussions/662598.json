@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1495583",
+    "ThreadId": "662598",
+    "Html": "We're able to access a .wav file stored as an embedded resource in the project with the below code.  This gets us a stream to the sound file contents <em>(the below assumes that there exists a SoundFiles sub-directory in the project containing the .wav sound files and that the files are set to be embedded resources).</em><br />\n<pre><code>                var asm = Assembly.GetExecutingAssembly();\n                var resourceStream = asm?.GetManifestResourceStream(\n                    asm.GetName().Name +\n                    &quot;.SoundFiles.&quot; +\n                    soundFile +\n                    &quot;.wav&quot;\n                );</code></pre>\n\nOnce we have the stream, we can use it to create an instance of the WaveFileReader class and then provide that instance to the output player (WasapiOut for example).  To control the playback volume, we could use IWavePlayer.Volume, but...\r<br />\n<br />\n... the comments for IWavePlayer.Volume indicate that this should not be used but that volume should be set &quot;on your input WaveProvider instead&quot;.  The problem is that WaveFileReader does not have a Volume property.\r<br />\n<br />\nSo if using WaveFileReader, there doesn't appear to be any way to control the volume &quot;correctly&quot;.  Also it appears that setting volume on the IWavePlayer actually affects the global system sound volume, which is not desirable.\r<br />\n<br />\nAn alternative is to use the AudioFileReader class.  While this class has a Volume property, it does not have a way to construct it using a stream.\r<br />\n<br />\nWhat we're doing now is to get the stream for the embedded resource, copy the contents out to a temp file, and then point the AudioFileReader class at the temp file, then play the sound, then delete the temp file when done.\r<br />\n<br />\nThis seems a bit hacky and unnecessary though.  I'm posting this to suggest one of the following.\r<br />\n<br />\n1) Add a Volume property to the WaveFileReader class\r<br />\n2) Add the ability to construct an AudioFileReader from a stream instead of just a file path string<br />\n",
+    "PostedDate": "2017-04-18T12:53:11.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495692",
+    "ThreadId": "662598",
+    "Html": "Use the extension WaveFileReader&quot;.ToSampleProvider&quot;, which will convert it in a sample based stream. Then pass this to a new VolumeSampleProvider, where you can set the volume of the stream internally, and finally play this stream witch an IWavePlayer.\r<br />\n<br />\n=&gt; Signal chain:\r<br />\n<br />\nWaveFileReader -&gt; .ToSampleProvider -&gt; VolumeSampleProvider -&gt; IWavePlayer.<br />\n",
+    "PostedDate": "2017-04-21T13:17:04.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495755",
+    "ThreadId": "662598",
+    "Html": "wow!  That looks great, will give that a try.  Thanks!<br />\n",
+    "PostedDate": "2017-04-24T11:32:21.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1443557",
+    "ThreadId": "644716",
+    "Html": "Hi ,<br />\n<br />\nI have developed NAudio waveoutevent player. I want to developed  Fade In/Out option alsio. Ex: While playing the sounds,if i click FadeOut  / FadeIn .<br />\nPlease help me to do this <br />\n<br />\n<br />\n<br />\nThanks<br />\nAthiVarathan.<br />\n",
+    "PostedDate": "2015-09-08T03:25:06.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443832",
+    "ThreadId": "644716",
+    "Html": "use FadeInOutSampleProvider<br />\n",
+    "PostedDate": "2015-09-09T16:40:52.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443874",
+    "ThreadId": "644716",
+    "Html": "Thank you for your replay, I got the solution. But the small problem FadeInOut working fine but volume meter option not working. Only one will work at the same time.<br />\n<br />\nEX : <br />\n<br />\nPlayer.Init(new SampleToWaveProvider(fadeInOut)); // FadeInOut works<br />\n<br />\nPlayer.Init(new SampleToWaveProvider(postVolumeMeter)); // volume meter works<br />\n<br />\nHow to work both in a single player.I want to use FadeInOut and  volume meter .Please do for need full.<br />\n<br />\nThank You.<br />\n",
+    "PostedDate": "2015-09-10T04:03:34.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443883",
+    "ThreadId": "644716",
+    "Html": "You need to build a signal chain like that:<br />\n<pre><code>        Dim Reader As New Mp3FileReader(&quot;&quot;)\n        Dim FadeInOut = New FadeInOutSampleProvider(Reader.ToSampleProvider)\n        Dim PostVolume = New VolumeSampleProvider(FadeInOut)\n        Dim WO As New WaveOut()\n        WO.Init(PostVolume)\n        WO.Play()</code></pre>\n\nGreetz.<br />\n",
+    "PostedDate": "2015-09-10T05:08:32.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443912",
+    "ThreadId": "644716",
+    "Html": "Thank you sir,  But  we are using Wav file in C# project. So, I can't use VolumeSampleProvider<br />\n\r<br />\nHere my code:\r<br />\n<br />\nfile = new AudioFileReader(fileName);\r<br />\nfadeInOut = new FadeInOutSampleProvider(file);<br />\nvar waveChannel = new SampleChannel(file, true);<br />\n<pre><code>                                 var postVolumeMeter = new MeteringSampleProvider(waveChannel);        \n                                 var postVolumeMeter = new MeteringSampleProvider(__fadeInOut__);     ///  &quot;here i cant add VolumeSampleProvider &quot;\n</code></pre>\n\npostVolumeMeter.StreamVolume += OnPostVolumeMeter_Stack;\r<br />\nPlayer.Init(new SampleToWaveProvider(postVolumeMeter));\r<br />\nPlayer.Play();\r<br />\n<br />\nI want to use MeteringSampleProvider and VolumeSampleProvider. Please help me to do this .\r<br />\n<br />\nThank You.<br />\n",
+    "PostedDate": "2015-09-10T07:27:04.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443960",
+    "ThreadId": "644716",
+    "Html": "Seems, you have no clue what &quot;signal chain&quot; means... Anyway, change:<br />\n<pre><code>var waveChannel = new SampleChannel(file, true);</code></pre>\n\nto:<br />\n<pre><code>var waveChannel = new SampleChannel(fadeInOut, true);</code></pre>\n\nAnd it should work. Btw, signal chain means, that all classes are connected by referring to the class before. The data is then pulled through all of them when the audio device requests a new block.\r<br />\n<br />\nGreetz.\r<br />\n<br />\nPS: Please mind a correct presentation and pronounciation in future, either nobody will want to help you.<br />\n",
+    "PostedDate": "2015-09-10T15:03:54.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

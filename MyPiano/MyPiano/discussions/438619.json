@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1023608",
+    "ThreadId": "438619",
+    "Html": "Hi,\r<br />\n<br />\nI'm trying to insert silence into the beginning of an audio file, then save that file as a new audio file.  I'm using the Mp3FileReader to read the input file, but can't figure out how to insert silence at the beginning of the file and save it.  I've seen some references to using WaveOffsetStream or OffsetSampleProvider, but can't figure out how to use them.  Any pointers/sample code would be greatly appreciated.\r<br />\n<br />\nThanks,\r<br />\nAlan<br />\n",
+    "PostedDate": "2013-03-31T21:25:13.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1023706",
+    "ThreadId": "438619",
+    "Html": "you have to convert to PCM first, and then re-encode as MP3 if you need MP3. So write zeroes into a WaveFileWriter until you have the desired amount of silence (use AverageBytesPerSecond from the Mp3FileReader's WaveFormat to know how many to write), and then read everything out of your Mp3FileReader into the WaveFileWriter after that. Once you've done that, you'll have a WAV file that you can re-encode as MP3.<br />\n",
+    "PostedDate": "2013-04-01T03:21:43.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1023756",
+    "ThreadId": "438619",
+    "Html": "Another option if you are just adding silence to the beginning of a MP3 file (and nothing more): Add empty frames to the &quot;beginning&quot; of the MP3 file.  There are some caveats to it, though:\r<br />\n<br />\n1) Adding a frame to a MPEG1 Layer III file will add 1152 samples (regardless how many channels; don't divide by channel count).\r<br />\n2) The new frames have to come after the ID3v2 tag and the RIFF header (if it exists; if it does, you'll also have to update the chunk sizes).\r<br />\n3) If there is a VBR tag (either form):  Put your frames after the VBR tag.  You can use minimum-bitrate frames here.  Make sure to update the VBR tag.\r<br />\n4) Otherwise, put your frames at the beginning of the audio data.  Your &quot;empty&quot; frame header should be almost identical to the first &quot;real&quot; audio frame's header.\r<br />\n<br />\nAny frames you add should consist of a 32-bit frame header and no less than 20 bytes of 0's.  Pad to the frame size (there are plenty of references for MP3 frame header parsing &amp; frame length calculation...).<br />\n",
+    "PostedDate": "2013-04-01T06:12:24.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1024411",
+    "ThreadId": "438619",
+    "Html": "Thanks for the quick replies.  Mark, love NAudio, great library!\r<br />\n<br />\nFor reference, here's basically what I ended up doing, thanks for the pointers.  If you see any problems, please comment.\r<br />\n<br />\n-Alan<br />\n<pre><code>            int silence = 5000;  // silence to add in ms\n            string mp3Url = &quot;http://freedownloads.last.fm/download/494669779/Calgary.mp3&quot;;\n            string outfile = &quot;newfile.wav&quot;;\n            WaveStream waveStream = new Mp3FileReader(mp3Url);\n            using (WaveFileWriter waveFileWriter = new WaveFileWriter(outfile, waveStream.WaveFormat))\n            {\n\n                int avgBytesPerMillisecond = waveStream.WaveFormat.AverageBytesPerSecond / 1000;\n                var silenceArraySize = avgBytesPerMillisecond * silence;\n                byte[] silenceArray = new byte[silenceArraySize];\n                waveFileWriter.Write(silenceArray, 0, silenceArray.Length);\n                byte[] songArray = new byte[waveStream.Length];\n                int numSamples = waveStream.Read(songArray, 0, songArray.Length);\n                waveFileWriter.Write(songArray, 0, numSamples);\n            }</code></pre>\n\n",
+    "PostedDate": "2013-04-02T11:46:26.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1025230",
+    "ThreadId": "438619",
+    "Html": "that's right, although be very careful that your silenceArray is always a multiple of the BlockAlign of the target WaveFormat.<br />\n",
+    "PostedDate": "2013-04-03T23:32:58.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

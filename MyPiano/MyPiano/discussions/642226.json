@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1436856",
+    "ThreadId": "642226",
+    "Html": "Hi. \r<br />\n<br />\nI'm trying to just play a file (for learning purposes) but the Stop() command sometimes throws a null error, while sometimes do nothing. \r<br />\n<br />\nThis is a very, very simple class:<br />\n<pre><code>class audioEngine\n\n{\n    private DirectSoundOut waveOut;\n    private AudioFileReader audioCorte;\n\n    public void cortePlay(string corte)\n    {\n\n\n        waveOut = new DirectSoundOut();\n        var audioCorte = new AudioFileReader(corte);\n        waveOut.Init(audioCorte);\n        waveOut.Play();\n        waveOut.PlaybackStopped += OnPlaybackStopped;\n\n\n\n    }\n\n    private void OnPlaybackStopped(object sender, EventArgs e)\n    {\n        waveOut.Dispose();\n\n    }\n\n    public void estadoPlayer()\n    {\n        if (waveOut != null\n                &amp;&amp; waveOut.PlaybackState != PlaybackState.Stopped)\n        {\n\n            waveOut.Stop();\n\n        }\n\n    }\n\n}\n</code></pre>\n\nWhat i'm missing there? I just want to play/stop a file...<br />\n",
+    "PostedDate": "2015-08-01T10:39:02.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437184",
+    "ThreadId": "642226",
+    "Html": "are you calling Stop after disposing WaveOut?<br />\n",
+    "PostedDate": "2015-08-04T06:31:15.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-08-04T13:08:58.747-07:00"
+  },
+  {
+    "Id": "1437246",
+    "ThreadId": "642226",
+    "Html": "Hi!.\r<br />\n<br />\nProbably that was the case... i figured out some hours later, sorry.<br />\n",
+    "PostedDate": "2015-08-04T13:09:08.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

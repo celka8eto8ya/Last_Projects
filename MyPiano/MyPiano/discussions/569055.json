@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1310542",
+    "ThreadId": "569055",
+    "Html": "Hi,\r<br />\n<br />\nI decide to use NAudio for my project because of its well equipped feature set and high-level access to audio data, and their respective endpoint devices. I'm sending uncompressed PCM data in small packets over-the-wire by UDP Protocol(thanks to Lidgren), and am attempting to store it in a buffered wave provider and feed it to the output device, however I'm a bit stumped regarding how to set up my code, so that I'm only feeding the buffer, and not reinitializing the audio device to the buffer, every time it is filled with new PCM data. \r<br />\n<br />\n<strong>How I'm Handling Audio Data</strong><br />\n<pre><code>\ncase MessageType.Audio_ByteData:\n              int count = msg.ReadInt32();\n              msg.SkipPadBits();\n              byte[] audioData = msg.ReadBytes(count);\n              bufferedWaveProvider.AddSamples(audioData, 0, audioData.Length);\n              outputDevice.Init(bufferedWaveProvider);\n              outputDevice.Play();\n                                  \n              break;\n</code></pre>\n\nAs of now, I'm only sending over 1 second of audio data for debugging purposes, but the o nly time I seem to be able to listen to the PCM data I sent over is by initializing and calling play right after I add samples to the buffered wave provider. I've tried, adding samples while creating a busy loop of outputDevice.Play(), on another thread(while having it initialized to that particular wave provider), but I don't get any results.\r<br />\n<br />\nWhat's the correct way to handle something like this? <br />\n",
+    "PostedDate": "2014-10-04T22:01:43.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1310822",
+    "ThreadId": "569055",
+    "Html": "You should only call init and play on the output device once. After that, just call AddSamples on the bufferedWaveprovider whenever you have new audio to play.\r<br />\nAlso, make sure BufferedWaveProvider.PadwithZeroes is set to true which means that the Read method never returns 0, which would cause playback to stop if no audio was queued up.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2014-10-06T09:06:28.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

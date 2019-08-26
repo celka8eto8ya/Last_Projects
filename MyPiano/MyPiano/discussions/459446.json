@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1100072",
+    "ThreadId": "459446",
+    "Html": "Hi i want to to convert the memory stream to mp3 and then send it to the client and play it <br />\n<br />\nhere is my asmx code :<br />\n<pre><code>[WebMethod]\npublic byte[] StartSpeak(string Word)\n{\n    MemoryStream ms = new MemoryStream();\n    using (System.Speech.Synthesis.SpeechSynthesizer synhesizer = new System.Speech.Synthesis.SpeechSynthesizer())\n    {\n        synhesizer.SelectVoiceByHints(System.Speech.Synthesis.VoiceGender.NotSet, System.Speech.Synthesis.VoiceAge.NotSet, 0, new System.Globalization.CultureInfo(&quot;en-US&quot;));\n        synhesizer.SetOutputToWaveStream(ms);\n        synhesizer.Speak(Word);\n    }\n    return ms.ToArray();\n\n}\n</code></pre>\n\nThanks.<br />\n",
+    "PostedDate": "2013-09-27T04:58:44.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1100514",
+    "ThreadId": "459446",
+    "Html": "On the web server, the easiest solution is to save a WAV file and then use something like LAME.exe to convert it to an MP3\r<br />\n<br />\nWhat is your client side technology? If it's just a web browser, then just make the converted MP3 available at a URL<br />\n",
+    "PostedDate": "2013-09-28T23:55:55.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

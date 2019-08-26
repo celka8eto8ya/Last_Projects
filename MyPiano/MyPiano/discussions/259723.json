@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "621183",
+    "ThreadId": "259723",
+    "Html": "\r\n<p>Hi all,</p>\r\n<p>first of I'd like to say this lib is freakin' awesome.. keep up the good work!</p>\r\n<p>anyway, I'm still new at C# and this library and I just have simple question in regards of a project that I'm working for my school..</p>\r\n<p>how can I get Decibel values of a wav/mp3 file I have in every 100 milliseconds?</p>\r\n<p>something like:</p>\r\n<p></p>\r\n<pre>Time: 0.6, DB: 0.213623\r\nTime: 0.75, DB: 0.2692261\r\nTime: 0.9, DB: 0.2355957\r\nTime: 3.9, DB: 0.2363281\r\nTime: 3.9, DB: 0.3799744\r\nTime: 4.05, DB: 0.3580322\r\nTime: 4.2, DB: 0.1331177\r\nTime: 7.2, DB: 0.3091431\r\nTime: 7.2, DB: 0.2984009\r\nTime: 7.35, DB: 0.2997437\r\nTime: 7.5, DB: 0.211792\r\nTime: 9, DB: 0.255127\r\nTime: 9.15, DB: 0.2884216\r\nTime: 11.4, DB: 0.2716675\r\nTime: 11.4, DB: 0.3035278\r\nTime: 14.4, DB: 0.157074\r\nTime: 14.55, DB: 0.2964783\r\nTime: 14.7, DB: 0.1188354\r\nTime: 16.5, DB: 0.313385\r\nTime: 16.5, DB: 0.2774658\r\nTime: 16.65, DB: 0.1695557\r\nTime: 19.35, DB: 0.1802063\r\nTime: 19.5, DB: 0.3108826\r\nTime: 19.5, DB: 0.2506409\r\nTime: 19.65, DB: 0.2417908\r\nTime: 19.8, DB: 0.1200562</pre>\r\n<p></p>\r\n<p>I'd really appreciate your help :)</p>\r\n<p>&nbsp;</p>\r\n<p>regards,</p>\r\n",
+    "PostedDate": "2011-05-31T22:54:41.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621223",
+    "ThreadId": "259723",
+    "Html": "<p>I've answered <a href=\"http://stackoverflow.com/questions/6196939/c-how-to-get-audio-decibel-values-with-time-span/6197702#6197702\">on StackOverflow</a></p>",
+    "PostedDate": "2011-06-01T00:32:19.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621525",
+    "ThreadId": "259723",
+    "Html": "<p>I saw it.. thanks for the reply but i'm still lost.. I've no idea where to start and what to do exactly..</p>\r\n<p>can you show me an example? or simple code snippets of how to perform this with any wav file..</p>",
+    "PostedDate": "2011-06-01T10:43:41.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621668",
+    "ThreadId": "259723",
+    "Html": "<p>here is what I did.. and I really have no idea if i'm doing it right or not...(the example below supposed to get the decibel values of the 1st second) \"as I imagined\" =_='</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mp3FileReader mp3 = new Mp3FileReader(@\"file.mp3\");<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mp3.Seek(1, SeekOrigin.Current);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int currentbyte = mp3.ReadByte();<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; double volume = Math.Abs(currentbyte / 32768.0);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; double decibels = 20 * Math.Log10(volume);</p>\n<p>&nbsp;</p>\n<p>I'd really appreciate your help if you point me to the right direction..</p>\n<p>thanks.</p>\n<p>---------------------------------</p>\n<p>EDIT:</p>\n<p>well after struggling 10 hours with the examples you provided. finally I figured out how to get it to work.</p>\n<p>now I'm getting all of the values I need its a bit dirty solution but who cares it works like charm :D</p>\n<p>although I'm not gonna post the solution coz its really too long. I extracted most of it from one of your examples and imported it to another simpler program..</p>\n<p>then removed all unwanted codes but its still a biggie.. :P</p>\n<p>anyway, thanks for help..</p>\n<p>&nbsp;</p>\n<p>regards</p>",
+    "PostedDate": "2011-06-01T13:58:44.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621895",
+    "ThreadId": "259723",
+    "Html": "<p>Glad you got it working. Digital audio can be a bit tricky to get your head round at first.</p>",
+    "PostedDate": "2011-06-02T03:09:39.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

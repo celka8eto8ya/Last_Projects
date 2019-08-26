@@ -1,0 +1,71 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "When playbackdevice disapears from windows playback devices (when user unplugs device from usb or audio jack port or disable it) while playling file, an COMException occrus in DirectSoundOut.StopPlayback() method on line 475: secondaryBuffer.Stop();\r\n\r\nI don't know if it is possible to handle the exception from wpf application since it is in another thread.\r\n\r\nI attached working sample project. just click the play button and unplug the device. if there's more than one playback device, then disable them. Exception occurs only when last device is disabled/uplugged.\r\n\r\nYou have a try..catch..finally bock in PlaybackThreadFunc, but when an exception is caught, then you call the com methods in finally block without try catch. You should at least use try..catch(ComException).\r\n\r\n\r\nSystem.Runtime.InteropServices.COMException was unhandled\r\n  Message=Exception from HRESULT: 0x88780096\r\n  Source=NAudio\r\n  ErrorCode=-2005401450\r\n  StackTrace:\r\n       at NAudio.Wave.DirectSoundOut.IDirectSoundBuffer.Stop()\r\n       at NAudio.Wave.DirectSoundOut.StopPlayback() in C:\\Users\\Admin\\Desktop\\NAudio\\naudio_db92aece4b2f\\NAudio\\Wave\\WaveOutputs\\DirectSoundOut.cs:line 475\r\n       at NAudio.Wave.DirectSoundOut.PlaybackThreadFunc() in C:\\Users\\Admin\\Desktop\\NAudio\\naudio_db92aece4b2f\\NAudio\\Wave\\WaveOutputs\\DirectSoundOut.cs:line 442\r\n       at System.Threading.ThreadHelper.ThreadStart_Context(Object state)\r\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean ignoreSyncCtx)\r\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)\r\n       at System.Threading.ThreadHelper.ThreadStart()\r\n  InnerException: \r\n",
+    "LastUpdatedDate": "2013-07-22T16:01:53.593-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-08-10T05:48:24.937-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "ComException when unplugged playback device",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 16329
+  },
+  "FileAttachments": [
+    {
+      "FileId": 268688,
+      "FileName": "ComExceptionSample.zip",
+      "DownloadUrl": ".\\268688"
+    },
+    {
+      "FileId": 708141,
+      "FileName": "DirectSoundOut.cs",
+      "DownloadUrl": ".\\708141"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I have added try catch block and it seems to work for me:\n\n        /// <summary>\n        /// Stop playback\n        /// </summary>\n        private void StopPlayback()\n        {\n          lock (this.m_LockObject)\n          {\n\n            if (secondaryBuffer != null)\n            {\n\n              try\n              {\n                secondaryBuffer.Stop();\n              }\n              catch (COMException ex)\n              {\n                if (ex.ErrorCode != -2005401450) throw; //catch only bufferlost\n              }\n              secondaryBuffer = null;\n\n            }\n            if (primarySoundBuffer != null)\n            {\n              try\n              {\n                primarySoundBuffer.Stop();\n              }\n              catch (COMException ex)\n              {\n                if (ex.ErrorCode != -2005401450) throw; //catch only bufferlost\n              }\n              primarySoundBuffer = null;\n            }\n\n          }\n        }\n",
+      "PostedDate": "2011-08-10T06:09:12.757-07:00",
+      "Id": 42379
+    },
+    {
+      "Message": "I don't seem to get any COM exceptions removing DirectSound playback devices which makes this hard to test. Can you try with the very latest NAudio code and use the NAudioDemo Audio File Playback page to see what happens?",
+      "PostedDate": "2012-10-06T02:17:40.083-07:00",
+      "Id": 78786
+    },
+    {
+      "Message": "I recently got this exception running [2339a04e76cc](https://naudio.codeplex.com/SourceControl/changeset/2339a04e76cc) from March 28, 2013.\n\nIt was after recently switching from WaveOut to DirectSoundOut (which works a lot faster with super low latency!!!)\n\nException Type: System.Runtime.InteropServices.COMExceptionException Message: Exception from HRESULT: 0x88780096 \nStack Trace: \nat NAudio.Wave.DirectSoundOut.IDirectSoundBuffer.Stop() \nat NAudio.Wave.DirectSoundOut.StopPlayback() in C:\\Users\\Brandon\\Projects\\RemoteHams.com\\NAudio\\Wave\\WaveOutputs\\DirectSoundOut.cs:line 485 \nat NAudio.Wave.DirectSoundOut.PlaybackThreadFunc() in C:\\Users\\Brandon\\Projects\\RemoteHams.com\\NAudio\\Wave\\WaveOutputs\\DirectSoundOut.cs:line 446 \nat System.Threading.ThreadHelper.ThreadStart_Context(Object state) \nat System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean ignoreSyncCtx) \nat System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state) \nat System.Threading.ThreadHelper.ThreadStart()\n\nI see that line 446, as in the crash report, follows the report above.  StopPlayback is called in a finally statement without exception handling. Making it difficult for the calling application to capture the exception.\n\nI will try the suggested fix and see if that helps prevent any further exceptions and report back here.\n",
+      "PostedDate": "2013-05-23T18:49:08.353-07:00",
+      "Id": 101060
+    },
+    {
+      "Message": "I have implemented some more changes to DirectSoundOut for better handling of a device gone missing (being unplugged).  I have attached the latest revision to this comment.  It is InSync with the latest sources as of 3f2bfe6abd55 (6 days ago).\r\n\r\nI have also applied the fix mentioned in the post above which did help.\r\n\r\nMark, if you get a chance please Diff the changes and get this implemented, thanks!",
+      "PostedDate": "2013-07-22T16:01:53.593-07:00",
+      "Id": 107005
+    }
+  ]
+}

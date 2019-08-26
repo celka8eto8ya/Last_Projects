@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1490423",
+    "ThreadId": "660395",
+    "Html": "How can I mix two different audio signals and write the ouput into one stream during recording? Currently, I record two signals from different devices and write them in two seperate files. After ending the recording, I mix the two files using a WaveMixerStream32:<br />\n<pre><code>// Loading first MP3 file\nusing (var fileReader1 = new Mp3FileReader(intputFile1))\n{\n    // Converting into 32 floating point format for mixing\n    using (WaveStream convertedStream1 = new WaveChannel32(fileReader1))\n    {\n        // Loading second file\n        using (var fileReader2 = new Mp3FileReader(intputFile2))\n        {\n            using (WaveStream convertedStream2 = new WaveChannel32(fileReader2))\n            {\n                // Mixing both streams\n                using (var mixer = new WaveMixerStream32())\n                {\n                    mixer.AddInputStream(convertedStream1);\n                    mixer.AddInputStream(convertedStream2);\n\n                    // Converting back to integer sample format\n                    using (WaveStream intOutput = new Wave32To16Stream(mixer))\n                    {\n                        // Converting into user-defined output format\n                        using (WaveStream convertedOutput = new WaveFormatConversionStream(OutputWaveFormat, intOutput))\n                        {\n                            // Writing to output file\n                            using (LameMP3FileWriter outputWriter = new LameMP3FileWriter(outputFile, convertedOutput.WaveFormat, mp3AudioQualityPreset))\n                            {\n                                convertedOutput.CopyTo(outputWriter);\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}</code></pre>\n\nBut I need to mix both audio signals on-the-fly to process the mixed-down stream in realtime during the recording. I figured that I need to use a BufferedWaveProvider but I don't understand how this could be achived. Is there an example that shows how to use the BufferedWaveProvider for this purpose? Or is there another way to achive this by using NAudio?<br />\n",
+    "PostedDate": "2016-12-29T10:08:05.53-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491939",
+    "ThreadId": "660395",
+    "Html": "If you want to mix on the fly you must do that in the data available events of the devices.\r<br />\n<br />\nThe hard point might be to sync them, as the events will not be exactly parallel fired or might have recorded different length.\r<br />\n<br />\nI´d use a queue of single for each device, where you enqueue the event data sample by sample. While doing this check on each sample if all queues got length&gt;0 and mix/dequeue each sample until one queue has length 0. Put a synclock around it and it should work fine.<br />\n",
+    "PostedDate": "2017-01-30T10:56:14.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

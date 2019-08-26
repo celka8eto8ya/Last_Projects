@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1029557",
+    "ThreadId": "440069",
+    "Html": "I want to work with audio of video file but I don't know how I do.\r<br />\n<br />\nI see NAudio only work with Mp3 file and Wav file.\r<br />\n<br />\nPlease help me !<br />\n",
+    "PostedDate": "2013-04-12T06:27:25.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1029565",
+    "ThreadId": "440069",
+    "Html": "You can use the MediaFoundationReader (currently in 1.7 preview release only) to do this<br />\n",
+    "PostedDate": "2013-04-12T06:42:05.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1029587",
+    "ThreadId": "440069",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nYou can use the MediaFoundationReader (currently in 1.7 preview release only) to do this<br />\n</blockquote>\nWhere can I download NAudio 1.7 ? \r<br />\n<br />\nI don't see it on this web.<br />\n",
+    "PostedDate": "2013-04-12T07:22:22.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1029591",
+    "ThreadId": "440069",
+    "Html": "Download the source code and build it yourself. Or if you use NuGet, you can get a pre-release build from nuget.<br />\n",
+    "PostedDate": "2013-04-12T07:26:29.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1029603",
+    "ThreadId": "440069",
+    "Html": "I don't see where the source code of MediaFoundationReader or 1.7.\r<br />\n<br />\nI was so upset about this. I tried to understand NAudio all day.\r<br />\n<br />\nPlease help me ! <br />\n",
+    "PostedDate": "2013-04-12T07:45:22.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1030591",
+    "ThreadId": "440069",
+    "Html": "look above at the &quot;Source Code&quot; tab<br />\n",
+    "PostedDate": "2013-04-15T06:11:33.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036439",
+    "ThreadId": "440069",
+    "Html": "I can not open your solution in source code. Because it is in newer version. My version Visual is 2010.<br />\n<br />\nWhat version of Visual did you use to do it ?<br />\n",
+    "PostedDate": "2013-04-27T02:19:53.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036551",
+    "ThreadId": "440069",
+    "Html": "I use VS2012 but only because there is now a Windows 8 store app in the solution. You can make your own VS2010 solution and add all the csproj except the Windows 8 store app one and it should work just fine.<br />\n",
+    "PostedDate": "2013-04-27T09:58:54.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

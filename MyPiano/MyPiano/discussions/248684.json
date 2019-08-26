@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "576509",
+    "ThreadId": "248684",
+    "Html": "\r\n<p>Hi all,</p>\r\n<p>I would like to position some audio channels in 3D space to simulate the direction of sound when listening using a surround system.</p>\r\n<p>Which of the following supported playback APIs support 3D audio?<br>\r\n- WaveOut<br>\r\n- DirectSound<br>\r\n- ASIO<br>\r\n- WASAPI</p>\r\n<p>Does anyone have experience with 3D audio using one of these APIs?</p>\r\n<p>Gr, Sander</p>\r\n",
+    "PostedDate": "2011-03-07T01:17:04.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

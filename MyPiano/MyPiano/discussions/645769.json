@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1446938",
+    "ThreadId": "645769",
+    "Html": "I have written a VB.Net Internet radio stream player that uses the Windows Media Player dll.  It works fine except for the stream information (titles, etc.), which is a bit temperamental (WMP's fault!).  I see that naudio can play these streams but does it provide stream information as well?\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2015-10-03T06:22:38.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448229",
+    "ThreadId": "645769",
+    "Html": "No, I'm afraid NAudio does not provide this capability<br />\n",
+    "PostedDate": "2015-10-12T14:02:45.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448268",
+    "ThreadId": "645769",
+    "Html": "Ah well!  Thanks for the reply.<br />\n",
+    "PostedDate": "2015-10-13T01:52:11.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448271",
+    "ThreadId": "645769",
+    "Html": "Is there an Naudio API that provides ability to play web streams? (ie Http://...)\r<br />\nI'm currently using WaveOut and IWavePlayer, which works great by it won't accept an Http URI.\r<br />\n<br />\nPS I don't need the stream information that MagratG asks about. I just want to be able to play the stream.<br />\n",
+    "PostedDate": "2015-10-13T02:11:56.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448275",
+    "ThreadId": "645769",
+    "Html": "try with MediaFoundationReader<br />\n",
+    "PostedDate": "2015-10-13T02:27:33.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448276",
+    "ThreadId": "645769",
+    "Html": "Thanks Mark. I'll take a look.<br />\n",
+    "PostedDate": "2015-10-13T02:33:12.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

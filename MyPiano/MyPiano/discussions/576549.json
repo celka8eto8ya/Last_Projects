@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1338080",
+    "ThreadId": "576549",
+    "Html": "My current project is a program to play the audio to a song along with a carefully crafted MIDI file that represents the audio. The program reads a MIDI file for specific tracks and notes within those tracks. I use NAudio to do so. The value of each note I care about is stored in a List of the MIDINote class I created for this:<br />\n<pre><code>public class MIDINote\n{\npublic int NoteNumber { get; set; }\npublic double NoteStart { get; set; }\npublic double NoteLength { get; set; }\npublic bool Played { get; set; }\n}</code></pre>\n\nThe NoteStart and NoteLength are in seconds (the conversion from absolute time works beautifully to 5 decimal places, no need to worry).\r<br />\n<br />\nNow here's the part I'm hoping you can show me how to do better.\r<br />\n<br />\nI have a timer that among many other things increases the value of a counter. After increasing that value, I want to know exactly which notes, if any, are &quot;on&quot; at that point (i.e. either start exactly then, or have already started but still haven't passed). Then I do a variety of things with the notes.\r<br />\n<br />\nThe way I'm doing it, I iterate through each note in the track (i.e. each note I stored when I first read the MIDI), and go until the time matches the current counter time. Display that note. Then the timer ticks, counter increases, and repeat. But now we're repeating from the beginning of the track when counting, so while arriving at Note 1 in the track would be fast, I can assume the amount of iterations to get to Note 2000 is immense and probably redundant. This is the code snippet i'm talking about:<br />\n<pre><code>\nforeach (var note in track)\n{\nif (note.NoteStart + note.NoteLength &lt; PlaybackSeconds || note.Played) continue;\nif (note.NoteStart &gt; PlaybackSeconds) break;\n//do my stuff here with this note\nnote.Played = true;\n}</code></pre>\n\nEven with my limited knowledge of the inner workings of things, I can see that this is not the optimal way to manage this process. Is there a more efficient way to store and then access this information that would cut down on processing time?\r<br />\n<br />\nMy development machine is an Intel Core i7, 16GB of DDR3 RAM and a SSD - so things run very quickly on my end, albeit with a fraction of a second delay no matter what I've tried (even setting the timer to 50ms). But a friend testing the program on his end is getting as much as 4 second delay, which is absolutely unacceptable.\r<br />\n<br />\nAny suggestions on how to improve this would be appreciated. Thanks!<br />\n",
+    "PostedDate": "2014-12-30T22:29:23.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340546",
+    "ThreadId": "576549",
+    "Html": "Even though that loop isn't particularly efficient, there is no way it should take 4 seconds even for several thousand notes. \r<br />\nI'd probably keep a running track of which notes were on though, so at each timer tick, you can simply see if the currently on notes have finished, and if the next note(s) have started. <br />\n",
+    "PostedDate": "2015-01-09T15:26:31.777-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

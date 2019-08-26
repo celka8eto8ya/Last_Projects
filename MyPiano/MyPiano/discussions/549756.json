@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1260084",
+    "ThreadId": "549756",
+    "Html": "I'm trying to write a converter from a compressed WAV (format is unknown at ingest) to output a PCM 44.1-16 stereo WAV.  I've tried using Mp3FileReader, but when I write the file back it has no data, only the RIFF and fmt headers.  Trying to read it via WaveFileReader and AudioFileReader and they throw a <strong>NoDriver calling acmFormatSuggest</strong> exception.  Opening the source file in Windows Media Player causes it to play, so I do have a good codec on my machine.<br />\n<br />\nMp3FileReader method:<br />\n<pre><code>//sourceFile is the input to the next section\nstring originalFile = chunk._SourceFN;\n                    sourceFile = Environment.ExpandEnvironmentVariables(&quot;%TEMP%&quot;) + @&quot;\\resampled.wav&quot;;\n                    WaveFormat outFormat = new WaveFormat(44100, 16, 2);\n\nusing (var reader = new Mp3FileReader(originalFile))\n                    {\n                        WaveFileWriter.CreateWaveFile(@&quot;c:\\temp.wav&quot;, reader);\n                        using (var resampler = new MediaFoundationResampler(reader, outFormat))\n                        {\n                            resampler.ResamplerQuality = 60;\n                            try\n                            {\n                                WaveFileWriter.CreateWaveFile(sourceFile, resampler);\n                                conversion.Add(&quot;Converted &quot; + originalFile);\n                            }\n                            catch (Exception e)\n                            {\n                                sourceFile = &quot;&quot;;\n                                DeleteLog.Add(&quot;Could not convert &quot; + originalFile + &quot; to 44.1 16bit stereo wave&quot;);\n                                DeleteLog.Add(&quot;Error &quot; + e.ToString());\n                            }\n                        }\n\n                    }</code></pre>\n\nAudioFileReader<br />\n<pre><code>using (var reader = new AudioFileReader(originalFile))\n                    {\n                        var resampler = new WdlResamplingSampleProvider(reader, 44100);\n                        WaveFileWriter.CreateWaveFile16(sourceFile, resampler);\n                    }</code></pre>\n\n",
+    "PostedDate": "2014-06-26T08:16:55.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1261269",
+    "ThreadId": "549756",
+    "Html": "bump?<br />\n",
+    "PostedDate": "2014-06-30T10:34:13.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1261290",
+    "ThreadId": "549756",
+    "Html": "you have to know what the format of the incoming file is to be able to do anything with it. If it's a WAV file, the compression type will be indicated in it's WAVEFORMAT structure. Open it with WaveFileReader and examine the WaveFormat to see what you have. You can only decompress if you have the right codec installed.<br />\n",
+    "PostedDate": "2014-06-30T11:37:19.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

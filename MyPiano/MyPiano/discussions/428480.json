@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "982999",
+    "ThreadId": "428480",
+    "Html": "\r\n<p>Hi all!</p>\r\n<p>First of all I want to thank you for this great library and the well described explanations in the discussions!</p>\r\n<p>But here's my problem: I want to use the BiQuadFilter, but I can't find any example. I did find some discussions about it, but couldn't figure out how to make them run. What do I have to do with the coefficients?</p>\r\n<p>Does anybody have a simple example for e.g. the implementation of a low pass filter?</p>\r\n<p>Thanks in advance!</p>\r\n",
+    "PostedDate": "2013-01-04T04:19:00.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

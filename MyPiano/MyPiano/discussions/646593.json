@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1449562",
+    "ThreadId": "646593",
+    "Html": "So I've started using NAudio and it's AWESOME. I had an application in mind and started using Naudio and everything is working perfectly. I've only run into one issue: I'm taking lots of small wav file samples and concatenating them, truncatiing, adding extra blank audio, etc to create my music. I tried out the WaveForm Demo to create a visualization and it worked great for a single wave file.\r<br />\n<br />\nThen I got really advanced and started mixing wav files together. The mixing demo worked great for playing the different wav files, but then I realized... getting that Visualization to work might be tough when mixing. I <em>can</em> go through the waveform demo where it reads through an AudioFilereader and finds the max value of each sample and then I could loop through the other wave files, making sure the buffer size is the same and comparing the max values to the previous max values. BUT before I go through all that I guess the one question I wanted to ask to make my life easier would be.... Can the mixing sample provider, instead of just PLAYING multiple inputs to waveout... can it actually OUTPUT the audio of the mixed wav files to one single wav file? IF that's possible I could save myself a lot of trouble and when rendering the waveform, just read through the one mixed/master wav file.<br />\n",
+    "PostedDate": "2015-10-23T20:22:18.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449795",
+    "ThreadId": "646593",
+    "Html": "BAM. Solved:<br />\n<pre><code>    private WaveFileReader reader1;\n    private WaveFileReader reader2;\n    private WaveFileReader reader3;\n    private WaveFileReader readerMaster;\n\n\n\n</code></pre>\n\nstring myinfile1 = &quot;C:\\samples\\00test\\test1.wav&quot;;\r<br />\nstring myinfile2 = &quot;C:\\samples\\00test\\test2.wav&quot;;\r<br />\nstring myinfile3 = &quot;C:\\samples\\00test\\test3.wav&quot;;\r<br />\nstring mymainfile = &quot;C:\\samples\\00test\\testmaster.wav&quot;;<br />\n<pre><code>       reader1 = new WaveFileReader(myfile1);\n        reader2 = new WaveFileReader(myfile2);\n        reader3 = new WaveFileReader(myfile3);\n        WaveChannel32 stream1 = new WaveChannel32(reader1);\n        WaveChannel32 stream2 = new WaveChannel32(reader2);\n        WaveChannel32 stream3 = new WaveChannel32(reader3);\n\n        WaveMixerStream32 mixer = new WaveMixerStream32();\n        mixer.AddInputStream(stream1);\n        mixer.AddInputStream(stream2);\n        mixer.AddInputStream(stream3);\n\n        Wave32To16Stream wavmixer = new Wave32To16Stream(mixer);\n\n        WaveFileWriter.CreateWaveFile(mymainfile, wavmixer);</code></pre>\n\n",
+    "PostedDate": "2015-10-26T19:26:16.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449973",
+    "ThreadId": "646593",
+    "Html": "Great, glad you got it working. You could also have used <code>MixingSampleProvider</code> and <code>CreateWaveFile16</code><br />\n",
+    "PostedDate": "2015-10-28T04:33:20.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

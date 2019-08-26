@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1424185",
+    "ThreadId": "637442",
+    "Html": "Hi there,\r<br />\n<br />\njust curious if there is native support for G722.2 codec within NAudio?<br />\n",
+    "PostedDate": "2015-05-08T06:59:48.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1424189",
+    "ThreadId": "637442",
+    "Html": "take a look <a href=\"https://github.com/naudio/NAudio/blob/9844639a1b0579fdd179fc066b88e8c9891af6f5/NAudio/Codecs/G722Codec.cs\" rel=\"nofollow\">here</a><br />\n",
+    "PostedDate": "2015-05-08T07:24:37.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1427445",
+    "ThreadId": "637442",
+    "Html": "unfortunately, there may be some differences between G722.2 and G722, but looking into the library to determine best course of action.\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2015-05-25T06:34:24.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1495560",
+    "ThreadId": "662584",
+    "Html": "I have a UDP stream of sampled audio arriving at my application.  I can process the stream and retrieve the data from the UDP packets.  This audio looks like a stereo two channel group of bytes. It really is sampled I and Q data from a remote DSP that is sending the data to the local port. All of the network stuff works OK.  My question is how to choose an appropriate WaveFormat to provide for the argument of the BufferedWaveProvider.  I need to separate the two channels, re-arrange two adjacent bytes into a 16 bit word, then save the separate I and Q words into separate buffers that I can pass to an FFT engine as floating point buffers.  Any help would be appreciated.\r<br />\nRegards,  Karin <br />\n",
+    "PostedDate": "2017-04-17T16:36:26.173-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495703",
+    "ThreadId": "662584",
+    "Html": "If you dont know the waveformat, you cant process the data ... lol<br />\n",
+    "PostedDate": "2017-04-21T14:21:10.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495725",
+    "ThreadId": "662584",
+    "Html": "Gotcha...  thanks after a day of messing around I found out what I need to do.  Now on to other things.  Karin <br />\n",
+    "PostedDate": "2017-04-22T16:50:59.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

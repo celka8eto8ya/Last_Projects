@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1306650",
+    "ThreadId": "567981",
+    "Html": "Hi,<br />\n<br />\nI wrote an app that plays an MP3:<br />\n<pre><code>       var reader = new Mp3FileReader(audioPath + SelectedTrack1);\n       var waveOut1 = new WaveOut();\n       waveOut1.Init(reader);\n       waveOut1.Play();</code></pre>\n\nIt works on Windows 8 and 8.1 perfectly. <br />\n<br />\nHowever on Windows 7 x64 (1 out of 100 computers) will get this ERROR and crash.  Unfortunately my users do not have Visual Studio installed and I have no way of troubleshooting because all three of my machines work just fine.<br />\n<br />\nThe app requires .NET 4.5 - all the users have it.<br />\n<hr />\n_Application: myapp_main.exe<br />\nFramework Version: v4.0.30319<br />\nDescription: The process was terminated due to an unhandled exception.<br />\nException Info: NAudio.MmException Stack:<br />\n<br />\n   at NAudio.Wave.AcmMp3FrameDecompressor..ctor(NAudio.Wave.WaveFormat)<br />\n   at NAudio.Wave.Mp3FileReader.CreateAcmFrameDecompressor(NAudio.Wave.WaveFormat)<br />\n   at NAudio.Wave.Mp3FileReader..ctor(System.IO.Stream, FrameDecompressorBuilder)<br />\n   at NAudio.Wave.Mp3FileReader..ctor(System.IO.Stream)<br />\n   at NAudio.Wave.Mp3FileReader..ctor(System.String)<br />\n   at #cab.#nT.#yY()<br />\n   at #cab.#nT.#Nab(System.Object)<br />\n   at System.Threading.QueueUserWorkItemCallback.WaitCallback_Context(System.Object)<br />\n   at System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object, Boolean)<br />\n   at System.Threading.ExecutionContext.Run(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object, Boolean)<br />\n   at System.Threading.QueueUserWorkItemCallback.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem()<br />\n   at System.Threading.ThreadPoolWorkQueue.Dispatch()<br />\n   at System.Threading.<em>ThreadPoolWaitCallback.PerformWaitCallback()<br />\n<br />\n<br />\n<br />\nFaulting application name: myapp_main.exe, version: 1.0.0.0, time stamp: 0x541bb643<br />\nFaulting module name: KERNELBASE.dll, version: 6.1.7601.18409, time stamp: 0x53159a86<br />\nException code: 0xe0434352<br />\nFault offset: 0x0000c42d<br />\nFaulting process id: 0x1d80<br />\nFaulting application start time: 0x01cfd4dcc389bdbe<br />\nFaulting application path: C:\\Program Files (x86)\\myapp\\myapp_main.exe<br />\nFaulting module path: C:\\Windows\\syswow64\\KERNELBASE.dll<br />\nReport Id: 11164c48-40d0-11e4-b010-d43d7ef3f05c</em><br />\n<hr />\nI would appreciate any guidance on this.  Why is this code crashing!?  HELP!!!<br />\n<br />\nThank you,<br />\n<br />\nAnthony<br />\n",
+    "PostedDate": "2014-09-20T08:35:22.06-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1345249",
+    "ThreadId": "567981",
+    "Html": "Hi, Did you get this error resolved???\r<br />\nWe are facing the same issue now... :-)<br />\n",
+    "PostedDate": "2015-01-22T18:33:11.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1346306",
+    "ThreadId": "567981",
+    "Html": "Hi!\r<br />\n<br />\nI changed:<br />\n<pre><code>var reader = new Mp3FileReader(audioPath + SelectedTrack);</code></pre>\n\nTo this:<br />\n<pre><code>var reader = new Mp3FileReader(audioPath + SelectedTrack, wave =&gt; new DmoMp3FrameDecompressor(wave));</code></pre>\n\nFound it after hours of reading the NAudio documentation.  This has solved my problem above.\r<br />\n<br />\nGood luck!\r<br />\n<br />\nAnthony<br />\n",
+    "PostedDate": "2015-01-27T07:06:58.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-01-27T07:07:27.413-08:00"
+  },
+  {
+    "Id": "1349941",
+    "ThreadId": "567981",
+    "Html": "Great, glad you found the solution. You also probably could have used MediaFoundationReader as well.<br />\n",
+    "PostedDate": "2015-02-07T06:26:16.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1417314",
+    "ThreadId": "632542",
+    "Html": "Hi\r<br />\n<br />\nI just upgraded the NAudio by using the latest NuGet package. Previously used NAudio source code ([<a href=\"http://naudio.codeplex.com/SourceControl/changeset/6993618a0fba](fixed\" rel=\"nofollow\">http://naudio.codeplex.com/SourceControl/changeset/6993618a0fba](fixed</a> M:B:T calculation in Audio File Inspector for MIDI )). Now it just crashes my application.\r<br />\n<br />\nCrashes at _waveIn.StartRecording() -&gt; OpenWaveInDevice() -&gt; MmResult result = callbackInfo.WaveInOpen(out waveInHandle, DeviceNumber, WaveFormat, callback);\r<br />\nUsing default device number 0 but that did not make any difference.\r<br />\n<br />\nAny idea what is going on?<br />\n<pre><code>_waveIn = new WaveIn(_windowHandler);\n// _waveIn.BufferMilliseconds = 50;\n// _waveIn.DeviceNumber = capturingDeviceNumber;\n// _waveIn.WaveFormat = _codec.RecordFormat;\n_waveIn.DataAvailable += OnWaveInDataAvailable;\n_waveIn.StartRecording();</code></pre>\n\n<pre><code>private void OnWaveInDataAvailable(object sender, WaveInEventArgs e)\n{\n    try\n    {\n        // Incomplete package - recording is stopping\n        if (e.BytesRecorded &lt; e.Buffer.Length)\n            return;\n\n        byte[] encoded = _codec.Encode(e.Buffer, 0, e.BytesRecorded);\n        _udpSender.Send(encoded, encoded.Length);\n    }\n    catch (SocketException socketException)\n    {\n        // Ignore\n    }\n    catch (Exception exception)\n    {\n        //LogManager.Error(exception);\n    }\n}</code></pre>\n\nThanks<br />\n",
+    "PostedDate": "2015-04-24T01:59:07.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1417315",
+    "ThreadId": "632542",
+    "Html": "what is the value of _windowHandler? Try calling the default WaveIn constructor, and also try using WaveInEvent instead.<br />\n",
+    "PostedDate": "2015-04-24T02:03:04.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1417322",
+    "ThreadId": "632542",
+    "Html": "I tried the default constructor but same things happens:<br />\n<pre><code>_waveIn = new WaveIn();</code></pre>\n\nI replace WaveIn with WaveInEvent and same result. It will not go pass the StartRecording method.\r<br />\nNo error or exception, it will just stall there.<br />\n",
+    "PostedDate": "2015-04-24T02:22:24.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1417325",
+    "ThreadId": "632542",
+    "Html": "I created minimum WPF application which is using latest NuGet package. Start and stopping the recording is working without problems (sadly :D).\r<br />\n<br />\nThis means that the other application is driving the NAudio into such state that it cannot handle the Wave In Start Recording anymore. Somehow the older library worked in that environment. I do not know how to debug it further...<br />\n",
+    "PostedDate": "2015-04-24T02:39:32.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "with no further diagnostic information, we'll close this",
+    "ClosedDate": "2013-05-03T08:24:25.81-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "If I encode any file to any format using your encoder in the wpf sample on win8x64 prof. it fails. If I play the file there is just a strange noise. And on some targetformats there is an Exceptoin in MediaFoundationEncoder::PerformEncoder in line writer.BeginWriting();",
+    "LastUpdatedDate": "2013-05-03T08:24:25.81-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-12-26T15:30:46.673-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "CantReproduce"
+    },
+    "Summary": "Whole MF Encoder does not work",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16382
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "That's odd, because I developed it in Win8 x64. Can you give an example of a format you tried to encode to? What was the input file? And what is the exception you get in BeginWriting?",
+      "PostedDate": "2012-12-27T00:23:33.78-08:00",
+      "Id": 84947
+    },
+    {
+      "Message": "I've done a few quick tests running as an x64 process (the WPF demo runs by default as x86) and encoding is working fine for me. I do need more information if you want me to attempt to fix your problem. Otherwise I'll close the issue.",
+      "PostedDate": "2012-12-30T13:40:32.76-08:00",
+      "Id": 85064
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "252255",
+    "ThreadId": "73770",
+    "Html": "<p>Dear Sir,</p>\r\n<p>I want to&nbsp;play mp3 memory stream(not file) using this dll.</p>\r\n<p>I am not familiar&nbsp;with this library, would someone please</p>\r\n<p>write me a sample code to help&nbsp;me&nbsp;getting start with this library.&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-01T20:27:14.16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424080",
+    "ThreadId": "73770",
+    "Html": "<p>hi there,</p>\r\n<p>sorry for the delay responding. check out this article here:</p>\r\n<p>http://stackoverflow.com/questions/184683/play-audio-from-a-stream-using-c</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-26T07:15:06.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

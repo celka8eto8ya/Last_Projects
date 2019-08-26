@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "473577",
+    "ThreadId": "221664",
+    "Html": "<p>In my app, I do .wav file playback which works fine I click on my Pause button and do waveoutDevice.Pause() which works ok.<br>But then, when I click on the play button, I am not sure what to do: I tried currentStream.Resume() and it did not work, then I tried waveoutDevice.Play() and it did not work either...</p>\r\n<p>What is the right way to implement this? What do I call and what is the sequence? Or is it a bug?</p>\r\n<p>BTW, my currentStream is this:</p>\r\n<p><span style=\"color:#0000ff;font-size:x-small\"><span style=\"color:#0000ff;font-size:x-small\"><span style=\"color:#0000ff;font-size:x-small\">\r\n<p>public</p>\r\n</span></span></span></p>\r\n<p><span style=\"font-size:x-small\">AudioStream(</span><span style=\"color:#0000ff;font-size:x-small\"><span style=\"color:#0000ff;font-size:x-small\">string</span></span><span style=\"font-size:x-small\"> fileName)\r\n<p>{</p>\r\n<p>_fileName = fileName;</p>\r\n<span style=\"color:#2b91af;font-size:x-small\"><span style=\"color:#2b91af;font-size:x-small\">WaveFileReader</span></span><span style=\"font-size:x-small\"> reader = </span><span style=\"color:#0000ff;font-size:x-small\"><span style=\"color:#0000ff;font-size:x-small\">new</span></span><span style=\"font-size:x-small\"> </span><span style=\"color:#2b91af;font-size:x-small\"><span style=\"color:#2b91af;font-size:x-small\">WaveFileReader</span></span><span style=\"font-size:x-small\">(fileName);</span></span></p>\r\n<p><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"><span style=\"font-size:x-small\">&lt;font size=&quot;2&quot;&gt;\r\n<p>channelStream =</p>\r\n&lt;/font&gt;<span style=\"color:#0000ff;font-size:x-small\"><span style=\"color:#0000ff;font-size:x-small\">new</span></span><span style=\"font-size:x-small\"> </span><span style=\"color:#2b91af;font-size:x-small\"><span style=\"color:#2b91af;font-size:x-small\">WaveChannel32</span></span><span style=\"font-size:x-small\">(reader);</span></span><span style=\"font-size:x-small\">&lt;font size=&quot;2&quot;&gt; &lt;/font&gt;</span></span></span><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"><span style=\"font-size:x-small\">&lt;font size=&quot;2&quot;&gt;\r\n<p>muted =</p>\r\n&lt;/font&gt;<span style=\"color:#0000ff;font-size:x-small\"><span style=\"color:#0000ff;font-size:x-small\">false</span></span><span style=\"font-size:x-small\">;</span></span><span style=\"font-size:x-small\"> </span></span></span><span style=\"font-size:x-small\">\r\n<p>volume = 1.0f;</p>\r\n<p>}</p>\r\n</span></p>",
+    "PostedDate": "2010-07-28T02:46:45.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "474494",
+    "ThreadId": "221664",
+    "Html": "<p>Hi Securigy,</p>\r\n<p>Have you reviewed the tutorials linked from the home page?</p>\r\n<p>Tutorial 2 covers how to play and pause a sample:</p>\r\n<p><a href=\"http://opensebj.blogspot.com/2009/03/naudio-tutorial-3-sample-properties.html\">http://opensebj.blogspot.com/2009/03/naudio-tutorial-3-sample-properties.html</a></p>\r\n<p>~DSebJ</p>",
+    "PostedDate": "2010-07-29T16:26:02.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

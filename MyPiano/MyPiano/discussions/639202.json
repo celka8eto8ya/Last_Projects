@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1428834",
+    "ThreadId": "639202",
+    "Html": "Hi Mark,\r<br />\nWith Windows 10 set to auto-convert windows 7/8 users to the new OS, I'm wondering if there are any known incompatibilities with Naudio libraries on that OS? And if yes, any plan/schedule for Naudio releases to address the issues? \r<br />\n<br />\nAlso is there a Release Notes doc for NA 1.7.3 to see what's new in that release?<br />\n",
+    "PostedDate": "2015-06-04T10:26:25.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430271",
+    "ThreadId": "639202",
+    "Html": "As far as I am aware, Windows 10 should work just fine with NAudio. I'll of course do some testing as soon as the final version becomes available. \r<br />\n<br />\nThere is no official release notes for 1.7.3 as it was just a roll-up of some minor bugfixes.<br />\n",
+    "PostedDate": "2015-06-12T09:56:28.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430331",
+    "ThreadId": "639202",
+    "Html": "Ok thanks Mark.<br />\n",
+    "PostedDate": "2015-06-13T04:37:57.11-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "601043",
+    "ThreadId": "254832",
+    "Html": "\r\n<p>Hello, this is what i need to do:</p>\r\n<p>I have a mp3 file usually 44Khz, 128 kbps, stereo or better, from this file i need to extract the first 30 seconds and save it to new mp3 file with lower quality, probly at&nbsp;22050&nbsp;Hz 56kbps stereo.</p>\r\n<p>Can i use NAudio for this or anybody know how can i solve this <strong>in C#</strong> ?&nbsp;</p>\r\n<p>Tu use a command line tool could be ok if no other choice, but it need to be win32 program to run in a Windows 2008 server.</p>\r\n<p>Thanks</p>\r\n<p>Enrique</p>\r\n",
+    "PostedDate": "2011-04-21T08:18:45.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602353",
+    "ThreadId": "254832",
+    "Html": "<p>You can use the MP3FileReader to convert to PCM. Then simply take the first 30 seconds of audio and write it to a WAV file using the WaveFileWriter. Finally, you will need to use a tool like LAME to convert the resulting WAV file into MP3 as NAudio does not support MP3 encoding.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-25T03:36:49.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602366",
+    "ThreadId": "254832",
+    "Html": "<p>Thank you have seen some partial code for this in the BLOGs refered in home page of project.</p>",
+    "PostedDate": "2011-04-25T04:50:48.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

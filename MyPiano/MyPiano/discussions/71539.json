@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "244004",
+    "ThreadId": "71539",
+    "Html": "<p>Hi there,</p>\r\n<p>I would like to know if it is possible to record audio to a wave file from only one application?</p>\r\n<p>Thanks!</p>\r\n<p>&nbsp;</p>\r\n<p>Jelle</p>",
+    "PostedDate": "2009-10-09T12:47:09.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244185",
+    "ThreadId": "71539",
+    "Html": "<p>Hi Jelle,</p>\r\n<p>it is not likely to be possible with NAudio, unless your soundcard supports a &quot;what you hear&quot; input for you to record from</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-10T07:58:55.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244229",
+    "ThreadId": "71539",
+    "Html": "<p>My soundcard does support the what you hear feature. but how do i manage to record only from one application?</p>\r\n<p>If it is not possible, are you planning on making it possible in NAudio?</p>\r\n<p>Greetings,</p>\r\n<p>Jelle</p>",
+    "PostedDate": "2009-10-10T11:56:23.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244243",
+    "ThreadId": "71539",
+    "Html": "<p>you can't record from only one application (at least not without some very low level hacking). Microsoft don't really want to make that easy to do, or people would use it to bypass DRM.</p>\r\n<p>Try recording with your mixer set to What You Hear as the selected input. It might work.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-10T12:55:01.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244343",
+    "ThreadId": "71539",
+    "Html": "<p>The What you hear recording does work, but IM message sound are also recorded.&nbsp;</p>\r\n<p>Well too bad... tnx for the additional information tough.</p>\r\n<p>Jelle</p>",
+    "PostedDate": "2009-10-11T05:09:52.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

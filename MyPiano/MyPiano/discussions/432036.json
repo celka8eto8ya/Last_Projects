@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "996661",
+    "ThreadId": "432036",
+    "Html": "How can I convert <em>.3ga file to </em>.wav file usiing NAudio?\r<br />\n<br />\nThe following link says it is possible:\r<br />\n<a href=\"http://stackoverflow.com/questions/12800282/play-custom-file-format-using-naudio\" rel=\"nofollow\">http://stackoverflow.com/questions/12800282/play-custom-file-format-using-naudio</a>\r<br />\n<br />\nA sample would be of great use.\r<br />\n<br />\nThanks.\r<br />\n<br />\nRegards\r<br />\nAnudeep<br />\n",
+    "PostedDate": "2013-02-05T05:56:15.277-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996666",
+    "ThreadId": "432036",
+    "Html": "You could only do this if you have an ACM codec that can decode 3ga. I have not come across one, but you might be able to find one. Having done so, you'd then need to query the codec to work out what WaveFormat it accepts as an input.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-05T06:02:17.31-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996673",
+    "ThreadId": "432036",
+    "Html": "Hi markheath,\r<br />\n<br />\nCan you guide me the way through some quick links or samples.\r<br />\n<br />\n--Anudeep<br />\n",
+    "PostedDate": "2013-02-05T06:12:36.607-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996676",
+    "ThreadId": "432036",
+    "Html": "I'm afraid I have no examples for converting 3ga. However, I have written a detailed article explaining how I go about converting between formats with NAudio:\r<br />\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET</a>\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-05T06:14:53.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

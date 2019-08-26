@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "546608",
+    "ThreadId": "241133",
+    "Html": "\r\n<p>I use the following method do play a MP3 file:</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> play_PreviewContactDown(<span style=\"color:blue\">object</span> sender, ContactEventArgs e)\r\n        {\r\n            (sender <span style=\"color:blue\">as</span> SurfaceButton).IsEnabled = <span style=\"color:blue\">false</span>;\r\n            ((sender <span style=\"color:blue\">as</span> SurfaceButton).Tag <span style=\"color:blue\">as</span> SurfaceButton).IsEnabled = <span style=\"color:blue\">true</span>;\r\n            waveOutDevice = <span style=\"color:blue\">new</span> WasapiOut(AudioClientShareMode.Shared, 100);\r\n            mainOutputStream = CreateInputStream( ((sender <span style=\"color:blue\">as</span> SurfaceButton).Content <span style=\"color:blue\">as</span> Polygon).Tag <span style=\"color:blue\">as</span> String);\r\n            waveOutDevice.Init(mainOutputStream);\r\n            waveOutDevice.Play();\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p>Now, I'd like to display the current time of the playback in a textview. But how can I get it? I know that using mainOutputStream.CurrentTime will display the current time of the stream, but how can I update the current time during the whole playback ofa\r\n file?</p>\r\n",
+    "PostedDate": "2011-01-10T05:02:24.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546616",
+    "ThreadId": "241133",
+    "Html": "\r\n<p>just use a timer to update the time every half second. Have a look at the NAudio demo app to see this in action</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-10T05:16:59.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546618",
+    "ThreadId": "241133",
+    "Html": "\r\n<p>Yes I examined the demo app, but there is Timer#tick used. This isn't available in my timer.</p>\r\n",
+    "PostedDate": "2011-01-10T05:21:41.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546626",
+    "ThreadId": "241133",
+    "Html": "\r\n<p>are you using Windows Forms or WPF?</p>\r\n",
+    "PostedDate": "2011-01-10T05:33:07.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546657",
+    "ThreadId": "241133",
+    "Html": "\r\n<p>I'm using WPF. Now i found out that i have to use Timer#Elapsed instead of Timer#Tick.</p>\r\n<p>&nbsp;</p>\r\n<p>However, one problem is left. I use this code to detect if the playback is finshed:</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>waveOutDevice.PlaybackStopped&#43;=<span style=\"color:blue\">new</span> EventHandler(waveOutDevice_PlaybackStopped);\r\n\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> waveOutDevice_PlaybackStopped(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n{\r\ntimer.Stop();\r\n}\r\n</pre>\r\n</div>\r\nBut the method waveOUtDevice_PlaybackStopped is nevercalled and thats why the timer isn't stop and always updates current time.\r\n<p></p>\r\n",
+    "PostedDate": "2011-01-10T06:00:15.353-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546778",
+    "ThreadId": "241133",
+    "Html": "\r\n<p>Playback will only stop of its own accord if the source WaveProvider stops returning data. That isn't always the case with all the WaveProviders/WaveStreams in your input chain. NAudio demo just detects if the position has gone past the length and stops\r\n manually.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-10T08:19:47.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

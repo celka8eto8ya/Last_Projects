@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1329699",
+    "ThreadId": "574316",
+    "Html": "Using UAudio 1.6 for recording audio from device Tascam US-600,  for recording using ASIO driver\r<br />\n<br />\nI have Windows Service for recording\r<br />\n<br />\nSometimes WindowsService can not receive audio data from device helps only restart service\r<br />\nAppears as follows:\r<br />\nStart Windows Service\r<br />\nsometimes 30 minutes, sometimes 4 hour all work fine\r<br />\nand after windows service can not receive audio data from device\r<br />\nafter restart again correct work\r<br />\nhardly ever helps reinitialization without restart windows service\r<br />\n<br />\nIn system log events no error, in log window service (my app) also no exception\r<br />\n<br />\nusing last driver Tascam US-600<br />\n",
+    "PostedDate": "2014-12-08T01:32:22.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340547",
+    "ThreadId": "574316",
+    "Html": "Sorry, hard to know what might be causing this. Does the machine go into sleep at any point perhaps?\r<br />\nCan you reproduce this if not running as a service?\r<br />\nHave you tried using WasapiCapture instead?<br />\n",
+    "PostedDate": "2015-01-09T15:29:39.42-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

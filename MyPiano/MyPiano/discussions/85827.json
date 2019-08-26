@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "292288",
+    "ThreadId": "85827",
+    "Html": "<p>Hello all!</p>\r\n<p>&nbsp;</p>\r\n<p>I'm stuck with a rather simple (as I thought at first) question... I'm trying to play PCM, raw wave file, but no luck... &nbsp;I can play *.mp3, *.wav, but no raw waves... There is a method &quot;CreatePcmStream&quot;, which only argument is WaveStream, but I don't know how to create that WaveStream. Actually, I don't know, if I really have to create a PCM stream, because I already have one :), in my file. I can read it into MemoryStream, or FileStream, but what's next? Or maybe I have to make my own class PCMStream, inherited from WaveStream?..</p>\r\n<p>Could you please give me a hand with it?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks a lot in advance!</p>",
+    "PostedDate": "2010-02-18T10:08:11.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "292356",
+    "ThreadId": "85827",
+    "Html": "<p>What do you mean by RAW Wave Stream? Do you actually mean a wave file without a header specifying the contents of the file?</p>\r\n<p>If that's what you are referring to, then what you are missing is that you haven't specified the format for NAudio. NAudio will handle most WAVE files but requires a valid WAVE header that will specify the information such as channels, bits per sample etc. If your not providing that information in the file then it's up to you to specify that information in the code by specifying it yourself before opening the stream.</p>\r\n<p>~DSebJ</p>",
+    "PostedDate": "2010-02-18T13:31:58.23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "292674",
+    "ThreadId": "85827",
+    "Html": "<p>Thanks for quick answer!</p>\r\n<p>&nbsp;</p>\r\n<p>&gt; What do you mean by RAW Wave Stream? Do you actually mean a wave file without a header specifying the contents of the file?</p>\r\n<p>&nbsp;</p>\r\n<p>Yes, exactly, wave file with no header.</p>\r\n<p>&nbsp;</p>\r\n<p>&gt; If that's what you are referring to, then what you are missing is that you haven't specified the format for NAudio</p>\r\n<p>&nbsp;</p>\r\n<p>OK , I get it... I know that info about my file: sample rate is 8000, &nbsp;mono channel, resolution is 8 bit, and compression format is 8-bit mu-Law.</p>\r\n<p>&nbsp;</p>\r\n<p>&gt; ...it's up to you to specify that information in the code by specifying it yourself before opening the stream.</p>\r\n<p>&nbsp;</p>\r\n<p>Please, can you tell me how can I specify it in the code? I can create a WaveFormat object, such as:</p>\r\n<p>WaveFormat wf = new WaveFormat(8000, 8, 1);</p>\r\n<p>But how will I use that object? How can I create a WaveStream object, using specified WaveFormat and my raw audiostream (byte array)?</p>\r\n<p>&nbsp;</p>\r\n<p>P.S. Just in case - the PCM-file is playable, I can open it with CoolEdit (using parameters from above) and play it...</p>",
+    "PostedDate": "2010-02-19T07:46:07.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "362611",
+    "ThreadId": "85827",
+    "Html": "<p>have a look at WaveFormatConversionStream.CreatePcmStream</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-02-22T05:58:07.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "362662",
+    "ThreadId": "85827",
+    "Html": "<p>&gt;have a look at WaveFormatConversionStream.CreatePcmStream</p>\r\n<p>Yeah, I already looked at that method, but it requires a WaveStream object as its only argument, and the problem is creaing some WaveStream object. I have MemoryStream of my file (or FileStream), I have a WaveFormat object (new WaveFormat(8000, 8, 1)), but I don't know how to create a PCM Stream from all that stuff...&nbsp;WaveStream is an abstract class, so what kind of inherited class I have to create? And how can I create such object? Could you please give me an example of the code or just the names of the suitable classes and methods?</p>",
+    "PostedDate": "2010-02-22T07:15:36.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "362697",
+    "ThreadId": "85827",
+    "Html": "<p>you have to create your own derived class from WaveStream. In the Read method, return the requested amount of data from your memory stream.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-02-22T08:40:00.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "362756",
+    "ThreadId": "85827",
+    "Html": "<p>It works!!! :) Thanks for help!</p>",
+    "PostedDate": "2010-02-22T10:40:53.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "529046",
+    "ThreadId": "236590",
+    "Html": "\r\n<p>I'm trying to run audio upsampling on an Amazon ECS instance, running Windows Server Datacenter. (No sound cards installed)</p>\r\n<p>It Runs Fine On My Machine (win 7 64-bit), but running on WSD, I get either</p>\r\n<p>Unhandled Exception: System.Runtime.InteropServices.COMException (0x80040154):&nbsp;Retrieving the COM class factory for component with CLSID {F447B69E-1884-4A7E-8055-346F74D6EDB3} failed due to the following error: 80040154.&nbsp;&nbsp; at NAudio.Dmo.Resampler..ctor()&nbsp;&nbsp;\r\n at NAudio.Wave.ResamplerDmoStream..ctor(IWaveProvider inputProvider, WaveFormat outputFormat)</p>\r\n<p>(if compiled for any cpu or x86)</p>\r\n<p>or&nbsp;</p>\r\n<p>Unhandled Exception: System.BadImageFormatException: Could not load file or assembly 'NAudio, Version=1.3.8.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. An attempt was made to load a program with an incorrect format.</p>\r\n<p>(if compiled for x64)</p>\r\n<p>I'm assuming the latter error is due to the non-64-bit nature of the current naudio code base.</p>\r\n<p>So, I did some reading, grabbed the source, and did 3 different compiles (any cpu, x86, x64) of the WPF demo app. They all die, but due to the way the demo app is set up I can't see the specific error.</p>\r\n<p>Is the fact that the WPF demo doesn't run due to the fact that by default the Windows Audio Service is not turned on, or that there is not an audio card installed?</p>\r\n",
+    "PostedDate": "2010-11-30T13:44:51.41-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "531083",
+    "ThreadId": "236590",
+    "Html": "\r\n<p>not every version of windows has the DMO resampler object. You could try to see if there is an ACM resampler you could use instead. (use WaveFormatConversionStream)</p>\r\n<p>And yes, NAudio 1.3 doesn't work in x64. The very latest code might be better.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-04T04:08:12.137-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

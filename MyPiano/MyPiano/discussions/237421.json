@@ -1,0 +1,250 @@
+[
+  {
+    "Id": "532241",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Is there an easy way to implement/use an equalizer (not the GUI, just the audio processing part) in NAudio?</p>\r\n<p>By Equalizer I mean an ability to control different frequency bands (say 5) ranging from bass to treble.</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-12-07T05:27:28.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "533900",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>NAudio doesn't include an equaliser, but one way to go would be to use an effect framework with NAudio like in the Skype Voice Changer project (skypefx.codeplex.com)</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-10T06:53:00.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "533916",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>Thanks for the lead - I'll take a look.</p>\r\n<p>Just a friendly warning - last two times you told me something doesn't exist in NAudio (WMA, OGG) they ended up existing... ;-)</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-12-10T07:23:40.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "533935",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Looked at the code. Brilliant work! It works great out of the box!</p>\r\n<p>Now I really don't understand why effects are not part of NAudio.. It is just calls for EffectStream to be included.</p>\r\n<p>The only thing I would change is&nbsp;separating&nbsp;the effects from the effects UI (sliders, etc). I think they should not be mixed up.</p>\r\n<p>I'll try to work on making this an NAudio module/add-on during this week end.</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-12-10T08:01:46.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "533940",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>the effects are this way in SkypeFx because they were modelled on the effects framework from REAPER. I do plan to bring something similar into NAudio, but it is easy to add yourself in the meantime.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-10T08:03:54.993-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "534261",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>I now have an equalizer (Three Band) working with NAudio. It was easy to use the code from SkypeFX. Thanks for the great lead!</p>\r\n<p>It works like a charm and seems to have better sound than SkypeFX - In SkypeFX there were many ticks/noises when I applied the Three Band effect with high gain/drive values, but I don't have these any longer with the new implementation.</p>\r\n<p>I changed the original&nbsp;Process16Bit routine to&nbsp;<span style=\"font-family:Consolas,'Courier New',Courier,monospace; white-space:pre\">ApplyDSPEffects\r\n</span>so that it handles floats natively (Using the ByteAndFloatsConverter technique). and I think this might have helped.</p>\r\n<p>I also changed the class names of Effect to DSPEffect and Slider to DSPEffectFactor. Slider is a GUI-y name which is kind of confusing as it really resembles a factor in the DSP effect.</p>\r\n<p>The processing should be also faster as there is less processing:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n        <span style=\"color:gray\">///</span><span style=\"color:green\"> Applies the DSP Effects in the effects chain</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;buffer&quot;&gt;</span><span style=\"color:gray\">&lt;/param&gt;</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;count&quot;&gt;</span><span style=\"color:gray\">&lt;/param&gt;</span>\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> ApplyDSPEffects( <span style=\"color:blue\">float</span>[] buffer, <span style=\"color:blue\">int</span> count)\r\n        {\r\n            <span style=\"color:blue\">int</span> samples = count * 2;\r\n            <span style=\"color:blue\">foreach</span> (DSPEffect effect <span style=\"color:blue\">in</span> m_dspEffects)\r\n            {\r\n                <span style=\"color:blue\">if</span> (effect.Enabled)\r\n                {\r\n                    effect.Block(samples);\r\n                }\r\n            }\r\n\r\n            <span style=\"color:blue\">for</span>(<span style=\"color:blue\">int</span> sample = 0; sample &lt; samples; sample&#43;=2)\r\n            {\r\n                <span style=\"color:green\">// get the sample(s)</span>\r\n                <span style=\"color:blue\">float</span> sampleLeft = buffer[sample];\r\n                <span style=\"color:blue\">float</span> sampleRight = buffer[sample &#43; 1];\r\n               \r\n                <span style=\"color:green\">// run these samples through the effects chain</span>\r\n                <span style=\"color:blue\">foreach</span> (DSPEffect effect <span style=\"color:blue\">in</span> m_dspEffects)\r\n                {\r\n                    <span style=\"color:blue\">if</span> (effect.Enabled)\r\n                    {\r\n                        effect.Sample(<span style=\"color:blue\">ref</span> sampleLeft, <span style=\"color:blue\">ref</span> sampleRight);\r\n                    }\r\n                }\r\n\r\n                <span style=\"color:green\">// put them back</span>\r\n                buffer[sample] = sampleLeft;\r\n                buffer[sample &#43; 1] = sampleRight;\r\n            }\r\n        }\r\n</pre>\r\n<pre><br></pre>\r\n</div>\r\n<p>Please let me know if you would like me to create a small standalone demo that shows usage of the Equalizer effect (the most useful effect IMO) with NAudio.</p>\r\n<p>&nbsp;</p>\r\n<p>Edit (12/13/2010): The latest version (Beta 4) of Practice# was released with the Three Band Equalizer, for those you want to see how NAudio works with an equalizer.</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/downloads/list\">http://code.google.com/p/practicesharp/downloads/list</a></p>\r\n<p>&nbsp;</p>\r\n<p>Once again I thank you for writing excellent re-usable code.</p>\r\n<p>Thanks,</p>\r\n<p>Yuval&nbsp;</p>\r\n",
+    "PostedDate": "2010-12-10T19:47:23.817-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542097",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hi Yuval,</p>\r\n<p>Did you create that small demo application on how to chain the Equalizer effect in to NAudio?</p>\r\n<p>Cheers,</p>\r\n<p>Sebastian</p>\r\n",
+    "PostedDate": "2010-12-30T04:09:17.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542121",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hi Sebastian,</p>\r\n<p>No, I didn't create that demo - Mark did not reply, so I thought there is no demand for it.</p>\r\n<p>If you'd like I could easily arrange such a demo application.</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-12-30T05:10:39.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542130",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hi Yuval,</p>\r\n<p>Yes please, that would be cool.</p>\r\n<p>I had a quick look at your application, looks good - do you do the speed up and slow down of the audio play back using NAudio?</p>\r\n<p>Cheers,</p>\r\n<p>Sebastian&nbsp;</p>\r\n",
+    "PostedDate": "2010-12-30T05:19:22.353-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542136",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Sure, will do that in the next day or so.</p>\r\n<p>&nbsp;</p>\r\n<p>As for Practice# - thanks. I change the playback speed using SoundTouch. (<a href=\"http://www.surina.net/soundtouch/\">http://www.surina.net/soundtouch/</a>)</p>\r\n<p>There is wrapper I wrote, SoundTouchSharp, that allows .NET to use that native library.</p>\r\n<p>NAudio is the audio framework/infrastructure - used for playback control, buffers, file readers but not for speed/pitch change.</p>\r\n<p>BTW: I documented my design decisions and choice of libraries in a CodeProject article:</p>\r\n<p><a href=\"http://www.codeproject.com/KB/audio-video/practice_sharp.aspx\">http://www.codeproject.com/KB/audio-video/practice_sharp.aspx</a></p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-12-30T05:26:03.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542142",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Cool, I'll have a look at that article, looks really interesting.</p>\r\n<p>Cheers,<br>\r\nSebastian&nbsp;</p>\r\n",
+    "PostedDate": "2010-12-30T05:36:07.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542416",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hi&nbsp;Sebastian,</p>\r\n<p>I just uploaded a demo of NAudio using an Equalizer (sources&#43;binary).</p>\r\n<p>It could be a nice tutorial.</p>\r\n<p>The sources are based of Mark's SkypeFX library.</p>\r\n<p>A few important remarks:</p>\r\n<p>1. The DSPEffectStream class is currently expecting IeeeFloat streams. IMO working with floats is cleaner and more accurate compare to PCM conversion. So the equalizer effect is chained AFTER the WaveChannel32.</p>\r\n<p>This can be changed of course to support PCM but I do not have time to do it, and I found the original PCM version to be problematic (sound quality/noises).</p>\r\n<p>2.&nbsp;DSPEffectStream &nbsp;supports only one DSPEffect. That was intentional - Advanced Chaining of effects can be added like Mark did in SkypeFX but I felt it was not so much needed, since NAudio allows chaining as it is.</p>\r\n<p>3. This is demo code - I did not handle threading issues for example. (BTW: This whole demo was especially written for the purpose of showing simple usage of the equalizer, my application Practice# did not require these threading protections since it was\r\n using a single audio processing thread).</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/downloads/detail?name=NAudioEqualizer.zip\">http://code.google.com/p/practicesharp/downloads/detail?name=NAudioEqualizer.zip</a></p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-12-30T18:48:32.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "550708",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hello Yuval, Mark, et.al.,</p>\r\n<p>So I've been using NAudio with the EQ code from Skype, with Yuval's modifications. I'm not sure if I'm interpreting it's use correctly, but if I am it's not behaving as expected. I was wondering if anyone else has tried to verify the behavior of the EQ's\r\n using a frequency analysis tool.</p>\r\n<p>So, for my particular application, I'd like to be able to specify a frequency and gain, and then have roughly an octave band around that frequency raised. In order to do this, I'm setting the LoMedFrequencyFactor and MedHiFrequencyFactor at values surrounding\r\n the central frequency, and then boosting the MedGainFactor. If my underestanding is correct, the example code below should boost the frequencies in&nbsp;the octave centered around 1kHz. But what I'm getting is&nbsp;more like all the frequencies below 640 boosted.&nbsp;I've\r\n tested other scenarios as well, boosting the LoGainFactor or HiGainFactor instead, and with different frequencies, and I don't&nbsp;get what I would expect.</p>\r\n<p>I tested this using white noise, and I have before and after images of the freq. analysis I can send someone if they are interested. I don't see a way to attach them here.&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> ApplyEQTest()\r\n        {\r\n\r\n            _player.Pause();\r\n            _eqEffect.LoDriveFactor.Value = 0;\r\n            _eqEffect.MedDriveFactor.Value = 0;\r\n            _eqEffect.HiDriveFactor.Value = 0;\r\n            _eqEffect.LoMedFrequencyFactor.Value = 640;\r\n            _eqEffect.MedHiFrequencyFactor.Value = 1280;\r\n            _eqEffect.LoGainFactor.Value = 0;\r\n            _eqEffect.HiGainFactor.Value = 0;\r\n            _eqEffect.MedGainFactor.Value = 24;\r\n            _eqEffect.OnFactorChanges();\r\n            _player.Volume = 1.0f;\r\n            _player.Play();\r\n\r\n        }\r\n</pre>\r\n<pre>Thanks,</pre>\r\n<pre>Rob</pre>\r\n</div>\r\n",
+    "PostedDate": "2011-01-17T11:42:45.45-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "550725",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hi Rob,</p>\r\n<p>I think the drive factors should not be zero.</p>\r\n<p>In my test application I did not change the default value of Drive properties, just played with Gain properties.&nbsp;</p>\r\n<p>Also the gain maximum is by default 12db not 24.</p>\r\n<p>I would suggest that you take my test application and try playing with it first, with several iterations - that is, change one parameter at a time until you get you you want.</p>\r\n<p>That's how I fine tuned the Equalizer for Practice# - I tested it with the test app.</p>\r\n<p>HTH,</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2011-01-17T11:59:58.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "550806",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hi Yuval,</p>\r\n<p>I have tried it with different drive properties - I only put those values in the code to test different options since the defaults weren't producing an accurate response. I did change the default max/min on the gain so that I could see a bigger impact.</p>\r\n<p>Can you tell me if you've actually verified the frequency response? Do you believe my assumptions about how the MedGainFactor &nbsp;should work (boosting only in between the LoMed and MedHi frequency factors) correct?</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2011-01-17T13:45:01.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "550837",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Hi Rob,</p>\r\n<p>&nbsp;I did not write the original code - I modified and re-factored it.</p>\r\n<p>The only actual frequency test I performed was a simple one - use my hearing, not with any scope.</p>\r\n<p>If you run Practice# and play with the equalizer it actually works. Raise the medium track bar and you will hear a very pronounced medium boost.</p>\r\n<p>This is done by playing with MedGainFactor.</p>\r\n<p>But I'm not sure if changing the frequency values actually has such a dramatic effect on the equalizer.</p>\r\n<p>This is the only place in the code where there is a reference to the frequencies:<br>\r\n&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Low frequency&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;al = Min(LoMedFrequencyFactor.Value, SampleRate) / SampleRate;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // High frequency&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ah = Max(Min(MedHiFrequencyFactor.Value, SampleRate) / SampleRate, al);</p>\r\n<p>&nbsp;</p>\r\n<p>Perhaps Mark can help with this.</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-17T14:22:54.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "552465",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>I'm afraid I don't know how this particular equaliser works. You might be better asking on the KVR dsp forum for details about the workings of a particular equalizer implementation</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-20T02:51:08.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "552790",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Rob,</p>\r\n<p>I concur with what Mark wrote.</p>\r\n<p>Maybe you could try to look at another equalizer implementation. For example:</p>\r\n<p>http://www.musicdsp.org/archive.php?classid=3#236</p>\r\n<p>&nbsp;</p>\r\n<p>You could try to port it to C# instead of the current one.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2011-01-20T11:44:40.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "553444",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>Thanks very much guys for your responses. I'll look into that. The particular app I'm working on requires something particularly specific. &nbsp;I'll let you know if I have any success.</p>\r\n",
+    "PostedDate": "2011-01-21T13:42:20.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "553445",
+    "ThreadId": "237421",
+    "Html": "\r\n<p>No worries, sorry I couldn't help more than that - not a DSP guy.</p>\r\n<p>But if you create something good, let us know..I might be borrowing it for myself ;)</p>\r\n<p>Good luck,</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2011-01-21T13:53:54.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082300",
+    "ThreadId": "237421",
+    "Html": "Question, how easy is it to expand the 3-band equalizer to multiple bands?<br />\n",
+    "PostedDate": "2013-08-19T11:25:24.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082319",
+    "ThreadId": "237421",
+    "Html": "I don't know how easy it is, as I haven't coded and tested it yet for more bands.\r<br />\nBut looking at the code (below, found in the file EqualizerEffect.cs), it seems that with some fiddling with the equations (i.e. some algebra, and adding a loop instead of hard coded low, medium and high) one can add more than 3 bands with not so much effort:<br />\n<pre><code>  public override void Sample(ref float spl0, ref float spl1)\n        {\n            float dry0 = spl0;\n            float dry1 = spl1;\n\n            float lf1h = lfh;\n            lfh = dry0 + lfh - ah * lf1h;\n            float high_l = dry0 - lfh * ah;\n\n            float lf1l = lfl;\n            lfl = dry0 + lfl - al * lf1l;\n            float low_l = lfl * al;\n\n            float mid_l = dry0 - low_l - high_l;\n\n            float rf1h = rfh;\n            rfh = dry1 + rfh - ah * rf1h;\n            float high_r = dry1 - rfh * ah;\n\n            float rf1l = rfl;\n            rfl = dry1 + rfl - al * rf1l;\n            float low_r = rfl * al;\n\n            float mid_r = dry1 - low_r - high_r;\n\n            float wet0_l = mixlg * Sin(low_l * HalfPiScaled);\n            float wet0_m = mixmg * Sin(mid_l * HalfPiScaled);\n            float wet0_h = mixhg * Sin(high_l * HalfPiScaled);\n            float wet0 = (wet0_l + wet0_m + wet0_h);\n\n            float dry0_l = low_l * mixlg1;\n            float dry0_m = mid_l * mixmg1;\n            float dry0_h = high_l * mixhg1;\n            dry0 = (dry0_l + dry0_m + dry0_h);\n\n            float wet1_l = mixlg * Sin(low_r * HalfPiScaled);\n            float wet1_m = mixmg * Sin(mid_r * HalfPiScaled);\n            float wet1_h = mixhg * Sin(high_r * HalfPiScaled);\n            float wet1 = (wet1_l + wet1_m + wet1_h);\n\n            float dry1_l = low_r * mixlg1;\n            float dry1_m = mid_r * mixmg1;\n            float dry1_h = high_r * mixhg1;\n            dry1 = (dry1_l + dry1_m + dry1_h);\n\n            spl0 = dry0 + wet0;\n            spl1 = dry1 + wet1;\n        }</code></pre>\n\n",
+    "PostedDate": "2013-08-19T12:23:20.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083060",
+    "ThreadId": "237421",
+    "Html": "I was thinking about that, but I guess it requires a lot of testing and comparing against a known working sample. I just wish there was an easy way to incorporate Audacity's equalizer into the NAudio framework as it appears it does some sort of formula based on the parametric and sends audio through this formula, but it doesn't look similar to this at all.\r<br />\n<br />\nI guess the initialization routine takes each of the bands and calculates some fixed parameters which are applied to each sample in the &quot;Sample&quot; routine.\r<br />\n<br />\nWhat do each of these parameters mean, the dry parameters and wet parameters? I assume they have meaning and the selection of these names was not random??\r<br />\n<br />\nThanks\r<br />\nPaul<br />\n",
+    "PostedDate": "2013-08-21T04:53:42.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083087",
+    "ThreadId": "237421",
+    "Html": "a signal with no effects is called &quot;dry&quot;, a signal with effects is called &quot;wet&quot;. With some effects, you mix the dry in with the wet (e.g. reverb). It's not so common with EQ though.<br />\n",
+    "PostedDate": "2013-08-21T06:15:57.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130592",
+    "ThreadId": "237421",
+    "Html": "<strong>yuvalnv wrote:</strong><br />\n<blockquote>\nHi&nbsp;Sebastian, I just uploaded a demo of NAudio using an Equalizer (sources&#43;binary). It could be a nice tutorial. The sources are based of Mark's SkypeFX library. A few important remarks: 1. The DSPEffectStream class is currently expecting IeeeFloat streams. IMO working with floats is cleaner and more accurate compare to PCM conversion. So the equalizer effect is chained AFTER the WaveChannel32. This can be changed of course to support PCM but I do not have time to do it, and I found the original PCM version to be problematic (sound quality/noises). 2.&nbsp;DSPEffectStream &nbsp;supports only one DSPEffect. That was intentional - Advanced Chaining of effects can be added like Mark did in SkypeFX but I felt it was not so much needed, since NAudio allows chaining as it is. 3. This is demo code - I did not handle threading issues for example. (BTW: This whole demo was especially written for the purpose of showing simple usage of the equalizer, my application Practice# did not require these threading protections since it was using a single audio processing thread). <a href=\"http://code.google.com/p/practicesharp/downloads/detail?name=NAudioEqualizer.zip\" rel=\"nofollow\">http://code.google.com/p/practicesharp/downloads/detail?name=NAudioEqualizer.zip</a> &nbsp; Thanks, Yuval<br />\n</blockquote>\nI am using nAudio in a project and wanted to implement a 3 band EQ as well, but since you already have on in your equalizer demo, i just borrowed that. it appears to work well, but I am seeing a strange problem. If i init my waveOut device with a DSPEffectStream, then my PlaybackStopped event handler is never called when my audio file finishes. if I use the stream from an AudioFileReader, then the event handler is clled just fine when the file finishes.\r<br />\n<br />\nis this a known issue?<br />\n",
+    "PostedDate": "2013-11-30T22:09:51.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130833",
+    "ThreadId": "237421",
+    "Html": "if PlaybackStopped is not firing, it may be that DSPEffectStream is never-ending. The Read method must return 0 for playback to end.<br />\n",
+    "PostedDate": "2013-12-02T03:13:04.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1131878",
+    "ThreadId": "237421",
+    "Html": "It appears that the Read method in DSPEffectStream is returning the same, non-zero value each time it is called. I just took the implementation that yuvalnv posted in the naudio-equalizer demo, so I am not sure if my code is at fault or if it's the demo code.\r<br />\n<br />\nFWIW, the implementation looks like this:<br />\n<pre><code>        public override int Read(byte[] buffer, int offset, int count)\n        {\n            int bytesRead = SourceStream.Read(buffer, offset, count);\n\n            if (ActiveDSPEffect.Enabled)\n            {\n                if (SourceStream.WaveFormat.Encoding == WaveFormatEncoding.IeeeFloat)\n                {\n                    ByteAndFloatsConverter convertInputBuffer = new ByteAndFloatsConverter { Bytes = buffer };\n                    ProcessDataIeeeFloat(convertInputBuffer, offset, bytesRead);\n                }\n                else\n                {\n                    // Do not process other types of streams\n                }\n            }\n\n            return bytesRead;\n        }</code></pre>\n\nSourceStream is a WaveStream object passed to DSPEffectStream as a  construction parameter.\r<br />\n<br />\nI will continue monkeying around with this to see if I can get it to work, but I am not that familiar with nAudio at this point.\r<br />\nthanks<br />\n",
+    "PostedDate": "2013-12-04T12:41:11.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1131910",
+    "ThreadId": "237421",
+    "Html": "DSPEffectStream is just returning the bytesRead from the SourceStream, i.e. the external WaveStream provided to the constructor.\r<br />\nSo it seems it is not DSPEffectStream that is not ending but rather the SourceStream.\r<br />\n<br />\n&quot; If i init my waveOut device with a DSPEffectStream, then my PlaybackStopped event handler is never called when my audio file finishes. if I use the stream from an AudioFileReader, then the event handler is called just fine when the file finishes. &quot;\r<br />\n<br />\nIt seems like the waveOut device you pass is not returning zero, where as the AudioFileReader is returning zero when reaching end of stream.\r<br />\n<br />\nCan you show how the waveOut device was created and initialized?\r<br />\n<br />\nHTH\r<br />\nYuval<br />\n",
+    "PostedDate": "2013-12-04T14:06:13.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1132274",
+    "ThreadId": "237421",
+    "Html": "I am trying to integrate nAudio into an XNA game framework application, so the application is split into multiple classes and methods. here's a basic summary. please excuse the poor commenting, structure and variable names; this is just quick test code :<br />\n<pre><code>public class Game1 : Microsoft.Xna.Framework.Game\n{\n        IWavePlayer waveOut;\n        WaveStream waveStream;\n        WaveChannel32 waveChannel;\n        EqualizerEffect eqEffect;\n\n        AudioFileReader file;\n\n        protected override void Initialize()\n        {\n            waveOut = new WaveOut();\n            waveOut.PlaybackStopped += waveOut_PlaybackStopped;\n        }\n\n        public void LoadFile(string filename)\n        {\n            file = new AudioFileReader(filename);\n\n            waveChannel = new WaveChannel32(file);\n\n            eqEffect = new EqualizerEffect();\n\n            eqEffect.HiGainFactor.Value = eqEffect.HiGainFactor.Maximum;\n            eqEffect.MedGainFactor.Value = 0;\n            eqEffect.LoGainFactor.Value = eqEffect.LoGainFactor.Minimum;\n\n            eqEffect.OnFactorChanges();\n\n            waveStream = new DSPEffectStream(waveChannel, eqEffect);\n\n            waveOut.Init(waveStream);\n\n            file.Volume = 0.5f;\n        }\n\n        protected override void LoadContent()\n        {\n            // Create a new SpriteBatch, which can be used to draw textures.\n            spriteBatch = new SpriteBatch(GraphicsDevice);\n\n            text = Content.Load&lt;SpriteFont&gt;(&quot;text&quot;);\n\n            LoadFile(&quot;06 - Swoon.mp3&quot;);\n\n            waveOut.Play();\n        }\n\n        void waveOut_PlaybackStopped(object sender, StoppedEventArgs e)\n        {\n            // load the next file in the playlist; unimplemented for now\n            LoadFile(&quot;04 - Dissolve.mp3&quot;);\n\n            waveOut.Play();\n        }\n\n</code></pre>\n\n",
+    "PostedDate": "2013-12-05T11:28:02.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1136925",
+    "ThreadId": "237421",
+    "Html": "bump.<br />\n",
+    "PostedDate": "2013-12-16T15:50:16.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1137240",
+    "ThreadId": "237421",
+    "Html": "Sorry, I don't know how to help you based on this.\r<br />\n<br />\nIf you could recreate the problem in a small demo, so that it runs from a command line, no XNA etc, then it would be much easier to find the root cause.\r<br />\nI have done the same thing in the past, when I wanted to debug or show a problem.\r<br />\n<br />\nI'm also wondering if the MP3 files have anything to do with this issue. Anyway, a stand alone demo is the best way IMO to move forward.<br />\n",
+    "PostedDate": "2013-12-17T11:24:17.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

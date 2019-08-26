@@ -1,0 +1,170 @@
+[
+  {
+    "Id": "540266",
+    "ThreadId": "239502",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>After adding playback support for WMA and OGG, FLAC was next on my plan.</p>\r\n<p>I've just added FLAC playback support (FLACFileReader) that allows NAudio to play FLAC files (currently 16-bit only).</p>\r\n<p>It seems to be working just fine (I also tested reposition).</p>\r\n<p>The code is using the official libFlac C DLL (which has BSD license - so it should be fine for NAudio Library) using a P/Invokes wrapper named LibFlacSharp.</p>\r\n<p>My library (NAudioFlac) has an MIT license.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>@Mark</strong> - if you find this code usable, please feel free to integrate the FLACFileReader to NAudio. Once/If you do this I'll get rid of my library like we did with WMA.</p>\r\n<p>Also, LibFlacSharp has an encoding interface which I did not use - you might want to write a FLAC writer, it should be easy and add a cool loseless encoding feature to NAudio.</p>\r\n<p>&nbsp;</p>\r\n<p>A binary demo is available at:</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/downloads/detail?name=NAudioFLAC.zip\">http://code.google.com/p/practicesharp/downloads/detail?name=NAudioFLAC.zip</a></p>\r\n<p>The latest sources are available from Practice# SVN: (under Trunk\\NAudioFLAC folder)</p>\r\n<p>Browsing:&nbsp;<a href=\"http://code.google.com/p/practicesharp/source/browse/#svn%2Ftrunk%2FNAudioFLAC\">http://code.google.com/p/practicesharp/source/browse/#svn%2Ftrunk%2FNAudioFLAC</a></p>\r\n<p>Or to checkout:&nbsp;<a href=\"http://code.google.com/p/practicesharp/source/checkout\">http://code.google.com/p/practicesharp/source/checkout</a></p>\r\n<p>&nbsp;</p>\r\n<h5>Thanks</h5>\r\n<p>Yuval Naveh</p>\r\n",
+    "PostedDate": "2010-12-24T07:15:45.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "544212",
+    "ThreadId": "239502",
+    "Html": "\r\n<p>thanks for doing this Yuval. I might consider incorporating it into the NAudio demo project at some point. I'll also try to get a link to this on the NAudio home page</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-05T02:48:50.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1108580",
+    "ThreadId": "239502",
+    "Html": "Hello,\r<br />\nI'm trying to make my player playing .flac. However, when the code &quot;<strong>fReader = new FLACFileReader(fileName);</strong>&quot; is run, I receive the following:\r<br />\n<br />\n&quot;<em><em>An unhandled exception of type 'System.ApplicationException' occurred in NAudioFLAC.dll</em>\r<br />\n<em>Additional information: FLAC: Could not Could not process single!</em></em>&quot;\r<br />\n<br />\nThen, I'm unable to play .flac songs.\r<br />\n<br />\nCould someone help me?<br />\n",
+    "PostedDate": "2013-10-16T19:35:42.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1221291",
+    "ThreadId": "239502",
+    "Html": "<em>bump</em>\r<br />\n<br />\nI also have the same problem as N_Neto. Why is this happening?<br />\n",
+    "PostedDate": "2014-03-10T22:34:49.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1221816",
+    "ThreadId": "239502",
+    "Html": "you may have to ask Yuval Naveh at the practice sharp site, as he wrote this code. You could perhaps try to load your FLAC file into his Practice Sharp app and see if that has the same issue<br />\n",
+    "PostedDate": "2014-03-12T04:23:11.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1222362",
+    "ThreadId": "239502",
+    "Html": "I am using a couple of different techniques to get Flac support in Naudio.  Naudio 1.7 support windows media foundation.  So once you install a codec to support flac in media center you can then ask Naudio to play it for you through media foundation.\r<br />\n<br />\nHere are a couple of link to codecs and howto install:\r<br />\n<br />\n<a href=\"http://sourceforge.net/projects/mfflac/\" rel=\"nofollow\">http://sourceforge.net/projects/mfflac/</a>  &lt;-- Main one I currently use  (Support for multiple bit rates)\r<br />\n<br />\n<a href=\"http://www.howtogeek.com/howto/13843/how-to-play-flac-files-in-windows-7-media-center-player/\" rel=\"nofollow\">http://www.howtogeek.com/howto/13843/how-to-play-flac-files-in-windows-7-media-center-player/</a>\r<br />\n<br />\nGood luck!\r<br />\n<br />\nBTW I can provide code to playback Flac's through media foundation interface in Naudio if needed.<br />\n",
+    "PostedDate": "2014-03-13T07:53:11.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223148",
+    "ThreadId": "239502",
+    "Html": "Some extra info: I'm using NaudioFLAC by Yuval and I'm getting the same exception (&quot;Could not Could not process single!&quot;) when running my player from visual studio in debug. When launching the executable outside visual studio it works fine though.\r<br />\n<br />\nThere is however a bad seeking bug. I'm trying to understand: there seems to be some translation needed between the way flac handles seeking compared to Naudio. I might contact Yuval about this.<br />\n",
+    "PostedDate": "2014-03-15T14:35:25.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223487",
+    "ThreadId": "239502",
+    "Html": "Hi guys,\r<br />\nSorry for the late response, I'm pretty busy at work.\r<br />\n<br />\nI already emailed rogdart and asked for more evidence - I need the flac file and full steps to reproduce it.\r<br />\nNAudioFlac is a wrapper over libFlac (C++ open source project).\r<br />\nThe version I'm currently using is 1.2. It could be a bug there as well.\r<br />\nAlso Practice# (and the demos in that project) were using NAudio 1.6.\r<br />\nYesterday I upgrade NAudio to 1.7 and also moved to a more modern .NET runtime (.NET 3.5 Client Profile).\r<br />\n<br />\nWith the flac files I tested, I'm unable to reproduce seeking issues.\r<br />\n<br />\nThanks\r<br />\nYuval<br />\n",
+    "PostedDate": "2014-03-17T06:05:19.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223756",
+    "ThreadId": "239502",
+    "Html": "I managed to re-produce the problem.<br />\nIt is not a private case - the get current position logic was done incorrectly in FLACReader/NAudioFlac.<br />\nThe root cause is (well me) the weird and inconsistent way libFlac works, in particular the FLAC__stream_decoder_get_decode_position() function that returns the <em>byte</em> position in the <em>DECODED</em>  frame (i.e. after decompression) which is useless for time position calculations.<br />\nI figured out how to get the current playing sample number in a different way.<br />\nMy fixed version sets and gets proper time values - still under testing.<br />\nOnce I verify this fix is good, I will commit to Practice# SVN - To update NAudioFlac and also Practice# App.<br />\n<br />\nThanks<br />\nYuval<br />\n",
+    "PostedDate": "2014-03-17T19:47:31.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1225807",
+    "ThreadId": "239502",
+    "Html": "The issue was fixed. \r<br />\nI committed the code to the SVN repository of Practice# in Google Code\r<br />\n<br />\nThanks\r<br />\nYuval<br />\n",
+    "PostedDate": "2014-03-23T17:03:32.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1227762",
+    "ThreadId": "239502",
+    "Html": "thanks Yuval<br />\n",
+    "PostedDate": "2014-03-28T04:58:53.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1227781",
+    "ThreadId": "239502",
+    "Html": "Hi Mark,<br />\nUnfortunately I was celebrating too soon.<br />\nSince I moved to .NET 3.5 and NAudio 1.7, but same libFlac, I'm now experiencing similar problems to what rgodart described.<br />\nFLAC plays fines (including re-positioning) inside Visual Studio (Debug or Release) but once run outside of VS it fails - the decoder_process_single function fails with a &quot;BAD FRAME&quot; error. This seems to be due to a failed CRC check on the in-memory frame, and I'm not sure what is the root cause for that.<br />\nOne suspicion I have is memory alignment - i.e. buffers aligned differently in VS vs outside of VS, causing zeros to be padded before or after the unmanaged flac buffer memory.<br />\n<br />\nI wish we had a fully managed (.NET/C#) flac library. <br />\n<br />\nI'm going to write a small console test app, without NAudio, that tries to reproduce the libFlac issue.<br />\n<br />\nAny ideas or help on this are welcome.<br />\n<br />\nYuval<br />\n",
+    "PostedDate": "2014-03-28T05:50:54.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1227865",
+    "ThreadId": "239502",
+    "Html": "UPDATE:\r<br />\nI have this small console libFlac test. Very minimal, no NAudio.\r<br />\nIn VS it works, outside fails. Both for .NET 2.0 and .NET 3.5.\r<br />\n<br />\nFor .NET 4.0 and 4.5 it fails in a similar way inside VS..\r<br />\n<br />\nEven for .NET 2.0 and .NET 3.5 the compile has to be done to x86. It fails on &quot;Bad Image&quot; for x64.<br />\n",
+    "PostedDate": "2014-03-28T08:45:22.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1228172",
+    "ThreadId": "239502",
+    "Html": "This is almost certainly due to incompatibilities between the CLR's memory allocator and libFlac.  The debugging allocator in CLR 2.0 (3.5) just happens to be compatible...\r<br />\n<br />\nYou might try looking at what the <a href=\"https://flacbox.codeplex.com/\" rel=\"nofollow\">FlacBox</a> guys have done...<br />\n",
+    "PostedDate": "2014-03-29T08:13:16.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1228173",
+    "ThreadId": "239502",
+    "Html": "Thanks. This makes sense.\r<br />\n<br />\nrgodart and I are working on it together.\r<br />\nHe will try to compile the latest version of libFlac (C code) and see if it works.\r<br />\n<br />\nIf not, we will probably find a managed .NET solution.\r<br />\nFlacBox is one option. I'm not too happy to use it as it is not based on the original libFlac logic.\r<br />\nAnother is to use <a href=\"http://jflac.sourceforge.net/\" rel=\"nofollow\">jFlac</a>, a Java port if libFlac, and convert it into .NET.\r<br />\nI started testing jFlac and it works great so far (in Java/Eclipse).<br />\n",
+    "PostedDate": "2014-03-29T08:17:05.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1228344",
+    "ThreadId": "239502",
+    "Html": "Looked at FlacBox.\r<br />\nI don't see any references to SeekTable, SeekPosition or seek in general.\r<br />\nLack of these features is a big minus, and adding them is not straight forward.\r<br />\n<br />\nI did manage to quickly add seek functionality to jFlac, which follows the libFlac implementation and seems more mature.<br />\n",
+    "PostedDate": "2014-03-30T09:51:06.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229432",
+    "ThreadId": "239502",
+    "Html": "UPDATE: rgodart found a link to a .NET port of jFlac - <a href=\"https://wp7flacplayer.codeplex.com/\" rel=\"nofollow\">https://wp7flacplayer.codeplex.com/</a><br />\nGreat find!<br />\nI checked out the code, it was built for Windows Phone 7.<br />\nConverted it to &quot;standard&quot; .NET library and it seems to be working fine. I can see correct meta data and also PCM coming out of the decoder.<br />\nI'm going to clean it up then test it with NAudioFlac, ,my NAudio plugin decoder for FLAC.<br />\nA seek() method is missing but I think it shouldn't be hard to add. I as mentioned in the previous post I added it to jFlac, to porting it to .NET should be feasible.<br />\n<br />\nThen if all goes well, I'll get rid of the native C libFlac.dll and move to a fully memory managed FLAC solution.<br />\n",
+    "PostedDate": "2014-04-02T05:39:32.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229502",
+    "ThreadId": "239502",
+    "Html": "I am looking forward to your new code library yuvalnv.  Thanks for all your work on this.  Hopefully there will be support for 96k/24bit FLAC files.<br />\n",
+    "PostedDate": "2014-04-02T07:52:54.06-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229529",
+    "ThreadId": "239502",
+    "Html": "That would be awesome.. i'll look forward to this!<br />\n",
+    "PostedDate": "2014-04-02T08:56:23.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1310760",
+    "ThreadId": "239502",
+    "Html": "Is 64 bit version of LibFlac.dll available ?\r<br />\n<br />\nThanks,\r<br />\nPraveen<br />\n",
+    "PostedDate": "2014-10-06T06:23:36.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1325914",
+    "ThreadId": "239502",
+    "Html": "Hello,<br />\n<br />\nI also searched for a full managed flac decoder and asked to include some of my suggested solutions into NAudio.<br />\nThere <strong>ARE</strong> already <strong>PURE</strong> .NET decoders out there!!!<br />\n<br />\nPlease read on here: <a href=\"https://naudio.codeplex.com/discussions/572746\" rel=\"nofollow\">NAudio Discussion Thread</a><br />\n<br />\nKind regards<br />\n<br />\nFreefall<br />\n<br />\n<br />\nEDIT: I´ve managed <strong>a full .NET solution</strong> by using the <a href=\"cscore\" rel=\"nofollow\">cscore.codeplex.com</a> source.<br />\n",
+    "PostedDate": "2014-11-25T06:13:03.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

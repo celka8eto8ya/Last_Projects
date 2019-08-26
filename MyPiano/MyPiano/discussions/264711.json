@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "640598",
+    "ThreadId": "264711",
+    "Html": "\r\n<div>\r\n<p>I am trying to create a recorder in Unity.</p>\r\n<p>I built the recent copy of your source code and added NAudio.dll to the reference list, and got this error:</p>\r\n<p>Internal compiler error. See the console log for more information. output was: Unhandled Exception: System.TypeLoadException: Could not load type 'NAudio.Wave.WaveCallbackInfo' from assembly 'NAudio, Version=<a href=\"http://1.5.3.0/\">1.5.3.0</a>, Culture=neutral,\r\n PublicKeyToken=null'.</p>\r\n<p>at (wrapper managed-to-native) System.Reflection.MonoMethodInfo:get_method_info (intptr,System.Reflection.MonoMethodInfo&amp;)</p>\r\n<p>at System.Reflection.MonoMethodInfo.GetMethodInfo (IntPtr handle) [0x00000] in :0</p>\r\n<p>Anyone knows how to resolve it? Very appreciate.</p>\r\n</div>\r\n",
+    "PostedDate": "2011-07-11T11:51:01.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "640599",
+    "ThreadId": "264711",
+    "Html": "<p>you running this on mono? What OS is this for? NAudio plays audio by wrapping Windows APIs,</p>",
+    "PostedDate": "2011-07-11T11:53:49.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "640602",
+    "ThreadId": "264711",
+    "Html": "<p>Some more detailed lines of this error. May help. Thanks.</p>\r\n<p>at System.Reflection.MonoCMethod.get_Attributes () [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.TypeManager+Closure.Filter (System.Reflection.MemberInfo m, System.Object filter_criteria) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.MemberCache.FindMembers (MemberTypes mt, BindingFlags bf, System.String name, System.Reflection.MemberFilter filter, System.Object criteria) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.TypeManager.MemberLookup_FindMembers (System.Type t, MemberTypes mt, BindingFlags bf, System.String name, System.Boolean&amp; used_cache) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.TypeManager.RealMemberLookup (System.Type invocation_type, System.Type qualifier_type, System.Type queried_type, MemberTypes mt, BindingFlags original_bf, System.String name, IList almost_match) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.TypeManager.MemberLookup (System.Type invocation_type, System.Type qualifier_type, System.Type queried_type, MemberTypes mt, BindingFlags original_bf, System.String name, IList almost_match) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.Expression.MemberLookup (Mono.CSharp.CompilerContext ctx, System.Type container_type, System.Type qualifier_type, System.Type queried_type, System.String name, MemberTypes mt, BindingFlags bf, Location loc) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.Expression.MemberLookupFinal (Mono.CSharp.ResolveContext ec, System.Type qualifier_type, System.Type queried_type, System.String name, MemberTypes mt, BindingFlags bf, Location loc) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.New.DoResolve (Mono.CSharp.ResolveContext ec) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.Expression.Resolve (Mono.CSharp.ResolveContext ec, ResolveFlags flags) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.Expression.Resolve (Mono.CSharp.ResolveContext ec) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.Assign.DoResolve (Mono.CSharp.ResolveContext ec) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.SimpleAssign.DoResolve (Mono.CSharp.ResolveContext ec) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.Expression.Resolve (Mono.CSharp.ResolveContext ec, ResolveFlags flags) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.Expression.Resolve (Mono.CSharp.ResolveContext ec) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.ExpressionStatement.ResolveStatement (Mono.CSharp.BlockContext ec) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.StatementExpression.Resolve (Mono.CSharp.BlockContext ec) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.Block.Resolve (Mono.CSharp.BlockContext ec) [0x00000] in &lt;filename unknown&gt;:0 <br /><br />&nbsp; at Mono.CSharp.ToplevelBlock.Resolve (Mono.CSharp.FlowBranching parent, Mono.CSharp.BlockContext rc, Mono.CSharp.ParametersCompiled ip, IMethodData md) [0x00000] in &lt;filename unknown&gt;:0</p>\r\n&nbsp;",
+    "PostedDate": "2011-07-11T11:55:18.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "640604",
+    "ThreadId": "264711",
+    "Html": "<p>what OS is this for? NAudio is not likely to work on top of Mono.</p>",
+    "PostedDate": "2011-07-11T11:57:02.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "640605",
+    "ThreadId": "264711",
+    "Html": "<p>I did that in Mono. Do I have to do it in VS?</p>\r\n<p>I am running it on a Windows 7 Enterprise x64.</p>\r\n<p>Do you rely on some windows audio api libs?</p>\r\n<p>What is required?</p>\r\n<p>Very appreciate.</p>",
+    "PostedDate": "2011-07-11T11:58:21.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "640606",
+    "ThreadId": "264711",
+    "Html": "<p>Thanks. I am trying to reference in VS. Hope it works.</p>",
+    "PostedDate": "2011-07-11T11:58:59.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "640613",
+    "ThreadId": "264711",
+    "Html": "<p>What do you mean by 'NAudio is not likely to work on top of Mono.'?</p>\r\n<p>If I create a wrapper class which does not derive from MonoBehaviour, then I could use NAudio, right?</p>\r\n<p>Or I could never make it work with Unity?</p>",
+    "PostedDate": "2011-07-11T12:15:57.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "640614",
+    "ThreadId": "264711",
+    "Html": "<p>you would need to ask a mono/unity expert that. NAudio uses Windows APIs, so it can only run on Windows. I don't know if Mono is able to call those Windows APIs directly.</p>",
+    "PostedDate": "2011-07-11T12:18:19.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

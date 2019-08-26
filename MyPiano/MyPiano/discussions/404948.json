@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "948636",
+    "ThreadId": "404948",
+    "Html": "\r\n<p>The BlackmannHarrisWindow Function in the FastFourierTransform class&nbsp;appears to&nbsp;have an error.</p>\r\n<p>I know this function is not currently used but as I like to think NAudio&nbsp;is&nbsp;accurate I thought it worth mentioning.&nbsp; The error is in the final term of the BlackmannHarris windowing function.&nbsp; According to wikipedia, and confirmed elsewhere,\r\n the&nbsp;fourth term should&nbsp;have a 6 rather than a 4.&nbsp;</p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">The\r\n fourth term should be<span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><font face=\"Consolas\" size=\"2\">\r\n</p>\r\n<p>(0.01168 *</p>\r\n</font></span></span><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\">Math</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">.Cos((6\r\n * </span></span><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\">Math</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">.PI\r\n * n) / (frameSize - 1)));</span></span></span></span></span>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"></span></span></span></span></span></span></span>rather\r\n than</p>\r\n</span></span></span>\r\n<p></p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><font face=\"Consolas\" size=\"2\"></p>\r\n<p>(0.01168 *</p>\r\n</font></span></span><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\">Math</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">.Cos((4\r\n * </span></span><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\">Math</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">.PI\r\n * n) / (frameSize - 1)));</span></span></span></span></span></span></span></span></span></span></span>\r\n<p></p>\r\n",
+    "PostedDate": "2012-11-28T14:26:33.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948647",
+    "ThreadId": "404948",
+    "Html": "\r\n<p>Yes, you're right. I've made the change. Please review and check it is OK now:</p>\r\n<p>http://naudio.codeplex.com/SourceControl/changeset/54905487ed2c</p>\r\n<p>thanks</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-28T14:40:42.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949319",
+    "ThreadId": "404948",
+    "Html": "\r\n<p>Thanks Mark,</p>\r\n<p>That was quick of you.&nbsp;&nbsp;The window function&nbsp;code now looks correct.</p>\r\n<p>Best wishes</p>\r\n<p>John C</p>\r\n",
+    "PostedDate": "2012-11-29T19:58:59.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

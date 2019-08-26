@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "858745",
+    "ThreadId": "362394",
+    "Html": "\r\n<p>Why is there no support for SetVolume, SetPan,...</p>\r\n<p>I tried to implement that but I get E_NOINTERFACE HRESULT. So I tried to implement the IUnknown Interface but it does not work. Do you have any ideas?</p>\r\n",
+    "PostedDate": "2012-07-07T16:15:33.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "869284",
+    "ThreadId": "362394",
+    "Html": "<p>DirectSound was contributed to NAudio by someone else, and possibly they did not implement all the features.</p>",
+    "PostedDate": "2012-07-16T02:49:28.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "881191",
+    "ThreadId": "362394",
+    "Html": "<p>Ok i tried to implement it by myself. The strange thing is that it only works on MTA Threads. Do you have any ideas why?</p>",
+    "PostedDate": "2012-07-20T15:41:01.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893041",
+    "ThreadId": "362394",
+    "Html": "<p>possibly because the DirectSound object is created and used on a background thread?</p>",
+    "PostedDate": "2012-07-30T06:39:51.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

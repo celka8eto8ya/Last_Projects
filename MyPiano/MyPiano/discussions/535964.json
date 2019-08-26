@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1216360",
+    "ThreadId": "535964",
+    "Html": "I'm creating a musicplayer where in some cases it has to play music which is located in for example a NAS, and that gives some delay when starting playback since I guess it reads the whole file before starting playback.\r<br />\n<br />\nSo my question is; Are there any way to read a file 'asynchronously' where it would buffer like an audiostream on a website or a Youtube video (where it buffers during playback, if that's the correct term for this) ?\r<br />\n<br />\nOne thing to note is that I'm using a MediaFoundationReader to read files.<br />\n",
+    "PostedDate": "2014-02-28T17:13:44.74-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217761",
+    "ThreadId": "535964",
+    "Html": "MediaFoundationReader should be able to start playback while it is downloading. There will always be some delay while it buffers enough to start playback.\r<br />\nYou could also try just using WPF MediaElement if you don't need NAudio\r<br />\n<br />\nOtherwise, you'll need to download and decode on the fly, like the MP3 streaming demo in the NAudio demo application. It's a bit more involved, and you'd need to separately handle each codec.<br />\n",
+    "PostedDate": "2014-03-03T02:37:12.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

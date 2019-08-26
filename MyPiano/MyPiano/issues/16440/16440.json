@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "can anyone help me to find out my .wav file to get value of pitch , frequency , noiseness and amplitude ?\r\n\r\n\r\n\r\nthank you.",
+    "LastUpdatedDate": "2014-05-08T02:08:11.597-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-05-07T06:22:50.787-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "need pitch , frequency , noise , amplitude",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16440
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "NAudio will give you access to the samples. It's up to you to use them to get amplitude and frequency data out. For the purposes of getting frequency information, NAudio provides an FFT class you can use, although you'll need to learn how FFT's work in order to make use of it",
+      "PostedDate": "2014-05-08T02:08:11.597-07:00",
+      "Id": 145906
+    }
+  ]
+}

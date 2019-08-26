@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "541628",
+    "ThreadId": "239879",
+    "Html": "\r\n<p>I managed to play wave files, but is it also possible to play mp3 files?</p>\r\n",
+    "PostedDate": "2010-12-29T04:49:29.68-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "541810",
+    "ThreadId": "239879",
+    "Html": "\r\n<p>Did you read the documentation? (The tab left of Discussions)</p>\r\n<p><a href=\"http://naudio.codeplex.com/documentation\">http://naudio.codeplex.com/documentation</a></p>\r\n<p>MP3 playing is described on the first page..:</p>\r\n<p><a href=\"http://naudio.codeplex.com/wikipage?title=MP3\">http://naudio.codeplex.com/wikipage?title=MP3</a></p>\r\n<p>&nbsp;</p>\r\n<p>Yuval</p>\r\n",
+    "PostedDate": "2010-12-29T10:50:36.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "541916",
+    "ThreadId": "239879",
+    "Html": "\r\n<p>Thanks I didnt saw the documentation. However now I followed the documentation and have one question left:</p>\r\n<p>&nbsp;</p>\r\n<p>The Class MeteringSystem isn't recognized:</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<pre>The type or namespace name 'MeteringStream' could not be found (are you missing a using directive or an assembly reference?) </pre>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p>What Am I missing?</p>\r\n",
+    "PostedDate": "2010-12-29T14:54:00.8-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "541929",
+    "ThreadId": "239879",
+    "Html": "\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:#000000\">I would Ignore MeteringStream - I couldn't find it either in NAudio.</span></pre>\r\n<pre><span style=\"color:#000000\"><br></span></pre>\r\n<pre><span style=\"color:#000000\">This is what I use:</span></pre>\r\n<pre><span style=\"color:gray\"><div style=\"color:black; background-color:white\"><pre><span style=\"color:blue\">       private</span> WaveStream m_blockAlignedStream = <span style=\"color:blue\">null</span>;\r\n       <span style=\"color:blue\">private</span> WaveStream m_waveReader = <span style=\"color:blue\">null</span>;\r\n       <span style=\"color:blue\">private</span> WaveChannel32 m_waveChannel = <span style=\"color:blue\">null</span>;\r\n</pre>\r\n</div>\r\n</span></pre>\r\n<pre><span style=\"color:gray\">        ///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n        <span style=\"color:gray\">///</span><span style=\"color:green\"> Creates an input WaveChannel</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;filename&quot;&gt;</span><span style=\"color:gray\">&lt;/param&gt;</span>\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> CreateInputWaveChannel(<span style=\"color:blue\">string</span> filename)\r\n        {\r\n            <span style=\"color:blue\">string</span> fileExt = Path.GetExtension( filename.ToLower() );\r\n            <span style=\"color:blue\">if</span> ( fileExt == MP3Extension )\r\n            {\r\n                m_waveReader = <span style=\"color:blue\">new</span> Mp3FileReader(filename);\r\n                m_blockAlignedStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(m_waveReader);\r\n                <span style=\"color:green\">// Wave channel - reads from file and returns raw wave blocks</span>\r\n                m_waveChannel = <span style=\"color:blue\">new</span> WaveChannel32(m_blockAlignedStream);\r\n            }\r\n            <span style=\"color:blue\">else</span> <span style=\"color:blue\">if</span> ( fileExt == WAVExtension )\r\n            {\r\n                m_waveReader = <span style=\"color:blue\">new</span> WaveFileReader(filename);\r\n                <span style=\"color:blue\">if</span> (m_waveReader.WaveFormat.Encoding != WaveFormatEncoding.Pcm)\r\n                {\r\n                    m_waveReader = WaveFormatConversionStream.CreatePcmStream(m_waveReader);\r\n                    m_waveReader = <span style=\"color:blue\">new</span> BlockAlignReductionStream(m_waveReader);\r\n                }\r\n                <span style=\"color:blue\">if</span> (m_waveReader.WaveFormat.BitsPerSample != 16)\r\n                {\r\n                    <span style=\"color:blue\">var</span> format = <span style=\"color:blue\">new</span> WaveFormat(m_waveReader.WaveFormat.SampleRate,\r\n                       16, m_waveReader.WaveFormat.Channels);\r\n                    m_waveReader = <span style=\"color:blue\">new</span> WaveFormatConversionStream(format, m_waveReader);\r\n                }\r\n                \r\n                m_waveChannel = <span style=\"color:blue\">new</span> WaveChannel32(m_waveReader);\r\n            }\r\n            <span style=\"color:blue\">else</span> <span style=\"color:blue\">if</span> (fileExt == WMAExtension)\r\n            {\r\n                m_waveReader = <span style=\"color:blue\">new</span> WMAFileReader(filename);\r\n                <span style=\"color:blue\">if</span> (m_waveReader.WaveFormat.Encoding != WaveFormatEncoding.Pcm)\r\n                {\r\n                    m_waveReader = WaveFormatConversionStream.CreatePcmStream(m_waveReader);\r\n                    m_waveReader = <span style=\"color:blue\">new</span> BlockAlignReductionStream(m_waveReader);\r\n                }\r\n                <span style=\"color:blue\">if</span> (m_waveReader.WaveFormat.BitsPerSample != 16)\r\n                {\r\n                    <span style=\"color:blue\">var</span> format = <span style=\"color:blue\">new</span> WaveFormat(m_waveReader.WaveFormat.SampleRate,\r\n                       16, m_waveReader.WaveFormat.Channels);\r\n                    m_waveReader = <span style=\"color:blue\">new</span> WaveFormatConversionStream(format, m_waveReader);\r\n                }\r\n\r\n                m_waveChannel = <span style=\"color:blue\">new</span> WaveChannel32(m_waveReader);\r\n            }\r\n            <span style=\"color:blue\">else</span>\r\n            {\r\n                <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> ApplicationException(<span style=\"color:#a31515\">&quot;Cannot create Input WaveChannel - Unknown file type: &quot;</span> &#43; fileExt);\r\n            }\r\n        }\r\n\r\n</pre>\r\n</div>\r\nYuval\r\n<p></p>\r\n",
+    "PostedDate": "2010-12-29T15:35:51.35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "541941",
+    "ThreadId": "239879",
+    "Html": "\r\n<p>Sorry, my fault. I'll fix up the documentation when I get home. The call back isn't defined in that code because it's not being used in that example. Just needs to return the input stream.</p>\r\n<p>I'll fix up that documentation this afternoon.</p>\r\n<p>Good to know it's being&nbsp;refereed&nbsp;to though :-)</p>\r\n<p>Sebastian</p>\r\n",
+    "PostedDate": "2010-12-29T16:40:34.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542094",
+    "ThreadId": "239879",
+    "Html": "\r\n<p>The documentation has been updated to remove that issue.</p>\r\n<p>Thanks for the feedback.</p>\r\n<p><br>\r\nSebastian</p>\r\n",
+    "PostedDate": "2010-12-30T04:02:47.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "542282",
+    "ThreadId": "239879",
+    "Html": "\r\n<p>Thanks a lot, now it works. However I had to changed it again, because only PCM is supported:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> <span style=\"color:blue\">private</span> WaveStream CreateInputStream(<span style=\"color:blue\">string</span> fileName)\r\n        {\r\n            WaveChannel32 inputStream;\r\n            <span style=\"color:blue\">if</span> (fileName.EndsWith(<span style=\"color:#a31515\">&quot;.mp3&quot;</span>))\r\n            {\r\n                WaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(fileName);\r\n                <span style=\"color:blue\">var</span> pStream = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(mp3Reader);\r\n                <span style=\"color:blue\">var</span> blockStream = <span style=\"color:blue\">new</span> NAudio.Wave.BlockAlignReductionStream(pStream);\r\n                inputStream = <span style=\"color:blue\">new</span> WaveChannel32(blockStream);\r\n            }\r\n            <span style=\"color:blue\">else</span>\r\n            {\r\n                <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> InvalidOperationException(<span style=\"color:#a31515\">&quot;Unsupported extension&quot;</span>);\r\n            }\r\n            volumeStream = inputStream;\r\n            <span style=\"color:blue\">return</span> volumeStream;\r\n        }\r\n<br><br>Now, one question is left... how can I adjust the volume of the playback? I'm sure it is in the documentation, but I just can't find it :S</pre>\r\n</div>\r\n<p>And if I use this code to playback a file. How can i check if the playback is finished?</p>\r\n",
+    "PostedDate": "2010-12-30T11:35:37.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "543625",
+    "ThreadId": "239879",
+    "Html": "\r\n<p>WaveChannel32 has a volume property. 1.0 is full volume</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-04T03:17:13.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

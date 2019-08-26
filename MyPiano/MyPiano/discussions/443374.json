@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1042372",
+    "ThreadId": "443374",
+    "Html": "The &quot;Read&quot; method of my custom sample provider executes every second, which is not working well for my spectrum analyzer. I based my sample provider on NotifyingSampleProvider and SampleChannel.\r<br />\n<br />\nCan't seem to find the issue. I have tried adjusting the WasapiOut latency and the DispatcherTimer in the spectrum analyzer. Both changes had no effect.\r<br />\n<br />\nIs there something I'm missing?\r<br />\n<br />\nI need the sample data every 32ms.\r<br />\n<br />\nSample provider code:<br />\n<pre><code>using System;\n\nnamespace MusicEngine.MediaFoundation\n{\n  public class FilterSampleProvider : ISampleProvider\n  {\n    public event EventHandler SampleReady;\n\n    private readonly ISampleProvider _sampleProvider;\n    private readonly WaveFormat _waveFormat;\n    private readonly ISampleFilter[] _sampleFilters;\n    private readonly int _channels;\n    private readonly bool _captureSample;\n\n    public WaveFormat WaveFormat { get { return _waveFormat; } }\n\n    public float CurrentSample { get; private set; }\n\n    public FilterSampleProvider(IWaveProvider waveProvider, ISampleFilter[] filters)\n      : this(waveProvider, filters, false, false)\n    {\n\n    }\n\n    public FilterSampleProvider(IWaveProvider waveProvider, ISampleFilter[] filters, bool forceStereo, bool captureSample)\n    {\n      _sampleFilters = filters;\n      _captureSample = captureSample;\n\n      _sampleProvider = SampleProviderConverters.ConvertWaveProviderIntoSampleProvider(waveProvider);\n\n      if (_sampleProvider.WaveFormat.Channels == 1 &amp;&amp; forceStereo)\n      {\n        _sampleProvider = new MonoToStereoSampleProvider(_sampleProvider);\n      }\n\n      _waveFormat = _sampleProvider.WaveFormat;\n      _channels = WaveFormat.Channels;\n    }\n\n    public int Read(float[] buffer, int offset, int sampleCount)\n    {\n      var readCount = _sampleProvider.Read(buffer, offset, sampleCount);\n\n      //var outputBuffer = new float[buffer.Length];\n\n      //TODO: Filter processing. Processes peak EQ. Currently NOT working.\n      //foreach (var sampleFilter in _sampleFilters)\n      //{\n      //  sampleFilter.TransformBuffer(buffer, outputBuffer);\n      //}\n\n      //FFT sample capture\n      if (_captureSample)\n      {\n        for (var n = 0; n &lt; readCount; n += _channels)\n        {\n          //if stereo, get average of right and left channels. If not, get the only channel.\n          CurrentSample = _channels &gt; 1 ? (buffer[offset + n] + buffer[offset + n + 1]) / 2 : buffer[offset + n];\n\n          if (SampleReady != null)\n            SampleReady(this, new EventArgs());\n        }\n      }\n\n      return readCount;\n    }\n  }\n}\n </code></pre>\n\nCode from playback engine:<br />\n<pre><code>    public async void OpenFile(string filePath, PlaybackCallback callback)\n    {\n      var file = await StorageFile.GetFileFromPathAsync(filePath);\n\n      TrackInfo = new TrackInfo\n      {\n        MusicProperties = await file.Properties.GetMusicPropertiesAsync(),\n        Thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem, 500)\n      };\n\n      _sampleAggregator = new SampleAggregator(4096);\n\n      var stream = await file.OpenAsync(FileAccessMode.Read);//  .OpenReadAsync();\n\n      if (stream == null)\n        return;\n\n      using (stream)\n      {\n        //TODO: fix this!!!\n        var task = Task.Factory.StartNew(() =&gt;\n          {\n            _activeStream = new MediaFoundationReader(stream);\n            _player = new WasapiOut(AudioClientShareMode.Shared, 200);\n            Task.WaitAll(new[] { _player.Init(CreateInputStream(_activeStream)) });\n          });\n\n        Task.WaitAll(new[] { task });\n\n        if (callback != null)\n          callback(true);\n\n        CanPlay = true;\n      }\n    }\n\n    private IWaveProvider CreateInputStream(IWaveProvider fileStream)\n    {\n      _filterSampleProvider = new FilterSampleProvider(fileStream, _filters, true, true);\n\n      _filterSampleProvider.SampleReady += (sender, args) =&gt; \n        _sampleAggregator.Add(_filterSampleProvider.CurrentSample);\n\n      return new SampleToWaveProvider(_filterSampleProvider);\n    }\n\n    //Called every 32ms by the spectrum analyzer\n    public float[] GetFFTBuffer()\n    {\n      var fftDataBuffer = new float[2048];\n\n      _sampleAggregator.GetFFTResults(fftDataBuffer);\n\n      return fftDataBuffer;\n    }\n</code></pre>\n\n",
+    "PostedDate": "2013-05-11T23:39:49.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042746",
+    "ThreadId": "443374",
+    "Html": "the NAudio sample aggregator raises events when it has got the required number of samples for an FFT (and has calculated the FFT). So just subscribe to the FftCalculated event. The NAudio WPF Demo shows this in action.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-05-13T04:00:24.543-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044253",
+    "ThreadId": "443374",
+    "Html": "Followed the WPF example and still have the same issue. I used the NAudio WPF example SampleAggrigator rather than my own. Although, I stripped out the volume code; didn't need it. The spectrum analyzer is now being fed by event rather than DispatcherTimer reading directly from the SampleAggrigator.\r<br />\n<br />\nWhen I set a tracepoint; FftCalculated fired 8 times, stopped for a second, then fired 8 times, stopped for a second, and repeated this behavior.\r<br />\n<br />\nUpdated playback engine code:<br />\n<pre><code>    public async void OpenFile(string filePath, PlaybackCallback callback)\n    {\n      var file = await StorageFile.GetFileFromPathAsync(filePath);\n\n      TrackInfo = new TrackInfo\n      {\n        MusicProperties = await file.Properties.GetMusicPropertiesAsync(),\n        Thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem, 500)\n      };\n\n      _sampleAggregator = new SampleAggregator(4096);\n\n      _sampleAggregator.FftCalculated += (sender, args) =&gt;\n        {\n          if (FftCalculated != null)\n          {\n            Window.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =&gt;\n            {\n              FftCalculated(sender, args);\n            });\n          }\n        };\n\n      var stream = await file.OpenAsync(FileAccessMode.Read);//  .OpenReadAsync();\n\n      if (stream == null)\n        return;\n\n      using (stream)\n      {\n        //TODO: fix this!!!\n        var task = Task.Factory.StartNew(() =&gt;\n          {\n            _activeStream = new MediaFoundationReader(stream);\n            _player = new WasapiOut(AudioClientShareMode.Shared, 200);\n            Task.WaitAll(new[] { _player.Init(CreateInputStream(_activeStream)) });\n          });\n\n        Task.WaitAll(new[] { task });\n\n        if (callback != null)\n          callback(true);\n\n        CanPlay = true;\n      }\n    }\n\n    private IWaveProvider CreateInputStream(IWaveProvider fileStream)\n    {\n      _filterSampleProvider = new FilterSampleProvider(fileStream, _filters, true, true);\n\n      _filterSampleProvider.SampleReady += (sender, args) =&gt; \n        _sampleAggregator.Add(_filterSampleProvider.CurrentSample);\n\n      return new SampleToWaveProvider(_filterSampleProvider);\n    }\n</code></pre>\n\nSampleAggrigator.cs (and FftEventArgs):<br />\n<pre><code>  public class SampleAggregator\n  {\n    public event EventHandler&lt;FftEventArgs&gt; FftCalculated;\n\n    private readonly Complex[] fftBuffer;\n    private readonly int m;\n\n    private int fftPos;\n    private float[] fftOutputBuffer;\n\n    public int FFTLength { get; set; }\n\n    public SampleAggregator(int fftLength = 1024)\n    {\n      if (!IsPowerOfTwo(fftLength))\n      {\n        throw new ArgumentException(&quot;FFT Length must be a power of two&quot;);\n      }\n\n      m = (int)Math.Log(fftLength, 2.0);\n      FFTLength = fftLength;\n      fftBuffer = new Complex[fftLength];\n      fftOutputBuffer = new float[fftLength];\n    }\n\n    bool IsPowerOfTwo(int x)\n    {\n      return (x &amp; (x - 1)) == 0;\n    }\n\n\n    public void Add(float value)\n    {\n      if (FftCalculated != null)\n      {\n        fftBuffer[fftPos].X = (float)(value * FastFourierTransform.HammingWindow(fftPos, fftBuffer.Length));\n        fftBuffer[fftPos].Y = 0;\n        fftPos++;\n\n        if (fftPos &gt;= fftBuffer.Length)\n        {\n          fftPos = 0;\n          // 1024 = 2^10\n          FastFourierTransform.FFT(true, m, fftBuffer);\n\n          for (int i = 0; i &lt; fftBuffer.Length / 2; i++)\n          {\n            // Calculate actual intensities for the FFT results.\n            fftOutputBuffer[i] = (float)Math.Sqrt(fftBuffer[i].X * fftBuffer[i].X + fftBuffer[i].Y * fftBuffer[i].Y);\n          }\n\n          FftCalculated(this, new FftEventArgs(fftOutputBuffer));\n        }\n      }\n    }\n  }\n\n  public class FftEventArgs : EventArgs\n  {\n    [DebuggerStepThrough]\n    public FftEventArgs(float[] result)\n    {\n      this.Result = result;\n    }\n\n    public float[] Result { get; private set; }\n  }\n</code></pre>\n\n",
+    "PostedDate": "2013-05-15T20:59:07.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044287",
+    "ThreadId": "443374",
+    "Html": "OK, what is likely happening is that your soundcard is using large buffers. So when a new buffer is filled up it reads enough from the source to do several FFTs. Your options are either to work with smaller buffers, or if you really must have 32 ms, then you could put each lot of FFT results into a queue and read from that queue each 32 ms. However, you'd need to make sure the FFT buffer wasn't being reused in that case (a new one for each FFT would be needed).<br />\n",
+    "PostedDate": "2013-05-15T23:45:00.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044577",
+    "ThreadId": "443374",
+    "Html": "I want the same buffer size across all devices no matter what the soundcard supports.\r<br />\n<br />\nWhat buffer size do you recommend?\r<br />\n<br />\nWhere do I change it?\r<br />\n<br />\n32ms refresh is not a necessity. It was the refresh rate I used with another audio playback library that did not support WinRT on an ARM processor.<br />\n",
+    "PostedDate": "2013-05-16T08:04:34.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044629",
+    "ThreadId": "443374",
+    "Html": "How about if I figure out frames per second, grab the current frame every ~40ms (needs to be a rate that is invisible to the human eye when I render) and run an FFT on that instead of relying on the buffer?\r<br />\n<br />\nThen my question would be: How do I get the current frame?<br />\n",
+    "PostedDate": "2013-05-16T10:02:25.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1044687",
+    "ThreadId": "443374",
+    "Html": "I was experimenting with WasapiOut.cs and found out the minimum supported period is 30000 (30ms). So, I did the following:<br />\n<pre><code>        audioClient.Initialize(shareMode, AudioClientStreamFlags.EventCallback, audioClient.MinimumDevicePeriod, 0,\n                               outputFormat, Guid.Empty);\n</code></pre>\n\nIt did not work. The stream latency ended up being 1.0666 seconds, which is the default.\r<br />\n<br />\nExclusive mode, based on MSDN documentation of IAudioClient::Initialize, should work if I set the buffer length and periodicity to MinimumDevicePeriod. It merely errors out: Buffer size not aligned.\r<br />\n<br />\nWhat I can possibly do is, like you suggested, place the completed FftBuffers into a FIFO queue. Then I can (StreamLatency / 10000)  / FftQueue.Length = Spectrum analyzer refresh rate. Then use a timer, with period based on refresh rate, to render the FFT.\r<br />\n<br />\nIt may not work as predicted, so I am still interested in retrieving the current frame based on a timer elapsed event.<br />\n",
+    "PostedDate": "2013-05-16T12:19:45.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1045229",
+    "ThreadId": "443374",
+    "Html": "you must make sure your buffer size is block aligned (use BlockAlign on the WaveFormat).\r<br />\nI'm not quite sure what you are referring to as a &quot;frame&quot; in this context.<br />\n",
+    "PostedDate": "2013-05-17T10:56:12.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1045303",
+    "ThreadId": "443374",
+    "Html": "I'm new at audio processing so you will have to forgive my ignorance.\r<br />\n<br />\nI took a look at WaveFormat.BlockAlign. It only has a getter and the value was &quot;4&quot; when I retrieved it (I have been trying to figure out exactly what that pertains to).\r<br />\n<br />\nframe: audio information for a given point in time.\r<br />\n<br />\nThe problem I seem to be having is the FFT calculation only happens 10 - 11 times per second and trying to time it correctly is... difficult.\r<br />\n<br />\nIf I rely on notifications, I get 10 - 11 (currently), one right after the other, then nothing for 1 second. So, I tried setting my timer to 100ms, which seemed to give me the correct data, but did not run smoothly.\r<br />\n<br />\nI do need to get a better understanding of how the underlying code works because when I finish this project, I will be porting over to Windows Phone 8.<br />\n",
+    "PostedDate": "2013-05-17T12:55:18.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1052698",
+    "ThreadId": "443374",
+    "Html": "Block align would be 4 if you have stereo 16 bit samples, or mono 32 bit samples. In both cases an &quot;audio frame&quot; is four bytes, and it wouldn't make sense to ask for a number of bytes that was not a multiple of four. FFTs operate on multiple samples (you use a power of 2). 1024 samples is common. <br />\n",
+    "PostedDate": "2013-06-04T09:16:50.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

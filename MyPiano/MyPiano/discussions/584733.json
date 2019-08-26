@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1360335",
+    "ThreadId": "584733",
+    "Html": "Hello.<br />\nMy question is the next.<br />\nI use NAudio in my C# console application. When i try to create AsioOut like this:<br />\nvar asioDevice = new AsioOut(deviceName);<br />\nthen i've got the error: System.Runtime.InteropServices.COMException: Unable to instantiate ASIO. Check if STAThread is set...<br />\n<br />\nWhy? What's the problem?<br />\n<br />\nWhen i check asio drivers using AsioOut.GetDriverNames() i've got 2 drivers: &quot;ASIO4ALL v2&quot; and &quot;Saffire&quot;.<br />\n",
+    "PostedDate": "2015-03-06T00:22:59.22-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1363157",
+    "ThreadId": "584733",
+    "Html": "Hello all, I am also having this problem with the ASIO4ALL v2 driver. Any help would be appreciated!<br />\n",
+    "PostedDate": "2015-03-13T07:48:38.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1363163",
+    "ThreadId": "584733",
+    "Html": "WorshipCookies, try to mark Main function as STAThread:\r<br />\n[STAThread]\r<br />\nstatic void Main(string[] args){\r<br />\n...\r<br />\n}<br />\n",
+    "PostedDate": "2015-03-13T07:52:37.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-03-13T07:53:01.84-07:00"
+  },
+  {
+    "Id": "1363165",
+    "ThreadId": "584733",
+    "Html": "Thanks Denchik! Solved the problem :).<br />\n",
+    "PostedDate": "2015-03-13T07:55:43.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

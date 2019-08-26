@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "713867",
+    "ThreadId": "283373",
+    "Html": "\r\n<p>Hi,&nbsp;</p>\r\n<p>Nice project!</p>\r\n<p>I was wondering if it is possible to stream asx media with this?</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you,&nbsp;</p>\r\n<p>Jerodev</p>\r\n",
+    "PostedDate": "2011-12-18T09:14:11.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713956",
+    "ThreadId": "283373",
+    "Html": "<p>hi, I'm afraid NAudio has no specific asx support at the moment</p>",
+    "PostedDate": "2011-12-18T14:32:39.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "714076",
+    "ThreadId": "283373",
+    "Html": "<p>How about mms?</p>",
+    "PostedDate": "2011-12-19T00:35:56.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "714119",
+    "ThreadId": "283373",
+    "Html": "<p>No, NAudio is targetted at playing back or recording audio, and doesn't have any streaming support. The only streaming example we have is in NAudioDemo which shows how to play an MP3 file as it is downloading.</p>",
+    "PostedDate": "2011-12-19T02:08:55.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

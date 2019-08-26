@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1249976",
+    "ThreadId": "546689",
+    "Html": "How to write Mp3FileWriter using Naudio Lib in C# ?<br />\nHelp me .<br />\n",
+    "PostedDate": "2014-05-27T05:14:26.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249984",
+    "ThreadId": "546689",
+    "Html": "Are you trying to write something from scratch?  If so, you might be best served by porting LAME to C#.  This would be a fully managed solution, though it would be slow.\r<br />\n<br />\nOR\r<br />\n<br />\nYou could just import NAudio.Lame from NuGet.  Don't forget to rename the unmanaged DLL as appropriate for your chosen &quot;bit-ness&quot;<br />\n",
+    "PostedDate": "2014-05-27T05:37:18.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1250024",
+    "ThreadId": "546689",
+    "Html": "I'm using NAudio.Lame , but lame not helpful becasue I want compressing audio from stream<br />\n",
+    "PostedDate": "2014-05-27T07:10:06.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1250505",
+    "ThreadId": "546689",
+    "Html": "Unless I've missed something in what you are trying to do, you're going to have to write the &quot;glue&quot; code to read from your stream into a buffer, convert to float32 (if needed), and write to NAudio.Lame from the converted buffer.<br />\n",
+    "PostedDate": "2014-05-28T08:10:30.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

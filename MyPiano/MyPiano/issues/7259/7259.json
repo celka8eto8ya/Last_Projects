@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "lots of improvements to recording since this bug was raised",
+    "ClosedDate": "2012-09-26T06:04:03.87-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Recording a wave file works fine with this: \r\n\r\nWaveFormat recordingFormat = new WaveFormat(8000, 16, 1);\r\n\r\nBut if I change the sampling rate to anything else I get the above exception after a second or two of recording.",
+    "LastUpdatedDate": "2012-09-26T06:04:03.87-07:00",
+    "PlannedForRelease": "NAudio 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-08-09T01:09:41.63-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveStillPlaying calling waveUnprepareHeader Exception",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7259
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "yes, it seems it gets itself in a mess with too much work to do. The whole recording mechanism of NAudio is still quite immature. We hope to provide some more robust methods of capturing audio in future versions.",
+      "PostedDate": "2008-08-11T13:40:20.26-07:00",
+      "Id": 41669
+    }
+  ]
+}

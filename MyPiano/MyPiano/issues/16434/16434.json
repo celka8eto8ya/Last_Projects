@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Got the following exception:\r\nAn unhandled exception of type 'System.InvalidOperationException' occurred in NAudio.dll\r\nAdditional information: Got a frame with channel mode Mono, in an MP3 with 2 channels. Mp3FileReader does not support changes to channel count.\r\n\r\ncode looks something like this:\r\n            this.ActiveFile = \"some_valid.mp3\";\r\n            waveOutDevice = new WaveOut();\r\n            audioFileReader = new AudioFileReader(this.ActiveFile);  <----- Exception here\r\n\r\nWorks fine for most files I throw at it, so presumably this particular file is encoded in a weird way?\r\nIs there a way to test for this, and work around it?  Other audio players have no trouble playing this particular file. I'm kind of at a loss at how to handle this.\r\n\r\nApologies if this has been brought up before, searching for this exception didn't yield any results :-(",
+    "LastUpdatedDate": "2014-02-28T23:32:00.81-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-02-28T23:23:38.877-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Changes to channel count?",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16434
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Aha! Tricksy filenames. Its actually an .ogg file in disguise. Please disregard.",
+      "PostedDate": "2014-02-28T23:32:00.81-08:00",
+      "Id": 135491
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-09-27T02:43:28.427-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi, I can't find waveinputs after installing nuget package. For example:\r\n\r\nint waveInDevices = NAudio.Wave.WaveInputs.WaveIn.DeviceCount\r\n\r\nReturns: Type or namespace name does not exist in namespace \"Naudio.Wave\"\r\n",
+    "LastUpdatedDate": "2016-09-27T02:43:28.427-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-04-22T05:30:49.877-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "AsDesigned"
+    },
+    "Summary": "Waveinputs missing from Visual Studio 2015 NuGet??",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16493
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "the correct namespace for `WaveIn` is `NAudio.Wave.WaveIn`",
+      "PostedDate": "2016-09-27T02:43:14.12-07:00",
+      "Id": 204333
+    }
+  ]
+}

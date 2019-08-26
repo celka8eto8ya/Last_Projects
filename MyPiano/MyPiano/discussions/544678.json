@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1242948",
+    "ThreadId": "544678",
+    "Html": "Hi,\r<br />\n<br />\nI'm a newbie for NAudio, so please be patient with me... :-)\r<br />\n<br />\nI'm concatenating many WAV files together using the code below.\r<br />\nMy problem is that after the operation finishes, the result WAV file has longer duration (!) than all files together...\r<br />\nI'm checking the duration of a WAV file<br />\n<pre><code>public static bool Concatenate(string outputFile, IEnumerable&lt;string&gt; sourceFiles, bool checkFormat)\n{\n    byte[] buffer = new byte[1024];\n    WaveFileWriter writer = null;\n\n    try\n    {\n        foreach (string sourceFile in sourceFiles)\n        {\n            using (WaveFileReader reader = new WaveFileReader(sourceFile))\n            {\n                if (writer == null)\n                    writer = new WaveFileWriter(outputFile, reader.WaveFormat);\n                else if (checkFormat &amp;&amp; !reader.WaveFormat.Equals(writer.WaveFormat))\n                    return false;\n\n                int read;\n                while ((read = reader.Read(buffer, 0, buffer.Length)) &gt; 0)\n                    writer.Write(buffer, 0, read);\n            }\n        }\n    }\n    finally\n    {\n        if (writer != null)\n        {\n            writer.Dispose();\n        }\n    }\n\n    return true;\n}</code></pre>\n\nI'm getting a file duration using:<br />\n<pre><code>public static TimeSpan GetDuration(string fileName)\n{\n    using (WaveFileReader wf = new WaveFileReader(fileName))\n        return wf.TotalTime;\n}</code></pre>\n\nAnd I'm reading all files duration using:<br />\n<pre><code>public static void GetFolderTotalDuration(string folderPath, out TimeSpan totalDuration, out int countFiles)\n{\n    totalDuration = TimeSpan.Zero;\n    countFiles = 0;\n    foreach (var s in Directory.GetFiles(folderPath, &quot;*.wav&quot;))\n    {\n        countFiles++;\n        totalDuration += GetDuration(s);\n    }\n}</code></pre>\n\nWhat am I doing wrong? Why am I getting a longer file?<br />\n",
+    "PostedDate": "2014-05-08T02:12:50.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242951",
+    "ThreadId": "544678",
+    "Html": "you can't concatenate WAV files of different formats. That's likely the issue here. They'll not only be the wrong duration, they'll sound wrong too.<br />\n",
+    "PostedDate": "2014-05-08T02:18:18.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242955",
+    "ThreadId": "544678",
+    "Html": "thanks for the quick reply. please see in my code that i'm validating that all files are in the same format... this is not the issue. for sure.<br />\n",
+    "PostedDate": "2014-05-08T02:21:52.11-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242957",
+    "ThreadId": "544678",
+    "Html": "OK, why is there a checkFormat parameter then? That should never be false.<br />\n",
+    "PostedDate": "2014-05-08T02:27:21.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242961",
+    "ThreadId": "544678",
+    "Html": "the parameter is for performance. i'm using it with true.\r<br />\nalso, i'm generating all the files with the exact wav file format...<br />\n",
+    "PostedDate": "2014-05-08T02:33:08.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242981",
+    "ThreadId": "544678",
+    "Html": "what about the Length? This is measured in bytes, and should be the same number of bytes as the total number of bytes you wrote in from each file.<br />\n",
+    "PostedDate": "2014-05-08T03:33:59.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242983",
+    "ThreadId": "544678",
+    "Html": "the length is different... I don't understand why. as i know, if the sample rate and bit rate are the same, than the length should be the same as well.<br />\n",
+    "PostedDate": "2014-05-08T03:47:22.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

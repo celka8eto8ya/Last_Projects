@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1120823",
+    "ThreadId": "467288",
+    "Html": "Hi,<br />\n<br />\nfor a private software project, I am looking for a C# code able to receive many internet radio channels, decoding them to pcm  (to a bandwidth of say 5kHz)  and send the channels bundled as a live stream to an USB port. At the USB port is a FPGA which first separates the audio signal in their channels processes the signal further. Is NAudio able to this (I mean from internet to USB port)?<br />\n<br />\nI use Windows 8<br />\n<br />\nRegards<br />\nUrs<br />\n",
+    "PostedDate": "2013-11-09T08:57:46.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1121707",
+    "ThreadId": "467288",
+    "Html": "NAudio does not include any functionality to talk directly to a USB device. What it can do is decode audio using ACM or MFT codecs installed on your computer.<br />\n",
+    "PostedDate": "2013-11-11T02:01:07.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

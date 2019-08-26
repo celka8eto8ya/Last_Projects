@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1492410",
+    "ThreadId": "661232",
+    "Html": "Hi, I'm new with audio and NAudio. I have connectd to my PC a Roland JDXi synthesizer.\r<br />\nUsing MidiIn I got how many devices are connected (1 obviously). \r<br />\nBut to open the device I need the device number. How to get this number?\r<br />\nThanks in advance.\r<br />\nUmbertoR<br />\n",
+    "PostedDate": "2017-02-08T16:08:30.613-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

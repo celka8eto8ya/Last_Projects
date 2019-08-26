@@ -1,0 +1,114 @@
+[
+  {
+    "Id": "575007",
+    "ThreadId": "248303",
+    "Html": "\r\n<p>I get this exception when I trying to play an MP3 file. Any hints what this is caused?</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>System.ArgumentException: Value does not fall within the expected range.   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHR(Int32 errorCode)   at NAudio.CoreAudioApi.AudioClient.Initialize(AudioClientShareMode shareMode, AudioClientStreamFlags streamFlags, Int64 bufferDuration, Int64 periodicity, WaveFormat waveFormat, Guid audioSessionGuid)   at NAudio.Wave.WasapiOut.Init(IWaveProvider waveStream)   at Prototype_Concept_2.views.AudioControl.play_PreviewContactDown(Object sender, ContactEventArgs e) <span style=\"color:blue\">in</span> C:\\Users\\Roflcoptr\\Documents\\Visual Studio 2008\\Projects\\Prototype_Concept_2\\Prototype_Concept_2\\views\\AudioControl.xaml.cs:line 208   at Microsoft.Surface.Presentation.ContactEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)   at System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)   at System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)   at System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)   at System.Windows.UIElement.RaiseEvent(RoutedEventArgs args, Boolean trusted)   at System.Windows.Input.InputManager.ProcessStagingArea()   at System.Windows.Input.InputManager.ProcessInput(InputEventArgs input)   at Microsoft.Surface.Presentation.InputSurfaceProviderBase.DoProcessInput(Object obj)   at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Boolean isSingleParameter)   at System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Boolean isSingleParameter, Delegate catchHandler)   at System.Windows.Threading.Dispatcher.WrappedInvoke(Delegate callback, Object args, Boolean isSingleParameter, Delegate catchHandler)   at System.Windows.Threading.DispatcherOperation.InvokeImpl()   at System.Windows.Threading.DispatcherOperation.InvokeInSecurityContext(Object state)   at System.Threading.ExecutionContext.runTryCode(Object userData)   at System.Runtime.CompilerServices.RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(TryCode code, CleanupCode backoutCode, Object userData)   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)   at System.Windows.Threading.DispatcherOperation.Invoke()   at System.Windows.Threading.Dispatcher.ProcessQueue()   at System.Windows.Threading.Dispatcher.WndProcHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean&amp; handled)   at MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean&amp; handled)   at MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)   at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Boolean isSingleParameter)   at System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Boolean isSingleParameter, Delegate catchHandler)   at System.Windows.Threading.Dispatcher.WrappedInvoke(Delegate callback, Object args, Boolean isSingleParameter, Delegate catchHandler)   at System.Windows.Threading.Dispatcher.InvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Boolean isSingleParameter)   at System.Windows.Threading.Dispatcher.Invoke(DispatcherPriority priority, Delegate method, Object arg)   at MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)   at MS.Win32.UnsafeNativeMethods.DispatchMessage(MSG&amp; msg)   at System.Windows.Threading.Dispatcher.PushFrameImpl(DispatcherFrame frame)   at System.Windows.Threading.Dispatcher.PushFrame(DispatcherFrame frame)   at System.Windows.Threading.Dispatcher.Run()   at System.Windows.Application.RunDispatcher(Object ignore)   at System.Windows.Application.RunInternal(Window window)   at System.Windows.Application.Run(Window window)   at System.Windows.Application.Run()   at Prototype_Concept_2.App.Main() <span style=\"color:blue\">in</span> C:\\Users\\Roflcoptr\\Documents\\Visual Studio 2008\\Projects\\Prototype_Concept_2\\Prototype_Concept_2\\obj\\Debug\\App.g.cs:line 0System.UnhandledExceptionEventArgs\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2011-03-03T06:03:22.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575011",
+    "ThreadId": "248303",
+    "Html": "<p>looks like some kind of error initializing WASAPI out. Debug into it and check the parameters that are being passed in.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-03T06:11:19.453-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575021",
+    "ThreadId": "248303",
+    "Html": "<p>Thanks. I'm doing it that way:</p>\r\n<p>&nbsp;</p>\r\n<p>waveOutDevice = new WasapiOut(AudioClientShareMode.Shared, 100);</p>\r\n<p>logging.Logging.Logger.write(\"Try to play audiofile: \" + (sender as Image).Tag as String);</p>\r\n<p>mainOutputStream = CreateInputStream( (sender as Image).Tag as String);</p>\r\n<p>waveOutDevice.Init(mainOutputStream);</p>\r\n<p>waveOutDevice.Play();</p>\r\n<p>&nbsp;</p>\r\n<p>And using the logger I verified that a valid filename is used.</p>",
+    "PostedDate": "2011-03-03T06:24:46.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575049",
+    "ThreadId": "248303",
+    "Html": "<p>I also tried to 100% valid wave files, but the same error.</p>",
+    "PostedDate": "2011-03-03T07:02:20.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575052",
+    "ThreadId": "248303",
+    "Html": "<p>its nothing to do with the file. You can't open Wasapi out. It may be to do with sample rate. What is the sample rate of the file you are playing?</p>\r\n<p>Have a look at the NAudio Demo project for an example of how to correctly query Wasapi to provide a stream at the correct format.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-03T07:04:28.84-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575061",
+    "ThreadId": "248303",
+    "Html": "<p>Do you mean the bitrate? It is 1141 kbps.</p>",
+    "PostedDate": "2011-03-03T07:19:30.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575064",
+    "ThreadId": "248303",
+    "Html": "<p>do mainOutputStream.WaveFormat.ToString() and tell me what you see</p>",
+    "PostedDate": "2011-03-03T07:22:24.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575071",
+    "ThreadId": "248303",
+    "Html": "<p>IeeeFloat</p>",
+    "PostedDate": "2011-03-03T07:33:05.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575074",
+    "ThreadId": "248303",
+    "Html": "<p>Can you try to play your file using the NAudioDemo project using Wasapi out and see if that works?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-03T07:34:36.517-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575078",
+    "ThreadId": "248303",
+    "Html": "<p>Ok I'll try it with this code:</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">private</span> WaveStream CreateInputStream(<span style=\"color: blue;\">string</span> fileName)\r\n        {\r\n            WaveChannel32 inputStream;\r\n            <span style=\"color: blue;\">if</span> (fileName.EndsWith(<span style=\"color: #a31515;\">\".wav\"</span>))\r\n            {\r\n                WaveStream readerStream = <span style=\"color: blue;\">new</span> WaveFileReader(fileName);\r\n                <span style=\"color: blue;\">if</span> (readerStream.WaveFormat.Encoding != WaveFormatEncoding.Pcm)\r\n                {\r\n                    readerStream = WaveFormatConversionStream.CreatePcmStream(readerStream);\r\n                    readerStream = <span style=\"color: blue;\">new</span> BlockAlignReductionStream(readerStream);\r\n                }\r\n                <span style=\"color: blue;\">if</span> (readerStream.WaveFormat.BitsPerSample != 16)\r\n                {\r\n                    <span style=\"color: blue;\">var</span> format = <span style=\"color: blue;\">new</span> WaveFormat(readerStream.WaveFormat.SampleRate,\r\n                        16, readerStream.WaveFormat.Channels);\r\n                    readerStream = <span style=\"color: blue;\">new</span> WaveFormatConversionStream(format, readerStream);\r\n                }\r\n                inputStream = <span style=\"color: blue;\">new</span> WaveChannel32(readerStream);\r\n            }\r\n            <span style=\"color: blue;\">else</span> <span style=\"color: blue;\">if</span> (fileName.EndsWith(<span style=\"color: #a31515;\">\".mp3\"</span>))\r\n            {                \r\n                WaveStream mp3Reader = <span style=\"color: blue;\">new</span> Mp3FileReader(fileName);\r\n                WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(mp3Reader);\r\n                WaveStream blockAlignedStream = <span style=\"color: blue;\">new</span> BlockAlignReductionStream(pcmStream);\r\n                inputStream = <span style=\"color: blue;\">new</span> WaveChannel32(blockAlignedStream);\r\n            }\r\n            <span style=\"color: blue;\">else</span>\r\n            {\r\n                <span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> InvalidOperationException(<span style=\"color: #a31515;\">\"Unsupported extension\"</span>);\r\n            }\r\n            <span style=\"color: green;\">// we are not going into a mixer so we don't need to zero pad</span>\r\n            <span style=\"color: green;\">//((WaveChannel32)inputStream).PadWithZeroes = false;</span>\r\n            volumeStream = inputStream;\r\n            <span style=\"color: blue;\">var</span> meteringStream = <span style=\"color: blue;\">new</span> MeteringStream(inputStream, inputStream.WaveFormat.SampleRate / 10);\r\n            meteringStream.StreamVolume += <span style=\"color: blue;\">new</span> EventHandler&lt;StreamVolumeEventArgs&gt;(meteringStream_StreamVolume);\r\n            \r\n            <span style=\"color: blue;\">return</span> meteringStream;\r\n        }\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2011-03-03T07:42:45.16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "575084",
+    "ThreadId": "248303",
+    "Html": "<p>The same error. I noticed that on one machine it is running and on another it is not.</p>",
+    "PostedDate": "2011-03-03T07:50:04.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "577116",
+    "ThreadId": "248303",
+    "Html": "<p>what are the values of mainOutputStream.WaveFormat.SampleRate and mainOutputStream.WaveFormat.Channels?</p>\r\n<p>can you run NAudioDemo in debug using Visual Studio and break on all errors to see the HResult that is being returned from AudioClient.Initialise?</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-08T04:09:49.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "594199",
+    "ThreadId": "248303",
+    "Html": "<p>I have similar problem with ieee float. im getting Exception:</p>\n<pre>\"MmException was unhandled by user code: No Driver calling acmFormatSuggest\"\r\n\r\n   at NAudio.MmException.Try(MmResult result, String function) in \\NAudio\\Wave\\MmeInterop\\MmException.cs:line 39\r\n   at NAudio.Wave.Compression.AcmStream.SuggestPcmFormat(WaveFormat compressedFormat) in \\NAudio\\Wave\\Compression\\AcmStream.cs:line 103\r\n   at NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(WaveStream sourceStream) \\NAudio\\WaveStreams\\WaveFormatConversionStream.cs:line 29\r\n\r\n</pre>\n<p>Here's the wav file (Ieee float, 2channels, 32bits):&nbsp;http://tsmaestro.aspone.cz/aa.wav</p>\n<p>To simulate the exception you can play the file by &nbsp;NAudio Demo project (WasapiOut).</p>\n<p>I made the file from tada.wav in C:/windows/media/ by using following code:</p>\n<pre style=\"font-family: Consolas; background: #0e1212; color: #d6ded4;\">&nbsp;<span style=\"color: #498091;\">public</span>&nbsp;<span style=\"color: #498091;\">void</span>&nbsp;<span style=\"color: #c7c7a5;\">Crop</span>(<span style=\"color: #498091;\">string</span>&nbsp;<span style=\"color: #c7c7a5;\">newFileName</span>,&nbsp;<span style=\"color: #c69797;\">TimeSpan</span>&nbsp;<span style=\"color: #c7c7a5;\">start</span>,&nbsp;<span style=\"color: #c69797;\">TimeSpan</span>&nbsp;<span style=\"color: #c7c7a5;\">end</span>)\r\n&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c69797;\">TimeSpan</span>&nbsp;<span style=\"color: #c7c7a5;\">originalPosition</span>&nbsp;<span style=\"color: gray;\">=</span>&nbsp;<span style=\"color: #c7c7a5;\">Position</span>;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c7c7a5;\">Stop</span>();\r\n \r\n \r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c7c7a5;\">Position</span>&nbsp;<span style=\"color: gray;\">=</span>&nbsp;<span style=\"color: #c7c7a5;\">start</span>;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">using</span>&nbsp;(<span style=\"color: #afc81c;\">WaveFileWriter</span>&nbsp;<span style=\"color: #c7c7a5;\">writer</span>&nbsp;<span style=\"color: gray;\">=</span>&nbsp;<span style=\"color: #498091;\">new</span>&nbsp;<span style=\"color: #afc81c;\">WaveFileWriter</span>(<span style=\"color: #c7c7a5;\">newFileName</span>,&nbsp;<span style=\"color: #c7c7a5;\">mainOutputStream</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">WaveFormat</span>))\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">byte</span>[]&nbsp;<span style=\"color: #c7c7a5;\">buffer</span>&nbsp;<span style=\"color: gray;\">=</span>&nbsp;<span style=\"color: #498091;\">new</span>&nbsp;<span style=\"color: #498091;\">byte</span>[<span style=\"color: #c7c7a5;\">mainOutputStream</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">WaveFormat</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">AverageBytesPerSecond</span>];\r\n \r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">while</span>&nbsp;(<span style=\"color: #498091;\">true</span>)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">double</span>&nbsp;<span style=\"color: #c7c7a5;\">seconds</span>&nbsp;<span style=\"color: gray;\">=</span>&nbsp;(<span style=\"color: #c7c7a5;\">end</span>&nbsp;<span style=\"color: gray;\">-</span>&nbsp;<span style=\"color: #c7c7a5;\">Position</span>)<span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">TotalSeconds</span>;\r\n \r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">int</span>&nbsp;<span style=\"color: #c7c7a5;\">read</span>;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">if</span>&nbsp;(<span style=\"color: #c7c7a5;\">seconds</span>&nbsp;<span style=\"color: gray;\">&gt;</span>&nbsp;<span style=\"color: #6dabd8;\">1</span>)&nbsp;<span style=\"color: #c7c7a5;\">read</span>&nbsp;<span style=\"color: gray;\">=</span>&nbsp;<span style=\"color: #c7c7a5;\">buffer</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">Length</span>;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">else</span>&nbsp;<span style=\"color: #498091;\">if</span>&nbsp;(<span style=\"color: #c7c7a5;\">seconds</span>&nbsp;<span style=\"color: gray;\">&gt;</span>&nbsp;<span style=\"color: #6dabd8;\">0</span>)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #707e77; font-weight: bold;\">//ak&nbsp;sa&nbsp;blizime&nbsp;ku&nbsp;koncu,&nbsp;nezoberieme&nbsp;cely&nbsp;buffer,&nbsp;ale&nbsp;iba&nbsp;jeho&nbsp;cast</span>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c7c7a5;\">read</span>&nbsp;<span style=\"color: gray;\">=</span>&nbsp;(<span style=\"color: #498091;\">int</span>)(<span style=\"color: #c7c7a5;\">mainOutputStream</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">WaveFormat</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">AverageBytesPerSecond</span>&nbsp;<span style=\"color: gray;\">*</span>&nbsp;<span style=\"color: #c7c7a5;\">seconds</span>);\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c7c7a5;\">read</span>&nbsp;<span style=\"color: gray;\">-=</span>&nbsp;<span style=\"color: #c7c7a5;\">read</span>&nbsp;<span style=\"color: gray;\">%</span>&nbsp;(<span style=\"color: #c7c7a5;\">mainOutputStream</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">WaveFormat</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">BitsPerSample</span>&nbsp;<span style=\"color: gray;\">/</span>&nbsp;<span style=\"color: #6dabd8;\">8</span>&nbsp;<span style=\"color: gray;\">*</span>&nbsp;<span style=\"color: #c7c7a5;\">mainOutputStream</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">WaveFormat</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">Channels</span>);\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">else</span>&nbsp;<span style=\"color: #498091;\">break</span>;\r\n \r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">int</span>&nbsp;<span style=\"color: #c7c7a5;\">bytesRead</span>&nbsp;<span style=\"color: gray;\">=</span>&nbsp;<span style=\"color: #c7c7a5;\">mainOutputStream</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">Read</span>(<span style=\"color: #c7c7a5;\">buffer</span>,&nbsp;<span style=\"color: #6dabd8;\">0</span>,&nbsp;<span style=\"color: #c7c7a5;\">read</span>);\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">if</span>&nbsp;(<span style=\"color: #c7c7a5;\">bytesRead</span>&nbsp;<span style=\"color: gray;\">==</span>&nbsp;<span style=\"color: #6dabd8;\">0</span>)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #498091;\">break</span>;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c7c7a5;\">writer</span><span style=\"color: gray;\">.</span><span style=\"color: #c7c7a5;\">WriteData</span>(<span style=\"color: #c7c7a5;\">buffer</span>,&nbsp;<span style=\"color: #6dabd8;\">0</span>,&nbsp;<span style=\"color: #c7c7a5;\">bytesRead</span>);\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\r\n \r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c7c7a5;\">Position</span>&nbsp;<span style=\"color: gray;\">=</span>&nbsp;<span style=\"color: #c7c7a5;\">originalPosition</span>;\r\n&nbsp;&nbsp;&nbsp;&nbsp;}</pre>\n<p>&nbsp;mainoutputstream is created by your CreateInputStreamMethod</p>",
+    "PostedDate": "2011-04-08T07:52:19.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "597453",
+    "ThreadId": "248303",
+    "Html": "<p>this file should now play with the latest NAudio demo code</p>",
+    "PostedDate": "2011-04-14T13:13:41.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

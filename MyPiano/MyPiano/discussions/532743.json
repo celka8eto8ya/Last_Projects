@@ -1,0 +1,130 @@
+[
+  {
+    "Id": "1210389",
+    "ThreadId": "532743",
+    "Html": "Does anyone have some good examples of how to build an equalizer with NAudio? when do we see this i the library? I would really appriciate if anyone could point me in the right direction.\r<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2014-02-19T01:46:02.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210408",
+    "ThreadId": "532743",
+    "Html": "Have a look at this thread: <a href=\"https://naudio.codeplex.com/discussions/237421\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/237421</a><br />\n",
+    "PostedDate": "2014-02-19T02:18:33.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210414",
+    "ThreadId": "532743",
+    "Html": "Thanks, i've seen that, but it's 4 years old, i thought some new stuff maybe existed today? :)<br />\n",
+    "PostedDate": "2014-02-19T02:28:24.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210466",
+    "ThreadId": "532743",
+    "Html": "NAudio has a BiQuad filter, which you could use for individual bands of an equaliser.<br />\n",
+    "PostedDate": "2014-02-19T04:39:14.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210467",
+    "ThreadId": "532743",
+    "Html": "Hi Mark, do you have any sample on that?<br />\n",
+    "PostedDate": "2014-02-19T04:40:14.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210469",
+    "ThreadId": "532743",
+    "Html": "I'm afraid the only sample so far is when I used it as part of a synthesizer in my <a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">NAudio pluralsight course</a>. It's definitely on the list of bits of NAudio I want to include as demos in the sample code though.<br />\n",
+    "PostedDate": "2014-02-19T04:44:01.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210473",
+    "ThreadId": "532743",
+    "Html": "Hm, can't download anything without a subscription.. :D do you have the sample any other place?<br />\n",
+    "PostedDate": "2014-02-19T04:46:46.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213538",
+    "ThreadId": "532743",
+    "Html": "afraid not at the moment. The BiQuad filter isn't that hard to use though. Hopefully I'll find time to add a demo in the not too distant future<br />\n",
+    "PostedDate": "2014-02-24T01:44:51.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215064",
+    "ThreadId": "532743",
+    "Html": "I know that this is the discussion place of naudio, but I've had exactly the same Problem a few days ago. I could not find a good implementation of a eq for NAudio. \r<br />\nSo I've posted my question on stackoverflow: <a href=\"http://stackoverflow.com/questions/22018898/sound-with-equalizer\" rel=\"nofollow\">http://stackoverflow.com/questions/22018898/sound-with-equalizer</a>\r<br />\nI've got perfectly working example on how to use the cscore library to create an eq. So since, NAudio does not includes this feature, I would recommend you to use CSCore. Could not find any bugs so far. And anyway. It includes the same and even more features than NAudio does. So if you are still looking for a working eq ... give it a try. It worked for me (y).<br />\n",
+    "PostedDate": "2014-02-26T03:15:42.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215089",
+    "ThreadId": "532743",
+    "Html": "glad you got an answer.\r<br />\n<br />\nI have mixed feelings about CSCore - it rips off a lot of my NAudio code (plus others contributions) without giving any credit. But there are some nice ideas in there, and shame they couldn't have been contributed to NAudio.\r<br />\n<br />\nThe Equalizer in cscore simply uses multiple instances of a BiQuad filter and would be quite easy to recreate in NAudio.<br />\n",
+    "PostedDate": "2014-02-26T03:48:30.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215149",
+    "ThreadId": "532743",
+    "Html": "I've added a simple 8 band Equalizer demo to the WPF demo for NAudio. Will promote it to be part of the main library eventually.<br />\n",
+    "PostedDate": "2014-02-26T06:53:59.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1219831",
+    "ThreadId": "532743",
+    "Html": "Thank you! i'll take a look at it when i get the time..<br />\n",
+    "PostedDate": "2014-03-06T04:26:50.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1221222",
+    "ThreadId": "532743",
+    "Html": "Right what i needed, thank you!<br />\n",
+    "PostedDate": "2014-03-10T15:10:44.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1222071",
+    "ThreadId": "532743",
+    "Html": "Got this working in my project now.. again thanks!<br />\n",
+    "PostedDate": "2014-03-12T13:22:11.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1256884",
+    "ThreadId": "532743",
+    "Html": "<em>I've added a simple 8 band Equalizer demo to the WPF demo for NAudio. Will promote it to be part of the main library eventually.</em>\r<br />\n<br />\nIs the code available now?\r<br />\n<br />\nthx <br />\n",
+    "PostedDate": "2014-06-16T17:03:07.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1256931",
+    "ThreadId": "532743",
+    "Html": "yes, it's in the WPF demo (look <a href=\"https://naudio.codeplex.com/SourceControl/latest#NAudioWpfDemo/EqualizationDemo/Equalizer.cs\" rel=\"nofollow\">here</a>). It's just not part of NAudio yet. Just copy the files you need into your own project. <br />\n",
+    "PostedDate": "2014-06-17T01:09:17.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

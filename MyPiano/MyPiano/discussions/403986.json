@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "944711",
+    "ThreadId": "403986",
+    "Html": "\r\n<p>Great API! I am having 2 small problems, I get gaps when the WPF gui I created does a big visual tree rebuild on changing tabs. Once the tab is built the problem goes away. The second problem may be related, but we did a comparison of playing the same mp3\r\n on multiple computers and the playbacks get out of phase and wander up to a second in a 20 minute mp3. This happens if you do the same test using Windows Multimedia player on multiple PCs.</p>\r\n<p>What is the best strategy to avoid audio gaps and try to maintain a consistent play rate?&nbsp;</p>\r\n<p>Here is how I'm playing the MP3, followed by how its being opened.</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>\t\t<span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Play()\r\n\t\t{\r\n\t\t\t<span style=\"color:blue\">if</span> (!CanPlay)\r\n\t\t\t\t<span style=\"color:blue\">return</span>;\r\n\r\n\t\t\t<span style=\"color:blue\">if</span> (waveOutDevice != <span style=\"color:blue\">null</span>)\r\n\t\t\t{\r\n\t\t\t\twaveOutDevice.Play();\r\n\t\t\t}\r\n\r\n\t\t\tIsPlaying = <span style=\"color:blue\">true</span>;\r\n\t\t\tCanPause = <span style=\"color:blue\">true</span>;\r\n\t\t\tCanPlay = <span style=\"color:blue\">false</span>;\r\n\t\t\tCanStop = <span style=\"color:blue\">true</span>;\r\n\t\t}\r\n\r\n\t\t<span style=\"color:blue\">public</span> <span style=\"color:blue\">bool</span> OpenFile( <span style=\"color:blue\">string</span> path )\r\n\t\t{\r\n\t\t\tCloseFile();\r\n\r\n\t\t\t<span style=\"color:blue\">if</span> (!System.IO.File.Exists(path))\r\n\t\t\t\t<span style=\"color:blue\">return</span> <span style=\"color:blue\">false</span>;\r\n\r\n\t\t\t<span style=\"color:blue\">try</span>\r\n\t\t\t{\r\n\t\t\t\twaveOutDevice = <span style=\"color:blue\">new</span> WaveOut()\r\n\t\t\t\t{\r\n\t\t\t\t\tDesiredLatency = 100,\r\n\t\t\t\t\tNumberOfBuffers = 64,\r\n\t\t\t\t};\r\n\t\t\t\tActiveStream = <span style=\"color:blue\">new</span> Mp3FileReader(path);\r\n\r\n\t\t\t\tinputStream = <span style=\"color:blue\">new</span> WaveChannel32(ActiveStream);\r\n\t\t\t\tsampleAggregator = <span style=\"color:blue\">new</span> SampleAggregator(4096);\r\n\t\t\t\tinputStream.Sample &#43;= inputStream_Sample;\r\n\t\t\t\twaveOutDevice.Init(inputStream);\r\n\t\t\t\tChannelLength = inputStream.TotalTime.TotalSeconds;\r\n\t\t\t\tCanPlay = <span style=\"color:blue\">true</span>;\r\n\r\n\t\t\t\tGenerateWaveformData(path);\r\n\r\n\t\t\t}\r\n\t\t\t<span style=\"color:blue\">catch</span>(Exception ex)\r\n\t\t\t{\r\n\t\t\t\tActiveStream = <span style=\"color:blue\">null</span>;\r\n\t\t\t\tCanPlay = <span style=\"color:blue\">false</span>;\r\n\t\t\t\tlog.ErrorFormat(<span style=\"color:#a31515\">&quot;Can not play wav file {0} - {1}&quot;</span>, path, ex.Message);\r\n\t\t\t}\r\n\t\t\t<span style=\"color:blue\">return</span> CanPlay;\r\n\t\t}\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Thanks for any advice,</p>\r\n<p>&nbsp;</p>\r\n<p>Neil</p>\r\n",
+    "PostedDate": "2012-11-20T10:14:52.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944743",
+    "ThreadId": "403986",
+    "Html": "\r\n<p>Try changing &quot;waveOutDevice = new WaveOut()&quot; to &quot;waveOutDevice = new WaveOutEvent()&quot;. &nbsp;This will move the decoding to a background thread so your UI updates don't affect the playback.</p>\r\n<p>This should also fix the &quot;de-sync&quot; issue you mentioned.</p>\r\n",
+    "PostedDate": "2012-11-20T11:23:58.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944747",
+    "ThreadId": "403986",
+    "Html": "\r\n<p>also, NumberOfBuffers should not be 64. It should be 2 or at most 3. You're giving the soundcard much more work than it needs by constantly cycling through very short buffers. Pushing latency up also protects more against the chance that a garbage collect\r\n could make you miss a buffer refill. 200 or even 300ms might be acceptable for your case.</p>\r\n",
+    "PostedDate": "2012-11-20T11:30:15.497-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944841",
+    "ThreadId": "403986",
+    "Html": "\r\n<p>The change to WaveOutEvent and setting number of buffers to 2 did the trick.</p>\r\n<p>The latency I need to experiment with, so that it corresponds roughly to the wireless sending of the fire message and ignition of the electrical match and the firing of the fireworks. &nbsp;It cannot be perfect timing, but its more than good enough when the brain\r\n combines the sound &nbsp;of the music and sight of the pyro. I think I may need to add a slider to advance/delay the pyro cues if the operator thinks the audio is a bit off from the actual firing.</p>\r\n<p>The timing issue became apparent when a broadcaster could not accept our audio feed. We decided on a simple &quot;ready set go&quot; to sync the pyro system with their playing of the mp3 on their computer. We tested it a few times and were surprised how much timing\r\n wander between the two systems there was. Tested again using windows media player on both systems and saw the same result. Any ideas why?&nbsp;</p>\r\n<p>Thanks Again!</p>\r\n",
+    "PostedDate": "2012-11-20T15:06:32.697-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944981",
+    "ThreadId": "403986",
+    "Html": "\r\n<p>One thing to note about the &quot;latency&quot; is that really I shouldn't have called it latency. It is the total duration of all the buffers. Actual latency is half that if you are working with two buffers (the computer is playing one buffer while it fills the other).\r\n Does NAudio lag behind the other PC or get ahead? I know the soundcards on windows PCs can sometimes be running at 48kHz even when they are playing 44.1kHz audio. It does of course do sample rate conversion, but it might account for a small drift perhaps.\r\n I don't know what the actual tolerance of audio clocks on soundcards is.</p>\r\n<p>Obviously with fireworks you have the bigger issue with the speed of sound which is much slower than people realise. It is 340m/s, so so moving just a few metres closer to the source of the sound will mean you hear it 30ms earlier. Unless everyone is exactly\r\n the same distance from the speakers, they will not experience the same synchronization</p>\r\n<p>Anyway, sounds a really interesting use you are putting NAudio to.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-20T23:46:01.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

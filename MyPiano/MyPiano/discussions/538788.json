@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1222004",
+    "ThreadId": "538788",
+    "Html": "Hi!\r<br />\n<br />\nI'm trying to write a kind of emulator and I must create a PCM stream and generate the sound it produced 50 times per second.\r<br />\n<br />\nWhat is the correct way to do this in NAudio?  (I was using DynamicSoundEffectInstance in XNA but now it's not an option)\r<br />\n<br />\nThanks a lot,\r<br />\nKak<br />\n",
+    "PostedDate": "2014-03-12T11:09:12.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223558",
+    "ThreadId": "538788",
+    "Html": "I'm not sure exactly what you are asking. Are you trying to repeat a short sound 50 times a second?<br />\n",
+    "PostedDate": "2014-03-17T08:48:48.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

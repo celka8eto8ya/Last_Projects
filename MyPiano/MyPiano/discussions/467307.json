@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1120873",
+    "ThreadId": "467307",
+    "Html": "Dear Sir, \r<br />\nI know it may be complex and out of scope of this great project, but I am sure that this great library will amaze me one more.\r<br />\n<br />\nI have a wav file , i need to match it to see which wav from a library of waves (15 files only) is close to it. I know this will need Fourier Transformation. I know that this library uses it too.\r<br />\n<br />\nAny advise .\r<br />\nThanks,<br />\n",
+    "PostedDate": "2013-11-09T14:28:17.003-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1121705",
+    "ThreadId": "467307",
+    "Html": "I'm afraid NAudio does not include this functionality. It';s actually a difficult problem to solve. Search for &quot;audio fingerprinting&quot; to read more about approaches you can take.<br />\n",
+    "PostedDate": "2013-11-11T01:59:59.03-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

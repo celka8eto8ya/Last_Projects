@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1292212",
+    "ThreadId": "561810",
+    "Html": "My goal is to get tiny fade in when starting mp3 playback, and fade out when stopping/pausing playback. So far I have sorted out to use following code to initialize waveoutdevice:<br />\n<pre><code>waveOutDevice = new WaveOutEvent();\naudioFileReader = new AudioFileReader(file);\nfadeInOut = new FadeInOutSampleProvider(audioFileReader);\nvar postVolumeMeter = new MeteringSampleProvider(fadeInOut);\npostVolumeMeter.StreamVolume += OnPostVolumeMeter;\nwaveOutDevice.Init(postVolumeMeter);\n</code></pre>\n\nfadeInOut.BeginFadeIn() and BeginFadeOut() is working as they should. My problem is how do I use them with waveOutDevice.Play() and Pause() to achieve fades? If I just run both Play() and FadeIn() consecutively, music starts playing at 100% volume, then drops to 0% and fades back to 100%.\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2014-08-21T12:13:47.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

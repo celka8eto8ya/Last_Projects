@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1215506",
+    "ThreadId": "535753",
+    "Html": "Hi mark,\r<br />\n<br />\nI developed a app using Naudio .I use Makeupgain=5,attacktime=50,release time=50,threshold=-14,Ratio=3,treable=-5.When song goes low to high bit some shuttering are there how to solve this problem?<br />\n",
+    "PostedDate": "2014-02-27T01:21:06.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215854",
+    "ThreadId": "535753",
+    "Html": "Have you made a compressor of some type?<br />\n",
+    "PostedDate": "2014-02-27T14:09:04.303-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215943",
+    "ThreadId": "535753",
+    "Html": "Thanks mark for your valuable reply.Yes we have made compressor using sample compressor stream.cs class.<br />\n",
+    "PostedDate": "2014-02-27T21:23:20.237-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215971",
+    "ThreadId": "535753",
+    "Html": "OK, that class is rather old, and I'd like to replace it at some point with something better. Possibly it is clipping going on, especially with that amount of makeup gain.<br />\n",
+    "PostedDate": "2014-02-27T23:55:43.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

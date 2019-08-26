@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1077029",
+    "ThreadId": "452502",
+    "Html": "Can I save Captured audio as amr file?<br />\n",
+    "PostedDate": "2013-08-05T19:46:43.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083123",
+    "ThreadId": "452502",
+    "Html": "I'm afraid NAudio has no support for creating AMR files. However if you have an ACM codec that can encode AMR, then you could use WaveFormatConversionStream to encode PCM to AMR.<br />\n",
+    "PostedDate": "2013-08-21T07:20:33.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083925",
+    "ThreadId": "452502",
+    "Html": "thanks,by the way why can i capture sound in same pc but others cant<br />\n",
+    "PostedDate": "2013-08-22T20:35:05.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

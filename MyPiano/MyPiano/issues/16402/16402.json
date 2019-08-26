@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "it's simple code:\r\nNAudio.Wave.WaveStream waveReader = new NAudio.Wave.Mp3FileReader(@\"C:\\~~.mp3\");\r\n\r\nOn SuggestFormat() of AcmStream.cs:\r\n->             MmException.Try(AcmInterop.acmFormatSuggest(IntPtr.Zero, compressedFormat, suggestedFormat, Marshal.SizeOf(suggestedFormat), AcmFormatSuggestFlags.FormatTag), \"acmFormatSuggest\");\r\n\r\nthis line causes crashing of application.\r\nI think this problem's about differences between 4.0 below with 4.5, especially for marshaling or interop services. I guess so because it solved temporarily when i changed my target framework by 4.5 to 4.0.\r\n\r\n\r\nahh.. seems like it's related with https://naudio.codeplex.com/discussions/415247.\r\n\r\n",
+    "LastUpdatedDate": "2013-07-18T01:38:15.103-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-07-17T09:10:54.067-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "crashing with acm",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16402
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "what codecs do you have installed on your machine?",
+      "PostedDate": "2013-07-18T01:38:15.103-07:00",
+      "Id": 106419
+    }
+  ]
+}

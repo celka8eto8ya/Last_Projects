@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "935799",
+    "ThreadId": "401712",
+    "Html": "\r\n<p>Good Afternoon,</p>\r\n<p>&nbsp;</p>\r\n<p>I've been testing the network chat demo and I noticed that when the host computer begins streaming, the audio coming from the microphone works well.&nbsp; However, when another client connects, the audio becomes choppy and it's hard to hear anything.&nbsp;\r\n What might be causing this and what would I need to look at to fix the problem?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2012-11-02T10:47:49.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "935814",
+    "ThreadId": "401712",
+    "Html": "<p>the demo code doesn't support multiple clients. You'd need a separate BufferedWaveProvider for each incoming stream and then mix them together with the MixingSampleProvider.</p>",
+    "PostedDate": "2012-11-02T11:13:04.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "935845",
+    "ThreadId": "401712",
+    "Html": "<p>Thank you for clearing that up for me.&nbsp; I didn't realize that the demo didn't support more than one client.</p>",
+    "PostedDate": "2012-11-02T12:15:03.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

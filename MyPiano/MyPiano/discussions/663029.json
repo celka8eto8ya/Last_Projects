@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1496612",
+    "ThreadId": "663029",
+    "Html": "I've successfully used NAudio to process a UDP incoming stream,by defining a signal chain composed of a BufferedWaveProvider, followed by a SampleChannel, followed by a WdlResamplingSampleProvider, then finally to a WaveOut device to play the audio stream on a USB audio device.  Now my question.  I am externally connecting the output of my USB audio device to the input of a pro audio card which has an ASIO driver using PortAudio.  I'd like to not use this external arrangement, but instead patch the stream from the the Resampler directly to the code that supports the processing from the PortAudio code.  Is anyone willing to provide some direction for me to experiment with? I can provide more details.  Basically I'd like to do away with the PortAudio stuff and patch the Resampler output directly to other signal processing code I have which is DttSP.  Regards,  Karin <br />\n",
+    "PostedDate": "2017-05-19T17:21:23.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

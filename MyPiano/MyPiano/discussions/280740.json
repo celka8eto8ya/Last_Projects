@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "703002",
+    "ThreadId": "280740",
+    "Html": "\r\n<p>Hi. In my app I need to play many sounds&nbsp;independently. From reading discussions and examples I am assuming I should use&nbsp;WaveMixerStream32. I have no idea how to connect all elements so they work properly. For me schema of using it looks like:\r\n &nbsp;many(WaveReader-&gt;WaveChannel )-&gt;WaveMixer-&gt;DirectOut &nbsp;. But in this schema only DirectOut has Play() and Pause() methods - so how can I Play and Stop files separately?</p>\r\n<p>I would like to have the possibility of starting and finishing playback of sounds for example when some events are firing (i.e. playSound1(), playSound2(), stopsSound1(), stopSound2() - fired by different buttons).</p>\r\n<p>Can you give me some examples how can I achieve this?</p>\r\n",
+    "PostedDate": "2011-11-24T08:05:56.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "703338",
+    "ThreadId": "280740",
+    "Html": "<p>I'm doing exactly this.&nbsp;</p>\n<p>I am using the sine wave generator that Mark has posted as an example, but you can use existing wave fragments as well.</p>\n<p>Basically, any IWaveProvider.</p>\n<p>Each note played is a separate WaveStream (this can be optimized later).</p>\n<p>I'm hooking these up through a WaveChannel with WaveMixerStream32's AddInput method,</p>\n<p>but after passing through a couple more WaveStreams:</p>\n<ul>\n<li>WaveOffsetStream, to delay the sound with a given parameter </li>\n<li>FadeStream (easy to write), which fades in and out at given moments - this is required to remove audible clicking </li>\n</ul>\n<p>I also want to add an</p>\n<ul>\n<li>StopSignallingStream </li>\n</ul>\n<p>that raises an event when its Read() reads 0 bytes, or fewer bytes than intended, assuming the end of the input;</p>\n<p>and use the event to call RemoveInput a stream from the mixer when it has finished.</p>\n<p>It appears to work well, but I haven't tested with a big number of notes yet.</p>\n<p>I've only just started.&nbsp; I'm very happy with the library's capabilities and ease of use.</p>\n<p>The only thing I, as a total newbie in audio programming, find confusing is the implicit constraints in the design and implementation, for instance:</p>\n<ul>\n<li>The WaveStream classes are Streams, so they have all Stream methods , but only a few of them (mainly Read()) are supposed to ever be used - I've come to realize that when using them I should regard them as IWaveProviders that just happen to use (Wave)Stream  for implementation.<br /> For clarity, I'd prefer if they didn't expose these methods in the first place. </li>\n<li>Different WaveStreams read and produce different sets of WaveFormats - it would be helpful if this was evident from their types so it could be checked statically.&nbsp; There could be a whole family of Read*() methods instead of just one or two. </li>\n</ul>",
+    "PostedDate": "2011-11-25T04:05:08.537-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

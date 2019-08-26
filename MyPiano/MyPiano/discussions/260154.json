@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "622771",
+    "ThreadId": "260154",
+    "Html": "\r\n<p>Hi all. I have a project that requires me to capture the audio from about eight different sources, mix them then stream it to another PC over a lan or the internet.</p>\r\n<p>I see Naudio as the way to go, but there appears to be a shortage of documentation and a wealth of examples.</p>\r\n<p>So can anyone give me a brief outline of which methods to use and in which order. Im not looking for a code just&nbsp;pointers in the right direction.</p>\r\n<p>The&nbsp;pc will either have multiple sound cards with mic/line in&nbsp;or one card with multiple inputs.</p>\r\n<p>the code has to run on Xp as well as windows 7 so I assume I need to start with WaveIn.</p>\r\n<p>After that someway to mix&nbsp;all the wavein outputs, then out via a tcp connection?</p>\r\n<p>I mainly code in vb.net but I can cope with c# if you need to use code snippits.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-06-03T13:36:59.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629677",
+    "ThreadId": "260154",
+    "Html": "<p>I would probably connect each WaveIn to a BufferedWaveProvider, and then use those BufferedWaveProviders as inputs to a Mixer stream. You could probably use the WaveMixer32 class to do the mixing, although you will need a couple of extra stages in your audio pipeline to turn the BufferedWaveProviders into WaveChannel32. I'm hoping to include more example classes that make this easier for people in NAudio 1.5.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-19T00:10:18.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629678",
+    "ThreadId": "260154",
+    "Html": "<p>I would probably connect each WaveIn to a BufferedWaveProvider, and then use those BufferedWaveProviders as inputs to a Mixer stream. You could probably use the WaveMixer32 class to do the mixing, although you will need a couple of extra stages in your audio pipeline to turn the BufferedWaveProviders into WaveChannel32. I'm hoping to include more example classes that make this easier for people in NAudio 1.5.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-19T00:22:56.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

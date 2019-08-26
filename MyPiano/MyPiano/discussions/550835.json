@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1263326",
+    "ThreadId": "550835",
+    "Html": "Hi,\r<br />\n<br />\nIs it possible to remove little gaps between different audio tracks?\r<br />\n<br />\nCurrently, when one track ends and PlaybackStopped event fires to load and play new track, there is little (under one second) gap between two tracks. Can I avoid this somehow?\r<br />\n<br />\nTracks itself does not contain any silence. If I play them with eg. foobar2000, there is no gaps.\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2014-07-07T09:54:53.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1266101",
+    "ThreadId": "550835",
+    "Html": "I am not sure whether NAudio supports gapless playback or not but achieving gapless playback is very tricky and depends on the two consecutive tracks.<br />\n<br />\nI have struggled with the gapless playback 7 yeas back and it seems true gapless is only possible if the two tracks are compatible are directshhow filter graphlevel. If the same filtergraph is able to play the consecutive tracks then only the true gapless can be achieved else not (which is seldom the case of audio tracks).<br />\n<br />\nThe workaround I had to put to overcome this is to start the next track 1 second(could vary for you) prior to the finish of first track. TO do this we need to have two instances of actual player engine and use them for alternate tracks. I was able to achieve the gapless using this trick. It was like cheating the ears. the only problem I had was when I was testing with sine wave. the sine wave can clearly bring this workaround to surface.<br />\n<br />\n<strong>P.S</strong>. This question reminded me of the good time I had developing that audio product. Those sleepless nights and constant fights with memory leaks.<br />\n",
+    "PostedDate": "2014-07-15T21:42:00.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1266263",
+    "ThreadId": "550835",
+    "Html": "Darx,\r<br />\n<br />\nIf you are waiting for the PlaybackStopped event, you're waiting too long... :)\r<br />\n<br />\nTo do gapless playback, an audio player has to be &quot;ready&quot; with the next file before the current file finishes.  That means it will load the next file and pre-decode the first buffer of audio from it some time before the end of the current file (figure out how much time your code needs, then double it; 3 seconds is probably enough for most).\r<br />\n<br />\nYou'll need to put logic in your IWaveProvider.Read(byte[], int, int) implementation to make the switch happen...  Mostly it would be just marking that the current file is now the previous file (and needs unloading), marking that the next file is now the current file, and telling the UI that the switch has happened and that it needs to update.  If you pre-decode the first buffer-full of audio, you'll have quite a few milliseconds to handle that before running up against the latency limit...\r<br />\n<br />\nOne other item to consider: Even if you don't overlap the tracks, you will probably still want to implement cross-fading so you can do a very quick (&lt; 3ms total) fade-out and fade-in so you don't get a &quot;pop&quot; between tracks...  Since it is so quick, most people won't even hear it, and even if they do it shouldn't be unpleasant.\r<br />\n<br />\nPlease note: In this design, PlaybackStopped only gets raised when a track ends and no &quot;Next Track&quot; is available to load &amp; play.  You can still handle it, but now it's a true &quot;done playing&quot; event rather than &quot;the track is over&quot;.<br />\n",
+    "PostedDate": "2014-07-16T07:12:25.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

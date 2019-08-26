@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-10-18T00:07:03.607-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi! I have a combobox with input devices, and i want to monitor the selected device. I do not understand is how I can stop \"BeginMonitoring\" to stop monitoring the current device, to monitor the newly selected device. Thx!",
+    "LastUpdatedDate": "2015-10-18T00:07:03.607-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-07-31T13:08:41.867-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Stop monitoring?",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16480
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "you would need to stop recording on the first device, create a new device and start monitoring on that",
+      "PostedDate": "2015-10-18T00:06:54.683-07:00",
+      "Id": 191742
+    }
+  ]
+}

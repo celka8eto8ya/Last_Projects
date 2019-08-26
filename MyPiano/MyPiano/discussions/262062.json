@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "630229",
+    "ThreadId": "262062",
+    "Html": "<p>Hi,</p>\n<p>I want to get stream from some server (pcm 16 bit) using udp and display the&nbsp;waveform and spectrum but I don't want to play the audio.</p>\n<p>I tried to do that with NAudio and&nbsp;<a href=\"http://wpfsvl.codeplex.com/\">http://wpfsvl.codeplex.com/</a>&nbsp;but I saw they use WaveOut to draw the spectrum and I don't need WaveOut...</p>\n<p>Can I do that without using WaveOut?</p>\n<p><span style=\"text-decoration: underline;\"><strong>Edit</strong></span></p>\n<p>I solve my problem</p>\n<p>anyway if someone know&nbsp;&nbsp;<a href=\"http://wpfsvl.codeplex.com/\">http://wpfsvl.codeplex.com/</a>&nbsp;I'll appreciate your help</p>\n<p>Thier have a demo that&nbsp;they are draw the waveform when the file is open. How I can to draw the waveform in real time (I get the stream from internet and I cant draw the waveform when I dont have it...)</p>\n<p>Thanks</p>",
+    "PostedDate": "2011-06-20T13:54:47.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630970",
+    "ThreadId": "262062",
+    "Html": "<p>you just need to pull the audio through your pipeline. Just call the Read method until you get to the end</p>",
+    "PostedDate": "2011-06-22T01:11:41.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

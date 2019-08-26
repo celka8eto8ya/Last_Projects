@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "605264",
+    "ThreadId": "255809",
+    "Html": "\r\n<p>Would it be possible to see a more complete example of how to stream and play audio from a http location?</p>\r\n<p>I'm afraid i'm struggling to grasp the particulars of it.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-04-30T08:04:46.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "605296",
+    "ThreadId": "255809",
+    "Html": "<p>hi, I realise this is an aspect of NAudio a lot of people are struggling to understand, so I have plans to add an internet radio playback example to the NAudioDemo project in the not too distant future.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-30T09:25:26.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "608021",
+    "ThreadId": "255809",
+    "Html": "<p>please see my article <a href=\"http://mark-dot-net.blogspot.com/2011/05/how-to-play-back-streaming-mp3-using.html\">here</a></p>",
+    "PostedDate": "2011-05-05T12:11:12.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

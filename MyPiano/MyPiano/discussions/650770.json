@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1461586",
+    "ThreadId": "650770",
+    "Html": "hello all\r<br />\n<br />\nI have required wav audio graph for audio player\r<br />\nand i had use naudio dll and wave viewer to display the wav audio graph\r<br />\nand for moving that graph is used startposition  and increment in every call and for call i used timer and interval \r<br />\n<br />\nbut is not looking find becouse of flicker.\r<br />\n<br />\nGive me some solution(idea) so i can move the graph(Audio Wav) smoothly without any flicking in my audio player<br />\n",
+    "PostedDate": "2016-02-01T04:55:43.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1461941",
+    "ThreadId": "650770",
+    "Html": "what are you using to draw the waveform? If it's WinForms / GDI then make sure you are using double-buffering<br />\n",
+    "PostedDate": "2016-02-04T06:23:50.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462351",
+    "ThreadId": "650770",
+    "Html": "i want to use waveFormpainter.\r<br />\nread data form wav file(audio file) and plot that file into graph form<br />\n",
+    "PostedDate": "2016-02-07T22:37:52.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

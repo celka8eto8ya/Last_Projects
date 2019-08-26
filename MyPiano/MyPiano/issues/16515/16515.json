@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I am trying to build an application in c# visual studio, in which I want to play 2 wav files at certain dB values simultaneously. I looked into many stackoverflow questions but didn't find any useful answers.\r\n\r\nMy scenario is : before using the application user fill the 2 different dB values for 2 wav files. So I am facing two problems -\r\n\r\n1. I am not able to figure out how to play two wav files on ceratin dB values?\r\n2. How can I validate that the wav file is being played on the dB value, I provided.\r\n\r\nI tried using the WaveChannel32, mediaplayer and Naudio but it didn't help.\r\n\r\nAny help will be much appreciated.\r\n\r\nThanks, Robin",
+    "LastUpdatedDate": "2017-05-18T08:41:54.237-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-05-18T08:41:54.237-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "In Visual Studio C# : How to play 2 wav file at certain dB values simultaneously",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16515
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

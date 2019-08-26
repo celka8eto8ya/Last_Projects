@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "902701",
+    "ThreadId": "392665",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I need a &quot;what you hear&quot; feature, to get the sound that the sound card is playing.<br>\r\nI need the sound being played from Winamp, Windows Media Player, iTunes, a Web Browser or any other software.<br>\r\nI will use this &nbsp;data to send it over the network to another destination.<br>\r\n<br>\r\nIs there a way to do with NAudio?<br>\r\nIf not, is there a way to do it using the Win32 API's? In this case, I could contribute the code to NAudio, but I need assistance with the Windows Audio API's.</p>\r\n<p>Thanks and Regards,<br>\r\nFernando Pelliccioni.&nbsp;</p>\r\n",
+    "PostedDate": "2012-08-22T13:52:29.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "904782",
+    "ThreadId": "392665",
+    "Html": "<p>This is done using \"loopback recording\", which can be done using WASAPI in on Windows Vista and above (see the WasapiLoopbackCapture class). If you want to do it with WaveIn, you are completely reliant on what your soundcard drivers allow, and it is a lot of work.</p>",
+    "PostedDate": "2012-08-27T14:13:56.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "907083",
+    "ThreadId": "392665",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Thanks for your answer.</p>\r\n<p>Let me see if I understand.</p>\r\n<p>On one hand, I can use the class \"WasapiLoopbackCapture\" only from Windows Vista and above.<br />On the other hand, I can use the class \"WaveIn\", but I depend on the capabilities of the soundcard drivers and it's a lot of work.<br />I am repeating your words, I just do not understand if you are talking about two different options.</p>\r\n<p>Regarding the first option (WasapiLoopbackCapture), I used the example \"WAV Recording\" of \"NAudio Demo\" and I have a little problem.The Wav file I get has an Extensible WaveFormat. This file can not be played using the examples of NAudio, because Extensible WaveFormat.</p>\r\n<p>Some questions:<br />&nbsp; &nbsp; 1. Can I play the WAV file captured using WasapiLoopbackCapture? (Extensible WaveFormat) &nbsp;&nbsp;<br />&nbsp; or&nbsp; &nbsp;<br />&nbsp; &nbsp; &nbsp; &nbsp; Can I capture a wav file with Pcm WaveFormat? (Pcm format is OK to play)</p>\r\n<p>&nbsp; &nbsp; &nbsp;2. Can I convert the wav file to MP3 using NAudio?, Or better, I can capture directly into MP3? &nbsp;&nbsp;<br />&nbsp; &nbsp; &nbsp; &nbsp; (The NAudio converting example requires an Pcm format) &nbsp;&nbsp;</p>\r\n<p>Finally, I'm thinking of porting the NAudio code to C++ (native C++, not managed).&nbsp;<br />For this, my plan is to, first convert the C# code to C++/CLI (Managed C++).<br />Once the NAudio unit tests are executed successfully, I will change the interface to a \"Modern C++\" design.<br />Then the next step is to make the code multiplatform. I intend to minimally support Windows (thanks to NAudio), Linux and MacOSX.<br />I think I could contribute to NAudio making it work on other platforms than Windows, using Mono.<br />NAudio could wrap my library for platforms other than Windows.</p>\r\n<p>I'm not a \"Licence Layer\", so I wonder if Ms-PL supports my intentions.</p>\r\n<p>Sorry for so many questions and thank you very much in advance.</p>\r\n<p>Regards,<br />Fernando Pelliccioni.</p>",
+    "PostedDate": "2012-08-31T13:24:00.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "907091",
+    "ThreadId": "392665",
+    "Html": "<p>I can capture in Pcm changing</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>        <span style=\"color: blue;\">public</span> WasapiCapture(MMDevice captureDevice)\r\n        {\r\n            <span style=\"color: blue;\">this</span>.audioClient = captureDevice.AudioClient;\r\n\r\n            <span style=\"color: green;\">//this.waveFormat = audioClient.MixFormat;</span>\r\n            <span style=\"color: blue;\">this</span>.waveFormat = <span style=\"color: blue;\">new</span> WaveFormat(44100, 16, 2);\r\n\r\n        }\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2012-08-31T13:49:01.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908555",
+    "ThreadId": "392665",
+    "Html": "<p>yes, this is the right way to do it. WASAPI uses extensible wave format for everything but for creating WAV files it is better to just use a standard WaveFormat</p>",
+    "PostedDate": "2012-09-05T01:53:54.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908652",
+    "ThreadId": "392665",
+    "Html": "<p>Thanks Mark.<br />I sent you a private message regarding to the convertion of NAudio to C++&nbsp;</p>\r\n<p>Regards,<br />Fernando.&nbsp;</p>",
+    "PostedDate": "2012-09-05T06:07:00.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

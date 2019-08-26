@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1197470",
+    "ThreadId": "526229",
+    "Html": "Dear Sir, <br />\n<br />\nI am getting audio file stream (as variable sized chunks per time eg 2000 bytes). I am saving this file to filewriter class <br />\n<br />\nPrivate Mywriter As WaveFileWriter<br />\n<br />\nand into the dataReceived event , I pass the audio chunk to wavefileriter class by Mywriter.Write <br />\n <br />\nQuestion , :<br />\n<ul>\n<li>I have a local mp3 file in the same format at the received bytes (PCM,16 bit , 8000 HZ,mono). </li>\n<li>I will get the size of the received data , eg 2000 bytes, and will get the first 2000 bytes from the local file(same format)</li>\n<li>I need to get 2000 bytes that is mix between first 2000 bytes &amp; second 2000 bytes.</li>\n<li>\nI will pass this 2000 bytes to the wavefilewriter.<br />\n</li>\n</ul>\nHow.<br />\n<br />\nThanks, <br />\n",
+    "PostedDate": "2014-01-25T12:19:03.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198293",
+    "ThreadId": "526229",
+    "Html": "you need to get to floating point first, then use a MixingSampleProvider to do the mixing. I'd use a BufferdWaveProvider and use ToSampleProvider() to get the recorded audio as floating point.<br />\n",
+    "PostedDate": "2014-01-26T12:51:51.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

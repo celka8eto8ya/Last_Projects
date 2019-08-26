@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "438351",
+    "ThreadId": "211393",
+    "Html": "<p>I'm running a project to get data over a USB connection and save it to a WAV file.</p>\r\n<p>&nbsp;</p>\r\n<p>This is written in C#</p>\r\n<p>We're using a PICDEM microcontroller and have succesfully programmed both client and hardware to send and receive data.</p>\r\n<p>&nbsp;</p>\r\n<p>Now, I was to use Naudio to save this data to a .WAV file.</p>\r\n<p>&nbsp;</p>\r\n<p>I've seen the 5th demo, which records from the sound card.</p>\r\n<p>I've been trying to adapt this code in order to use the data from the device, but with no success.</p>\r\n<p>Instead of using the soundcard, I wanna use the array of bytes that I receive from the microcontroller.</p>\r\n<p>&nbsp;</p>\r\n<p>So, it's just byte[certain_length] that contains the data.</p>\r\n<p>That is what I'd be using to write to a WAV file, and I can't find how.</p>\r\n<p>I'm probably missing something obvious here, but I'd rather just ask then spend the next few days going nuts about this.</p>",
+    "PostedDate": "2010-05-03T07:17:20.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439822",
+    "ThreadId": "211393",
+    "Html": "<p>the way to go is to create a class that inherits from WaveStream. Then in its Read method, return the bytes from your data array</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-05-06T05:49:01.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

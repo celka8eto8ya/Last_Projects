@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "432978",
+    "ThreadId": "209851",
+    "Html": "<p>Hi Mark,</p>\r\n<p>how can I show mic level . It's the same The Sound recorder of MS.Window Vista Home Premium Version.</p>",
+    "PostedDate": "2010-04-19T19:52:37.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "433089",
+    "ThreadId": "209851",
+    "Html": "<p>have a look at the <a href=\"http://voicerecorder.codeplex.com\">.NET voice recorder</a> project, which uses NAudio and does exactly this</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-04-20T01:46:10.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

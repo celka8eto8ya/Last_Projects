@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1318859",
+    "ThreadId": "571223",
+    "Html": "I want to change the tempo of some MP3 before saving to a file.  Is this possible with NAudio?\r<br />\nThanks.<br />\n",
+    "PostedDate": "2014-11-03T23:49:05.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1318940",
+    "ThreadId": "571223",
+    "Html": "NAudio does not include tempo change algorithms. I recommend creating managed wrappers for the soundtouch dll to do this. I hope to blog about how this can be done at some point, as it is quite a common request\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2014-11-04T03:11:13.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1319245",
+    "ThreadId": "571223",
+    "Html": "Great, thanks Mark.  I'll give that a go.<br />\n",
+    "PostedDate": "2014-11-04T23:22:46.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

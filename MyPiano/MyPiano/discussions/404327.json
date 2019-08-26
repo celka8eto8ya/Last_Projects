@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "946005",
+    "ThreadId": "404327",
+    "Html": "\r\n<p><span>I am using NAudio to play Mp3 files in my .NET 4 app. First of all I initialize WaveOut:</span></p>\r\n<p><span>&nbsp;</span></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>IWavePlayer^ waveOutDevice = <span style=\"color:blue\">gcnew</span> WaveOut();\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p><span>Then I have 2 buttons. Play button :(code)</span></p>\r\n<p><span>&nbsp;</span></p>\r\n<pre><div style=\"color:black; background-color:white\"><pre>volumeStream = <span style=\"color:blue\">gcnew</span> WaveChannel32(<span style=\"color:blue\">gcnew</span> Mp3FileReader(<span style=\"color:blue\">gcnew</span> IO::FileStream(path, IO::FileMode::Open, IO::FileAccess::Read, IO::FileShare::ReadWrite)));\nmainOutputStream = volumeStream;\nwaveOutDevice-&gt;Init(mainOutputStream);\nwaveOutDevice-&gt;Play();</pre>\n</div>\n</pre>\r\n<p><span>It loads MP3 form FileStream and plays it. 2nd button is Stop :(code)</span></p>\r\n<p><span>&nbsp;</span></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>waveOutDevice-&gt;Stop();</pre>\r\n</div>\r\n<p>t just stops playing.</p>\r\n<p>When I start my app it eats 5.344 KB.&nbsp;But when i hit 2 buttons (Play then Stop) (imagine i'm playing different MP3's) about 10 times app eats 14.912 KB!</p>\r\n<p><span>And I don't know how to release this memory. To play MP3 I am using these NAudio objects:</span></p>\r\n<p><span>&nbsp;</span></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>IWavePlayer^ waveOutDevice;\nWaveStream^ mainOutputStream;\nWaveChannel32^ volumeStream;</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-11-23T00:23:19.817-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "946146",
+    "ThreadId": "404327",
+    "Html": "\r\n<p>you need to remember to call Dispose your Mp3FileReader and your waveOutDevice before creating new ones</p>\r\n",
+    "PostedDate": "2012-11-23T07:07:15.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

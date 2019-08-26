@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1207868",
+    "ThreadId": "531706",
+    "Html": "I'm a bit confused as to why this is happening..<br />\n<br />\nI need to create a custom WaveFormat due to AAC SBR samplerate doubling, but I'm getting the compile error below. It doesn't tell me which parameter is in question. Instead of parsing &quot;goodframe&quot; vars I've created local int's but still no luck.<br />\n<br />\nMember 'NAudio.Wave.WaveFormat.CreateCustomFormat(NAudio.Wave.WaveFormatEncoding, int, int, int, int, int)' cannot be accessed with an instance reference; qualify it with a type name instead (CS0176)<br />\n<pre><code>private void InitializeADTSStream()\n{\n            ....\n            ....\n            int blockAlign = goodFrame.ChannelsOutput * (16 / 8);\n            int sampleRate = goodFrame.SampleRateOutput;\n            int channels = goodFrame.ChannelsOutput;\n            int avgBytes = sampleRate * blockAlign;\n\n            // WaveFormat outputWaveFormat is a global variable in the class\n            outputWaveFormat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, sampleRate, channels, avgBytes, blockAlign, 16);\n}</code></pre>\n\nRemoving &quot;outputWaveFormat = &quot; before &quot;WaveFormat.CreateCustomFormat&quot; makes no difference.<br />\n<br />\nNAudio source:<br />\n<pre><code>        public static WaveFormat CreateCustomFormat(WaveFormatEncoding tag, int sampleRate, int channels, int averageBytesPerSecond, int blockAlign, int bitsPerSample)\n        {\n            WaveFormat waveFormat = new WaveFormat();\n            waveFormat.waveFormatTag = tag;\n            waveFormat.channels = (short)channels;\n            waveFormat.sampleRate = sampleRate;\n            waveFormat.averageBytesPerSecond = averageBytesPerSecond;\n            waveFormat.blockAlign = (short)blockAlign;\n            waveFormat.bitsPerSample = (short)bitsPerSample;\n            waveFormat.extraSize = 0;\n            return waveFormat;\n        }</code></pre>\n\n",
+    "PostedDate": "2014-02-13T05:07:06.463-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207876",
+    "ThreadId": "531706",
+    "Html": "Nevermind, problem solved.<br />\n<br />\nThe WaveFormat in my class was conflicting with NAudio.Wave.WaveFormat<br />\n<br />\n// Solution<br />\noutputWaveFormat = NAudio.Wave.WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, sampleRate, channels, avgBytes, blockAlign, 16);<br />\n<br />\n<br />\nYou may delete this thread Mark<br />\n",
+    "PostedDate": "2014-02-13T05:22:41.65-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

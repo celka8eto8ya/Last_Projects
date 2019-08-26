@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1129765",
+    "ThreadId": "471354",
+    "Html": "Does version 1.7 support ogg/vorbis format? (I am asking because I see it listed on the WaveFormat.Encoding enum). If so, which reader should I use? AudioFileReader? Other?\r<br />\n<br />\nIs it possible for future versions to allow all readers to receive streams on its constructors besides filenames? WMAFileReader and AudioFileReader only have one constructor receiving filenames. By allowing passing streams to all readers, the use case where audio should be read from a memory-stream (instead of file-streams) could get covered.<br />\n",
+    "PostedDate": "2013-11-27T13:32:28.743-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130836",
+    "ThreadId": "471354",
+    "Html": "the best way to get vorbis support is to use NVorbis <a href=\"https://nvorbis.codeplex.com/\" rel=\"nofollow\">https://nvorbis.codeplex.com/</a> \r<br />\nI want to expand the Media Foundation support to allow playing from threads. Hopefully that might be a new feature for NAudio 1.8<br />\n",
+    "PostedDate": "2013-12-02T03:19:24.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

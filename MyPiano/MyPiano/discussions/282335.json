@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "709629",
+    "ThreadId": "282335",
+    "Html": "\r\n<p>Hi folks,</p>\r\n<p>I've been asked to allow playback of a sub section of an audio file.&nbsp; I need to allow a Start/End Position to be set and probably to toggle looped playback.</p>\r\n<p><br>\r\nI'm new to NAudio and have started looking at the source and demos but if anyone can give me a heads up on how I should get started it would be great.</p>\r\n<p>So far the closest I can find to what I want to do is in a tutorial linked from the Documentation for playing multiple samples at once.</p>\r\n<p>It doesn't do exactly what I want but I'm assuming, based on it, that I need to create my own implementation of WaveStream that overrides Read to return bytes between a set Start/End Position.</p>\r\n<p>&nbsp;</p>\r\n<p>Any/all feedback would be appreciated.</p>\r\n<p>&nbsp;</p>\r\n<p>Jon</p>\r\n",
+    "PostedDate": "2011-12-08T17:50:11.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710841",
+    "ThreadId": "282335",
+    "Html": "<p>yes, creating your own WaveStream / IWaveProvider is the way to go. You would pass in a source stream to the constructor, and then in the Read method just read from the section of the source stream you want to. For looping, you would need to reposition the source stream once you have read up to the ned position. Have a look at LoopStream.cs in NAudioDemo to see looping in action. You would just need to change where it repositions to, and how it decides when it has got to the end.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-12T03:34:07.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

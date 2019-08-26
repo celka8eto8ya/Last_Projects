@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "602842",
+    "ThreadId": "255271",
+    "Html": "\r\n<p>I'm working on a music player and i want to create a slider for selecting only a channel of the track!</p>\r\n<p>For example... i've got a song with two channel: left chennel is completely different from the right channel!</p>\r\n<p>How can i select to play only one channel scrolling&nbsp;the slider?</p>\r\n<p>&nbsp;</p>\r\n<p>p.s: i've read this post: &quot;<span>How to output a sound wave to only left or right channel?&quot; but i don't understand... can someone help me?</span></p>\r\n<p><span>Thanks in advance</span></p>\r\n<p><span>Marco1998</span></p>\r\n",
+    "PostedDate": "2011-04-26T04:04:53.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602863",
+    "ThreadId": "255271",
+    "Html": "<p>the stereo to mono wave provider provided with NAudio 1.4 should do what you want.</p>",
+    "PostedDate": "2011-04-26T04:39:15.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602996",
+    "ThreadId": "255271",
+    "Html": "<p>How? i've read the \"StereoToMonoProvider16.cs\"...</p>\r\n<p>First i must call the fuction&nbsp;&nbsp;StereoToMonoProvider16 and convert the track</p>\r\n<p>Second i must set the value of the Left/Right Volume</p>\r\n<p>And now? what i must do?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-04-26T08:36:36.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

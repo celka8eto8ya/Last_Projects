@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1343732",
+    "ThreadId": "578206",
+    "Html": "Is it possible to convert video to wav audio file with naudio in winrt?<br />\n",
+    "PostedDate": "2015-01-21T00:34:22.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1351978",
+    "ThreadId": "578206",
+    "Html": "MediaFoundationReader can do this, although I haven't tried it in a Windows Store app yet. <br />\n",
+    "PostedDate": "2015-02-12T14:40:05.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

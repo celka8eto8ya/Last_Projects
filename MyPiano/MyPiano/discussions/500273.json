@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1168912",
+    "ThreadId": "500273",
+    "Html": "Hi,\r<br />\n<br />\nI just started to use NAudio and i'm trying to convert aif file o mp3.\r<br />\nCan someone help me?\r<br />\n<br />\n10x,\r<br />\nLior<br />\n",
+    "PostedDate": "2014-01-15T05:57:26.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1168980",
+    "ThreadId": "500273",
+    "Html": "Use AiffFileReader to get from AIFF to PCM\r<br />\nThen to make MP3, there are several options, but <a href=\"https://github.com/Corey-M/NAudio.Lame\" rel=\"nofollow\">NAudio.Lame</a> would be a good choice<br />\n",
+    "PostedDate": "2014-01-15T06:22:31.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1169149",
+    "ThreadId": "500273",
+    "Html": "Hi markheath, 10x for you answer,\r<br />\n<br />\nI've looked at NAudio.Lame link and this is what i did:<br />\n<ol>\n<li>opened a new .net project.</li>\n<li>downloaded NAudio.Lame using Nuget.</li>\n<li>copied the example code from <a href=\"https://github.com/Corey-M/NAudio.Lame\" rel=\"nofollow\">https://github.com/Corey-M/NAudio.Lame</a></li>\n<li>\nthe convertion between mp3 to wav worked fine but when i've tried to convert between wav to mp3 i got an error:\r<br />\nUnable to load DLL 'libmp3lame.32.dll': The specified module could not be found. (Exception from HRESULT: 0x8007007E)<br />\n</li>\n</ol>\nbut i can see that i have these files in my solution (the nuget added all the files) \r<br />\n<br />\nDo you familiar with this?\r<br />\n<br />\nIn addition, who do i use AiffFileReader?\r<br />\n<br />\n10x,\r<br />\nLior<br />\n",
+    "PostedDate": "2014-01-15T07:21:22.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1169170",
+    "ThreadId": "500273",
+    "Html": "for my first question, now it's ok.\r<br />\n<br />\nthis is the answer\r<br />\n<a href=\"http://stackoverflow.com/questions/20088743/mvc4-app-unable-to-load-dll-libmp3lame-32-dll\" rel=\"nofollow\">http://stackoverflow.com/questions/20088743/mvc4-app-unable-to-load-dll-libmp3lame-32-dll</a>\r<br />\n<br />\nI'd like if you can tell me how to use AiffFileReader...\r<br />\n<br />\n10x,\r<br />\nLior<br />\n",
+    "PostedDate": "2014-01-15T07:27:30.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

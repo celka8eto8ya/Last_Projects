@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1452373",
+    "ThreadId": "647548",
+    "Html": "Will there be any AIFC support in the AiffFileReader in the near future? Really would like to see this feature being implemented.\r<br />\n<br />\nIn the meantime, is there any workaround to read AIFC somehow?<br />\n",
+    "PostedDate": "2015-11-14T09:07:43.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1452555",
+    "ThreadId": "647548",
+    "Html": "Sorry, no active work is planned in this area at the moment.<br />\n",
+    "PostedDate": "2015-11-16T05:57:42.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

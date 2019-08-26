@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "950068",
+    "ThreadId": "405276",
+    "Html": "\r\n<p>small complement</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">// MediaFoundationHelper.cs</span>\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> WaveFormat CreateWaveFormatFromMediaType(IMFMediaType mediatype)\r\n{\r\n\tWaveFormat wF;\r\n\t<span style=\"color:blue\">int</span> pcbSize = 0;\r\n\tMediaFoundationInterop.MFCreateWaveFormatExFromMFMediaType(mediatype, <span style=\"color:blue\">out</span> wF, <span style=\"color:blue\">out</span> pcbSize);\r\n\r\n\r\n\t<span style=\"color:blue\">return</span> (WaveFormat)wF;\r\n}\r\n\r\n<span style=\"color:green\">// Modify in MediaFoundationInterop.cs</span>\r\n\r\n<span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n<span style=\"color:gray\">///</span><span style=\"color:green\"> Converts a Media Foundation audio media type to a WAVEFORMATEX structure.</span>\r\n<span style=\"color:green\">// &lt;/summary&gt;</span>\r\n<span style=\"color:gray\">///</span><span style=\"color:green\"> TODO: try making second parameter out WaveFormatExtraData</span>\r\n[DllImport(<span style=\"color:#a31515\">&quot;mfplat.dll&quot;</span>, ExactSpelling = <span style=\"color:blue\">true</span>, PreserveSig = <span style=\"color:blue\">false</span>)]\r\n\t\t<span style=\"color:blue\">internal</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">extern</span> <span style=\"color:blue\">void</span> MFCreateWaveFormatExFromMFMediaType\r\n(\r\n\tIMFMediaType pMFType,\r\n\t<span style=\"color:blue\">out</span> WaveFormat wf,\r\n\t<span style=\"color:blue\">out</span> <span style=\"color:blue\">int</span> pcbSize,\r\n\t<span style=\"color:blue\">int</span> flags = 0\r\n);\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-12-01T17:38:14.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950101",
+    "ThreadId": "405276",
+    "Html": "\r\n<p>hi Manu, thanks for this,although I think you may need to use WaveFormatExtraData in the function prototype, or you could end up missing the extra bytes. CreateWaveFormatFromMediaType should still return a WaveFormat though.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-01T23:43:21.027-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953259",
+    "ThreadId": "405276",
+    "Html": "\r\n<p>I took the time to check with the documentation and with some audio files.</p>\r\n<p>This version is probably better fit.</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>[DllImport(<span style=\"color:#a31515\">&quot;mfplat.dll&quot;</span>, ExactSpelling = <span style=\"color:blue\">true</span>, PreserveSig = <span style=\"color:blue\">false</span>)]\r\n<span style=\"color:blue\">internal</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">extern</span> <span style=\"color:blue\">void</span> MFCreateWaveFormatExFromMFMediaType\r\n(\r\n\tIMFMediaType pMFType,\r\n\t<span style=\"color:blue\">out</span> WaveFormatExtensible wf,\r\n\t<span style=\"color:blue\">out</span> <span style=\"color:blue\">int</span> pcbSize,\r\n\t<span style=\"color:blue\">int</span> flags = 0\r\n);\r\n\r\n\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> WaveFormat CreateWaveFormatFromMediaType(IMFMediaType mediatype)\r\n{\r\n\t\t\t\r\n\tWaveFormatExtensible wF;\r\n\t<span style=\"color:blue\">int</span> pcbSize = 0;\t\r\n\tMFCreateWaveFormatExFromMFMediaType(mediatype, <span style=\"color:blue\">out</span> wF, <span style=\"color:blue\">out</span> pcbSize);\r\n\r\n\t<span style=\"color:blue\">if</span> (wF.Encoding == WaveFormatEncoding.Extensible)\r\n\t\t<span style=\"color:blue\">return</span> wF;\r\n\t<span style=\"color:blue\">else</span>\r\n\t{\r\n\t\t<span style=\"color:blue\">var</span> xx = (WaveFormat)wF;\r\n\t\t<span style=\"color:blue\">return</span> xx;\r\n\t}\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-12-08T00:47:08.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953455",
+    "ThreadId": "405276",
+    "Html": "\r\n<p>It really will have to be WaveFormatExtraData or a WaveFormat using NAudio's WaveFormatCustomMarshaller. The trouble is, waveformats can be any length, so you must use a class that is big enough to hold the largest possible WaveFormat, otherwise the marshaller\r\n will not copy all the data across. However, for Windows 8 store apps, the custom marshaller cannot be used, so it might mean I have to use an IntPtr, and manually choose which derived WaveFormat class to marshal it into.</p>\r\n",
+    "PostedDate": "2012-12-09T00:00:30.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953460",
+    "ThreadId": "405276",
+    "Html": "\r\n<p>I had not seen WaveFormatCustomMarshaler & WaveFormatExtraData.</p>\r\n<p>Gloupss Sorry, I tested this solution.</p>\r\n",
+    "PostedDate": "2012-12-09T00:14:28.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953464",
+    "ThreadId": "405276",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre style=\"color:black\">I change my routine somewhat.</pre>\r\n<pre style=\"color:black\">I do not have audio file with ExtraData to complementary tests.<br></pre>\r\n<pre style=\"color:black\"><br></pre>\r\n<pre style=\"color:black\"><br></pre>\r\n<pre>[DllImport(<span style=\"color:#a31515\">&quot;mfplat.dll&quot;</span>, ExactSpelling = <span style=\"color:blue\">true</span>, PreserveSig = <span style=\"color:blue\">false</span>)]\r\n<span style=\"color:blue\">internal</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">extern</span> <span style=\"color:blue\">void</span> MFCreateWaveFormatExFromMFMediaType\r\n(\r\n\tIMFMediaType pMFType,\r\n\t<span style=\"color:blue\">out</span> IntPtr wf,\r\n\t<span style=\"color:blue\">out</span> <span style=\"color:blue\">int</span> pcbSize,\r\n\t<span style=\"color:blue\">int</span> flags = 0\r\n);\r\n\r\n\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> WaveFormat CreateWaveFormatFromMediaType(IMFMediaType mediatype)\r\n{\r\n\tIntPtr ptr;\r\n\t<span style=\"color:blue\">int</span> pcbSize = 0;\r\n\tMFCreateWaveFormatExFromMFMediaType(mediatype, <span style=\"color:blue\">out</span> ptr, <span style=\"color:blue\">out</span> pcbSize);\r\n\r\n\t<span style=\"color:blue\">return</span> WaveFormat.MarshalFromPtr(ptr);\r\n\t\t\r\n}\r\n<span style=\"font-family:'Segoe UI','Microsoft Sans Serif',Arial,Geneva,sans-serif\"><span style=\"white-space:normal\">\r\n</span></span></pre>\r\n</div>\r\n",
+    "PostedDate": "2012-12-09T00:29:06.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953466",
+    "ThreadId": "405276",
+    "Html": "\r\n<p>It is formats like MP3, AAC (and some types of ADPCM) that tend to have extra data after the WaveFormat structure. The most I have ever seen is about 40 bytes. You could perhaps enumerate all MF decoder's input media types and create their WaveFormat's and\r\n see what the largest value of pcbSize you get is.</p>\r\n",
+    "PostedDate": "2012-12-09T00:34:21.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953469",
+    "ThreadId": "405276",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<p>For the moment pcbSize = 18 (standard type) or 40 (with extensible format)</p>\r\n",
+    "PostedDate": "2012-12-09T00:36:38.607-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198563",
+    "ThreadId": "405276",
+    "Html": "I got this working. Refer to thread:<br />\n<br />\n<a href=\"https://naudio.codeplex.com/discussions/526991\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/526991</a><br />\n",
+    "PostedDate": "2014-01-26T19:18:46.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

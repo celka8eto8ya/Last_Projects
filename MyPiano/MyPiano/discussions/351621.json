@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "821405",
+    "ThreadId": "351621",
+    "Html": "<p>Hello,</p>\n<p>i have tried to get the sine wave example running on an AsioOut, but it sounds more like a distorted square wave. is it possible that the AsioOut only supports PCM formats? the asio .wav file playback just works...</p>\n<p>If so, how can i fill my buffers with Ieee floats and convert to PCM? or whats the best way to palyback Ieee on ASIO? i would love to avoid sample conversions..</p>",
+    "PostedDate": "2012-04-08T18:11:09.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "822768",
+    "ThreadId": "351621",
+    "Html": "<p>no worries, got it!</p>",
+    "PostedDate": "2012-04-12T00:30:58.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

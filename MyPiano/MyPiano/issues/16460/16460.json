@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hello, I'm read mp3 file by such procedure:\r\n```\r\nNAudio.Wave.Mp3FileReader reader = new NAudio.Wave.Mp3FileReader(chooseMp3file.FileName, wf => new NAudio.FileFormats.Mp3.DmoMp3FrameDecompressor(wf));\r\nStream wavestream = new NAudio.Wave.Mp3FileReader(chooseMp3file.FileName);\r\nbytesRead1 = wavestream.Read(Buffer, 0, intLenght);\r\n```\r\nbut file have two channels. How do i can set certain channel (first or second) for read operation?",
+    "LastUpdatedDate": "2014-12-28T13:00:31.937-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-12-02T10:56:58.023-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Set channel",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16460
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "take a look at the stereo to mono converters in NAudio to do this, allowing you to mix left and right, or just pick one channel",
+      "PostedDate": "2014-12-28T13:00:31.937-08:00",
+      "Id": 168969
+    }
+  ]
+}

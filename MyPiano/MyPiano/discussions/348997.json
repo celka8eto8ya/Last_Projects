@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "811817",
+    "ThreadId": "348997",
+    "Html": "\r\n<p>I just came across this API and worked my way through some of the tutorials. I have written a WPF app to play sound in my car. It takes the line in wave from a radio tuner and I want to route that via bluetooth to the car head unit.</p>\r\n<p>If I&nbsp;use the onboard Windows 7 settings I cannot convince the line in- wave to be routed via bluetooth. No matter what I set it always uses the analog speaker output and I have some ground loop noise on that which&nbsp;explains&nbsp;why&nbsp;I would\r\n like to use bluetooth. For reasons I don't know the bluetooth headset output waveform is fixed at 48 kHz, 2 channels, 16 bit.</p>\r\n<p>Is there an easy way to solve this, maybe with the waveIn, waveMixerStream32 and waveOut classes?</p>\r\n<p>Thank you for your attention.</p>\r\n",
+    "PostedDate": "2012-03-17T05:55:51.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "812950",
+    "ThreadId": "348997",
+    "Html": "<p>as long as you can identify which output device your bluetooth headset is, you should be able to play to it using WaveOut.</p>",
+    "PostedDate": "2012-03-20T05:53:39.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

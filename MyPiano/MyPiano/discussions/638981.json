@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1428161",
+    "ThreadId": "638981",
+    "Html": "I have a bizarre situation.\r<br />\nI've implemented a player using NAudio, and ask that player to play a certain audio file (MP3, but that shouldn't matter) at a low volume. The original file I pass through a volume/panning provider, where I pan the channels and multiply by a volume multiplier (around 0.004).\r<br />\n<br />\nI've tried that feature on three difference computers, on two of which everything is fine. The thing is, that on one particular laptop (HP EliteBook 8570w) the audio been played begins at a low volume, and then the volume gradually increases. I figured out, that if in my volume/panning provider, in the Read, I insert the following lines, the volume does not increase.<br />\n<pre><code>    ' Keep volume down\n    For idx = 0 To 3999\n        buffer(offset + idx) = 0\n    Next\n</code></pre>\n\nSo it looks like there is something that checks the samples on the output and if it believes the level is too low, it increases it by itself. Note, that this does not happen if I use standard .NET MediaPlayer component.\r<br />\n<br />\nThe question is: what is this entity, and how do I switch it off?<br />\n",
+    "PostedDate": "2015-05-31T13:43:09.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1428162",
+    "ThreadId": "638981",
+    "Html": "I found the issue (it helps formulating the question :-)\r<br />\nIn HP there is an &quot;Enhance audio&quot; setting in the Control Panel, which, when switched off, keeps the audio volume as specified. Interesting, though, is the fact that Media Player seems to be able to circumvent this setting.<br />\n",
+    "PostedDate": "2015-05-31T14:04:54.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-05-31T14:05:01.377-07:00"
+  }
+]

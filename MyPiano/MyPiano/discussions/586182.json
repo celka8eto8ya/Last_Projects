@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1362911",
+    "ThreadId": "586182",
+    "Html": "I developed around DLL NAudio a professional application and randomly, for some reason, when I run the command 'StartRecording', there is no data that arrives in a routine 'DataAvailable'! Someone would have an idea?\r<br />\n<br />\nThank you in advance<br />\n",
+    "PostedDate": "2015-03-12T11:45:02.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1362951",
+    "ThreadId": "586182",
+    "Html": "what class are you using to record? WaveIn? WasapiIn?<br />\n",
+    "PostedDate": "2015-03-12T14:13:11.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1363480",
+    "ThreadId": "586182",
+    "Html": "I used WaveIn Without explore WasapiIn because WaveIn fits perfectly with what I do.\r<br />\n<br />\nHere is my code :\r<br />\n<br />\nImports NAudio.Wave\r<br />\nImports System.Runtime.InteropServices\r<br />\nFriend Class NaudioMicro\r<br />\n...<br />\n<h1>Region &quot;Déclarations&quot;</h1>\n<pre><code>'Autorisation d'exporter le flux Audio\nPrivate Transmit As Integer = 0\n'Indique que le recorder est en mode capture\nPrivate IsCapturing As Integer = 0\n'Recorder Naudio\nPrivate WithEvents _WaveInDevice As NAudio.Wave.WaveIn</code></pre>\n\n<h1>End Region</h1>\n<h1>Region &quot;Constructor&quot;</h1>\nPublic Sub New()<br />\n<pre><code>    Dim DeviceInfoI As WaveInCapabilities\n    Try\n        '1. Détection automatique du Micro Peiker\n        Dim DeviceNumber As Integer = -1\n        For I As Integer = 0 To WaveIn.DeviceCount - 1\n            DeviceInfoI = WaveIn.GetCapabilities(I)\n            If Val(&quot;&amp;H&quot; &amp; Strings.Left(DeviceInfoI.ProductGuid.ToString, 2)) &gt; 0 Then\n                If InStr(DeviceInfoI.ProductName, &quot;PTC USB&quot;, CompareMethod.Text) &gt; 0 Then\n                    DeviceNumber = I\n                    Exit For\n                End If\n            End If\n        Next\n</code></pre>\n\n'2. Configuration du Recorder avec Micro Peiker<br />\n<pre><code>        If DeviceNumber &gt;= 0 Then\n            _WaveInDevice = New WaveIn()\n            _WaveInDevice.DeviceNumber = DeviceNumber\n            _WaveInDevice.WaveFormat = New WaveFormat(8000, 16, 1)\n            _WaveInDevice.NumberOfBuffers = 2\n            _WaveInDevice.BufferMilliseconds = 60\n        End If\n    Catch Ex As Exception\n    End Try\nEnd Sub</code></pre>\n\n<h1>End Region</h1>\n<h1>Region &quot;Event&quot;</h1>\n<pre><code>Friend Event OnError(ByVal Source As String, ByVal Message As String)\nFriend Event OnDeliverySpeechData(ByVal SpeechData() As Byte)</code></pre>\n\n<h1>End Region</h1>\n<h1>Region &quot;Commandes&quot;</h1>\n<pre><code>   Private Sub CaptureStart()\n    Try\n        If _WaveInDevice Is Nothing Then\n            Return\n        End If\n        If IsCapturing = 0 Then\n            IsCapturing = 1\n            _WaveInDevice.StartRecording()\n        End If\n    Catch Ex As Exception\n        RaiseEvent OnError(&quot;CaptureStart&quot;, Ex.Message)\n    End Try\nEnd Sub\n Private Sub CaptureStop()\n    If _WaveInDevice Is Nothing Then\n        Return\n    End If\n    If IsCapturing = 1 Then\n        IsCapturing = 0\n        _WaveInDevice.StopRecording()\n        Transmit = 0\n    End If\nEnd Sub\nFriend Sub StartCapture()\n    Transmit = 1\n    CaptureStart()\nEnd Sub\nFriend Sub StopCapture()\n    Transmit = 0\n    CaptureStop()\nEnd Sub</code></pre>\n\n<h1>End Region</h1>\n<h1>Region &quot;Processus_internes&quot;</h1>\n<pre><code>Private Sub DataAvailable(ByVal sender As Object, ByVal e As NAudio.Wave.WaveInEventArgs) Handles _WaveInDevice.DataAvailable\n    Try\n        If My.Settings.SendSpeechDirect = 1 Then\n            Dim AIOPCMFrame As New _D25AIOPCMFRAME\n            AIOPCMFrame.sz = e.Buffer.Length\n            AIOPCMFrame.m_aFrame = Marshal.AllocHGlobal(e.Buffer.Length)\n            Marshal.Copy(e.Buffer, 0, AIOPCMFrame.m_aFrame, e.Buffer.Length)\n            Call IHM.Appels.DiffusionMicro(AIOPCMFrame)\n            If IHM.LoopBack = 1 Then\n                If IHM.PlayBackJingleInProgress = 0 Then\n                    If My.Settings.AudioEmbeded = 0 Then\n                        IHM.Players.Player(0).PlayPacket(e.Buffer)\n                    Else\n                        IHM.LocalPlayer.PlayPacket(e.Buffer)\n                    End If\n                End If\n            End If\n        Else\n            RaiseEvent OnDeliverySpeechData(e.Buffer)\n        End If\n    Catch Ex As Exception\n    End Try\nEnd Sub</code></pre>\n\n<h1>End Region</h1>\n...\r<br />\nEnd Class<br />\n",
+    "PostedDate": "2015-03-15T04:15:59.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1364259",
+    "ThreadId": "586182",
+    "Html": "What sort of app are you using? WaveIn can be used with WinForms or WPF, but if it is a console app you'll need to go with WaveInEvent<br />\n",
+    "PostedDate": "2015-03-16T10:32:36.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1027741",
+    "ThreadId": "439617",
+    "Html": "hi<br />\ni play some sound with WaveOut after i disconnect headphone and connect again the sound not return.<br />\nanyone have an idea?<br />\n",
+    "PostedDate": "2013-04-09T02:28:39.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1028337",
+    "ThreadId": "439617",
+    "Html": "playback will likely have stopped if it was a USB headset. Do you get the PlaybackStopped event?<br />\n",
+    "PostedDate": "2013-04-10T03:37:13.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1028349",
+    "ThreadId": "439617",
+    "Html": "\r\n<p>The headphone is not usb , and i dont get any event.<br>\r\nIts connected with jack .</p>\r\n<div></div>\r\n",
+    "PostedDate": "2013-04-10T03:59:18.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

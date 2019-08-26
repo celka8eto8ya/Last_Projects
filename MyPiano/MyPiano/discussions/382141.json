@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "883022",
+    "ThreadId": "382141",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I had hoped to use NAudio to access raw 24 bit WASAPI audio streams in exclusive mode, but find that AudioClient.IsFormatSupported() allows only 16 bit access to my particular sound cards. Three sound cards are attached, two via USB, and all have 24-bit\r\n hardware.</p>\r\n<p>Below is a partial printout of IsFormatSupported() responses for all combinations of sample rates { 192000, 96000, 48000, 44100 } and bit widths { 32, 24, 16 }. Operating system was Windows 7 x64, and the C# project was compiled for &quot;Any CPU&quot;. Properties\r\n of all devices were set to &quot;Allow applications to take exclusive control&quot; and &quot;Give exclusive applications priority&quot;.</p>\r\n<p>Question: Is the 16 bit restriction something to do with my code, the NAudio library,&nbsp;the operating system&nbsp;and drivers, or the hardware?</p>\r\n<p>Ian</p>\r\n<p><span style=\"font-size:xx-small\"></p>\r\n<p>High Definition Audio Device: Speakers</p>\r\n<p>192000: 16 EXCLUSIVE</p>\r\n<p>96000: 16 EXCLUSIVE</p>\r\n<p>48000: 16 EXCLUSIVE</p>\r\n<p>44100: 32 SHARED</p>\r\n<p>44100: 24 SHARED</p>\r\n<p>44100: 16 EXCLUSIVE SHARED</p>\r\n<p><span style=\"font-size:xx-small\"></p>\r\n<p>SB X-Fi Surround 5.1: Speaker</p>\r\n<p>96000: 16 EXCLUSIVE</p>\r\n<p>48000: 32 SHARED</p>\r\n<p>48000: 24 SHARED</p>\r\n<p>48000: 16 EXCLUSIVE SHARED</p>\r\n<p>44100: 16 EXCLUSIVE</p>\r\n</span>\r\n<p></p>\r\n</span>\r\n<p></p>\r\n<p></p>\r\n<p><span style=\"font-size:xx-small\"></p>\r\n<p>E-MU 0202 | USB: Speakers</p>\r\n<p>192000: 16 EXCLUSIVE</p>\r\n<p>96000: 16 EXCLUSIVE</p>\r\n<p>48000: 32 SHARED</p>\r\n<p>48000: 24 SHARED</p>\r\n<font size=\"1\">\r\n<p>48000: 16 SHARED</p>\r\n</font>&nbsp;&nbsp;</span>\r\n<p></p>\r\n<p></p>\r\n",
+    "PostedDate": "2012-07-21T06:48:50.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "883748",
+    "ThreadId": "382141",
+    "Html": "<p>Update: it's not an NAudio problem. Spent this afternoon hacking a C++ version (no NAudio involved) which gives the same result.</p>\r\n<p>But I would still like to know what causes the 16 bit limitation.</p>\r\n<p>Ian</p>",
+    "PostedDate": "2012-07-21T12:28:20.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "883758",
+    "ThreadId": "382141",
+    "Html": "<p>yes, NAudio is simply calling through to the WASAPI APIs - it doesn't introduce any restrictions of its own. I suspect that this is due to the device driver. I would suspect that Shared mode relies on Windows to convert 32 or 24 bit down to 16 while exclusive mode passes the audio directly to the sound card which is likely 16 bir only.</p>",
+    "PostedDate": "2012-07-21T12:33:02.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "884013",
+    "ThreadId": "382141",
+    "Html": "<p>Thanks for the quick reply. My interest is in using sound cards for intrumentation, hence the wish to avoid low level artefacts introduced by software layers, even if not audible.</p>\r\n<p>For information, all 3 sound cards advertised 24 bit conversion. For two of them (the third was proprietary) I downloaded the codec (A/D &amp; D/A) data sheet some time ago, and confirmed that&nbsp;it was designed for 24 bit operation,&nbsp;although system noise will restrict the number of usable bits to perhaps 18. For the only card with an ASIO driver I have run a managed&nbsp;ASIO interface (an extension of Rob Philpott's library) and confirmed that noise level drops by a few dB when switching from 16 to 24 bits, as do low level artefacts.</p>\r\n<p>Apologies if I am posting this in the wrong forum, as NAudio is blameless, but others may like to know that shelling out for a 24 bit card won't necessarily get them 24 bit WASAPI.</p>",
+    "PostedDate": "2012-07-21T14:42:14.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "889158",
+    "ThreadId": "382141",
+    "Html": "<p>Problem fixed! (sort of)</p>\r\n<p>It appears that, in exclusive mode,&nbsp;some drivers respond to a WaveFormatExtensible better than a WaveFormat, the solution being to try both structures on&nbsp;IsFormatSupported(), and use whichever gives a positive result. Doing so confirmed the 24-bit response at all sample rates for two of the cards. The third card&nbsp;has a low level stream of 24 bit&nbsp;audio in 32 bits words, which is not supported by&nbsp;the NAudio constructor for WaveFormatExtensible. Adding a new constructor fixed that problem.</p>\r\n<p>All that remains is to get the data in and out ;-)</p>",
+    "PostedDate": "2012-07-23T10:51:20.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "892922",
+    "ThreadId": "382141",
+    "Html": "<p>yes, WASAPI likes to work with WaveFormatExtensible. I think there is a way to get it to enumerate supported formats, so it is best to use the WaveFormat structures it reports.</p>",
+    "PostedDate": "2012-07-30T01:40:30.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

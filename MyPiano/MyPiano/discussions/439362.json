@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1026595",
+    "ThreadId": "439362",
+    "Html": "Hello, I am a newbie programmer. I wonder if anyone could give me some pointers on how to create an event for when microphone is unplugged, open msg &quot;Your mic is unplugged&quot;.\r<br />\n<br />\nIs there an event from Naudio to do this, like the Form_Load, timer_tick events?\r<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2013-04-06T09:27:15.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1027267",
+    "ThreadId": "439362",
+    "Html": "This is not something you can reliably detect. If it was a USB microphone, then the device itself would be removed, but many soundcards will not surface any notification to Windows that something has been connected or disconnected from one of their inputs.<br />\n",
+    "PostedDate": "2013-04-08T08:04:43.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

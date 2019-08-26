@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1476732",
+    "ThreadId": "655703",
+    "Html": "Greetings,\r<br />\n<br />\nI have written a little &quot;soundboard&quot; app in visual studio that plays mp3 files triggered by button presses. Right now I'm simply using the System.Windows.Media MediaPlayer for that, so the sound is played using the currently selected sound output device in Windows. Now I would like to ALSO play the same sound (at the same time) to a second output device.\r<br />\n<br />\nThe reason is that I want to use the soundboard to play jingles, effects, etc. in a small quiz I do on a popular community Discord server. I have setup a Virtual Audio Cable (VAC) so that the Discord VoIP app takes the VAC output as its input device. The VAC has two input devices that it can mix, one of which is of course my microphone, and I want my WFP soundboard app to use the second VAC input as its output device (while at the same time also playing the sound using the default output device, so I can hear it in my headphones).\r<br />\n<br />\nCan I use naudio to do that? If so, could you give me a little hint on how to start implementing this?\r<br />\n<br />\nThank you in advance!\r<br />\nKonadi<br />\n",
+    "PostedDate": "2016-06-19T05:43:22.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1477270",
+    "ThreadId": "655703",
+    "Html": "There's no built-in easy way at the moment. One option would be to have one device being fed from a BufferedWaveProvider, and then insert something into the signal chain going to the first device to always copy its data into that BufferedWaveProvider.<br />\n",
+    "PostedDate": "2016-06-25T08:57:14.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

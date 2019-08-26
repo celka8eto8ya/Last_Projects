@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "248538",
+    "ThreadId": "72773",
+    "Html": "<p>Hi,&nbsp;</p>\r\n<p>we are developing a wpf application and we are trying (quite successfully so far, thanks for the great work!) to use NAudio to play an mp3 while the app is working (as a background melody). the main idea is the sound not to stop while the dispatcher (UI) thread is busy doing something and the playback to be controllable (i.e. play/stop/play). First we tried with DirectSoundOut as a playback device as it is doing its sound processing/playback in a background thread (digging into the code we saw that it spawns a thread) and indeed using it there are no problems of playback stopping if the dispatcher thread is busy. But there were all kinds of other weird behaviour and crashes when controlling the playback with play() and stop(), to sum up DirectSoundOut was rather unstable. So we tried WaveOut which turned out to be more stable (no crashes with start()/stop()). Now the question is how to make it play in a background thread and control it? Does the device need to be created in a background thread or only the play() method called on a background thread? Help would be much appreciated, thanks !</p>",
+    "PostedDate": "2009-10-22T06:04:33.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "248540",
+    "ThreadId": "72773",
+    "Html": "<p>Hi Xenry,</p>\r\n<p>What version of NAudio are you using, and what constructor of WaveOut? There is a function callback option. The only trouble with this is that some audio chipsets don't play nice with the function callback. I'm sorry you ran into problems with DirectSoundOut. That code hasn't been exercised very heavily, so maybe needs a bit more robustness work. Do you have any stack traces of your crashes?</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-22T06:07:39.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "248605",
+    "ThreadId": "72773",
+    "Html": "<p>thanks for the quick reply, Mark</p>\r\n<p>the version is 1.3.8.0.</p>\r\n<p>some more words about the situation we are getting the crashes. the app should play videos (its kind of multimedia app) and the trick is that when the user starts a video, the background sound should be stopped and when the video finishes (is stopped) the background sound should start playing again. now from time to time (actually quite often) when the sound is stopped ( DirectSoundOut.Stop() ) the audio kind of plays only the last buffer (i.e. repeats one pattern) but does not stop and the strange thing is that wpf's MediaElement refuses to play videos any more and&nbsp;DirectSoundOut.Play() does not seem to work any more (the audio pattern keeps repeating till the app is closed). maybe the problem is somewhere in the windows itself (xp sp3 here) or the MediaElement or sth else, its strange but that does not happen (at least has not happened so far) with WaveOut. the stack trace looks sth like: <a href=\"http://i.imagehost.org/0641/naudio_wpf_stacktrace.jpg\">http://i.imagehost.org/0641/naudio_wpf_stacktrace.jpg</a></p>\r\n<p>about WaveOut we tried both WaveOut() and&nbsp;</p>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">vahwnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;mPlaybackDevice = new WaveOut(hwnd)</div>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">var</span> hwnd = <span style=\"color:Blue\">new</span> WindowInteropHelper(Application.Current.MainWindow).Handle;\r\nmPlaybackDevice = <span style=\"color:Blue\">new</span> WaveOut(hwnd);\r\n</pre>\r\n</div>\r\n<p>both worked, but just cannot figure out how to start playback in a different thread. for instance&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><div style=\"color:Black;background-color:White\"><pre>ThreadPool.QueueUserWorkItem(<span style=\"color:Blue\">delegate</span>(<span style=\"color:Blue\">object</span> state) {\r\n   mPlaybackDevice.Play();\r\n});\r\n</pre>\r\n</div>\r\ndoes not seem to make any difference. Thanks again !</pre>\r\n</div>",
+    "PostedDate": "2009-10-22T08:06:22.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "248613",
+    "ThreadId": "72773",
+    "Html": "<p>Hi xenry</p>\r\n<p>you should be able to run with window callbacks on a background thread so long as you create a (hidden) window and get it pumping messages (that's the tricky part).</p>\r\n<p>Also have you tried <strong>new WaveOut(WaveCallbackInfo.FunctionCallback())</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n<p>I didn't write the DirectSoundOut code myself (just did a bit of threading work on it), so I will need to familiarise myself with what the IsBufferLost is doing.</p>\r\n<p>I should also ask why you aren't just using WPF MediaElement to play your MP3. Might be easier?</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-22T08:21:32.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "248617",
+    "ThreadId": "72773",
+    "Html": "<p>thanks, will try with hidden window and see if I can get it working. we headed to NAudio because the mp3-s should be played from memorystream and not extracted to hdd :/ and MediaElement also had problems with some kinds of mp3s</p>",
+    "PostedDate": "2009-10-22T08:31:20.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

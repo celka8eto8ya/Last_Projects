@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "282769",
+    "ThreadId": "82303",
+    "Html": "<p>Hello Mark,</p>\r\n<p>I tried using the WaveRecorder as described in your example: &nbsp; http://mark-dot-net.blogspot.com/2009/10/recording-soundcard-output-to-wav-in.html,</p>\r\n<p>but instead of using a sineWaveProvider I used a WaveMixerstream32. Now when I listen to the recorded file, there's only &quot;random&quot; noise....Could you imagine whats the problem ?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks, Sahel</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-28T07:42:38.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "282829",
+    "ThreadId": "82303",
+    "Html": "<p>you need to make sure you have set the WaveFormat correctly, or you will get random noise. Also, what are the inputs to your wavemixerstream32?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-01-28T09:02:28.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "282857",
+    "ThreadId": "82303",
+    "Html": "<p>the input stream is WaveChannel32;&nbsp; the WaveFileWriter inside the constructor of WaveRecorder is created with WaveFormat 32Bit IeeeFloat, because thats the inputStream's format ( the original source is 16 Bit Mono 44.1 Khz, but as I'm using WaveChannel32 I cannot control the waveformat....)</p>\r\n<p>So, how/where would I have to set the WaveFormat ?</p>\r\n<p>Sahel</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-28T10:18:49.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "416953",
+    "ThreadId": "82303",
+    "Html": "<p>can you post a code snippet. I am not sure exactly what you are trying to do.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-11T06:29:09.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

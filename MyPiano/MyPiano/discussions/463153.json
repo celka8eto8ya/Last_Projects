@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1110621",
+    "ThreadId": "463153",
+    "Html": "Hi,\r<br />\n<br />\nI want to use NAudio with WCF streaming. I have a service loading .wav (16 bit PCM: 8kHz 1 channels) files from a server and streaming them to a client. In the service i read in the file as a WaveStream and then return it as a &lt;Stream&gt;.\r<br />\n<br />\nThe client receive this as a &lt;MessageBodyStream&gt;. How do I play this stream on the client using NAudio? \r<br />\n<br />\nRegards\r<br />\n<br />\nPONDEV<br />\n",
+    "PostedDate": "2013-10-22T08:35:46.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1111943",
+    "ThreadId": "463153",
+    "Html": "the BufferedWaveProvider is best for using with streaming. Every time you receive a block of audio over the network, write it into a BufferedWaveProvider. Then you can play from that.<br />\n",
+    "PostedDate": "2013-10-24T23:18:40-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112382",
+    "ThreadId": "463153",
+    "Html": "\r\n<div dir=\"ltr\">Thank you!<br>\r\n<br>\r\nI think WaveStream is a supported return type over wcf streaming. I have enbedded the WaveStream as MessageBodyMember in a MessageContract. And as you suggest, then I should write the WaveStream to the bufferedWaveProvider on the client side?<br>\r\n<br>\r\n..or do I first need to write the WaveStream to a MemoryStream and return it from the wcf service. Then writing the memorystream to BufferedWaveProvider on the client?<br>\r\n<br>\r\nRegards<br>\r\n<br>\r\nPeder<br>\r\n<br>\r\n<div>\r\n<hr id=\"stopSpelling\">\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2013-10-26T01:50:02.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112386",
+    "ThreadId": "463153",
+    "Html": "I'd just return byte arrays, and let the client put them into the BufferedWaveProvider. You could also ask on stackoverflow as I don't know what the recommended way to stream media over WCF is.<br />\n",
+    "PostedDate": "2013-10-26T02:43:12.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112775",
+    "ThreadId": "463153",
+    "Html": "WCF has a Streamed binding:\r<br />\n<br />\n<a href=\"http://stackoverflow.com/questions/13525402/streaming-with-wcf-and-mtom\" rel=\"nofollow\">http://stackoverflow.com/questions/13525402/streaming-with-wcf-and-mtom</a>\r<br />\n<br />\nIt works very well.<br />\n",
+    "PostedDate": "2013-10-27T13:52:05.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112985",
+    "ThreadId": "463153",
+    "Html": "cool, I'll have to give that a try some time. <br />\n",
+    "PostedDate": "2013-10-28T04:03:55.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

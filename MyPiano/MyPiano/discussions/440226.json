@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1030196",
+    "ThreadId": "440226",
+    "Html": "hi am trying to stream the WasapiLoopbackCapture ..\r<br />\nbut the proble is that the WasapiLoopbackCapture writes a wav file of 32bits per sample wich VLC netwok stream reader cannot read . <br />\n<pre><code> waveIn  = new WasapiLoopbackCapture();\nwaveIn.DataAvailable += OnDataAvailable;\n  waveIn.StartRecording();\n void OnDataAvailable(object sender, WaveInEventArgs e)\n        {\n m_MulticastSender.SendBytes(ToRTPPacket(e.Buffer,waveIn.WaveFormat.BitsPerSample,waveIn.WaveFormat.Channels).ToBytes());\n}</code></pre>\n\n",
+    "PostedDate": "2013-04-14T06:03:38.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1030559",
+    "ThreadId": "440226",
+    "Html": "convert it to 16 bit before you send it. Is it 32 bit int or 32 bit float you are capturing. The helper methods on the BitConverter will help you make the conversion,.<br />\n",
+    "PostedDate": "2013-04-15T05:05:35.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1030650",
+    "ThreadId": "440226",
+    "Html": "yes ... but how to convert it ?<br />\n",
+    "PostedDate": "2013-04-15T07:39:03.903-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1032504",
+    "ThreadId": "440226",
+    "Html": "hi, this article will help you understand about converting different bit depths\r<br />\n<br />\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET</a><br />\n",
+    "PostedDate": "2013-04-18T08:06:40.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

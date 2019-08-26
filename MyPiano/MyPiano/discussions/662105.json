@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1494401",
+    "ThreadId": "662105",
+    "Html": "Hello:  I'm a new member to codeplex, and have a couple of questions about some strange (to me) text in the source code of a couple of the naudio modules. The first anomaly I see is on line 88 of ASIODriverExt.cs.  public AsioDriver Driver =&gt; driver;    I have Visual Studio Team System 2008, which was given to me.  I can't afford to upgrade as I'm retired.  When I try to compile I get error message about this line of code.  There are other anomalies.  Anyone care to walk me through a discussion about some of these anomalies?  Regards,  Karin <br />\n",
+    "PostedDate": "2017-03-21T08:06:48.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494475",
+    "ThreadId": "662105",
+    "Html": "That line is the short form for a property declaration, available in the newer VS versions<br />\n",
+    "PostedDate": "2017-03-22T12:07:24.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494480",
+    "ThreadId": "662105",
+    "Html": "Thank you for the response .Not quite sure if this discussion was still active.  After a bit of tedious research I finally found out what you mentioned.\r<br />\nRelated to C# version 6.0 and later versions of .NET.  I only have VS2008 so am limited to .NET3.5.  Retired and no money to purchase upgrades.\r<br />\nThanks again.    Karin <br />\n",
+    "PostedDate": "2017-03-22T12:38:28.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494623",
+    "ThreadId": "662105",
+    "Html": "KarinAnne Good News. Visual Studio 2017 Community edition is free. I've been using Community edition since 2015. Unless you are in a team environment, it has everything you should need. Go for it. :-)<br />\n",
+    "PostedDate": "2017-03-24T15:55:23.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494692",
+    "ThreadId": "662105",
+    "Html": "Thanks Theseus:  I saw that availability. My XP machine has VS2008 on it and I don't want to get too confused with adding another version of VS to the XP machine. I loaded the community edition on my Win7 laptop just to play with it a bit but haven't transitioned over to it.  I've got a massive hobby project on the XP machine with VS2008 and am used to its eccentricities.  so for now I kind of answered my own question related to this thread. and am OK to go.  Karin <br />\n",
+    "PostedDate": "2017-03-26T14:48:00.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

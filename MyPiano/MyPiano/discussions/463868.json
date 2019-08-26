@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1112908",
+    "ThreadId": "463868",
+    "Html": "Respected Sir,<br />\n<br />\n  I need to make a chat application for my project using Naudio . So, I have followed NetworkChat demo source code and run NetworkChat demo Application on Desktop and Laptop . But whenever I run NetworkChat demo Application it generates low Echo on Desktop and too much high Echo on Laptop . I have tried all other popular chat application like Skype on my Desktop and Laptop but Skype don't returns any Echo . <br />\n  Is there any way that I can Suppress this Echo and make a Professional Chat Application like Skype by using Naudio ?<br />\n  I'm eagerly waiting for useful reply.<br />\n<br />\nthanks,<br />\nShuvam  <br />\n",
+    "PostedDate": "2013-10-28T01:14:42.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112958",
+    "ThreadId": "463868",
+    "Html": "Yes this demo has no echo cancellation algorithm which you would need for a professional chat application. NAudio does not include an echo cancellation algorithm, so you'd need to write your own, or make use of a third party one. There seems to be a Media Foundation Transform AEC algorithm in the latest versions of Windows which may be of use.\r<br />\n<br />\nYou may also be interested that in the next few weeks a new Pluralsight course about NAudio is about to be released, and I have a module about this network chat demo, in which I explain the need for echo suppression.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-10-28T03:15:19.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

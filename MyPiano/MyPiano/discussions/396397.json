@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "915705",
+    "ThreadId": "396397",
+    "Html": "\r\n<p>Is the wave stream class and all of its descendants fully managed? I would like to do some manipulation of a wav file under mono and the WaveFileReader class has everything I need.</p>\r\n",
+    "PostedDate": "2012-09-21T07:03:37.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "915816",
+    "ThreadId": "396397",
+    "Html": "<p>WaveFileReader and WaveFileWriter uses File read/write which I'm sure mono supports. You won't be able to do any format conversion though since that calls into the Windows ACM APIs</p>",
+    "PostedDate": "2012-09-21T10:17:24.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "916078",
+    "ThreadId": "396397",
+    "Html": "<p>By format conversion are you referring to changing from pcm to another audio format, or pcm to pcm format conversions like a change from stereo to mono?</p>",
+    "PostedDate": "2012-09-22T05:57:28.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "916080",
+    "ThreadId": "396397",
+    "Html": "<p>You can't use WaveFormatConversionStream or Mp3FileReader</p>",
+    "PostedDate": "2012-09-22T06:06:27.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

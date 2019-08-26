@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "259757",
+    "ThreadId": "75928",
+    "Html": "<p>Hey,</p>\r\n<p>I tried to get a specific number of samples from the soundcard. The only way until now seems to set the bufferlength over the &quot;BufferMillisconds&quot; (think the misseplling will be corrected in the next release).</p>\r\n<p>This background brought me to the following solution (for testing purposes):</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">private</span> <span style=\"color:Blue\">void</span> btnGetSamples_Click(<span style=\"color:Blue\">object</span> sender, EventArgs e)<br>{<br>    btnGetSamples.Enabled = <span style=\"color:Blue\">false</span>;<br>    nudMs.Enabled = <span style=\"color:Blue\">false</span>;<br>    <br>    waveInStream = <span style=\"color:Blue\">new</span> WaveIn();<br>    waveInStream.BufferMillisconds = (<span style=\"color:Blue\">int</span>) nudMs.Value;<br>    waveInStream.WaveFormat = <span style=\"color:Blue\">new</span> WaveFormat(44100, 16, 1);<br>    waveInStream.NumberOfBuffers = 1;<br>    waveInStream.DataAvailable += <span style=\"color:Blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveInStream_DataAvailable);<br><br>    Debug.WriteLine(<span style=\"color:#A31515\">&quot;--StartRecording--&quot;</span>);<br>    waveInStream.StartRecording();<br>}<br><br><span style=\"color:Blue\">void</span> waveInStream_DataAvailable(<span style=\"color:Blue\">object</span> sender, WaveInEventArgs e)<br>{<br>    waveInStream.StopRecording();<br> <br>    Debug.WriteLine(<span style=\"color:#A31515\">&quot;--DataAvailable--&quot;</span>);<br>    Debug.WriteLine(<span style=\"color:#A31515\">&quot;BytesRecorded: &quot;</span> + e.BytesRecordehttp://naudio.codeplex.com/Thread/Create.aspxd);<br>    <br>    waveInStream.Dispose();<br><br>    btnGetSamples.Enabled = <span style=\"color:Blue\">true</span>;<br>    nudMs.Enabled = <span style=\"color:Blue\">true</span>;<br>}<br><br>Note that I use 44100 Hz, 16 bit deepth and one channel. Moreover, I use only one buffer because the recording is stopped in the DataAvailable-method.<br><br>This works fine for most cases but when I try to get the samples for 105 ms, I get 9261 bytes (16 bits per sample (two bytes per sample), so there is a half sample).<br>That is not nice for converting to double and I don't know what to do with the half sample in case of recording for a while (and not stop directly after getting the data).<br><br><br>Little calculation for understanding what is going on:<br>44100 samples per second - I want to get 105 ms =&gt; 44100 Hz * 0.105 = 4630,5 samples<br>16 bit deepth leads to: 4630,5 samples * 2 bytes per sample = 9261 bytes.<br><br>I don't know if this is a bug or a feature^^</pre>\r\n</div>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-23T02:45:53.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "259763",
+    "ThreadId": "75928",
+    "Html": "<p>hi,</p>\r\n<p>the mispelling has been fixed.</p>\r\n<p>I should probably do a block-alignment adjustment on the buffer size when you set BufferMilliseconds.</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-11-23T03:00:46.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "259796",
+    "ThreadId": "75928",
+    "Html": "<p>That would be nice. There could be an additional property for setting (and getting) the number of samples to get ;-)</p>\r\n<p>&nbsp;</p>\r\n<p>Edit:</p>\r\n<p>I asked myself in which cases the BytesRecorded differ from the buffersize?</p>",
+    "PostedDate": "2009-11-23T04:58:56.303-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

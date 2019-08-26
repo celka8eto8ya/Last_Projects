@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi,\r\n\r\nI am using NAudio.dll for my project for converting MP3 files to WAV files and WAV files to given WAV format ( as per given BitsPerSample, Channel, and sample rate). \r\n\r\nNow i having another task to remove metadata from MP3, WAV files. How to remove metadata from these files and save using NAudio Assembly ?\r\n\r\nWarm Regards\r\nSathyanarayanan.R",
+    "LastUpdatedDate": "2014-03-28T04:59:57.39-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-02-27T03:50:03.777-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Remove metadata from MP3 and WAV",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16433
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "For MP3, just copy all Mp3Frames (using Mp3FileReader) into a new file, and not the ID3 tags\nFor WAV, juts use WaveFileWriter to create a new WAV File, reading the data from the old one with WaveFileReader. ",
+      "PostedDate": "2014-03-28T04:59:57.39-07:00",
+      "Id": 139885
+    }
+  ]
+}

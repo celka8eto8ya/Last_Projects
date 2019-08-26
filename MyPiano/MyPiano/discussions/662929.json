@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1496294",
+    "ThreadId": "662929",
+    "Html": "Hello\r<br />\n<br />\nI'm new to naudio and I want to use it for recording audio as mp3 but so far I found only examples with wav files. \r<br />\n<br />\nSo far I have:<br />\n<pre><code>m_WaveSource = new WaveIn();\n            m_WaveSource.WaveFormat = new WaveFormat(44100, 1);\n\n            m_WaveSource.DataAvailable += new EventHandler&lt;WaveInEventArgs&gt;(DataAvailable);\n            m_WaveSource.RecordingStopped += new EventHandler&lt;StoppedEventArgs&gt;(RecordingStopped);\n\n            m_WaveFile = new WaveFileWriter(strFile, m_WaveSource.WaveFormat);\n\n            m_WaveSource.StartRecording();</code></pre>\n\n<pre><code> void DataAvailable(object sender, WaveInEventArgs e)\n        {\n            if (m_WaveFile != null)\n            {\n                m_WaveFile.Write(e.Buffer, 0, e.BytesRecorded);\n                m_WaveFile.Flush();\n            }\n        }</code></pre>\n\nWhat do I have to change for getting a mp3 file?<br />\n",
+    "PostedDate": "2017-05-11T12:28:19.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496331",
+    "ThreadId": "662929",
+    "Html": "Dude, how about asking google before posting?? As answered 1000 ppl before NAudio does NOT include an MP3 encoder.\r<br />\n<br />\nYou can try the NAudio MediafoundationEncoder class, which depends on your OS, or Lame.<br />\n",
+    "PostedDate": "2017-05-12T09:58:53.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

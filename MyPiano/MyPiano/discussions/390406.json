@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "895940",
+    "ThreadId": "390406",
+    "Html": "\r\n<p>Is this possible to record the already playing audio in system...?</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-08-06T02:34:10.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896006",
+    "ThreadId": "390406",
+    "Html": "<p>you can do this with WASAPI loopback capture</p>",
+    "PostedDate": "2012-08-06T06:16:54.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896351",
+    "ThreadId": "390406",
+    "Html": "<p>ya through WASAPI loopback capture its fine...but Audio format is not correct</p>\r\n<p>if i use WaveIn its recording and Audio format is also correct,but <strong>Volume is very low while playing</strong>....</p>",
+    "PostedDate": "2012-08-07T00:14:31.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896407",
+    "ThreadId": "390406",
+    "Html": "<p>WASAPI will only record at the format the soundcard is using. If it is not the sample rate you want then you have to resample manually.</p>",
+    "PostedDate": "2012-08-07T02:09:41.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896430",
+    "ThreadId": "390406",
+    "Html": "<p>sorry, how can i Resample manually ...?</p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">i tryed like this....</span></span></span></p>\r\n<p><strong><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">outputfile </span></span></span></strong><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">is the name of audio recorded using WasApi </span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">loopback method</span></span></span><strong><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">.</span></span></span></strong></p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">&nbsp;</span></span></p>\r\n<p><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">WaveFileReader</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"> Reader = </span></span><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\"><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\"><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\">new</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"> </span></span><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">WaveFileReader</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">(outputfile);</span></span></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><font face=\"Consolas\" size=\"2\" color=\"#2b91af\">\r\n<p>WaveFormat</p>\r\n</font></span></span></span></span></span></span></span>\r\n<p>&nbsp;</p>\r\n</span>\r\n<p>&nbsp;</p>\r\n<span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"> TargetFormat = </span></span><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\"><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\"><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\">new</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"> </span></span><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">WaveFormat</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">();<span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><font face=\"Consolas\" size=\"2\">\r\n<p>&nbsp;</p>\r\n</font></span></span></span></span></span></span></span>\r\n<p>&nbsp;</p>\r\n<span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">WaveStream</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"> convertedStream;<span style=\"font-family: Consolas; font-size: x-small;\">\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><font face=\"Consolas\" size=\"2\">\r\n<p>TargetFormat =</p>\r\n</font></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">WaveFormat</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">.CreateCustomFormat(</span></span><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">WaveFormatEncoding</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">.Pcm,</span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">44100, 2, 176400, 4, 16</span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">);</span></span></p>\r\n</span></span></span>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><font face=\"Consolas\" size=\"2\">\r\n<p>convertedStream =</p>\r\n</font></span></span></span></span><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\"><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\"><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\">new</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"> </span></span><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">WaveFormatConversionStream</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">(TargetFormat, Reader);<span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"></span></span></span></span></span></span></span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">&nbsp;</span></span></span></span></span></span></span></span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><font face=\"Consolas\" size=\"2\">\r\n<p>&nbsp;</p>\r\n</font></span></span></span></span></span></span>\r\n<p>&nbsp;</p>\r\n<span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">WaveFileWriter</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">.CreateWaveFile(CompresedFileName, convertedStream);\r\n<p>convertedStream.Dispose();</p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">&nbsp;</span></span></p>\r\n</span></span>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">&nbsp;</span></span></p>\r\n</p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">&nbsp;</span></span>but getting the error \"AcmNotPossible calling acmStreamOpen\"</p>\r\n</p>",
+    "PostedDate": "2012-08-07T03:14:07.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896432",
+    "ThreadId": "390406",
+    "Html": "<p>what is Reader.WaveFormat?</p>",
+    "PostedDate": "2012-08-07T03:16:28.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896479",
+    "ThreadId": "390406",
+    "Html": "<p>&nbsp;<strong>Reader.WaveFormat.</strong></p>\r\n<ul>\r\n<li>&nbsp; AverageBytesPerSecond :352800</li>\r\n<li>&nbsp; BitsPerSample:32</li>\r\n<li>&nbsp; BlockAlign:8</li>\r\n<li>&nbsp; Chanels:2</li>\r\n<li>&nbsp; ExtraSize:22</li>\r\n<li>&nbsp; SAmpleRate:44100</li>\r\n<li>&nbsp; Encoding:Extensible</li>\r\n</ul>",
+    "PostedDate": "2012-08-07T04:59:16.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896518",
+    "ThreadId": "390406",
+    "Html": "<p>the ACM codec that does the format conversion doesn't like extensible, so the reader format passed in should be a regular WaveFormat(44100,16,2). You could create a very simple IWaveProvider implementor that replaces the WaveFormat with one of your choosing and passes on Read to the underlying source</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-08-07T06:54:39.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981529",
+    "ThreadId": "390406",
+    "Html": "\r\n<blockquote style=\"padding-bottom:0px; font-style:italic; padding-top:0px; padding-left:0.25em; margin:0.25em 1em 0px; padding-right:0.25em; border:#ccc 0.1em solid\">\r\n<strong>markheath wrote:</strong><br>\r\n<p>the ACM codec that does the format conversion doesn't like extensible, so the reader format passed in should be a regular WaveFormat(44100,16,2). You could create a very simple IWaveProvider implementor that replaces the WaveFormat with one of your choosing\r\n and passes on Read to the underlying source</p>\r\n<p>Mark</p>\r\n</blockquote>\r\n<p><br>\r\nCan you please elaborate a bit more. I am sorry I am new to this. thank you.</p>\r\n",
+    "PostedDate": "2012-12-28T20:31:08.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

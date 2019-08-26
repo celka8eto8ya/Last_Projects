@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "637449",
+    "ThreadId": "263938",
+    "Html": "\r\n<p>I'm investigating the possibility of using NAudio for a project that I'm just starting. The project is an audio router which will take audio from a sound card/network port and output it to a sound card/network port.</p>\r\n<p>As part of my investigation I'm looking at the NetworkChat demo project and trying to change it to use WASAPI instead of WaveIn. The WASAPI capture will provide audio at a rate of 44.1 Khz so I will need to convert it to 8 Khz before sending it over the\r\n network. The WasapiCapture class implements the IWaveIn interface, but the WaveFormatConversionStream constructor expects a WaveStream.</p>\r\n<p>Could anybody offer some advice on how to convert the input from an IWaveIn to 8 Khz?</p>\r\n<p>Regards,</p>\r\n<p>Dave</p>\r\n",
+    "PostedDate": "2011-07-05T05:42:51.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637455",
+    "ThreadId": "263938",
+    "Html": "<p>you'll make life a lot easier for yourself if you just use WaveIn and capture at 8kHz in the first place.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-05T05:50:48.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637990",
+    "ThreadId": "263938",
+    "Html": "<p>Mark,</p>\r\n<p>Thanks for you very prompt reply. You're absolutely right and I'm a big fan of simplifying the solution and I will attempt to do that when possible.</p>\r\n<p>Latency is a bit of an issue for me which is why I was looking at WASAPI. I realise that I'm never going to get low latency using .NET but I'm trying to keep it as low as possible. I'll probably look at the ASIO interface too, since I think that will still provide lower latency than WASAPI. I think I'll probably end up&nbsp;cannibalising&nbsp;some of your Acm code to convert the audio as I read it from the sound card.</p>\r\n<p>Regards,</p>\r\n<p>Dave</p>",
+    "PostedDate": "2011-07-06T03:00:22.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "637994",
+    "ThreadId": "263938",
+    "Html": "<p>ASIO is the lowest latency, but I haven't implemented recording yet. I really like the ASIO model for recording (essentially your double buffer swap is for playback and record at the same time) but it is quite different from the way record works with other input driver types. I'm still trying to decide what the best way of exposing this functionality in NAudio is.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-06T03:05:16.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "638006",
+    "ThreadId": "263938",
+    "Html": "<p>I see what you mean, it looks like you would have to have a singleton driver which doesn't easily fit in with your current model. A lot of my users will already have expensive ASIO devices so I may end up implementing this. If I do I'll let you have the code to do with as you wish.</p>\r\n<p>Regards,</p>\r\n<p>Dave</p>",
+    "PostedDate": "2011-07-06T03:28:24.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

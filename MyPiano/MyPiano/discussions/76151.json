@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "260468",
+    "ThreadId": "76151",
+    "Html": "<p>Hi,</p>\r\n<p>Is there a way to specify which channel the audio is played out of? I'm following the sine wave tutorial from <a href=\"http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html\">http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html</a>&nbsp;and I'm wondering if I can tell one SineWaveProvider32/WaveProvider32 to output to the left channel and another to output to the right channel.</p>",
+    "PostedDate": "2009-11-24T21:45:06.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "261367",
+    "ThreadId": "76151",
+    "Html": "<p>well you could make another IWaveProvider that interleaved samples from your two SineWaveProviders. Ultimately I would like to add an IWaveProvider mixer which should do this. Have a look at the WaveChannel32 and WaveMixerStream for the WaveStream way of doing this.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-11-28T11:31:39.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

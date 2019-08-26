@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1087761",
+    "ThreadId": "455293",
+    "Html": "I know I can convert to PCM or IEEE float format if I use a wave stream object. However, is there a way to convert from mulaw to PCM audio using the ISampleProvider framework, so I can feed the audio straight into a PanningSampleProvider?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-09-03T09:14:37.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1087764",
+    "ThreadId": "455293",
+    "Html": "you can ignore my question.....figured it out...<br />\n",
+    "PostedDate": "2013-09-03T09:34:56.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

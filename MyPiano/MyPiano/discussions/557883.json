@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1284003",
+    "ThreadId": "557883",
+    "Html": "Hi there,<br />\n<br />\nI'm using the WasapiLoopbackCapture to get the audio played on a system and visualize it.<br />\n<br />\nWhen I playback music and exit the music player or press stop then the sound &quot;hangs&quot; (happens with VLC and Winamp, not Windows Media Player). It seems that the last soundbuffer just gets repeated.<br />\n<br />\nWhile normal music playback it looks like there is sound coming from both applications (my application and the music player). Actually there isn't any sound coming from my application, if i mute it there is no output difference on my headphones, but my application doesn't get any sound from the loopback.<br />\nThis looks like <a href=\"http://i.imgur.com/EVAmAZh.png\" rel=\"nofollow\">this.</a><br />\n<br />\nWhen pressing stop or exiting the music player the last soundbuffer continues to play over and over until i exit my application. Looking into the volume control you can see <a href=\"http://i.imgur.com/BDo8vSN.png\" rel=\"nofollow\">this</a>. The sound is coming from my application.<br />\n<br />\nI'm using Windows 7 x64.<br />\n<br />\nHow can i prevent this?<br />\n<br />\n<a href=\"https://www.youtube.com/watch?v=6bFS3dDnm1s\" rel=\"nofollow\">Here is a video</a> to better show you whats the issue<br />\n<br />\nregards.<br />\n",
+    "PostedDate": "2014-08-03T13:05:45.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1286906",
+    "ThreadId": "557883",
+    "Html": "why have you made your own WasapiCapture and WasapiLoopbackCapture classes? The default constructor is getting the default Render device and it should be getting the default Capture device.<br />\n",
+    "PostedDate": "2014-08-06T03:07:04.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1288133",
+    "ThreadId": "557883",
+    "Html": "I made my own classes because with the standard classes i get an exception (ArgumentException(&quot;Unsupported Wave Format&quot;)) when selecting more than 2 channels (eg, 4, 6 or 8) with my Asus Xonar DS.<br />\nHowever just copying the code from <a href=\"http://daisy-trac.cvsdude.com/urakawa-sdk/browser/trunk/csharp/audio/NAudio/Wave/WaveInputs/WasapiCapture.cs\" rel=\"nofollow\">this source</a> and writing my own classes without any changes fixes this.<br />\n<br />\nEDIT: However the issue is unrelated to my own 2 classes. I just used WasapiLoopbackCapture and WasapiCapture from NAudio instead and the problem persists.<br />\nEDIT2: While using a screen recording software the issue disappears.<br />\n",
+    "PostedDate": "2014-08-08T10:50:55.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1288680",
+    "ThreadId": "557883",
+    "Html": "I've added a <a href=\"https://www.youtube.com/watch?v=6bFS3dDnm1s\" rel=\"nofollow\">video</a> to the main post.<br />\n",
+    "PostedDate": "2014-08-10T13:39:43.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1290036",
+    "ThreadId": "557883",
+    "Html": "Any ideas?<br />\n",
+    "PostedDate": "2014-08-14T07:01:58.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291687",
+    "ThreadId": "557883",
+    "Html": "WasapiLoopback capture will get no fresh audio if no applications are playing system sound. \r<br />\nAre you trying to capture audio and play it back at the same time? <br />\n",
+    "PostedDate": "2014-08-20T06:30:07.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1293717",
+    "ThreadId": "557883",
+    "Html": "What I'm doing is:<br />\n<ul>\n<li>create WasapiLoopbackCapture</li>\n<li>register SampleAggregator to the WasapiLoopbackCapture.DataAvailable</li>\n<li>perform FFT</li>\n<li>\ndisplay via DirectX<br />\n</li>\n</ul>\nMy application is not playing any audio and I'm not recording the audio.<br />\n<br />\nI just checked on a second PC and I get the same visual results eg. it seems there is sound coming from my application but the sound doesn't hang there.<br />\nAre there any known issues with specific soundcards?<br />\n",
+    "PostedDate": "2014-08-26T14:59:54.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

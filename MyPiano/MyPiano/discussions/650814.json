@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1461668",
+    "ThreadId": "650814",
+    "Html": "First of all - many thanks for NAudio!\r<br />\n<br />\nIs it possible in NAudio to split the audio signal for processing the input audio data by \r<br />\nseparate filters with their own (non-audible) outputs, that consume my application, and finally to send the dry unprocessed signal to the soundcard? <br />\n",
+    "PostedDate": "2016-02-02T01:42:49.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1461938",
+    "ThreadId": "650814",
+    "Html": "you would create your own <code>IWaveProvider</code> that can pass the audio signal onto some other code doing the DSP as it passes through. The <code>Read</code> method would read from the source <code>IWaveProvider</code> and send it to the DSP code, as well as returning it.<br />\n",
+    "PostedDate": "2016-02-04T06:20:52.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463248",
+    "ThreadId": "650814",
+    "Html": "Thank you!<br />\n",
+    "PostedDate": "2016-02-15T06:17:37.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "236409",
+    "ThreadId": "69470",
+    "Html": "<p>Hello,</p>\r\n<p>can someone paste me an excample how to cut xxx ms from the beginning of a wavefile?</p>",
+    "PostedDate": "2009-09-19T06:37:26.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "239102",
+    "ThreadId": "69470",
+    "Html": "<p>Check my blog post <a href=\"http://mark-dot-net.blogspot.com/2009/09/trimming-wav-file-using-naudio.html\">here</a> for some sample code</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-09-26T05:32:07.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "239103",
+    "ThreadId": "69470",
+    "Html": "<p>Wow, thanks!</p>",
+    "PostedDate": "2009-09-26T05:36:49.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

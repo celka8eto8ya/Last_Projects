@@ -1,0 +1,186 @@
+[
+  {
+    "Id": "952213",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp; &nbsp;I have created player using NAudio and now I have to add VOLUME METER. I use the following code.</p>\r\n<p>&nbsp;</p>\r\n<p>WaveOut Player = new WaveOut();</p>\r\n<p>string fileName;</p>\r\n<p>AudioFileReader FileReader;</p>\r\n<p>FileReader = new AudioFileReader(fileName);</p>\r\n<p>Player.Init(FileReader);</p>\r\n<p>Player.Play();</p>\r\n<p>&nbsp;</p>\r\n<p>How I add volume meter to my player... from where I get value for Volume meter..</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n",
+    "PostedDate": "2012-12-06T04:23:06.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "952268",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>hi, have a look at the Audio File Playback code in the NAudioDemo project. This shows how to create a volume meter and update it.</p>\r\n",
+    "PostedDate": "2012-12-06T06:06:55.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "952767",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>hi,</p>\r\n<p>&nbsp;&nbsp; It tell to create a pannel...</p>\r\n<p>i need to use it in a form...</p>\r\n<p></p>\r\n<p><span style=\"font-size:x-small; color:#0000ff; font-family:Consolas\"><span style=\"font-size:x-small; color:#0000ff; font-family:Consolas\"><span style=\"font-size:x-small; color:#0000ff; font-family:Consolas\"><span style=\"font-size:x-small; color:#0000ff; font-family:Consolas\"><span style=\"font-size:x-small; color:#0000ff; font-family:Consolas\"><span style=\"font-size:x-small; color:#0000ff; font-family:Consolas\"><span style=\"font-size:x-small; color:#0000ff; font-family:Consolas\"><font face=\"Consolas\" size=\"2\" color=\"#0000ff\"></p>\r\n<p>private <span style=\"font-size:x-small; color:#2b91af; font-family:Consolas\"><span style=\"font-size:x-small; color:#2b91af; font-family:Consolas\"><span style=\"font-size:x-small; color:#2b91af; font-family:Consolas\">SampleProvider</span></span></span><span style=\"font-size:x-small; font-family:Consolas\"><span style=\"font-size:x-small; font-family:Consolas\">\r\n CreateInputStream(</span></span><span style=\"font-size:x-small; color:#0000ff; font-family:Consolas\"><span style=\"font-size:x-small; color:#0000ff; font-family:Consolas\"><span style=\"font-size:x-small; color:#0000ff; font-family:Consolas\">string</span></span></span></p>\r\n</font></span></span></span></span></span></span></span>\r\n<p><span style=\"font-size:x-small; font-family:Consolas\"><span style=\"font-size:x-small; font-family:Consolas\">fileName)</span></span></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>HInshin</p>\r\n",
+    "PostedDate": "2012-12-07T01:16:06.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "952775",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>the exact same code will work in a form.</p>\r\n",
+    "PostedDate": "2012-12-07T01:28:35.113-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "952896",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp; &nbsp;can you please tell me the sample code for that ... I tried a lot but I was not able to find that . please tell the solution.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>&nbsp;</p>\r\n<p>Hinshin&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-07T05:30:04.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953240",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<p>Hi,</p>\r\n<p>&nbsp; &nbsp;can you please tell me the sample code for that ... I tried a lot but I was not able to find that . please tell the solution.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>&nbsp;</p>\r\n<p>Hinshin&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-07T21:58:28.003-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953457",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>This is the important bit in the demo - we wrap our input stream in a MeteringSampleProvider, and subscribe to stream volume</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var postVolumeMeter = new MeteringSampleProvider(waveChannel);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; postVolumeMeter.StreamVolume += OnPostVolumeMeter;</p>\r\n<p>Then in the event handler, set the value of your volume meter:</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void OnPostVolumeMeter(object sender, StreamVolumeEventArgs e)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // we know it is stereo<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; volumeMeter1.Amplitude = e.MaxSampleValues[0];<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; volumeMeter2.Amplitude = e.MaxSampleValues[1];<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n",
+    "PostedDate": "2012-12-09T00:03:57.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953547",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>Hi,</p>\r\n<p><span style=\"white-space:pre\"></span>I was always getting null value for&nbsp;InputFileFormats and getting error like this...</p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"white-space:pre\">Value cannot be null.Parameter name: source</span></p>\r\n<p>&nbsp;</p>\r\n<p>[ImportMany(typeof(IInputFileFormatPlugin))]&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>public IEnumerable&lt;IInputFileFormatPlugin&gt; InputFileFormats { get; set; }</p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"white-space:pre\">private IInputFileFormatPlugin GetPluginForFile(string fileName)&nbsp; &nbsp; &nbsp; &nbsp;</span></p>\r\n<p><span style=\"white-space:pre\">{</span></p>\r\n<p><span style=\"white-space:pre\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return (from f in this.InputFileFormats where fileName.EndsWith(f.Extension, StringComparison.OrdinalIgnoreCase) select f).FirstOrDefault();&nbsp; &nbsp; &nbsp; &nbsp;\r\n</span></p>\r\n<p><span style=\"white-space:pre\">}</span></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"white-space:pre\">I</span>&nbsp;was using&nbsp;AudioFileReader...&nbsp;</p>\r\n<p>is there any different using wavestream and AudioFileReader.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n",
+    "PostedDate": "2012-12-09T07:59:11.373-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953561",
+    "ThreadId": "405801",
+    "Html": "just use AudioFileReader, that will make a SampleProvider from most playable types.<br>\r\n<div><br>\r\n<br>\r\n<div>On 9 December 2012 15:59, hinshin <span dir=\"ltr\">&lt;<a href=\"mailto:notifications@codeplex.com\" target=\"_blank\">notifications@codeplex.com</a>&gt;</span> wrote:<br>\r\n<blockquote style=\"margin:0 0 0 .8ex; border-left:1px #ccc solid; padding-left:1ex\">\r\n<div>\r\n<p>From: hinshin</p>\r\n<div>\r\n<p>Hi,</p>\r\n<p><span style=\"white-space:pre-wrap\"></span>I was always getting null value for InputFileFormats and getting error like this...</p>\r\n<p></p>\r\n<p><span style=\"white-space:pre-wrap\">Value cannot be null.Parameter name: source</span></p>\r\n<p></p>\r\n<p>[ImportMany(typeof(IInputFileFormatPlugin))] </p>\r\n<p>public IEnumerable&lt;IInputFileFormatPlugin&gt; InputFileFormats { get; set; }</p>\r\n<p></p>\r\n<p><span style=\"white-space:pre-wrap\">private IInputFileFormatPlugin GetPluginForFile(string fileName)\r\n</span></p>\r\n<p><span style=\"white-space:pre-wrap\">{</span></p>\r\n<p><span style=\"white-space:pre-wrap\">return (from f in this.InputFileFormats where fileName.EndsWith(f.Extension, StringComparison.OrdinalIgnoreCase) select f).FirstOrDefault();\r\n</span></p>\r\n<p><span style=\"white-space:pre-wrap\">}</span></p>\r\n<p></p>\r\n<p></p>\r\n<p><span style=\"white-space:pre-wrap\">I</span> was using AudioFileReader... </p>\r\n<p>is there any different using wavestream and AudioFileReader.</p>\r\n<p></p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n</div>\r\n<div>\r\n<div>\r\n<p>Read the <a href=\"http://naudio.codeplex.com/discussions/405801#post953547\" target=\"_blank\">\r\nfull discussion online</a>.</p>\r\n<p>To add a post to this discussion, reply to this email (<a href=\"mailto:naudio@discussions.codeplex.com?subject=[naudio:405801]\" target=\"_blank\">naudio@discussions.codeplex.com</a>)</p>\r\n<p>To start a new discussion for this project, email <a href=\"mailto:naudio@discussions.codeplex.com\" target=\"_blank\">\r\nnaudio@discussions.codeplex.com</a></p>\r\n<p>You are receiving this email because you subscribed to this discussion on CodePlex. You can\r\n<a href=\"https://naudio.codeplex.com/subscriptions/thread/project/edit\" target=\"_blank\">\r\nunsubscribe or change your settings</a> on codePlex.com.</p>\r\n<p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at\r\n<a href=\"http://codeplex.com\" target=\"_blank\">codeplex.com</a></p>\r\n</div>\r\n</div>\r\n</div>\r\n</blockquote>\r\n</div>\r\n<br>\r\n</div>\r\n",
+    "PostedDate": "2012-12-09T09:21:04.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953747",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp;&nbsp; I done every think like Audioplayback sample in NAudio..... But There is no cjhange in VOlume Meter...</p>\r\n<p>my code are,</p>\r\n<p>Play Button Click</p>\r\n<p><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">private\r\n</span></span></span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">void</span></span><span style=\"font-size:x-small\"> button2_Click(</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">object</span></span><span style=\"font-size:x-small\">\r\n sender, </span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">EventArgs</span></span><span style=\"font-size:x-small\"> e)\r\n</span></p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div><span style=\"font-size:x-small\">\r\n<p>{</p>\r\n</span></div>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">if</span></span><span style=\"font-size:x-small\"> (player !=\r\n</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">null</span></span><span style=\"font-size:x-small\">)</span>&nbsp;</p>\r\n</span>\r\n<p></p>\r\n<p>&nbsp;<span style=\"font-size:x-small\">{</span></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">if</span></span><span style=\"font-size:x-small\"> (player.PlaybackState ==\r\n</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">PlaybackState</span></span><span style=\"font-size:x-small\">.Paused)</span></p>\r\n</span>\r\n<p></p>\r\n<p></p>\r\n</span>\r\n<p></p>\r\n<p></p>\r\n<div><span style=\"font-size:x-small\">\r\n<p>{</p>\r\n<p>player.Play();</p>\r\n</span></div>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p>}</p>\r\n<p>&nbsp;</p>\r\n</span>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p>&nbsp;</p>\r\n</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">else</span></span><span style=\"font-size:x-small; color:#0000ff\">&nbsp;</span>\r\n<div><span style=\"font-size:x-small\"></span></div>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p>{</p>\r\n<p>player.DeviceNumber = 3;</p>\r\n</span>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p>reader =<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">new</span></span><span style=\"font-size:x-small\">\r\n</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">AudioFileReader</span></span><span style=\"font-size:x-small\">(fileName);</span><span style=\"font-size:x-small\">\r\n</span></p>\r\n</span>\r\n<div><span style=\"font-size:x-small\"></span></div>\r\n&nbsp;\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p></p>\r\n<p>player.Init(reader);</p>\r\n<p>player.Play();</p>\r\n<p></p>\r\n<p>}</p>\r\n</span>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p>}<span style=\"font-size:x-small\">&nbsp;</span></p>\r\n<span style=\"font-size:x-small\"><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"><font size=\"2\">\r\n<p>&nbsp;</p>\r\n</font><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">ISampleProvider</span></span><span style=\"font-size:x-small\"> sampleProvider =\r\n</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">null</span></span><span style=\"font-size:x-small\">;</span></span></span></span></span></span><span style=\"font-size:x-small\"><span style=\"font-size:x-small\">&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">try</span></span><span style=\"font-size:x-small; color:#0000ff\">&nbsp;</span><span style=\"font-size:x-small\">\r\n</span></span></span>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p></p>\r\n<p>{</p>\r\n<p>sampleProvider = CreateInputStream(fileName);</p>\r\n<p>}</p>\r\n<span style=\"font-size:x-small\">catch</span><span style=\"font-size:x-small\">(</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">Exception</span></span><span style=\"font-size:x-small\"> createException)</span>\r\n<p></p>\r\n</span>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\">{</span> </p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">MessageBox</span></span><span style=\"font-size:x-small\">.Show(</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">String</span></span><span style=\"font-size:x-small\">.Format(</span><span style=\"font-size:x-small; color:#a31515\"><span style=\"font-size:x-small; color:#a31515\">&quot;{0}&quot;</span></span><span style=\"font-size:x-small\">,\r\n createException.Message), </span><span style=\"font-size:x-small; color:#a31515\"><span style=\"font-size:x-small; color:#a31515\">&quot;Error Loading File&quot;</span></span><span style=\"font-size:x-small\">);</span><span style=\"font-size:x-small\"><span style=\"font-size:x-small\">\r\n</span></span></p>\r\n</span><span style=\"font-size:x-small\"><span style=\"font-size:x-small\">\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">return</span></span><span style=\"font-size:x-small\">;</span></p>\r\n</span></span>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p>}</p>\r\n<span style=\"font-size:x-small\"><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"><font size=\"2\">\r\n<p>&nbsp;</p>\r\n</font><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">try</span></span></span><span style=\"font-size:x-small; color:#0000ff\">&nbsp;</span><span style=\"font-size:x-small\">\r\n</span></span></span><span style=\"font-size:x-small\">&nbsp;</span></span></span>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p></p>\r\n<p>{</p>\r\n<span style=\"font-size:x-small\"></span>\r\n<p></p>\r\n<p>player.Init(<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">new</span></span><span style=\"font-size:x-small\">\r\n</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">SampleToWaveProvider</span></span><span style=\"font-size:x-small\">(sampleProvider));</span></p>\r\n</span>\r\n<p></p>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p>}</p>\r\n<span style=\"font-size:x-small\">\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">catch</span></span><span style=\"font-size:x-small\"> (</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">Exception</span></span><span style=\"font-size:x-small\">\r\n initException)</span><span style=\"font-size:x-small\"> </span></p>\r\n</span></span>\r\n<p></p>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p></p>\r\n<p>{</p>\r\n<span style=\"font-size:x-small\">\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">MessageBox</span></span><span style=\"font-size:x-small\">.Show(</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">String</span></span><span style=\"font-size:x-small\">.Format(</span><span style=\"font-size:x-small; color:#a31515\"><span style=\"font-size:x-small; color:#a31515\">&quot;{0}&quot;</span></span><span style=\"font-size:x-small\">,\r\n initException.Message), </span><span style=\"font-size:x-small; color:#a31515\"><span style=\"font-size:x-small; color:#a31515\">&quot;Error Initializing Output&quot;</span></span><span style=\"font-size:x-small\">);</span></p>\r\n</span>\r\n<p></p>\r\n</span>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"><span style=\"font-size:x-small\">&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">return</span></span><span style=\"font-size:x-small\">;</span><span style=\"font-size:x-small\">\r\n</span></span></span></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p></p>\r\n<p>}</p>\r\n<p>}</p>\r\n<p><span style=\"font-size:x-small\">&nbsp;</span></p>\r\n<p></p>\r\n</span>\r\n<p></p>\r\n<p><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\"></p>\r\n<p>private <span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">ISampleProvider</span></span><span style=\"font-size:x-small\"> CreateInputStream(</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">string</span></span><span style=\"font-size:x-small\">\r\n fileName) </span></p>\r\n</span></span></span><span style=\"font-size:x-small\"></span>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"></p>\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">if</span></span><span style=\"font-size:x-small\"> (plugin ==\r\n</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">null</span></span><span style=\"font-size:x-small\">)</span><span style=\"font-size:x-small\">\r\n</span></p>\r\n</span></span><span style=\"font-size:x-small\"></span>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p>}</p>\r\n<span style=\"font-size:x-small\">\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">this</span></span><span style=\"font-size:x-small\">.fileWaveStream = plugin.CreateWaveStream(fileName);</span><span style=\"font-size:x-small\"><span style=\"font-size:x-small\">\r\n</span></span></p>\r\n</span></span>\r\n<p><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"></p>\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">var</span></span><span style=\"font-size:x-small\"> waveChannel =\r\n</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">new</span></span><span style=\"font-size:x-small\">\r\n</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">SampleChannel</span></span><span style=\"font-size:x-small\">(</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">this</span></span><span style=\"font-size:x-small\">.fileWaveStream,\r\n</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">true</span></span><span style=\"font-size:x-small\">);</span></p>\r\n</span></span>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"></p>\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">this</span></span><span style=\"font-size:x-small\">.setVolumeDelegate = (vol) =&gt; waveChannel.Volume = vol;</span><span style=\"font-size:x-small\"><span style=\"font-size:x-small\">\r\n</span></span></p>\r\n</span></span>\r\n<p><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"></p>\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">var</span></span><span style=\"font-size:x-small\"> postVolumeMeter =\r\n</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">new</span></span><span style=\"font-size:x-small\">\r\n</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">MeteringSampleProvider</span></span><span style=\"font-size:x-small\">(waveChannel);</span></p>\r\n</span></span>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p>postVolumeMeter.StreamVolume += OnPostVolumeMeter;</p>\r\n<span style=\"font-size:x-small\">\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">return</span></span><span style=\"font-size:x-small\"> postVolumeMeter;</span><span style=\"font-size:x-small\">\r\n</span></p>\r\n</span></span>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<p></p>\r\n<p>}</p>\r\n<span style=\"font-size:x-small\">\r\n<p>&nbsp;</p>\r\n</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">void</span></span><span style=\"font-size:x-small\"> OnPostVolumeMeter(</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">object</span></span><span style=\"font-size:x-small\">\r\n sender, </span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">StreamVolumeEventArgs</span></span><span style=\"font-size:x-small\"> e)</span>\r\n<p></p>\r\n<span style=\"font-size:x-small\">\r\n<p>{</p>\r\n<p>volumeMeter1.Amplitude = e.MaxSampleValues[0];</p>\r\n<p>volumeMeter2.Amplitude = e.MaxSampleValues[1];</p>\r\n<p>}</p>\r\n<p><span style=\"font-size:x-small\">where I was doing wrong. please guide me to display volume meter.</span></p>\r\n<p><span style=\"font-size:x-small\">Thanks & Regards,</span></p>\r\n<p><span style=\"font-size:x-small\">Hinshin&nbsp;</span></p>\r\n</span></span>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p>{</p>\r\n<span style=\"font-size:x-small\">\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">throw</span></span><span style=\"font-size:x-small\">\r\n</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">new</span></span><span style=\"font-size:x-small\">\r\n</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">InvalidOperationException</span></span><span style=\"font-size:x-small\">(</span><span style=\"font-size:x-small; color:#a31515\"><span style=\"font-size:x-small; color:#a31515\">&quot;Unsupported\r\n file extension&quot;</span></span><span style=\"font-size:x-small\">);</span></p>\r\n</span>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p>{</p>\r\n<span style=\"font-size:x-small\">\r\n<p>&nbsp;<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">var</span></span><span style=\"font-size:x-small\"> plugin = GetPluginForFile(fileName);</span></p>\r\n</span>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\">player.Volume = (</span><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">float</span></span><span style=\"font-size:x-small\">)1.0;\r\n</span></p>\r\n",
+    "PostedDate": "2012-12-10T00:07:11.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953776",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>Are you hearing the audio? Also, try putting a breakpoint in OnPostVolumeMeter and seeing if it gets hit.</p>\r\n",
+    "PostedDate": "2012-12-10T01:21:13.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953832",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>hi,</p>\r\n<p>&nbsp; yes i am hearing audio, it is not hitting OnPostVOlumeMeter event..</p>\r\n<p>&nbsp;</p>\r\n<p>private IInputFileFormatPlugin GetPluginForFile(string fileName)&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>return (from f in this.InputFileFormats where fileName.EndsWith(f.Extension, StringComparison.OrdinalIgnoreCase) select f).FirstOrDefault();&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>}</p>\r\n<p>&nbsp;</p>\r\n<p>It returns null value for me...&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-10T03:07:30.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953929",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<p>don't use GetPluginForFile at all. Just make an AudioFileReader. That is all you need to do.</p>\r\n<p><span style=\"font-size:x-small\"><span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">this</span></span><span style=\"font-size:x-small\">.fileWaveStream = new AudioFileReader(fileName);</span></span></p>\r\n",
+    "PostedDate": "2012-12-10T06:10:02.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953960",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>Hi,</p>\r\n<p><span style=\"white-space:pre\"></span>My exact code is,</p>\r\n<p>play button click</p>\r\n<p>reader = new AudioFileReader(fileName);&nbsp;</p>\r\n<p>player.Init(reader);</p>\r\n<p>player.Play();&nbsp;</p>\r\n<p>ISampleProvider sampleProvider = null;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>sampleProvider = CreateInputStream(fileName);&nbsp;</p>\r\n<p>return;&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>private ISampleProvider CreateInputStream(string fileName)&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>this.fileWaveStream = new AudioFileReader(fileName);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>var waveChannel = new SampleChannel(this.fileWaveStream, true);&nbsp;</p>\r\n<p>var postVolumeMeter = new MeteringSampleProvider(waveChannel);&nbsp;</p>\r\n<p>postVolumeMeter.StreamVolume += OnPostVolumeMeter;<br>\r\nreturn postVolumeMeter;&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>}<br>\r\nvoid OnPostVolumeMeter(object sender, StreamVolumeEventArgs e)&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>{&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>volumeMeter1.Amplitude = e.MaxSampleValues[0];&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>volumeMeter2.Amplitude = e.MaxSampleValues[1];&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>}</p>\r\n<p>But it was not hitting OnPostVolumeMeter event... Please correct my mistake...</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n",
+    "PostedDate": "2012-12-10T06:43:07.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953983",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<p>the thing you pass to Init must have the metering sample provider in the audio pipeline or it will have no effect. Try this:</p>\r\n<p>reader = new AudioFileReader(fileName);&nbsp;</p>\r\n<p>var postVolumeMeter = new MeteringSampleProvider(reader);&nbsp;</p>\r\n<p>postVolumeMeter.StreamVolume += OnPostVolumeMeter;</p>\r\n<p>player.Init(postVolumeMeter);</p>\r\n<p>player.Play();</p>\r\n",
+    "PostedDate": "2012-12-10T07:16:40.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954324",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp; I was getting error because of invalid parameter....</p>\r\n<p>The best overloaded method match for 'NAudio.Wave.WaveOut.Init(NAudio.Wave.IWaveProvider)' has some invalid arguments&nbsp;<br>\r\nArgument '1': cannot convert from 'NAudio.Wave.SampleProviders.MeteringSampleProvider' to 'NAudio.Wave.IWaveProvider'</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n",
+    "PostedDate": "2012-12-10T22:16:41.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954369",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>ah yes, convert to IWaveProvider (I'm planning to make that step automatic for future NAudio versions). You've already got the code that does this elsewhere in your app:</p>\r\n<p>player.Init(<span style=\"font-size:x-small; color:#0000ff\"><span style=\"font-size:x-small; color:#0000ff\">new</span></span><span style=\"font-size:x-small\">\r\n</span><span style=\"font-size:x-small; color:#2b91af\"><span style=\"font-size:x-small; color:#2b91af\">SampleToWaveProvider</span></span><span style=\"font-size:x-small\">(postVolumeMeter));</span></p>\r\n",
+    "PostedDate": "2012-12-11T00:23:32.22-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954458",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>hi,</p>\r\n<p>&nbsp; &nbsp;Now it not playing and hitting&nbsp;OnPostVolumeMeter(object sender, StreamVolumeEventArgs e) event</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n",
+    "PostedDate": "2012-12-11T03:23:05.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954550",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp; &nbsp;Thankyou for your response I got that (volume meter).</p>\r\n<p>&nbsp;I was not able to play wave file which has 319 kbps of Bit Rate...</p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n",
+    "PostedDate": "2012-12-11T06:28:14.583-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954887",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I was not able to play wave file which has 319 kbps of Bit Rate...</p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n",
+    "PostedDate": "2012-12-11T21:16:29.547-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954921",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>I'll need more information than that if you want help. What is the WaveFormat of the WAV file and what error message did you see?</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-11T23:28:19.537-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954935",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>hi,</p>\r\n<p>&nbsp; &nbsp;I was playing wave file with ( Bit Rate: 319 kbps, Audio Sample Rate: 44 kHz) and I was getting the following error...</p>\r\n<p>&nbsp;</p>\r\n<p>NoDriver calling acmFormatSuggest</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n",
+    "PostedDate": "2012-12-12T00:04:05.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955305",
+    "ThreadId": "405801",
+    "Html": "\r\n<p>This means you have no ACM codec installed on your computer that can perform the requested conversion. You need to tell me what WaveFormat you are using (the most important thing is the Encoding).</p>\r\n<p>For a detailed explanation, please read my article on CodeProject:</p>\r\n<p>http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-12-12T13:15:22.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

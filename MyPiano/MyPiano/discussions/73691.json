@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "251961",
+    "ThreadId": "73691",
+    "Html": "<p>Hi everybody,</p>\r\n<p>First I'd like to thanks for this great project who is helping me a lot managing with audio devices.</p>\r\n<p>I've a question about how we use WaveBuffer for capturing (in order to not convert byte[] to short[] everytime I've a new buffer)...</p>\r\n<p>All tests are made generating a sine of 1000Hz to the line-in.</p>\r\n<p>In brief here is my problem:</p>\r\n<p>&nbsp;</p>\r\n<pre>format = new WaveFormat(44100, 16, 1);\r\n            waveInStream = new WaveIn();\r\n            waveInStream.WaveFormat = format;\r\n\r\nwaveInStream.DataAvailable += new EventHandler(waveInStream_DataAvailable);\r\n            waveInStream.StartRecording();</pre>\r\n<p>&nbsp;</p>\r\n<p>Here is where I capture my data: (e.Buffer is a byte[] buffer so I use the WaveBuffer to &quot;abstract&quot; it)</p>\r\n<pre>private void waveInStream_DataAvailable(object sender, WaveInEventArgs e)\r\n        {\r\n            WaveBuffer wb = new WaveBuffer(e.Buffer);\r\n            db.SetBufferDebug(wb);\r\n        }</pre>\r\n<p>&nbsp;</p>\r\n<p>This function prepare a debugBuffer who display in a Graph widget the last 500 elements of my last buffer and the first 500 elements of the new one:</p>\r\n<pre><pre>        public void SetBufferDebug(WaveBuffer s)\r\n        {\r\n            if (position == 0)\r\n            {\r\n                for (int i = 0; i &lt; 500; i++)\r\n                    debugArray[499-i] = s.ShortBuffer[(s.ShortBuffer.Length-1)-i];\r\n\r\n                position = 1;\r\n            }\r\n            else\r\n            {\r\n                int j = 0;\r\n                for (int i = 0; i &lt; 500; i++)\r\n                {\r\n                    debugArray[500+i] = s.ShortBuffer[i];\r\n                }\r\n\r\n                position = 0;\r\n                mainGUI.updateGraph(debugArray);\r\n            }\r\n\r\n        }</pre>\r\n</pre>\r\n<p>&nbsp;</p>\r\n<p>The results are strange, once in a while the last part of my buffer is wrong, like noise:</p>\r\n<p><a href=\"http://img688.imageshack.us/i/samplingfailed.jpg/\"><img src=\"http://img688.imageshack.us/img688/3708/samplingfailed.th.jpg\" border=0 alt=\"Free Image Hosting at www.ImageShack.us\"></a><br><br>and the other time the capturing is perfect:</p>\r\n<p><a href=\"http://img527.imageshack.us/i/samplingsuccess.jpg/\"><img src=\"http://img527.imageshack.us/img527/414/samplingsuccess.th.jpg\" border=0 alt=\"Free Image Hosting at www.ImageShack.us\"></a><br><br><a title=QuickPost href=\"http://img604.imageshack.us/content.php?page=blogpost&files=img527/414/samplingsuccess.jpg\"><br></a></p>\r\n<p>I'm I using WaveBuffer wrong? There is another way to capture directly a buffer of shorts when using 16 bits sampling?</p>\r\n<p>Thanks for the attention....</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-31T08:46:45.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "252006",
+    "ThreadId": "73691",
+    "Html": "<p>have you checked that the BytesRecorded member of the WaveInEventArgs is what you expect?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-31T12:26:33.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "252042",
+    "ThreadId": "73691",
+    "Html": "<p>Thanks for the answer Mark,</p>\r\n<p>What is expected is what I received, in case I sample at 16bits per sample, my single sample is composed by 2 elements of my bytes array, and if just @8 bits I've one sample each element.</p>\r\n<p>So If I manually &quot;convert&quot; my buffer to short[] using:</p>\r\n<p>\r\n<pre> samplingBuffer[i] = (short)((buff[i] &amp; 0xff) | (buff[i + 1] &lt;&lt; 8));\r\n// samplingBuffer is my destination array of shorts\r\n// buff is my e.Buffer</pre>\r\n</p>\r\n<p>The samplingBuffer returned is perfectly working and the graph show my signal correctly...</p>\r\n<p>I'm asking myself if this is the same that happens when I use the WaveBuffer.ShortBuffer attribute. When I'm calling my WaveBuffer as a ShortBuffer did it automatically &quot;aggregate&quot; the two bytes in single one short?</p>\r\n<p>Tnx</p>",
+    "PostedDate": "2009-10-31T15:47:46.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

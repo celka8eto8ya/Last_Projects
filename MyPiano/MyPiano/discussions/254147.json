@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "598326",
+    "ThreadId": "254147",
+    "Html": "\r\n<p>Please let us to&nbsp;customize our own thread priority of playback/input thread in every API classes which inherited the interface IWavePlayer.</p>\r\n",
+    "PostedDate": "2011-04-15T23:11:48.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598337",
+    "ThreadId": "254147",
+    "Html": "<p>Not every implementation of IWavePlayer creates threads (e.g. WaveOut window callback), or has control over the threads it uses (e.g. WaveOut function callback), but yes it would be nice to add a property to some of the other implementors to do this. Why not make the change you want and submit a patch?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-16T00:25:33.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598597",
+    "ThreadId": "254147",
+    "Html": "<p>So do you know, do every callbacks are using the same thread?</p>",
+    "PostedDate": "2011-04-17T01:02:48.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598989",
+    "ThreadId": "254147",
+    "Html": "<p>not sure exactly what you mean, but WASAPI creates a background thread on which to fill buffers, so you could control that.</p>",
+    "PostedDate": "2011-04-18T04:05:11.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "162028",
+    "ThreadId": "48530",
+    "Html": "Can someone explain to me the difference between an 8 bit (8kHz, 1 channel) PCM and u-Law (8 bit, 8kHz,1ch) encoded file? I was attempting to convert from the former PCM format to the later u-Law format and the WaveConversionStream threw an exception. The size of those two files appears to be the same.<br>\r\n<br>\r\n-G<br>\r\n",
+    "PostedDate": "2009-02-25T11:37:01.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "162382",
+    "ThreadId": "48530",
+    "Html": "Hi geiman,<br>\r\n<br>\r\nThe main difference is to do with dynamic range. While with 8 bit PCM, the 256 volume levels are evenly distributed, with u-law and a-law they are on a curve that improves the quality of encoding speech. Not sure why you would get the exception. Normally you go from u-law to 16 bit.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-02-26T08:56:45.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "162436",
+    "ThreadId": "48530",
+    "Html": "From http://en.wikipedia.org/wiki/PCM, &quot;In telephony, a standard audio signal for a single phone call is encoded as 8000 analog samples per second, of 8 bits each, giving a 64 kbit/s digital signal known as DS0. The default signal compression encoding on a DS0 is either µ-law (mu-law) PCM (North America and Japan) or A-law PCM (Europe and most of the rest of the world).&quot;<br>\r\n<br>\r\nIf I receive a 16gHz, 8bit mono PCM file, it is my understanding that this will eventually be converted to u-Law to be played on a telephony device, but it does seem possible to convert any 8 bit PCM to u-Law using NAudio, so perhaps I am misunderstanding something. I always get the exception &quot;NAudio.MmException:&nbsp;AcmNotPossible&nbsp;calling&nbsp;acmStreamOpen&quot;. I have tried using multiple WaveConversionStreams but have not been successful.<br>\r\n",
+    "PostedDate": "2009-02-26T10:32:34.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "429122",
+    "ThreadId": "48530",
+    "Html": "<p>All of the coding I've seen for converting PCM to u-Law have been for converting 16-bit samples to 8-bit.&nbsp;</p>\r\n<p>If you record something as 8kHz, 8 bit, mono PCM in Sound Recorder it won't let you convert it to u-Law.</p>\r\n<p>I would record as 8kHz, 16 bit, mono PCM and then convert it to u-Law</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-04-08T23:45:47.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

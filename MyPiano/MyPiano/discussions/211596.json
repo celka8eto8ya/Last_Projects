@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "439082",
+    "ThreadId": "211596",
+    "Html": "<p>I do it in this way:</p>\r\n<p>AudioPlayer player = new AudioPlayer();</p>\r\n<p>player.LoadFile(filename);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>player.StartPosition = PositionToTimeSpan(waveControl1.LeftPosition);<br>player.EndPosition = PositionToTimeSpan(waveControl1.RightPosition);<br>player.Play();&nbsp;</p>\r\n<p>But after play wave file. It didn't release IO handle, so I can't delete it in other process.</p>",
+    "PostedDate": "2010-05-04T19:38:30.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439129",
+    "ThreadId": "211596",
+    "Html": "<p>do you dispose of your AudioPlayer after playback has finished?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-05-04T23:43:23.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439130",
+    "ThreadId": "211596",
+    "Html": "<p>Waveout.disposed can't solve out my problem. I added inStream.close() and it's working.</p>\r\n<p>public class AudioPlayer</p>\r\n<p>{</p>\r\n<p>...</p>\r\n<p>public void Stop()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveOut.Stop();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inStream.Position = 0;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inStream.Close();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>}</p>\r\n<p>Thank mark.</p>",
+    "PostedDate": "2010-05-04T23:49:17.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

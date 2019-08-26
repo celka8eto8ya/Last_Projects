@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "554362",
+    "ThreadId": "243043",
+    "Html": "\r\n<p>I am trying to synchronize visual content with an MP3 that has pitch shifting applied to it.</p>\r\n<p>I need to know how much latency the effect processing is adding so I can offset the position of the visual content.</p>\r\n<p>I also need 1/60 second resolution for the &quot;Actual Play Position (mp3 position - latency)&quot;.</p>\r\n<p>How do I need to configure the DirectSound settings to get the chunks processed in smaller than 1/60 second intervals and get the latency factored in?</p>\r\n<p>Basically I need, &quot;what you are hearing now is at xxxxx milliseconds in the source MP3 file&quot;.</p>\r\n<p>Great library by the way.</p>\r\n",
+    "PostedDate": "2011-01-24T06:09:10.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555252",
+    "ThreadId": "243043",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I wrote a class named&nbsp;AdvancedBufferedWaveProvider, since I had a similar problem/question.</p>\r\n<p>[Just some credits: it is&nbsp;based on code from trentdevers (http://naudio.codeplex.com/Thread/View.aspx?ThreadId=54133)]</p>\r\n<p>There is an event there:&nbsp;PlayPositionChanged, which has a property on the Event Argument named:&nbsp;PlayTime</p>\r\n<p>It should give you what you're looking for. Just subscribe to the event and you get the current playing time.</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/source/browse/trunk/PracticeSharpApp/Core/AdvancedBufferedWaveProvider.cs\">http://code.google.com/p/practicesharp/source/browse/trunk/PracticeSharpApp/Core/AdvancedBufferedWaveProvider.cs</a></p>\r\n<p>&nbsp;</p>\r\n<p>To check out the whole project:</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/source/checkout\">http://code.google.com/p/practicesharp/source/checkout</a></p>\r\n<p>&nbsp;</p>\r\n<p>Hope this helps,</p>\r\n<p>Yuval</p>\r\n<p>Author of Practice#</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-25T14:16:05.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

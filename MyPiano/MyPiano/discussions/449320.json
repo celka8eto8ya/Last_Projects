@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1065648",
+    "ThreadId": "449320",
+    "Html": "Would love to be able to make use of an existing library. I know people have written equalizers before, I am not a DSP guy, but would like to simply plug it into our player framework with NAudio.<br />\n",
+    "PostedDate": "2013-07-08T09:47:04.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1066146",
+    "ThreadId": "449320",
+    "Html": "I'm afraid I don't have one. I'm hoping to add some EQ in a future NAudio though. For now, I'd recommend searching for some open source EQ and porting it to C#<br />\n",
+    "PostedDate": "2013-07-09T07:51:07.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "257423",
+    "ThreadId": "75232",
+    "Html": "<p>Hello all,</p>\r\n<p>For my first little project I just want to read a mono,&nbsp;16-bit, 44.1 kHz WAV file and get the PCM data as an array of doubles where -1.0 &lt;= y &lt;= +1.0, just like MATLAB's wavread function.</p>\r\n<p>Maybe there's&nbsp;a more direct way to do it, but so far I tried this:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>WaveStream readerStream = CreateInputStream(<span style=\"color:#A31515\">&quot;idiot.wav&quot;</span>);\r\nWave32To16Stream pcm = <span style=\"color:Blue\">new</span> Wave32To16Stream(readerStream);\r\n<span style=\"color:Blue\">int</span> bitsPerSample = pcm.WaveFormat.BitsPerSample; <span style=\"color:Green\">// 16. good.</span>\r\n<span style=\"color:Blue\">int</span> sampleRate = pcm.WaveFormat.SampleRate; <span style=\"color:Green\">// 44100. good.</span>\r\n<span style=\"color:Blue\">string</span> encoding = pcm.WaveFormat.Encoding.ToString(); <span style=\"color:Green\">// Pcm. good.</span>\r\n<span style=\"color:Blue\">int</span> channels = pcm.WaveFormat.Channels; <span style=\"color:Green\">// 2.  why not 1 ???</span>\r\n</pre>\r\n</div>\r\n<p>(One odd thing is I noticed is that &quot;channels&quot; equals 2 even though the input file is mono.&nbsp; Not sure why.)</p>\r\n<p>So anyway,&nbsp;do I now have to read two bytes at a time to get the 16-bit samples?&nbsp; Or is there some easier way to get my array of doubles?</p>\r\n<p>Thank you!</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-16T02:18:16.547-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "257427",
+    "ThreadId": "75232",
+    "Html": "<p>I would guess that CreateInputStream is converting to stereo 32 bit audio.</p>\r\n<p>Also, if you want doubles, I would skip using the Wave32To16Stream, as 32 bit floating point is easy to convert to doubles.</p>\r\n<p>Have a look at the WaveBuffer class which has some clever tricks allowing you to convert from arrays of byte[] to arrays of short[] or float[] (depending on your need)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-11-16T02:22:23.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "257453",
+    "ThreadId": "75232",
+    "Html": "<p>thanks Mark, yeah my CreateInputStream method was indeed converting to stereo.&nbsp; fixed.</p>\r\n<p>So I think I have found a solution that works (although I haven't actually verified the data yet).<br>Anyway, let me know if you see any glaring problems with doing it this way:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>WaveFileReader readerStream = <span style=\"color:Blue\">new</span> WaveFileReader(<span style=\"color:#A31515\">&quot;idiot.wav&quot;</span>);\r\n<span style=\"color:Blue\">double</span>[] samples = <span style=\"color:Blue\">new</span> <span style=\"color:Blue\">double</span>[readerStream.Length / 2]; <span style=\"color:#008000\">// 16-bits per sample\r\n</span><span style=\"color:Blue\">double</span> sample = 0.0;\r\n<span style=\"color:Blue\">int</span> i = 0;\r\n<span style=\"color:Blue\">while</span> (readerStream.TryReadDouble(<span style=\"color:Blue\">ref</span> sample) &amp;&amp; i &lt; readerStream.Length / 2)\r\n{\r\n    samples[i++] = sample;\r\n}</pre>\r\n</div>\r\n<p>mucho thanks!</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-16T03:47:09.35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "257508",
+    "ThreadId": "75232",
+    "Html": "<p>Should work, although you need to be aware that TryReadDouble probably won't remain much longer (trying to keep the main interface clean). TryReadFloat will remain, and you can simply cast its return value to a double (or create your own derived WaveFileReader that includes the old TryReadDouble method).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-11-16T06:47:48.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "258724",
+    "ThreadId": "75232",
+    "Html": "<p>Hi,</p>\r\n<p>I want to make something similar except I use the WaveIn class. It doesn't support something like &quot;TryReadDouble&quot; so that I had to look for that method and write it for my own. This is what I got:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">void</span> waveInStream_DataAvailable(<span style=\"color:Blue\">object</span> sender, WaveInEventArgs e)\r\n{\r\n   <span style=\"color:Blue\">double</span>[] dBuffer = <span style=\"color:Blue\">new</span> <span style=\"color:Blue\">double</span>[e.BytesRecorded/2];\r\n   <span style=\"color:Blue\">byte</span>[] buffer = <span style=\"color:Blue\">new</span> <span style=\"color:Blue\">byte</span>[2];\r\n            \r\n   <span style=\"color:Blue\">for</span> (<span style=\"color:Blue\">int</span> i = 0; i &lt; e.BytesRecorded; i+=2)\r\n   {\r\n      buffer[0] = e.Buffer[i];\r\n      buffer[1] = e.Buffer[i + 1];\r\n\r\n      dBuffer[i / 2] = BitConverter.ToInt16(buffer, 0) / 32768.0;              \r\n   }\r\n\r\n   <span style=\"color:Green\">// do something with the dBuffer...</span>\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Not very nice at all because only 16 bits sampling is supported but it's a beginning and it works fine.</p>\r\n<p>&nbsp;</p>\r\n<p>The only question: Where the hell does the number &quot;32768.0&quot; come from?</p>\r\n<p>You wrote in the source code of NAudio: // for the benefit of oggencoder we divide by 32768.0f;</p>\r\n<p>How does it work?</p>",
+    "PostedDate": "2009-11-19T08:42:47.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "258762",
+    "ThreadId": "75232",
+    "Html": "<p>In a 16-bit system, you've got a total of 65536 possible values.&nbsp;&nbsp;If&nbsp;you put half of those below zero, use one for zero itself,&nbsp;and the remaining&nbsp;above zero, you&nbsp;get a range of -32768 &lt;= y &lt;= 32767.&nbsp; Dividing by 32768 converts the&nbsp;range of sample values&nbsp;to [-1.00000 &lt;= y &lt;~ +0.99997].&nbsp; My assumption is that the OggEncoder is looking for the -1 to 1 range.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-19T09:50:21.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

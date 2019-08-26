@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1479592",
+    "ThreadId": "656633",
+    "Html": "Hello,\r<br />\nI have an application that was working and playing a WAV file selected from a listbox. It stopped working while I was adding code for a fade-out. I removed that code and even went back to an earlier commit but there is no sound output. In the latest version of application I have a progress report and I see the progression through the file.\r<br />\n<br />\nAs I said I have reverted to an earlier commit that was producing sound, it does not anymore. I can use the demo applications and they perform as expected.\r<br />\n<br />\nHere is a code snippet from the early commit that was working but no longer does:<br />\n<pre><code>        mReader = New AudioFileReader(mCue.FilenameFullPath)\n        mVolumeController = New SampleProviders.VolumeSampleProvider(mReader.ToSampleProvider())\n        mWaveOutputDevice = New WaveOut\n        mWaveOutputDevice.Init(mVolumeController)\n        AddHandler mWaveOutputDevice.PlaybackStopped, AddressOf HandlePlaybackHasStopped\n        mWaveOutputDevice.Play()\n</code></pre>\n\nIt is VB.NET code.\r<br />\n<br />\nAny ideas why this has quit working?\r<br />\nSid<br />\n",
+    "PostedDate": "2016-07-22T08:31:08.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479593",
+    "ThreadId": "656633",
+    "Html": "check which soundcard you are playing on, and that it is not muted\r<br />\nBy the way, audiofilereader has a volume property so you don't need a volumesamplerpovider.<br />\n",
+    "PostedDate": "2016-07-22T08:33:47.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479594",
+    "ThreadId": "656633",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Hi Mark,</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">There is only a single sound card in the VM. What I just noticed is that my application is producing a signal when I open the Windows Volume Mixer, that fader was down for some reason. I moved the fader up but\r\n still no sound output or signal shown for the Device output in the Volume Mixer. Looks like a routing issue, just don’t know how it got routed that way or how to fix it.</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Sid</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<div style=\"border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0in 0in 0in\">\r\n<p><b><span style=\"font-size:11.0pt; font-family:\"></span></b></p>\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2016-07-22T08:42:20.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479598",
+    "ThreadId": "656633",
+    "Html": "Mark, one more piece of information; I connected a USB headset to the VM and the application plays through that, however there is still no sound through the main sound card.\r<br />\nWould really appreciate a little help, it seems like there is some setting for the application that is being persisted so it screws up even older, previously working, verskoins.\r<br />\nTnanks,\r<br />\nSid<br />\n",
+    "PostedDate": "2016-07-22T10:07:41.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479604",
+    "ThreadId": "656633",
+    "Html": "Hi Sidprice,\r<br />\nTry building the project to Release, then start the app by clicking the exe file in the bin/Release folder.\r<br />\n<br />\nI have a similar problem with a VS2015 project (on win10). It will not play under debug for some reason. If I find out why, I will post back here. I just converted the machine from win7 to win10, so this may be a reward for that.<br />\n",
+    "PostedDate": "2016-07-22T11:26:19.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479609",
+    "ThreadId": "656633",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Hi Theseus, yes the sound does get played through the speakers if I build a release build. This makes me think there is some setting that is persisted. To test this hypothesis, I created a new build configuration,\r\n it was based upon the Debug configuration. When I build and run the new debug configuration it works.</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">So, what settings is NAudio persisting? Where are they persisted?</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Sid</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<div style=\"border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0in 0in 0in\">\r\n<p><b><span style=\"font-size:11.0pt; font-family:\"></span></b></p>\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2016-07-22T13:10:30.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479611",
+    "ThreadId": "656633",
+    "Html": "NAudio saves no settings. I'm afraid I don't know what could be causing this behaviour. I would say though that audio support in VM / RDP situations is notoriously buggy.<br />\n",
+    "PostedDate": "2016-07-22T13:39:36.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479614",
+    "ThreadId": "656633",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Mark, I have been developing in VMs for a very long time, in fact the previous version of the application I am working on was developed entirely in a VM.</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">To me this is maybe a VS2015 issue of some kind. Anyway, I have a work-around. I removed the original “Debug” configuration and renamed my new configuration “Debug” and I am back in business.</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">I will report back if anything reveals itself.</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Thanks Theseus for suggesting trying a release build, that brought me to this work-around.</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Sid </span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<div style=\"border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0in 0in 0in\">\r\n<p><b><span style=\"font-size:11.0pt; font-family:\"></span></b></p>\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2016-07-22T13:46:30.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479618",
+    "ThreadId": "656633",
+    "Html": "Sidprice,\r<br />\nI took your advice to reconfig my project Debug configuration. I changed it from &quot;Any CPU&quot; to x86. Then everything runs perfect in debug mode. My machine is x64 and I believe the VS2015 x64 Debugger is &quot;buggy&quot;. I've had other issues with the VS2015 x64 Debugger and typically debug in x86 mode and build the release to &quot;Any CPU&quot; for publishing.\r<br />\n<br />\nSo hey thanks, we helped fix each others problems. Teamwork, yay! :-)\r<br />\n<br />\nFor the record, I have a straight Win10 upgrade install (no VM).<br />\n",
+    "PostedDate": "2016-07-22T14:47:14.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479700",
+    "ThreadId": "656633",
+    "Html": "Hi Mark,<br />\nThis problem just doesn't seem to want to go away.<br />\n<br />\nToday I attached some USB headphones to my development VM to do some testing of my NAudio application, being kind to the family! It worked just fine. Later in the day I did some edits and this time I ran my application using the default sound card of the VM ... once again no sound. Closed the application, plugged the headset in and it worked! Ran the Release build and it played. I further found that if I use the VS2015 &quot;Run without debugging&quot; the sound plays.<br />\n<br />\nI find this very strange and I am struggling to understand what is different.<br />\n<br />\nIf I look at the number of devices reported by WaveOut I see just 1.<br />\n<br />\nOne last observation; if I use &quot;run without debugging&quot; and then attach the debugger, the sounds works.<br />\n<br />\nSo the trigger for no sound seems to be using &quot;Start Debugging&quot;.<br />\n<br />\nBTW: I signed up for PluralSight and loved the NAudio course, well done!<br />\n<br />\nAny input would be much appreciated,<br />\nSid<br />\n",
+    "PostedDate": "2016-07-24T15:57:17.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

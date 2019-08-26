@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1480989",
+    "ThreadId": "657102",
+    "Html": "I'm trying to make an application to show pitch of microphone input in a pitch contour in real-time using NAudio.  To check the FFT results I inputted an A4 note on a clarinet which has the known f0 of 440Hz. But I got 430.6641Hz and got 904.3945Hz once in a blue moon. <br />\n<br />\nButton_Click Event<br />\n<pre><code>            var inputStream = new AudioFileReader(&quot;a4.wav&quot;);\n            fileStream = inputStream;\n            var aggregator = new SampleAggregator(inputStream);\n            aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;\n            aggregator.PerformFFT = true;\n            aggregator.FftCalculated+=OnFftCalculated;\n            playback = new WaveOut();\n            playback.Init(aggregator);\n\n            int read = 0;\n            float[] buffer = new float[1024];\n\n            do\n            {\n                read = aggregator.Read(buffer, 0, buffer.Length);\n            } while (read &gt; 0);\n\n            playback.Play();</code></pre>\n\nOnFFTCalculated Event<br />\n<pre><code>            float[] magnitudes = new float[e.Result.Length / 2];\n\n            for (int i = 0; i &lt; e.Result.Length / 2; i++)\n                magnitudes[i] = ((float)Math.Sqrt((e.Result[i].X * e.Result[i].X) + (e.Result[i].Y * e.Result[i].Y)));\n\n\n            float max_mag = float.MinValue;\n            float max_index = -1;\n            for (int i = 0; i &lt; e.Result.Length / 2; i++)\n                if (magnitudes[i] &gt; max_mag)\n                {\n                    max_mag = magnitudes[i];\n                    max_index = i;\n                }\n\n            var frequency = max_index * samplingFrequency / 1024; // CurrentSamplerate gets set dynamically incase some tracks have a different samplerate.\n            Dispatcher.Invoke(new Action(() =&gt;\n            {\n                Debug.WriteLine(frequency.ToString() + &quot;Hz&quot;);\n            }));</code></pre>\n\nNAudio's Sample Aggregator Class<br />\n<pre><code>public bool PerformFFT { get; set; }\n\n        public SampleAggregator(int fftLength)\n        {\n            if (!IsPowerOfTwo(fftLength))\n            {\n                throw new ArgumentException(&quot;FFT Length must be a power of two&quot;);\n            }\n            this.m = (int)Math.Log(fftLength, 2.0);\n            this.fftLength = fftLength;\n            this.fftBuffer = new Complex[fftLength];\n            this.fftArgs = new FftEventArgs(fftBuffer);\n        }\n\n        bool IsPowerOfTwo(int x)\n        {\n            return (x &amp; (x - 1)) == 0;\n        }\n\n        public void Add(float value)\n        { \n            if (PerformFFT &amp;&amp; FftCalculated != null)\n            {\n                // Remember the window function! There are many others as well.\n                fftBuffer[fftPos].X = (float)(value * FastFourierTransform.HammingWindow(fftPos, fftLength));\n                fftBuffer[fftPos].Y = 0; // This is always zero with audio.\n                fftPos++;\n                if (fftPos &gt;= fftLength)\n                {\n                    fftPos = 0;\n                    FastFourierTransform.FFT(true, m, fftBuffer);\n                    FftCalculated(this, fftArgs);\n                }\n            }\n\n        }\n    }\n\n    public class FftEventArgs : EventArgs\n    {\n        [DebuggerStepThrough]\n        public FftEventArgs(Complex[] result)\n        {\n            this.Result = result;\n        }\n        public Complex[] Result { get; private set; }\n    }\n}</code></pre>\n\nWhat can be the issue? How can I improve the accuracy of the results?<br />\n",
+    "PostedDate": "2016-08-12T10:20:49.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481109",
+    "ThreadId": "657102",
+    "Html": "Only idea I got in mind on first view: You could use double instead of float to improve precision.<br />\n",
+    "PostedDate": "2016-08-14T09:45:38.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481632",
+    "ThreadId": "657102",
+    "Html": "Hey I'm trying to apply harmonic product spectrum to FFT result. But when I try to downsample I'm getting &quot;cannot implicitly convert float to naudio.dsp.complex&quot; because the X value (Real part) is a float. How can I solve this? <br />\n<pre><code>      public Complex[] Downsample(Complex[] data, int n)\n        {\n            Complex[] array = new Complex[Convert.ToInt32(Math.Ceiling(data.Length * 1.0 / n))];\n            for (int i = 0; i &lt; array.Length; i++)\n            {\n                array[i] = data[i * n].X; //Here .. It was originally __data[i * n].Re;__\n__            }\n            return array;\n        }</code></pre>\n\n",
+    "PostedDate": "2016-08-20T03:01:23.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

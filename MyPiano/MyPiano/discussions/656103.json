@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1478033",
+    "ThreadId": "656103",
+    "Html": "I may be missing something obvious, but how do I get the sound device &quot;ID&quot; from a list of devices. This code gets me a nice list of full (not truncated) sound device names:<br />\n<pre><code>Dim enumerator As New MMDeviceEnumerator()\nFor Each endpoint As MMDevice In enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active)\n       GsSoundList.Add(endpoint.FriendlyName.ToString)\nNext</code></pre>\n\nThe problem is, the devices are not in order, so - for example - the first device in the list is not necessarily the device with an ID of 0. The following code (which truncates the device names) <strong><em>does</em></strong> seem to retrieve a list in the correct order:<br />\n<pre><code>Dim devicecount As Integer = NAudio.Wave.WaveOut.DeviceCount()\n\nIf devicecount &gt; 0 Then\n      For i As Integer = 0 To devicecount - 1\n           GsSoundList.Add(NAudio.Wave.WaveOut.GetCapabilities(i).ProductName)\n       Next i\nEnd If</code></pre>\n\nI guess I could get the truncated names and then look up the longer name, but that seems a bit of a kludge. Am I missing something?\r<br />\n<br />\nThanks,\r<br />\n<br />\nPaul.<br />\n",
+    "PostedDate": "2016-07-04T11:51:46.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1478035",
+    "ThreadId": "656103",
+    "Html": "I'm afraid these are two fundamentally different audio APIs. The MMDeviceEnumerator is the WASAPI view of things, the WaveOut devices list is the old winMM view of your devices. I've seen lots of ways of trying to match the two up over the years, including looking in the registry, but have never found something reliable. Can you use WasapiOut for your application? \r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2016-07-04T12:08:12.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1478045",
+    "ThreadId": "656103",
+    "Html": "Many thanks for your prompt reply Mark. At least it seems I wasn't missing anything obvious! I will look into WasapiOut; for now it seems that getting both lists and matching up the device names works well enough, until I find two devices with the same first 32 characters in their names ;-)\r<br />\n<br />\nThanks again,\r<br />\n<br />\nPaul.<br />\n",
+    "PostedDate": "2016-07-04T14:14:06.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1030898",
+    "ThreadId": "440395",
+    "Html": "Quick question...\r<br />\nWhich way is best for sampling both left and right channels?<br />\n<pre><code>        private ISampleProvider CreateInputStream(string fileName)\n        {\n            fileStream = OpenWavStream(fileName);\n            var inputStream = new SampleChannel(fileStream, true);\n            var sampleStream = new NotifyingSampleProvider(inputStream);\n/// this way?\n            sampleStream.Sample += (s, e) =&gt; aggregator.Add(e.Left);\n            sampleStream.Sample += (s, e) =&gt; aggregator.Add(e.Right);\nOR\n/// this way?\n            sampleStream.Sample += (s, e) =&gt; aggregator.Add(e.Left + e.Right);\n\n            return sampleStream;\n        }</code></pre>\n\nThank you!\r<br />\nDan<br />\n",
+    "PostedDate": "2013-04-15T18:57:12.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1031200",
+    "ThreadId": "440395",
+    "Html": "the first way if you were drawing separate waveforms for left and right<br />\n",
+    "PostedDate": "2013-04-16T08:12:39.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1031473",
+    "ThreadId": "440395",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nthe first way if you were drawing separate waveforms for left and right<br />\n</blockquote>\nThank you.  Would the second way be appropriate for &quot;mixing&quot; the two channels if I was drawing one waveform?<br />\n",
+    "PostedDate": "2013-04-16T18:44:30.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1032508",
+    "ThreadId": "440395",
+    "Html": "yes, although quite often if I am drawing one waveform for a stereo signal I just cheat and draw one of the two channels.<br />\n",
+    "PostedDate": "2013-04-18T08:09:49.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

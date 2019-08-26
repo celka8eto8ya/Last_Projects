@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "983351",
+    "ThreadId": "428602",
+    "Html": "\r\n<p>Hello guys, first NAudio library is awsome keep up the good work. :)</p>\r\n<p>So I am using it with one of my project and I have created this class to play a sond when a intersection with rectangle is available :</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">class</span> Music\r\n{\r\n <span style=\"color:blue\">private</span> <span style=\"color:blue\">string</span> fileLocation;\r\n        <span style=\"color:blue\">private</span> IWavePlayer waveout;\r\n        <span style=\"color:blue\">private</span> WaveStream outputStream;\r\n        WaveOutEvent audio ;\r\n        <span style=\"color:blue\">public</span> Drum(<span style=\"color:blue\">string</span> file)\r\n        {\r\n            <span style=\"color:blue\">this</span>.fileLocation = file;\r\n            <span style=\"color:blue\">this</span>.waveout = <span style=\"color:blue\">new</span> WaveOut();\r\n            audio = <span style=\"color:blue\">new</span> WaveOutEvent();         \r\n        }\r\n        <span style=\"color:blue\">static</span> WaveStream CreateInputStream(<span style=\"color:blue\">string</span> name)\r\n        {\r\n            WaveChannel32 inputStream;\r\n            <span style=\"color:blue\">if</span> (name.EndsWith(<span style=\"color:#a31515\">&quot;.wav&quot;</span>))\r\n            {\r\n                WaveStream readerStream = <span style=\"color:blue\">new</span> WaveFileReader(name);\r\n                <span style=\"color:blue\">if</span> (readerStream.WaveFormat.Encoding != WaveFormatEncoding.Pcm)\r\n                {\r\n                    readerStream = WaveFormatConversionStream.CreatePcmStream(readerStream);\r\n                    readerStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(readerStream);\r\n                }\r\n\r\n                <span style=\"color:blue\">if</span> (readerStream.WaveFormat.BitsPerSample != 16)\r\n                {\r\n                    <span style=\"color:blue\">var</span> format = <span style=\"color:blue\">new</span> WaveFormat(readerStream.WaveFormat.SampleRate, 16, readerStream.WaveFormat.Channels);\r\n                    readerStream = <span style=\"color:blue\">new</span> WaveFormatConversionStream(format, readerStream);\r\n                }\r\n                inputStream = <span style=\"color:blue\">new</span> WaveChannel32(readerStream);\r\n            }\r\n            <span style=\"color:blue\">else</span>\r\n            {\r\n                <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> InvalidOperationException(<span style=\"color:#a31515\">&quot;Invalid extension&quot;</span>);\r\n            }\r\n            <span style=\"color:blue\">return</span> inputStream;\r\n        }\r\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Play()\r\n        {        \r\n            <span style=\"color:blue\">this</span>.outputStream = CreateInputStream(<span style=\"color:blue\">this</span>.fileLocation);        \r\n            audio.Init(outputStream);\r\n            audio.Play();          \r\n        }\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>the problem is that I get this error when I intersect alot :&nbsp;<span><span style=\"color:#ff0000\">AlreadyAllocated calling waveOutOpen.</span></span></p>\r\n<p><span style=\"color:#000000\">My first question is how to resolve this error with the class above,and if you have time to correct my code will be greate. :)</span></p>\r\n<p><span style=\"color:#000000\">My second question is: Is it possible to mix the sounds lets say that I have intersected with two rectangles and I want to mix the both sounds together, I now that NAudio have a mixer.</span></p>\r\n<p><span><span style=\"color:#ff0000\"><br>\r\n</span></span></p>\r\n",
+    "PostedDate": "2013-01-05T09:31:53.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "983656",
+    "ThreadId": "428602",
+    "Html": "\r\n<p>this is because you are opening the sound card too many times. Probably a better approach would be to open the soundcard only once and mix your audio. In the NAudio WPF Demo project, I have created a Drum Machine demo which shows how this can be done. If\r\n you click the source code tab above, you can explore the code and see how the MixingSampleProvider is used for this purpose.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2013-01-07T01:48:55.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "986940",
+    "ThreadId": "428602",
+    "Html": "\r\n<p>Yes I am using mixer already,but the other problem I am facing is that I don't know how to clear the data entered in the&nbsp;WaveMixerStream32.</p>\r\n<p>but I want after I play the mixed example threw DirectSoundOut() somehow to clean the mixer from all examples.<br>\r\nHow can I do this ?</p>\r\n<p>I am adding samples this way :&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> mixer.AddInputStream();</pre>\r\n</div>\r\n",
+    "PostedDate": "2013-01-15T02:35:00.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987118",
+    "ThreadId": "428602",
+    "Html": "\r\n<p>you'd either need to remove streams from the mixer, or read out of the mixer until you reached the end of the streams. You'd probably be better off using the MixingSampleProvider as WaveMixerStream32 has some quirks.</p>\r\n",
+    "PostedDate": "2013-01-15T08:09:00.493-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987154",
+    "ThreadId": "428602",
+    "Html": "\r\n<p>Ok I tryed it,but after I add a stream in the mixer how to get the result which I have to play threw DirectSoundOut ?</p>\r\n<p>I saw you example, but I have some problems understanding it. :)</p>\r\n",
+    "PostedDate": "2013-01-15T09:14:20.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987162",
+    "ThreadId": "428602",
+    "Html": "\r\n<p>It needs to become a waveprovider again (I'll intend to make this simpler in a future NAudio)</p>\r\n<p>directSoundOut.Init(new SampleToWaveProvider(mixingSampleProvider))</p>\r\n",
+    "PostedDate": "2013-01-15T09:28:11.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "988998",
+    "ThreadId": "428602",
+    "Html": "\r\n<p>Ok so I have one last question, I hope you dont mind:&nbsp;</p>\r\n<p>so now I have a timer which update every 10 miliseconds, after the timer starts i do this :</p>\r\n<p><br>\r\n&nbsp;waveOutDevice.Dispose();&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>SoundMixer.waveData.Clear();&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>SoundMixer.ClearMixer();<br>\r\n<br>\r\nafter I have intersection I add WaveStream data into global list which store all the sounds:&nbsp;</p>\r\n<p>SoundMixer.waveData.Add(placeToPress.ChannelStream);<br>\r\nthen I set the channelStream.Position = 0;</p>\r\n<p>when I want to play it I use this :</p>\r\n<p><span style=\"font-size:10pt\">SoundMixer.AddToMixer(); &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><br>\r\nwaveOutDevice.Init(SoundMixer.MixerPlay()); //this return SampleToWaveProvider<br>\r\nwaveOutDevice.Play();// waveOutDevice is DirectSoundOut.</p>\r\n<p><br>\r\nIf I add &nbsp;Thread.Sleep(100); after the whole code I can hear sound,but before this I cant hear nothing, any idea how to do this working<br>\r\nwithout sleep method ?<br>\r\n<br>\r\n<br>\r\n</p>\r\n",
+    "PostedDate": "2013-01-18T15:02:24.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989002",
+    "ThreadId": "428602",
+    "Html": "\r\n<p>you're disposing the waveOutDevice every 10ms? It needs to be kept alive. Really you should open it once and keep it open for the whole duration of your playback.</p>\r\n",
+    "PostedDate": "2013-01-18T15:09:00.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989061",
+    "ThreadId": "428602",
+    "Html": "\r\n<p>well I removed the Dispose() line but I can hear sound only if I add Thread.Sleep at the end of the timer. :)</p>\r\n",
+    "PostedDate": "2013-01-19T01:27:25.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989516",
+    "ThreadId": "428602",
+    "Html": "\r\n<p>The idea is you create just one device, and only call Init and Play once. Then in your timer, you add inputs to the mixer. Also, starting sounds every 10ms is pretty heavy-duty. You'll be playing 100 sounds after just 1 second unless they are very short.</p>\r\n",
+    "PostedDate": "2013-01-20T23:17:21.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "998067",
+    "ThreadId": "428602",
+    "Html": "ok I tryed to lunch you code examples, but I get alot error and when I try to read the code its a little hard to understand it.\r<br />\nCan you make a simple mixing example with two wave file so when you press a button or something to mix the both sounds ?<br />\n",
+    "PostedDate": "2013-02-07T09:57:46.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

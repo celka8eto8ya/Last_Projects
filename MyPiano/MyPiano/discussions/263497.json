@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "635761",
+    "ThreadId": "263497",
+    "Html": "<p>hi ,&nbsp;</p>\n<p>I want to play a Streaming audio from the Internet.</p>\n<p>here is code</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<hr />\n<p>&nbsp;</p>\n<p>Imports System.Net</p>\n<p>Imports NAudio.CoreAudioApi</p>\n<p>Imports NAudio.Wave</p>\n<p>Imports NAudio<br /> <br /> Public Class Form1</p>\n<p>&nbsp;&nbsp;Dim DwonloadDataThread As New Threading.Thread(AddressOf downloadStream)</p>\n<p>&nbsp; &nbsp; Dim PlayBackThread As New Threading.Thread(AddressOf Playback)</p>\n<p>&nbsp; &nbsp; Dim waveOut As WaveOut</p>\n<p>&nbsp; &nbsp; Dim bwp As New BufferedWaveProvider(New WaveFormat())</p>\n<p><br /> &nbsp; &nbsp; Private Sub Playback()<br /> &nbsp; &nbsp; &nbsp; &nbsp; While Me.bwp.BufferLength &lt; 65535</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Threading.Thread.Sleep(100)</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; End While<br /> &nbsp; &nbsp; &nbsp; &nbsp; Dim WaveOutDevice As IWavePlayer = New DirectSoundOut(100)<br /> &nbsp; &nbsp; &nbsp; &nbsp; WaveOutDevice.Init(Me.bwp)<br /> &nbsp; &nbsp; &nbsp; &nbsp; WaveOutDevice.Play()<br /> &nbsp; &nbsp; &nbsp; &nbsp; While WaveOutDevice.PlaybackState = PlaybackState.Playing</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Threading.Thread.Sleep(100)</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; End While<br /> &nbsp; &nbsp; &nbsp; &nbsp; Playback()<br /> &nbsp; &nbsp; End Sub<br /> &nbsp; &nbsp; Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; PlayBackThread.Start()</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; DwonloadDataThread.Start()</p>\n<p>&nbsp; &nbsp; End Sub<br /> <br /> &nbsp; &nbsp; Private Sub downloadStream()</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; Dim httpreq As HttpWebRequest = HttpWebRequest.Create(\"http://magi.now.in:7000/kakvkxkz2214\")</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; Dim resp As HttpWebResponse = httpreq.GetResponse<br /> &nbsp; &nbsp; &nbsp; &nbsp; While True</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Dim mStream As IO.Stream = resp.GetResponseStream<br /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 'Dim fs As New IO.FileStream(\"D:\\a.mp3\", IO.FileMode.Create)<br /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Dim buffer(4095) As Byte<br /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; While True</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Dim read As Integer = mStream.Read(buffer, 0, buffer.Length)<br /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If read = 0 Then</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Exit While</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; End If</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Me.bwp.AddSamples(buffer, 0, read)</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 'fs.Write(buffer, 0, read)</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; End While</p>\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 'fs.Close()<br /> &nbsp; &nbsp; &nbsp; &nbsp; End While&nbsp; &nbsp; End Sub</p>\n<p>End Class</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<hr />\n<p>&nbsp;</p>\n<p>It will not play smoothly and just like cannot find the radio&nbsp;frequency.&nbsp;</p>\n<p>How to improve my code?</p>\n<p>Thanks for any help in advance.</p>",
+    "PostedDate": "2011-06-30T20:06:28.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "635850",
+    "ThreadId": "263497",
+    "Html": "<p>look in the latest source code at the NAudio demo for an example of how to play streaming MP3 from the internet</p>",
+    "PostedDate": "2011-07-01T00:28:31.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636390",
+    "ThreadId": "263497",
+    "Html": "<p>Thank you very much!! :)</p>\r\n<p>i've done the job!</p>",
+    "PostedDate": "2011-07-02T05:10:56.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "638177",
+    "ThreadId": "263497",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>look in the latest source code at the NAudio demo for an example of how to play streaming MP3 from the internet</p>\r\n</blockquote>\r\n<p>hi ,&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>I encounter another problem in decompressing mp3 frame.</p>\r\n<p>I use both of AcmMp3FrameDecompressor and DmoMp3FrameDecompressor.</p>\r\n<p>Some of computer can decompress the mp3 frame by both of them or either of them ,&nbsp;but few of computer cannot decompress it .</p>\r\n<p>would you please tell me how can i solve this problem?</p>\r\n<p>Thank you very much!!</p>",
+    "PostedDate": "2011-07-06T08:00:03.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "638333",
+    "ThreadId": "263497",
+    "Html": "<p>you'll have to show the exception details for me to help</p>",
+    "PostedDate": "2011-07-06T12:24:52.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

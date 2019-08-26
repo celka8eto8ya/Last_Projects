@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1289271",
+    "ThreadId": "560966",
+    "Html": "Hello, thanks for a great library!\r<br />\n<br />\nIs it possible to export audio waveform visualization (to PNG or SVG)? I just need to get a source &quot;raw&quot; peak levels for the whole file (without intermediate converting to WAV file) and then save it to some kind of file...\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2014-08-12T07:07:57.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291715",
+    "ThreadId": "560966",
+    "Html": "best way is to use the Windows Forms Graphics object and draw the waveform onto that. You create a graphics object from an Image, and you can then simply save the image. If you are a Pluralsight subscriber I do a session on waveform drawing in my NAudio course.<br />\n",
+    "PostedDate": "2014-08-20T07:17:48.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

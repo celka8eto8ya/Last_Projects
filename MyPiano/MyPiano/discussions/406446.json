@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "954770",
+    "ThreadId": "406446",
+    "Html": "\r\n<p>&#65279;&#65279;We&nbsp;are using Naudio (1.5) in a C# application. We plug in&nbsp;3-5 USB microphone in an WIndows 7 machine to make recording. When using WaveIn, we need to give it the index number for the USB devices that plugged in.</p>\r\n<p>&#65279;waveIn = new WaveIn();</p>\r\n<p>waveIn.DeviceNmber = xxxxx;</p>\r\n<p>......</p>\r\n<p>&#65279;My question is: how to get device number for each USB microphone we are using?</p>\r\n<p>Thanks a lot</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-11T12:48:48.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954925",
+    "ThreadId": "406446",
+    "Html": "\r\n<p>You can enumerate the available WaveIn devices using WaveIn.GetCapabilities passing in numbers up to WaveIn.DeviceCount</p>\r\n",
+    "PostedDate": "2012-12-11T23:48:02.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955050",
+    "ThreadId": "406446",
+    "Html": "\r\n<p>Thanks for your reply, so if i do this</p>\r\n<p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span><span> waveInDevices </span><span>=</span><span> </span>\r\n<span>WaveIn</span><span>.</span><span>DeviceCount</span><span>;</span><span><br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>for</span><span> </span><span>(</span><span>int</span><strong><span> waveInDevice\r\n</span></strong><span>=</span><span> </span><span>0</span><span>;</span><span> waveInDevice\r\n</span><span>&lt;</span><span> waveInDevices</span><span>;</span><span> waveInDevice</span><span>++)</span><span><br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>{</span><span><br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>WaveInCapabilities</span><span> deviceInfo </span><span>=</span><span>\r\n</span><span>WaveIn</span><span>.</span><span>GetCapabilities</span><span>(</span><span>waveInDevice</span><span>);</span><span><br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>MessageBox</span><span>.</span><span>Show</span><span>(</span><span class=\"str\">&quot;Device &quot;</span><span>\r\n</span><span>+</span><span> waveInDevice </span><span>+</span><span> </span><span class=\"str\">&quot;: &quot;</span><span>\r\n</span><span>+</span><span> deviceInfo</span><span>.</span><span>ProductName</span><span>\r\n</span><span>+</span><span><br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class=\"str\">&quot;, &quot;</span><span> </span><span>+</span><span> deviceInfo</span><span>.</span><span>Channels</span><span>\r\n</span><span>+</span><span> </span><span class=\"str\">&quot; channels&quot;</span><span>);</span><span><br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>}</span><span> </span></p>\r\n<p><span>the <strong>waveInDevice </strong>is the devicenumber for each device.</span></p>\r\n<p>&#65279;waveIn = new WaveIn();</p>\r\n<p>waveIn.DeviceNmber = <strong>waveInDevice;</strong></p>\r\n<p>Thanks</p>\r\n<p><strong>&nbsp;</strong></p>\r\n",
+    "PostedDate": "2012-12-12T04:03:23.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955051",
+    "ThreadId": "406446",
+    "Html": "\r\n<p>that's right. It's an index, and 0 always is your default audio device</p>\r\n",
+    "PostedDate": "2012-12-12T04:04:54.897-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955054",
+    "ThreadId": "406446",
+    "Html": "\r\n<p>Thanks!!</p>\r\n",
+    "PostedDate": "2012-12-12T04:13:42.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955060",
+    "ThreadId": "406446",
+    "Html": "\r\n<p>I plugged 2 USB microphones in front of my machine and 1 in the&nbsp;back. The one in the back (Microphone (3-USB Audio Device)&nbsp;has index 0, so this is the default audio device.</p>\r\n<p>Thanks&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-12T04:33:54.277-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

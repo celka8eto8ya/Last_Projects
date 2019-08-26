@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Hi\r\n\r\nI have been trying to use the, playbackstopped eventhandler on the wavout class.  I am trying to get a playlist to cycle through audio tracks so at the end of each track it evaluates the playlist and plays the next valid track. For some reason NAudio crashes when I do this at the .init() call I have had a look at the PlaybackStatus  and it seems to still be at Playing when the playbackstopped event is or has been called.\r\n\r\nAny suggestions....\r\n\r\nif you want my project off me please give me a shout moogus@hotmail.co.uk\r\n\r\nDarren",
+    "LastUpdatedDate": "2013-04-13T09:44:02.517-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-04-06T14:54:42.993-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Problem with WavOut.Eventhandler",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16393
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "what callback mechanism are you using?\nIt can be problematic to be opening the waveout device at the same time as closing it with some callback models.",
+      "PostedDate": "2013-04-08T08:03:08.007-07:00",
+      "Id": 96340
+    },
+    {
+      "Message": "Hi\n\nThanks for the response.\n\nI was just using the playbackstopped event to start another track.\n\nThe action being passed in is the playlist initiating the next track.  I traced it through the sample code version and when the playbackstopped event fires the state is not stopped could this be the why?\n\nAny advice would be cool.\n\nDarren\n\n\n    private static IWavePlayer _waveOutDevice;\n    private static WaveStream _mainOutputStream;\n\n    public NAudioPlayFile()\n    {\n      _waveOutDevice = new WaveOut();\n    }\n\n    public void OnTrackStopped(Action action)\n    {\n      _waveOutDevice.PlaybackStopped += (sender, args) => action();\n    }\n\n    public void InitializeAudioTrack(string source)\n    {\n      _mainOutputStream = new AudioFileReader(source);\n    }\n\n    public PlaybackState PlaybackState\n    {\n      get { return _waveOutDevice.PlaybackState; }\n    }\n\n    public void PlayFile()\n    {\n      _waveOutDevice.Init(_mainOutputStream);\n      _waveOutDevice.Play();\n    }\n\n    public void CancelTrack()\n    {\n      _waveOutDevice.Stop();\n      _waveOutDevice.Dispose();\n    }\n",
+      "PostedDate": "2013-04-13T09:44:02.517-07:00",
+      "Id": 96903
+    }
+  ]
+}

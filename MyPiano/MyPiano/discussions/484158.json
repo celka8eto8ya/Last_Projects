@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1151243",
+    "ThreadId": "484158",
+    "Html": "I would like to check on all available devices whether they provide any valid sound or not.\r<br />\nBut at this moment I'm only able to check a device's input when it is set as default one.\r<br />\n<br />\nHere's my code<br />\n<pre><code>            Dim recordingFormat As New NAudio.Wave.WaveFormat(44200, 16, 1)\n            wvInStream = New NAudio.Wave.WaveIn()\n            wvInStream.DeviceNumber = _AudioDevicePort\n            wvInStream.WaveFormat = recordingFormat\n            wvWriter = New NAudio.Wave.WaveFileWriter(System.IO.Stream.Null, wvInStream.WaveFormat)\n            AddHandler wvInStream.DataAvailable, AddressOf ThereIsDataNoticed\n\n            wvInStream.StartRecording()</code></pre>\n\nThe handler just checks the validity of the sound.<br />\n",
+    "PostedDate": "2014-01-09T01:08:34.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151245",
+    "ThreadId": "484158",
+    "Html": "The _AudioDevicePort is equal to the ID of the device which is determined in the combobox with a list of all available sound devices on the pc. <br />\n",
+    "PostedDate": "2014-01-09T01:09:34.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151756",
+    "ThreadId": "484158",
+    "Html": "44200 is not a standard sample rate. You should use 44100.<br />\nAlso, not sure what you mean by validity?<br />\n",
+    "PostedDate": "2014-01-10T05:52:47.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1168448",
+    "ThreadId": "484158",
+    "Html": "OK changed it to 44100.\r<br />\n<br />\nI'm now able to determine the sound and check if there is a valid sound ( no noise ) on the input.<br />\n",
+    "PostedDate": "2014-01-15T03:09:02.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

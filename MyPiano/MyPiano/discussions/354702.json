@@ -1,0 +1,250 @@
+[
+  {
+    "Id": "832718",
+    "ThreadId": "354702",
+    "Html": "\r\n<p>Thanks for this great&nbsp;library!</p>\r\n<p>Is support for Windows 8 WinRT Metro Style apps planned by leveraging the <a href=\"http://msdn.microsoft.com/en-us/library/windows/apps/windows.media.capture.mediacapture.aspx\">\r\nMediaCapture API</a>?</p>\r\n",
+    "PostedDate": "2012-05-06T10:30:38.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "833117",
+    "ThreadId": "354702",
+    "Html": "<p>I'd love to do this for a future version of NAudio. Not top of the priority list at the moment though.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-05-07T14:15:52.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "903381",
+    "ThreadId": "354702",
+    "Html": "<p>@markheath</p>\r\n<p>Would you accept patches that would add support for WinRT and/or other platforms?</p>\r\n<p>&nbsp; - Tom</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-08-23T22:13:52.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "904768",
+    "ThreadId": "354702",
+    "Html": "<p>hi Tom,</p>\r\n<p>I do accept patches but please read <a href=\"http://naudio.codeplex.com/documentation\">these notes</a> about submitting patches. NAudio currently builds against .NET 2.0, and maintaining backwards compatibility is important. There would only be a certain subset of NAudio that would apply with WinRT in any case, so I could imagine a separate project just bringing in fewer files might be possible. I have got VS2012 installed on my dev PC myself now, so I may get the chance at some point to experiment with how WinRT and NAudio can be combined.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-08-27T13:58:54.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "905518",
+    "ThreadId": "354702",
+    "Html": "<p>Hi Tom,&nbsp;</p>\r\n<p>Have you done your patch yet ? I'm also considering doing mine. I want to convert a subset of NAudio (CoreAudio) in order to use it in a store application. Right now I'm stuck with custom marshaling (ICustomMarshaler doesn't exist). Is your patch available ? Have you the same problem ?&nbsp;</p>\r\n<p>Thanks.&nbsp;</p>\r\n<p>Olivier</p>",
+    "PostedDate": "2012-08-29T01:11:50.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "923510",
+    "ThreadId": "354702",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Do you have any plan to release a WinRT version of NAudio? I am currently using NAudio 1.5 in my WinRT Javascript application to convert MP3 to WAV using Naudio. It works like a charm but unfortunately the application does not pass the appcert tool certification... The tool says that naudio.dll uses some APIs that are forbidden.</p>\r\n<p>I&nbsp;am aware&nbsp;it is not on your priority list but I just check.</p>\r\n<p>The other idea I have is to remove from naudio source all the methods and libraries not necessary in the methods I use. Here is what I do:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">public</span> <span style=\"color: blue;\">static</span> <span style=\"color: blue;\">void</span> ConvertMp3toPcm(<span style=\"color: blue;\">string</span> sourceFilename, <span style=\"color: blue;\">string</span> outputFileName, <span style=\"color: blue;\">string</span> pcmFilename)\r\n        {\r\n            <span style=\"color: blue;\">if</span> (<span style=\"color: blue;\">string</span>.IsNullOrEmpty(sourceFilename))\r\n                <span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> ArgumentNullException(<span style=\"color: #a31515;\">\"sourceFilename\"</span>);\r\n\r\n            <span style=\"color: blue;\">if</span> (<span style=\"color: blue;\">string</span>.IsNullOrEmpty(outputFileName))\r\n                <span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> ArgumentNullException(<span style=\"color: #a31515;\">\"outputFileName\"</span>);\r\n\r\n            <span style=\"color: blue;\">if</span> (<span style=\"color: blue;\">string</span>.IsNullOrEmpty(pcmFilename))\r\n                <span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> ArgumentNullException(<span style=\"color: #a31515;\">\"pcmFilename\"</span>);\r\n\r\n                <span style=\"color: blue;\">using</span> (Mp3FileReader reader = <span style=\"color: blue;\">new</span> Mp3FileReader(sourceFilename))\r\n                {\r\n                    <span style=\"color: blue;\">using</span> (WaveStream waveStream = WaveFormatConversionStream.CreatePcmStream(reader))\r\n                    {\r\n                        WaveFileWriter.CreateWaveFile(outputFileName, waveStream);\r\n                    }\r\n                }\r\n\r\n                <span style=\"color: green;\">//Re-encode the stream with a mono channel, 16bits and 16kHz</span>\r\n                <span style=\"color: blue;\">using</span> (WaveStream readWaveStream = <span style=\"color: blue;\">new</span> WaveFileReader(outputFileName))\r\n                {\r\n                    WaveFormat target = <span style=\"color: blue;\">new</span> WaveFormat(16000, 16, 1);\r\n\r\n                    WaveFormatConversionStream monoStream = <span style=\"color: blue;\">new</span> WaveFormatConversionStream(target, readWaveStream);\r\n                    WaveFileWriter.CreateWaveFile(pcmFilename, monoStream);\r\n\r\n                }             \r\n                    }\r\n</pre>\r\n</div>\r\n<p>I don't know if the licensing of Naudio would allow me to do this. I have to check.</p>\r\n<p>Thanks a lot,</p>\r\n<p>Omid.</p>",
+    "PostedDate": "2012-10-08T09:24:47.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "923515",
+    "ThreadId": "354702",
+    "Html": "<p>I'd love to make a WinRT version of NAudio, but as you have discovered, NAudio contains wrappers for lots of APIs that are disallowed in WinRT (I assume this will include all waveIn, waveOut, and acm functions). I'm hoping to experiment with Windows 8 and see what is possible in the near future. There are some new Audio APIs that are part of WinRT, which I presume Windows Store applications are supposed to use exclusively.</p>",
+    "PostedDate": "2012-10-08T09:30:53.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "923527",
+    "ThreadId": "354702",
+    "Html": "<p>Sure I understand. Thanks anyway.</p>\r\n<p>Omid.</p>",
+    "PostedDate": "2012-10-08T09:51:00.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950055",
+    "ThreadId": "354702",
+    "Html": "\r\n<p>How is WinRT support efforts going? I downloaded the project and it looks like there's been some progress. Would it be worthwhile for me to fork and do some work?</p>\r\n",
+    "PostedDate": "2012-12-01T15:23:51.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950100",
+    "ThreadId": "354702",
+    "Html": "\r\n<p>Hi tcl,</p>\r\n<p>Did you see my recent <a href=\"http://mark-dot-net.blogspot.co.uk/2012/11/enabling-naudio-for-windows-8-store.html\">\r\nblog post</a> on adding Windows Store support to NAudio? I'm actively working on it at the moment, but there is some way to go. Here's the key tasks that need to be completed.</p>\r\n<p>1. <strong>Media Foundation</strong>. This is because ACM and DMO which NAudio already supported are both not allowed in Windows Store apps. The main three things we need are a MediaFoundationReader (which is mostly complete, just needs some tweaks), a MediaFoundationEncoder\r\n (which I have prototyped the internals of, just need to give it a nice public API), and a MediaFoundationResampler, which another forum user Manu is kindly helping out with, so hopefully there will be enough Media Foundation interop in the very near future.</p>\r\n<p>2. <strong>WASAPI. </strong>Even though I have already done all the hard work on WASAPI interop, it will need to be modified to work with Windows Store apps. Currently I've not decided whether to make completely separate WasapiOut and WasapiIn classes for\r\n the Win8. I don't know whether loopback capture is possible. There is a <a href=\"http://www.codeproject.com/Articles/460145/Recording-and-playing-PCM-audio-on-Windows-8-VB\">\r\ngreat article on CodeProject</a> showing how it can be done (in VB), so I'm hoping that when I get onto this in the very near future, it should be done quite quickly.</p>\r\n<p>3. <strong>Streams </strong>NAudio depends heavily on the Stream base class, but the WinRT API now seems to prefer IInputStream, IOutputStream and IRandomAccessStream. There are a lot of classes (e.g. the WaveFileReader, WaveFileWriter, MP3FileReader, AiffFileReader,\r\n AiffFileWriter) that will at least need new constructors. I don't really want to have to maintain two completely separate versions of all these classes, so one interesting task will be to see what the simplest change that allows them to be used with the regular\r\n Windows Store file APIs is.</p>\r\n<p>4.<strong> Demo Project</strong> I'm also going to create a Windows Store demo app. It will follow a similar structure to the WPF and WinForms ones, allowing me to very quickly add in new demos. Before we announce WinRT support we need two main demos. One\r\n reads files using MediaFoundationPlayer and plays them through WASAPI, and the other records from the microphone and encodes to WMA/MP3 using the MediaFoundationEncoder. I'll probably throw in some visualisation like waveform drawing as well. Once I've got\r\n the basic demo store app's structure in place, it should be easy for people to contribute other WinRT demos to it.</p>\r\n<p>If you want to contribute, the best way at the moment is probably to prototype a proof of concept for one of these tasks, since the overall project is still very fluid and so I may not be able to merge in large contributions. Let me know if there is anything\r\n above that takes your interest.</p>\r\n",
+    "PostedDate": "2012-12-01T23:41:31.367-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950348",
+    "ThreadId": "354702",
+    "Html": "\r\n<p>Mark,</p>\r\n<p>Thanks for the thoughtful reply. I hadn't seen your blog post before. I'll dig into the WinRT project over the next couple of weeks and see if/where I can help.</p>\r\n<p>Todd</p>\r\n",
+    "PostedDate": "2012-12-02T23:22:44.517-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1004026",
+    "ThreadId": "354702",
+    "Html": "Any news on the WinRT front?<br />\n<br />\nIn partucular I'm looking for a way to draw an audio graph from the MediaCapture microphone stream in C#.<br />\nSimilar to yours here<br />\n <img src=\"http://i3.codeplex.com/Download?ProjectName=naudio&amp;DownloadId=240418\" alt=\"Image\" /> <br />\n",
+    "PostedDate": "2013-02-20T06:46:30.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1004574",
+    "ThreadId": "354702",
+    "Html": "hi, the WinRT support is coming along reasonably well, although I haven't had a chance to work on it in the last few weeks. If you get the latest code out, you can see what has been done so far. The WPF drawing code might be able to translate across, as WinRT has a very similar XAML-based graphics system.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-21T03:45:08.643-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1091639",
+    "ThreadId": "354702",
+    "Html": "Mark,<br />\nThank you for your great work.<br />\nI am eagerly waiting for the WinRT version of NAudio, as I am trying to create an equalizer for a Windows 8 Style app I am creating.<br />\nI see that quite a few months have passed since your last post here, wanted to see how everything is coming along.<br />\nHope you guys have been successful in porting this great product over to WinRT  :)<br />\n<br />\nI also wanted to know if it is possible to use NAudio for eliminating a certain range of frequencies from the input stream (basically what an equalizer is supposed to do). I am new to this, so a little bit of guidance - maybe some links to more information - would really be appreciated.<br />\n<br />\nThank you again.<br />\n",
+    "PostedDate": "2013-09-12T02:55:19.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1091651",
+    "ThreadId": "354702",
+    "Html": "hi, you can trial the WinRT support using the Nuget package available here (need to select prerelease version)\r<br />\n<a href=\"https://www.nuget.org/packages/NAudio\" rel=\"nofollow\">https://www.nuget.org/packages/NAudio</a>\r<br />\n<br />\nIt can't do very much at the moment, but might be enough depending on your needs.<br />\n",
+    "PostedDate": "2013-09-12T03:29:24.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1110869",
+    "ThreadId": "354702",
+    "Html": "Mark - first off, your work is great. I can't believe how much you're able to produce in your &quot;spare time&quot;.\r<br />\nI'm trying to get my head around your WasapiOutRT class and use it similarly to WaveOut in your AudibleDragging example from your traditional 1.3.8 version. Not having much luck, no sound. I'm trying to make Win8.1 metronome with configurable tones, no audio files.<br />\n",
+    "PostedDate": "2013-10-22T21:18:08.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1111863",
+    "ThreadId": "354702",
+    "Html": "does the Windows 8 demo app in the NAudio source code work for you?<br />\n",
+    "PostedDate": "2013-10-24T14:58:35.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1111871",
+    "ThreadId": "354702",
+    "Html": "I was able to load an audio file (mp3) in your demo app and the play button became enabled. However, once clicked, the play button sent no sound out.<br />\n",
+    "PostedDate": "2013-10-24T15:20:40.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1111893",
+    "ThreadId": "354702",
+    "Html": "I'm sorry, I know this isn't the right place but, since this topic is alive, i wanna know about the support to FLAC files...\r<br />\nThere's a topic about this but, actually, it's an old dead topic, unfortunatelly. Did anyone have success in playing FLAC songs?\r<br />\nWill NAudio support it natively someday?<br />\n",
+    "PostedDate": "2013-10-24T17:27:57.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1111942",
+    "ThreadId": "354702",
+    "Html": "@adamrozek: hmmm, what device are you using, is it a MS Surface, or a regular Windows 8 machine?\r<br />\n<br />\n@N_Neto: please start new threads for things like this. short answer is that there is an example of playing FLAC with NAudio in Yuval Naveh's Practice# open source app<br />\n",
+    "PostedDate": "2013-10-24T23:17:10.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112103",
+    "ThreadId": "354702",
+    "Html": "I'm using Windows 8.1 on a desktop<br />\n",
+    "PostedDate": "2013-10-25T07:13:06.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112105",
+    "ThreadId": "354702",
+    "Html": "you might need to debug the WasapiOutRT class, see if the playback thread is doing anything, or whether it is playing, just silently<br />\n",
+    "PostedDate": "2013-10-25T07:15:59.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112316",
+    "ThreadId": "354702",
+    "Html": "Got it! I wasn't implementing my Play method as an async with the await on the WasapiOutRT Init call. <br />\n",
+    "PostedDate": "2013-10-25T20:48:39.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112988",
+    "ThreadId": "354702",
+    "Html": "Yes init had to become async, as the user can get asked to grant permission during the call.<br />\n",
+    "PostedDate": "2013-10-28T04:06:31.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113110",
+    "ThreadId": "354702",
+    "Html": "Now my problem is getting the timing in sync with my metronome timespan. I tried an async delay but that's giving inaccurate timing. Going to try feeding the Wasapi object to a MediaStreamSource and use a MediaTimeline.<br />\n",
+    "PostedDate": "2013-10-28T08:01:20.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113115",
+    "ThreadId": "354702",
+    "Html": "for a metronome, I wouldn't recommend using timers at all. Just have an ISampleProvider that emits the sound after the correct number of samples. That gives you the best accuracy. See the drum machine sample in the WPF demo for an example.<br />\n",
+    "PostedDate": "2013-10-28T08:07:21.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113123",
+    "ThreadId": "354702",
+    "Html": "Thanks for the tip! I have a sprite I'm blinking on the beat using an animation Timeline, adjusting the ending keyframe at runtime, and that's been spot on.  So I thought that path might work with the audio also. It's not a Timer per se (I did start down that path and found that messed with my threads &amp; overall timing even more), but I do derive a TimeSpan object from the BeatsPerMinute translation. <br />\n",
+    "PostedDate": "2013-10-28T08:24:21.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113463",
+    "ThreadId": "354702",
+    "Html": "Good gravy... I'm quickly learning I have no idea what I'm doing with audio. I'm off to your <a href=\"http://pluralsight.com/training/Courses/TableOfContents/digital-audio-fundamentals\" rel=\"nofollow\">Pluralsight course</a><br />\n",
+    "PostedDate": "2013-10-28T20:47:59.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113587",
+    "ThreadId": "354702",
+    "Html": "cool, the followup course (on NAudio) is really close to being released, but the digital audio fundamentals one will definitely be useful for you to watch first.<br />\n",
+    "PostedDate": "2013-10-29T04:42:49.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1150227",
+    "ThreadId": "354702",
+    "Html": "Here's a quick &quot;Getting Started&quot; blog post using the 1.7.0 beta release in a WinRT app: <a href=\"http://themethodology.blogspot.ca/2014/01/getting-started-with-naudio-and-winrt-c.html\" rel=\"nofollow\">http://themethodology.blogspot.ca/2014/01/getting-started-with-naudio-and-winrt-c.html</a><br />\n",
+    "PostedDate": "2014-01-06T20:15:45.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151293",
+    "ThreadId": "354702",
+    "Html": "great, thanks for writing this up BeerRoot.<br />\n",
+    "PostedDate": "2014-01-09T03:56:08.82-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "713962",
+    "ThreadId": "283392",
+    "Html": "<p>Hi , I have poor English ,I try to use my poor English ask few question.</p>\n<p>&nbsp;</p>\n<p>I use Naudio ,I went to create Online Meeting</p>\n<p>so I have many client</p>\n<p>I have a problem , I don't know how mix byte , when my Server got byte , how &nbsp;into the mix &nbsp;WaveMixerStream32?&nbsp;</p>\n<p>I already try few week,but it doesn't work, play help me</p>\n<p>there is my code.</p>\n<p>&nbsp;</p>\n<pre>       WaveIn wi;\n        BufferedWaveProvider bwp;\n        WaveOut wo;\n\n\n        private WaveMixerStream32 mixer;\n        WaveFileWriter writer;\n        public MainWindow()\n        {\n            InitializeComponent();\n            startMic();\n        }\n        public void startMic()\n        {\n            wi = new WaveIn { BufferMilliseconds = 5 };//MIC\n            wi.DataAvailable += new EventHandler(wi_DataAvailable);\n            bwp = new BufferedWaveProvider(wi.WaveFormat);\n            wo = new WaveOut { DesiredLatency = 100 };\n\n            wo.Init(bwp);\n            wo.Play();\n            wi.StartRecording();\n\n        }\n\n\n        void wi_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            try\n            {           \n                bwp.AddSamples(e.Buffer, 0, e.BytesRecorded);</pre>\n<pre><span style=\"white-space: pre;\">\t\t</span>/<strong>/there e.buffer will use Udp socket send to Server&nbsp;</strong></pre>\n<pre><strong>                  and Server want to mix it.  but i <span style=\"color: #ff0000;\"><span style=\"color: #000000;\">fail</span> . i don't know</span></strong></pre>\n<pre><strong><span style=\"color: #ff0000;\">                  when i get byte ,how to into waveMixerStream32</span></strong></pre>\n<pre>            }\n            catch (Exception)\n            {\n            }\n\n        }</pre>\n<pre><br /></pre>\n<p>&nbsp;</p>\n<p>when i get &nbsp;e.Buffer .I use Udp socket send to Server</p>\n<p>then, when Server receive this byte &nbsp;,server &nbsp;want to mix it.</p>\n<p>I already search many discussion few week but doesn't work ,please help me~</p>\n<p>thanks a lot.</p>",
+    "PostedDate": "2011-12-18T14:49:17.357-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717465",
+    "ThreadId": "283392",
+    "Html": "<p>You need to go from a WaveProvider to a WaveStream (create your own adapter), then use a WaveChannel32 to make a class that can be passed into WaveMixerStream32</p>",
+    "PostedDate": "2011-12-27T07:49:19.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "425163",
+    "ThreadId": "207713",
+    "Html": "<p>Hi&nbsp;</p>\r\n<p>I have been trying to use the voice recorder code, &nbsp;&nbsp;<a href=\"http://voicerecorder.codeplex.com/releases/view/33787\">http://voicerecorder.codeplex.com/releases/view/33787</a>&nbsp;, to simply record and play back wav files. I did the following things :&nbsp;</p>\r\n<p>1. Attached the VoiceRecorder.Audio files with my project, adding references to NAudio.</p>\r\n<p>2. Making the project x86</p>\r\n<p>3. testing out the code for simple things like selecting recording device, handling volume, microphone sensitivity, recording, replaying and transcoding using Lame. I have a number of queries:&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>A. &nbsp;Simplest one first, when I use Lame a dos windows pops open, since the exe is being run. Is there any way to suppress that ?&nbsp;</p>\r\n<p>B. I am not able to handle volume or microphone sensitivity, because &quot;control&quot; is cribbing.</p>\r\n<p>C . most importantly, when I try to record, playback, at best I get a momentary recording ( 46 bytes) &nbsp;or a short burst of the starting of the audio file( less than 1s ).</p>\r\n<p>D. When I tried debugging, the thread passes control onto the next statement immediately. I tried sleeping the thread, putting an infinite loop, etc but at best I am able to get a momentary recording or playback.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>I am almost a newbie to C#, forgive me for the simplistic issues. I would appreciate it very much if you can help me out in any way, to perform two tasks of : recording and playback.</p>\r\n<p>Thank you,</p>\r\n<p>Alok</p>\r\n<p>_______________________</p>\r\n<p>&nbsp;</p>\r\n<p>update 1, If I try to put a message box comment after play and before stop, I am able to render continuous playing, but as soon as I ok the message box, the stream terminates.&nbsp;</p>\r\n<p>update 2, I tried the same message box strategy for recording, it does record, and the final file size is much larger. but after I &quot;ok&quot; the message box, I get an error message saying &quot;WaveFileWriter was not disposed at WaveFileWriter.Finalize()&quot; &nbsp;.</p>\r\n<p>update 3, I was able to fix the earlier bug, by adding the line, &quot;writer.Dispose();&quot; to AudioRecorder.Audio project's file AudioRecorder ' s method Stop() at the end before the closing braces , &nbsp;that fixes the recording problem and closes the file properly. &nbsp;So the only problem that I want to know about is : 1. hw to avoid the message box thing &nbsp; 2. &nbsp;how to avoid a dos pop up from lame ?</p>",
+    "PostedDate": "2010-03-29T16:35:52.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "425357",
+    "ThreadId": "207713",
+    "Html": "<p>A. I'm sure this is possible but I don't know how. Perhaps ask on stackoverflow</p>\r\n<p>B. Trying to find mixer code that worked on both XP and Vista/7 was next to impossible. I gave up in the end, but if you're willing to experiment a bit with the mixer api's you might find something that works for you. What do you mean by &quot;cribbing&quot;?</p>\r\n<p>C &amp; D. This sounds like you are using window callbacks with a console application. You either must use function callbacks, or have a window somewhere.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-30T02:38:29.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

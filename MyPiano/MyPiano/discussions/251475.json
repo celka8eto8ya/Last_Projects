@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "587536",
+    "ThreadId": "251475",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I like to use a WaveFormatConversionStream in two directions, 8bit aLaw &lt;-&gt; 16bit Pcm.</p>\r\n<p>After converting the aLaw data to Pcm data, the resulting stream has to be added to a WaveMixerStream to mix the pcm bytes.</p>\r\n<p>The mixed pcm bytes than have to be reconverted again back to 8 bit alaw.</p>\r\n<p>At the moment only WaveMixerStream32 in NAudio exists in the default VS solution, but I had no luck yet to get alaw converted into 32bit IeeeFloat.</p>\r\n<p>I also recognized the Wave32To16Stream, but anyway the puzzle is not solved. The stream conversion from 16bit Pcm to IeeeFloat Pcm always throws an AcmNotPossible exception.</p>\r\n<p>I always stuck in the conversion streaming.</p>\r\n<p>Is it possible to convert 16bit Pcm into IeeeFloat for mixing it with standard WaveMixerStream32, or do I have to implement my own WaveMixerStream16?</p>\r\n<p>And how would such a WaveMixerStream16 implementation mix the bytes without floating points? Do you know an algorithm function for this, something like ( Sum16BitAudio() )?</p>\r\n<p>Or how could such a WaveMixerStream16 be used to convert the 16 bit stream into a 32bit Ieeefloat stream and vice versa?</p>\r\n<p>Could you please help me to get this solved?</p>\r\n<p>Any help would be gratefully appreciated.</p>\r\n<p>Thank you in advance.</p>\r\n<p>Micha.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-03-28T05:52:07.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588676",
+    "ThreadId": "251475",
+    "Html": "<p>look at WaveChannel32 which convers 16 bit PCM into IEEEFloat.</p>\r\n<p>Mixing directly in 16 bit is more awkward because you have no headroom, and risk arithmetic overflows.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-30T02:20:07.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "606332",
+    "ThreadId": "251475",
+    "Html": "<p>Thank your for the advice.</p>\r\n<p>And sorry,&nbsp;my answer is a bit late. I&nbsp;had no time to test this yet.</p>\r\n<p>The waveChannel32 seems to work. But&nbsp;the back conversion doesn't.</p>\r\n<p>For the&nbsp;input conversion I build a WaveAlawTo32Stream. It doesn't throw a AcmNotPossible exception.</p>\r\n<p>Here is&nbsp;the code:</p>\r\n<p>﻿﻿﻿﻿﻿&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color: blue;\">public</span> WaveAlawTo32Stream()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m_OutputWaveFormat =&nbsp; WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, 8000, 1, 16000, 2, 16);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m_InputWaveFormat = WaveFormat.CreateALawFormat(8000, 1);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m_waveFormat = m_InputWaveFormat;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m_ConversionStream = <span style=\"color: blue;\">new</span> WaveFormatConversionStream(m_OutputWaveFormat, m_AlawWaveStream);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m_WaveChannel32 = <span style=\"color: blue;\">new</span> WaveChannel32(m_ConversionStream);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>So I thought I could build something like a Wave32ToAlawStream. But this doesn't work yet. Here is the not yet working code which throws an \"AcmNotPossible calling acmStreamOpen\"&nbsp;exception:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>        public Wave32ToAlawStream(int sampleRate)\r\n        {\r\n            m_OutputWaveFormat = WaveFormat.CreateALawFormat(8000, 1);\r\n            m_InputWaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, 2);\r\n            m_waveFormat = m_InputWaveFormat;\r\n\r\n            m_InputStream = new WaveStreamMemory(m_InputWaveFormat);\r\n            m_Wave32To16Stream = new Wave32To16Stream(m_InputStream);\r\n\r\n            m_OutputStream = new WaveFormatConversionStream(m_OutputWaveFormat, m_Wave32To16Stream);\r\n          \r\n        }</pre>\r\n</div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">The sample Rate is 8000 too.</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">So my question is, why does the WaveFormatConversionStream throw a AcmnotPossible exception and how can I fix this.</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">﻿﻿When debugging the delivered waveFormats are:</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">&nbsp;</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">Debugging Line: \"conversionStream = new AcmStream(sourceStream.WaveFormat, targetFormat);\"</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">&nbsp;</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">sourceStream.WaveFormat:</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">averageBytesPerSecond =&nbsp;32000</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">BitsPerSample&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 16</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">BlockAlign&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 4</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">Channels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 2</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">Encoding&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Pcm</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">SampleRate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 8000</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">&nbsp;</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">targetFormat:</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">averageBytesPerSecond = 8000</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">BitsPerSample&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 8</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">BlockAlign&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 1</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">Channels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 1</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">Encoding&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= ALaw</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">SampleRate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 8000</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">&nbsp;</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">&nbsp;</span><span style=\"font-family: Consolas;\">&nbsp;</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">Thank you very much for helping me.</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">&nbsp;</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">Best regards,</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">&nbsp;</span></div>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">Micha </span>\r\n<div style=\"color: black; background-color: white;\"><span style=\"font-family: Consolas;\">&nbsp;</span></div>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>       </pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>﻿</p>\r\n<p>&nbsp;</p>\r\n</div>",
+    "PostedDate": "2011-05-03T03:07:30.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "606336",
+    "ThreadId": "251475",
+    "Html": "<p>AcmNotPossible exception either means you have no encoder for Alaw (unlikely since I think most Windows installs have one) or that it doesn't like your source format. I suspect it is that you are trying to go from stereo to mono in one step. Try encoding to stereo alaw, or having two encoder streams one for left and one for right</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-03T03:23:37.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "606361",
+    "ThreadId": "251475",
+    "Html": "<p>I found out, that it is a mono/stereo problem.</p>\r\n<p>Maybe Acm doesn't support stereo -&gt; mono conversion?</p>\r\n<p>Can you provide an example how&nbsp;\"IeeeFloat stereo\" -&gt; \"ALaw mono\" conversion could be done?</p>\r\n<p>I only need one of the two channels and not the mono mix. This should be not so complicated i think.</p>\r\n<p>Thank you very&nbsp;much for your help,</p>\r\n<p>Micha.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-05-03T04:44:15.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "606365",
+    "ThreadId": "251475",
+    "Html": "<p>Oh,</p>\n<p>I send the reply before reading yours. :-)</p>\n<p>So it is a&nbsp; stereo -&gt; mono&nbsp; problem.</p>\n<p>How to get only&nbsp;left or right enocder stream out of a stereo stream?</p>\n<p>To be more precisely. How can I extract one of the two mono channels of a IeeeFloat 32 stereo stream?</p>\n<p>&nbsp;By the way: stereo Alaw seems not to be supported. Isn't Alaw mono in any case?</p>",
+    "PostedDate": "2011-05-03T04:47:28.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "606371",
+    "ThreadId": "251475",
+    "Html": "<p>To make a stereo float stream mono, read four bytes (i.e. one sample), then throw away four bytes, etc. Have a look at the StereoToMonoWaveProvider included with NAudio for a more complete example.</p>",
+    "PostedDate": "2011-05-03T05:01:15.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "606381",
+    "ThreadId": "251475",
+    "Html": "<p>Thank you, this helps a lot.</p>\r\n<p>Best regards.</p>",
+    "PostedDate": "2011-05-03T05:13:39.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1208290",
+    "ThreadId": "251475",
+    "Html": "Hi\r<br />\n<br />\nI have the same problem and wrote these lines of code acoording to this discussion,<br />\n<pre><code>    WaveFileReader r1 = new WaveFileReader(...);\n    WaveFileReader r2 = new WaveFileReader(...);\n\n    WaveFormat OutputWaveFormat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, 8000, 1, 16000, 2, 16);\n    WaveFormat InputWaveFormat = WaveFormat.CreateALawFormat(8000, 1);\n\n    WaveFormatConversionStream ConversionStream1 = new WaveFormatConversionStream(OutputWaveFormat, r1);\n    WaveFormatConversionStream ConversionStream2 = new WaveFormatConversionStream(OutputWaveFormat, r2);\n\n    WaveChannel32 WaveChannel32_1 = new WaveChannel32(ConversionStream1);\n    WaveChannel32 WaveChannel32_2 = new WaveChannel32(ConversionStream2);\n\n    WaveMixerStream32 mixer32 = new WaveMixerStream32();\n    mixer32.AddInputStream(WaveChannel32_1);\n</code></pre>\n\n(*)     mixer32.AddInputStream(WaveChannel32_2);<br />\n<pre><code>    Wave32To16Stream stereo16 = new Wave32To16Stream(mixer32);        \n</code></pre>\n\nafter line (*) I have data in this sequence : 0 0 32 60 0 0 32 60 0 0 59 126 0 0 59 126 ...\r<br />\nbut after applying Wave32To16Stream, I have a sequence of just zeros in stereo16!!\r<br />\nwhat should I do in this step?\r<br />\nafter that,  how can I converte stereo16 to mono16 and mono16 to monoA-Law?<br />\n",
+    "PostedDate": "2014-02-14T02:12:51.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209483",
+    "ThreadId": "251475",
+    "Html": "the best way to troubleshoot issues like this is to write to Wave file at different points in your stream. So for example, write ConversionStream1 to WAV and see if that sounds OK. \r<br />\n<br />\nAlso, you don't need to use CreateCustomFormat to create a PCM waveformat. Just use new WaveFormat(8000,1);<br />\n",
+    "PostedDate": "2014-02-17T07:57:07.68-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

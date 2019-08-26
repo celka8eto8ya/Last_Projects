@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "629159",
+    "ThreadId": "261765",
+    "Html": "\r\n<p>hi folks,</p>\r\n<p>&nbsp;</p>\r\n<p>i hope someone can help me with the following problem.</p>\r\n<p>i want to simulate an voice-over ip software.</p>\r\n<p>for that reason i need to find a way to stream some audio-file automaticly into the audio-in of my laptop.</p>\r\n<p>is this possible with NAudio or does anyone have further suggestions?</p>\r\n<p>&nbsp;</p>\r\n<p>thanks a lot,</p>\r\n<p>ben</p>\r\n",
+    "PostedDate": "2011-06-17T03:12:59.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630978",
+    "ThreadId": "261765",
+    "Html": "<p>there is an example of voice chat using UDP in NAudioDemo. If you want to make something like Skype though there is a lot more work involved.</p>\r\n<p>Faking an audio-input is unfortunately very difficult in Windows. You need a virtual audio device driver to do it.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-22T01:19:29.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

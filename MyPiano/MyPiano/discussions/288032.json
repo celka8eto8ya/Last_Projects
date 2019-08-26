@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "733247",
+    "ThreadId": "288032",
+    "Html": "\r\n<p>Is it possible to hook an audio file accessed by NAudio into the WindowsMediaPlayer widget?&nbsp; I kind of like their widget ...</p>\r\n",
+    "PostedDate": "2012-01-31T07:17:34.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "733431",
+    "ThreadId": "288032",
+    "Html": "<p>How do I get access to the NAudio components I see in the Demo?&nbsp; They are not showing up in my project.&nbsp; I have added the NAudio.dll (version 1.5), and I am using it in the project.&nbsp; Running Visual Studio 2010, VB.</p>",
+    "PostedDate": "2012-01-31T12:15:38.797-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "733436",
+    "ThreadId": "288032",
+    "Html": "<p>what components do you mean? there are some bits of code in the demo that is not part of NAudio, just an example of how you can use NAudio.</p>",
+    "PostedDate": "2012-01-31T12:19:25.817-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "733444",
+    "ThreadId": "288032",
+    "Html": "<p>When I look at the AudioPlaybackPanel.cs [Design] form, I see a list of \"NAudio Components\" in the Toolbox panel to the left of my IDE.&nbsp; I am asking how I can get access to those components.&nbsp; In the panel, for example, \"VolumeSlider1\" seems to be one of those components.</p>\r\n<p>I can't seem to find or add those components in a new Project&nbsp;I have created with NAudio.dll as a reference.&nbsp; I do see the NAudio components named in the Object Browser within my new project.&nbsp; Sorry, I should know how to do this ...</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-01-31T12:28:04.743-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "733448",
+    "ThreadId": "288032",
+    "Html": "<p>OK, I think you can rightclick in your toolbox panel and click \"select components\" or something like that if I remember correctly.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-01-31T12:33:38.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "733453",
+    "ThreadId": "288032",
+    "Html": "<p>Peviously, when adding a missing tool, I had gone into Tools-&gt;Choose Toolbox Items, then selected a missing component.</p>\r\n<p>In your Demo project, for example, you can see your NAudio tools (widgets/components)&nbsp;available within the .NET Framework Components tab within the Choose Toolbox Items popup&nbsp;form.</p>\r\n<p>I do not have those NAudio tools available to add from within my new Project's Choose Toolbox Items-&gt;.NET Framework Components list.&nbsp; Perhaps I am not properly including the NAudio namespace or Assembly or something.</p>",
+    "PostedDate": "2012-01-31T12:40:34.343-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "733457",
+    "ThreadId": "288032",
+    "Html": "<p>Maybe they are only available in C# projects.</p>",
+    "PostedDate": "2012-01-31T12:49:24.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "733476",
+    "ThreadId": "288032",
+    "Html": "<p>right-click toolbox, cselect \"Choose Items\", then in the dialog that appears, select Browse to open up the NAudio dll.</p>",
+    "PostedDate": "2012-01-31T13:28:19.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "734591",
+    "ThreadId": "288032",
+    "Html": "<p>Hah!&nbsp; Perfect, thank you.&nbsp; Donated 50.</p>",
+    "PostedDate": "2012-02-01T05:48:03.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

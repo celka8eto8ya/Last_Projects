@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1064217",
+    "ThreadId": "448984",
+    "Html": "Hi, I'm pretty new to this so I'll try to explain as best I can.\r<br />\nI want to count the number of times the audio level goes above a certain level. I have found/created some code which can detect if the level has gone above a certain threshold, but can't figure out how to count the number of times it has risen above that threshold reliably. the sound/noise is being created by a switch which is connected to the microphone, every time it switches a noise is created by the switching. Do I need to use some sort of filtering?\r<br />\nSteve.<br />\n",
+    "PostedDate": "2013-07-03T10:50:19.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1073460",
+    "ThreadId": "448984",
+    "Html": "I'd suggest looking at noise gate algorithms, as you could then count the number of times the gate opens and shuts<br />\n",
+    "PostedDate": "2013-07-26T06:06:00.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

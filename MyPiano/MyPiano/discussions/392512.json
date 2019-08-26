@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "902081",
+    "ThreadId": "392512",
+    "Html": "\r\n<p>It sounds wrong.&nbsp; Looks good in Audacity, but while playing it has a engine put put sort of noise.&nbsp;&nbsp; I know its probably my bad implementation.... so if anyone could provide some pointers it would be appreciated!</p>\r\n<p>Richard</p>\r\n<p>------------------</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>sineWaveProvider.SetWaveFormat(44100, 1); <span style=\"color:green\">// 44khz Stereo</span>\r\nsineWaveProvider.Frequency = 100;\r\nsineWaveProvider.Amplitude = 0.10f;\r\n\r\n// Using the SineWave Sample that Mark provided, I changed it to produce a SawTooth.\r\n\r\n<span style=\"color:blue\">int</span> amplitude = (<span style=\"color:blue\">int</span>)(32760 * Amplitude);\r\n            <span style=\"color:blue\">double</span> t = (Math.PI * 2 * Frequency) / (WaveFormat.SampleRate * WaveFormat.Channels);\r\n            <span style=\"color:blue\">int</span> samplesPerWavelength = Convert.ToInt32(WaveFormat.SampleRate / (Frequency / WaveFormat.Channels));\r\n            <span style=\"color:blue\">short</span> ampStep = Convert.ToInt16((amplitude * 2) / samplesPerWavelength);\r\n            <span style=\"color:blue\">short</span> tempSample = (<span style=\"color:blue\">short</span>)-amplitude;\r\n\r\n            <span style=\"color:blue\">int</span> sampleRate = WaveFormat.SampleRate;\r\n            <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> n = 0; n &lt; sampleCount; n&#43;&#43;)\r\n            {\r\n                buffer[n &#43; offset] = (<span style=\"color:blue\">float</span>)(tempSample &#43;= ampStep) / 1000;\r\n                sample&#43;&#43;;\r\n                <span style=\"color:blue\">if</span> (sample &gt;= sampleRate) sample = 0;\r\n            }\r\n            <span style=\"color:blue\">return</span> sampleCount;\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-08-21T12:22:15.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "902121",
+    "ThreadId": "392512",
+    "Html": "<p>I'm an idiot.</p>\r\n<p>WikiPedia is a great resource for refreshing ones self on Math...&nbsp; this now works.</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">override</span> <span style=\"color: blue;\">int</span> Read(<span style=\"color: blue;\">float</span>[] buffer, <span style=\"color: blue;\">int</span> offset, <span style=\"color: blue;\">int</span> sampleCount)\r\n        {\r\n            <span style=\"color: blue;\">int</span> sampleRate = WaveFormat.SampleRate;\r\n            <span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> n = 0; n &lt; sampleCount; n++)\r\n            {\r\n                buffer[n + offset] = (<span style=\"color: blue;\">float</span>)(2 * ((sample * Frequency) / sampleRate - Math.Floor((sample * Frequency) / sampleRate + 0.5)));\r\n                sample++;\r\n                <span style=\"color: blue;\">if</span> (sample &gt;= sampleRate) sample = 0;\r\n            }\r\n            <span style=\"color: blue;\">return</span> sampleCount;\r\n        }\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2012-08-21T13:49:48.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "904775",
+    "ThreadId": "392512",
+    "Html": "<p>great, glad you got it working in the end</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-08-27T14:03:35.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1242725",
+    "ThreadId": "544632",
+    "Html": "how do I  read in a MP3 file from amazon s3?  S<br />\n",
+    "PostedDate": "2014-05-07T12:27:33.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242938",
+    "ThreadId": "544632",
+    "Html": "you could try MediaFoundationReader which will let you play from a URL<br />\n",
+    "PostedDate": "2014-05-08T02:02:17.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

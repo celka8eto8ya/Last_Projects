@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1463153",
+    "ThreadId": "651279",
+    "Html": "Hello.\r<br />\nI am trying to change the playback device of the existing audio sessions on my devices.\r<br />\n<br />\nI know that this is possible.\r<br />\n<br />\nDo you guys have any idea on how to do that?<br />\n",
+    "PostedDate": "2016-02-14T10:08:14.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463218",
+    "ThreadId": "651279",
+    "Html": "I'm afraid it's not something I've done myself. NAudio has wrappers for a lot of WASAPI, so if you can find out on MSDN how to do it WASAPI, then it should be possible to implement it in NAudio<br />\n",
+    "PostedDate": "2016-02-15T01:43:14.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463296",
+    "ThreadId": "651279",
+    "Html": "Hello again.\r<br />\n<br />\nWell i believe the way I should go towards is here:\r<br />\n<a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/dd756610(v=vs.85).aspx\" rel=\"nofollow\">https://msdn.microsoft.com/en-us/library/windows/desktop/dd756610(v=vs.85).aspx</a>\r<br />\nBut after a quick read through I didn't find how to change the streams, only how to get notifications from them.\r<br />\n<br />\nAny further help would be very much appreciated.\r<br />\nAt least a pointer to the right class? or function?\r<br />\n<br />\nThanks again.<br />\n",
+    "PostedDate": "2016-02-15T13:02:12.303-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

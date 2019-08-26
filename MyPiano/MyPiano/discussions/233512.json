@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "517180",
+    "ThreadId": "233512",
+    "Html": "\r\n<p>I am converting a c&#43;&#43; pyrotechnic firing system to C# / .NET and also adding in a shoot to music feature set. Does the NAudio async playback provide information on the current audio position by time in the audio file?&nbsp;&nbsp;I need around 100 millisec\r\n timing accuracy. Using the playback position as the timing source is the desired solution because of operator pauses, where the music and the pyro should both stop and then continue to be in sync after continuing the show. I do have the option of limiting\r\n the sound files to non compressed codecs&nbsp;and doing time calcs based on sample rate and position in playback. I would like to allow for MP3 and other compressed formats if possible.</p>\r\n<p>Thanks for any help,</p>\r\n<p>Neil</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-11-04T10:06:15.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "517258",
+    "ThreadId": "233512",
+    "Html": "\r\n<p>wow, sounds amazing! The latency of NAudio is not particularly low, but you can adjust it for WaveOut or WasapiOut. Wasapi will give you lower latency. The other issue that you might run into is that the MP3 file reader is not always reliable in its position\r\n reporting. I have been working on fixing that in the latest code, but not sure if it is quite there yet.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-11-04T12:20:23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "832008",
+    "ThreadId": "233512",
+    "Html": "<p>I'm there, its all working and the timing is close enough. I used the WPFSoundVisualizationLib to show progress along the soundtrack. The only thing to solve is a problem with the sound after a pause. Seems like its playing 2 versions simultaneously. I'm using the NAudio sample from the visualization lib. After the restart of the audio, its garbled like its being played twice slightly out of phase. Any advice on pausing and resuming audio play?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>&nbsp;</p>\r\n<p>Neil</p>",
+    "PostedDate": "2012-05-03T22:15:50.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "833320",
+    "ThreadId": "233512",
+    "Html": "<p>I haven't examined the WPF Sound Visualization Library's example, so it is hard to say what the problem is. You should have an IWavePlayer implementation that you just call Pause and Play on. Whave version of NAudio are you working with?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-05-08T02:10:51.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

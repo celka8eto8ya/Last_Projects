@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "97601",
+    "ThreadId": "29285",
+    "Html": "hello, I was so happy when I found  your project library..I thought that gonna save a lot of time in my project..<br>\r\nI'm trying to resample wave and mp3 files to convert them after to ccitt alaw file,<br>\r\nI tried to use the released DLL and the test you wrote with samplerDMO...but I didn't find the DMO class, so I compiled the latest source project you have ..and tried again ..but I still have a problem to create the DMO object..I also downloaded the SamplerDMO.DLL and tried tô register it..but this not working!!<br>\r\nit said :&quot;COMException: can't load COM class with CLSID {F447B69E-1884-4A7E-8055-346F74D6EDB3} &quot;<br>\r\nthank in advance for your help.<br>\r\nregards,<br>\r\nWalid<br>\r\n",
+    "PostedDate": "2008-06-09T03:34:23.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "97638",
+    "ThreadId": "29285",
+    "Html": "hello again, can we have please the last version of your DLL???<br>\r\nplease<br>\r\n",
+    "PostedDate": "2008-06-09T06:25:47.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "97702",
+    "ThreadId": "29285",
+    "Html": "<br>\r\n<div style=\"border-style:dotted none;border-color:rgb(170, 170, 170) -moz-use-text-color;border-width:0.1em medium;margin:1em 0em 2.5em 3em;padding:0.2em;font-style:italic\"><br>\r\nzwalid wrote:<br>\r\nhello again, can we have please the last version of your DLL???<br>\r\nplease<br>\r\n<br>\r\n<br>\r\n</div>\r\nHi Zwalid. ResamplerDMOStream is a very new feature of NAudio and is still a work in progress. It would appear that your PC doesn't have the COM object registered. Can I ask what operating system you are using? I was developing on Vista, and haven't got round to seeing what happens in XP yet.<br>\r\nI am planning to release a new version of NAudio in the coming weeks though, but for now there is nothing stopping you downloading the code and compiling your own. <br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-06-09T09:10:06.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "97869",
+    "ThreadId": "29285",
+    "Html": "hello,<br>\r\nThanks for your answer Mark.<br>\r\nI'm using Vista, and I did compile the latest version of your source code &quot;1.2.128.0&quot; , the same like you did use in your resamplr jigg example.<br>\r\nlike you said,I think the problem is that my resamplrdmo COM object is not registered on my PC.<br>\r\nactually, I did add resamplerDMO.dll to my /system32 &nbsp;and tried to register it ...but still not working ..I'm still having this loading problem....<br>\r\ndo you have any hint to how solve this problem..<br>\r\nthank a lot.<br>\r\nregards,<br>\r\nWalid\r\n",
+    "PostedDate": "2008-06-10T00:48:31.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "97990",
+    "ThreadId": "29285",
+    "Html": "hi Walid,<br>\r\nI'm surprised resamplerdmo.dll isn't on your system already. It is on mine. What edition of Vista are you using?\r\n",
+    "PostedDate": "2008-06-10T12:02:04.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "100204",
+    "ThreadId": "29285",
+    "Html": "<br>\r\nhello,<br>\r\nthat's me again...I did solve the problem..Actually it was a missing DLL<br>\r\nI'm win XP pro, but I don't know why this DLL was missing...anyway, I found this DLL and it' dependency..and now, it's working fine ..the resampling is working great..thanks a lot&nbsp; ;)<br>\r\nthis resampling was just a small part of my project, what I'm trying to do is converting MP3 to&nbsp; wave(CCITT ALAW 8khz mono) for our phone application ..and lately I found something similar to this in your library..is it possible to be done with NAudio????<br>\r\n..cause I'm stuck with directShowNet..I can't get it working..<br>\r\nthanks in advance.<br>\r\ncheers, <br>\r\nWalid<br>\r\n",
+    "PostedDate": "2008-06-22T04:59:27.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647171",
+    "ThreadId": "29285",
+    "Html": "<p>Only for completeness.</p>\r\n<p>The missing dll zwalid mentioned seems to be usually mfplat.dll. The resampledmo.dll&nbsp; and mfplat.dll have to be copied to C:\\Windows\\SysWow64\\ (x86 Project) or in standard C:\\Windows\\System32\\ directory for x64 architecture and on 32 bit systems.</p>\r\n<p>Just register the resampledmo.dll with the dedicated regsvr32.exe. Then type in the cmd line in the system directory&nbsp;&nbsp; \"regsvr32.exe resampledmo.dll\".</p>\r\n<p>For me, that did the job on a x64 windows server 2008 R2 system.</p>",
+    "PostedDate": "2011-07-25T07:18:37.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647626",
+    "ThreadId": "29285",
+    "Html": "<p>thanks for the info knoerzer</p>",
+    "PostedDate": "2011-07-26T02:43:13.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

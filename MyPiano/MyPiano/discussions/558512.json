@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1284912",
+    "ThreadId": "558512",
+    "Html": "ok I am not returning sampleCount which is 52920 in my WaveStream class for Read.\r<br />\n<br />\nI am making Brown noise and then filter it out using a fft filter so I can only do 2^N samples at a time.\r<br />\nthe close thing to 52920 that is 2^N is 32768.\r<br />\n<br />\nbut than the buffer has a lot of zero in it. and when I play it is sound bad.\r<br />\nI return  32768 in Read, but that is not fix how it sound.\r<br />\n<br />\nAlso this is without adding the FFT filter , just only returning  327680 sound bad.\r<br />\nit I return  52920 it sound good.\r<br />\n<br />\nso How can I only return 327680 at a time and not have zero in my buffer\r<br />\ncan i make the buffer smaller  or bigger ?\r<br />\nI only need this because FFTs only work with  2^N number\r<br />\n<br />\nalso I tried to set \r<br />\nPadWithZeroes to false\r<br />\nbut it did not help <br />\n",
+    "PostedDate": "2014-08-04T11:24:06.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1286638",
+    "ThreadId": "558512",
+    "Html": "ok I  saw that I can change  waveout.DesiredLatency.\r<br />\nbut it only takes int and  without a double I cannot get it to return 2^n.\r<br />\nthe closest thing I can do is: \r<br />\n waveout.DesiredLatency = 1486;\r<br />\n<br />\nand then my buffersize is 262136.\r<br />\nbut that is off by 8 points\r<br />\n<br />\n2^18 is  262144.\r<br />\n<br />\nis there anyway to make buffersize = 2^n?\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2014-08-05T12:42:34.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1286899",
+    "ThreadId": "558512",
+    "Html": "Have a look at the SampleAggregator class in the NAudio WPF demo. This holds a buffer for FFT, and when it has got enough samples, it performs the FFT. This means it doesn't matter what the read size from your Wave provider is.<br />\n",
+    "PostedDate": "2014-08-06T02:57:59.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1287275",
+    "ThreadId": "558512",
+    "Html": "Mark,\r<br />\nI was looking at your code, but you do not change your buffer size from read.\r<br />\nyou have a fft buffer and you set that size to 1024 and you enter your values in there and do a fft.\r<br />\n<br />\nbut I am doing a fft filter, so I need to filter out all the signal before I play it.\r<br />\nif I do what you are doing I would miss the remaining values in buffer that you are skipping.\r<br />\nwhat you are doing would only work in your  buffer.length/1024 was even. but in my case it do not seem to ever be even .\r<br />\n<br />\ndo you understand what I am saying?\r<br />\nor\r<br />\ndid I miss something? <br />\n",
+    "PostedDate": "2014-08-06T11:36:55.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1287276",
+    "ThreadId": "558512",
+    "Html": "the same technique applies, you'd just need to do an extra read on your source, and save some leftovers of the FFT. What I'd do in your situation is make an adapter ISampleProvider which always returns the number of samples requested in Read, by calling into the source provider enough times to fulfill the request, buffering any leftovers.<br />\n",
+    "PostedDate": "2014-08-06T11:41:15.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1287305",
+    "ThreadId": "558512",
+    "Html": "ok I starting hearing a tick and after troubleshooting I learned that i get a tick when I do this :<br />\n<pre><code>waveout.DesiredLatency = 1486;\n</code></pre>\n\nI do not understand why,\r<br />\nthe code should work no matter how big the buffer is. I  checked my return value and the buffer and everything looks good\r<br />\nhave you had any problem with changing     waveout.DesiredLatency ?\r<br />\n \r<br />\nwait are you saying to do the fft and  then ifft, over and over and just not send the remaining values and keep them for the next interval ?\r<br />\num...\r<br />\n<br />\nso  waveout will not play the missing values as 0, 0, ?\r<br />\nI mean the buffer would still have 0s in it when read is done right? \r<br />\nis would have zeros because the remaining values are not being played but then the next time read it called...\r<br />\nright?<br />\n",
+    "PostedDate": "2014-08-06T13:13:41.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1287319",
+    "ThreadId": "558512",
+    "Html": "ok I just tried to do \r<br />\na fft at length 32768\r<br />\nand i return 32768,\r<br />\n<br />\nbut you can hear where it stops at ...\r<br />\nit has a beat and it should not.\r<br />\n<br />\n<br />\nso what do I do?\r<br />\nI do not want the zeros to be played?<br />\n",
+    "PostedDate": "2014-08-06T13:51:48.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

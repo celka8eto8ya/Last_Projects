@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "843875",
+    "ThreadId": "358084",
+    "Html": "\r\n<p>&nbsp; &nbsp;I have 2 WPF applications and I'm trying to build an audio conference system between them. I followed the NetworkChat example and it works, at leas in one direction but I have 3 big problems. First, an annoying background sound is present and\r\n at first I thought it's my old laptop to blame, but then I used an i5 laptop and it's still the same. Second, I can hear the voice clearly, but on the receiving end it echoes indefinitely and third, a high pitching sound goes off at random times and I have\r\n to stop the transmission, it's unbearable. Any suggestions? I really need to solve this. I use the NarrowBand Speex &nbsp;codec, as in the example. Thanks.</p>\r\n<p>This is my code:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre style=\"color:black\"><div style=\"color:black; background-color:white\"><pre><span style=\"color:blue\">//recording:</span></pre>\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> StartAudioStreaming()\n        {\n            <span style=\"color:blue\">if</span> (!connected)\n            {\n                IPEndPoint endPoint = <span style=\"color:blue\">new</span> IPEndPoint(IPAddress.Parse(<span style=\"color:#a31515\">&quot;127.0.0.1&quot;</span>), <span style=\"color:blue\">int</span>.Parse(<span style=\"color:#a31515\">&quot;7081&quot;</span>));\n                <span style=\"color:blue\">int</span> inputDeviceNumber = 1;\n                <span style=\"color:blue\">this</span>.codec = <span style=\"color:blue\">new</span> NarrowBandSpeexCodec();\n                Connect(endPoint, inputDeviceNumber, codec);               \n            }           \n        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Connect(IPEndPoint endPoint, <span style=\"color:blue\">int</span> inputDeviceNumber, INetworkChatCodec codec)\n        {\n            waveIn = <span style=\"color:blue\">new</span> WaveIn();\n            waveIn.BufferMilliseconds = 50;\n            waveIn.DeviceNumber = inputDeviceNumber;\n            waveIn.WaveFormat = codec.RecordFormat;\n            waveIn.DataAvailable &#43;= waveIn_DataAvailable;\n            waveIn.StartRecording();\n\n            udpSender = <span style=\"color:blue\">new</span> UdpClient();                        \n            udpSender.Client.Bind(endPoint);\n            udpSender.Connect(endPoint);\n\n            connected = <span style=\"color:blue\">true</span>;\n        }\n</pre>\n<pre><br></pre>\n<pre><div style=\"color:black; background-color:white\"><pre><span style=\"color:blue\">void</span> waveIn_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\n        {\n            <span style=\"color:blue\">byte</span>[] encoded = codec.Encode(e.Buffer, 0, e.BytesRecorded);\n            udpSender.Send(encoded, encoded.Length);\n        }     \n</pre>\n</div>\n<br></pre>\n</div>\n</pre>\r\n<pre><span style=\"background-color:white; color:blue\"> </span></pre>\r\n<pre style=\"color:black\"><span style=\"color:blue\">  &nbsp;// Playback:</span></pre>\r\n<pre style=\"color:black\"><span style=\"color:blue\">   public</span> <span style=\"color:blue\">void</span> StartAudioStreaming()\n        {\n            <span style=\"color:blue\">if</span> (!connected)\n            {\n                IPEndPoint endPoint = <span style=\"color:blue\">new</span> IPEndPoint(IPAddress.Parse(<span style=\"color:#a31515\">&quot;client.ip&quot;</span>), <span style=\"color:blue\">int</span>.Parse(<span style=\"color:#a31515\">&quot;7081&quot;</span>));\n                <span style=\"color:blue\">int</span> inputDeviceNumber = 1;\n                <span style=\"color:blue\">this</span>.codec = <span style=\"color:blue\">new</span> NarrowBandSpeexCodec();\n                Connect(endPoint, inputDeviceNumber, codec);                \n            }         \n        }\n\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Connect(IPEndPoint endPoint, <span style=\"color:blue\">int</span> inputDeviceNumber, INetworkChatCodec codec)\n        {          \n            udpListener = <span style=\"color:blue\">new</span> UdpClient();                   \n            udpListener.Client.Bind(endPoint);            \n\n            waveOut = <span style=\"color:blue\">new</span> WaveOut();\n            waveProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(codec.RecordFormat);\n            waveOut.Init(waveProvider);\n            waveOut.Play();\n\n            connected = <span style=\"color:blue\">true</span>;\n            ListenerThreadState state = <span style=\"color:blue\">new</span> ListenerThreadState() { Codec = codec, EndPoint = endPoint };\n            ThreadPool.QueueUserWorkItem(<span style=\"color:blue\">this</span>.ListenerThread, state);\n        }\n\n</pre>\r\n</div>\r\n<pre><br></pre>\r\n<pre><div style=\"color:black; background-color:white\"><pre style=\"color:black\"><span style=\"color:blue\">    private</span> <span style=\"color:blue\">void</span> ListenerThread(<span style=\"color:blue\">object</span> state)\n        {\n            ListenerThreadState listenerThreadState = (ListenerThreadState)state;\n            IPEndPoint endPoint = listenerThreadState.EndPoint;\n            <span style=\"color:blue\">try</span>\n            {\n                <span style=\"color:blue\">while</span> (connected)\n                {\n                    <span style=\"color:blue\">byte</span>[] b = <span style=\"color:blue\">this</span>.udpListener.Receive(<span style=\"color:blue\">ref</span> endPoint);\n                    <span style=\"color:blue\">byte</span>[] decoded = listenerThreadState.Codec.Decode(b, 0, b.Length);\n                    waveProvider.AddSamples(decoded, 0, decoded.Length);\n                }\n            }\n            <span style=\"color:blue\">catch</span> (SocketException)\n            {\n                <span style=\"color:green\">// Thrown when disconnecting</span>\n            }\n        }<span style=\"background-color:white\">    </span><span style=\"color:blue; background-color:white\">  </span></pre>\n</div>\n</pre>\r\n<p>&nbsp; &nbsp; &nbsp;The device number 1 is ok (it appears I have 2 microphones and it doesn't work with 0)</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-06-02T08:55:09.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847380",
+    "ThreadId": "358084",
+    "Html": "<p>echo is a big problem when doing audio conferencing. you either need to listen on headphones, or to add an echo suppression algorithm (which can be tricky to write). Skype for example has built in echo-suppression for this very reason.</p>\r\n<p>To track down background noise, try just recording directly to a WAV file. That will tell you if the speex or network streaming code is introducing the noise or if it is coming from the microphone.</p>",
+    "PostedDate": "2012-06-11T03:32:20.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1069674",
+    "ThreadId": "358084",
+    "Html": "Here, this is what i want to do, but with pure PCM.\r<br />\n<br />\nAnd even if i look at this code, i don´t know how to do it, anyone want to help me out?<br />\n",
+    "PostedDate": "2013-07-17T12:00:56.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1088186",
+    "ThreadId": "358084",
+    "Html": "Yes! A slight echo at the end of the sound is always. And it is in your sample. In NAudio 1.6, NAudio demo, &quot;WAV recording&quot; by &quot;waveIn&quot;. If you explicitly specify: build for 64-bit systems, there is no echo at the end.<br />\nRecording with &quot;waveIn Event Callbacks&quot; is correct in both cases.<br />\nWhy is this happening?<br />\n",
+    "PostedDate": "2013-09-04T04:48:19.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094452",
+    "ThreadId": "358084",
+    "Html": "OK that's interesting. Wonder if the same buffer is getting reported back a couple of times at the end of recording. I made some changes there a while ago to fix a problem with the very last bit of recording being missed<br />\n",
+    "PostedDate": "2013-09-19T06:08:08.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

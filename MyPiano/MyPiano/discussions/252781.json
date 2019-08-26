@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "592811",
+    "ThreadId": "252781",
+    "Html": "\r\n<p>Hi there, I had 1.2 version of naudio working in my vista 64 bit machine. Was having issues using waveout.stop(). Browsing thr the discussion board, assumed this was resolved in 1.3 version.</p>\r\n<p>Got 1.3 now, but this is what I see at runtime, not even able to run sample demo project.</p>\r\n<p>{&quot;Could not load file or assembly 'NAudio, Version=1.3.8.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. An attempt was made to load a program with an incorrect format.&quot;}</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-04-06T07:44:36.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592813",
+    "ThreadId": "252781",
+    "Html": "<p>you need to set the main executable to target x86</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-06T07:45:50.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592836",
+    "ThreadId": "252781",
+    "Html": "<p>Thanks much Mark for quick response. I tried with the sample code and it worked.</p>\r\n<p>But again in my project, its still the same issue. Please help.</p>",
+    "PostedDate": "2011-04-06T08:06:41.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592842",
+    "ThreadId": "252781",
+    "Html": "<p>have you set the target in your project?</p>",
+    "PostedDate": "2011-04-06T08:12:52.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592891",
+    "ThreadId": "252781",
+    "Html": "<p><span style=\"font-size: x-small; color: #000000; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">Thanks Mark,&nbsp;changing the traget to x86 works now. But still I see the same issue as in 1.2 with the waveout.stop().</span></span></span></p>\r\n<p><span style=\"color: #000000;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">if</span></span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"> (</span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">this</span></span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">.waveOut != </span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">null </span></span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">&amp;&amp; </span></span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">this</span></span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">.waveOut.PlaybackState != </span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">PlaybackState</span></span></span></span></p>\r\n<p><span style=\"color: #000000;\">\r\n<p><span style=\"font-size: x-small; font-family: Consolas;\"> <span style=\"font-size: x-small; font-family: Consolas;\">.Stopped) {</span></span></p>\r\n</span></p>\r\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">\r\n<p><span style=\"font-size: x-small; font-family: Consolas;\">\r\n<p>&nbsp;<span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\"><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\"><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\">this</span></span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">.waveOut.Stop();</span></span></p>\r\n</span></p>\r\n</span></span></p>\r\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">}</span></span></p>\r\n<p><span style=\"color: #000000;\">ContextSwtichDeadlock </span>error</p>\r\n<p>The CLR has been unable to transition from COM context 0x74bed0 to COM context 0x74c040 for 60 seconds. The thread that owns the destination context/apartment is most likely either doing a non pumping wait or processing a very long running operation without pumping Windows messages. This situation generally has a negative performance impact and may even lead to the application becoming non responsive or memory usage accumulating continually over time. To avoid this problem, all single threaded apartment (STA) threads should use pumping wait primitives (such as CoWaitForMultipleHandles) and routinely pump messages during long running operations.</p>",
+    "PostedDate": "2011-04-06T09:14:17.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592895",
+    "ThreadId": "252781",
+    "Html": "<p>what sort of application are you running (WinFroms, WPF, something else)? in what what way are you using COM? What callback mechanism are you using for WPF?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-06T09:18:05.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592908",
+    "ThreadId": "252781",
+    "Html": "<p>Its a Winforms app, .net 3.5. not a WPF. This is what we are doing, suspecting something wrong with the flow of events.</p>\r\n<p>&nbsp; public void PlaySoundFile(string fileName)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.StopPlayback();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FileStream stream = new FileStream(fileName, FileMode.Open);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PlaySoundFile(stream);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;public void PlaySoundFile(Stream soundStream)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback());</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Set volume<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (this.playbackVolume != -1F)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.waveOut.Volume = this.playbackVolume;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveStream = new WaveFileReader(soundStream);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveChannel = new WaveChannel32(waveStream);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.waveOut.PlaybackStopped += new EventHandler(waveOut_PlaybackStopped);</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bool foundDevice = false;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Attempt to set correct device<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (int i = 0; i &lt; WaveOut.DeviceCount; i++)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (WaveOut.GetCapabilities(i).ProductName.Contains(Settings.Default.AudioPlaybackDevice))<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Set the device to playback audio on<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveOut.DeviceNumber = i;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foundDevice = true;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Make sure we find the audio device<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!foundDevice)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CloseOutputFileAndDispose();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw new AudioDeviceNotFoundException(Settings.Default.AudioPlaybackDevice);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.waveOut.Init(waveChannel);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.waveOut.Play();</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp; public void StopPlayback()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (this.waveOut != null<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &amp;&amp; this.waveOut.PlaybackState != PlaybackState.Stopped)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.waveOut.Stop();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (waveStream != null)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // this one really closes the file and ACM conversion<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveChannel.Close();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveChannel = null;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // this one does the metering stream<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveStream.Close();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveStream = null;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveOut.Dispose();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveOut = null;</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">&nbsp;</span></span></p>",
+    "PostedDate": "2011-04-06T09:36:15.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592912",
+    "ThreadId": "252781",
+    "Html": "<p>Try using Window callbacks. Also, in your StopPlayback function, don't dispose of WaveOut yet - it's not necesarily finished doing stuff. Finally, what are you doing in waveOut_PlaybackStopped?</p>",
+    "PostedDate": "2011-04-06T09:40:45.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592962",
+    "ThreadId": "252781",
+    "Html": "<div>\n<p><span style=\"color: navy; font-family: Arial; font-size: x-small;\"><span style=\"font-size: 10pt; font-family: Arial; color: navy;\">&nbsp;</span></span></p>\n<p><span style=\"color: navy; font-family: Arial; font-size: x-small;\"><span style=\"font-size: 10pt; font-family: Arial; color: navy;\">What do you mean by window callbacks? On paybackstopped, we are cleaning up the wave out object.</span></span></p>\n<p><span style=\"color: navy; font-family: Arial; font-size: x-small;\"><span style=\"font-size: 10pt; font-family: Arial; color: navy;\">&nbsp;</span></span></p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-size: 9.5pt; font-family: Consolas;\"><span style=\"color: blue;\"><span style=\"color: blue;\">void</span></span> waveOut_PlaybackStopped(<span style=\"color: blue;\"><span style=\"color: blue;\">object</span></span> sender, <span style=\"color: #2b91af;\"><span style=\"color: #2b91af;\">EventArgs</span></span> e)</span></span></p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-size: 9.5pt; font-family: Consolas;\">{</span></span></p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-size: 9.5pt; font-family: Consolas;\"><span style=\"color: green;\"><span style=\"color: green;\">// Clean-up the wave out object</span></span></span></span></p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-size: 9.5pt; font-family: Consolas;\"><span style=\"color: blue;\"><span style=\"color: blue;\">if</span></span> (<span style=\"color: blue;\"><span style=\"color: blue;\">this</span></span>.waveOut != <span style=\"color: blue;\"><span style=\"color: blue;\">null</span></span>)</span></span></p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-size: 9.5pt; font-family: Consolas;\">{</span></span></p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-size: 9.5pt; font-family: Consolas;\"><span style=\"color: blue;\"><span style=\"color: blue;\">this</span></span>.waveOut.Dispose();</span></span></p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-size: 9.5pt; font-family: Consolas;\"><span style=\"color: blue;\"><span style=\"color: blue;\">this</span></span>.waveOut = <span style=\"color: blue;\"><span style=\"color: blue;\">null</span></span>;</span></span></p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-size: 9.5pt; font-family: Consolas;\">&nbsp;</span></span></p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-size: 9.5pt; font-family: Consolas;\">}</span></span></p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-size: 9.5pt; font-family: Consolas;\">}</span></span></p>\n<p><span style=\"color: navy; font-family: Arial; font-size: x-small;\"><span style=\"font-size: 10pt; font-family: Arial; color: navy;\">&nbsp;</span></span></p>\n<p><span style=\"color: navy; font-family: Arial; font-size: x-small;\"><span style=\"font-size: 10pt; font-family: Arial; color: navy;\">&nbsp;</span></span></p>\n<p><span style=\"color: navy; font-family: Arial; font-size: x-small;\"><span style=\"font-size: 10pt; font-family: Arial; color: navy;\">&nbsp;</span></span></p>\n</div>",
+    "PostedDate": "2011-04-06T10:54:41.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "593937",
+    "ThreadId": "252781",
+    "Html": "<p>You are probably debugging in Visual studio?</p>\r\n<p>see this post for a more deeply explanation: <a href=\"http://social.msdn.microsoft.com/Forums/en-US/vsto/thread/8630a1bb-fc65-49e5-8b37-bf77378e380f/\">http://social.msdn.microsoft.com/Forums/en-US/vsto/thread/8630a1bb-fc65-49e5-8b37-bf77378e380f/</a></p>\r\n<p>I have had this several times when dealing with Directx, just configure VS not to react on this.</p>",
+    "PostedDate": "2011-04-07T22:47:32.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "594510",
+    "ThreadId": "252781",
+    "Html": "<p>try using WaveCallbackInfo.NewWindow() instead of function callbacks. Also, PlaybackStopped can be a dangerous place to call WaveOut.Dispose(), especially when using function callbacks.</p>\r\n<p>Mark</p>\r\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;\">\r\n<pre style=\"font-family: consolas;\">NewWindowW<br /></pre>\r\n</div>",
+    "PostedDate": "2011-04-09T00:17:49.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

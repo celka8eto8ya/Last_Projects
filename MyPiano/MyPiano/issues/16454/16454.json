@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I think this is a mistake. \r\nDisposing the sourceStream is not the responsibility of the WaveFormatConversionStream class.\r\nI see no point in disposing a resource which was not created by the class itself.\r\n\r\nFor example: converting a stream to different formats or demultiplexing it succeeds first, then throwing NullReferenceException because sourceStream was disposed in the meantime.",
+    "LastUpdatedDate": "2014-10-23T14:44:53.1-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-10-14T05:07:22.273-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveFormatConversionStream disposes sourceStream",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16454
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "You are right. I designed this class many years ago and would probably make a different decision today. It's convenient in some circumstances and a pain in others. The workaround I use when I need one is to decorate the input what I call an \"IgnoreDisposeStream\" which simply ignores calls to dispose but passes all other stream methods through to the source.\n\nI will consider this change for a future NAudio though",
+      "PostedDate": "2014-10-23T14:44:53.1-07:00",
+      "Id": 163106
+    }
+  ]
+}

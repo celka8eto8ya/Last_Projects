@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "848925",
+    "ThreadId": "359592",
+    "Html": "\r\n<p>What approach can I take to compare two wavs and get a text output. My goal is to make something like siri using speex.</p>\r\n",
+    "PostedDate": "2012-06-14T05:25:49.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "848944",
+    "ThreadId": "359592",
+    "Html": "<p>Speech recognition is hard. Really really hard. Sorry to be so blunt about it, but I have learned to be very clear about this after encountering people with unrealistically high expectations of what they could achieve.</p>\r\n<p>Your best bet is to use the Microsoft speech recognition engine that comes free with Windows. It comes with a <a href=\"http://msdn.microsoft.com/en-us/library/ms723627%28v=vs.85%29.aspx\">managed API</a>.</p>",
+    "PostedDate": "2012-06-14T05:49:34.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

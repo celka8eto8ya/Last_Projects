@@ -1,0 +1,51 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I created a class on the basis of AudioFileReader to integrate an Autocue option (as with CD Player) to readjust the beginning of the song without white or 'click' the beginning of song.\r\n\r\n\r\nEnclosed Class AudioFileReaderAutoCue.cs and a small demo based on your PlugIn (AutoCue.cs, AutoCue.Designer.cs, AutoCuePlugin.cs)\r\nFiles are compiled in VS 2012 Express Desktop",
+    "LastUpdatedDate": "2012-11-03T09:12:46.733-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-10-23T12:20:40.09-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "AutoCue",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 16366
+  },
+  "FileAttachments": [
+    {
+      "FileId": 518242,
+      "FileName": "AutoCue.zip",
+      "DownloadUrl": ".\\518242"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Bonjour,\nMark, please change the \"Type Issue\" to Feature\nI have not respect the hierarchy. Sorry\nMerci",
+      "PostedDate": "2012-10-26T00:55:47.203-07:00",
+      "Id": 81059
+    }
+  ]
+}

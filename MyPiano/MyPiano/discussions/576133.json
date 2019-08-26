@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1336774",
+    "ThreadId": "576133",
+    "Html": "Hello,\r<br />\n<br />\nI am trying to create a dictation module. \r<br />\nI have seen different discussions but none gives an exact answer.\r<br />\n<br />\nMy problem is reposition a wave in stream. In my case i use a wavefilewriter with a memorystream.\r<br />\nWavefilewriter does not support re positionning.\r<br />\n<br />\nAny idea how to achieve this ?\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2014-12-23T06:36:41.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1337502",
+    "ThreadId": "576133",
+    "Html": "you can't reposition a wavein device as it is simply giving you audio from the soundcard. Are you trying to go back in a WAV file and overwrite something you already wrote?<br />\n",
+    "PostedDate": "2014-12-28T07:15:53.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

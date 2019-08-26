@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1224178",
+    "ThreadId": "539419",
+    "Html": "Hello, I'm really interested in using NAudio with the Unity game engine to implement it with a game I'm working on. However, after reading the docs and checking the example projects I still have a pretty basic question that I can't answer myself and will appreciate greatly if somebody answered briefly to it:<br />\n<ul>\n<li>\nI've written various algorithms for beat detection, melody analysis, etc. they currently work with FMOD in real-time while the game is playing (which is bad because different framerate affects the audio analysis). These algorithms use the spectrum and wave data from the currently playing audio file. Will I be able to get the spectrum and wave data from certain audio times before the game loads? (in other words, will analyzing audio before the game loads be possible with NAudio?) \r<br />\ne.g. On 0.015 seconds, get the frequencies from 20Hz to 4Khz, get Wave samples, run the algorithms, save the results and move on to the next time -&gt; 0.03 (do the same) ?\r<br />\nAnd if this is possible, how fast/slow would that be ? Let's not take any audio analysis algorithms into account, would just pulling data with a 0.015 seconds interval until the end of the audio file be too slow ? <br />\n</li>\n</ul>\nThank you for your time! I hope my question isn't too stupid.<br />\n",
+    "PostedDate": "2014-03-18T15:33:56.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1227761",
+    "ThreadId": "539419",
+    "Html": "NAudio can give you access to individual samples, so you should be able to perform any of your algorithms. As for speed, it probably won't be as fast as doing it in C/C++, but if you profile your code, you should be able to find ways to speed it up.<br />\n",
+    "PostedDate": "2014-03-28T04:58:34.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1227773",
+    "ThreadId": "539419",
+    "Html": "Thank you! I've been using it for several days now and I find it's speed pretty sufficient for our game's needs. I haven't still managed to make the spectrum analysis work so I cannot tell for sure. <br />\n",
+    "PostedDate": "2014-03-28T05:33:17.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1228171",
+    "ThreadId": "539419",
+    "Html": "not sure if you've seen this. For the spectrum analysis you can look here <a href=\"https://wpfsvl.codeplex.com/\" rel=\"nofollow\">https://wpfsvl.codeplex.com/</a> they have an NAudio sample for WPF. It could help you see how NAudio spec analysis is done.<br />\n",
+    "PostedDate": "2014-03-29T08:01:05.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1228291",
+    "ThreadId": "539419",
+    "Html": "Yeah, I have the source code for this but to be honest I'm having trouble finding my way around it. I actually made another topic here asking about getting the spectrum  and wave data specifically prior to playing the audio. However, I'm still dwelling on this so I hope that even if no one answers, I'll be able to get something to work soon :) <br />\n",
+    "PostedDate": "2014-03-30T03:59:31.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

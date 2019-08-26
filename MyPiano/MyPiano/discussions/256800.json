@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "609183",
+    "ThreadId": "256800",
+    "Html": "\r\n<p>What is the easiest way to implement a visualazion with bufferedwaveprovider.</p>\r\n",
+    "PostedDate": "2011-05-08T08:39:21.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "609253",
+    "ThreadId": "256800",
+    "Html": "<p>Oo i found something (&nbsp;ISampleProvider ) but I have one problem:</p>\n<p>&nbsp;</p>\n<p>void LoadNextChunk(IWaveProvider sourceProvider, int samplePairsRequired);</p>\n<p>&nbsp;</p>\n<p>How many samplePairsRequired?</p>\n<p>EDIT:</p>\n<p>ok i ve got a visualazion now but it doesn t look nice and it is 2 small :&nbsp;http://s1.directupload.net/images/110508/8pmffcae.png</p>\n<p>because it should look like this:&nbsp;http://s1.directupload.net/images/110508/dck5vvmu.png</p>\n<p>This is tested with the wavechannel32 but i cant impletment it into my new programm</p>",
+    "PostedDate": "2011-05-08T14:05:46.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

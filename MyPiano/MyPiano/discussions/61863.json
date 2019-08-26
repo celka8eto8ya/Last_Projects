@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "209963",
+    "ThreadId": "61863",
+    "Html": "<p>Simple question:</p>\r\n<p>Is it possible to get a wavestream of what is currently playing through a device without relying on stereo mix input channel?</p>",
+    "PostedDate": "2009-07-08T07:39:08.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "210624",
+    "ThreadId": "61863",
+    "Html": "<p>Hi Jansson,</p>\r\n<p>I don't belive so, at least not easily; it's always more difficult to say something isn't so for certain with a question like this.</p>\r\n<p>If you look at an audio recording application, say Audacity for instance, the only way that you can record what is being played out through the sound card is to select a channel which provides the output after it has been mixed and will be streamed to the sound card. i.e. the what-you-hear or the stereo mix input channel.</p>\r\n<p>From my understanding the buffer which the application would be writing to is normally circular, with a read pointer a few positions behind where the data is being written to. Perhaps there is some low level windows programming you could do to pick up the data before it has been overwritten but I've personaly not observed any implementations of that before.</p>\r\n<p>Could I ask what scenario you are trying to solve, where the stereo mix channel is not sufficient?</p>\r\n<p>Cheers,<br>OpenSebJ</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-07-09T16:06:01.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "211178",
+    "ThreadId": "61863",
+    "Html": "<p>I don't hade any real practical scenarios I was just researching. I've seen this and was wondering if there was any .NET library that could do it, or something similar:</p>\r\n<p>http://blogs.msdn.com/matthew_van_eerde/archive/2008/12/16/sample-wasapi-loopback-capture-record-what-you-hear.aspx</p>",
+    "PostedDate": "2009-07-12T05:11:25.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "229186",
+    "ThreadId": "61863",
+    "Html": "<p>OpenSebJ,</p>\r\n<p>How would I go about doing recording what is being played back using the Stereo Mix Channel?</p>\r\n<p>Thanks</p>",
+    "PostedDate": "2009-08-30T20:22:10.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "229504",
+    "ThreadId": "61863",
+    "Html": "<blockquote style=\"border:solid .1em #ccc;font-style:italic;margin:.25em 1em 0 1em;padding:0 .25em 0 .25em\"><strong>georgiosd wrote:</strong><br>\r\n<p>OpenSebJ,</p>\r\n<p>How would I go about doing recording what is being played back using the Stereo Mix Channel?</p>\r\n<p>Thanks</p>\r\n</blockquote>\r\n<p>Please see tutorial 5 for a background and explanation on how you can achieve this;</p>\r\n<p><a title=\"http://opensebj.blogspot.com/2009/04/naudio-tutorial-5-recording-audio.html\" href=\"http://opensebj.blogspot.com/2009/04/naudio-tutorial-5-recording-audio.html\">http://opensebj.blogspot.com/2009/04/naudio-tutorial-5-recording-audio.html</a></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-08-31T16:12:18.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

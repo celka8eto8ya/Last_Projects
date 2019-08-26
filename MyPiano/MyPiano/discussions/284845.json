@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "719885",
+    "ThreadId": "284845",
+    "Html": "\r\n<p>Sorry,</p>\r\n<p>How can I set recording volume with Naudio.dll?</p>\r\n<p>Is there an API for this request?</p>\r\n<p>Thx</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-01-03T08:53:07.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "719889",
+    "ThreadId": "284845",
+    "Html": "<p>you use the Mixer API to do this, but it can be a real tear your hair out experience trying to work out which the right mixer control to tweak is.Code that works on XP doesn't work on Windows 7 and vice versa. My best attempt so far can be seen in the source code for the .NET Voice Recorder. See the TryGetVolumeControl function here:</p>\r\n<p>http://voicerecorder.codeplex.com/SourceControl/changeset/view/f652f98eb1ff#VoiceRecorder.Audio%2fAudioRecorder.cs</p>",
+    "PostedDate": "2012-01-03T08:56:45.577-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

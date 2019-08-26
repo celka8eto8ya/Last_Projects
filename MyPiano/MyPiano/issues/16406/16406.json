@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "I have been trying to use the new media foundation facilities in NAudio version 1.7 pre release (downloaded 2013-08-05 @ 15:20 UTC) and have come across the following issue. I am writing a program called TelephoneTrack which needs to convert a recorded WAV file into either a M4A or WMA file. In my code when I call my routine ConvertWAVToM4A routine it works but when I call the ConvertWAVToWMA it fails.\r\n\r\nI know this is pre-release but I thought you would like to know about this issue. NAudio is an excellent library by the way and I am very impressed with your efforts so far with the media foundation add-on.\r\n\r\n```\r\n        public static void ConvertWAVToM4A(string outputFile, string inputFile)\r\n        {\r\n            FileInfo fileInfo = new FileInfo(outputFile);\r\n            if (fileInfo.Extension.ToUpper() != \".M4A\")\r\n            {\r\n                fileInfo = new FileInfo(outputFile + \".m4a\");\r\n            }\r\n\r\n            if (fileInfo.Exists)\r\n            {\r\n                fileInfo.Delete();\r\n            }\r\n\r\n            using (var reader = new MediaFoundationReader(inputFile))\r\n            {\r\n                MediaFoundationEncoder.EncodeToAac(reader, fileInfo.FullName, 192000);\r\n            }\r\n        }\r\n\r\n\r\n        public static void ConvertWAVToWMA(string outputFile, string inputFile)\r\n        {\r\n\r\n            FileInfo fileInfo = new FileInfo(outputFile);\r\n            if (fileInfo.Extension.ToUpper() != \".WMA\")\r\n            {\r\n                fileInfo = new FileInfo(outputFile + \".wma\");\r\n            }\r\n\r\n            if (fileInfo.Exists)\r\n            {\r\n                fileInfo.Delete();\r\n            }\r\n\r\n            using (var reader = new MediaFoundationReader(inputFile))\r\n            {\r\n                MediaFoundationEncoder.EncodeToWma(reader, fileInfo.FullName, 192000);\r\n            }\r\n        }\r\n\r\n```\r\nIt throws an exception:\r\n\r\nException has been thrown by the target of an invocation.\r\n\r\nInnerException\r\nMessage:Object reference not set to an instance of an object.\r\nSource:NAudio\r\nStackTrace:\r\n   at NAudio.Wave.MediaFoundationEncoder.Dispose(Boolean disposing) in c:\\SVN\\NAudio\\NAudio\\Wave\\WaveOutputs\\MediaFoundationEncoder.cs:line 278\r\n   at NAudio.Wave.MediaFoundationEncoder.Dispose() in c:\\SVN\\NAudio\\NAudio\\Wave\\WaveOutputs\\MediaFoundationEncoder.cs:line 289\r\n   at NAudio.Wave.MediaFoundationEncoder.EncodeToWma(IWaveProvider inputProvider, String outputFile, Int32 desiredBitRate) in c:\\SVN\\NAudio\\NAudio\\Wave\\WaveOutputs\\MediaFoundationEncoder.cs:line 84\r\n   at TelephoneTrack.ApplicationCommon.ConvertWAVToWMA(String outputFile, String inputFile) in c:\\SVN\\TelephoneTrack\\TelephoneTrack\\ApplicationCommon.cs:line 755\r\n   at TelephoneTrack.View.MainView..ctor() in c:\\SVN\\TelephoneTrack\\TelephoneTrack\\View\\MainView.xaml.cs:line 47",
+    "LastUpdatedDate": "2013-08-21T07:24:54.387-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-08-06T03:40:41.143-07:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Exception When Calling MediaFoundationEncoder.EncodeToWma",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16406
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "can you encode WMA using the NAudio WPF Demo app?",
+      "PostedDate": "2013-08-06T07:10:07.143-07:00",
+      "Id": 108656
+    },
+    {
+      "Message": "it will either be that your machine has no WMA encoders, or the format of your input file has a sample rate or channel count that is not supported. I'm updating the code to throw more meaningful exceptions when this happens",
+      "PostedDate": "2013-08-06T07:20:59.317-07:00",
+      "Id": 108657
+    },
+    {
+      "Message": "When I try using the NAudio WPF Demo app to encode the WAV file to WMA the encoder settings drop down is blank. The only option that works is AAC. As you mention this means I do not have the requisite encoders installed on my machine:\n\nAudio Codecs\nType Name Format Binary Version \nACM Microsoft IMA ADPCM CODEC 0011 imaadp32.acm 6.1.7600.16385 \nACM Microsoft CCITT G.711 A-Law and u-Law CODEC 0007 msg711.acm 6.1.7600.16385 \nACM Microsoft GSM 6.10 Audio CODEC 0031 msgsm32.acm 6.1.7600.16385 \nACM Microsoft ADPCM CODEC 0002 msadp32.acm 6.1.7600.16385 \nACM Fraunhofer IIS MPEG Layer-3 Codec (decode only) 0055 l3codeca.acm 1.9.0.401 \nACM Microsoft PCM Converter 0001   \nDMO WMAudio Decoder DMO 0160, 0161, 0162, 0163 WMADMOD.DLL 6.1.7601.17514 \nDMO WMAPro over S/PDIF DMO 0162 WMADMOD.DLL 6.1.7601.17514 \nDMO WMSpeech Decoder DMO 000A, 000B WMSPDMOD.DLL 6.1.7601.17514 \nDMO MP3 Decoder DMO 0055 mp3dmod.dll 6.1.7600.16385 \n\n",
+      "PostedDate": "2013-08-12T09:24:02.08-07:00",
+      "Id": 109448
+    },
+    {
+      "Message": "I've improved the error messages to make it clearer what is going wrong in this circumstance. \nIf you can't encode WMA, it seems more likely to me that it is an unsupported input sample rate or channel count rather than the codec missing. WMA encoders are usually supplied as standard on Windows (except on some Server versions)",
+      "PostedDate": "2013-08-21T07:24:37.37-07:00",
+      "Id": 110592
+    }
+  ]
+}

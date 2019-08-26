@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "555135",
+    "ThreadId": "243242",
+    "Html": "\r\n<p>Whenever I use an NAudio.Midi.MidiIn object, it works perfectly the first time. However, after terminating the program I need to restart my computer to get it to work again. Other programs that support Midi In still work normally. It seems like I don't dispose\r\n of the objects correctly, but I don't see how I can do better than calling MidiIn.Stop() and MidiIn.Dispose(). Any ideas?</p>\r\n",
+    "PostedDate": "2011-01-25T09:57:13.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "555445",
+    "ThreadId": "243242",
+    "Html": "\r\n<p>that's strange. Is the app definitely terminated (checked in process explorer?).</p>\r\n<p>also, what OS and MIDI card drivers do you have. Years ago I used to have the same issue whenever Cakewalk crashed my MIDI would be unusable until a reboot of the system</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-26T01:24:02.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

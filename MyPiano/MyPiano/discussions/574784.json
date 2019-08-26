@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1331374",
+    "ThreadId": "574784",
+    "Html": "Hi All,\r<br />\n<br />\nI am using NAudio in a project that I have built in Android as well. I am trying to make my Windows side able to play .3gp audio that is recorded in the Android version. I have the codecs installed on my computer for .3gp and the files can be played in Windows Media Player but I am getting an error that NAudio is not able to find the codec. Is .3gp not supported at all in NAudio or do I need to do something besides just making sure the necessary codec is installed on the computer?\r<br />\n<br />\nThank you,\r<br />\nErik<br />\n",
+    "PostedDate": "2014-12-12T07:51:05.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1337515",
+    "ThreadId": "574784",
+    "Html": "NAudio doesn't know the file format for .3gp files or what WaveFormat to request a codec for. It it an ACM codec you have? If so, you can use the code from the NAudioDemo, to enumerate the codecs and discover details of what WaveFormat structure the 3gp codec is expecting. Once you have this information, it will allow you to open an AcmStream for that codec, and pass the contents of your .3gp file through. If it's an MFT (less likely but possible), then use the WpfDemo application to explore the media types for the installed Media Foundation decoders.<br />\n",
+    "PostedDate": "2014-12-28T08:01:52.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1339235",
+    "ThreadId": "574784",
+    "Html": "Thank you! I will check this out...<br />\n",
+    "PostedDate": "2015-01-05T14:30:49.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

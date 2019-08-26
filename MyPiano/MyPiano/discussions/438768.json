@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1024157",
+    "ThreadId": "438768",
+    "Html": "Hi All,\r<br />\n<br />\nHow i can set the different sample rate on the ASIO device from the code.\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2013-04-02T03:06:54.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1025220",
+    "ThreadId": "438768",
+    "Html": "NAudio will try to open the ASIO device using the sample rate of the stream to playback you passed into the Init method<br />\n",
+    "PostedDate": "2013-04-03T23:18:59.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

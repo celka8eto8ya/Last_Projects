@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "242532",
+    "ThreadId": "71118",
+    "Html": "<p>Hi,I'm very new to your NAudio,&nbsp;&nbsp; &nbsp;<br>how can i do select a soundcard where reproduce mp3/wma/ogg?<br><br>Thanks Giuseppe Lippolis.</p>",
+    "PostedDate": "2009-10-06T06:26:46.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "242988",
+    "ThreadId": "71118",
+    "Html": "<p>Hi,</p>\r\n<p>I'm not entirely sure what you mean. Have you looked at some of the example code in NAudioDemo? This shows how to play an MP3. NAudio currently cannot play back WMA or OGG files.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-07T08:19:25.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "243516",
+    "ThreadId": "71118",
+    "Html": "<p>Hi,</p>\r\n<p>I have two sound card, i would like play a mp3 on each card.</p>\r\n<div id=\"result_box\" dir=ltr>Sorry for bad English</div>\r\n<div dir=ltr></div>\r\n<div dir=ltr>Giuseppe.</div>",
+    "PostedDate": "2009-10-08T09:21:42.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244652",
+    "ThreadId": "71118",
+    "Html": "<p>Hi,</p>\r\n<p>you use the DeviceNumber property on WaveOut. You will need to create one instance of WaveOut for each MP3 file you want to play.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-10-12T06:33:14.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "262042",
+    "ThreadId": "71118",
+    "Html": "<p>Thanks.<br><br>Edit:<br>Any status for the wma-implementation that&nbsp;you mentioned in a previous thread</p>",
+    "PostedDate": "2009-11-30T14:30:50.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

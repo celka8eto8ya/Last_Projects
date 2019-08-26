@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "660973",
+    "ThreadId": "269808",
+    "Html": "\r\n<p>Thanks for the project.<br>\r\nI want to know how to bulid up a parametric equalizer for playing.I've seen BiQuadFilter.cs,but I still can not understand.<br>\r\nCould you give me some codes for buliding a parametric equalizer.<br>\r\nThank you very much.</p>\r\n",
+    "PostedDate": "2011-08-20T08:25:58.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "663126",
+    "ThreadId": "269808",
+    "Html": "<p>some examples of using effects with NAudio can be seen in the SkypeFX project (skypefx.codeplex.com). NAudio does not include a parametric EQ, so you would need to find an algorithm yourself. <a href=\"http://www.musicdsp.org/\">MusicDSP</a> is a good place to start.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-08-25T03:31:26.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

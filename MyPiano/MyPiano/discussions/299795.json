@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "748620",
+    "ThreadId": "299795",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Does NAudio support resample &nbsp;(downsample) of wav files? I mean, for example I have wave file sampled at 32 000 Hz, a I want convert it to 16,8, or 4 kHz. It's not only a simple conversion by picking samples depends from divide factor. I tried that\r\n and it gives extra noise in comparison with output from programs like GoldWave.</p>\r\n<p>Maybe u have any idea how to convert properly, minimizing noise (ex. form&nbsp;quantization)?</p>\r\n",
+    "PostedDate": "2012-02-09T07:34:41.453-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "749551",
+    "ThreadId": "299795",
+    "Html": "<p>Another question that I have:</p>\r\n<p>I found a low pass filter at BiQuadFilter in NAudio.Dsp. How to use that low pass filter to recorded wave file? Any example to filter samples?</p>",
+    "PostedDate": "2012-02-09T12:02:54.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "752339",
+    "ThreadId": "299795",
+    "Html": "<p>NAudio can resample using ACM, or with the DMOResamplerStream (if the DMO resampler COM object is on your box). I don't think either of them do filtering though so there is possibility of aliasing when downsampling. The BiQuadFilter was a very early addition to NAudio, and probably needs to be made into an IWaveProvider or ISampleProvider to make it more easily usable.</p>",
+    "PostedDate": "2012-02-10T05:19:38.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

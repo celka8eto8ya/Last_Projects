@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "210571",
+    "ThreadId": "62038",
+    "Html": "<p>Hi</p>\r\n<p>&nbsp;</p>\r\n<p>I am getting (from my camera) blocks of u-Law encrypted Audio Data, I want to convert this to uncompressed standard Wave audio...</p>\r\n<p>I can't seem to find any tutorials on how to decode a stream without a header?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-07-09T12:44:05.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "210627",
+    "ThreadId": "62038",
+    "Html": "<p>Hi Mark,</p>\r\n<p>If you don't have the header, your a bit on your own. You can create a buffer that matches the stream, if you know exactly what the format of the buffer is going to be but I still don't think that would be a resolution that is going to support what you do due to the u-Law block - which would lead me to think this isn't a wave stream in the first place...</p>\r\n<p>Cheers,<br>OpenSebJ</p>",
+    "PostedDate": "2009-07-09T16:15:17.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

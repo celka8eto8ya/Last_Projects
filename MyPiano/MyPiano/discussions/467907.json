@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1121636",
+    "ThreadId": "467907",
+    "Html": "I'm trying to figure out the best way to save the output of MixingSampleProvider as a wave file?  CreateWaveFile16(string filename, ISampleProvider sourceProvider) includes a warning about not writing from indefinite sources.  Is there another preferred way to record live audio through a mixer?<br />\n",
+    "PostedDate": "2013-11-10T20:49:24.24-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1121702",
+    "ThreadId": "467907",
+    "Html": "you don't have to use the static methods on WaveFileWriter. Create a WaveFileWriter, and write blocks of samples to it using WriteSamples. Then when you've finished writing, dispose the WaveFileWriter<br />\n",
+    "PostedDate": "2013-11-11T01:58:39.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "I am using this class to read a wave stream but the derived stream class that I am using that contains the wave does not support setting the Postion (CanSeek == false).\r\n  public void ReadWaveHeader(Stream stream)\r\n        { ...\r\n          while (stream.Position <= stopPosition - 8)\r\n            {...\r\n          stream.Position += chunkLength; //This line throws an expection.\r\n            }\r\n        ...\r\n       }\r\nIs it posible to use another metholody to read the wave that is not based on Postion? or is there another alternative?",
+    "LastUpdatedDate": "2013-06-07T02:53:23.65-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-06-04T10:32:05.357-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveFileChunkReader.ReadWaveHeader assumes that the stream supports position/seek",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16354
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "the trouble is, after reading all the chunks, it then will go back to the start of the data position. However, I guess it would be possible to make a version of this class that does not set position (just does read), and stops before going past the data chunk",
+      "PostedDate": "2012-06-11T03:27:19.9-07:00",
+      "Id": 67720
+    },
+    {
+      "Message": "Thank you for your answer. I can add some code so you can see it. The wave files are in a zip file, what I am doing is reading each wav from the zip directly to a stream (this is my business requirement, no file should copied to the hard drive) using codeplex DOTNETZIP. This is all work good expect that the stream class used by DONEZIP does not support Position/Seek (CanSeek == false). The class name is CrcCalculatorStream. \n\nI tried to change the WaveFileChunkReader class to do a stream.Read(buffer, 0,  chunkLength); instead of a stream.Position += chunkLength; but after a few reads I get this error ex.Message = \"Specified argument was out of the range of valid values.\\r\\nParameter name: count\". \n\nYou said \"(just does read), and stops before going past the data chunk\" how do I do that?\n",
+      "PostedDate": "2012-06-11T07:47:42.077-07:00",
+      "Id": 67729
+    },
+    {
+      "Message": "I found a solution DONETZIP has an option to write the wave file directly to a MemoryStream which does support seek/position. Thanks your comement helpped me look further into this.",
+      "PostedDate": "2012-06-11T12:16:49.19-07:00",
+      "Id": 67741
+    },
+    {
+      "Message": "By the way I think that :\n```\nstream.Position += chunkLength;\n```\nshould really be :\n```\nstream.Position += ((chunkLength % 2 == 1) ? (chunkLength + 1) : chunkLength);\n```\n(both occurrences in this file)\nGiven that 1 padding byte sometimes has to be skipped (chunks with an odd \"specified\" length L, actual length is L + 1 !)\n\nWill fix this when ... I understand how to submit a fix on Codeplex !\n",
+      "PostedDate": "2013-06-06T11:55:22.873-07:00",
+      "Id": 102298
+    },
+    {
+      "Message": "I wouldn't want to make a change like that unless it was officially part of the RIFF file spec. There are all kinds of wierd WAV files out there, and it has proved nearly impossible to create a reader that copes with them all.",
+      "PostedDate": "2013-06-07T02:53:23.65-07:00",
+      "Id": 102416
+    }
+  ]
+}

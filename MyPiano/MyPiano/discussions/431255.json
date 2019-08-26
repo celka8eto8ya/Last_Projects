@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "993581",
+    "ThreadId": "431255",
+    "Html": "\r\n<p><br>\r\nAnyone got example/tips on how to play Midi files using NAudio?</p>\r\n<p>All I have found is sending note signals to midi synthesizer</p>\r\n<p><span id=\"ctl00_MTContentSelector1_mainContentContainer_ctl08\">&nbsp;</span></p>\r\n<pre id=\"ctl00_MTContentSelector1_mainContentContainer_ctl08_code\">midiOut.Send(MidiMessage.ChangePatch(47, 0).RawData);</pre>\r\n<p>&nbsp;</p>\r\n<p>But looping through each note over 10&#43; tracks is a mess!</p>\r\n<p>Also another question, I have lots of wav files sorted into instruments and notes. How would I use my own wav files to play the midi? or sf2 files? (my own synthesizer?)</p>\r\n<p><br>\r\n<br>\r\n</p>\r\n",
+    "PostedDate": "2013-01-29T04:35:01.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "993630",
+    "ThreadId": "431255",
+    "Html": "\r\n<p>I'm afraid I never got round to implementing MIDI file playback in NAudio. My focus at the time I did MIDI was much more on manipulating MIDI files. I do think that some of the midiStream APIs can do it, but the wrappers for them in NAudio are only partially\r\n complete.</p>\r\n<p>If you're making your own synth, then you'd probably be implementing the sequencer yourself anyway as it wouldn't appear to Windows as a MIDI device. The drum machine demo I added to the NAudio WPF Demo project might point you in the right direction for\r\n doing this. However, drums are usually &quot;one-shot&quot; whilst other MIDI notes must respond to the note-off message at the right time.</p>\r\n",
+    "PostedDate": "2013-01-29T06:10:40.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1315157",
+    "ThreadId": "431255",
+    "Html": "Any progress on this subject?<br />\n",
+    "PostedDate": "2014-10-20T16:54:52.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1361465",
+    "ThreadId": "585428",
+    "Html": "Hello everyone,\r<br />\n<br />\nI'm new around here and I'm trying to dig my way up to NAudio. I have a project were I need to find a file's spectrogram peaks and I'm a little bit lost. I thought about splitting my chore into two phases: \r<br />\n<br />\n1) Making a spectrogram visualizer\r<br />\n2) Reading somehow information from a .wav file to find the peaks\r<br />\n<br />\nCan you help me with this chores? Maybe if you could just lead me on how to read data from the .wav file in order to find the magnitude, frequency and time I could understand better how to accomplish my goal.\r<br />\n<br />\nThanks in advance!<br />\n",
+    "PostedDate": "2015-03-09T08:51:30.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366211",
+    "ThreadId": "585428",
+    "Html": "the best way to learn how to do this is to look at the examples in the NAudio Demo project <br />\n",
+    "PostedDate": "2015-03-17T10:06:23.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

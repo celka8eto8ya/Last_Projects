@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "987712",
+    "ThreadId": "429813",
+    "Html": "\r\n<p>I'm building an application where would be interesting to have access to ambient sound. The main problem of this is that the sound file should not be too big. I would like to know if using this framework is possible to actually record audio from a microphone\r\n only when the dB is high enough.</p>\r\n<p>&nbsp;</p>\r\n<p>Obs.: Keep in mind that all the recorded data should go to the same file.</p>\r\n<p>Is it possible to do with this framework?</p>\r\n",
+    "PostedDate": "2013-01-16T10:52:27.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987724",
+    "ThreadId": "429813",
+    "Html": "\r\n<p>sure, you call &quot;StartRecording&quot;, but every time a buffer of audio is available (DataAvailable event), you examine the value of each sample. If the volume is greater than a particular threshold, you write the recorded buffer to your WAV file, if not, you\r\n simply discard it.</p>\r\n",
+    "PostedDate": "2013-01-16T11:07:03.923-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987734",
+    "ThreadId": "429813",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>markheath wrote:</strong><br>\r\n<p>sure, you call &quot;StartRecording&quot;, but every time a buffer of audio is available (DataAvailable event), you examine the value of each sample. If the volume is greater than a particular threshold, you write the recorded buffer to your WAV file, if not, you\r\n simply discard it.</p>\r\n</blockquote>\r\n<p>&nbsp;</p>\r\n<p>Thank you, man. That's all I had to know</p>\r\n",
+    "PostedDate": "2013-01-16T11:23:37.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987801",
+    "ThreadId": "429813",
+    "Html": "\r\n<p>Do you know how the bytes are sorted? I mean I got to record sound to a .mp3 (there is a less space consuming file type? quality is no issue) but I want to know how the bytes are sorted in the 'buffer' array</p>\r\n<p>Buffer = [MostSig-1,LessSig-1,MostSig-2,LessSig-2,MostSig-3,LessSig-3, ... ] Is it like this? Or how does it work?</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2013-01-16T13:28:32.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989517",
+    "ThreadId": "429813",
+    "Html": "\r\n<p>In a WAV file the bytes are little endian (intel byte order) and are interleaved left channel, right channel. In an MP3 file, you cannot access the samples directly. To make MP3, you record as WAV and then convert to MP3 using something like lame.exe</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2013-01-20T23:19:05.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

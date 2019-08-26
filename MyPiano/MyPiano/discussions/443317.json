@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1042151",
+    "ThreadId": "443317",
+    "Html": "Is there anyway to detect when a USB sound card is either inserted or removed?  Bonus, if I can also detect insertion/removal of a Mic from the Mic RJ-45 jack.<br />\n",
+    "PostedDate": "2013-05-10T22:17:40.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042373",
+    "ThreadId": "443317",
+    "Html": "You should be able to use this as a starting point:<br />\n<br />\n<a href=\"http://www.codeproject.com/Articles/18062/Detecting-USB-Drive-Removal-in-a-C-Program\" rel=\"nofollow\">Detecting USB Drive Removal in a C# Program </a><br />\n<blockquote>\nWindows will send WM_DEVICECHANGE message to all applications whenever some hardware change occurs, including when a flash drive (or other removable device) is inserted or removed. The WParam parameter of this message contains code which specifies exactly what event occurred.<br />\n</blockquote>\n",
+    "PostedDate": "2013-05-12T00:00:07.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

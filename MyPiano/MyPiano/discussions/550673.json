@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1262917",
+    "ThreadId": "550673",
+    "Html": "Hi,\r<br />\n<br />\nI'm trying to use IAudioClock but when I get the interface from AudioClient.AudioClockClient, the GetService call throws an InvalidCastException.\r<br />\n<br />\nFor instance, in WasapiOut.cs if I retrieve the clock at the end in the Init call like this:<br />\n<pre><code>    // Get the RenderClient\n    renderClient = audioClient.AudioRenderClient;\n\n    var clockClient = audioClient.AudioClockClient;\n</code></pre>\n\n...I get the InvalidCastException.\r<br />\n<br />\nAny ideas?<br />\n",
+    "PostedDate": "2014-07-05T09:47:43.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273587",
+    "ThreadId": "550673",
+    "Html": "It appears there are several problems with the code to get the AudioClockClient. I've checked in an experimental fix, will need to make sure it still works with Win 8.<br />\n",
+    "PostedDate": "2014-07-17T08:27:28.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

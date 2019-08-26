@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-10-19T08:35:20.143-07:00",
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "Hello,\r\n\r\ni am using the MixingSampleProvider for multiple Inputs.\r\n```\r\nBufferedWaveProvider dummy = new BufferedWaveProvider(new WaveFormat(48000, 16, 1));\r\n\r\nMixingSampleProvider ss = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(48000, 1));\r\n\r\n ss.AddMixerInput(dummy);\r\nWaveOut waveOut = new WaveOut();\r\nwaveOut.Init(ss);\r\nwaveOut.Play();\r\n```\r\nundefinied error while waveoutopen.interop\r\n\r\n\r\n```\r\nI think the floatWaveFormat is the reason, the same Code above works fine without the MixingSampleProvider.\r\n\r\nwaveOut.Init(dummy);\r\nwaveOut.Play();\r\n```\r\n\r\n\r\n\r\n\r\n\r\n\r\nBut when i use DirectSound as waveOut both Codes are ist working fine.\r\n\r\nWhy?\r\n\r\n\r\n",
+    "LastUpdatedDate": "2015-10-19T08:35:20.143-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-09-10T03:44:58.89-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "MixingSampleProvider+Waveout does not work",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16484
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "UPDATE: When changed the SampleRate to 32000, then it works fine. \n\nBut i Need 48000 as SampleRate. Waveout.Init() does not accept 48000 as Floating eee Format. ",
+      "PostedDate": "2015-09-10T04:43:28.467-07:00",
+      "Id": 190060
+    },
+    {
+      "Message": "Hello,\n\nsomething are wrong with the waveformat:\n\n        public static WaveFormat CreateIeeeFloatWaveFormat(int sampleRate, int channels)\n        {\n            WaveFormat wf = new WaveFormat();\n            wf.waveFormatTag = WaveFormatEncoding.IeeeFloat;\n            wf.channels = (short)channels;\n            wf.bitsPerSample = 32;\n            wf.sampleRate = sampleRate;\n            wf.blockAlign = (short) (4*channels);\n            wf.averageBytesPerSecond = sampleRate * wf.blockAlign;\n            wf.extraSize = 0;\n            return wf;\n        }\n\n\nthe winmm waveout.open api return 1. For expermentaion, i changed wf.waveFormatTag = WaveFormatEncoding.IeeeFloat; to wf.waveFormatTag = WaveFormatEncoding.PCM;\n\nthen no error retuns. So what going on?",
+      "PostedDate": "2015-09-11T05:20:24.547-07:00",
+      "Id": 190116
+    },
+    {
+      "Message": "New Update:\n\nThe WaveouOpen API does not accept a Samplerate of 48000. \n\nFor example:\n\n47999 and smaller works. 48001 and bigger works. Is this specified by  my Hardware?",
+      "PostedDate": "2015-09-11T05:35:36.223-07:00",
+      "Id": 190117
+    },
+    {
+      "Message": "very strange. I suspect it is a limitation in your soundcard drivers. Make sure they are up to date.",
+      "PostedDate": "2015-10-17T02:37:06.94-07:00",
+      "Id": 191728
+    }
+  ]
+}

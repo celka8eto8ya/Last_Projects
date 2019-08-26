@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1415548",
+    "ThreadId": "631539",
+    "Html": "Hello,<br />\n<br />\nI have a <em>.wav</em> audio file that I want to show in windows form and simultaneously add to the video, that I create in my C# aplication, but when I try to add audio into videa an exception is thrown saying that the audio file is locked by another proces. <br />\n<br />\nHow can I unlock the audio file used by WaveViewer?<br />\n",
+    "PostedDate": "2015-04-18T12:22:25.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485704",
+    "ThreadId": "631539",
+    "Html": "you'd need to dispose the <code>WaveStream</code> that was passed to it. To be honest, the WaveViewer should really be moved to the samples part of NAudio as it was just a quick demo of how to do waveform rendering<br />\n",
+    "PostedDate": "2016-10-10T06:39:06.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "649433",
+    "ThreadId": "267034",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>i try to play two wavefiles at once by using a WaveMixerStream32. I managed to play them at the same time. But i need to loop one wavefile.</p>\r\n<p>My question is: How can i loop one of the wavefiles while the other ends normally.</p>\r\n",
+    "PostedDate": "2011-07-29T01:54:53.873-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "650439",
+    "ThreadId": "267034",
+    "Html": "<p>Maybe someone can tell me if it's possible to loop one stream of a mixer while the other ends normally.</p>",
+    "PostedDate": "2011-08-01T01:57:19.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "655205",
+    "ThreadId": "267034",
+    "Html": "<p>you would do this by creating your own derived WaveStream class to perform the looping - in the Read method, just go back to the beginning of the source when you reach its end. Then that can be passed in as a mixer input.</p>",
+    "PostedDate": "2011-08-09T07:18:06.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "659371",
+    "ThreadId": "267034",
+    "Html": "<p>Yes this should work, i know. but my problem is that&nbsp;if you jump back to the start, you can here a snap. I modified my wavefiles so that the fist and last samplevalues are nearly the same. so if i loop them in audacity the loop is perfect. but with the WaveMixerStream32 the problem stays.</p>\n<p>I tried to use just a normal Wavestream and initialized my IWavePlayer with this one. With this method the loop is perfect,</p>\n<p>I dont know why this works. With the mixer i&nbsp;did the same and its not working correctly.</p>\n<p>the only difference of these&nbsp; two methods is, that if i use the mixer all methods of the derived WaveStream class are used several times. withot the mixer, only the read method and the costructor are used.</p>\n<p>i start to think, that the snap on the jump back is a consequence of the time that the processor need to call all thes methods. but i am not sure.</p>\n<p>Sorry if there is some bad english and confusing sentence in this post, but i try my best -.-</p>",
+    "PostedDate": "2011-08-17T05:03:39.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "697212",
+    "ThreadId": "267034",
+    "Html": "<p>Did you ever solve this? &nbsp;I'm running into the same problem (my fading operations increase the clicks instead of removing them) and not having any prior experience with audio processing I'm not sure where to start looking for answers.</p>",
+    "PostedDate": "2011-11-11T14:27:29.113-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "697306",
+    "ThreadId": "267034",
+    "Html": "<p>I never solved this problem. I created an \"offline-loop\" of the wavefiles i wanted to loop in my class.</p>",
+    "PostedDate": "2011-11-12T01:59:11.703-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "697448",
+    "ThreadId": "267034",
+    "Html": "<p>Meanwhile I figured out how to debug: simply add a WaveFileWriter to save the .wav and inspect the waves in Audacity.</p>\r\n<p>The cause is easy to see there: it isn't in the mixer but the samples I fed to it.</p>",
+    "PostedDate": "2011-11-12T16:53:52.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

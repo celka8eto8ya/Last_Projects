@@ -1,0 +1,170 @@
+[
+  {
+    "Id": "805846",
+    "ThreadId": "347412",
+    "Html": "\r\n<p>When I'm trying to resample IeeeFloat wave format with sample rate of 48000 to wave format with sample rate of 41000, an exception occurred - &quot;AcmNotPossible calling acmStreamOpen&quot;.</p>\r\n<p>What is the right way to convert an input stream from one wave format to another. I need to feed MixingSampleProvider with two streams with equal wave formats.</p>\r\n",
+    "PostedDate": "2012-03-05T14:59:43.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805849",
+    "ThreadId": "347412",
+    "Html": "<p>Are they both IEEE float? And do they both have the same number of channels? I can't remember off the top of my head if the ACM resampler can do IEEE. There is also the DmoResampler available on Vista and Win 7 if not. I've also got a fully managed resampler in the works but its not ready yet</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-03-05T15:02:36.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "806127",
+    "ThreadId": "347412",
+    "Html": "<p>They are both IEEE float. The number of channels is equal - 2. Maybe I have to convert them first to 16bit PCM and then resample?</p>",
+    "PostedDate": "2012-03-06T04:00:24.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "806130",
+    "ThreadId": "347412",
+    "Html": "<p>yes, you might have to to use the ACM resampler.</p>",
+    "PostedDate": "2012-03-06T04:04:45.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "806456",
+    "ThreadId": "347412",
+    "Html": "<p>If I use</p>\n<pre><div style=\"color: black; background-color: white;\"><pre>WaveFormat waveFormat = <span style=\"color: blue;\">new</span> WaveFormat(44100, 2); <br />mixer = <span style=\"color: blue;\">new</span> MixingSampleProvider(waveFormat);\n</pre>\n</div>\n</pre>\n<p>everything is ok with the WaveFormatConversionStream. But then I'm trying to save mixed song to the disk like this</p>\n<pre><div style=\"color: black; background-color: white;\"><pre>WaveFileWriter.CreateWaveFile(mixedSong, <span style=\"color: blue;\">new</span> SampleToWaveProvider(mixer));\n\n</pre>\n</div>\n</pre>\n<p>I recieve error: \"Must be already floating point\".</p>",
+    "PostedDate": "2012-03-06T12:50:06.343-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "806960",
+    "ThreadId": "347412",
+    "Html": "<p>How did you manage to create MixingSampleProvider with that WaveFormat? It should have thrown an exception</p>",
+    "PostedDate": "2012-03-07T09:07:49.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "807003",
+    "ThreadId": "347412",
+    "Html": "<p>What kind of exception. The constructor overload of MixingSampleProvider with WaveFormat is so simple. Why it should throw any exception?</p>\r\n<p>If I use:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>WaveFormat waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2);<br /><br />Then the problem I have mentionied earlier occurred - I cannot resample the input streams with that IEEE format.<br /></pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2012-03-07T09:58:15.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "807024",
+    "ThreadId": "347412",
+    "Html": "<p>maybe I added that in a later version. all SampleProviders must be IEEE float. they will not work with PCM audio</p>",
+    "PostedDate": "2012-03-07T10:26:14.27-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808246",
+    "ThreadId": "347412",
+    "Html": "<p>So what is the best way to mix two ISampleProvider streams with different wave formats. Especially waveIn stream and a converted to wave MP3 stream.</p>\r\n<p>I have to provide IEEE float wave format that actually cannot be resampled. I'm stuck...</p>",
+    "PostedDate": "2012-03-09T12:03:07.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808413",
+    "ThreadId": "347412",
+    "Html": "<p>Yes, the WaveFormatConversionStream cannot resample IEEE. You either have to use the DmoResampler, or convert first to 16 bit PCM, resample, and then go back to IEEE. I am working on a fully managed resampler, but it is not ready to be incorporated into NAudio yet.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-03-10T01:38:48.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808602",
+    "ThreadId": "347412",
+    "Html": "<pre>Now I'm able to do the mixing like this:<br /><div style=\"color: black; background-color: white;\"><pre>WaveFormat waveFormat = <span style=\"color: blue;\">new</span> WaveFormat(44100, 2);\r\nWaveFileReader reader = <span style=\"color: blue;\">new</span> WaveFileReader(fileName);\r\nWaveFormatConversionStream convertStream = <span style=\"color: blue;\">new</span> WaveFormatConversionStream(waveFormat, reader);\r\ncm16BitToSampleProvider sampleProvider = <span style=\"color: blue;\">new</span> Pcm16BitToSampleProvider(convertStream);\r\nmixer.AddMixerInput(sampleProvider);\r\n</pre>\r\n</div>\r\n<br />But how can I play/save the mixer stream. The problem is that it is 16bit PCM at this stage and I need to convert it to IWaveProvider <br /></pre>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-03-10T14:29:43.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808765",
+    "ThreadId": "347412",
+    "Html": "<p>if it is a sampleprovider then it is IEEE float. That&nbsp; is what Pcm16BitToSampleProvider does</p>",
+    "PostedDate": "2012-03-11T10:42:54.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808774",
+    "ThreadId": "347412",
+    "Html": "<p>The mixer itself is 16bit PCM. Pcm16BitToSampleProvider needs IWaveProvider as source. Mixer is ISampleProvider. If I convert it using SampleToWaveProvider it tells me that must be floating point...</p>",
+    "PostedDate": "2012-03-11T11:13:11.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808786",
+    "ThreadId": "347412",
+    "Html": "<p>The WaveFormat of your sampleProvider class should be IEEE. Please do a sampleProvider.WaveFormat.ToString() and tell me what you've got.</p>\r\n<p>You can go back fom ISampleProvider to IWaveProvider using SampleToWaveProvider in order to play the audio. (n.b. in the very latest code there is SampleToWaveProvider16, which will also put it back to 16 bit PCM).</p>",
+    "PostedDate": "2012-03-11T12:29:07.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808792",
+    "ThreadId": "347412",
+    "Html": "<p>sampleProvider.WaveFormat.ToString() - \"IeeeFloat\"</p>\r\n<p>mixer.WaveFormat.ToString()&nbsp; -\"16 bit PCM: 44kHz 2 channels\"</p>\r\n<p>I need to play the mixer that is 16 bit PCM...</p>",
+    "PostedDate": "2012-03-11T12:44:39.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808796",
+    "ThreadId": "347412",
+    "Html": "<p>If you are using MixingSampleProvider you <strong>must </strong>pass in an IEEE format into its constructor. The bug that lets you pass in PCM was fixed last month. It simply will not work with PCM, even though the version you are using lets you pass in the wrong WaveFormat.</p>",
+    "PostedDate": "2012-03-11T12:53:25.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808800",
+    "ThreadId": "347412",
+    "Html": "<p>But when I pass this waveFormat instance</p>\n<p>\n<div style=\"color: black; background-color: white;\">\n<pre>WaveFormat waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2);\n</pre>\n</div>\n</p>\n<p>the following line throws exception:</p>\n<p>\n<div style=\"color: black; background-color: white;\">\n<pre>WaveFormatConversionStream convertStream = <span style=\"color: blue;\">new</span> WaveFormatConversionStream(waveFormat, reader);\n</pre>\n</div>\n</p>\n<p>\"AcmNotPossible calling acmStreamOpen\". That's the issue that I'm trying to resolve.</p>",
+    "PostedDate": "2012-03-11T13:01:55.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1169251",
+    "ThreadId": "347412",
+    "Html": "Has anybody figured out the solution? I have the exact same problem. just cannot convert the PCM wav to IEEE wave format in any way. I believe I do have the needed codecs. Thank you for any hint or help!<br />\n",
+    "PostedDate": "2014-01-15T07:55:10.447-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170438",
+    "ThreadId": "347412",
+    "Html": "The SampleProvider classes in the NAudio source contains float[] to byte[] conversion code.<br />\n<br />\nI based this function on the code in NAudio as a quick conversion function.<br />\nIt works fine but I haven't fully tested it in all scenario's.<br />\nIt takes an OffsetSampleProvider but you can easily change it to another SampleProvider that uses the standard Read functions, or a raw float array if need be.<br />\n<br />\n(Due to a forum formatting glitch change PLUS PLUS to the symbol plus plus)<br />\n<pre><code>    // float samples to stream as byte buffer\n    void SampleProviderToByteBuffer(OffsetSampleProvider oSP, Stream streamOutput)\n    {\n        int nReadF = 0;\n        float[] bufferF = new float[1024];\n        byte[] bufferB = new byte[2048];\n        WaveBuffer destWaveBuffer = new WaveBuffer(bufferB);\n        int destOffset = 0;\n        float volume = 1;\n        do\n        {\n            destOffset = 0;\n            nReadF = oSP.Read(bufferF, 0, bufferF.Length);\n            for(int n=0;n&lt;bufferF.Length;n PLUS PLUS)  //  (HTML FORMATTING GLITCH)\n            {\n\n                // adjust volume\n                float sample32 = bufferF[n] * volume;\n                // clip\n                if (sample32 &gt; 1.0f)\n                    sample32 = 1.0f;\n                if (sample32 &lt; -1.0f)\n                    sample32 = -1.0f;\n\n                destWaveBuffer.ShortBuffer[destOffset PLUS PLUS] = (short)(sample32 * 32767);   \n\n\n\n            }\n\n            streamOutput.Write(bufferB, 0, nReadF*2);\n            destWaveBuffer.Clear();\n        }\n        while(nReadF &gt; 0);\n\n    }</code></pre>\n\n",
+    "PostedDate": "2014-01-16T05:05:29.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170442",
+    "ThreadId": "347412",
+    "Html": "Use the .ToSampleProvider() extension method to go from 16 bit PCM to an IEEE float ISampleProvider. Under the hood it simply calls this:\r<br />\nSampleProviderConverters.ConvertWaveProviderIntoSampleProvider(waveProvider);\r<br />\n<br />\nNo need for WaveFormatConversionStream<br />\n",
+    "PostedDate": "2014-01-16T05:11:49.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170467",
+    "ThreadId": "347412",
+    "Html": "I put together that function due to issues with WaveStream -&gt; ToSampleProvider() -&gt; OffsetSampleProvider  -&gt; MFEncoder, for some reason the output file was the full length of the input file depending on what MF codec I selected. Not sure if its an issue with the codecs themselves or MF or NAudio but either way I ended up splitting the whole process into two steps to avoid complex situations.<br />\n<ol>\n<li>Convert the input file to a WAV file.</li>\n<li>\nConvert the WAV file to the target format.<br />\n</li>\n</ol>\n",
+    "PostedDate": "2014-01-16T05:57:37.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

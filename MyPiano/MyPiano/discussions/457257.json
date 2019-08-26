@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1093864",
+    "ThreadId": "457257",
+    "Html": "i have used Naudio for getting the raw data of an mp3\r<br />\nin this case i used \r<br />\n private void button1_Click(object sender, EventArgs e)<br />\n<pre><code>    {\n        Mp3FileReader reader = new Mp3FileReader(@&quot;F:\\1.mp3&quot;);\n        Mp3Frame mp3Frame = reader.ReadNextFrame();\n        byte [] FrameByteArray =  mp3Frame.RawData;\n\n\n\n        BitArray bits = new BitArray(FrameByteArray);\n\n        Console.Write(bits[10]);\n        Console.Write(mp3Frame.RawData.Length);\n\n        foreach (bool b in bits)\n        {\n\n            if (b == true)\n            {\n                Console.Write(&quot; 1&quot;);\n            }\n            else\n            {\n                Console.Write(&quot; 0&quot;);\n            }\n\n        }\n\n        reader.Close();\n      }\n\n    }\n\n\n\n  }   \n</code></pre>\n\nit gives me all data in bits\r<br />\nbut i only need actual data without header and side info\r<br />\ncan anyone help<br />\n",
+    "PostedDate": "2013-09-17T23:05:32.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

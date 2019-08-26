@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "439329",
+    "ThreadId": "211667",
+    "Html": "<p>Hello:)</p>\r\n<p>I try to work with your source code but is in c# and i know only vb.net.</p>\r\n<p>My problem is how in vb.net i can choose from were i record.like mic line in etc.</p>\r\n<p>My problem is in that line</p>\r\n<p>&nbsp;waveIn = new WasapiCapture((MMDevice)comboDevices.SelectedItem);</p>\r\n<p>From a c# to vb.net convert is that</p>\r\n<p>waveIn = New WasapiCapture(DirectCast(comboDevices.SelectedItem, MMDevice))</p>\r\n<p>But i get an error</p>\r\n<p>Error&nbsp;&nbsp;&nbsp;&nbsp; Value of type 'NAudio.CoreAudioApi.WasapiCapture' cannot be  converted to 'NAudio.Wave.WaveInStream'.</p>\r\n<p>&nbsp;</p>\r\n<p>I hope for your help :)</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-05-05T08:58:23.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "441939",
+    "ThreadId": "211667",
+    "Html": "<p>the type of waveIn should be IWaveIn, not WaveInStream</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-05-12T02:50:03.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

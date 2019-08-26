@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1151917",
+    "ThreadId": "484316",
+    "Html": "I have some raw ADPCM data that I'm playing with in firmware binaries and am working on a C# app to browse and play that data using NAudio. I've been able to extract and play the audio in Audacity, importing as raw VOX ADPCM data at various sampling rates (defined elsewhere in the file). The files also contains 24bit PCM audio which I'm able to play just fine. My question is, how can I use NAudio to play raw ADPCM?<br />\n<br />\nI've tried the following and get nothing but silence:<br />\n<pre><code>WaveOut waveout = new WaveOut();\nAdpcmWaveFormat format = new AdpcmWaveFormat(rate, 1);\nStream stream = new MemoryStream(file.sfdata, record._offset, record._size);\nRawSourceWaveStream rawstream = new RawSourceWaveStream(stream, format);\nWaveStream wavestream = WaveFormatConversionStream.CreatePcmStream(rawstream);\nwaveout.Init(wavestream);\nwaveout.Play();</code></pre>\n\nMy 24bit PCM routine plays just fine as this:<br />\n<pre><code>WaveOut waveout = new WaveOut();\nWaveFormat format = new WaveFormat(rate, 24, 1);\nStream stream = new MemoryStream(file.sfdata, record._offset, record._size);\nRawSourceWaveStream rawstream = new RawSourceWaveStream(stream, format);\nwaveout.Init(rawstream);\nwaveout.Play();</code></pre>\n\nEDIT:  I tried using a WaveWriter off wavestream for the ADPCM routine and the resulting file just had the .wav header information in it.  When checking wavestream in the debugger, the length and time looks correct for what the data should be converted as.<br />\n",
+    "PostedDate": "2014-01-10T12:23:38.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1153518",
+    "ThreadId": "484316",
+    "Html": "there are a number of different types of ADPCM. The WaveFormat structure must be exactly right for ACM to decode it properly. So you may need to find out more about what exact incoming format is being used and experiment with custom WaveFormat structures.<br />\n",
+    "PostedDate": "2014-01-11T03:07:10.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1154138",
+    "ThreadId": "484316",
+    "Html": "What format is expected when using the AdpcmWaveFormat class to define the format?  Is there a header I need to insert at the beginning of the stream?  I tried creating various custom formats but didn't have much luck.  I'll dig into custom WaveFormat structures more.<br />\n",
+    "PostedDate": "2014-01-11T07:35:01.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

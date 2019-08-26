@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "671708",
+    "ThreadId": "272558",
+    "Html": "\r\n<p><span>My code</span><span>:</span><br>\r\n</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">var</span> buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">short</span> [e.BytesRecorded / 2];\r\nBuffer.BlockCopy (e.Buffer, 0, buffer, 0, e.Buffer.Length);</pre>\r\n</div>\r\n<span>And:</span><br>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">foreach</span> (<span style=\"color:blue\">var</span> sample <span style=\"color:blue\">in</span> buffer)\r\n{\r\n   <span style=\"color:blue\">double</span> normalized = (<span style=\"color:blue\">double</span>) sample / HalfSampleRate; / / -1 ... &#43;1\r\n   <span style=\"color:blue\">short</span> multiplied =???\r\n   / / I need to increase the volume, that it would remain within the (nonlinear). How to make it correctly?\r\n   / / Other processing\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2011-09-14T06:54:01.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "672213",
+    "ThreadId": "272558",
+    "Html": "<p>have a look at the WaveChannel32 code to see an example of how to do this</p>",
+    "PostedDate": "2011-09-15T05:42:11.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

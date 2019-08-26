@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2011-05-27T13:31:44.72-07:00",
+    "CommentCount": 1,
+    "Custom": "",
+    "Description": "A broadcast wave file is an extension of the wav spec with some different chunks, a required one is bext.   However, bext is often before the fmt header.  NAudio wrongly assumes the fmt must follow the WAVE chunk.  One can hack the code in openheader to be\nbut it is not an elegant solution\n\n            var fmtChunkId = WaveInterop.mmioStringToFOURCC(\"fmt \", 0);\n            var dataChunkID = WaveInterop.mmioStringToFOURCC(\"data\", 0);\n            dataChunkLength = 0;\n            \n            while (stream.Position < stream.Length-1)\n            {\n                Int32 chunkIdentifier = br.ReadInt32();                \n                Int32 chunkLength = br.ReadInt32();\n                if (chunkIdentifier == dataChunkID)\n                {\n                    dataChunkPosition = stream.Position;\n                    dataChunkLength = chunkLength;\n                }\n                else if (chunkIdentifier == fmtChunkId)\n                {\n                    var oldPosition = br.BaseStream.Position;\n                    br.BaseStream.Position = oldPosition - 4;\n                    format = new WaveFormatExtraData(br);\n                    br.BaseStream.Position = oldPosition;\n                }\n                else\n                {\n                    if (chunks != null)\n                    {\n                        chunks.Add(new RiffChunk(chunkIdentifier, chunkLength, stream.Position));\n                    }\n                }\n                stream.Position += chunkLength;\n            }\n\n            // Check to see if it is found\n            if (format == null)\n            {\n                throw new FormatException(\"Not a WAVE file - no FMT header\");\n            }",
+    "LastUpdatedDate": "2011-05-27T13:31:44.72-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-07-24T18:31:51.017-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudio can't read some broadcast wave files",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 10342
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "this should all be working now. we now support custom chunks in any location in the file",
+      "PostedDate": "2009-11-22T12:40:10.47-08:00",
+      "Id": 41806
+    }
+  ]
+}

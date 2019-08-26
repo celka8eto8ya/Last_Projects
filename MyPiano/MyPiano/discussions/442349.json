@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1038569",
+    "ThreadId": "442349",
+    "Html": "Hi to everybody, I’m new in sound applications and I’m not sure if NAudio is the right choice for me.\r<br />\nI need to play musical notes (single at the moment but probably not in the future) with different instruments when the user push the pc keyboard buttons, through the pc sound card.\r<br />\nI don’t know if the best choice is NAudio or another library (I use VS C#), could someone help me?\r<br />\n<br />\nThank you<br />\n",
+    "PostedDate": "2013-05-02T07:09:12.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1039050",
+    "ThreadId": "442349",
+    "Html": "You can use NAudio to do this. Easiest route if you are a beginner to sound programming would be to have a separate WAV file for each note.<br />\n",
+    "PostedDate": "2013-05-03T08:06:12.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1228276",
+    "ThreadId": "540606",
+    "Html": "Hello!\r<br />\n<br />\nI'm the author of <a href=\"http://software.muzychenko.net/eng/vac.htm\" rel=\"nofollow\">Virtual Audio Cable (VAC)</a> software; it is a virtual audio device driver. One of VAC users reported that NAudio WASAPI exclusive-mode capture produces permanently garbled audio data.\r<br />\n<br />\nI have reproduced it in Win7 SP1 (both x86 and x64) with NAudioWpfDemo. In shared mode, the driver gets capture buffers (IOCTL_KS_READ_STREAM) in time and the stream is stable. But in exclusive mode, there are large (50-100 ms) gaps between capture buffer groups (the application sends IOCTL_KS_READ_STREAM in groups of 3). In other words, the driver gets three capture requests, starting to fill the buffers, completes the first request, then the second and the third, but the application does not provide next capture buffers/requests in time.\r<br />\n<br />\nThis problem does not occur with native Windows device drivers and VB-Audio virtual driver so I thought there is a bug in VAC but under Win8 and Win8.1, NAudioWpfDemo works fine with VAC too.\r<br />\n<br />\nIn NAudio sources, I see that it is Win8-aware; what may be different in audio capture process between Win7 and Win8?\r<br />\n<br />\nMaybe the difference is due that VAC is a WavePci miniport driver while VB-Audio is WaveCyclic one. Both WaveCyclic and WavePci drivers accept IOCTL_KS_READ_STREAM requests but WaveCyclic driver fills them immediately from its internal buffer while WavePci driver queues them and fills as soon as audio data become available (no pre-buffering is used).\r<br />\n<br />\nRegards,\r<br />\nEugene<br />\n",
+    "PostedDate": "2014-03-30T00:17:40.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1228623",
+    "ThreadId": "540606",
+    "Html": "hi Eugene, great to hear from you. To be honest, exclusive mode capture is something I enabled in NAudio since it just required setting a flag, but it isn't something I use very often myself. The way it works is identical to shared mode capture,.\r<br />\n<br />\nThere should be nothing Win 8 specific in this code though. There is a separate experimental Windows Store DLL, but I'm assuming you're not using that.\r<br />\n<br />\nIn terms of not being able to provide new capture buffers in time, that does sometimes happen with .NET applications as the garbage collector can kick in at any time and starve the process of time to handle callbacks.\r<br />\n<br />\nDon't know if this information is helpful, but do keep me informed with any progress you have on this issue.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2014-03-31T07:52:42.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229419",
+    "ThreadId": "540606",
+    "Html": "Thank you for the reply. Since you don't use different buffering technique in exclusive mode, I'm afraid that there is a bug in Win7 audio subsystem because NAudio with exclusive mode works well in Win8/8.1 over .NET 4.0 but record gaps in Win7 over the same .NET 4.0.\r<br />\n<br />\nLooks like I should learn about WASAPI and write a WinAPI test application to trace it completely. :)<br />\n",
+    "PostedDate": "2014-04-02T05:05:22.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1231418",
+    "ThreadId": "540606",
+    "Html": "Hello Mark,\r<br />\n<br />\nI have built a simple WASAPI capture application, tested some drivers and figured out the problem. Really, Vista/Win7 and Win8/8.1, audio subsystems behave different ways in exclusive mode with Standard Streaming drivers that accept IOCTL_KS_READ_STREAM/IOCTL_KS_WRITE_STREAM requests.\r<br />\n<br />\nAll systems provide capture buffers of 10 ms portions (for 44100/16/2 format, buffer size is 1764 bytes). Vista/Win7 keep no more than a single buffer (10 ms) ahead of capture position but Win8/8.1 keep 20..80 ms. So if a device and/or a driver uses more than 3..5 ms interval for data processing, Vista/Win7 audio subsystem may lack to provide data buffers in time.\r<br />\n<br />\nFor WaveCyclic miniport audio drivers, Port driver (PortCls) maintains an internal buffer that can compensate this problem. WaveRT miniport drivers don't use a buffer queue created by IOCTL_KS_READ_STREAM/IOCTL_KS_WRITE_STREAM requests but they have an internal data buffer too. Only WavePci miniport drivers or true AVStream drivers that use only client-provided data buffers are affected.\r<br />\n<br />\nThe <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/dd370800(v=vs.85).aspx\" rel=\"nofollow\">stream capture example provided in MSDN documentation</a> suggests to poll ready data size twice per buffer duration. It would be correct if WASAPI always provides data packets large enough to cover such sleeping duration (i.e. larger than a half of the buffer). In NAudio, you use 100 ms buffer so polling interval is 50 ms. It is usually enough for a WavePci miniport driver in Win8/8.1 but not enough in Vista/Win7.\r<br />\n<br />\nIn my experiments, stable streaming in Vista/Win7 can be achieved with polling interval no more than 5..7 ms. Polling interval is not dependent on buffer size, it affects only data packet processing period. Audio subsystem won't pass next data buffers (in IOCTL_KS_READ_STREAM requests) until a WASAPI client (an application) processes already buffered data packets.\r<br />\n<br />\nSo could you please lower polling internal (the time passed to Sleep) down to 3..5 ms or make it configurable? 200..300 loops per second won't increase the overhead. I understand that only some rare audio drivers have WavePci model (I will add WaveRT to my VAC driver soon) but short buffering in Vista/Win7 is definitely a bug fixed in Win8.\r<br />\n<br />\nRegards,\r<br />\nEugene<br />\n",
+    "PostedDate": "2014-04-07T09:54:25.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1231552",
+    "ThreadId": "540606",
+    "Html": "thanks for this analysis Eugene, I'll review the code and see what I can do about making it configurable.\r<br />\nIs this only an issue for exclusive mode streaming?<br />\n",
+    "PostedDate": "2014-04-07T14:56:22.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1231646",
+    "ThreadId": "540606",
+    "Html": "Yes, only exclusive mode is affected. In shared mode, the audio subsystem uses its internal intermediate mixing/splitting buffer and does not aspire to achieve low latency. In exclusive mode, Vista and Win7 use much less buffering to get less latency but it is not a right way. To get a stable streaming, a client must maintain enough buffering; to get a low latency, it must just process incoming data fast.\r<br />\n<br />\nYou could test various polling intervals with VAC (the page mentioned above contains free trial version link or I could provide full version for free if you want). VAC does not use intermediate buffering and writes captured data to client-provided buffers only. With small timer period (1..3 ms), it allows to achieve small latency and jitter but requires a proper buffering algorithm. <br />\n",
+    "PostedDate": "2014-04-07T21:54:02.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "479500",
+    "ThreadId": "223306",
+    "Html": "<p>I need to record sounds from the microphone as a wav file, and got it to work pretty fast using WasapiCapture. Thanks for putting together such a useful library, Mark.</p>\r\n<p>However, I am running into an issue. Because I need this to work on Windows XP as well, I replaced:</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre><span style=\"color:blue\">this</span>.waveIn = <span style=\"color:blue\">new</span> WasapiCapture(recordingDevice);\r\n</pre>\r\n</div>\r\n</p>\r\n<p>with the following code:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre><span style=\"color:blue\">var</span> waveIn = <span style=\"color:blue\">new</span> WaveIn();&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;\r\n&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;\r\nwaveIn.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat(8000, 1);&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;\r\n\r\n<span style=\"color:blue\">this</span>.waveIn = waveIn;\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Bizarrely, the code stops working, and DataIsAvailable stops being called.</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre><span style=\"color:blue\">this</span>.waveIn.DataAvailable += <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(DataIsAvailable);\r\n</pre>\r\n</div>\r\nI found a thread which listed an issue, but it didn't seem that there was a resolution:</p>\r\n<p><a href=\"http://naudio.codeplex.com/Thread/View.aspx?ThreadId=217804&ProjectName=naudio\">http://naudio.codeplex.com/Thread/View.aspx?ThreadId=217804&amp;ProjectName=naudio</a></p>\r\n<p>Any suggestions highly welcome! If this is of any help, I am running this on a BackgroundWorker.</p>\r\n<p>Cheers, and thanks again for the great job,</p>\r\n<p>Mathias</p>",
+    "PostedDate": "2010-08-11T22:29:19.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "479505",
+    "ThreadId": "223306",
+    "Html": "<p>Never mind, found out an answer on this thread; using the constructor with CallBack does the trick.</p>\r\n<p><a href=\"http://naudio.codeplex.com/Thread/View.aspx?ThreadId=69523\">http://naudio.codeplex.com/Thread/View.aspx?ThreadId=69523</a></p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre><span style=\"color:blue\">var</span> waveIn = <span style=\"color:blue\">new</span> WaveIn(WaveCallbackInfo.FunctionCallback());\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2010-08-11T22:39:06.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "479510",
+    "ThreadId": "223306",
+    "Html": "<p>argh, looks like we all stumbled on this call..</p>",
+    "PostedDate": "2010-08-11T23:18:08.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "423565",
+    "ThreadId": "207284",
+    "Html": "<p>Hi, as the title dictates, I want to mix wave files with different sampling-rates. How can I achieve that in NAudio? I managed to mix those wave files using Audacity. Though, I need to automate the procedure. So, could you please help me achieve that? I have another question, is it possible to read raw adpcm data using NAudio? Thanks a lot for your time.</p>",
+    "PostedDate": "2010-03-25T06:41:39.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423644",
+    "ThreadId": "207284",
+    "Html": "<p>Audacity will mix the files by converting them both to the same sample rate (by default this is likely to be 44.1kHz). You can use the WaveFormatConversion stream or the DMO Resampler object in NAudio to perform resampling.</p>\r\n<p>NAudio can also convert ADPCM to PCM using ACM codecs installed on your PC.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-25T09:00:46.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423675",
+    "ThreadId": "207284",
+    "Html": "<p>Thanks for the reply, Mark. The ADPCM files I am trying to convert are headerless. I have already tried the suggested</p>\r\n<p>WaveFormatConversionStream.CreatePcmStream method,</p>\r\n<p>on your blog but it could not detect the files. So, is there any way of processing those?</p>",
+    "PostedDate": "2010-03-25T10:03:29.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423678",
+    "ThreadId": "207284",
+    "Html": "<p>what you do is to create a derived class from WaveStream. In the WaveFormat property, return a correctly formatted ADPCM WaveFormat (this is a pain because they contain a bunch of coefficients). In the Read method, simply read out of your headerless ADPCM files.</p>\r\n<p>then you can pass that derived class into the WaveFormatConversionStream</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-25T10:07:13.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423712",
+    "ThreadId": "207284",
+    "Html": "<p><strong>return a correctly formatted ADPCM WaveFormat (this is a pain because  they contain a bunch of coefficients)</strong></p>\r\n<p>Any resources or documents on this, I can read?<br><strong><br></strong></p>",
+    "PostedDate": "2010-03-25T11:49:39.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423983",
+    "ThreadId": "207284",
+    "Html": "<p>have a look at AdpcmWaveFormat in NAaudio. It might just do what you need. However, there are other ADPCM codecs that have different WAVFORMAT structures out there.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-26T02:38:49.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424195",
+    "ThreadId": "207284",
+    "Html": "<p>Thanks, Mark. Will check that out.</p>",
+    "PostedDate": "2010-03-26T10:51:32.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

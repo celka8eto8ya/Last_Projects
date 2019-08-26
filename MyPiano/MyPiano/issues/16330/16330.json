@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:11:30.97-07:00",
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "When I was doing some UI testing, I found few common exceptions.\r\nFor example when calling handler (directsoundout.cs, line 451):\r\n\r\n                // Fire playback stopped event\r\n                if (PlaybackStopped != null)\r\n                {\r\n                    if (this.syncContext == null)\r\n                    {\r\n                        PlaybackStopped(this, EventArgs.Empty);\r\n                    }\r\n                    else\r\n                    {\r\n                        syncContext.Post(state => PlaybackStopped(this, EventArgs.Empty), null);\r\n                    }\r\n                }\r\n\r\n\r\nit should be written like this, because syncContext.Post will sooner or later throw  nullreferenceexcepion. Playbackstopped could be null at this time. \r\n\r\n                var handler = PlaybackStopped;\r\n                // Fire playback stopped event\r\n                if (handler != null)\r\n                {\r\n                    if (this.syncContext == null)\r\n                    {\r\n                      handler(this, EventArgs.Empty);\r\n                    }\r\n                    else\r\n                    {\r\n                      syncContext.Post(state => handler(this, EventArgs.Empty), null);\r\n                    }\r\n                }\r\n\r\n\r\nI think all the code needs revision , which is not so big deal. I could help you to write some UI, with UIautomation testing, which I think is the best way to test stuff like this, especially when it comes to thread safety.",
+    "LastUpdatedDate": "2012-10-27T00:11:30.97-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-08-11T02:12:16.177-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Thread safety",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 16330
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "this can only fail if someone is unsubscribing to the event from another thread while it is being called on another, but point taken, it is safer to do it the way you suggest.",
+      "PostedDate": "2011-08-11T02:54:54.943-07:00",
+      "Id": 42463
+    },
+    {
+      "Message": "If you don't mind I will write here issues which a think are related to thread safety.\nWhen disposing DirectSoundOut which is in playing state, and NullReferenceException occurs.\nI added private bool disposing = false; then is Dispose set it to true and in Feed method: if (disposing) return 0;\nthis worked for me;.",
+      "PostedDate": "2011-08-11T08:19:31.633-07:00",
+      "Id": 42474
+    },
+    {
+      "Message": "I ran into this also. I was planning to submit a pull request for the fix, let me know if you'd like to receive a patch another way.",
+      "PostedDate": "2011-09-16T09:54:01.173-07:00",
+      "Id": 44833
+    },
+    {
+      "Message": "This one and others have been fixed in NAudio 1.6",
+      "PostedDate": "2012-10-27T00:11:26.797-07:00",
+      "Id": 81114
+    }
+  ]
+}

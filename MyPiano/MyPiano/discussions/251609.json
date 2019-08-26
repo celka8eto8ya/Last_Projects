@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "588094",
+    "ThreadId": "251609",
+    "Html": "\r\n<p>I'm trying to use the NAudio library to build a C# programm that allow me to control the play speed (x2, x0.5, ...).</p>\r\n<p>No documentation is available for this topic (as for advanced audio functions).</p>\r\n<p>I try to implement by miself the algorithm that can perform such a task but I still don't know the bases Properties to manipulate.</p>\r\n<p>Can anyone help me with that (I'm using an instance of IWavePlayer and an instance of WaveChannel32 to play my wav files) ?</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-03-29T02:27:30.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588674",
+    "ThreadId": "251609",
+    "Html": "<p>NAudio has no built-in support for playback speed. You would need to implement the DSP yourself as an IWaveProvider, So for 2x you would read twice the bytes you were asked for from your source provider then run your speedup algorithm.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-30T02:18:34.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588794",
+    "ThreadId": "251609",
+    "Html": "<p>Thanks, it was helpful :</p>\r\n<p>Overriding the Read(buffer, offset, count) method of the WaveChannel32 Class that way resolves the problem :</p>\r\n<p>public override int Read(byte[] buffer, int offset, int count)</p>\r\n<p>{</p>\r\n<p>//2X speed exemple</p>\r\n<p>_resultRead = _inputStreamTab.Read(buffer, offset, count);</p>\r\n<p>_resultRead += _inputStreamTab.Read(buffer, offset, count);</p>\r\n<p>return resultRead;</p>\r\n<p>}</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-03-30T06:14:53.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "589304",
+    "ThreadId": "251609",
+    "Html": "<p>Read should not return a number higher than count. You should return count here if you want double-speed playback. Also, you still need to implement the 2x speed algorithm</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-31T01:13:37.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592072",
+    "ThreadId": "251609",
+    "Html": "<p>@SourceCodeSeeker: I've implemented exactly that (tempo changes) using NAudio and another open source library (SoundTouch).</p>\r\n<p>Please see:</p>\r\n<p><a href=\"http://code.google.com/p/practicesharp/\">http://code.google.com/p/practicesharp/</a></p>\r\n<p><a href=\"http://www.codeproject.com/KB/audio-video/practice_sharp.aspx\">http://www.codeproject.com/KB/audio-video/practice_sharp.aspx</a></p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>",
+    "PostedDate": "2011-04-05T07:49:35.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

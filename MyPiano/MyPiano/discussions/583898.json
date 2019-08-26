@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1358606",
+    "ThreadId": "583898",
+    "Html": "I just started using NAudio and I have following code:<br />\n<pre><code>        capture = new WasapiCapture(SelectedDevice);\n        capture.ShareMode = AudioClientShareMode.Shared;\n        capture.WaveFormat = new WaveFormat(48000,32,2);\n        SelectedDevice.AudioEndpointVolume.MasterVolumeLevelScalar = 1.0f;//Max\n        capture.StartRecording();\n        capture.RecordingStopped += OnRecordingStopped;\n        capture.DataAvailable += CaptureOnDataAvailable;</code></pre>\n\nand following function to handle DataAvailable event<br />\n<pre><code>        private void CaptureOnDataAvailable(object sender, WaveInEventArgs e)\n        {\n\n        }</code></pre>\n\nI want to know what will be contents of e.Buffer will be like if my bit depth is 32, sample rate 48000Hz and channel 2?\r<br />\n<br />\nIs it like this:<br />\n<pre><code>         e.Buffer[0] will contain least significant byte of channel 1\n         e.Buffer[3] will contain most significant byte of channel 1\n         e.Buffer[4] will contain least significant byte of channel 2\n         e.Buffer[7] will contain most significant byte of channel 2\n         and so on\n</code></pre>\n\nIf not, please explain its format. <br />\n",
+    "PostedDate": "2015-03-02T00:10:49.24-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358744",
+    "ThreadId": "583898",
+    "Html": "Yes, it will be little endian, with interleaved samples. You can use BitConverter to help read samples out.\r<br />\n32 bit PCM is a bit unusual. More common to use IEEE float (use WaveFormat.CreateIEEEFloat ... static method)\r<br />\nIn fact with WASAPI, I'd recommend leaving the WaveFormat alone. You can't change the sample rate in shared mode anyway. By default you'll get a WAVEFORMATEXTENSIBLE containing 32 bit floating point (IEEE float). You can use BitConverter.ToSingle to read them out<br />\n",
+    "PostedDate": "2015-03-02T05:20:04.53-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-03-02T05:29:38.267-08:00"
+  }
+]

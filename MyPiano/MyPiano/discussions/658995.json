@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1486942",
+    "ThreadId": "658995",
+    "Html": "Hi,\r<br />\n<br />\nDoing my first steps in Audio prog and using NAudio, I'm trying to have a simple app that grabs a WAV file and getting 20ms of audio data each time till EOF. However I'm getting a bit confused with the buffer arrays and probably conversions.\r<br />\nIs there a simple way someone can post in here?\r<br />\n<br />\nMoreover I got confused with the following:\r<br />\nWhen using <strong>AudioFileReader readertest = new AudioFileReader(fileName)</strong> I'm getting different metadata like bitrate of 32 and length of ~700000.\r<br />\nHowever, when using the NAudio - <strong>WaveFileReader file1 = new WaveFileReader(fileName)</strong> I'm getting half values for the same audio file (bitrate = 16, length = ~350000).\r<br />\nCan someone please explain the reason?\r<br />\n<br />\nThanks v much!<br />\n",
+    "PostedDate": "2016-10-26T07:04:33.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487016",
+    "ThreadId": "658995",
+    "Html": "The explanation is simple:<br />\n<br />\nAudioFileReader works with 32 bit float audio, WaveFileReader works with the original format.<br />\n<br />\nAs floats (= single datatype in VB) need 32 bit of space instead of 16 bit (= short datatype) the length is exactly doubled.<br />\n<br />\nAudioFileReader does this because it implements ISampleProvider, which must work with floats, and also volume scaling is easier there.<br />\n<br />\nYou can achieve the same with WaveFileReader using the extension: &quot;file1.ToSampleProvider()&quot;.<br />\n",
+    "PostedDate": "2016-10-27T09:53:18.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487126",
+    "ThreadId": "658995",
+    "Html": "Thanks for the explanation, I'll stick with the WaveFileReader as it seems to fit my needs the best.\r<br />\nWhat is the simple way to convert a WAV file to 8Khz and run on 20ms buffers?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2016-10-30T09:48:41.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487412",
+    "ThreadId": "658995",
+    "Html": "You can resample to 8kHz with WdlResamlingSampleProvider, MediaFoundationResampler or WaveformatconversionStream.\r<br />\n<br />\nI´d prefer WDL as it is independent from components installed on you system.\r<br />\n<br />\nFor 20 ms buffer playback set latency of your waveout device accordingly.<br />\n",
+    "PostedDate": "2016-11-04T17:38:13.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487560",
+    "ThreadId": "658995",
+    "Html": "Thanks. is there a sample code of setting the latency to get the 20ms?\r<br />\n<br />\nAssuming I'm using a 8khz, 1 channel, 16bit audio file, I have the below code:<br />\n<pre><code>WaveFileReader wHeader = new WaveFileReader(fullFileName);\n\nbyte[] data = new byte[wHeader.Length];\nint read = wHeader.Read(data, 0, data.Length);\nshort[] sampleBuffer = new short[read / 2];\nshort[] InpBuf;\n\nfor (int i = 0; i &lt; read; i += 2)\n{\nInpBuf = new short[159]; //20ms?\n\nBuffer.BlockCopy(data, 0, sampleBuffer, 0, read);\nInpBuf = sampleBuffer;\n\nProcess20(InpBuf); //Send 20ms of audio data which inside InpBuf \n\n}\n</code></pre>\n\nI can see that the complete audio data is inside sampleBuffer now (generated wave sine) but I cannot divide these 20ms into <strong>InpBuf</strong> and I see that <strong>InpBuf</strong> contains the whole audio data.<br />\n",
+    "PostedDate": "2016-11-08T01:29:24.273-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487804",
+    "ThreadId": "658995",
+    "Html": "What you want is not a 20ms playback latency, but reading in 20ms chunks. To do that I´d create a NotifyingSampleProvider and read from it. It raises an event on each sample (pair) and you can simply aggregate 20ms by counting SampleRate/50 values.<br />\n",
+    "PostedDate": "2016-11-12T10:00:21.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

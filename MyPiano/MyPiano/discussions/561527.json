@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1291173",
+    "ThreadId": "561527",
+    "Html": "I specifically needed to normalize audio.  Not compress, normalize.\r<br />\n<br />\nI was successfully able to use a WaveFileReader to load a file.  Then used .ReadAsync to fill a byteArray with the data.  I performed the necessary math and have a new normalized byteArray.\r<br />\n<br />\nQ: How do I save it back out?  Is there an example of this?<br />\n",
+    "PostedDate": "2014-08-18T14:25:11.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291642",
+    "ThreadId": "561527",
+    "Html": "You can save it back out with a WaveFileWriter. Just call Write and pass in your byte array<br />\n",
+    "PostedDate": "2014-08-20T04:06:20.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291833",
+    "ThreadId": "561527",
+    "Html": "Thank-you.  I've been making good progress.\r<br />\n<br />\nThe issue I've run into is that my audio file is 8bit.  I was able to read an 8bit wav to a byte[], and write it back out again, BUT, when I went to scale the data for normalization, it appears unsigned.  So a multiplier just moves the whole waveform upwards, instead of scaling the negative side down.  (hope you get what I mean)\r<br />\n<br />\nQ: How should I read/write/manipulate the 8bit array to work with it as an SByte or signed 8-bit that it is?  Some type of cast?<br />\n\r<br />\n(PseudoCode)<br />\n<pre><code>       byte[] byteArray;\n        wfr = new WaveFileReader(&quot;sine.wav&quot;);\n         wavByteArray = new byte[wfr.Length];\n         await WAV_ReadToByteArray(wfr, wavByteArray);\n         NormalizeMono8bit22(wavByteArray);\n\n      async Task&lt;int&gt; WAV_ReadToByteArray(WaveFileReader a, byte[] destination)\n        {\n            Task&lt;int&gt; dataRead = a.ReadAsync(destination, 0, (int)a.Length);\n            int s = await dataRead;\n            return s;\n        }\n\n      void NormalizeMono8bit22(byte[] source)\n        {\n            biggest = 0;\n            for (int i = 0; i &lt; source.Length; i++)\n            {\n                if (Math.Abs(source[i]) &gt; biggest)\n                    biggest = source[i];\n            }\n\n            float multiplier; \n            if (biggest &lt;= 0)\n                multiplier = 1;\n            else\n                multiplier = byte.MaxValue / biggest;\n\n            for (int i = 0; i &lt; source.Length; i++)\n            {\n                int maxVal = (int)(multiplier * source[i]);\n                if (maxVal &gt; byte.MaxValue)\n                    source[i] = byte.MaxValue;\n                else if (maxVal &lt; byte.MinValue)\n                    source[i] = byte.MinValue;\n                else\n                    source[i] = (byte)(source[i] * multiplier);\n            }\n        }\n</code></pre>\n\n",
+    "PostedDate": "2014-08-20T14:22:19.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1292725",
+    "ThreadId": "561527",
+    "Html": "Right. Well as far as I can tell there is no direct casting method deal with an 8 bit signed audio array in NAudio.<br />\nYou have to read in the signed 8bit, and offset it by -128.  If its stereo, you have to process each channel that way.\r<br />\n<br />\nThen you can rescale it in a more intuitive way, using floats.  When the result is finished, add back the 128 and write it back out.\r<br />\nThat's what I did.<br />\n",
+    "PostedDate": "2014-08-23T08:01:36.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

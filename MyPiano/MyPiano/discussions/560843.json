@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1288844",
+    "ThreadId": "560843",
+    "Html": "Hello. I'm trying to create a many simple WAV to WMA converter but I can't set a value for profile in WmaWriter !!<br />\n<br />\nhelp me !<br />\n<pre><code>WaveFileReader wr = new WaveFileReader(@&quot;C:\\mywav.wav&quot;);\nWmaWriter ww = new WmaWriter(new FileStream(@&quot;C:\\mywma.wma&quot;,FileMode.Create),new WaveFormat(44100,2),profile);\n \nbyte[] buff = null;\n\nint read = 0;\n\nbuff=new byte[wr.Length];\nread = wr.Read(buff,0,buff.Length);\nwhile ((read &gt; 0))\n{\nww.Write(buff,0,read);\nread = wr.Read(buff,0,buff.Length);\n}</code></pre>\n\n",
+    "PostedDate": "2014-08-11T06:15:34.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291703",
+    "ThreadId": "560843",
+    "Html": "you may find MediaFoundationEncoder easier to use<br />\n",
+    "PostedDate": "2014-08-20T06:56:44.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

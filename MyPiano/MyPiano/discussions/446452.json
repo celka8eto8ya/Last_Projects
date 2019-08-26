@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1054489",
+    "ThreadId": "446452",
+    "Html": "How to use NAudio to echo my sound after 0.2s?<br />\n",
+    "PostedDate": "2013-06-09T01:06:22.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1055293",
+    "ThreadId": "446452",
+    "Html": "play from a BufferedWaveProvider, and put the input from the microphone into it. There will be a delay of around 200ms simply due to buffer sizes. you can adjust it by either playing with buffer sizes, or adding a bit of extra silence into the BufferedWaveProvider before you start playback.<br />\n",
+    "PostedDate": "2013-06-11T03:23:46.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1056174",
+    "ThreadId": "446452",
+    "Html": "Thank you for your answer. I see that's just what waveIn.BufferMilliseconds means.<br />\n",
+    "PostedDate": "2013-06-12T22:03:33.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

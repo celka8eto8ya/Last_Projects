@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "981867",
+    "ThreadId": "428075",
+    "Html": "\r\n<p>Hi All,</p>\r\n<p>I am using naudio for mixing the audio files.Its a great tool .But unfortunately i am getting errors while i am mixing the more than 5 to 6 files( but they are less in size like just below 1min in length).</p>\r\n<p>Some times 4th one coming at position 6 in the final out put so please once review this and let me know is there any possibilities to come out from this problem..</p>\r\n<p>cod ei am using is&nbsp; ::</p>\r\n<p>&nbsp;MemoryStream memStream = new MemoryStream();<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveStream originalStream = new WaveFileReader(fileName);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var pcmStream = WaveFormatConversionStream.CreatePcmStream(originalStream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var blockAlignReductionStream = new BlockAlignReductionStream(pcmStream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var waveFormatConversionStream = new WaveFormatConversionStream(<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; new WaveFormat(44100, blockAlignReductionStream.WaveFormat.BitsPerSample, 2), blockAlignReductionStream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //var waveOffsetStream = new WaveOffsetStream(waveFormatConversionStream);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var audioOffsetted = new WaveOffsetStream(<br>\r\n&nbsp;pcmStream, TimeSpan.FromSeconds(offset), TimeSpan.Zero, pcmStream.TotalTime);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveChannel32 wavch = new WaveChannel32(audioOffsetted);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return wavch;</p>\r\n",
+    "PostedDate": "2012-12-30T21:12:20.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-26T23:56:36.43-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "Working with multichannel output in NAudio I noticed a bug in the ASIOSampleConvertor: the ConvertorFloatToIntGeneric is using a float pointer instead of a int pointer as it should.\r\n\r\nCorrected code:\r\n\r\npublic static void ConvertorFloatToIntGeneric(IntPtr inputInterleavedBuffer, IntPtr[] asioOutputBuffers, int nbChannels, int nbSamples)\r\n        {\r\n            unsafe\r\n            {\r\n                float* inputSamples = (float*)inputInterleavedBuffer;\r\n                int*[] samples = new int*[nbChannels];                // <- here stood float*\r\n                for (int i = 0; i < nbChannels; i++)\r\n                {\r\n                    samples[i] = (int*)asioOutputBuffers[i];            // <- here stood float*\r\n                }\r\n\r\n                for (int i = 0; i < nbSamples; i++)\r\n                {\r\n                    for (int j = 0; j < nbChannels; j++)\r\n                    {\r\n                        *samples[j]++ = clampToInt(*inputSamples++);\r\n                    }\r\n                }\r\n            }\r\n        }",
+    "LastUpdatedDate": "2012-10-26T23:56:36.43-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-09-03T08:25:06.58-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "ASIOSampleConvertor bug",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16361
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for reporting this. testing ASIO is a pain as not all soundcards use all the sample converters. What soundcard are you using? And have you tested this in an x86 and/or x64 app?",
+      "PostedDate": "2012-09-04T01:28:05.603-07:00",
+      "Id": 76246
+    },
+    {
+      "Message": "Yeah, multichannel is a lot of pain, took me quite a while to find this. I used a M-Audio ProFire 610 Firewire device on a Windows 7 x86 machine. I used the NAudio source code version 60216c3b9380.\nWhen I found this, it got really obvious, the sound was clearly clipped (on all channels and ok in the wave file created at the same time) and the function schoult convert from float to int but still was writing float.",
+      "PostedDate": "2012-09-04T05:38:43.663-07:00",
+      "Id": 76260
+    },
+    {
+      "Message": "hi jonahoffmann, I've checked in your fix. Can you test it on your system and let me know if the issue is resoveld now (my ASIO devices are 2 channels only so makes it hard for me to test this stuff)",
+      "PostedDate": "2012-09-04T07:56:14.473-07:00",
+      "Id": 76267
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1116912",
+    "ThreadId": "465213",
+    "Html": "i'm a newbie for C# and i have Project to capture Mic to visualizer<br />\n<br />\nnow i'm have data <br />\n<br />\n<br />\n<br />\nfreq 0  amp 0<br />\nfreq 10.7666015625  amp 936.3754<br />\nfreq 21.533203125  amp 49597.43<br />\nfreq 32.2998046875  amp 32029.97<br />\nfreq 43.06640625  amp 20008.48<br />\nfreq 53.8330078125  amp 13674.98<br />\nfreq 64.599609375  amp 8665.981<br />\nfreq 75.3662109375  amp 438.3661<br />\nfreq 86.1328125  amp 1916.943<br />\nfreq 96.8994140625  amp 2719.369<br />\nfreq 107.666015625  amp 11415.74<br />\nfreq 118.4326171875  amp 2645.431<br />\nfreq 129.19921875  amp 528.4136<br />\nfreq 139.9658203125  amp 2869.114<br />\nfreq 150.732421875  amp 604.6565<br />\nfreq 161.4990234375  amp 2680.482<br />\nfreq 172.265625  amp 797.9217<br />\nfreq 183.0322265625  amp 1500.465<br />\nfreq 193.798828125  amp 5511.122<br />\nfreq 204.5654296875  amp 1926.032<br />\nfreq 215.33203125  amp 345.0173<br />\nfreq 226.0986328125  amp 779.2922<br />\nfreq 236.865234375  amp 775.6301<br />\nfreq 247.6318359375  amp 220.2209<br />\nfreq 258.3984375  amp 268.1793<br />\nfreq 269.1650390625  amp 989.3768<br />\nfreq 279.931640625  amp 1534.077<br />\n<br />\ni use accordaudio.net to get these<br />\n<br />\nhow to show data in WPF visualizer<br />\n",
+    "PostedDate": "2013-11-03T02:43:47.63-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1117398",
+    "ThreadId": "465213",
+    "Html": "NAudio isn't a visualisation library, but I do cover how you can draw spectrum analysers in the visualisation module of my new Pluralsight course: <a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio</a><br />\n",
+    "PostedDate": "2013-11-04T13:05:29.027-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

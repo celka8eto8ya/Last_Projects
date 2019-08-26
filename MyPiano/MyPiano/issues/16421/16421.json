@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "Hi Mark, while I am trying to convert amr file to wma the following exception I have encountered.\r\n\"Exception from HRESULT: 0xC00D36C4\". Is there any way to convert amr file format to wma format or mp3 format. \r\n\r\n```\r\n public byte[] ConvertAMRToWMA( )\r\n {      \r\n      var data = new MediaFoundationReader(\"..\\\\amr\\\\sample.amr\");\r\n      MediaFoundationEncoder.EncodeToWma(data, \"..\\\\sampleamr.wma\", 128000);\r\n  }\r\n\r\n```",
+    "LastUpdatedDate": "2014-09-08T22:42:52.76-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-11-25T22:41:57-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "amr to wma using NAudio MFT",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16421
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "NAudio does not include any AMR file support. You'd probably be best off finding a command line utility that can decode an AMR file to PCM.",
+      "PostedDate": "2013-11-26T08:54:11.493-08:00",
+      "Id": 124326
+    },
+    {
+      "Message": "Thanks for quick replay !!\nI am hardly finding any code to decode amr file format. Do you know any 3rd party tool or C# wrapper to decode amr file?",
+      "PostedDate": "2013-11-27T00:50:31.223-08:00",
+      "Id": 125420
+    },
+    {
+      "Message": "afraid not. You coud try SOX",
+      "PostedDate": "2013-12-02T03:42:34.403-08:00",
+      "Id": 125757
+    },
+    {
+      "Message": "Unable to convert amr ",
+      "PostedDate": "2014-09-08T22:42:52.76-07:00",
+      "Id": 159217
+    }
+  ]
+}

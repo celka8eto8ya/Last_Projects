@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1014854",
+    "ThreadId": "436529",
+    "Html": "I am trying to stream live audio data (U-Law 8000Hz, 8-bit, Mono) over my network and play it on my client machine. I have it working but I have having an issue with play time.<br />\n<br />\nI am using a BufferedWaveProvider to &quot;stream&quot; the audio data into so I can play it out. I was trying as data came in to increase the buffer size until the user presses stop and then I can flush the buffers out and start over when the user presses play again. My issue is that even though I am increasing the buffer size my audio stops playing after 5 seconds (or what ever I have set the BufferDuration too. Is there a way to increase this time as the buffer grows so it doesn't stop playing?<br />\n<br />\nHow I currently have my BufferedWaveProvider setup<br />\n<pre><code>_waveProvider1 = new BufferedWaveProvider(_inputWaveFormat);\n_waveProvider1.BufferDuration = new TimeSpan(_bufferHours,\n                                             _bufferMinutes,\n                                             _bufferSeconds);\n_waveProvider1.DiscardOnBufferOverflow = true;</code></pre>\n\nI currently have the TimeSpan set to 5 minutes and everything plays fine until I reach the 5 minute mark and then it just stops. If i set DiscardOnBufferOverflow to false I will get a Buffer Full exception<br />\n<br />\nHere is how I add samples to my buffer<br />\n<pre><code>byte[] tempBuffer = Decode(buffer, 0, buffer.Length);\n\n_waveProvider1.BufferLength += tempBuffer.Length;\n_waveProvider1.BufferDuration += _timeSpanIncrement;\n\n_waveProvider1.AddSamples(tempBuffer, 0, tempBuffer.Length);</code></pre>\n\nSo I increase the buffer length and the buffer duration (buffer increment is 5 seconds). The application still stops playing after 5 seconds. I also get a InvalidOperationsException after I have loaded about five seconds of data into the buffer. What am i doing wrong? why can't i stream live audio into a buffered wave provider and have it play longer then it's initial timespan?<br />\n",
+    "PostedDate": "2013-03-13T13:56:13.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015191",
+    "ThreadId": "436529",
+    "Html": "Any ideas?<br />\n",
+    "PostedDate": "2013-03-14T05:42:51.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015313",
+    "ThreadId": "436529",
+    "Html": "Figured it out. <br />\n",
+    "PostedDate": "2013-03-14T08:05:36.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015440",
+    "ThreadId": "436529",
+    "Html": "glad you got it working :)<br />\n",
+    "PostedDate": "2013-03-14T10:33:18.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1325714",
+    "ThreadId": "436529",
+    "Html": "Thanks for sharing -.-<br />\n",
+    "PostedDate": "2014-11-24T13:12:29.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

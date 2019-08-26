@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1482024",
+    "ThreadId": "657402",
+    "Html": "I need to detect when the microphone is in use by another application.  Can the naudio library used to detect this?  I was thinking of 'listening' for x seconds, determine the level to indicate if it is in use or not\r<br />\n<br />\n If I try to record in order to detect will the other application still be recording?\r<br />\n<br />\nThank you..Jim<br />\n",
+    "PostedDate": "2016-08-24T15:13:20.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482089",
+    "ThreadId": "657402",
+    "Html": "I'm afraid I don't know of a way to tell whether another application is using the microphone. But usually it is possible for more than one application to record at the same time.<br />\n",
+    "PostedDate": "2016-08-25T08:29:24.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482090",
+    "ThreadId": "657402",
+    "Html": "Thank you.  I will pursue that.  The problem I am trying to solve is that we have a screen saver that activates every minute and that cannot be changed.  Doctors are dictating using Nuance Dragon.  I was planing on writing a process that wakes up every 50 seconds, records 5 to 7 seconds, figure out if something is actually there to record (volume level perhaps) and if so send a key stroke to the computer to reset the clock on the screen saver<br />\n",
+    "PostedDate": "2016-08-25T08:33:19.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482101",
+    "ThreadId": "657402",
+    "Html": "Wow what a nice library.  I get a list of all of the DataFlow.Capture devices.  During a 6 second while  loop, i record the highest MasterPeakValue for each microphone.  if any of them are greater than X, i will assume that they are transcribing and mimic a mouse move to reset the clock on the screen saver.<br />\n",
+    "PostedDate": "2016-08-25T12:09:28.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

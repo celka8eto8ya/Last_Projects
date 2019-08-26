@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1490452",
+    "ThreadId": "660410",
+    "Html": "With a few clicks of a mouse I can change the 'Speaker Configuration' to 5.1 and the sample rate to 24bit 48000hz.   You see on my machine, every once in a while it is being reset because of another unrelated issue.  I want to programmatically set it back.  I can't seem to find in the documentation how to do this.  I think it would be in NAudio.CoreAudioApi.<br />\nI'm using C#.<br />\n",
+    "PostedDate": "2016-12-30T03:59:47.26-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

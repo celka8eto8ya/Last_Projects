@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1488791",
+    "ThreadId": "659711",
+    "Html": "Hi,\r<br />\n<br />\nI'm, trying to convert an app which uses NAudio to the UWP (Universal Windows Platform) platform. I have installed the Nuget package for NAudio to my UWP solution, but the WaveOut object no longer seems to exist. \r<br />\n<br />\nHas this been removed for UWP projects? If so what is the alternative and is there any documentation on this? If not then does anyone know why it appears to be missing. I have exactly the same version (1.7.3) running just fine in a standard Windows Forms app so it definitely seems to be a problem related to the UWP platform.\r<br />\n<br />\nMany thanks,\r<br />\n<br />\nDamien<br />\n",
+    "PostedDate": "2016-11-25T09:30:22.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488835",
+    "ThreadId": "659711",
+    "Html": "After some further research I've found that WaveOut is replaced by WasapiOutRT for Windows Store Apps. I have had to make quite a few code changes. However, I'm having problem making any sound. My code is as follows:<br />\n<pre><code>WasapiOutRT _wavePlayer;\nBufferedWaveProvider _bufferProvider;\n\npublic Audio()\n{\n_wavePlayer = new WasapiOutRT(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 100);\n\n            _wavePlayer.Init(() =&gt;\n            {\n                WaveFormat waveFormat = new WaveFormat(SAMPLE_RATE, 16, 2);\n                _bufferProvider = new BufferedWaveProvider(waveFormat);\n                _bufferProvider.DiscardOnBufferOverflow = true;\n                return _bufferProvider;\n            });\n}\n\npublic bool TrySubmitBuffer(byte[] buffer, int buffer_size)\n        {\n            if (buffer_size &gt;= SUBMIT_SIZE)\n            {\n                if (_wavePlayer.PlaybackState == PlaybackState.Stopped)\n                {\n                    _wavePlayer.Play();\n                }\n                else\n                {\n                    _bufferProvider.AddSamples(buffer, 0, buffer_size);\n                }\n\n                return true;\n            }\n\n            return false;\n        }\n</code></pre>\n\nDoes this look right? Audio is called once to set up the class then TrySubmitBuffer is continually called by my AY sound chip emulator. I can see the data is passed into the BufferProvider instance but I can't see it being passed to the WasapiOutRT instance.<br />\n",
+    "PostedDate": "2016-11-27T05:59:18.223-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1346246",
+    "ThreadId": "578675",
+    "Html": "Hi, \r<br />\nI need help with simple code that create response to midi messages.\r<br />\n<br />\nfor example:\r<br />\nif midi device name &quot;device&quot; send message &quot;ch1-cc18-value127&quot;\r<br />\ndo something.\r<br />\n<br />\ncan anyone help me with that?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2015-01-27T04:37:55.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347225",
+    "ThreadId": "578675",
+    "Html": ":(<br />\n",
+    "PostedDate": "2015-01-29T10:15:11.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347310",
+    "ThreadId": "578675",
+    "Html": "have you had a look at the code in the NAudioDemo project? There is a very simple midi in and out demo there.\r<br />\nStart off looking <a href=\"https://naudio.codeplex.com/SourceControl/latest#NAudioDemo/MidiInDemo/MidiInPanel.cs\" rel=\"nofollow\">here</a><br />\n",
+    "PostedDate": "2015-01-29T14:43:41.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347762",
+    "ThreadId": "578675",
+    "Html": "Yes i did,\r<br />\nbut theres only a demo of log and monitoring midi commands and i need to responde to a specific one.\r<br />\ni just need an example of one command and i will do the rest.\r<br />\n<br />\nthere is not much midi references in the help and wiki.\r<br />\n<br />\nThanks for your help<br />\n",
+    "PostedDate": "2015-01-31T07:42:34.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1348029",
+    "ThreadId": "578675",
+    "Html": "well midi commands are quite easy to work with. Just look at the command code, and see if it is the type you are looking for, then cast to the appropriate type (e.g. NoteOnEvent) and get more information out<br />\n",
+    "PostedDate": "2015-02-01T13:03:00.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

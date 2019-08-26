@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "671078",
+    "ThreadId": "272406",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I have a big problem, when I'm listing music played by your Mp3StreamingDemo, everything is OK, but when I'm playing the same music from my application - using code from Mp3StreamingDemo, and minimize my application, in this special moment (about 1s) everything\r\n stops (music does not play anymore) till application will finish minimize process. The same thing is happening when I click on my taskbar to show application playing music.</p>\r\n<p>What I'm doing wrong ?</p>\r\n<p>PS sorry for my bad English</p>\r\n",
+    "PostedDate": "2011-09-13T03:58:40.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "672215",
+    "ThreadId": "272406",
+    "Html": "<p>It may be the garbage collector kicking in which can interrupt audio playback. If you restore and minimise again does it do it again?</p>",
+    "PostedDate": "2011-09-15T05:44:11.903-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "672696",
+    "ThreadId": "272406",
+    "Html": "<p>Yes, but the problem is only in my application, in yours Mp3StreamingDemo everything is ok, even when I start new project and use yours panel (from Mp3StreamingDemo) its the same issue, any idea what I'm doing wrong ?</p>\n<p>&nbsp;</p>\n<p>Edit: Today I even changed timer1 which is responsible for playing from buffer to DispacherTimer (wpf) where I can set priority, and nothing changed, still when I minimize application (not only project, any window) I hear nothing, when minimizing is done, music starts playing...</p>",
+    "PostedDate": "2011-09-16T06:24:55.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

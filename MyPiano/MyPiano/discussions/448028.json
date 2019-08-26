@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1060312",
+    "ThreadId": "448028",
+    "Html": "( I'm not good at English.. sorry )<br />\n<br />\n I want to record sound from speaker and save to file.!<br />\n(In windows 7 32bit, and without REAL speaker)<br />\n<br />\n But I cannot find any good solution.<br />\n<br />\n Does Anyone know any way ??<br />\n",
+    "PostedDate": "2013-06-24T03:18:23.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1060350",
+    "ThreadId": "448028",
+    "Html": "Try WasapiLoopbackCapture.\r<br />\nTo only capture sound being sent to a single speaker, you'd probably need to discard one channel.<br />\n",
+    "PostedDate": "2013-06-24T05:31:14.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

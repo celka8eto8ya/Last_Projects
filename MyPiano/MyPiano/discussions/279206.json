@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "697354",
+    "ThreadId": "279206",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I've just upgraded from 1.3 to the latest 1.4 changeset, and have been reworking my app to use the AudioFileReader (thanks for making this, BTW).&nbsp; NAudio is playing beautifully except the AudioFileReader returns a &quot;0&quot; when I look at the position property\r\n (same thing when I look at the CurrentTime property).&nbsp; The length property and Total Time properties appear correct.&nbsp;</p>\r\n<p>I'm using WASAPIOUT to output the media.</p>\r\n<p>Config:&nbsp; Windows 7 64 bit, NAudio target platform&nbsp;set for AnyCPU</p>\r\n<p>&nbsp;</p>\r\n<p>Any thoughts on what I could be doing incorrectly?</p>\r\n<p>&nbsp;</p>\r\n<p>Regards,</p>\r\n<p>-John</p>\r\n",
+    "PostedDate": "2011-11-12T07:32:27.853-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "697395",
+    "ThreadId": "279206",
+    "Html": "<p>The problem seems to be threading related.&nbsp; I'm running NAudio out of a console app (it will ultimately be a service)&nbsp;and I use a .NET timer to periodically check the value of the AudioFileReader Position attribute.&nbsp; As a test, I read the Position attribute&nbsp;one second after I invoked the Play method (by putting the thread to sleep).&nbsp; I was able to get a correct value for Position.&nbsp; It appears that the .NET timers run the \"Elapsed\" event on a separate thread and is subsequently not providing the correct value for Position or CurrentTime.&nbsp;</p>\r\n<p>The demo apps appear to use the Windows Forms timers which execute their \"Tick\" method on the same thread as the GUI, so they are working correctly.&nbsp; Does anyone have any thoughts on how to make this work?&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Regards,</p>\r\n<p>-John</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-11-12T11:12:36.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713996",
+    "ThreadId": "279206",
+    "Html": "<p>I figured it out.&nbsp; I needed to create an instance of the timer on the same thread that invokes the Play method on the WASAPIOUT provider.&nbsp; My mistake (apparently) was creating the timer during the instantiation of the class making use of NAUDIO, and starting the timer just before I invoked the Play method.&nbsp; Now, I create a new instance of the timer and start it&nbsp;just before I invoke Play,</p>",
+    "PostedDate": "2011-12-18T18:14:23.277-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "714083",
+    "ThreadId": "279206",
+    "Html": "<p>glad you got it working in the end</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-19T00:57:13.077-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

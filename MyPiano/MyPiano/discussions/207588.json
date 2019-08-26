@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "424732",
+    "ThreadId": "207588",
+    "Html": "<p>I started using DirectShowLib to implement MP3 to WAV conversion and vice versa then I stumbled upon NAudio which on the whole I feel is far cleaner and far easier to use.</p>\r\n<p>I quickly modified the ACM Format Conversion sample to convert from MP3 to WAV, however when attempting to convert a WAV file back to MP3 the WaveFileWriter throws a Divide By Zero exception from the Dispose method.</p>\r\n<p>Do you have a sample to show how to convert from WAV to MP3 ?</p>\r\n<p>Thanks</p>\r\n<p>Steve</p>",
+    "PostedDate": "2010-03-28T17:02:42.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424848",
+    "ThreadId": "207588",
+    "Html": "<p>I've never used NAudio to convert to MP3. I see you are wrapping the MP3 in a WAV file container, which is slightly unconventional but should work in theory.</p>\r\n<p>Are you able to post a little bit of sample code and the full stack trace of the exception?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-29T02:36:22.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424871",
+    "ThreadId": "207588",
+    "Html": "<p>&nbsp;</p>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">Exception Message: Attempted to divide by zero.</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">Stack Trace: &nbsp; &nbsp;at NAudio.Wave.WaveFileWriter.Dispose(Boolean disposing) in C:\\Users\\Steve Wilkinson\\Documents\\Visual Studio 2005\\Projects\\NAudio-1-3\\Source Code\\NAudio\\Wave\\WaveOutputs\\WaveFileWriter.cs:line 243</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">&nbsp;&nbsp; at NAudio.Wave.WaveFileWriter.Dispose() in C:\\Users\\Steve Wilkinson\\Documents\\Visual Studio 2005\\Projects\\NAudio-1-3\\Source Code\\NAudio\\Wave\\WaveOutputs\\WaveFileWriter.cs:line 217</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">&nbsp;&nbsp; at NAudio.Wave.WaveFileWriter.CreateWaveFile(String filename, WaveStream stream) in C:\\Users\\Steve Wilkinson\\Documents\\Visual Studio 2005\\Projects\\NAudio-1-3\\Source Code\\NAudio\\Wave\\WaveOutputs\\WaveFileWriter.cs:line 36</div>\r\n<div id=\"_mcePaste\" style=\"left:-10000px;top:0px;width:1px;height:1px;overflow-x:hidden;overflow-y:hidden\">\r\n<p>&nbsp;&nbsp; at NAudioDemo.AcmForm.EncodeFile() in C:\\Users\\Steve Wilkinson\\Documents\\Visual Studio 2005\\Projects\\NAudio-1-3\\Source Code\\NAudioDemo\\AcmForm.cs:line 134</p>\r\n<p>&nbsp;</p>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Mark,</p>\r\n<p>Apart from modifying the filter strings in GetInputFileName() and GetOutputFileName() functions to select/choose Mp3 files the only other modifiecations I made were to the DecodeFile() function in the AcmForm.cs class to implicitly use Mp3FileReader. &nbsp;The DecodeFile() function is as follows:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; private void DecodeFile()</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;try</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;string inputFileName = GetInputFileName(&quot;Select an MP3 file to decode&quot;);</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (inputFileName == null)</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Open the MP3</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;using (Mp3FileReader reader = new Mp3FileReader(inputFileName))</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Check the encoding is MP3</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (reader.WaveFormat.Encoding != WaveFormatEncoding.MpegLayer3)</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;MessageBox.Show(&quot;Please select an MP3 file to decode&quot;);</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Default to PCM 44.1kHz 16-bit stereo</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WaveFormat targetFormat = new WaveFormat();</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (targetFormat == null)</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;string outputFileName = GetOutputFileName(&quot;Select Output File Name&quot;);</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (outputFileName == null)</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;using (WaveStream convertedStream = new WaveFormatConversionStream(targetFormat, reader))</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WaveFileWriter.CreateWaveFile(outputFileName, convertedStream);</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (checkBoxAutoLaunchConvertedFile.Checked)</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.Diagnostics.Process.Start(outputFileName);</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;catch (Exception ex)</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.Console.WriteLine(string.Format(&quot;Exception Message: {0}\\n\\nStack Trace: {1}&quot;,&nbsp;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex.Message, ex.StackTrace));</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Converting from MP3 to WAV works fine using this modification, do you&nbsp;foresee any problems using this approach ? &nbsp;Would the same modifications work for other formats e.g. OGG albeit not using the MP3FileReader.</p>\r\n<p>The EncodeFile() function remains unchanged. &nbsp;Basically I select the WAV file I've just decoded and then set the output format for the target file to MP3 (e.g. 192 Kbits/s 44.100 Hz Stereo). &nbsp;At this point the&nbsp;Attempted to divide by zero exception is thrown.</p>\r\n<p>The full exception and stack trace is as follows:</p>\r\n<p>Exception Message: Attempted to divide by zero.</p>\r\n<p>Stack Trace: &nbsp; &nbsp;at NAudio.Wave.WaveFileWriter.Dispose(Boolean disposing) in C:\\Users\\Steve\\Documents\\Visual Studio 2005\\Projects\\NAudio-1-3\\Source Code\\NAudio\\Wave\\WaveOutputs\\WaveFileWriter.cs:line 243</p>\r\n<p>&nbsp;&nbsp; at NAudio.Wave.WaveFileWriter.Dispose() in C:\\Users\\Steve\\Documents\\Visual Studio 2005\\Projects\\NAudio-1-3\\Source Code\\NAudio\\Wave\\WaveOutputs\\WaveFileWriter.cs:line 217</p>\r\n<p>&nbsp;&nbsp; at NAudio.Wave.WaveFileWriter.CreateWaveFile(String filename, WaveStream stream) in C:\\Users\\Steve\\Documents\\Visual Studio 2005\\Projects\\NAudio-1-3\\Source Code\\NAudio\\Wave\\WaveOutputs\\WaveFileWriter.cs:line 36</p>\r\n<p>&nbsp;&nbsp; at NAudioDemo.AcmForm.EncodeFile() in C:\\Users\\Steve\\Documents\\Visual Studio 2005\\Projects\\NAudio-1-3\\Source Code\\NAudioDemo\\AcmForm.cs:line 134</p>\r\n<div></div>\r\n<div>Note the machine is running Windows 7 and has&nbsp;both the &quot;Fraunhofer IIS MPEG-Layer3 Codec (decode only)&quot; and &nbsp;&quot;Fraunhofer IIS MPEG-Layer3 Codec (professional)&quot; codecs installed. &nbsp;I think the professional codec is shipped with the latest incarnation of Windows Media Player. &nbsp;I tried a second machine (running Vista) and the professional codec wasn't installed but was present on the system. &nbsp;I used the information at the following link to&nbsp;<a href=\"http://www.looprecorder.de/tut_l3codec.php\">http://www.looprecorder.de/tut_l3codec.php</a>&nbsp;to enable the professional codec on the Vista machine.</div>\r\n<div></div>\r\n<div>When you said <em>&quot;</em><span style=\"color:#30332d\"><em>I see you are wrapping the MP3 in a WAV file container, which is slightly unconventional but should work in theory&quot; </em>I presume you are referring to the use of the WaveFileWriter. &nbsp;Just in general what are the principles for converting from WAV to another format in terms of the target files ? &nbsp;Do you have to derive a class capable of writing the encoded data or does the library/codec deal with this ?</span></div>\r\n<div></div>\r\n<div><span style=\"color:#30332d\">Many thanks for you help, if you need any further information just let me know.</span></div>\r\n<div></div>\r\n<div><span style=\"color:#30332d\">Steve</span></div>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-29T04:37:47.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424875",
+    "ThreadId": "207588",
+    "Html": "<p>It seems like you are in fact trying to convert from MP3 to WAV, not from WAV to MP3 as the title of this post says?</p>\r\n<p>Have a look elsewhere in the NAudio demo at the use of MP3FileReader and WaveFormatConversionStream. For example on the playback demo page you can play MP3s which essentially does this conversion. You will see that this code uses the BlockAlignmentReductionStream which should get round any problems you have been experiencing</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-29T04:52:17.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424899",
+    "ThreadId": "207588",
+    "Html": "<p>Mark,</p>\r\n<p>Thanks for the help, I guess the title should have read &quot;Converting from WAV to MP3 and back again&quot;.</p>\r\n<p>Thanks</p>\r\n<p>Steve</p>",
+    "PostedDate": "2010-03-29T05:56:07.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424917",
+    "ThreadId": "207588",
+    "Html": "<p>Mark,</p>\r\n<p>Just looking through the area of code that you suggested, this relates to playback and decoding from MP3 to WAV. &nbsp;This all works perfectly, the main problem I have is in taking a WAV file and converting it back to MP3. &nbsp;I need to be able to convert files from WAV to MP3 and vice versa.</p>\r\n<p>Does the library have any support to save out/encode MP3 files ?</p>\r\n<p>Thanks</p>\r\n<p>Steve</p>",
+    "PostedDate": "2010-03-29T06:42:01.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "424918",
+    "ThreadId": "207588",
+    "Html": "<p>For WAV to MP3 I always use LAME.exe - makes life a lot simpler. NAudio doesn't have the ability to create MP3 files at the moment.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-29T06:43:43.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "577777",
+    "ThreadId": "207588",
+    "Html": "<p>Hi,</p>\r\n<p>I have started using NAudio for a project of mine and have really benifited from discussions here and at stackoverflow and also Mark's and OpenSebJ's blogs. I should say, NAudio is really programmer friendly and I got the hang of it in less than in a week and am&nbsp;now close to completing my project which I believe would have taken longer otherwise.</p>\r\n<p>But now I too face a similar situation as the OS here. I read some files (in this case wav, mp3 and ogg) perform some operations and then save them back. For the writing back part, I see that wav is default, ogg support is provided by someone (<a href=\"http://daisy.trac.cvsdude.com/urakawa-sdk/browser/trunk/csharp/audio/NAudio/FileFormats?rev=1346\">http://daisy.trac.cvsdude.com/urakawa-sdk/browser/trunk/csharp/audio/NAudio/FileFormats?rev=1346</a>), but I could not find any MP3 encoding help.</p>\r\n<p>So, I am looking at other alternatives here. I can save the file as wave and then as per Mark's suggestion use Lame.exe to convert it to mp3. But I would still prefer an alternative that gives me more control over this process. Specifically, I wanted to know if there is any wrapper for any mp3 encoding library that can seamlessly work with NAudio? Or if not seamlessly, at least a library that converts wave to mp3?</p>\r\n<p>It would be really if someone can point me in the right direction.</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2011-03-09T07:16:35.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "578312",
+    "ThreadId": "207588",
+    "Html": "<p>Unfortunately there doesn't seem to be any good solutions for encoding MP3s from C# at the moment.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-10T02:43:45.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

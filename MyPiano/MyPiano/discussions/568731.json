@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1309408",
+    "ThreadId": "568731",
+    "Html": "Good evening,<br />\n<br />\nI'm trying to decrypt an audio file and load it in runtime (I can encrypt and decrypt using real files), but I'm struggling with this exception: <strong>Index was outside the bounds of the array</strong><br />\n<br />\nI currently have the following code:<br />\n<pre><code>           WaveStream stream;\n\n           // (....) decrypting algorithm part 1\n\n            MemoryStream ms = new MemoryStream();\n\n            CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write);\n\n            cs.Write(inputByteArray, 0, inputByteArray.Length);\n\n            cs.FlushFinalBlock();\n\n            stream = new Mp3FileReader(ms);</code></pre>\n\nAfter searching for a while, I read something about a ConvertNonSeekableStreamToByteArray so I tried the folowing, which works:<br />\n<pre><code>            WaveStream stream;\n\n            // (....) decrypting algorithm part 1\n\n            MemoryStream ms = new MemoryStream();\n\n            CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write);\n\n            cs.Write(inputByteArray, 0, inputByteArray.Length);\n\n            cs.FlushFinalBlock();\n\n            // create file and write inside\n            FileStream fs = File.OpenWrite(&quot;decrypted.mp3&quot;);\n            foreach (byte b in ms.ToArray())\n            {\n\n                fs.WriteByte(b);\n\n            }</code></pre>\n\nBasically, I use the MemoryStream to write a file.<br />\n<br />\nThen, instead of decrypting in runtime, I just load the FileStream as so:<br />\n<pre><code>            FileStream ffs = new FileStream(&quot;decrypted.mp3&quot;, FileMode.Open, FileAccess.Read);\n\n            stream = new Mp3FileReader(ffs);</code></pre>\n\nBasically, I load the decrypted file. <strong>It works, but it creates a real file (decrypted)</strong>. <br />\n<strong>I don't want to create the file</strong>, I just need the memory (as shown in the first example).<br />\n<br />\nI've read some threads about a <strong>ConvertNonSeekableStreamToByteArray</strong> method. Is it somehow related to it?<br />\n<br />\nAny thoughts?<br />\n<br />\nOne more question. After reading the audio file successfully, I have the following code: <br />\n<pre><code>        stream = new WaveFormatConversionStream(new WaveFormat(44100, 1), stream);\n        offset = new WaveOffsetStream(stream);\n        channel = new WaveChannel32(offset);\n        channel.Volume = volume;</code></pre>\n\nI've read some threads saying that there's no need to use WaveFormatConversionStream. What's the best way?<br />\n<br />\nSincerely,<br />\nApidcloud<br />\n",
+    "PostedDate": "2014-09-30T16:37:03.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1309614",
+    "ThreadId": "568731",
+    "Html": "I just tried to convert the MemoryStream into a new Stream (using array of bytes) and it worked. For some reason it does work this way..<br />\n<pre><code>                Stream myStream = new MemoryStream(ms.ToArray());\n\n\n                stream = new Mp3FileReader(myStream);</code></pre>\n\n",
+    "PostedDate": "2014-10-01T09:21:24.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-10-01T09:21:31.673-07:00"
+  },
+  {
+    "Id": "1309959",
+    "ThreadId": "568731",
+    "Html": "Glad you found a way to get it working.<br />\n",
+    "PostedDate": "2014-10-02T09:13:39.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

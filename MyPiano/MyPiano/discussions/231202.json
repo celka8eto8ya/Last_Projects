@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "508421",
+    "ThreadId": "231202",
+    "Html": "<p>Hi, i'm trying to make my own music player, and i'd like to add function which will play online radio.</p>\r\n<p>I've only found code which play MP3FromURL :</p>\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> PlayMp3FromUrl(<span style=\"color:blue\">string</span> url)\r\n        {\r\n            <span style=\"color:blue\">using</span> (Stream ms = <span style=\"color:blue\">new</span> MemoryStream())\r\n            {\r\n                <span style=\"color:blue\">using</span> (Stream stream = WebRequest.Create(url)\r\n                    .GetResponse().GetResponseStream())\r\n                {\r\n                    <span style=\"color:blue\">byte</span>[] buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[32768];\r\n                    <span style=\"color:blue\">int</span> read;\r\n                    <span style=\"color:blue\">while</span> ((read = stream.Read(buffer, 0, buffer.Length)) &gt; 0)\r\n                    {\r\n                        ms.Write(buffer, 0, read);\r\n                    }\r\n                }\r\n\r\n                ms.Position = 0;\r\n                <span style=\"color:blue\">using</span> (WaveStream blockAlignedStream =\r\n                    <span style=\"color:blue\">new</span> BlockAlignReductionStream(\r\n                        WaveFormatConversionStream.CreatePcmStream(\r\n                            <span style=\"color:blue\">new</span> Mp3FileReader(ms))))\r\n                {\r\n                    <span style=\"color:blue\">using</span> (WaveOut waveOut = <span style=\"color:blue\">new</span> WaveOut(WaveCallbackInfo.FunctionCallback()))\r\n                    {\r\n                        waveOut.Init(blockAlignedStream);\r\n                        waveOut.Play();\r\n                        <span style=\"color:blue\">while</span> (waveOut.PlaybackState == PlaybackState.Playing)\r\n                        {\r\n                            System.Threading.Thread.Sleep(100);\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n</pre>\r\n<p>Also there is similar topic here :</p>\r\n<p><a href=\"http://naudio.codeplex.com/Thread/View.aspx?ThreadId=225622\">http://naudio.codeplex.com/Thread/View.aspx?ThreadId=225622</a></p>\r\n<p>But it has no answer too.</p>\r\n<p>Can anyone help me with this?</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2010-10-17T04:47:08.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "517277",
+    "ThreadId": "231202",
+    "Html": "\r\n<p>NAudio doesn't have built-in support for playing over the network, but it has the basic building blocks needed to set this up.</p>\r\n<p>Currently the MP3 file reader does some seeking in the constructor, which means you need to pre-download the whole file. I am hoping to eliminate this in the near future.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-04T12:47:40.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

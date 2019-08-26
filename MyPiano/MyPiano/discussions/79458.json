@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "272026",
+    "ThreadId": "79458",
+    "Html": "<p>Hello,</p>\r\n<p>I'm trying to mix some audio using a WaveMixerStream32 so I'm using WaveChannel32 to feed it the streams in the proper format. I've got an exception with the following message:</p>\r\n<p style=\"padding-left:30px\">Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.</p>\r\n<p>The minimum example I could make that also throw that error didn't include WaveMixerStream32 at all with took me to the&nbsp;conclusion&nbsp;that the problem was in how I'm using WaveChannel32. The code is this:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">var</span> audio = <span style=\"color:Blue\">new</span> WaveFileReader(OriginalAudioFileName);\r\n<span style=\"color:Blue\">var</span> audio32 = <span style=\"color:Blue\">new</span> WaveChannel32(<span style=\"color:blue\">new</span> WaveFileReader(OriginalAudioFileName));</pre>\r\n<pre>WaveFileWriter.CreateWaveFile(PublicAudioFileName + <span style=\"color:#A31515\">&quot;audio.wav&quot;</span>, audio);\r\nWaveFileWriter.CreateWaveFile(PublicAudioFileName + <span style=\"color:#A31515\">&quot;audio32.wav&quot;</span>, audio32);\r\n</pre>\r\n</div>\r\n<p>audio.wav is generated just fine. audio32.wav is 58 bytes and that line thrown the exception.</p>\r\n<p>What am I doing wrong?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-12-31T10:30:42.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272830",
+    "ThreadId": "79458",
+    "Html": "<p>thanks for reporting this. I've fixed the bug in WaveChannel32 that is causing this problem (get the latest NAudio code from codeplex). Also, you must remember to set audio32.PadWithZeroes = false before you call WaveFileWriter.CreateWaveFile or you will create an infinitely long WAV file (I might remove this requirement in future versions to save anyone else from making this mistake).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-01-04T02:55:11.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272855",
+    "ThreadId": "79458",
+    "Html": "Hello Mark,<div><br></div><div>Thank you for looking into this so quickly. I'll give it another try today or tomorrow. I understand I'll have to get the version from source control and compile it myself, is that correct?</div>\r\n\r\n<div><br></div><div>At one point it seems I workarounded the original problem I've had and I did ended up with a 10GB wav (by dumping a 100MB wav), so thank you very much for the hint about PadWithZeroes, I was already having that problem.</div>\r\n\r\n<div><br></div><div>Thanks.<br><br><div>On Mon, Jan 4, 2010 at 11:55, markheath <span dir=ltr>&lt;<a href=\"mailto:notifications@codeplex.com\">notifications@codeplex.com</a>&gt;</span> wrote:<br><blockquote style=\"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex\">\r\n\r\n   <div> <p>From: markheath</p> <div><p>thanks for reporting this. I've fixed the bug in WaveChannel32 that is causing this problem (get the latest NAudio code from codeplex). Also, you must remember to set audio32.PadWithZeroes = false before you call WaveFileWriter.CreateWaveFile or you will create an infinitely long WAV file (I might remove this requirement in future versions to save anyone else from making this mistake).</p>\r\n\r\n\r\n<p>Mark</p></div> <div> <p>Read the <a href=\"http://naudio.codeplex.com/Thread/View.aspx?ThreadId=79458&ANCHOR#Post272830\">full discussion online</a>.</p> <p>To add a post to this discussion, reply to this email (<a href=\"mailto:naudio@discussions.codeplex.com?subject=[naudio:79458]\">naudio@discussions.codeplex.com</a>)</p>\r\n\r\n <p>To start a new discussion for this project, email <a href=\"mailto:naudio@discussions.codeplex.com\">naudio@discussions.codeplex.com</a></p> <p>You are receiving this email because you subscribed to this discussion on CodePlex. You can <a href=\"http://www.codeplex.com/site/discussions/thread/unsubscribe/79458\">unsubscribe</a> on CodePlex.com.</p>\r\n\r\n <p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at CodePlex.com</p> </div> </div> </blockquote></div><br><br clear=all><br>-- <br>J. Pablo Fernández &lt;<a href=\"mailto:pupeno@pupeno.com\">pupeno@pupeno.com</a>&gt; (<a href=\"http://pupeno.com\">http://pupeno.com</a>)<br>\r\n\r\n\r\n</div>",
+    "PostedDate": "2010-01-04T05:01:32.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "422865",
+    "ThreadId": "79458",
+    "Html": "<p>Please excuse my ignorance here. I am having this exact issue. I have downloaded the changes from Jan 4, however I have no idea how to apply them to the dll. I usually work alone and this is a first to me. Also, thank you for the work you have done on this library. Great stuff!</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-23T19:52:58.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423638",
+    "ThreadId": "79458",
+    "Html": "<p>Agonisties, do you have VS 2008? If so you can build your own copy of NAudio.dll from the latest code in CodePlex.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-25T08:53:59.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

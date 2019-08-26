@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1072649",
+    "ThreadId": "451171",
+    "Html": "How to i convert WasapiLoopback to 16bit?\r<br />\n<br />\nI know NAudio got something like this built in, but i don´t know how to use it for this.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2013-07-25T01:43:36.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1073458",
+    "ThreadId": "451171",
+    "Html": "there isn't a one-liner as it really depends what you are doing next with the audio (e.g. writing to file, putting into a buffered wave provider). The manual way is use BitConverter.ToSingle on every four bytes, and then multiply by Int16.MaxValue to make it into an Int16.<br />\n",
+    "PostedDate": "2013-07-26T06:04:23.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1073461",
+    "ThreadId": "451171",
+    "Html": "I want to use it as sending through udp.\r<br />\nLike a waveinevent,\r<br />\n<br />\nudpClient.Send(e.Buffer, e.BytesRecorded, otherPartyIP.Address.ToString(), 1500);\r<br />\n<br />\nI want to do like that, but i need to change it to 16 bit right before that.\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-07-26T06:07:55.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1073464",
+    "ThreadId": "451171",
+    "Html": "then I'd just use the technique I mentioned above then. You can speed it up using WaveBuffer if you know how. Bind a WaveBuffer to the recorded byte array and you can access each sample individually. Then convert them all to shorts my multiplying by Int16.MaxValue and writing into a new buffer to be sent over UDP. WaveBuffer can help you again there letting you write shorts into a byte array<br />\n",
+    "PostedDate": "2013-07-26T06:14:01.343-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1073472",
+    "ThreadId": "451171",
+    "Html": "Well this is way beyond me, will have to read up on this.\r<br />\nI can see what you are saying, but i can´t understand it (new to c#), but hopefully it will get me somewhere.\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-07-26T06:27:35.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

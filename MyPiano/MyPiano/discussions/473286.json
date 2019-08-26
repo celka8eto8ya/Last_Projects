@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1134861",
+    "ThreadId": "473286",
+    "Html": "I have encounter a problem recently.\r<br />\nI use  wasapi capture the sound,it is working fine,but when i close/stop the\r<br />\nplayer(use VLC player),it will give out a annoying whistle,until I stop naudio\r<br />\ncapture.Only use VLC player will have this problem.\r<br />\nHow can I solve this problem?Thank you in advandce.<br />\n",
+    "PostedDate": "2013-12-11T19:00:11.517-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1138159",
+    "ThreadId": "473286",
+    "Html": "I'm not sure exactly what you are doing. Are you actually using WasapiLoopbackCapture?<br />\n",
+    "PostedDate": "2013-12-19T03:54:11.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

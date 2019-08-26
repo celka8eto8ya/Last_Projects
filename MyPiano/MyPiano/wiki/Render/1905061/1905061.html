@@ -1,0 +1,73 @@
+<div class="wikidoc"><h2>NAudio Overview</h2><b>IMPORTANT</b> The latest NAudio source code can now be found on <a href="http://github.com/naudio/NAudio">GitHub</a>. For now, CodePlex remains the place to access documentation, discussions and downloads.<br /><br />NAudio is an open source .NET audio and MIDI library, containing dozens of useful audio related classes intended to speed development of audio related utilities in .NET. It has been in development since 2002 and has grown to include a wide variety of features. While some parts of the library are relatively new and incomplete, the more mature features have undergone extensive testing and can be quickly used to add audio capabilities to an existing .NET application. NAudio can be quickly added to your .NET application <a href="https://nuget.org/packages/NAudio">using NuGet</a>.<br /><br /><i>NAudio demo project showing an MP3 file playing:</i><br /><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=naudio&DownloadId=46923" alt="naudiodemo.png" title="naudiodemo.png" /><br /><br /><i>NAudio WPF Project showing waveform visualisation and spectrum analyser:</i><br /><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=naudio&DownloadId=240418" alt="NAudioWPF.png" title="NAudioWPF.png" />
+<h2>Latest News</h2>For the latest news and more documentation on NAudio, visit <a href="http://mark-dot-net.blogspot.com/search/label/NAudio">Mark Heath&#39;s blog</a>.<br />
+<ul><li><b>27 Dec 2016</b> NAudio 1.8 released. Read the <a href="http://www.markheath.net/post/announcing-naudio-1.8">release notes</a></li>
+<li><b>24 Nov 2014</b> NAudio 1.7.2 Released with lots of minor enhancements and bugfixes</li>
+<li><b>4 Nov 2013</b> <a href="http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio">Programming Audio with NAudio</a> training course released on Pluralsight</li>
+<li><b>29 Oct 2013</b> NAudio 1.7 Released. Read the <a href="http://mark-dot-net.blogspot.co.uk/2013/10/naudio-17-release-notes.html">release notes</a></li>
+<li><b>26 Oct 2012</b> NAudio 1.6 Released. Read the <a href="http://mark-dot-net.blogspot.co.uk/2012/10/naudio-16-release-notes-10th.html">release notes</a></li>
+<li><b>9 Sep 2012</b> ASIO Recording Support added</li>
+<li><b>19 Dec 2011</b> NAudio 1.5 Released. Read the <a href="http://mark-dot-net.blogspot.com/2011/12/naudio-15-released.html">release notes</a></li>
+<li><b>20 Apr 2011</b> NAudio 1.4 Released. Read the <a href="http://mark-dot-net.blogspot.com/2011/04/naudio-14-release-notes.html">release notes</a></li>
+<li><b>15 Apr 2011</b> NAudio demo now shows how to select output devices (for WaveOut, DirectSound, WASAPI and ASIO), and can play 8 bit, 16 bit, 24 bit, and 32 bit float WAV files. Fixed a longstanding ASIO issue.</li>
+<li><b>7 Nov 2010</b> Major improvements to Mp3FileReader</li>
+<li><b>10 Oct 2009</b> Version 1.3 Released. Read the <a href="http://mark-dot-net.blogspot.com/2009/10/naudio-13-release-notes.html">release notes</a></li>
+<li><b>20 Sep 2009</b> We are getting close to feature complete for 1.3. Last chance to get in any feedback on the API</li>
+<li><b>26 Aug 2009</b> WPF Waveform drawing demo project including FFT added</li>
+<li><b>28 Feb 2009</b> Lots of new stuff is being added and planned, so do check out the Source Code tab to have a sneak peak at what&#39;s coming in 1.3</li>
+<li><b>26 June 2008</b> Version 1.2 Released. Read the <a href="http://mark-dot-net.blogspot.com/2008/06/naudio-12-release-notes.html">release notes</a></li></ul>
+<h2>NAudio Features</h2><ul><li>Play back audio using a variety of APIs
+<ul><li>WaveOut</li>
+<li>DirectSound</li>
+<li>ASIO</li>
+<li>WASAPI (Windows Vista and above)</li></ul></li>
+<li>Decompress audio from different Wave Formats
+<ul><li>MP3 decode using ACM or DMO codec</li>
+<li>AIFF</li>
+<li>G.711 mu-law and a-law</li>
+<li>ADPCM</li>
+<li>G.722</li>
+<li>Speex (using NSpeex)</li>
+<li>SF2 files</li>
+<li>Decode using any ACM codec installed on your computer</li></ul></li>
+<li>Record audio using WaveIn, WASAPI or ASIO</li>
+<li>Read and Write standard .WAV files</li>
+<li>Mix and manipulate audio streams using a 32 bit floating mixing engine</li>
+<li>Extensive support for reading and writing MIDI files</li>
+<li>Full MIDI event model</li>
+<li>Basic support for Windows Mixer APIs</li>
+<li>A collection of useful Windows Forms Controls</li>
+<li>Some basic audio effects, including a compressor</li></ul>
+<h2>Projects Using NAudio</h2>NAudio currently is used to support a number of audio related utilities, some of which may be moved to be hosted on CodePlex in the future. If you have used NAudio for a project, please get in touch so we can post it here.
+<ul><li><a href="http://skypevoicechanger.net">Skype Voice Changer</a> - Modify your voice with audio effects while talking on Skype</li>
+<li><a href="http://voicerecorder.codeplex.com">.NET Voice Recorder</a> - Record your voice, save to MP3, and visualise the waveform using WPF. Now includes autotune</li>
+<li><a href="http://qedcode.com/pree">Pree</a> - Record spoken word without the need for editing. </li>
+<li><a href="http://www.codeplex.com/midifilemapper">MIDI File Mapper</a> - Utility for mapping MIDI drum files for use on other samplers</li>
+<li><a href="http://www.codeplex.com/midifilesplitter">MIDI File Splitter</a> - Split MIDI files up at their markers</li>
+<li><a href="http://sharpmod.codeplex.com/">SharpMod</a> - managed port of MikMod, can play mod files in both WinForms and Silverlight</li>
+<li><a href="http://nvorbis.codeplex.com/">NVorbis</a> - Fully managed Vorbis decoder, with support for NAudio</li>
+<li><a href="http://code.google.com/p/practicesharp/">Practice#</a> - Windows tool for practicing playing an instrument with playback music. <b>Includes FLAC playback support and an equaliser for NAudio.</b></li>
+<li><a href="http://wpfsvl.codeplex.com">WPF Sound Visualization Library</a> - beautiful waveform and spectrum analyzer code written for WPF, comes with NAudio sample</li>
+<li><a href="http://q2cue.codeplex.com">Q2Cue</a> - application for running audio cues in a theatrical or other performance related settings</li>
+<li><a href="http://www.tuneblade.com/">TuneBlade</a> - Stream Windows&#39; audio to AirPlay receivers</li>
+<li><a href="http://www.teacheyteach.com/">Teachey Teach</a> - utility to help English language conversation teachers generate feedback for students</li>
+<li><a href="http://breakthrusoftware.com/html/products/soundmgr/index.html">Sound Mill</a> -  an audio player, list organizer and automation manager</li>
+<li><a href="http://cybermental.com/bravura-studio/">Bravura Studio</a> - a modular, extensible application and platform for creating and experimenting with music and audio.</li>
+<li><a href="http://raphaelgodart.tumblr.com/">musiX</a></li>
+<li><a href="http://sipsorcery.codeplex.com">SIPSorcery</a> - .NET softphone framework</li>
+<li><a href="http://squiggle.codeplex.com/">Squiggle</a> - A free open source LAN Messenger</li>
+<li><a href="http://helixtoolkit.codeplex.com/">Helix 3D toolkit</a> - Multi-format audio player</li>
+<li><a href="http://code.google.com/p/airphone-tv/">airphone-tv</a> - A revival of axStream to implement control through the iPhone</li>
+<li><a href="http://jamnet.codeplex.com/">JamNet</a> - a Silverlight drum sample player</li>
+<li><a href="http://www.jinglejim.de/Startseite.aspx">Jingle Jim</a> - Jingle Software (German language)</li>
+<li><a href="http://www.winisoft.ch">All My Music</a></li>
+<li><a href="http://www.ispyconnect.com/">iSpy</a> - Open Source Camera Security Software</li>
+<li><a href="http://radiotuna.com/OnlineRadioPlayer/Intro">RadioTuna</a> - Online internet radio player</li>
+<li><a href="http://www.firetalknew.com">Fire Talk New</a> - chat program</li>
+<li><a href="http://www.marcsapps.co.uk/">AVR Audio Guard</a> - utility to fix a HDMI related issue</li>
+<li><a href="http://locutordahora.unijui.edu.br/o-software/">Locutor da Hora</a> - Educational app simulating a radio studio</li>
+<li><a href="https://www.assetstore.unity3d.com/en/#!/content/42677">uAudio</a> - Audio player component for Unity3D</li>
+<li><a href="https://www.assetstore.unity3d.com/en/#!/content/32034">Radio Pro</a> - Unity 3D Radio Asset</li>
+<li><a href="https://github.com/art-drobanov/NAudio.DTMF">NAudio DTMF</a> - NAudio DTMF example code</li></ul>
+<h2>More Info</h2>
+For more information, please visit the <a href="http://naudio.codeplex.com/documentation">NAudio Documentation Wiki</a><br />
+<h2>Donate</h2>NAudio is a free open source project that is developed in personal time. You can show your appreciation for NAudio and support future development by donating.<br /><a href="https&#58;&#47;&#47;www.paypal.com&#47;cgi-bin&#47;webscr&#63;cmd&#61;_s-xclick&#38;hosted_button_id&#61;TE4B48U2PPEL6"><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=naudio&DownloadId=233829" alt="Donate" title="Donate" /></a></div><div class="ClearBoth"></div>

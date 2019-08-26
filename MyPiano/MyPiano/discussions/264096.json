@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "638122",
+    "ThreadId": "264096",
+    "Html": "\r\n<p>Hello again Mark.</p>\r\n<p>I can&nbsp;play now a streaming wav successfully</p>\r\n<p>my problem is that I cant display the fft.</p>\r\n<p>In&nbsp;the Read method of WaveChannel32&nbsp;&nbsp;thare is a event that raise with right &amp; left values that pass to the fft calc</p>\r\n<p>How can I do that in BufferWaveProvider? How can I know when a sample arrive?</p>\r\n<p>Thanks in advance</p>\r\n<p>Zeev</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-07-06T06:50:08.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "639354",
+    "ThreadId": "264096",
+    "Html": "<p>NAudio is all about creating audio pipelines. The output of BufferedWaveProvider could feed into another class that raises events for each sample. BufferedWaveProvider can't be plugged directly into WaveChannel32 since it expects a WaveStream instead of an IWaveProvider as an input, but you could make an adaptor very easily (it's just that BufferedWaveProvider doesn't support repositioning for obvious reasons).</p>",
+    "PostedDate": "2011-07-08T03:29:18.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "641942",
+    "ThreadId": "264096",
+    "Html": "<p>save the data from network in the bufferedwaveprovider but create the waveout with waveout.init(wavechannel32) . So you have to modify the wavechannl32 class and in the readmethod you have to read from your bufferedwaveprovider</p>",
+    "PostedDate": "2011-07-13T14:22:46.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "642778",
+    "ThreadId": "264096",
+    "Html": "<p>thanks mark &amp; thefilo. All work now.</p>",
+    "PostedDate": "2011-07-14T23:52:54.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

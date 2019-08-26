@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1051221",
+    "ThreadId": "445572",
+    "Html": "Hi !\r<br />\n<br />\nI need help with converting 24 bit input to 16 bit &quot;on the fly&quot; im trying to record audio output, if the format is set to 24 bit depth i have problem with mix it down to one channel (sound is slower) here is the example wchich im using to convert if audio has 32 bit i dont know how to change this code if input has 24 bit<br />\n<pre><code>                            byte[] newArray16Bit = new byte[e.BytesRecorded / 2];\n                            short two;\n                            float value;\n                            for (int i = 0, j = 0; i &lt; e.BytesRecorded; i += 4, j += 2)\n                            {\n                                value = (BitConverter.ToSingle(e.Buffer, i));\n                                two = (short)(value * short.MaxValue);\n\n                                newArray16Bit[j] = (byte)(two &amp; 0xFF);\n                                newArray16Bit[j + 1] = (byte)((two &gt;&gt; 8) &amp; 0xFF);\n                            }\n                            byte[] mono = StereoToMono(newArray16Bit);\n                            OutFile.Write(mono);</code></pre>\n\ni found sample code to convert but it returns float[] i need byte:<br />\n<pre><code>public float[] Convert24BitToFloat(byte[] input)\n{\n    int inputSamples = input.Length / 3; // 24 bit input\n    float[] output = new float[inputSamples];\n    int outputIndex = 0;\n    var temp = new byte[4];\n    for(int n = 0; n &lt; inputSamples; n++)\n    {\n        // copy 3 bytes in\n        Array.Copy(input,n*3,temp,0,3);\n        int sample = BitConverter.ToInt32(temp,0);\n        output[outputIndex++] = sample / 16777216f;\n    }\n    return output;\n}</code></pre>\n\n",
+    "PostedDate": "2013-05-31T07:18:12.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1052175",
+    "ThreadId": "445572",
+    "Html": "use BitConverter.GetBytes to turn a float into a byte array<br />\n",
+    "PostedDate": "2013-06-03T08:05:27.22-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

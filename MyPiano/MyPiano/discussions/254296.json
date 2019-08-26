@@ -1,0 +1,170 @@
+[
+  {
+    "Id": "598883",
+    "ThreadId": "254296",
+    "Html": "\r\n<p>how many and which methodes provides naudio the decode mp3. Is there only the &quot;WaveFormatConversionStream.CreatePcmStream(Mp3FileReader)&quot; or are there a few other?</p>\r\n",
+    "PostedDate": "2011-04-18T00:23:30.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598892",
+    "ThreadId": "254296",
+    "Html": "<p>NAudio also includes a wrapper for the <a href=\"http://naudio.codeplex.com/SourceControl/changeset/view/71848#1678721\">DMO MP3 Decoder</a> (with the latest NAudio code you can see easily how to swap out MP3 frame decoders). Also, I created <a href=\"http://nlayer.codeplex.com/\">NLayer</a> here on codeplex, a fully managed MP3 decoder. Sadly it can't be incorporated fully into NAudio due to the licenses being incompatile.</p>",
+    "PostedDate": "2011-04-18T00:36:13.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598899",
+    "ThreadId": "254296",
+    "Html": "<p>ok thanks i found another class and changed it to public you may take a look on this:(it is because of the networkstreaming you remember?)</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte[] buffer = new byte[100]; //The mp3Buffer i recive from the network from the responsestream.read(...)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte[] OutPutBuffer = new byte[100]; //The OutputBuffer<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mp3Frame mp3frame = new Mp3Frame(new MemoryStream(buffer)); //Put the mp3buffer from network in the mp3frame<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AcmMp3FrameDecompressor mp3framedec = new AcmMp3FrameDecompressor(new WaveFormat()); //inzialize a new instance of the decoder<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mp3framedec.DecompressFrame(mp3frame, OutPutBuffer, 0); //decode</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>could this BASICLY work?</p>\r\n<p>And sorry about my english i am really bad in english... so I may be inpolite or do many mistakes but i am doing my best :D</p>",
+    "PostedDate": "2011-04-18T00:50:25.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598918",
+    "ThreadId": "254296",
+    "Html": "<p>Naudio may a&nbsp;wrapper for MPG123 decoding too, that is a much faster and better sound qaulity mp3 decoder<br />Now they provide the CLR version already for C#</p>\r\n<p><a href=\"http://www.mpg123.de/\">http://www.mpg123.de/</a></p>",
+    "PostedDate": "2011-04-18T01:47:38.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598934",
+    "ThreadId": "254296",
+    "Html": "<p>hmm but i am not searching 4 something ... 1. i want to do something on my on ( its fun :D) and 2. i don t want to have a console open D:</p>",
+    "PostedDate": "2011-04-18T02:26:46.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598937",
+    "ThreadId": "254296",
+    "Html": "<p>yes, the basic idea should work, although those buffer sizes will probably need tweaking</p>",
+    "PostedDate": "2011-04-18T02:28:57.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598976",
+    "ThreadId": "254296",
+    "Html": "<p>ok but don t worry the buffersize of 100 is just a sample. In real it is 418(frame.length). But i have 2 more questions: I always get an error on this line:</p>\n<pre>mp3framedec.DecompressFrame(mp3frame, OutPutBuffer, 0); //decode</pre>\n<p>The Error:</p>\n<pre>Couldn't convert the whole MP3 frame</pre>\n<p>because of this:</p>\n<pre>sourceBytesConverted != frame.FrameLength<br /><br /></pre>\n<p>So why?</p>\n<p>&nbsp;</p>\n<p>And 2nd question:</p>\n<p>How can i convert the bytes to a waveprovider to use the WaveOut or which class/Interface... what ever should i use to play in the end?</p>",
+    "PostedDate": "2011-04-18T03:49:43.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598981",
+    "ThreadId": "254296",
+    "Html": "<p>that's strange. can you play the MP3 file using NAudio demo?</p>\r\n<p>2nd question: use BufferedWaveProvider</p>",
+    "PostedDate": "2011-04-18T03:55:35.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "599166",
+    "ThreadId": "254296",
+    "Html": "<p>i don t use a mp3file :D its an mp3stream. From network --&gt; it is live radio.</p>",
+    "PostedDate": "2011-04-18T08:40:56.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "599193",
+    "ThreadId": "254296",
+    "Html": "<p>What are the values of sourceBytesConverted and frame.FrameLength? Are you sure your dest buffer is big enough?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-18T09:08:49.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601159",
+    "ThreadId": "254296",
+    "Html": "<p>i ve changed a little part of your libary:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;throw new InvalidOperationException(\"Couldn't convert the whole MP3 frame\" + sourceBytesConverted.ToString() + \" / \" + frame.FrameLength);</p>\r\n<p>&nbsp;</p>\r\n<p>that comes out: Couldn't convert the whole MP3 frame416 / 418</p>\r\n<p>\r\n<hr />\r\n</p>\r\n<p>and here is again my whole code for this test:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const string url = \"http://listen.technobase.fm/tunein-dsl-pls\";<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var response = WebRequest.Create(url).GetResponse();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (var stream = response.GetResponseStream())<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte[] buffer = new byte[418];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte[] OutPutBuffer = new byte[416];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stream.Read(buffer, 0, buffer.Length);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mp3Frame mp3frame = new Mp3Frame(new MemoryStream(buffer));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AcmMp3FrameDecompressor mp3framedec = new AcmMp3FrameDecompressor(new WaveFormat());<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mp3framedec.DecompressFrame(mp3frame, OutPutBuffer, 0);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveOut o = new WaveOut();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>",
+    "PostedDate": "2011-04-21T11:21:06.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601175",
+    "ThreadId": "254296",
+    "Html": "<p>you need a much bigger output buffer. MP3 is a compressed format, PCM is uncompressed. Pass in an output buffer of 4196 bytes</p>",
+    "PostedDate": "2011-04-21T11:46:01.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "601438",
+    "ThreadId": "254296",
+    "Html": "<p>oh yeah your right sorry what a silly problem of me. i was ill so may my brain was a bit confused :D</p>\r\n<p>&nbsp;</p>\r\n<p>but thanks :)<br />i will try</p>",
+    "PostedDate": "2011-04-22T02:30:31.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602361",
+    "ThreadId": "254296",
+    "Html": "<p>ok that was one problem but there is stil the same problem. <br />Here is a screen of the problem http://s7.directupload.net/images/110425/hg3dxaly.png</p>",
+    "PostedDate": "2011-04-25T04:20:36.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602375",
+    "ThreadId": "254296",
+    "Html": "<p>ok, not sure why only 416 bytes are converted. It might be you have a different MP3 ACM codec installed. Or maybe NAudio is not correctly calculating the frame length and it is only 416 bytes. What happens if you comment out the exception? Can you play the file to the end?</p>",
+    "PostedDate": "2011-04-25T05:09:58.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602388",
+    "ThreadId": "254296",
+    "Html": "<p>i can t test it because i have to finish the algorithm to stream a internet radio. Thats the problem but do you think it might be a problem?</p>",
+    "PostedDate": "2011-04-25T05:46:15.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602431",
+    "ThreadId": "254296",
+    "Html": "<p>Stream some of the internet radio into a local file. Save it with an mp3 extension and see if the NAudio demo can play it. (also see it Windows Media Player can)</p>",
+    "PostedDate": "2011-04-25T07:49:30.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602504",
+    "ThreadId": "254296",
+    "Html": "<p>ok what I know exactly is that the mp3 files are working(if i save them). I ve written a programm 4 recording the radio some time ago. And the files worked. But I m can t do play that frame 4 frame:</p>\r\n<p>&nbsp;</p>\r\n<p>byte[] buffer = new byte[418];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte[] OutPutBuffer = new byte[4196];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BufferedWaveProvider prov = new BufferedWaveProvider(new WaveFormat());<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AcmMp3FrameDecompressor mp3framedec = new AcmMp3FrameDecompressor(new WaveFormat());<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; prov.DiscardOnBufferOverflow = true;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; new System.Threading.Thread(delegate(object o)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while (true)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stream.Read(buffer, 0, buffer.Length);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mp3Frame mp3frame = new Mp3Frame(new MemoryStream(buffer));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mp3framedec.DecompressFrame(mp3frame, OutPutBuffer, 0);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; prov.AddSamples(OutPutBuffer, 0, OutPutBuffer.Length);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }).Start();<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.Threading.Thread.Sleep(200);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveOut wo = new WaveOut(WaveCallbackInfo.NewWindow());<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wo.Init(prov);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wo.Play();<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(\"PLAYED\");</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>I always get different errors</p>",
+    "PostedDate": "2011-04-25T10:30:44.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602973",
+    "ThreadId": "254296",
+    "Html": "<p>Can the NAudioDemo play the MP3 files you saved though? We need to know if the MP3Frame decoding is getting the wrong frame length.</p>",
+    "PostedDate": "2011-04-26T07:59:56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "603031",
+    "ThreadId": "254296",
+    "Html": "<p>ok what should i exactly do now? should i save frame 4 frame or just save the file on classic method means saving the responestream getting from network?</p>",
+    "PostedDate": "2011-04-26T09:48:30.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604169",
+    "ThreadId": "254296",
+    "Html": "<p>Just save all the bytes that come back from the network into a .mp3 file. Then load NAudioDemo and see if it can play it. This will help narrow down where things are going wrong.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-28T08:01:32.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

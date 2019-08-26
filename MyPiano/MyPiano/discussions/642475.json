@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1437789",
+    "ThreadId": "642475",
+    "Html": "Hi all,\r<br />\n<br />\nI'm having a strange problem where the PeakValues are only being populated when the windows sound properties are open and the recording tab is selected. If either of these conditions aren't met, the values just don't update.\r<br />\n<br />\nI'm using a timer (1ms) to poll AudioMeterInformation.PeakValues as such:<br />\n<pre><code>MMDeviceEnumerator devEnum = new MMDeviceEnumerator();\nMMDevice DefaultDevice = devEnum.GetDevice(Config.GetString(&quot;VUDevice&quot;));</code></pre>\n\nIn timer_tick:<br />\n<pre><code>volLeft = DefaultDevice.AudioMeterInformation.PeakValues[0] * 100;              \nvolRight = DefaultDevice.AudioMeterInformation.PeakValues[1] * 100;</code></pre>\n\nAny ideas? Is there something basic I'm missing?\r<br />\n<br />\nThanks, Dave<br />\n",
+    "PostedDate": "2015-08-07T20:21:58.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449043",
+    "ThreadId": "642475",
+    "Html": "sorry, no ideas here. Might be worth reading up the MSDN documentation of the <a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/dd368227(v=vs.85).aspx\" rel=\"nofollow\">IAudioMeterInformation</a> interface which is what NAudio is calling under the hood<br />\n",
+    "PostedDate": "2015-10-19T08:46:12.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "553807",
+    "ThreadId": "242880",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I have an application which records from the stereo mixer. I would like it to keep recording the audio if the speakers are muted. With the WaveIn class it will just record silence. Is there any way to do that?&nbsp;</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-01-22T18:20:48.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554058",
+    "ThreadId": "242880",
+    "Html": "\r\n<p>It depends on your soundcard drivers as to what recording inputs are available. You might need to experiment with the windows record settings dialog</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-23T14:04:05.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

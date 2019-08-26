@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "641581",
+    "ThreadId": "264967",
+    "Html": "\r\n<p>Hi everyone,</p>\r\n<p>I need to play a sound in windows XP, can someone tell me how I can do this? I have try the wasapi code, but it doesn't work.</p>\r\n<p>Thanks in advance for any help</p>\r\n",
+    "PostedDate": "2011-07-13T03:51:17.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "642781",
+    "ThreadId": "264967",
+    "Html": "<p>I do it with waveout.</p>\r\n<p>You need to create wavestream or/and wave provider and init your waveout with the provider.</p>",
+    "PostedDate": "2011-07-14T23:56:03.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "644841",
+    "ThreadId": "264967",
+    "Html": "<p>Hi Mayakz23,</p>\r\n<p>Thank you for your reply. Could you please provide me any example? Thanks</p>",
+    "PostedDate": "2011-07-20T01:40:06.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "646198",
+    "ThreadId": "264967",
+    "Html": "<p>Please look on the Documentation tab for examples about how to use NAudio</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-22T09:26:42.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

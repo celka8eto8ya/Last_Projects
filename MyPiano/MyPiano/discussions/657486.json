@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1482275",
+    "ThreadId": "657486",
+    "Html": "Hi.\r<br />\nI tried this with several audio devices, both capture and render and the result is the same for all of them:\r<br />\n<br />\n<img src=\"http://s12.postimg.io/jwp8lgvr1/naudio_comexception.png\" alt=\"Image\" />\r<br />\n<br />\nThere are several properties of a device's AudioClient property I can't access - it just keeps throwing a System.Runtime.InteropServices.COMException (&quot;Exception of HRESULT: 0x88890001&quot;)\r<br />\n<br />\nI didn't even do anything advanced:<br />\n<pre><code>Dim devEnum As New NAudio.CoreAudioApi.MMDeviceEnumerator()\nDim deviceList As NAudio.CoreAudioApi.MMDeviceCollection = devEnum.EnumerateAudioEndPoints(NAudio.CoreAudioApi.DataFlow.Capture, NAudio.CoreAudioApi.DeviceState.Active)\nDim dev As NAudio.CoreAudioApi.MMDevice = devEnum.GetDevice(deviceList(0).ID)</code></pre>\n\nAll my audio devices are being listed by MMDeviceEnumerator and the MixingFormat property is recognized correctly.. Did I do anything wrong or is it a bug?\r<br />\n<br />\nOperating System: Win7 Ultimate x64\r<br />\nAudio interfaces: Zoom G3X, Creative Sound Blaster X-Fi Xtreme Audio, ASUS Xonar D2\r<br />\nIDE: Visual Basic 2010 Express (.NET 4.0)\r<br />\nNAudio version: 1.7.3.0<br />\n",
+    "PostedDate": "2016-08-28T10:03:56.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482445",
+    "ThreadId": "657486",
+    "Html": "That error code is AUDCLNT_E_NOT_INITIALIZED, which means that until you call Initialize on the AudioClient, you can't access all its properties.<br />\n",
+    "PostedDate": "2016-08-30T13:07:11.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

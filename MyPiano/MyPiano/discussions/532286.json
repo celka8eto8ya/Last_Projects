@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1209321",
+    "ThreadId": "532286",
+    "Html": "I'm using NAudio 1.7 in a WinRT app. I have a WaveProvider for MP3 files working (using the MediaFoundationReaderRt class from the Win8 sample). I want to calculate the FFT for each sample.\r<br />\n<br />\nCreating a SampleProvider goes fine:<br />\n<pre><code>var sp = wp.ToSampleProvider();</code></pre>\n\nBut sp.Read() throws the exception<br />\n<blockquote>\nUnable to cast COM object of type 'System.__ComObject' to interface type 'NAudio.MediaFoundation.IMFSourceReader'. This operation failed because the QueryInterface call on the COM component for the interface with IID '{70AE66F2-C809-4E4F-8915-BDCB406B7993}' failed due to the following error: No such interface supported (Exception from HRESULT: 0x80004002 (E_NOINTERFACE)).<br />\n</blockquote>\nHelp?<br />\n",
+    "PostedDate": "2014-02-17T02:23:53.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209380",
+    "ThreadId": "532286",
+    "Html": "According to <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/dd374655(v=vs.85).aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-us/library/windows/desktop/dd374655(v=vs.85).aspx</a>\r<br />\nIn Windows 8, this interface is extended with IMFSourceReaderEx.\r<br />\n<br />\nSo use IMFSourceReaderEx instead.<br />\n",
+    "PostedDate": "2014-02-17T04:39:56.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209485",
+    "ThreadId": "532286",
+    "Html": "I'm a little surprised you get this error. Is this regular Windows 8 or  Windows 8 RT only device (e.g. Surface)<br />\n",
+    "PostedDate": "2014-02-17T07:58:03.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209586",
+    "ThreadId": "532286",
+    "Html": "@markheath Full Win8 PC, I haven't tested on my Surface yet. I'm intending for the app to work on both if at all possible though.\r<br />\n<br />\n@K24A3 Where would I use IMFSourceReaderEx? I'm guessing this is the relevant code:<br />\n<pre><code>protected override IMFSourceReader CreateReader(MediaFoundationReaderSettings settings)\n        {\n            var fileStream = ((MediaFoundationReaderRtSettings)settings).Stream;\n            var byteStream = MediaFoundationApi.CreateByteStream(fileStream);\n            var reader = MediaFoundationApi.CreateSourceReaderFromByteStream(byteStream);\n            reader.SetStreamSelection(MediaFoundationInterop.MF_SOURCE_READER_ALL_STREAMS, false);\n            reader.SetStreamSelection(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, true);\n\n            // Create a partial media type indicating that we want uncompressed PCM audio\n\n            var partialMediaType = new MediaType();\n            partialMediaType.MajorType = MediaTypes.MFMediaType_Audio;\n            partialMediaType.SubType = settings.RequestFloatOutput ? AudioSubtypes.MFAudioFormat_Float : AudioSubtypes.MFAudioFormat_PCM;\n\n            // set the media type\n            // can return MF_E_INVALIDMEDIATYPE if not supported\n            reader.SetCurrentMediaType(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, IntPtr.Zero, partialMediaType.MediaFoundationObject);\n            return reader;\n        }</code></pre>\n\nfrom <a href=\"https://naudio.codeplex.com/SourceControl/latest#NAudioWin8Demo/MediaFoundationReaderRT.cs\" rel=\"nofollow\">https://naudio.codeplex.com/SourceControl/latest#NAudioWin8Demo/MediaFoundationReaderRT.cs</a> <br />\n",
+    "PostedDate": "2014-02-17T13:05:42.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209644",
+    "ThreadId": "532286",
+    "Html": "It appears that IMFSourceReaderEx has not been implemented.\r<br />\n<br />\nDoes the interface work in a Desktop app?<br />\n",
+    "PostedDate": "2014-02-17T16:22:00.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

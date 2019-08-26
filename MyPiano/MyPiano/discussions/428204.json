@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "982161",
+    "ThreadId": "428204",
+    "Html": "\r\n<p>First of all thank you for this great piece of work - it is so easy to use...</p>\r\n<p>My problem is, when I am recording audio via WasapiLoopbackCapture and start another process with a bit heavier cpu-load, I get a faulty recording with skips. When the system is nearly &quot;idle&quot; everything works great. Do I have to change the buffer\r\n size? When yes, how can I do this?</p>\r\n<p>Thanks in advance!</p>\r\n",
+    "PostedDate": "2013-01-01T14:15:37.613-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

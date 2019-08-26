@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "417826",
+    "ThreadId": "204879",
+    "Html": "<p>Hello,</p>\r\n<p>&nbsp;</p>\r\n<p>I've been having a strange problem using WaveOut / SineWaveProvider32. When I close my app after instantiating a WaveOut object and using it I get an error dialog saying &quot;WaveOut deice was not closed at WaveOut.Finalize()&quot;. I get this message despite explicitly calling:</p>\r\n<p>&nbsp;</p>\r\n<p>waveOut.Stop();</p>\r\n<p>waveOut.Dispose();</p>\r\n<p>waveOut = null;</p>\r\n<p>&nbsp;</p>\r\n<p>I have confirmed via the debugger that the above three lines are being executed long before I attempt shutdown. I still get the error dialog however.</p>\r\n<p>&nbsp;</p>\r\n<p>The second issue is probably related somehow: &nbsp;After instantiating a WaveOut object and initializing it with a SineWaveProvider32 object and playing some sine wave, I execute the above 3 lines to stop playback. I then go about my business with the app and much later I shutdown. I again receive the aforementioned error dialog. However, after a bit of poking around I discovered that the &quot;Read()&quot; method of the SineWaveProvider32 object is being called LONG after I've disposed of &quot;waveOut&quot;. What's going on here? Thanks in advance folks.</p>\r\n<p>&nbsp;</p>\r\n<p>-L</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-13T17:42:42.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423647",
+    "ThreadId": "204879",
+    "Html": "<p>are you sure you didn't create more than one WaveOut object? GC.SuppressFinalize should be called when you call waveOut.Dispose()</p>\r\n<p>Also, what callback mechanism are you using?</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-25T09:05:10.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "568398",
+    "ThreadId": "204879",
+    "Html": "<p>I am having the exact same problem described above (the first one). Those three lines are being executed but I still get the error message after closing the application.</p>\r\n<p>Did you manage to solve it,&nbsp;lkeene?</p>\r\n<p>Gr, Sander</p>",
+    "PostedDate": "2011-02-18T01:30:41.237-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569514",
+    "ThreadId": "204879",
+    "Html": "<p>Sander - check you are not making more than one WaveOut object</p>",
+    "PostedDate": "2011-02-21T02:38:45.89-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569519",
+    "ThreadId": "204879",
+    "Html": "<p>Thanks for your reply. I managed to fix the issue.</p>\r\n<p>Although I was convinced I was not creating a second WaveOut object, I was actually. My bad.</p>\r\n<p>Gr, Sander</p>",
+    "PostedDate": "2011-02-21T02:45:54.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

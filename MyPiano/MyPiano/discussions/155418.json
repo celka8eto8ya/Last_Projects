@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "362949",
+    "ThreadId": "155418",
+    "Html": "<p>Hi, Im using the sinewaveoscillator and am wondering about the buffers. When you change amplitude will it finish the current buffer and then&nbsp;increase&nbsp;the next buffer or will it stop the current buffer and increase it in realtime?</p>\r\n<p>What is SampleAggregator?</p>\r\n<p>Also I have this code to get the input level and display it on the volume meter. It works sort of, but not accurately and repeatablly. I cannot get a consistent lvl reading. I have the input looped to the output and a sinewave playing from the sinewaveoscillator. When I stop the sinewaveoscillator and restart it, it will be a completely different reading. Its never consistent.</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><div style=\"color:Black;background-color:White\"><pre><div style=\"color:Black;background-color:White\"><pre><span style=\"color:Blue\">public</span> <span style=\"color:Blue\">float</span> sample32;    .....\r\n</pre>\r\n</div>\r\n</pre>\r\n<pre>&nbsp;</pre>\r\n<pre>waveInStream.DataAvailable += waveIn_DataAvailable;   .....\r\n\r\n\r\n\r\n<span style=\"color:Blue\">void</span> waveIn_DataAvailable(<span style=\"color:Blue\">object</span> sender, WaveInEventArgs e)\r\n        {\r\n            label11.Text = (sample32.ToString());   <span style=\"color:Green\">//to see the actuall float value</span>\r\n            volumeMeter1.Amplitude = sample32;\r\n            <span style=\"color:Blue\">for</span> (<span style=\"color:Blue\">int</span> index = 0; index &lt; e.BytesRecorded; index += 2)\r\n            {\r\n                <span style=\"color:Blue\">short</span> sample = (<span style=\"color:Blue\">short</span>)((e.Buffer[index + 1] &lt;&lt; 8) | e.Buffer[index + 0]);\r\n                <span style=\"color:Blue\">float</span> sample32 = sample / 32768f;  \r\n            }\r\n            \r\n        }\r\n\r\n\r\nThanks for any input in advance,</pre>\r\n<pre>John</pre>\r\n</div>\r\n</pre>\r\n</div>",
+    "PostedDate": "2010-02-22T17:32:41.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

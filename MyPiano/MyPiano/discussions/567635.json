@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1305406",
+    "ThreadId": "567635",
+    "Html": "Hello dear guys,\r<br />\nI am sitting here for 4 hours now and can't figure out how to solve this.\r<br />\nI have a RAW (PCM) audio stream and already got it working to convert it to wav format with the following code:\r<br />\n<br />\nprivate FileStream rawstream= .....\r<br />\n.....\r<br />\nrawstream.Seek(0, SeekOrigin.Begin);\r<br />\nbyte[] buffer = new byte[rawstream.Length];\r<br />\nrawstream.Read(buffer, 0, buffer.Length);\r<br />\n<br />\nusing (WaveFileWriter writer2 = new WaveFileWriter(pFile + &quot;.wav&quot;, mWaveFormat))\r<br />\n{<br />\n<pre><code> writer2.Write(buffer, 0, buffer.Length);</code></pre>\n\n}\r<br />\n<br />\nI have also read most of the following article: <a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET</a>\r<br />\n<br />\nThere is mentioned that some conversion from PCM to MP3 is possible:\r<br />\nusing(var reader = MediaFoundationReader(&quot;somefile.mp3&quot;))\r<br />\n{<br />\n<pre><code>MediaFoundationEncoder.EncodeToWma(reader, &quot;encoded.wma&quot;, 192000);</code></pre>\n\n}<br />\n\r<br />\nBut when I try to create a MediaFoundationReader the class can't be found.\r<br />\nFurthermore I don't know if it takes a normal Stream as input anyway.\r<br />\n<br />\nSomething like this exists:\r<br />\nMediaFoundationEncoder.EncodeToMP3(reader, &quot;encodedmp3&quot;, 192000);\r<br />\n<br />\nBut I also can't convert my &quot;normal pcm stream&quot; to a type that the EncodeToMP3 method would accept it.\r<br />\n<br />\nCould you please help me and give me a small tip where my failure is?\r<br />\nOr am I totally wrong and can't convert PCM to MP3 with NAudio?\r<br />\n<br />\nThank you very much.<br />\n",
+    "PostedDate": "2014-09-16T18:02:59.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305889",
+    "ThreadId": "567635",
+    "Html": "I sadly still didn't get further. Does nobody have an idea?<br />\n",
+    "PostedDate": "2014-09-18T04:45:09.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

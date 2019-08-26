@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "278373",
+    "ThreadId": "81135",
+    "Html": "<p>I am using VS2008 on an XP system.&nbsp; I run the NAudioTutorial5 example and when I attempt to playback a recording from &quot;Record only audio mixed and played by NAudio&quot;, I get an exception, &quot;Only PCM Supported&quot;.&nbsp; Why is this happening?</p>\r\n<p>&nbsp;</p>\r\n<p>Additionally, to make my need clear, I am looking to build in recording functionaliity into a Voip Softphone I am developing.&nbsp; I am not looking to capture the remote incoming audio from an Input device like a Microphone, but rather get the audio from the Output device.&nbsp; Am I on the right track using NAudio and more specifically, this example?&nbsp; Thank you for your time.</p>",
+    "PostedDate": "2010-01-17T23:29:56.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "280348",
+    "ThreadId": "81135",
+    "Html": "<p>Hi Yired,</p>\r\n<p>Can you please post up the code that you are using for this?</p>\r\n<p>Are you using a modified version of the NAudio library for this?</p>\r\n<p>The NAudio library has changed a bit since that tutorial was written; you can either use the version of the library where the modifications were made or reapply those modifications to the current version.</p>\r\n<p>I'm not sure if this type of functionality has been included in the core latest version on SVN; I haven't had a chance to check out the latest updates from SVN recently but if your interested in this type of functionality I would suggest you start there.</p>\r\n<p>&nbsp;</p>\r\n<p>Having said all this, the normal reason you would get an error like this is if you are loading a format which NAudio doesn't handle or you have incorrectly told NAudio the format of a file type that is supported. So I would suggest you check if you are preparing the RIFF header correctly for the data you have saved.</p>\r\n<p>Cheers.</p>",
+    "PostedDate": "2010-01-21T18:44:16.89-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "598990",
+    "ThreadId": "254322",
+    "Html": "\r\n<p>I try to play music from http url i have simple code, but i want to play stream and buffering in the meantime. Can i do that with NAudio.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        <span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> PlayMp3FromUrl(<span style=\"color:blue\">string</span> url)\r\n        {\r\n            Stream ms = <span style=\"color:blue\">new</span> MemoryStream();\r\n            Stream stream = WebRequest.Create(url).GetResponse().GetResponseStream();\r\n            <span style=\"color:blue\">byte</span>[] buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[32768];\r\n            <span style=\"color:blue\">int</span> read;\r\n\r\n            <span style=\"color:blue\">while</span> ((read = stream.Read(buffer,0, buffer.Length)) &gt; 0)\r\n            {\r\n                ms.Write(buffer, 0, read);\r\n            }\r\n            ms.Position = 0;\r\n            WaveStream blockAlignedStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(WaveFormatConversionStream.CreatePcmStream(<span style=\"color:blue\">new</span> Mp3FileReader(ms)));\r\n            WaveOut waveOut = <span style=\"color:blue\">new</span> WaveOut(WaveCallbackInfo.FunctionCallback());\r\n            waveOut.Init(blockAlignedStream);\r\n            waveOut.Play();\r\n        }\r\n</pre>\r\n</div>\r\nin this code i dont use any dispose and i know its wrong\r\n<p></p>\r\n",
+    "PostedDate": "2011-04-18T04:05:35.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "599215",
+    "ThreadId": "254322",
+    "Html": "<p>NAudio has the building blocks to make MP3 streaming, but it is not straightforward at the moment. Basically you need to get the latest code and look at the MP3Frame class and the MP3FrameDecompressor class. Using these in conjuction with a BufferedWaveProvider  would allow streaming playback of MP3, although you might need to make a few code tweaks to avoid attempting to parse half-complete MP3 frames. Also, you will need a strategy to cope with data arriving too fast or too slow.</p>\n<p>Mark</p>",
+    "PostedDate": "2011-04-18T09:31:34.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

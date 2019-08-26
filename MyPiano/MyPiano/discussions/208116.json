@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "426658",
+    "ThreadId": "208116",
+    "Html": "<p>Is it possible to use NAudio to read and or write RIFF chuck meta data to or from a wave file?</p>",
+    "PostedDate": "2010-04-01T14:55:08.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "427764",
+    "ThreadId": "208116",
+    "Html": "<p>have a look at the ExtraChunks property of the WaveFileReader class and look at the CueWaveFileWriter for an example of how to add extra chunks in</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-04-06T02:28:35.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

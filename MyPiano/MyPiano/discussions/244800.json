@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "561311",
+    "ThreadId": "244800",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I am trying to get a latency around 10-25 ms using WaveIn, but when I get below 50 ms the sound quality starts to decrease. Is a latency below 50 posible at all?</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you</p>\r\n<p>Martin</p>\r\n",
+    "PostedDate": "2011-02-05T13:10:23.33-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561555",
+    "ThreadId": "244800",
+    "Html": "\r\n<p>it's hard to get low latency with WaveIn. Set the number of buffers to 2, which should help a little.</p>\r\n",
+    "PostedDate": "2011-02-06T11:56:10.523-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561762",
+    "ThreadId": "244800",
+    "Html": "\r\n<p>Would I need to use ASIO then? I have only seen examples of ASIO out in NAudio. Is there support for ASIO In?</p>\r\n",
+    "PostedDate": "2011-02-06T23:40:31.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561923",
+    "ThreadId": "244800",
+    "Html": "\r\n<p>to be honest, for real low latency code I would use C/C&#43;&#43; rather than a garbage collected language. ASIO support in NAUdio is very weak. Wasapi might be a better bet if you can do without Windows XP support.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-07T06:27:58.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

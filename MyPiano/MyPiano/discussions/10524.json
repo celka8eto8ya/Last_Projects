@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "34083",
+    "ThreadId": "10524",
+    "Html": "\r\nMark,<br /><br />This is a very useful library and I'm so glad to find it! I've been hunting for a simple MIDI event library for .NET for a long time. I'm writing a free music education application in VB.<br /><br />I've figured out from your MidiIn demo how to get the ToString() value from a MIDI event, which has the info I need, but it's strung together with other stuff I don't. Here's what I'm getting:<br /><br />0 NoteOff Ch: 1 E3 Vel:122<br /><br />What I need is just the \"E3\" noteName or, better yet, the MIDI note number. Here's my code for the event handling:<br /><br />    Private Sub messageReceived(ByVal sender As Object, ByVal e As MidiInMessageEventArgs)<br />        contentArea.InnerHtml = e.MidiEvent.ToString<br />    End Sub<br /><br /><br />Can you help me get the note name or the MIDI note number out of the event?<br /><br />Thanks!<br />-- D<br />",
+    "PostedDate": "2007-05-21T08:24:18.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "34110",
+    "ThreadId": "10524",
+    "Html": "\r\nyou need to check what type the MidiEvent is. If it is a NoteOn event, then you can cast it to NoteOnEvent, which will give you access to all the parameters you need.<br /><br />Mark<br />",
+    "PostedDate": "2007-05-21T12:53:32.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "34167",
+    "ThreadId": "10524",
+    "Html": "\r\nMark,<br /><br />Thanks for that! That solves my problem. But I'm using an ugly string-based method of determining if we have \"NoteOn\". Is there an elegant way to tell from the MidiInMessageEventArgs or from the MidiEvent itself?<br /><br />Thanks to you, I got a working prototype of my application up and running in one day. :-)<br /><br />-- D<br />",
+    "PostedDate": "2007-05-22T07:11:41.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "34237",
+    "ThreadId": "10524",
+    "Html": "\r\nHave a look at the midiEvent.CommandCode property - it will tell you what you need to know<br /><br />Mark<br />",
+    "PostedDate": "2007-05-22T12:19:16.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "34255",
+    "ThreadId": "10524",
+    "Html": "\r\nThanks again, Mark. I understand now how it works... You find out the type of event, then recast as an event of that type to get the full properties.<br /><br />Nice work!<br /><br />-- D<br />",
+    "PostedDate": "2007-05-22T13:41:04.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

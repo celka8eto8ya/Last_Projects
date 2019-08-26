@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "908728",
+    "ThreadId": "394503",
+    "Html": "\r\n<p>Can NAudio handle live down-mixing off multi-channel streams to stereo? We have an audio streaming solution, and we are looking to down-mix 5.1 to stereo.</p>\r\n",
+    "PostedDate": "2012-09-05T08:39:04.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908747",
+    "ThreadId": "394503",
+    "Html": "<p>NAudio isn't highly optimised for speed, but it should be possible with 44.1kHz audio on a relatively modern machine. Are you mixing down to file or trying to play the mixed audio back?</p>",
+    "PostedDate": "2012-09-05T09:14:45.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908758",
+    "ThreadId": "394503",
+    "Html": "<p>We are playing back. In fact we are streaming, but it would have to be pretty much real time. All we are interested in is the resampling code... literally converting 6 sample streams into 2.</p>",
+    "PostedDate": "2012-09-05T09:25:41.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909517",
+    "ThreadId": "394503",
+    "Html": "<p>yes, you could do this no problem with your own IWaveProvider (or ISampleProvider)</p>",
+    "PostedDate": "2012-09-07T02:29:13.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1213729",
+    "ThreadId": "534840",
+    "Html": "Hi All,<br />\n<br />\nAm new to NAudio, I am trying to create an application that will write to file (.wav) the last 30 seconds of Audio since having started capturing (Using WasapiLoopbackCapture()).<br />\n<br />\nMy question is do I need to create my own CircularDataStack and fill it with OnDataAvailable() or is there a way to do this already using BufferedWaveProvider maybe?<br />\n<br />\nThanks in advance for any help!<br />\n",
+    "PostedDate": "2014-02-24T07:06:40.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213816",
+    "ThreadId": "534840",
+    "Html": "I'm pretty sure NAudio's CircularBuffer does not overwrite data already in there (once it's full no more audio gets added). So you'd need to make your own that discards existing audio when new audio is written in.<br />\n",
+    "PostedDate": "2014-02-24T08:57:47.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213879",
+    "ThreadId": "534840",
+    "Html": "Thanks for the reply Mark!<br />\n",
+    "PostedDate": "2014-02-24T10:00:32.547-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

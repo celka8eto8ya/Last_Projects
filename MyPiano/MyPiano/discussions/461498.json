@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1104933",
+    "ThreadId": "461498",
+    "Html": "Hi,\r<br />\n<br />\nI'm having an issue with the MultiplexingWaveProvider class. I have the following scenario:\r<br />\nI have multiple incoming IWaveProvider streams (all mono with 1 channel and 16bit rate) and must mix them so that the user can hear them in the right or left or both sides of his/her headphone. So I created two MixingWaveProvider32 object, one for each side and created a MultiplexingWaveProvider with the two MixingWaveProviders32s. However when the same IWaveProvider  is added to both MixingWaveProvider32s on one side it can be heard clearly, but on the other side it is just noise. I think it is because of the MultiplexingWaveProviders Read method, but I'm not sure. Can you help me out?\r<br />\n<br />\nRegards,\r<br />\nIstvan<br />\n",
+    "PostedDate": "2013-10-08T03:00:14.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1104964",
+    "ThreadId": "461498",
+    "Html": "you can't pass the same IWaveProvider in twice. When the Read method is called, it doesn't know who is calling it, so it just returns the next block of data. You'd need to come up with some way to buffer the data allowing it to be read twice. Two BufferedWaveProviders wouldn't be a bad way to approach this.<br />\n",
+    "PostedDate": "2013-10-08T04:54:34.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105330",
+    "ThreadId": "461498",
+    "Html": "Thanks, that helped me out.\r<br />\n<br />\nHave another question though, to be able to mix the channels, I need to convert them to IEEE floating point. Isn't there a Mixer that can handle PCM mono streams?<br />\n",
+    "PostedDate": "2013-10-08T23:46:08.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105340",
+    "ThreadId": "461498",
+    "Html": "no, you really want to be mixing at IEEE floating point. NAudio has loads of converters that can get you from PCM WaveProviders to SampleProviders, then you can use MixingSampleProvider and MultiplexingSampleProvider.<br />\n",
+    "PostedDate": "2013-10-09T00:36:35.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105349",
+    "ThreadId": "461498",
+    "Html": "Ok, but can't I use the MixingWaveProvider32 and MultiplexingWaveProvider classes? Should I use the SampleProvider counterparts? And what is the difference between the WaveProvider and SampleProvider classes (for example MultiplexingWaveProvider and MultiplexingSampleProvider).<br />\n",
+    "PostedDate": "2013-10-09T00:49:05.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105385",
+    "ThreadId": "461498",
+    "Html": "ISampleProvider deals with float[] while IWaveProvider deals with byte[]. ISampleProvider is always IEEE float samples, whilst IWaveProvider could be anything (PCM 16 or 24 bit, G.711, IEEE float etc). You'll find ISampleProvider is much more straightforward to work with and create your own classes.\r<br />\n<br />\nI'm currently working on a Pluralsight course in which I go into a lot of detail about this, so keep an eye out on this site or my blog and I'll announce it.<br />\n",
+    "PostedDate": "2013-10-09T03:01:32.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105407",
+    "ThreadId": "461498",
+    "Html": "With IWaveProvider you can use WaveOut or WaveOutEvent. What can you use instead of this class with ISampleProviders?<br />\n",
+    "PostedDate": "2013-10-09T03:53:33.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105408",
+    "ThreadId": "461498",
+    "Html": "at the end of your signal chain, use a SampleToWaveProvider16 to go back to 16 bit PCM (or just a SampleToWaveProvider to stay at IEEE float). The next NAudio will have some extension methods that make this a lot easier.<br />\n",
+    "PostedDate": "2013-10-09T03:56:10.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

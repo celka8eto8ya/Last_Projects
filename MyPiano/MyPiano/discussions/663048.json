@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1496655",
+    "ThreadId": "663048",
+    "Html": "I hope someone can help me, I have a recorded wav file which I did already sent through the SimpleCompressor class like that:<br />\n<pre><code>            WaveFileReader audio = new WaveFileReader(strFile);\n            \n            string strCompressedFile = &quot;&quot;;\n\n            byte[] WaveData = new byte[audio.Length];\n            \n            SimpleCompressorStream Compressor = new SimpleCompressorStream(audio);\n            Compressor.Enabled = true;\n\n            if (Compressor.Read(WaveData, 0, WaveData.Length) &gt; 0)\n            {\n                strCompressedFile = &quot;xxx.wav&quot;;               \n            \n                WaveFileWriter CompressedWaveFile = new WaveFileWriter(strCompressedFile, audio.WaveFormat);\n                CompressedWaveFile.Write(WaveData, 0, WaveData.Length);\n                CompressedWaveFile.Flush();                                                     \n\n            } </code></pre>\n\nAfterwards I need to do some normalization of the volume but I have no idea how to do that. Is there any function in naudio for that like the compressor class? If not what do I have to do?<br />\n",
+    "PostedDate": "2017-05-22T10:36:41.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496708",
+    "ThreadId": "663048",
+    "Html": "Simply loop through each sample and find the max sample. Finally loop through each sample again and multiply by (1/max sample).<br />\n",
+    "PostedDate": "2017-05-24T12:04:41.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

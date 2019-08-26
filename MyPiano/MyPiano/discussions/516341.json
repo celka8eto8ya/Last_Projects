@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1186437",
+    "ThreadId": "516341",
+    "Html": "Hello,<br />\n<br />\nI was wondering if it is possible to write the code to fetch real-time audio data using multiple USB microphone using NAudio. If so, how would I do it? (I was looking at the sample code for Voice Recorder) <br />\n<br />\nI am using C#.<br />\nWaveIn waveIn = new WaveIn(); =&gt; This line is throwing an exception (Use WaveInEvent to record on a background thread).<br />\nAny idea? <br />\n<br />\nThanks,<br />\n",
+    "PostedDate": "2014-01-20T23:16:11.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1188836",
+    "ThreadId": "516341",
+    "Html": "Never mind. Figured out. <br />\n",
+    "PostedDate": "2014-01-21T18:08:13.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216148",
+    "ThreadId": "516341",
+    "Html": "<strong>s2moon wrote:</strong><br />\n<blockquote>\nHello,<br />\n<br />\nI was wondering if it is possible to write the code to fetch real-time audio data using multiple USB microphone using NAudio. If so, how would I do it? (I was looking at the sample code for Voice Recorder) <br />\n<br />\nI am using C#.<br />\nWaveIn waveIn = new WaveIn(); =&gt; This line is throwing an exception (Use WaveInEvent to record on a background thread).<br />\nAny idea? <br />\n<br />\nThanks,<br />\n</blockquote>\nI'm doing the same work now.\r<br />\n<br />\nCan you tell me how to process the stream in real-time？\r<br />\n<br />\nI have successfully recorded the voice into *.wav file.<br />\n",
+    "PostedDate": "2014-02-28T07:13:45.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216157",
+    "ThreadId": "516341",
+    "Html": "Actually, I want to draw a dynamic waveform figure of the voice. (It's in real-time)\r<br />\n<br />\nThe X axis is time, Y axis is frequency.\r<br />\n<br />\nMaybe you can help me. Thanks!<br />\n",
+    "PostedDate": "2014-02-28T07:23:10.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217759",
+    "ThreadId": "516341",
+    "Html": "have a look at the WPF demo source code - it shows how to create a real-time spectrum analyser<br />\n",
+    "PostedDate": "2014-03-03T02:35:18.03-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Not an issue with NAudio",
+    "ClosedDate": "2014-01-09T05:38:47.143-08:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "i m successfully write raw data to serial port with NAudio Library here is my code,\r\n\r\n   Dim rawStream = File.OpenRead(\"c:\\myfile.raw\")\r\n    Dim waveFormat = New NAudio.Wave.WaveFormat(8000, 16, 1)\r\n\r\n    Dim rawSource = New RawSourceWaveStream(rawStream, waveFormat)\r\n\r\n    Dim buffer As Byte() = New Byte(rawSource.Length) {}\r\n\r\n    Dim n As Integer = 2\r\n    For x As Integer = 0 To buffer.Length - n - 1 Step n\r\n        Application.DoEvents()\r\n        Dim bytesRead As Integer = rawSource.Read(buffer, 0, x)\r\n        If bytesRead > 0 Then\r\n\r\n            SP1.Write(buffer, 0, bytesRead)\r\n\r\n        End If\r\n\r\n        Thread.Sleep(40)\r\n\r\n    Next\r\nthis code works fine only problem i m able to hear raw file to my mobile but play raw file very fast i use thread.sleep and application.DoEvents() but it still play very fast please guide me how to write data with normal speed",
+    "LastUpdatedDate": "2014-01-09T05:38:47.143-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-12-29T05:28:12.23-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "raw file play very fast using NAudio Library",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16425
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "if you are sending raw audio via serial port, then it must match exactly the sample rate, bit depth and channel count whatever on the other end is expecting. Also, NAudio is completely superfluous in this example. Just send your raw stream directly",
+      "PostedDate": "2013-12-31T08:03:40.71-08:00",
+      "Id": 128768
+    },
+    {
+      "Message": "how to set raw file sample rate ,bit depth and channel it possible please give me example\n\nThanks\nZahid",
+      "PostedDate": "2013-12-31T09:21:32.387-08:00",
+      "Id": 128777
+    },
+    {
+      "Message": "to change the sample rate, you need to resample. To change the bit depth, you need to examine each sample and convert it to the new range. To change the number of channels there are lots of techniques. If you have a Pluralsight account, I'd recommend watching module 4 of my [Audio Programming with NAudio course](http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio).",
+      "PostedDate": "2013-12-31T10:54:40.98-08:00",
+      "Id": 128781
+    }
+  ]
+}

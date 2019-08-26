@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "851661",
+    "ThreadId": "360348",
+    "Html": "\r\n<p>how can I get frequency music ?&nbsp;</p>\r\n<p>I'm little confused about byte.....Does it mean byte as frequency ?&nbsp;</p>\r\n",
+    "PostedDate": "2012-06-20T10:31:43.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "851996",
+    "ThreadId": "360348",
+    "Html": "<p>You can determine the frequencies present in audio&nbsp; by using an FFT. It's not an easy topic for beginners though, as you need to understand some DSP.</p>\r\n<p>Read my Autotune article for more information:</p>\r\n<p>http://channel9.msdn.com/coding4fun/articles/AutotuneNET</p>",
+    "PostedDate": "2012-06-21T01:38:11.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "852009",
+    "ThreadId": "360348",
+    "Html": "<p>Is it possible in NAudio to do echo data hiding ?</p>\r\n<p>Echo daa hiding like hide data in the frequency&nbsp; of song.</p>",
+    "PostedDate": "2012-06-21T02:05:01.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "852520",
+    "ThreadId": "360348",
+    "Html": "<p>do you mean echo suppression? NAudio does not have an echo suppression algorithm I am afraid</p>",
+    "PostedDate": "2012-06-22T03:08:28.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1000614",
+    "ThreadId": "432971",
+    "Html": "If you have a couple ISampleProviders, for instance: one to perform a BassTreble adjustment and then let's say another do perform some kind of filter adjustment, how can you make it them work together in one player. I can see individual ISampleProvider examples in the source download, don't haven't seen (as far as I can tell) a way to chain them?\r<br />\n<br />\nAm I missing something? Or, do I have to build one ISampleProvider which would a list of other ISampleProviders similar to the effect chain in the skype example?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-13T07:17:09.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1001747",
+    "ThreadId": "432971",
+    "Html": "yes, that is the idea of ISampleProviders. Just make lots of implementations of them. In the Read method, read from the source ISampleProvider, and apply the effects. No need to have a single class managing them all unless you need to swap them in and out, or change their order etc.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-02-15T03:40:28.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1001813",
+    "ThreadId": "432971",
+    "Html": "Is there a way to couple the ISampleProvider's with the BufferedWaveReader? Right now, without any effects, we have a BufferedWaveReader reading in the samples, filling in the buffer and we are hearing the audio. How would we plugin a ISampleProvider within the stream?\r<br />\n<br />\nIs there an example that we can use that utilizes this combo where one format is byte[] and another is float[]? \r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-15T06:18:10.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1001819",
+    "ThreadId": "432971",
+    "Html": "there is an adapter class - something like Pcm16WaveToSampleProvider (assuming you have 16 bit audio in your BufferedWaveProvider)<br />\n",
+    "PostedDate": "2013-02-15T06:22:59.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

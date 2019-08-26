@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "915793",
+    "ThreadId": "396423",
+    "Html": "\r\n<p>This is happening with NAudio's DirectSoundOut in Windows XP. &nbsp;Seems like it's related to the DirectX version, because it works fine in Vista&#43; (w/DX 10&#43;). &nbsp;I'm wondering if anyone has ran into this and can maybe suggest a workaround. &nbsp;I've\r\n also emailed the contact info from the file - Alexandre Mutel - for ideas. &nbsp;</p>\r\n",
+    "PostedDate": "2012-09-21T09:51:30.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "915814",
+    "ThreadId": "396423",
+    "Html": "<p>probably just means you're trying to play a WaveFormat that DirectSound doesn't support. What is the WaveFormat of the WaveProvider you are passing to the Init function?</p>",
+    "PostedDate": "2012-09-21T10:15:10.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "915831",
+    "ThreadId": "396423",
+    "Html": "<p>Thanks for the quick response. &nbsp;GSM 6.10 and CCITT u-Law are two of the formats. &nbsp;Going by the error, it definitely makes sense that this is what's going on. &nbsp;I don't get why they would work fine with dx10+ though, I didn't think it added any support. &nbsp;</p>",
+    "PostedDate": "2012-09-21T10:45:29.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917036",
+    "ThreadId": "396423",
+    "Html": "<p>try using WaveFormatConversionStream.CreatePcmStream</p>",
+    "PostedDate": "2012-09-24T23:32:24.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "918021",
+    "ThreadId": "396423",
+    "Html": "\r\n<p>Works fine on a local XP install. &nbsp;I've dug into it more since the original post and have come to the conclusion that it isn't related to DX 9.0c, but actually related to the Microsoft RDP Audio Driver. &nbsp;The DirectSoundOut and CreatePcmStream problems\r\n only happen over remote desktop when the remote machine is XP, with this RDP Audio Driver. &nbsp;</p>\r\n<p>I didn't realize it was a special case originally since I wasn't running XP locally.&nbsp;</p>\r\n",
+    "PostedDate": "2012-09-26T12:00:24.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919577",
+    "ThreadId": "396423",
+    "Html": "<p>Yes, the RDP audio driver is quite limited</p>",
+    "PostedDate": "2012-09-29T23:34:26.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

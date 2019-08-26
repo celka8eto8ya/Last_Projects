@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1496817",
+    "ThreadId": "663128",
+    "Html": "I have a working incoming UDP audio stream being routed to a WaveOut device.  I would like\r<br />\nto pass the incoming audio to a buffer instead of the WaveOut device, so that I can pass the buffer to another already coded DSP engine, using pointers to the buffer.  The buffer would act as a kind of FIFO.  There is a lot to absorb with regards to the available interfaces in NAudio.  Anyone have a suggestion what the signal chain items would be for this application.  Regards,  Karin \r<br />\nPS: Anyone have any idea when this site will be migrated????<br />\n",
+    "PostedDate": "2017-05-30T13:23:50.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

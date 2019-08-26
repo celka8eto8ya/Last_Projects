@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1235986",
+    "ThreadId": "542791",
+    "Html": "Hi,\r<br />\nI'm a little bit lost,\r<br />\n<br />\nI'd like to pipe a BufferedWaveProvider to a Stream. I need to pipe a given Microphone to a SpeechRecognitionEngine<br />\n<blockquote>\nWaveIn recorder = new WaveIn();<br />\nrecorder.DataAvailable += RecorderOnDataAvailable;<br />\nBufferedWaveProvider buffer = new BufferedWaveProvider(recorder.WaveFormat);<br />\n</blockquote>\nNow how can I pipe my buffer to a Stream ?\r<br />\nand then call :<br />\n<blockquote>\nengine.SetInputToAudioStream(stream, format);<br />\n</blockquote>\n",
+    "PostedDate": "2014-04-20T16:49:28.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239501",
+    "ThreadId": "542791",
+    "Html": "see discussion <a href=\"https://naudio.codeplex.com/discussions/436249\" rel=\"nofollow\">here</a>\r<br />\n<br />\nNot sure how well it would work though. I'd need to find out exactly what the speech recognition engine expects of its input stream.<br />\n",
+    "PostedDate": "2014-04-29T12:15:31.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

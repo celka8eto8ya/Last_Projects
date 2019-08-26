@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "991033",
+    "ThreadId": "430602",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I have a question:</p>\r\n<p>I'm using an USB external Sound Card (http://www.sweex.com/en/assortiment/sound-vision/sound-cards/SC016/) and it's SW is not working on one of my PCs(running&nbsp;win XP), so I figured: I want to do a simple&nbsp;application. The main point is to set different\r\n volume to each speaker. So when I have 5.1 I'd like to change the volume on each speaker independently(that means&nbsp;control&nbsp;the volume on center speaker, on&nbsp;sub-woofer, etc.). I was able to get this working for a 2 channel output (left and right)\r\n but when I plugged 5.1&nbsp;speakers&nbsp;it controlled them the same(so when I lowered volume for left speaker the surround left went off too, and sub-woofer too).</p>\r\n<p>I used something like this to change the channel volume:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>MMDeviceCollection devEnum = DevEnum.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);\r\ndevEnum[3].AudioEndpointVolume.Channels[0].VolumeLevelScalar = (<span style=\"color:blue\">float</span>)trackBar2.Value / 100;\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p>And now the question: Is it even possible to get this done? Or do I need to make my own drivers for this external USB sound card?</p>\r\n<p>&nbsp;<br>\r\n&nbsp;Thanks for your answers in advance.</p>\r\n",
+    "PostedDate": "2013-01-23T08:01:18.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "992009",
+    "ThreadId": "430602",
+    "Html": "\r\n<p>I haven't personally used the <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/dd368056%28v=vs.85%29.aspx\">\r\nIAudioEndpointVolume</a> interface, but I'd assume you can use this on any OS you can use WASAPI. However, XP does not support WASAPI, so you're options there are very limited.</p>\r\n",
+    "PostedDate": "2013-01-25T03:50:07.303-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

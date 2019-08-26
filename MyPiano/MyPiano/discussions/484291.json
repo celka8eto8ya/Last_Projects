@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1151807",
+    "ThreadId": "484291",
+    "Html": "Any chance of an AACFileReader class as like MP3FileReader?<br />\n<br />\nI'd like to process an AAC file via frames. I have yet to find solid info regarding the acc format, I assume it is similar to MP3 frames.<br />\n",
+    "PostedDate": "2014-01-10T07:40:04.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151809",
+    "ThreadId": "484291",
+    "Html": "try using the MediaFoundationReader<br />\n",
+    "PostedDate": "2014-01-10T07:41:48.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151813",
+    "ThreadId": "484291",
+    "Html": "At a glance I dont see a ReadNextFrame() function in MediaFoundationReader but I'll look into how MediaFoundationReader works. Basically I need to cut an ACC file at a lossless frame level.<br />\n",
+    "PostedDate": "2014-01-10T07:46:02.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151814",
+    "ThreadId": "484291",
+    "Html": "No, I'd need full documentation on ACC to be able to parse it, which is something I simply don't have. MediaFoundationReader will convert to PCM<br />\n",
+    "PostedDate": "2014-01-10T07:50:36.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151818",
+    "ThreadId": "484291",
+    "Html": "Ok no worries. I know it is possible and if I figure it out I'll submit the class. Surely it cant be too different to MP3 frames.<br />\n",
+    "PostedDate": "2014-01-10T07:57:02.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

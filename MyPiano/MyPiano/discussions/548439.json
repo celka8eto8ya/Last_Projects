@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1255649",
+    "ThreadId": "548439",
+    "Html": "Hello, I think this question has already been asked but I do not speak English and I did not find my answer in the documentation.\r<br />\n<br />\nI want to record sound from microphone in a memory stream and send it back for over a TCP network.\r<br />\n<br />\nCan you give me links to source code or documentation?\r<br />\nThank you in advance, sorry for the English translation.<br />\n",
+    "PostedDate": "2014-06-12T09:19:08.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260971",
+    "ThreadId": "548439",
+    "Html": "have a look at the NetworkChatDemo in the source code repository<br />\n",
+    "PostedDate": "2014-06-29T15:46:21.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1323669",
+    "ThreadId": "572478",
+    "Html": "I'm trying to make a 8khz a 44 khz wav file but when I generate a 44khz file it is empty (1kb in size from 300 kb) my code follows any help is greatly appreciated <br />\n<pre><code> using (WaveFileReader wfr = new WaveFileReader(fn))\n                {\n                    var newFormat = new WaveFormat(44, wfr.WaveFormat.BitsPerSample, wfr.WaveFormat.Channels);\n                    using (WaveFileWriter wfw = new WaveFileWriter(&quot;C:\\\\Users\\\\karls_000\\\\OneDrive\\\\Documents\\\\temp16khz.wav&quot;, newFormat))\n                    {\n                        using (WaveFormatConversionStream conversionStream = new WaveFormatConversionStream(newFormat, wfr))\n                        {\n                            conversionStream.Position = 0;\n                            byte[] buffer = new byte[1024];\n                            while (conversionStream.Position &lt; conversionStream.Length)\n                            {\n                                int bytesRead = conversionStream.Read(buffer, 0, 1024);\n                                if (bytesRead &gt; 0)\n                                {\n                                    wfw.Write(buffer, 0, bytesRead);\n                                }\n                                else\n                                {\n                                    break;\n                                }\n                            }\n                        }\n                    }\n                }</code></pre>\n\n",
+    "PostedDate": "2014-11-19T00:45:21.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-11-19T00:54:38.773-08:00"
+  },
+  {
+    "Id": "1323672",
+    "ThreadId": "572478",
+    "Html": "Omg I never notice I missed 000 off the 44000 I can't find how to delete this sorry for this pointless question.<br />\n",
+    "PostedDate": "2014-11-19T00:54:35.523-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1323685",
+    "ThreadId": "572478",
+    "Html": "great, glad you found what the problem was ;)<br />\n",
+    "PostedDate": "2014-11-19T01:15:05.58-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

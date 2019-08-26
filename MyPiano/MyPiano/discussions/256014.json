@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "605918",
+    "ThreadId": "256014",
+    "Html": "\r\n<p>Hey guys,</p>\r\n<p>I'm having a problem with TryReadFloat that was previously working under version 1.3.&nbsp; When I run this code block:</p>\r\n<p>while (reader.HasData(array.Length))<br>\r\n{<br>\r\nreader.TryReadFloat(out nextSample);<br>\r\nif (reader.WaveFormat.Channels &gt; 1)<br>\r\n{<br>\r\n&nbsp;&nbsp;&nbsp; reader.TryReadFloat(out nextSample);<br>\r\n}<br>\r\n}</p>\r\n<p>I get a System.ApplicationException with a message &quot;Must read complete blocks&quot;.&nbsp;&nbsp; The audio I'm running is a wav file that has 2 channels of audio.&nbsp; I've search around on the site for source code for the samples associated with version 1.4\r\n but I couldn't find anything.&nbsp; If someone can direct me to the location of the source of the samples, I'm sure I could find out the issue.&nbsp; Thanks for your help!</p>\r\n",
+    "PostedDate": "2011-05-02T08:34:20.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "605938",
+    "ThreadId": "256014",
+    "Html": "<p>OK that is probably a bug you have found. That part of the code is not one I tend make use of myself (I prefer using something like Wave16ToFloatProvider). I am trying to increase unit test coverage for future NAudio so things like that don't get inadvertently broken.&nbsp; I had been contemplating making TryReadFloat an extension method anyway, so you could do the same and make a TryReadFloat with a stereo overload (two out parameters) for use with stereo files.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-02T09:08:08.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "606010",
+    "ThreadId": "256014",
+    "Html": "<p>Hey Mark!&nbsp; No worries.&nbsp; Can you give me an example of using the Wave16ToFloatProvider to gather samples in the same way I'm trying to do above?</p>",
+    "PostedDate": "2011-05-02T11:27:04.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "606090",
+    "ThreadId": "256014",
+    "Html": "<p>might be easiest for you just to do it yourself. here's the snippet for a stereo TryReadFloat extension method</p>\r\n<pre style=\"font-family: Consolas; font-size: 13; color: black; background: white;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <pre style=\"font-family: Consolas; font-size: 13px; color: black; background: none repeat scroll 0% 0% white;\">public static bool TryReadFloat(this WaveFileReader waveFileReader, out float sampleValueLeft, out float sampleValueRight)<br />{<span style=\"color: green;\"><br />    //&nbsp;16&nbsp;bit&nbsp;PCM&nbsp;data</span>\r\n&nbsp;&nbsp;&nbsp; <span style=\"color: blue;\">if</span>&nbsp;(waveFileReader.waveFormat.BitsPerSample&nbsp;==&nbsp;16)\r\n&nbsp;&nbsp;&nbsp; {\r\n&nbsp;&nbsp;&nbsp;&nbsp;    <span style=\"color: blue;\">byte</span>[]&nbsp;value&nbsp;=&nbsp;<span style=\"color: blue;\">new</span>&nbsp;<span style=\"color: blue;\">byte</span>[4];\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color: blue;\">int</span>&nbsp;read&nbsp;= waveFileReader.Read(value,&nbsp;0, value.Length);\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color: blue;\">if</span>&nbsp;(read&nbsp;&lt; value.Length)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <span style=\"color: blue;\">return</span>&nbsp;<span style=\"color: blue;\">false</span>;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sampleValueLeft =&nbsp;(<span style=\"color: blue;\">float</span>)<span style=\"color: #2b91af;\">BitConverter</span>.ToInt16(value,&nbsp;0)&nbsp;/&nbsp;32768f;<br />        sampleValueRight =&nbsp;(<span style=\"color: blue;\">float</span>)<span style=\"color: #2b91af;\">BitConverter</span>.ToInt16(value, 2)&nbsp;/&nbsp;32768f;<br /></pre>\r\n<span style=\"color: blue;\"> return</span>&nbsp;<span style=\"color: blue;\">true</span>; &nbsp;&nbsp;&nbsp;  }<br /> // etc if you need to support other input bit depths<br />}</pre>",
+    "PostedDate": "2011-05-02T13:26:01.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

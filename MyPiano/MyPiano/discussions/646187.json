@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1448406",
+    "ThreadId": "646187",
+    "Html": "Hi all,<br />\n<br />\nI am receiving some audio data via http and now want to play the data received. But I am always getting an exception which says that the buffer is full. I know that the problem is normally caused by not playing the buffer, but I am playing it...<br />\nAnd with the data receiving everything should be correct (I checked that several times), so the problem has to be somewhere in the part that cares about playing.<br />\n<br />\nThis is my code:<br />\n<pre><code>class Program\n{\n    static BufferedWaveProvider bufferedWaveProvider;\n    static WaveOut player;\n    static WebClient client = new WebClient();\n\n    static void Main(string[] args)\n    {\n        bufferedWaveProvider = new BufferedWaveProvider(new WaveFormat(48000, 2) { });\n        player = new WaveOut();\n        player.Init(bufferedWaveProvider);\n        player.Play();\n\n        while(true)\n        {\n             using (client)\n             {\n                 byte[] response = \n                 client.UploadValues(&quot;http://localhost:8080/test&quot;, new NameValueCollection());\n\n                 bufferedWaveProvider.AddSamples(response, 0, response.GetLength(0));\n\n                 System.Threading.Thread.Sleep(1);\n            }\n        }\n    }\n}</code></pre>\n\nDue to make it better for reading, I left out some code that is responsible for checking whether the received data is already stored in the WaveProvider. Only when something new is coming, it is written to the Wave Provider. That means the exception is not caused by the endless-loop running too fast for the playback.<br />\n<br />\nAnyone knows what is going wrong?<br />\n",
+    "PostedDate": "2015-10-13T22:49:50.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448596",
+    "ThreadId": "646187",
+    "Html": "I have found the problem now.\r<br />\n<br />\nThe problem was the WaveFormat used to create the bufferd wave provider. I only checkd that sample rate and channels are the same because I did not know that there is a difference between PCM and Ieee. So I changed that and everything is fine :)<br />\n",
+    "PostedDate": "2015-10-15T01:42:51.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448599",
+    "ThreadId": "646187",
+    "Html": "great, glad you found the problem<br />\n",
+    "PostedDate": "2015-10-15T01:46:23.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1007547",
+    "ThreadId": "434679",
+    "Html": "I have seen the PracticeSharp# code, but curious if anyone has done work by making it into a provider?\r<br />\n<br />\nOtherwise, I will be playing around with making it into a provider on my own....\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-02-27T04:53:14.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007554",
+    "ThreadId": "434679",
+    "Html": "not that I know of. Let us know how you get on. <br />\n",
+    "PostedDate": "2013-02-27T05:10:53.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015188",
+    "ThreadId": "434679",
+    "Html": "I'm also trying to integrate them but I haven't been successful. If somebody gets it going please let me know. Thanks<br />\n",
+    "PostedDate": "2013-03-14T05:38:22.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015251",
+    "ThreadId": "434679",
+    "Html": "<strong>ecruz wrote:</strong><br />\n<blockquote>\nI'm also trying to integrate them but I haven't been successful. If somebody gets it going please let me know. Thanks<br />\n</blockquote>\nI have integrated SoundTouch using some of the design elements from the PracticeSharp library. I was previously using the WaveOut driver before integrating Soundtouch, but the buffer size is calculated based on the WaveFormat and it was asking for too much audio. So, there was lots of gaps. Those gaps were not present when I had written each processed element to a file. I used the Wasapiout driver instead which appears to ask for less packets. Seemed to work well, but I still have issues with delayed audio feedback when I change bass/treble, etc because those occur before the resampling of data and not after. \r<br />\n<br />\nI am just curious if resampling the tempo prior to adjusting bass/treble, volume, left/right balance has any adverse affects oppose to doing it in the original wave format. <br />\n",
+    "PostedDate": "2013-03-14T06:45:16.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1027861",
+    "ThreadId": "434679",
+    "Html": "any thoughts an my above question about applying bass/treble, panning adjustments after adjusting tempo?\r<br />\n<br />\nPaul<br />\n",
+    "PostedDate": "2013-04-09T07:02:43.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

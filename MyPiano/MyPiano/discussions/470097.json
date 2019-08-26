@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1125635",
+    "ThreadId": "470097",
+    "Html": "Dear Sir, \r<br />\n<br />\nKindly , I need to play an mp3 sound to serial port (GSM) , since I am sending it to GSM, it should be ( signed 16bit PCM 8000 Hz file.). I have MP3 file that i need to play using this format and write it to the COM port. I used the below code to get wave stream with the required format. <br />\n<pre><code>Dim reader As New Mp3FileReader(z.Text)\n    Dim downsampledStream As New WaveFormatConversionStream(New WaveFormat(8000, 16, 1), reader)\n    Dim alawStream As New WaveFormatConversionStream(WaveFormat.CreateALawFormat(16000, 1), downsampledStream)\n\n</code></pre>\n\nNow I need to send only pcm data  to the serial port (no wav header) , I need to play it by sending bytes count to serial port and wait for a certain interval based on this format.<br />\n 1- how to get the data to be sent from this stream ?\r<br />\n 2- how many bytes to read each time which represent a sample\r<br />\n 3- how long shall I wait before sending the next step.\r<br />\n 4- do i really need to convert mp3 to wav. it seems logic to me that playing MP3 itself include a decompressor and real time conversion to PCM that will be send to the output device, Can I capture send output device and make it a certain COM port ?\r<br />\n<br />\n<br />\nThanks, <br />\n",
+    "PostedDate": "2013-11-17T15:04:04.963-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

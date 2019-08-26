@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "Deadlock has place in StopRecording() in WasapiCapture class in the implementation presented in WavRecording demo code.\r\nWhen Stop button is pressed then StopRecording() is launched. Flag stop is set to true.\r\nStopRecording calls waits for thread \"captureThread.Join();\".\r\nWhen recording thread detects stop flag, then it calls Dispose().\r\nDispose() calls again StopRecording(), but we already were here and we are waiting for thread. So thread.Join is called for the second time, and we have deadlock problem.\r\nI avoided this problem with extending condition in StopRecording():\r\nif (this.captureThread != null && this.stop == false)\r\ninstead of\r\nif (this.captureThread != null)\r\n\r\nRegards.\r\nPiotr.",
+    "LastUpdatedDate": "2013-07-04T08:24:14.767-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-06-17T06:56:39.073-07:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WasapiCapture class - deadlock in StopRecording()",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 16128
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Issue confirmed, thanks Piotr for the fix.",
+      "PostedDate": "2013-07-04T07:11:53.353-07:00",
+      "Id": 105116
+    },
+    {
+      "Message": "The real problem being calling StopRecording() from the DataAvailable event handler. The capture thread is basically joining itself.",
+      "PostedDate": "2013-07-04T07:51:00.413-07:00",
+      "Id": 105122
+    },
+    {
+      "Message": "I think I'll fix this another way. StopRecording() should not do a join, it should just signal for recording to stop. We have the RecordingStopped event that users can wait on if they need to know it has finished",
+      "PostedDate": "2013-07-04T08:17:17.113-07:00",
+      "Id": 105123
+    },
+    {
+      "Message": "fix checked in, will be part of the next NAudio 1.7 alpha build",
+      "PostedDate": "2013-07-04T08:24:14.767-07:00",
+      "Id": 105124
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "684503",
+    "ThreadId": "275967",
+    "Html": "\r\n<p>Playing &nbsp;24 bit 48 K Mp3 streams from pandora using DSound. Noticed on our stereo there's a strange popping. Anyone have any ideas ?</p>\r\n",
+    "PostedDate": "2011-10-14T16:14:14.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685111",
+    "ThreadId": "275967",
+    "Html": "<p>It could be that you are trying to play at too low latency, or it could be a problem converting the audio to PCM. If you download the streams and use NAudio to convert them to WAV files, does the same popping occur?</p>",
+    "PostedDate": "2011-10-17T02:54:45.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

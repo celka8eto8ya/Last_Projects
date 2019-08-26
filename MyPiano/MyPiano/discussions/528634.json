@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1201680",
+    "ThreadId": "528634",
+    "Html": "Hi,\r<br />\n<br />\nI'm looking to use Naudio for a game I'm making.\r<br />\n<br />\nI've coded a simple initialisation routine, which currently has:<br />\n<pre><code>                    IWavePlayer wavePlayer1;\n                    AudioFileReader file1;\n                    string filename1 = &quot;D:\\\\Programming\\\\SFX\\\\MUSIC\\\\IN_GAME_1.wav&quot;;\n                    \n                    wavePlayer1 = new WaveOut();\n                    file1 = new AudioFileReader(filename1);\n                    wavePlayer1.Init(file1);\n                    Thread thread1 = new Thread(new ThreadStart(wavePlayer1.Play));\n                    thread1.Start();</code></pre>\n\nWhen I run the game, the wav file plays for maybe half a second, then it stops, and a second later it resumes.\r<br />\n<br />\nIf I place System.Threading.Thread.Sleep(5000) immediately after starting the thread, the delay has an additional 5 seconds. This seems to prove that 'thread1.Start();' isn't actually starting the sound in it's own thread at all.\r<br />\n<br />\nBeing a bit of a threading and Naudio noob can anyone tell me what I'm doing wrong here? My requirement for the game is to simply have the ability to play several sounds at once. Nothing major.\r<br />\n<br />\nAny ideas? \r<br />\n<br />\nThanks in advance! <br />\n",
+    "PostedDate": "2014-02-01T12:58:34.277-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201694",
+    "ThreadId": "528634",
+    "Html": "Instead of using WaveOut with a Thread, use WaveOutEvent. It has it's own thread.<br />\n",
+    "PostedDate": "2014-02-01T16:23:07.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201737",
+    "ThreadId": "528634",
+    "Html": "<strong>K24A3 wrote:</strong><br />\n<blockquote>\nInstead of using WaveOut with a Thread, use WaveOutEvent. It has it's own thread.<br />\n</blockquote>\nDude - that works brilliantly! THANK YOU!\r<br />\n<br />\nSo next I'm considering how to take this further. The question is, should I create a WaveOutEvent every time I want to play a sound, or create a set of these objects up front, to be triggered when needed? I am just concerned what the performance impact of creation-on-demand would be.\r<br />\n<br />\nI'll give this a go and compare the different approaches anyways.\r<br />\n<br />\nCheers!<br />\n",
+    "PostedDate": "2014-02-02T02:51:17.027-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201767",
+    "ThreadId": "528634",
+    "Html": "Not quite sure to be honest, my app only plays one file at a time.<br />\n<br />\nPerhaps Mark or someone else can assist.<br />\n<br />\nEDIT.. Have a look at this thread: <br />\n<a href=\"https://naudio.codeplex.com/discussions/66112\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/66112</a><br />\n",
+    "PostedDate": "2014-02-02T05:30:57.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202045",
+    "ThreadId": "528634",
+    "Html": "hi, I've been meaning to blog about how you can do fire and forget audio playback like you would with sound effects from a game. So I've blogged about it <a href=\"http://mark-dot-net.blogspot.co.uk/2014/02/fire-and-forget-audio-playback-with.html\" rel=\"nofollow\">here</a>. Hopefully I'll get the sample into one of the NAudio demos at some point as well.<br />\n",
+    "PostedDate": "2014-02-03T06:21:42.343-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202260",
+    "ThreadId": "528634",
+    "Html": "Does the mixer use hardware buffering if the sound card supports it?<br />\n",
+    "PostedDate": "2014-02-03T14:36:22.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202477",
+    "ThreadId": "528634",
+    "Html": "<strong>K24A3 wrote:</strong><br />\n<blockquote>\nNot quite sure to be honest, my app only plays one file at a time.<br />\n<br />\nPerhaps Mark or someone else can assist.<br />\n<br />\nEDIT.. Have a look at this thread: <br />\n<a href=\"https://naudio.codeplex.com/discussions/66112\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/66112</a><br />\n</blockquote>\nHi K2 - thanks for the reply. I've had a quick look and this looks really interesting. I'll definitely have a play.\r<br />\n<br />\nI suspected there was some technique I was missing, and streams / mixers seem to be that missing link.<br />\n",
+    "PostedDate": "2014-02-04T05:54:31.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202478",
+    "ThreadId": "528634",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nhi, I've been meaning to blog about how you can do fire and forget audio playback like you would with sound effects from a game. So I've blogged about it <a href=\"http://mark-dot-net.blogspot.co.uk/2014/02/fire-and-forget-audio-playback-with.html\" rel=\"nofollow\">here</a>. Hopefully I'll get the sample into one of the NAudio demos at some point as well.<br />\n</blockquote>\nFire and forget .... YES! That's pretty much what I need. I can't wait to get started on a new play method. Perhaps the wierd problems I'm having will go away. What has been VERY difficult to ascertain is a consensus on the best way to implement something as simple as sound in a c# game. I'm left wondering if I'm just inept or if there's another library out there which is easier to use. (probably the former).<br />\n",
+    "PostedDate": "2014-02-04T05:57:42.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

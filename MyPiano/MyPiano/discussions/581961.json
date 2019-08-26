@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1356192",
+    "ThreadId": "581961",
+    "Html": "So, I am working on something that need a simple interaction's user. \r<br />\nI have 4 sounds : 1 background and 3 others for user's interaction, the interaction occurs by the respective audio button pressed.\r<br />\n<br />\nI am using the AudioFileReader to read the mp3 audio files and using the WaveOut to play it. \r<br />\nI need to record a file where have the background file and the user interaction with the audios. How can I get that? ( I searched and I found a WaveIn, WaveStream and WASABI too, but I don't know what is the best to do that).\r<br />\n<br />\nAnother thing is, this audio recorded has to be a mp3 audio. I know about the wav record, but I need to get a mp3 file. Someone has some advice?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2015-02-26T18:33:26.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356241",
+    "ThreadId": "581961",
+    "Html": "Look into MixingSampleProvider to perform the mixing. \r<br />\nLook into MediaFoundationEncoder to create MP3 (although this is only usually available on Windows 8 or above)<br />\n",
+    "PostedDate": "2015-02-26T23:39:09.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356398",
+    "ThreadId": "581961",
+    "Html": "Thanks for the reply Mark.\r<br />\nBut, for now that looks like will be too much work. I am trying here but without any success. :(\r<br />\nSo, now I have a new possibility, ignore the mp3 files to work with wavefiles.\r<br />\nBut the MixingSampleProvider returns a error about 'all files have to be as the same WaveFormat'. I searched for this and in a <a href=\"http://mark-dot-net.blogspot.com.br/2014/05/how-to-resample-audio-with-naudio.html\" rel=\"nofollow\">example</a>, you create new files with waveformat. \r<br />\nEven if I am working with wave files in 16 bits (Audacity's convertion), will do I need create a new file?\r<br />\nCould you give some more explanation about it?\r<br />\n<br />\nThanks again. <br />\n",
+    "PostedDate": "2015-02-27T08:04:19.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356520",
+    "ThreadId": "581961",
+    "Html": "Hello again,\r<br />\nSo, now I understood a little of the process and I started to use your AudioPlackEngine code. Btw, nice code.\r<br />\nI had to make some changes (just SampleRate value to 16000) - what I can change again, if necessary - to work with my audios.\r<br />\nAudioPlackEngine is working pretty well.\r<br />\nBut, I still have a  problem. \r<br />\nHow can I record the mixer from the AudioPlackEngine?\r<br />\nI tried access the mixer, but the application returns a error about 'WAV too large'.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2015-02-27T14:02:40.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356845",
+    "ThreadId": "581961",
+    "Html": "I was looking for some way to get it done, and I found that post (<a href=\"https://naudio.codeplex.com/discussions/578924\" rel=\"nofollow\">here</a>).<br />\nI was thinking if the problem could be just the mix doesn't stop.<br />\nBut I need to know if the main sound is stopped.<br />\nRemember, I am using AudioPlacybackEngine.<br />\n<br />\nThanks and sorry if I am being annoying but I really need to have this done.<br />\n",
+    "PostedDate": "2015-02-28T05:16:31.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356852",
+    "ThreadId": "581961",
+    "Html": "yeah, don't try to save a never-ending stream to a WAV file! I'd recommend picking a length for the file and when it gets over that length starting a new WAV file<br />\n",
+    "PostedDate": "2015-02-28T05:30:06.35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1356856",
+    "ThreadId": "581961",
+    "Html": "The length of the 'mixed' audio must be the length of the background audio (first audio to play). OK?\r<br />\nThe other audio, will be played during the background audio is playing.\r<br />\nThis part is working right now. I add them to the mixingsample instance as when necessary.\r<br />\nBut the save this mixed file is being my problem. I will need to read the bytes again from mixer instance to write a file?\r<br />\nPlease, could you give more info about this?\r<br />\n<br />\nThanks again to be so nice.<br />\n",
+    "PostedDate": "2015-02-28T06:06:58.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1357190",
+    "ThreadId": "581961",
+    "Html": "hi, please check my article on <a href=\"http://www.markheath.net/post/how-to-record-and-play-audio-at-same\" rel=\"nofollow\">saving and playing audio at the same time</a>. This should point you in the right direction<br />\n",
+    "PostedDate": "2015-02-28T23:55:23.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358753",
+    "ThreadId": "581961",
+    "Html": "Hi, so I have tried to do with SavingWaveProvider and BufferedWaveProvider, as your post about saving and playing audio.\r<br />\nIt creates the WAV file, but haven't audio. Why?\r<br />\nI looked at BufferedWaveProvider and it's need somewhere to have a AddSamples function. How can I add this function to the MixingSampleProvider?or to WaveOut.\r<br />\nHere goes some code:<br />\n<pre><code>bufferedProviderRec = new BufferedWaveProvider(AudioPlaybackEngine.Instance.Mixer.WaveFormat);\n                 savingRec = new SavingWaveProvider(bufferedProviderRec, &quot;mixedAudio.wav&quot;);\n                 outMix = new WaveOut();\n                 outMix.Init(savingRec);\n                 outMix.Play();\n                 AudioPlaybackEngine.Instance.PlaySound(players[0].GetInfos.Path + &quot;/&quot; + players[0].GetInfos.NameWithExtension);</code></pre>\n\nThanks again to be so nice.<br />\n",
+    "PostedDate": "2015-03-02T05:50:30.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358842",
+    "ThreadId": "581961",
+    "Html": "OK, if you are using AudioPlaybackEngine, then SavingWaveProvider needs to be put into the signal chain for that. Look for the call to Init in there, and wrap whatever is being passed in (probably a mixer) in a SavingWaveProvider.<br />\n",
+    "PostedDate": "2015-03-02T08:41:43.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1358890",
+    "ThreadId": "581961",
+    "Html": "Could you explain a little more?\r<br />\nI don't understand about signal chain. \r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2015-03-02T09:42:39.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1360120",
+    "ThreadId": "581961",
+    "Html": "A signal chain is where you connect together IWaveProviders and ISampleProviders. So for example pass two AudioFileReaders into a MixingSampleProvider, and then pass that into a SavingWaveProvider and then pass that into Init of a WaveOut device. If you have access to Pluralsight, I go into this in a lot of detail in my <a href=\"http://www.pluralsight.com/courses/audio-programming-naudio\" rel=\"nofollow\">NAudio course</a><br />\n",
+    "PostedDate": "2015-03-05T07:57:57.663-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

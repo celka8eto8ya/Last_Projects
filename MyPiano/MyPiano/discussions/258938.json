@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "617954",
+    "ThreadId": "258938",
+    "Html": "\r\n<p>Is there any plan to support 3D by using DirectSoundOut? I'm being just curious, as I've been able to play some 3D audio by using the managed Microsoft.DirectX assemblies, but would prefer to use NAudio.</p>\r\n<p>I've been taking a quick glance and I guess it's possible adding the missing structures and DLLImports, but I've never touched DirectX nor DirectSound, and I'm not an expert in this area, nothing that couldn't be solved with the needed time, sadly I don't\r\n have much of it, although it's caught my interest.</p>\r\n<p>As I said, I'm not demanding anything, just asking.</p>\r\n",
+    "PostedDate": "2011-05-25T04:27:13.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618110",
+    "ThreadId": "258938",
+    "Html": "<p>I'd never heard of 3D audio support in DirectSoundOut to be honest, but it sounds interesting. One of the goals behind NAudio is to make possible in .NET everything audio-related you can do with Windows APIs, so it would be a good fit. However, I have higher priorities in the short-term (such as Media Foundation Transforms and Silverlight support), so ideally this would be something contributed by the community.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-25T08:46:20.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618142",
+    "ThreadId": "258938",
+    "Html": "<p>Thanks for the info Mark.</p>\n<p>From what I've read, 3D Audio can be enabled by changing how BufferDescription is created and adding some new methods (well, and properties and constants...). Some info here:</p>\n<p><a href=\"http://msdn.microsoft.com/en-us/library/ee416765(v=vs.85).aspx\"><a href=\"http://msdn.microsoft.com/en-us/library/ee416965(v=VS.85).aspx\">http://msdn.microsoft.com/en-us/library/ee416965(v=VS.85).aspx</a></a></p>\n<p>I'm talking just for giving out some info. Your reply is already what I was looking for.</p>\n<p>If I manage to get some spare time anytime soon, I may look into it myself.</p>",
+    "PostedDate": "2011-05-25T09:14:46.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

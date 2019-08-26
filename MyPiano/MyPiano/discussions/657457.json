@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1482159",
+    "ThreadId": "657457",
+    "Html": "Hi there,\r<br />\nis there a way to make Naudio able to play/loop up to ~8000 sample streams simultaneously or is c# just too slow?\r<br />\nI need this to create a virtual pipe organ and would like to stick to open-source content. This excludes libraries like BASS.<br />\n",
+    "PostedDate": "2016-08-26T13:01:42.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482541",
+    "ThreadId": "657457",
+    "Html": "C# is quite fast although is not going to be as fast as an audio engine written in optimized C++. The main issues here are how much work is required to generate the audio for the 8000 streams - is it pre-calculated or calcuated on the fly? Also, do you need low latency? Low latency can be a challenge due to garbage collection causing glitches in the audio. \r<br />\n<br />\nI recommend you try and see, by mixing together a bunch of sounds (say using SignalGenerator class) and mixing them with MixingSampleProvider. You'll soon get an idea of what's possible on your hardware. Just be careful of your ears when making loud noises.<br />\n",
+    "PostedDate": "2016-08-31T13:22:20.4-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

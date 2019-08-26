@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1297697",
+    "ThreadId": "564803",
+    "Html": "Hi , \r<br />\nI have merged two songs and played at the same time using wave out.\r<br />\nIf i want to set the volume for each song differently how i can set the volume.\r<br />\nim putting all the wave out objects in the list and when i try to set volume whole system volume changes. how i can the volume for specific wave out\r<br />\nFollowing is the code <br />\n<pre><code>   var sound1 = new Mp3FileReader(path);\n            var waveOut = new WaveOut();\n            waveOut.Init(sound1); waveOut.Play();\n   var sound2 = new Mp3FileReader(path2);\n            var waveOut = new WaveOut();\n            waveOut.Init(sound2); waveOut.Play();</code></pre>\n\n",
+    "PostedDate": "2014-09-01T03:56:57.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1297716",
+    "ThreadId": "564803",
+    "Html": "<ul>\n<li>create a VolumeWaveProvider for each chain (passing sound&lt;X&gt; in the constructor of each of them).</li>\n<li>\npass the VolumeWaveProviders to the .Init() functions<br />\n</li>\n</ul>\n-&gt; you put a volume control in between the source (= reader) and the playback destination<br />\n<br />\n<br />\nnow you can usethe volume property of the VolumeWaveProviders to control playback volume of the single streams independently<br />\n<br />\nHarry<br />\n",
+    "PostedDate": "2014-09-01T04:16:35.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1297721",
+    "ThreadId": "564803",
+    "Html": "Can you please write some code there respective to my code or give me link of example\r<br />\nThanks<br />\n",
+    "PostedDate": "2014-09-01T04:27:53.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1297748",
+    "ThreadId": "564803",
+    "Html": "just check the code at the end of this topic: <a href=\"https://naudio.codeplex.com/discussions/562158\" rel=\"nofollow\">Directsoundout set volume</a>\r<br />\n...its a similiar problem...<br />\n",
+    "PostedDate": "2014-09-01T06:43:12.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

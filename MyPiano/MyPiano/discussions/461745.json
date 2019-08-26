@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1105886",
+    "ThreadId": "461745",
+    "Html": "Hi!\r<br />\n<br />\nToday i've tried to merge certain wav file in memory using WaveFileWriter and MemoryStream. But wave header of this stream is incorrect (empty size fileds), so I've wrote a simple patch:\r<br />\n<a href=\"http://yadi.sk/d/FwpCK541AhBnZ\" rel=\"nofollow\">patch</a><br />\n",
+    "PostedDate": "2013-10-10T01:58:31.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105920",
+    "ThreadId": "461745",
+    "Html": "that's because you're not disposing your WaveFileWriter. Until you call Dispose, the headers will never be updated.<br />\n",
+    "PostedDate": "2013-10-10T03:36:10.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105923",
+    "ThreadId": "461745",
+    "Html": "If I Dispose WaveFileWriter the MemoryStream will be closed and I can't read from it. My case is merge files and play it without temporary file.<br />\n",
+    "PostedDate": "2013-10-10T03:45:56.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105929",
+    "ThreadId": "461745",
+    "Html": "I usually make an &quot;IgnoreDisposeStream&quot; for this very purpose. I think there's an example somewhere in the NAudio demo code. It's a class that inherits from Stream and passes all methods through to the source stream with the exception of Dispose<br />\n",
+    "PostedDate": "2013-10-10T03:52:20.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105947",
+    "ThreadId": "461745",
+    "Html": "Ok, it's work ;) \r<br />\nThank you for good advice.\r<br />\n<br />\nI find reference to this class only in Tests and it's hard to google this solution. I think it is usefull to put reference to this class at FAQ.<br />\n",
+    "PostedDate": "2013-10-10T04:51:10.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

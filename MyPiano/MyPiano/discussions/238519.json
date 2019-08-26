@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "536375",
+    "ThreadId": "238519",
+    "Html": "\r\n<p>i want to analyze a wav file and determine the level of the audio in that file. i see in naudio it can display this data but only when its in .play which plays the audio, i only want to get the information as to how loud it is. can this be done? thank you.</p>\r\n",
+    "PostedDate": "2010-12-15T13:06:47.933-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "540222",
+    "ThreadId": "238519",
+    "Html": "\r\n<p>you need to look at the value of each sample individually. Have a look at WaveChannel32 to see how to convert each sample into a floating point number</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-24T02:54:59.687-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

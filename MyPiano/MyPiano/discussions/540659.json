@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1228474",
+    "ThreadId": "540659",
+    "Html": "<strong>Hi Mark Heath</strong> (And everyone)<br />\n<br />\nMany thanks for your great library !!! I need your help for my situation.<br />\n<br />\n<strong>I'm writing a Sound Recorder Program and dealing with this case:</strong><br />\n<ul>\n<li>\nA function which Record from both Mic/Speaker and then Mix into 1 mp3 file at the desired BitRate/SampleRate (It have to do realtime - output file keep up to date and not corrupted event in the case the computer is down when recording).<br />\n</li>\n</ul>\n<strong>My implementation is like this.</strong><br />\n<ul>\n<li>Record from Mic/Speaker into separated file (Using WaveIn/WasapiLoopbackCapture)</li>\n<li>Mix those files (using WaveMixerStream32)</li>\n<li>\nConvert Mixed file to Mp3 (Using Mp3Writer)<br />\n</li>\n</ul>\n<strong>My questions is:</strong><br />\n<ol>\n<li>Can I do all those step in realtime and write directly to mp3 file?</li>\n<li>Record process could take hours... Why your WaveWriter only flush the Stream when it disposing ? It took time and make program freezing.<br />\n   (I'm modified the Flush function and added 3 Update......Chunk function and it work fine.<br />\n   Is it better? Do you have any comments about this modification? I'm concern about the seek process when file size is to long...)</li>\n</ol>\n",
+    "PostedDate": "2014-03-31T00:39:42.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237064",
+    "ThreadId": "540659",
+    "Html": "Hi,\r<br />\n<br />\nthe answer to question 1 is that it is a bit tricky to do in real-time but can be done. I've used commandline lame for this in the past.\r<br />\n<br />\nAllowing the user to &quot;Flush&quot; and update the length chunk might be a nice enhancement to WaveFileWriter. I'll consider it for a future version\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2014-04-23T07:22:15.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239324",
+    "ThreadId": "540659",
+    "Html": "<strong>Hi Mark !</strong><br />\n<br />\nI can't wait for your answer, so I'm try to Do It My Self and it's done. (Mostly)<br />\n<br />\n <strong>I build a class called &quot;Listener&quot; to listen from both Record/Playback Device</strong><br />\n<ul>\n<li>It raise DataAvailable for each &quot;Chanel&quot; just like the IWaveIn</li>\n<li>\nAnd an other event when listener is stoped<br />\n</li>\n</ul>\n<strong>The second class called &quot;MixWriter&quot; which receive Raw Wave Data</strong><br />\n<ul>\n<li>It add data to the queue for each Chanel</li>\n<li>\nWhen all queue have enough data for 1 wave block, MixWriter process Mix data &amp; Write to mp3 file directly. (use Yeti wrapper for Lame_enc.dll)<br />\n</li>\n</ul>\n<strong>Between 2 class is main process, implement in a business class</strong><br />\n<ul>\n<li>Forward data from Listener to MixWriter</li>\n<li>\nControl UI and User's Interactions.<br />\n</li>\n</ul>\nDon't need WaveFileWriter any more !<br />\n<br />\nI will post my solution here with a sample. (Still dealing with few issues... serious one)<br />\nHope that you have any advise &amp; improvement. :)<br />\n",
+    "PostedDate": "2014-04-29T07:08:13.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

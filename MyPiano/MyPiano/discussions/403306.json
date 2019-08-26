@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "942054",
+    "ThreadId": "403306",
+    "Html": "\r\n<p>I'm trying to implement a converter such that the 16KHz audio that is recorded by WP7's microphone can be down sampled to 8KHz, ideally ALaw,&nbsp;as is required by an API I'm using and I'd like to use WaveFormatConversionStream.</p>\r\n<p>I've been using PAR for WP7 as an example as it includes a subset of NAudio that works on the phone, WaveFormatConversionStream isn't included in that by default and I was wondering if it will even function on the phone as I'm not sure what codecs are included\r\n on the platform.</p>\r\n<p>Has anyone succeeded in this or is it not feasible?&nbsp; Any tips welcome if another method is possible too.</p>\r\n<p>Thanks,<br>\r\nJB</p>\r\n",
+    "PostedDate": "2012-11-15T03:01:12.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942640",
+    "ThreadId": "403306",
+    "Html": "\r\n<p>You can't use WaveFormatConversionStream on the Windows Phone as it calls into the ACM APIs which are not available.</p>\r\n<p>However, I have implemented fully managed a-law encoding and decoding in NAudio, so you could use that instead.</p>\r\n",
+    "PostedDate": "2012-11-16T02:31:39.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942649",
+    "ThreadId": "403306",
+    "Html": "\r\n<p>Ah, good to hear it is possible and thanks for setting me on the right track.&nbsp; No pun intended...<br>\r\nI'll have a look for the ALaw conversion methods and will give them a go.</p>\r\n<p>Thanks,<br>\r\nJB</p>\r\n",
+    "PostedDate": "2012-11-16T02:42:19.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

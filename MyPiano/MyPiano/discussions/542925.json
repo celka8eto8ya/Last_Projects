@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1236512",
+    "ThreadId": "542925",
+    "Html": "Hi, can I know how to play a wav file by byte using Naudio?<br />\n",
+    "PostedDate": "2014-04-22T04:51:35.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1236525",
+    "ThreadId": "542925",
+    "Html": "By deafault Naudio play wav file.<br />\n",
+    "PostedDate": "2014-04-22T05:18:40.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1236577",
+    "ThreadId": "542925",
+    "Html": "Sorry I should be more specify. I have read a wav file in a byte array. How I play specific part of the wav by selecting few byte from that byte array? Hope you understand my question<br />\n",
+    "PostedDate": "2014-04-22T06:48:29.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237419",
+    "ThreadId": "542925",
+    "Html": "Hello,\r<br />\n<br />\nthis Sample Code should help you to play a Wave File from Bytearray and specified position:<br />\n<pre><code>Imports NAudio.Wave\nImports System.IO\n\nPublic Class Form1\n\n    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load\n\n        Dim WaveOut As New WaveOut() 'Class WaveOut uses WaveOutOpen to open a audio device.\n\n        Dim WaveStream As New WaveFileReader(New MemoryStream(My.Resources.Tune)) 'Create a Waveprovider,\n        ' in this case a Stream called WaveStream and pass your song to it.\n\n        WaveOut.Init(WaveStream) 'Use the Init function, to prepare playback. NAudio will call WaveOutPrepareHeader internally for you,\n        'but keep in mind, that NAudio needs the COMPLETE WaveFile at this point including the header. So DON´T set a position here!\n\n        WaveStream.Position = 2000000 'Now you can specify a position in your WaveStream.\n        'Alternatively use &quot;WaveStream.seek(2000000,SeekOrigin.Begin)&quot; here.\n\n        WaveOut.Play() 'Let NAudio play the stream. It will do the tricky work for you, including callback, writing the audio blocks with\n        'WaveOutWrite and enqueing them using several buffers to recieve a fluent playback.\n    End Sub\n\nEnd Class</code></pre>\n\nBest regards\r<br />\n<br />\nFreefall<br />\n",
+    "PostedDate": "2014-04-24T01:31:36.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

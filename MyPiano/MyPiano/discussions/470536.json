@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1126898",
+    "ThreadId": "470536",
+    "Html": "I am pulling data from the mic and  displaying it to two graphs \r<br />\n<br />\none time graph\r<br />\n<br />\nand FFT graph\r<br />\n<br />\nduring real time... but I cant click on my stop button to stop sampling data..\r<br />\n<br />\nfor my graph I am using Zedgraph\r<br />\n<br />\nnow when i was using   Microsoft chart that came C# i can use the stop button but not it is like it never gets call\r<br />\n<br />\nhow do I fix this ? <br />\n<pre><code>void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            \n            // myPane.XAxis.MajorTic. = (1D / (double)samplerate1);\n            // Make up some data points from the Sine function\n            PointPairList list = new PointPairList();\n           PointPairList list2 = new PointPairList();\n            byte[] buffer = e.Buffer;\n            int bytesRecorded = e.BytesRecorded;\n            buffer1 = new float[bytesRecorded];\n            //  WriteToFile(buffer, bytesRecorded);\n\n            for (int index = 0; index &lt; e.BytesRecorded; index += 2)\n            {\n                short sample = (short)((buffer[index + 1] &lt;&lt; 8) |\n                                        buffer[index + 0]);\n                float sample32 = sample / 32768f;\n                buffer1[index] = sample32;\n            }\n          //  buffer1 = new float[1024];\n\n          /*  for (int n = 0; n &lt; 1024; n++)\n            {\n\n                buffer1[n] = (float)(10000D * Math.Sin((2D * 2000D * Math.PI * n) / 44100D));\n\n            }*/\n\n            DSP = new DSPclass(buffer1, 44100);\n            DSP.FFT1(buffer1);\n            float[] F = new float[bytesRecorded];\n            float[] C = new float[bytesRecorded];\n            int temp = DSP.frequencies(F, C);\n            \n            for (int u = 0; u &lt; temp; u++)\n            {\n\n            list2.Add((double)F[u], (double)C[u]);\n                \n            }\n\n          //  int u = 100; \n           \n            for (int i = 0; i &lt; buffer1.Length; i++)\n            {\n                list.Add(counter, (double)buffer1[i]);\n                counter++;\n            }\n\n            LineItem myCurve = myPane.AddCurve(&quot;&quot;, list, System.Drawing.Color.Blue, SymbolType.Circle);\n            LineItem myCurve2 = myPane2.AddCurve(&quot;&quot;, list2, System.Drawing.Color.Blue, SymbolType.Circle);\n            zedGraphControl1.IsShowHScrollBar = true;\n            zedGraphControl1.IsAutoScrollRange = true;\n            zedGraphControl1.AxisChange();\n            zedGraphControl1.Refresh();\n\n            zedGraphControl2.IsShowHScrollBar = true;\n            zedGraphControl2.IsAutoScrollRange = true;\n            zedGraphControl2.AxisChange();\n            zedGraphControl2.Refresh();\n          //  Stop();\n        }\n\n        void Stop()\n        {\n            if (waveIn != null)\n            {\n                waveIn.StopRecording();\n                waveIn.Dispose();\n\n            }\n        }\n</code></pre>\n\n",
+    "PostedDate": "2013-11-19T22:24:43.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127208",
+    "ThreadId": "470536",
+    "Html": "Dear Sir, \r<br />\n<br />\nI also in need to get FFT work, and looks for complex for me . Can you please post your project, please.\r<br />\nThanks for your support.\r<br />\n<br />\nWaleed<br />\n",
+    "PostedDate": "2013-11-20T11:51:22.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127582",
+    "ThreadId": "470536",
+    "Html": "if you can't click your stop button you probably have a performance issue. You should not try to plot every single sample you receive. There are 44100 of them each second. You'd need at least 22 monitors side by side to display one second of audio.<br />\n",
+    "PostedDate": "2013-11-21T08:28:02.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127589",
+    "ThreadId": "470536",
+    "Html": "thanks Markheath...\r<br />\n<br />\nso I  ended up using a timer to and set it to 100 ms for display only..\r<br />\nand now i can click on the stop button<br />\n",
+    "PostedDate": "2013-11-21T08:35:32.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

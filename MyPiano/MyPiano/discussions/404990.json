@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "948846",
+    "ThreadId": "404990",
+    "Html": "\r\n<p>I was trying to convert 16bit PCM files to IeeeFloat and encountered a problem where the files grew until hitting the 2GB limit.My code was:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> ImportAudio3(<span style=\"color:blue\">string</span> sourceFileName, <span style=\"color:blue\">string</span> targetFileName) {\n\t<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> reader = <span style=\"color:blue\">new</span> WaveFileReader(sourceFileName)) {\n\t\t<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> channel = <span style=\"color:blue\">new</span> WaveChannel32(reader)) {\n\t\t\tWaveFileWriter.CreateWaveFile(targetFileName, channel);\n\t\t}\n\t}\n}\n</pre>\r\n</div>\r\n<p>Is it intended that WaveChannel32.Read() never returns 0 or is it a bug?</p>\r\n<p>I just realized that I can avoid using WaveChannel32 by using AudioFileReader and passing that directly to WaveFileWriter.CreateWaveFile, but I still thought I'd ask because I'm using WaveChannel32 in other places.</p>\r\n<p>&nbsp;</p>\r\n<p>Edit: After reading WaveChannel32's description (&quot;represents channel for the WaveMixerStream&quot;) I guess its current behaviour is intended. If so, never mind my question.&nbsp;BTW, many thanks for all the time and effort you've put into this wonderful library!</p>\r\n",
+    "PostedDate": "2012-11-29T02:12:25.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948870",
+    "ThreadId": "404990",
+    "Html": "\r\n<p>set PadWithZeros to false or preferably use Wave16ToFloatProvider instead. Really I want to obsolete WaveChannel32 and WaveMixerStream, as there are better ways to do mixing but a lot of people are still using them.</p>\r\n",
+    "PostedDate": "2012-11-29T02:37:02.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1226315",
+    "ThreadId": "540040",
+    "Html": "Hi Mark,\r<br />\nI developed a project using Naudio.But client send this issue:&quot;Audio still splutters particularly when multi tasking on the computer i.e doing something else on the computer (Skype or email)&quot;.\r<br />\nHow to solve this particular issue?\r<br />\nN.B:Client test on 64 bit windows 8 machine and ram=4Gb,I-3 processor.<br />\n",
+    "PostedDate": "2014-03-24T22:26:07.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1230310",
+    "ThreadId": "540040",
+    "Html": "well how complicated is the audio playback graph? Are you doing any DSP/visualisation? <br />\n",
+    "PostedDate": "2014-04-04T05:56:43.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:02:14.717-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "In AddInputStream, the following code:\r\n...\r\n// get to the right point in this input file\r\nthis.Position = Position;\r\n...\r\nseems wrong to me. It should be:\r\n...\r\n// get to the right point in this input file\r\nwaveStream.Position = this.Position;\r\n...\r\nin order to set the position of the new stream correctly, so it is in sync with other streams.\r\n\r\nIn RemoveInputStream, the field length is updated multiple times and this can cause problems in multi-threaded scenario as an observer in another thread may see invalid values for the Length property. Making the calculation in a local variable instead and storing the result in the length field only once would solve this issue. \r\n\r\nAlways in RemoveInputStream, the code:\r\n...\r\nthis.length = Math.Max(this.length, waveStream.Length);\r\n...\r\nshould be:\r\n...\r\nthis.length = Math.Max(this.length, inputStream.Length);\r\n...\r\notherwise the length of the mixer stream is always set to the length of the removed input stream, and not to the maximum length among remaining streams.\r\n\r\nIn the Read method, the code should be in a lock() statement for thread safety, otherwise the AutoStop-related code may proceed incorrectly if the Length property is changed by another thread, and the foreach statement may raise an exception if the collection is changed by another thread (both are common scenarios when a mixer object is modified during playback).",
+    "LastUpdatedDate": "2012-10-27T00:02:14.717-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-05-23T05:31:26.263-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Multiple issues in WaveMixerStream32",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16351
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for these suggestions\nthis.Position = Position; is in there to reposition all input files,  but you are right, it could be optimised.\nThe original WaveMixerStream32 was never written with real-time adding and removing of inputs in mind, so it is probably not ideal for this scenario. ",
+      "PostedDate": "2012-05-25T02:14:37.417-07:00",
+      "Id": 66664
+    },
+    {
+      "Message": "have finally got round to fixing this, thanks for reporting",
+      "PostedDate": "2012-10-06T02:29:11.923-07:00",
+      "Id": 78788
+    }
+  ]
+}

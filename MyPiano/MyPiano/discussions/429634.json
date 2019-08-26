@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "986900",
+    "ThreadId": "429634",
+    "Html": "\r\n<p>Hi Mark. I had used naudio in my project. Its a great thing. Thank you for work.</p>\r\n<p>I have some problems with ASIO. Its work fine. But in my E-mu 0404 USB i can use only 2&nbsp; channels of 4. Naudio dont see spdif in/out. And by default using only analog in/out.</p>\r\n",
+    "PostedDate": "2013-01-15T01:20:25.293-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987111",
+    "ThreadId": "429634",
+    "Html": "\r\n<p>what does NAudio report as the number of available channels? Did you know there is an output channel offset property that you can use to select the next two inputs/outputs?</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2013-01-15T07:41:48.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987135",
+    "ThreadId": "429634",
+    "Html": "\r\n<p>ОК. I found names of channels in AsioOut.driver.Capabilities.InputChannelInfos &nbsp;and make methods to get it.</p>\r\n",
+    "PostedDate": "2013-01-15T08:39:41.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987140",
+    "ThreadId": "429634",
+    "Html": "\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> \nI added this to AsioOut:<br>\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">string</span> AsioInputChannelName(<span style=\"color:blue\">int</span> channel)\n{\n<span style=\"color:blue\">if</span> (channel &gt; DriverInputChannelCount)\n<span style=\"color:blue\">return</span> <span style=\"color:#a31515\">&quot;&quot;</span>;\n<span style=\"color:blue\">else</span>\n<span style=\"color:blue\">return</span> driver.Capabilities.InputChannelInfos[channel].name;\n}\n\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">string</span> AsioOutputChannelName(<span style=\"color:blue\">int</span> channel)\n{\n<span style=\"color:blue\">if</span> (channel &gt; DriverOutputChannelCount)\n<span style=\"color:blue\">return</span> <span style=\"color:#a31515\">&quot;&quot;</span>;\n<span style=\"color:blue\">else</span>\n<span style=\"color:blue\">return</span> driver.Capabilities.OutputChannelInfos[channel].name;\n}\n\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2013-01-15T08:48:12.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1069199",
+    "ThreadId": "429634",
+    "Html": "it's taken ages I know, but this is in NAudio now\r<br />\nthanks<br />\n",
+    "PostedDate": "2013-07-16T13:53:33.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

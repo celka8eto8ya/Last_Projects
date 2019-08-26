@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "919983",
+    "ThreadId": "397517",
+    "Html": "\r\n<p>What is the difference between them, and which is to best to use for repositioning the stream (move backwards or forwards) ?</p>\r\n",
+    "PostedDate": "2012-10-01T05:31:04.543-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "922979",
+    "ThreadId": "397517",
+    "Html": "<p>On streams that don't support seeking, you can only move forwards and you have to use Read.</p>\r\n<p>Otherwise, setting the Position/Seek basically amount to the same thing. They are only there because WaveStream inherits from Stream which has both</p>\r\n<p>Skip is just a helper method that allows you to specify duration in seconds rather than bytes. It calls Position under the hood.</p>",
+    "PostedDate": "2012-10-07T00:15:07.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

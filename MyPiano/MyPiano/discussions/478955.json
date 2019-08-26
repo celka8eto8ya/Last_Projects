@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1143481",
+    "ThreadId": "478955",
+    "Html": "I am using following code for sending wave file via gsm modem(sound port) I tried the below code , but I am hearing a very strange sound on the other side. I know I am missing something like sample rate or wave format etc. please guide me how to set wave format or sample or anything other missing here is my code\r<br />\n<br />\nusing (WaveFileReader reader = new WaveFileReader(&quot;myfile.wav&quot;))\r<br />\n{\r<br />\n   byte[] buffer = new byte[reader.Length];\r<br />\n   int read = reader.Read(buffer, 0, buffer.Length);\r<br />\n   short[] sampleBuffer = new short[read / 2];\r<br />\n   SoundPort.Write(buffer, 0, read);\r<br />\n}<br />\n",
+    "PostedDate": "2013-12-28T03:12:25.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

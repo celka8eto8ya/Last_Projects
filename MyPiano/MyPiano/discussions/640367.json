@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1431605",
+    "ThreadId": "640367",
+    "Html": "Hey did I can change the volume of output from received bytes?\r<br />\nI have found WaveOut.Volume but is not allow great 1 and when i change in the source-code so has not a influence for the output.\r<br />\nNotice: I have a Network-Chat not a MP3-File!\r<br />\n<br />\nWhat should I do?\r<br />\n<br />\nThank your for any replies.<br />\n",
+    "PostedDate": "2015-06-23T12:33:03.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443909",
+    "ThreadId": "640367",
+    "Html": "Use VolumeSampleProvider. If you need to push volume &gt; 100% you should use a compressor effect.<br />\n",
+    "PostedDate": "2015-09-10T07:01:54.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

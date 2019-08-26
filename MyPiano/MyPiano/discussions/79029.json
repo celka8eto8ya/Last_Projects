@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "270587",
+    "ThreadId": "79029",
+    "Html": "<p>Hi,</p>\r\n<p>my intention is to play multiple wav files at the same time (I havent seen an example which does this)</p>\r\n<p>So far I got it working, but only when using files with a samplerate of&nbsp; 44100, when using files with&nbsp; 8000 it plays back much to fast. So I'm missing a conversion, but where ? (all files are 16bit, 1 channel)</p>\r\n<p>I want to use DirectSound.&nbsp;&nbsp;</p>\r\n<p>I use WaveMixerStream32&nbsp; which&nbsp; takes multiple WaveChannel32 objects.&nbsp;&nbsp; The WaveChannel32 objects&nbsp; I'm&nbsp; creating via&nbsp;&nbsp;&nbsp; &quot;new WaveFileReader(fileName)&quot;.</p>\r\n<p>Thanks</p>\r\n<p>henrik</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-12-24T06:27:25.96-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "271954",
+    "ThreadId": "79029",
+    "Html": "<p>hi Henrik,</p>\r\n<p>you can mix multiple streams at any sample rate, but they must all be of the same sample rate for things to work. You will have to post a bit more of your code to set up the WaveMixerStream32 for me to offer any more assistance</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-12-31T04:21:29.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "271973",
+    "ThreadId": "79029",
+    "Html": "<p>Hi Mark, here's some code (only one file gets loaded):</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>   mixer = <span style=\"color:Blue\">new</span> WaveMixerStream32();\r\n   waveOutDevice = <span style=\"color:Blue\">new</span> DirectSoundOut();\r\n   waveOutDevice.Init(mixer);\r\n\r\n   sample = <span style=\"color:Blue\">new</span> AudioSample(fileName);****\r\n\r\n   mixer.AddInputStream(sample);\r\n\r\n\r\n**** AudioSample inherits <span style=\"color:Blue\">from</span> WaveStream and <span style=\"color:Blue\">in</span> its ctor:\r\n\r\n     WaveStream readerStream = <span style=\"color:Blue\">new</span> WaveFileReader(fileName);\r\n\r\n     WaveChannel32  inputStream = <span style=\"color:Blue\">new</span> WaveChannel32(readerStream);\r\n</pre>\r\n</div>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n<p>This will make a file with 8khz 16Bit Mono play back much too fast.&nbsp;</p>\r\n<p>Or just look at the OpenSebJ&nbsp; NAudio tutorial 3 project which also fails to play back a 8khz file correctly.&nbsp;</p>\r\n<p>henrik</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-12-31T06:45:32.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "271978",
+    "ThreadId": "79029",
+    "Html": "<p>you are calling Init on the WaveOutDevice too early. At that point the mixer doesn't yet know what sample rate it will be operating at (will only know when you add the first input stream). You need to add the first mixer input before initializing the wave out device.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-12-31T06:57:13.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "271987",
+    "ThreadId": "79029",
+    "Html": "<p>As you suggested:</p>\r\n<p>&nbsp;</p>\r\n<p>mixer.AddInputStream(sample);</p>\r\n<p>waveOutDevice.Init(mixer);</p>\r\n<p>&nbsp;</p>\r\n<p>but with the same result : plays too fast !</p>\r\n<p>Maybe because of this (?):</p>\r\n<p>/// &lt;summary&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /// Creates a new 32 bit WaveMixerStream<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /// &lt;/summary&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public WaveMixerStream32()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.autoStop = true;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); // &lt;--------<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.bytesPerSample = 4;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.inputStreams = new List&lt;WaveStream&gt;();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>henrik</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-12-31T07:33:46.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272002",
+    "ThreadId": "79029",
+    "Html": "<p>yes, but that should get overridden when you call AddInputStream.</p>\r\n<p>&nbsp;</p>\r\n<p>public void AddInputStream(WaveStream waveStream)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (waveStream.WaveFormat.Encoding != WaveFormatEncoding.IeeeFloat)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw new ArgumentException(&quot;Must be IEEE floating point&quot;, &quot;waveStream.WaveFormat&quot;);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (waveStream.WaveFormat.BitsPerSample != 32)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw new ArgumentException(&quot;Only 32 bit audio currently supported&quot;, &quot;waveStream.WaveFormat&quot;);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (inputStreams.Count == 0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // first one - set the format<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int sampleRate = waveStream.WaveFormat.SampleRate;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int channels = waveStream.WaveFormat.Channels;<br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, channels);</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;</p>\r\n<p>What does your AudioSample class return as its WaveFormat?</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-12-31T08:39:27.933-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272166",
+    "ThreadId": "79029",
+    "Html": "<p>Hi Mark,</p>\r\n<p>now i got it (it was a stupid mistake) Thanks for your support!</p>\r\n<p>So the conclusion is:&nbsp; you'll have to dispose waveOutDevice and call Init() every time when loading&nbsp; streams that have a different samplerate&nbsp; than streams which were added before(and then removed via RemoveInputStream)</p>\r\n<p>henrik</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-01T06:15:35.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "272876",
+    "ThreadId": "79029",
+    "Html": "<p>ah, I see how you got the playback speed problem now. glad you have it working now</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-01-04T06:11:44.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

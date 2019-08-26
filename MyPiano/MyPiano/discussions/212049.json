@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "440760",
+    "ThreadId": "212049",
+    "Html": "<p>Hello Community - I could really use some help.</p>\r\n<p>&nbsp;</p>\r\n<p>I am trying to modify the&nbsp;.Net Voice Recorder so that after you record the sound file and you are on the screen that allows you to edit / playback, when you hit the back button to re-record, the wave resets and doesn't move until you click record. Currently it continues to run and even shows the sound levels when not recording (after the initial record and hitting back).&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Any help would be great - I tried invoking a stop wave command, but it isn't working out for me.</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you again for any guidance.</p>",
+    "PostedDate": "2010-05-09T00:14:03.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "440848",
+    "ThreadId": "212049",
+    "Html": "<p>Sorry this should have been posted elsewhere...</p>\r\n<p>&nbsp;</p>\r\n<p><a href=\"http://voicerecorder.codeplex.com/Thread/View.aspx?ThreadId=212074\">http://voicerecorder.codeplex.com/Thread/View.aspx?ThreadId=212074</a><br><br></p>",
+    "PostedDate": "2010-05-09T10:22:33.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

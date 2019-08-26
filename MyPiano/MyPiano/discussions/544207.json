@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1241165",
+    "ThreadId": "544207",
+    "Html": "I want to get a message when the play is stopped, but the PlaybackStopped event doesn't work. <br />\nthe code :<br />\n<pre><code>public partial class Form1 : Form\n{\n    public Form1()\n    {\n        InitializeComponent();\n    }\n\n    private WaveOut waveOutDevice;\n    private WaveStream activeStream;\n    private WaveChannel32 inputStream;\n\n    private void Form1_Load(object sender, EventArgs e)\n    {\n        string path = @&quot;D:\\1.mp3&quot;;\n        waveOutDevice = new WaveOut();\n        waveOutDevice.DesiredLatency = 100;\n        waveOutDevice.PlaybackStopped += waveOutDevice_PlaybackStopped;\n        activeStream = new Mp3FileReader(path);\n        inputStream = new WaveChannel32(activeStream);\n        waveOutDevice.Init(inputStream);\n        waveOutDevice.Play();\n    }\n\n    private void waveOutDevice_PlaybackStopped(object sender, StoppedEventArgs e)\n    {\n        MessageBox.Show(&quot;stopped.&quot;);\n    }\n}\n</code></pre>\n\nwhen the play is stopped,  there is no message box appeared. <br />\nanybody know why, thanks.<br />\n",
+    "PostedDate": "2014-05-04T00:46:16.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1241934",
+    "ThreadId": "544207",
+    "Html": "It's because you're playing a never-ending audio stream. Set WaveChannel32.PadWithZeroes to false to fix this.<br />\n",
+    "PostedDate": "2014-05-06T01:57:08.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

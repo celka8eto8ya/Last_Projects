@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "114645",
+    "ThreadId": "34532",
+    "Html": "Dear Sir,<br>\r\n<br>\r\nThanks a lot for such a good Library to perform Audio related functionality.<br>\r\n<br>\r\nI have 2 question, first is much simpler and hope it would take just 2-3 minutes of yours to answer.<br>\r\n<br>\r\nI want to play recorded bytes i.e in Eventhandler after writting e.buffer to file, I also want to hear it.<br>\r\n<br>\r\nOne way (What I think) can be using WaveOut.Play , by providing instance of WaveStream in WaveOut.Init().<br>\r\n<br>\r\nProblem is that How to Instantiate WaveStream, becuase all your examples use to read from file using WaveFileReader, and I want to read bytes buffer.<br>\r\n<br>\r\nSimply speaking , I want to create a WaveStream instance from bytes array instead of wav file.<br>\r\n<br>\r\nSecond question is , that can we detect silance in bytes buffer.<br>\r\n<br>\r\nI mean that If I want to record only that buffer which ha some data in it, i.e. I want to record only when I speak in Microphone and not when I remain silent.<br>\r\n<br>\r\nThanks a lot.<br>\r\n<br>\r\nRegards<br>\r\n<br>\r\n<br>\r\n",
+    "PostedDate": "2008-08-29T05:28:08.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "115833",
+    "ThreadId": "34532",
+    "Html": "Hi there<br>\r\nI replied to your first question on another thread. For your second question, you need to check that each byte is zero in the input buffer. Unfortunately, there is no other way at the moment.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-09-03T15:23:07.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

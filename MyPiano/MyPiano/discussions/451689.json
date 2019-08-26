@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1074090",
+    "ThreadId": "451689",
+    "Html": "Using WaveOutEvent, i can play a song just fine through Line Out on a laptop (headphones)\r<br />\n<br />\nMy first problem came when unpluging while playing. The playback stopped and program froze. After some forum searching, i found the solution through the PlaybackStopped event on WaveOutEvent, i just started the same song at the last position, problem solved.\r<br />\n<br />\nBut, if i play through the speakers and plugs in the headphones, there is no sound. If i unplug, the speakers play again. The same happens, after my first solution, if i start with headphones in, unplugges, and the playback is reinitiated through the fix and plugges them in again, there is no sound. Only through speakers.\r<br />\n<br />\nAm i missing something? my guess is that i need to reinitiate the playback when plugging in the headphones, but how would i know when to do that?<br />\n",
+    "PostedDate": "2013-07-28T11:29:45.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1074485",
+    "ThreadId": "451689",
+    "Html": "I think there is a WIndows audio API that lets you know when the default playback device has changed (somewhere in the WASAPI API), but I haven't used it myself so I don't know it off the top of my head. You'd need to browse the MSDN documentation and see if you can find it, then have a look at the NAudio wrappers and see if you can call it.<br />\n",
+    "PostedDate": "2013-07-29T15:07:35.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "855845",
+    "ThreadId": "361505",
+    "Html": "\r\n<p>Hi! I don't speak english good, sorry but I speak spanish.<br>\r\n<br>\r\nThis is my code, that have a problem. Sometime, it finalize the application with an error (the application stopped working).<br>\r\n<br>\r\nThe code:<br>\r\n<br>\r\n</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>                <span style=\"color:blue\">var</span> t = <span style=\"color:blue\">new</span> Thread(() =&gt;\n                {\n                    <span style=\"color:blue\">try</span>\n                    {\n                        sonido.Position = 0; <span style=\"color:green\">// Reset position... sonido = Properties.Resources.bateria_1</span>\n                        <span style=\"color:blue\">var</span> StreamFile = <span style=\"color:blue\">new</span> WaveFileReader(sonido);\n                        <span style=\"color:blue\">var</span> time = StreamFile.TotalTime.Milliseconds &#43; 2200;  <span style=\"color:green\">// the sum is for prevent an error</span>\n                        <span style=\"color:blue\">var</span> Channel32 = <span style=\"color:blue\">new</span> WaveChannel32(StreamFile);\n                        <span style=\"color:blue\">var</span> waveout = <span style=\"color:blue\">new</span> WaveOut(WaveCallbackInfo.FunctionCallback());\n\n                        waveout.Init(Channel32);\n                        waveout.Play();\n\n\n                        Thread.Sleep(time);\n\n                        waveout.Stop();\n                        waveout.Dispose();\n\n                        Thread.CurrentThread.Abort();\n                    }\n                    <span style=\"color:blue\">catch</span>(IOException e) { \n                        MessageBox.Show(<span style=\"color:#a31515\">&quot;Error: &quot;</span> &#43; e.Message); <span style=\"color:green\">// this exception e, dont have a description for view the error...</span>\n                    }\n                });\n                t.Name = <span style=\"color:#a31515\">&quot;Sonido_platillo&quot;</span>;\n                t.Start();\n</pre>\r\n</div>\r\n<p><br>\r\nThanks!</p>\r\n<p>&nbsp;</p>\r\n<p>EDIT:</p>\r\n<p>The exeption information is:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<pre>Not controlled NAudio.MmException\n  Message=WaveStillPlaying calling waveOutWrite\n  Source=NAudio\n  StackTrace:\n       en NAudio.Wave.WaveOutBuffer.WriteToWaveOut()\n       en NAudio.Wave.WaveOutBuffer.OnDone()\n       en NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveMessage uMsg, IntPtr dwInstance, WaveHeader wavhdr, IntPtr dwReserved)\n  InnerException: \n</pre>\r\n<p>&nbsp;</p>\r\n<p>EDIT 2:</p>\r\n<p>Also sometime, the exeption is:&nbsp;<strong>Not a WAVE file - no RIFF header</strong></p>\r\n<p>&nbsp;</p>\r\n<p>EDIT 3:</p>\r\n<p>Another exeption is:</p>\r\n<p>&nbsp;</p>\r\n<pre>Se detect� FatalExecutionEngineError\nMessage: El tiempo de ejecuci�n detect� un error irrecuperable. La direcci�n del error fue 0x5766dc02, en el subproceso 0x1d70. El c�digo de error es 0xc0000005. Es posible que este error sea un error de CLR o de partes no seguras y no verificables de c�digo de usuario. Entre los or�genes m�s habituales de este error se encuentran los errores de referencias calculadas para la interoperabilidad COM o PInvoke, que pueden da�ar la pila.\n</pre>\r\n<p>I dont know what is the problem! :(</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-06-30T13:11:21.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "855905",
+    "ThreadId": "361505",
+    "Html": "<p>I recommend you use WaveOutEvent rather than WaveOut with function callbacks, which I have never managed to get working reliably.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-07-01T00:53:47.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "855982",
+    "ThreadId": "361505",
+    "Html": "<p>Thanks for you reply. But I dont know how use the WaveOutEvent with function callbacks. In my Visual Studio, when I use it, dont&nbsp;shown the function&nbsp;PlaybackThread. I see that WaveOutEvent and WaveOut are very similar. How I do bad?</p>",
+    "PostedDate": "2012-07-01T06:57:12.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "856254",
+    "ThreadId": "361505",
+    "Html": "<p>WaveOutEvent is instead of function callbacks. Just use WaveOutEvent instead of WaveOut</p>",
+    "PostedDate": "2012-07-02T02:52:02.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

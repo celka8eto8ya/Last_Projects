@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1459743",
+    "ThreadId": "650198",
+    "Html": "Hi ,\r<br />\n<br />\nI have created WaveOutEvent Player. I want to mute and unmute  the particular player. I set the volume =(float)0.0; but it will show error &quot;Waveoutevent.volume is obsolete&quot;. Please help me to solve this.\r<br />\n<br />\nThanks in Advance \r<br />\nAthi Varathan<br />\n",
+    "PostedDate": "2016-01-18T23:37:29.003-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1460584",
+    "ThreadId": "650198",
+    "Html": "You can still use it. In fact, I've taken the obsolete attribute off in the latest version of the code anyway<br />\n",
+    "PostedDate": "2016-01-25T11:41:41.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "Greetings all,\r\n\r\nI am using 1.7 to play around with WaveOut Audio using the Event callback mechanism.  \r\n\r\nWhenever I exit out of the demo while audio is playing Visual Studio is raising an unhandled exception error.  When I look further into it I have found that the WaveFormatConversionStream class is attempting to access either \"sourceStream\" or \"conversionStream\" and both of these members are null.  I think it has to do with closing the demo window (using the red \"X\" in the upper right corner) while audio is playing because if I stop the audio first (click on the square block) then there are no exceptions raised.  I am going to guess that these exceptions go unnoticed if you are not running under Visual Studio.\r\n\r\nTo reproduce:\r\n\r\n1. Load the NAudio.sln in VS2010.\r\n2. Set the NAudioDemo project as the Startup Project.\r\n3. Be building and running in \"Debug\" mode.\r\n4. Hit \"F5\" to kick things off.\r\n5. Select \"Audio File Playback\" and press Load.\r\n6. Select \"Event\" \"Callback Mechanism:\" and start playing a .wav file.\r\n7. Click on the red \"X\" in the upper right hand corner to close NAudio Demo.",
+    "LastUpdatedDate": "2014-02-27T14:27:42.84-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-02-19T14:19:17.99-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveFormatConversionStream class attempting to reference a null pointer...",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16430
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "good spot. The AudioPlaybackPanel should not really be trying to reposition the file after it has been disposed. But I could add some protection into AudioFilePlayer as well",
+      "PostedDate": "2014-02-19T15:08:43.097-08:00",
+      "Id": 134118
+    },
+    {
+      "Message": "Sounds good Mark.  I would think that the WaveFormatConversionStream class itself should check for this condition and either take alternative action or raise an explicit exception.  Allowing the null pointer access exception seems like the wrong thing to do to me.\n\nJust my two cents, your mileage may vary.\n\nThanks again for letting me know what was going on.\n\nMarc",
+      "PostedDate": "2014-02-20T07:51:45.017-08:00",
+      "Id": 134210
+    },
+    {
+      "Message": "I've fixed the demo app. Probably classes like WaveFormatConversionStream and AudioFIleReader should throw ObjectDisposedException to make this obvious if you call methods after calling Dispose",
+      "PostedDate": "2014-02-27T14:27:42.84-08:00",
+      "Id": 135336
+    }
+  ]
+}

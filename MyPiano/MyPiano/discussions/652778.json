@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1467575",
+    "ThreadId": "652778",
+    "Html": "This dll works fine in a winform application. \r<br />\n<br />\nBut if I used it in webservice, it dosen't work at all. There is no exception but there is no sound.\r<br />\n<br />\nhere is my code, and the mp3 file exists.<br />\n<pre><code>    [WebMethod(Description = &quot;Play Test&quot;)]\n    public string Test()\n    {\n        WaveOut waveOutDevice = new WaveOut();\n\n        AudioFileReader audioFileReader = new AudioFileReader(&quot;D:\\\\Web\\\\bin\\\\Music\\\\Thunderstruck.mp3&quot;);\n        waveOutDevice.DeviceNumber = 0;\n        waveOutDevice.Init(audioFileReader);\n        waveOutDevice.Play();\n\n        return &quot;Success&quot;;\n    }\n\n</code></pre>\n\nCan naudio works in webservice or I just didn't get the right method ?<br />\n",
+    "PostedDate": "2016-03-21T20:07:03.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1467702",
+    "ThreadId": "652778",
+    "Html": "OK, a number of issues here\r<br />\n<br />\nFirst, and most important, you do understand that this will attempt to play sound on the web server, NOT the client calling the web service?\r<br />\n<br />\nSecond, WaveOut needs a dispatcher thread which you don't have here. WaveOutEvent creates its own thread to do audio processing\r<br />\n<br />\nThird, Play is not blocking. It simply starts playback. So the minute you leave this method, waveOutDevice will become available for garbage collection. You'd need to sleep until you receive the PlaybackStopped event.<br />\n",
+    "PostedDate": "2016-03-22T14:15:43.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

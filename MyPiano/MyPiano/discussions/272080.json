@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "669746",
+    "ThreadId": "272080",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I am just trying to runt the Mp3Streaming Demo but I get the following exception:<br>\r\n<br>\r\n&nbsp;NAudio.MmException was unhandled&nbsp; Message=AcmNotPossible calling acmStreamConvert&nbsp; Source=NAudio&nbsp; StackTrace:&nbsp; &nbsp; &nbsp; &nbsp;at NAudio.MmException.Try(MmResult result, String function) in D:\\Development\\2011\\RadioStreaming\\naudio_db92aece4b2f\\NAudio\\Wave\\MmeInterop\\MmException.cs:line\r\n 39&nbsp; &nbsp; &nbsp; &nbsp;at NAudio.Wave.Compression.AcmStreamHeader.Convert(Int32 bytesToConvert, Int32&amp; sourceBytesConverted) in D:\\Development\\2011\\RadioStreaming\\naudio_db92aece4b2f\\NAudio\\Wave\\Compression\\AcmStreamHeader.cs:line 63&nbsp; &nbsp;\r\n &nbsp; &nbsp;at NAudio.Wave.Compression.AcmStream.Convert(Int32 bytesToConvert, Int32&amp; sourceBytesConverted) in D:\\Development\\2011\\RadioStreaming\\naudio_db92aece4b2f\\NAudio\\Wave\\Compression\\AcmStream.cs:line 155&nbsp; &nbsp; &nbsp; &nbsp;at NAudio.Wave.AcmMp3FrameDecompressor.DecompressFrame(Mp3Frame\r\n frame, Byte[] dest, Int32 destOffset) in D:\\Development\\2011\\RadioStreaming\\naudio_db92aece4b2f\\NAudio\\FileFormats\\Mp3\\Mp3FrameDecompressor.cs:line 44&nbsp; &nbsp; &nbsp; &nbsp;at NAudioDemo.MP3StreamingPanel.StreamMP3(Object state) in D:\\Development\\2011\\RadioStreaming\\naudio_db92aece4b2f\\NAudioDemo\\Mp3StreamingDemo\\MP3StreamingPanel.cs:line\r\n 126&nbsp; &nbsp; &nbsp; &nbsp;at System.Threading._ThreadPoolWaitCallback.WaitCallback_Context(Object state)&nbsp; &nbsp; &nbsp; &nbsp;at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)&nbsp;\r\n &nbsp; &nbsp; &nbsp;at System.Threading._ThreadPoolWaitCallback.PerformWaitCallbackInternal(_ThreadPoolWaitCallback tpWaitCallBack)&nbsp; &nbsp; &nbsp; &nbsp;at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback(Object state)&nbsp; InnerException:&nbsp;13:16\r\n 09/09/2011 Friday<br>\r\n<br>\r\n&nbsp;<br>\r\nCan anyone help?<br>\r\n<br>\r\nThanks&nbsp;</p>\r\n",
+    "PostedDate": "2011-09-09T08:52:42.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "670471",
+    "ThreadId": "272080",
+    "Html": "<p>I have just found out that this problem is caused by a &nbsp;malformed file. If I play other files it does not crash, however, the playback is very slow, like you are playing the song is slow motion</p>",
+    "PostedDate": "2011-09-12T00:35:51.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "672216",
+    "ThreadId": "272080",
+    "Html": "<p>The slow motion thing possibly indicates that the wrong waveformat is being used - e.g. often number of channels</p>",
+    "PostedDate": "2011-09-15T05:44:51.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

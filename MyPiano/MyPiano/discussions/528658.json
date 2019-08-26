@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1201773",
+    "ThreadId": "528658",
+    "Html": "Ridiculous, there are many videos, but how can I get Naudio Class library reference guide?\r<br />\nReference guide means, some collection of Naudio Classes and it's brief explanations.\r<br />\nWhy Can't I found it easily?\r<br />\nSomebody help me.<br />\n",
+    "PostedDate": "2014-02-02T06:30:55.86-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201863",
+    "ThreadId": "528658",
+    "Html": "There are tools to generate documentation (HTML or MS Help File) out of a .NET assembly.\r<br />\nSandcastle is probably the best one at the moment:\r<br />\n<a href=\"http://shfb.codeplex.com/\" rel=\"nofollow\">http://shfb.codeplex.com/</a><br />\n",
+    "PostedDate": "2014-02-02T14:58:29.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1105007",
+    "ThreadId": "461519",
+    "Html": "I am generating a Sine signal using the SignalGenerator class. Can someone please suggest how can I switch the output between the left only, right only and both speakers ?\r<br />\n<br />\nHow can I use the volumesampleprovider with SignalGenerator?\r<br />\n<br />\nThank you in advance for your help<br />\n",
+    "PostedDate": "2013-10-08T06:54:20.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105118",
+    "ThreadId": "461519",
+    "Html": "From my research I think I need to play the audio into a buffer, mute every alternate sample depending on whether we want to play it to left or right speaker, and then play the file from the buffer. But all of this has to be done on the fly. Can someone point me to a sample where this is being done?<br />\n",
+    "PostedDate": "2013-10-08T11:51:53.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105142",
+    "ThreadId": "461519",
+    "Html": "Much easier to create a StereoVolumeSampleProvider, with a LeftVolume and RightVolume property. In the Read method, read from the source (i.e. signal generator) and multiply every pair of samples by LeftVolume and RightVolume. Very simple and will give you exactly what you want.<br />\n",
+    "PostedDate": "2013-10-08T12:27:52.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

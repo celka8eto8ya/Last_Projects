@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1038305",
+    "ThreadId": "442267",
+    "Html": "I looked at the SampleAggregator as an example and did the same thing-\r<br />\n<br />\nI use a NotifyingSampleProvider's &quot;.sample&quot; property to create FFT data for analysis.\r<br />\n<br />\nEverything works great, but the analysis finishes a bit behind the actual sound (duh).\r<br />\n<br />\nIs there a way to allow the sound processing to continue at its normal rate (so NotifyingSampleProvider's samples arrive normally) but to delay the actual sound OUTPUT behind that a bit, so that my analysis syncs up better with the sound?\r<br />\n<br />\n<br />\nSorry if it's a confusing question - please let me know if I need to provide any more information.<br />\n",
+    "PostedDate": "2013-05-01T15:12:52.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1038350",
+    "ThreadId": "442267",
+    "Html": "Nevermind, I was looking for &quot;DesiredLatency&quot;.<br />\n<pre><code>var inputStream = CreateInputStream(fileName);\n                WaveOut useMeInstead = new WaveOut();\n                useMeInstead.DesiredLatency = desiredLatency;\n                useMeInstead.Init(new SampleToWaveProvider(inputStream));\n                playbackDevice = useMeInstead;</code></pre>\n\n",
+    "PostedDate": "2013-05-01T17:46:12.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

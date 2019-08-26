@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1142370",
+    "ThreadId": "478045",
+    "Html": "Hi \r<br />\nI have Logitech USB headset H340 and I capture speaker audio coming to this device with the help of WasapiLoopbackCapture. But problem occur its MIC stop working after some time when we start capturing speaker audio. its sample rate is 44100  but the older usb headphone have 32000 which is working fine with same code. \r<br />\nAny help..\r<br />\nThanks <br />\n",
+    "PostedDate": "2013-12-26T08:59:37.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1144222",
+    "ThreadId": "478045",
+    "Html": "Loopback capture must be at the sample rate the system is using, not the device.<br />\n",
+    "PostedDate": "2013-12-31T06:18:19.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1144542",
+    "ThreadId": "478045",
+    "Html": "Hi Mark \r<br />\n<br />\nLoopback capture is at same sample rate with device but still its stop , I check it with diff settings but no success in final file audio is loopback . what should I do .\r<br />\n<br />\nThanks <br />\n",
+    "PostedDate": "2014-01-02T02:10:32.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1145286",
+    "ThreadId": "478045",
+    "Html": "It may be a driver issue. Normally there should not be a problem with recording while you also capture with loopback. Can you post a short snippet of code that reproduces the issue?<br />\n",
+    "PostedDate": "2014-01-03T11:15:26.33-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1149842",
+    "ThreadId": "478045",
+    "Html": "Hi mark \r<br />\nHere is my code<br />\n<pre><code>using System;\nusing System.Collections.Generic;\nusing System.ComponentModel;\nusing System.Data;\nusing System.Drawing;\nusing System.Linq;\nusing System.Text;\nusing System.Windows.Forms;\nusing NAudio.CoreAudioApi;\nusing NAudio.Lame;\nusing NAudio.Wave;\nusing System.IO;\n\nnamespace WindowsFormsApplication1\n{\n    public partial class Form1 : Form\n    {\n        public Form1()\n        {\n            InitializeComponent();\n        }\n\n        private void button1_Click(object sender, EventArgs e)\n        {\n            wavtomp3();\n\n        }\n        static LameMP3FileWriter wri;\n        static bool stopped = false;\n        private WaveFileWriter writer;\n        public void wavtomp3()\n        {\n\n\n            // Start recording from loopback\n            IWaveIn waveIn = new WasapiLoopbackCapture();\n            //  int bitrate = System.Convert.ToInt32(textBox2.Text);\n            \n            MessageBox.Show(&quot;BitsPerSample=&quot; + waveIn.WaveFormat.ToString());\n            MessageBox.Show(&quot;Sample Rtae=&quot; + waveIn.WaveFormat.SampleRate.ToString());\n            MessageBox.Show(&quot;Channels=&quot; + waveIn.WaveFormat.Channels.ToString());\n            MessageBox.Show(&quot;BitsPerSample=&quot; + waveIn.WaveFormat.BitsPerSample.ToString());\n           \n           wri = new LameMP3FileWriter(@&quot;E:\\128bits.mp3&quot;, waveIn.WaveFormat,LAMEPreset.ABR_128);\n             \n\n\n                      waveIn.DataAvailable += waveIn_DataAvailable;\n            waveIn.RecordingStopped += waveIn_RecordingStopped;\n            waveIn.StartRecording();\n           // stopped = false;\n\n\n\n            \n                    }\n\n        static void waveIn_RecordingStopped(object sender, StoppedEventArgs e)\n        {\n            stopped = true;\n        }\n\n        static void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            if (wri != null)\n                          wri.Write(e.Buffer, 0, e.BytesRecorded);\n         }\n\n\n\n       \n        }\n\n\n            }\n}</code></pre>\n\n",
+    "PostedDate": "2014-01-05T23:03:43.897-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151292",
+    "ThreadId": "478045",
+    "Html": "in what way does the mic stop working? You are not recording from the microphone in this code sample.<br />\n",
+    "PostedDate": "2014-01-09T03:55:22.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151303",
+    "ThreadId": "478045",
+    "Html": "Hi mark\r<br />\nyes  I am not recording MIC , but headphone mic stop working on other application like if you use MIC on skypee then its stop working.<br />\n",
+    "PostedDate": "2014-01-09T04:22:50.373-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

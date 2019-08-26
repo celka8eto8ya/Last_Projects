@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1198434",
+    "ThreadId": "526991",
+    "Html": "I'm trying to get a WaveFormat from a MediaType via MediaFoundationReader but I'm not sure if this is the correct way of doing it. StructureToPtr is throwing an exception.\r<br />\n<br />\nLine: Marshal.StructureToPtr(wfed, waveFormatPointer, false);\r<br />\nException: System.AccessViolationException: Attempted to read or write protected memory.<br />\n<pre><code>            IMFMediaType uncompressedMediaType;\n            \n            \n            reader.GetCurrentMediaType(MediaFoundationInterop.MF_SOURCE_READER_FIRST_AUDIO_STREAM, out uncompressedMediaType);\n\n            WaveFormatExtraData wfed = new WaveFormatExtraData();\n            IntPtr waveFormatPointer = new IntPtr(Marshal.SizeOf(wfed));\n            Marshal.StructureToPtr(wfed, waveFormatPointer, false);\n\n            \n            int size = 0;\n            MediaFoundationInterop.MFCreateWaveFormatExFromMFMediaType(uncompressedMediaType, ref waveFormatPointer, ref size, 0);\n            \n            WaveFormat waveFormat = WaveFormat.MarshalFromPtr(waveFormatPointer);</code></pre>\n\n",
+    "PostedDate": "2014-01-26T16:03:19.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198584",
+    "ThreadId": "526991",
+    "Html": "I got it working.<br />\n<br />\nIn MediaFoundationInterop.cs I had to change<br />\n<pre><code>internal static extern void MFCreateWaveFormatExFromMFMediaType(IMFMediaType pMFType, ref IntPtr ppWF, ref int pcbSize, int flags = 0);</code></pre>\n\nto<br />\n<pre><code>internal static extern void MFCreateWaveFormatExFromMFMediaType(IMFMediaType pMFType, out IntPtr ppWF, out int pcbSize, int flags = 0);</code></pre>\n\nThis goes in MediaFoundationHelpers.cs<br />\n<pre><code>        /// &lt;summary&gt;\n        /// Creates a WaveFormatExtraData from an IMFMediaType\n        /// &lt;/summary&gt;\n        /// &lt;param name=&quot;mediatype&quot;&gt;A MediaFoundation IMFMediaType&lt;/param&gt;\n        /// &lt;returns&gt;A WaveFormat based on WaveFormatExtraData&lt;/returns&gt;        \n        public static WaveFormat CreateWaveFormatExFromMediaType(IMFMediaType mediatype)\n        {\n            WaveFormatExtraData wfed = new WaveFormatExtraData();\n            IntPtr waveFormatPointer  = new IntPtr(Marshal.SizeOf(wfed));\n            \n            int size = 0;\n            MediaFoundationInterop.MFCreateWaveFormatExFromMFMediaType(mediatype, out waveFormatPointer, out size, 0);\n\n            return WaveFormatExtraData.MarshalFromPtr(waveFormatPointer);\n                \n        }    </code></pre>\n\nEncoding: MpegLayer3<br />\nExtraSize: 12<br />\nAudioSubType 00000055-0000-0010-8000-00aa00389b71<br />\npcbsize 30<br />\n<br />\nEncoding: WindowsMediaAudio<br />\nExtraSize: 10<br />\nAudioSubType 00000161-0000-0010-8000-00aa00389b71<br />\npcbsize 28<br />\n<br />\nEncoding: MPEG_HEAAC<br />\nExtraSize: 14<br />\nAudioSubType 00001610-0000-0010-8000-00aa00389b71<br />\npcbsize 32<br />\n<br />\nEncoding: 61868   &lt;-- FLAC<br />\nExtraSize: 0<br />\nAudioSubType 0000f1ac-0000-0010-8000-00aa00389b71<br />\npcbsize 18<br />\n<br />\nEncoding: Pcm<br />\nExtraSize: 0<br />\naudioSubType 00000001-0000-0010-8000-00aa00389b71<br />\npcbsize 18<br />\n",
+    "PostedDate": "2014-01-26T19:43:59.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

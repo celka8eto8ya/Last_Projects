@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "913162",
+    "ThreadId": "395694",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>After taking OpenSebJ's tutorial on MIDI, I realized that it didn't work. This was some time ago, maybe even a year or more, and I haven't noticed any changes to it since. I'm really interested in NAudio. Would someone be willing to make a tutorial for us\r\n noobs?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2012-09-15T18:08:36.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "914286",
+    "ThreadId": "395694",
+    "Html": "<p>sorry the tutorial isn't working for you. I'm afraid that one wasn't written by me, so I am not in a position to update it. All my tutorials are available on my blog at <a href=\"http://mark-dot-net.blogspot.co.uk/search/label/NAudio\">http://mark-dot-net.blogspot.co.uk/search/label/NAudio</a>. I'm afraid I haven't done much on MIDI but I will bear it in mind for future blog posts. The best thing for now is to look at the source code for the NAudioDemo which contains simple working examples of NAudio in action.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-09-18T12:46:00.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "914760",
+    "ThreadId": "395694",
+    "Html": "<p>No need to&nbsp;apologize! Thanks for all of the great work! I'll grab an example.</p>\r\n<p>Thanks</p>",
+    "PostedDate": "2012-09-19T11:33:58.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

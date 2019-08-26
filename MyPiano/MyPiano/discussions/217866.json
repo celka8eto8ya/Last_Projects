@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "461694",
+    "ThreadId": "217866",
+    "Html": "<p>Hello,</p>\r\n<p>I've been using NAudio to play test tones (i.e. sine waves) in my app. I'm following the sine wave example exactly and everything has been working well. &nbsp;While my app is generating/playing the continuous sine wave it is simultaneously using Managed DirectX (9) to process and display images on the monitor in real-time. This has been working very well on my desktop machine (core i5). Yesterday, however, I tried this same application on a core i7 laptop and got some pretty bad stuttering in the acoustic sine wave output. The directX stuff is using a pixel shader to process incoming images from a camera. Depending on the settings the pixel shader that's invoked uses either a neighborhood of 5x5, 7x7 or 9x9 pixels to compute the output color. When I use a 5x5 neighborhood everything progresses smoothly and there is no audio stuttering. When I tax the GPU a little more though (7x7) I start to hear some stuttering, and when I go all the way to a 9x9 neighborhood the stuttering becomes really bad. The UI also slows down.</p>\r\n<p>&nbsp;</p>\r\n<p>I've tried lowering the sampling rate of the WaveForm object to 44.1 / 2 since my audio frequencies are confined to the lower ranges (say 5Khz or so) but that hasn't helped. It seems like somehow as DirectX is called upon to do more work via the pixel sgader program this starts to slow down NAudio even though NAudio is running on the UI thread and DirectX is on the GPU. Any ideas what may be going on here? This has me stumped.</p>\r\n<p>&nbsp;</p>\r\n<p>-L</p>",
+    "PostedDate": "2010-06-30T08:15:48.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

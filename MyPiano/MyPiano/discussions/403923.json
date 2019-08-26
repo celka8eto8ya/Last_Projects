@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "944471",
+    "ThreadId": "403923",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp; &nbsp;I have to make audio play back in FORM without using User Control, from where you are loading &quot;outputDevicePlugins&quot;. You have passed&nbsp;outputDevicePlugins parameter where it calls the user control.&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-20T03:07:04.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944504",
+    "ThreadId": "403923",
+    "Html": "\r\n<p>No need to copy that example, as it is intended to show all possible output modes.</p>\r\n<p>&nbsp;</p>\r\n<p>Just do something like:</p>\r\n<p>this.player = new WaveOut();</p>\r\n<p>var reader = new AudioFileReader(filename);</p>\r\n<p>player.Init(reader);</p>\r\n<p>player.Play();</p>\r\n",
+    "PostedDate": "2012-11-20T04:30:41.973-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944932",
+    "ThreadId": "403923",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp; &nbsp;I need to set audio output device(sound card) how can i assign that using naudio in normal form in normal form. can you please tell the sample code.</p>\r\n",
+    "PostedDate": "2012-11-20T20:41:57.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947992",
+    "ThreadId": "403923",
+    "Html": "\r\n<p>set the DeviceNumber property of WaveOut.</p>\r\n",
+    "PostedDate": "2012-11-27T15:04:30.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198268",
+    "ThreadId": "403923",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nset the DeviceNumber property of WaveOut.<br />\n</blockquote>\nWaveOut doesn't appear to have DeviceNumber as a property...?<br />\n",
+    "PostedDate": "2014-01-26T12:20:02.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198272",
+    "ThreadId": "403923",
+    "Html": "Well <a href=\"https://naudio.codeplex.com/SourceControl/latest#NAudio/Wave/WaveOutputs/WaveOut.cs\" rel=\"nofollow\">it does</a>.<br />\n",
+    "PostedDate": "2014-01-26T12:24:15.657-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198279",
+    "ThreadId": "403923",
+    "Html": "Oh right, I must be doing something wrong then - doesn't show up in intellisense for me.<br />\n<br />\nMust have the wrong class I guess<br />\n",
+    "PostedDate": "2014-01-26T12:36:46.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

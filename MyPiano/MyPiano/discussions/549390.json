@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1258816",
+    "ThreadId": "549390",
+    "Html": "Hi,\r<br />\n<br />\nI have just come across this conversion tool today and would like to know if it is possible to convert Mulaw to Wav?\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2014-06-23T02:39:58.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260963",
+    "ThreadId": "549390",
+    "Html": "yes, there are examples in the NAudioDemo source code\r<br />\nuse the WaveFormatConversionStream<br />\n",
+    "PostedDate": "2014-06-29T15:30:49.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

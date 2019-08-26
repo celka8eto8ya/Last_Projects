@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1480326",
+    "ThreadId": "656898",
+    "Html": "Hi,\r<br />\n<br />\nVery new to NAudio… \r<br />\nI have a few ready wave files (.wav) which I need to play (about 10 files, each ~1 second long)\r<br />\nThe only tricky requirement (at least tricky for me) is that I need to control (synchronize) the exact timing (tick count) at which the audio actually starts playing.\r<br />\nI care less about large latencies.\r<br />\nAlternatively if that is not feasible, querying and retroactively obtaining the “Audio Start timestamp” anytime during the playback is also fine.\r<br />\nThe only important thing is for that timestamp to be accurate and reliable at a millisecond resolution.\r<br />\nThe purpose of this is to accurately measure the time elapsing between that audio signal and some response from the user.\r<br />\nI mentioned the small sized wave files which I use because any solution requiring pre-loading / caching / initializing stuff beforehand would also be great.\r<br />\n<br />\nMany thanks!!! \r<br />\nJ (-:<br />\n",
+    "PostedDate": "2016-08-03T10:35:45.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486151",
+    "ThreadId": "656898",
+    "Html": "sorry for long delay replying. What I'd do is feed a WaveOutEvent (or similar) with a custom SampleProvider. Then in the Read method keep track of exactly how many samples so far have been read and start returning audio from your source file at the exact right moment. You could possibly make something like this by combining a MixingSampleProvider with an OffsetSampleProvider<br />\n",
+    "PostedDate": "2016-10-15T01:35:09.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

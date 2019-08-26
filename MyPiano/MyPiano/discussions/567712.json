@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1305703",
+    "ThreadId": "567712",
+    "Html": "I am trying to convert PCM to MuLaw. I'm not changing SampleRate, or Channels.<br />\n<br />\nThe code works for these audio files below:<br />\nPCM - Sample Rate: 8000 -  BitsPerSample: 16 - Channels: 1<br />\nPCM - Sample Rate: 11025 -  BitsPerSample: 16 - Channels: 1<br />\n<br />\nBut not these audio files. I get &quot;AcmNotPossible calling acmStreamOpen&quot;<br />\nPCM - Sample Rate: 8000 -  BitsPerSample: 16 - Channels: 2<br />\nPCM - Sample Rate: 11025 -  BitsPerSample: 16 - Channels: 2<br />\n<br />\nWhen I use ACM Format Conversion / NAudioDemo, I can convert all of these 4 audio files to muLaw. So the audio files are fine.<br />\n<br />\n<br />\nThis is my code:<br />\n<pre><code>        WaveFormat targetFormat = WaveFormat.CreateMuLawFormat(_mainWaveStream.WaveFormat.SampleRate, _mainWaveStream.WaveFormat.Channels);\n\n        _mainWaveStream = new WaveFormatConversionStream(targetFormat, _mainWaveStream);\n\n\n</code></pre>\n\nI was wondering what the hell I am doing wrong. :)<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2014-09-17T12:14:55.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305710",
+    "ThreadId": "567712",
+    "Html": "I compared my targetFormat, with targetFormat of ACM Format Conversion / NAudioDemo. The only difference is my BlockAlign is 1, the other BlockAlign is 2.\r<br />\n<br />\nSo I have to do this, and it works fine, but it looks ugly:<br />\n<pre><code>        WaveFormat targetMuLawFormat = WaveFormat.CreateMuLawFormat(_mainWaveStream.WaveFormat.SampleRat, _mainWaveStream.WaveFormat.Channels);\n\n        WaveFormat targetFormat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.MuLaw, targetMuLawFormat.SampleRate, targetMuLawFormat.Channels, targetMuLawFormat.AverageBytesPerSecond, _mainWaveStream.WaveFormat.BlockAlign, 8);\n\n        _mainWaveStream = new WaveFormatConversionStream(targetFormat, _mainWaveStream);\n\n</code></pre>\n\nIs there a smart way to do this?<br />\n",
+    "PostedDate": "2014-09-17T12:55:38.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305729",
+    "ThreadId": "567712",
+    "Html": "OK, that may be a bug in CreateMuLawFormat. BlockAlign should be the same as the number of channels. I'm surprised that the ACM codec is picky about what that value is, but I'll get a fixed checked in.<br />\n",
+    "PostedDate": "2014-09-17T13:59:57.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

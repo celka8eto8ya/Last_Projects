@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1493777",
+    "ThreadId": "661793",
+    "Html": "If I understand correctly, in order to achieve a doppler effect in my wav file I have to alter its frequency. In my project with the Naudio library I have implemented a Isampleprovider and have access to the individual samples(float array). What do I have to do now to achieve the doppler effect(change the frequency?). Thanks.<br />\n",
+    "PostedDate": "2017-03-08T11:54:23.8-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493865",
+    "ThreadId": "661793",
+    "Html": "Not included in NAudio, you have to code the sample manipulation yourself.<br />\n",
+    "PostedDate": "2017-03-10T01:49:41.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1403648",
+    "ThreadId": "620767",
+    "Html": "I need help with my script i want to change my voice in a audio loop back w and i want my computer to recognice it as a new microphone. And i want to change my voice in a way that it plays 2 times the same output but with different pitches at the same time. Any ideas?<br />\n",
+    "PostedDate": "2015-04-11T08:23:47.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1409792",
+    "ThreadId": "620767",
+    "Html": "well for the pitch shifting part, you would need a pitch shifter algorithm. Unfortunately there isn't one in NAudio, but you can find an example of one in the code for Skype Voice Changer (skypefx.codeplex.com). You'd run your audio through two instances of this in parallel and mix the outputs together.<br />\n",
+    "PostedDate": "2015-04-13T08:46:15.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

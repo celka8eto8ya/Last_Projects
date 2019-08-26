@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "217658",
+    "ThreadId": "64016",
+    "Html": "<p>Part of a fairly large program I've written involves decoding audio files into 16-bit 8kHz PCM files. These audio files tend to be in the encoded-speech spectrum so I get things like GSM, g7**, and VOX. Before I found NAudio, for anything but the simplest audio formats (PCM and VOX) I was doing the rather horrible thing of running the file through Windows Media Encoder to translate the file into a WMA file using a custom profile that converted it to PCM but upped the sample rate to 20050 Hz which I then had to downsample. Memory usage has been pretty bad. Now that I've found NAudio, I've been able to convert GSM and g711 *-law files fine through it. Unfortunately there are a few formats that I've had difficulty with. One is a g723.1 file and the other I haven't figured out yet though it is a stereo format. So far I've been basing my code off the NAudio Demo's ACM Format Conversion code.</p>\r\n<p>Initially there was a problem because the format had a non &quot;fmt &quot; chunk after the RIFF chunk but I modified ReadWaveHeader function in the WaveFileReader class to skip any intervening chunks and store them in the chunks list. I then get an error in the ShowFormatChooseDialog method of AcmDriver.cs with the result assignment on line 76 returning NoDriver. Both of these audio files play fine in Windows Media Player 11 and convert via WMEncoder on Windows XP and Windows Server 2003, so I have to assume that a driver does exist but being a neophyte at this kind of thing I'm not really sure what the next step would be (other than reading quite a lot of documentation). Any help?</p>",
+    "PostedDate": "2009-07-30T09:44:35.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

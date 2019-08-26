@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "929590",
+    "ThreadId": "400093",
+    "Html": "\r\n<p>I think the NAudio library does not support the audio format IEEE 64bit, so here is my modest contribution by adding a class WaveToSampleProvider64 and a small change in the class SampleProviderConverters.</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>\r\n<span style=\"color:blue\">using</span> System;\r\n\r\n<span style=\"color:blue\">namespace</span> NAudio.Wave.SampleProviders\r\n{\r\n    <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n    <span style=\"color:gray\">///</span><span style=\"color:green\"> Helper class turning an already 64 bit floating point IWaveProvider</span>\r\n    <span style=\"color:gray\">///</span><span style=\"color:green\"> into an ISampleProvider - hopefully not needed for most applications</span>\r\n    <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n    <span style=\"color:blue\">public</span> <span style=\"color:blue\">class</span> WaveToSampleProvider64 : SampleProviderConverterBase\r\n    {\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n        <span style=\"color:gray\">///</span><span style=\"color:green\"> Initializes a new instance of the WaveToSampleProvider class</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;param name=&quot;source&quot;&gt;</span><span style=\"color:green\">Source wave provider, must be IEEE float&lt;/param&gt;</span>\r\n        <span style=\"color:blue\">public</span> WaveToSampleProvider64(IWaveProvider source)\r\n            : <span style=\"color:blue\">base</span>(source)\r\n        {\r\n            <span style=\"color:blue\">if</span> (source.WaveFormat.Encoding != WaveFormatEncoding.IeeeFloat)\r\n            {\r\n                <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> ArgumentException(<span style=\"color:#a31515\">&quot;Must be already floating point&quot;</span>);\r\n            }\r\n        }\r\n\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;summary&gt;</span>\r\n        <span style=\"color:gray\">///</span><span style=\"color:green\"> Reads from this provider</span>\r\n        <span style=\"color:gray\">///</span> <span style=\"color:gray\">&lt;/summary&gt;</span>\r\n        <span style=\"color:blue\">public</span> <span style=\"color:blue\">override</span> <span style=\"color:blue\">int</span> Read(<span style=\"color:blue\">float</span>[] buffer, <span style=\"color:blue\">int</span> offset, <span style=\"color:blue\">int</span> count)\r\n        {\r\n            <span style=\"color:blue\">int</span> bytesNeeded = count * 8;\r\n            EnsureSourceBuffer(bytesNeeded);\r\n            <span style=\"color:blue\">int</span> bytesRead = source.Read(sourceBuffer, 0, bytesNeeded);\r\n            <span style=\"color:blue\">int</span> samplesRead = bytesRead / 8;\r\n            <span style=\"color:blue\">int</span> outputIndex = offset;\r\n            <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> n = 0; n &lt; bytesRead; n&#43;=8)\r\n            {\r\n\t\t<span style=\"color:blue\">long</span> sample64 = BitConverter.ToInt64(sourceBuffer, n);\r\n                buffer[outputIndex&#43;&#43;] = (<span style=\"color:blue\">float</span>)BitConverter.Int64BitsToDouble(sample64);\r\n            }\r\n            <span style=\"color:blue\">return</span> samplesRead;\r\n        }\r\n    }\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>and modify class SampleProviderConverters</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><div style=\"color:black; background-color:white\"><pre><span style=\"color:blue\">else</span> <span style=\"color:blue\">if</span> (waveProvider.WaveFormat.Encoding == WaveFormatEncoding.IeeeFloat)\r\n{\r\n\t<span style=\"color:blue\">if</span> (waveProvider.WaveFormat.BitsPerSample == 64)\r\n\t\tsampleProvider = <span style=\"color:blue\">new</span> WaveToSampleProvider64(waveProvider);\r\n\t<span style=\"color:blue\">else</span>\r\n\t\tsampleProvider = <span style=\"color:blue\">new</span> WaveToSampleProvider(waveProvider);\r\n}\r\n<span style=\"color:blue\">else</span>\r\n{\r\n    <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> ArgumentException(<span style=\"color:#a31515\">&quot;Unsupported source encoding&quot;</span>);\r\n}\r\n</pre>\r\n</div>\r\n<br></pre>\r\n<pre><br></pre>\r\n<pre>Best Regards, Manu.N</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-10-19T12:40:59.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929974",
+    "ThreadId": "400093",
+    "Html": "<p>thanks for this. Have you tested them?</p>",
+    "PostedDate": "2012-10-21T01:17:08.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929978",
+    "ThreadId": "400093",
+    "Html": "<p>Yes, of course, the audio is correct.</p>\r\n<p>But may need to adjust the Length and Position property based.</p>",
+    "PostedDate": "2012-10-21T01:41:42.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930050",
+    "ThreadId": "400093",
+    "Html": "<p>thanks, this is checked in</p>",
+    "PostedDate": "2012-10-21T09:11:17.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "930074",
+    "ThreadId": "400093",
+    "Html": "\r\n<p>Ok, :-)</p>\r\n<p>I tested the length and position properties in your demo part.</p>\r\n<p>The properties work correctly.</p>\r\n",
+    "PostedDate": "2012-10-21T11:06:31.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1293552",
+    "ThreadId": "562158",
+    "Html": "Im trying to set the volume for directsoundout. How would I achieve this ? An example would be great :)\r<br />\nMy code is below:<br />\n<pre><code> play = new DirectSoundOut(idHere);\n           \n            NAudio.Wave.AudioFileReader fileRead = new AudioFileReader(textBox1.Text);\n            play.Init(fileRead);\n            play.Play();</code></pre>\n\n",
+    "PostedDate": "2014-08-26T07:59:46.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294170",
+    "ThreadId": "562158",
+    "Html": "hi!\r<br />\n<br />\nuse the <em>Volume</em> property of the DirectSoundOut object<br />\n<pre><code>play.Volume = x;</code></pre>\n\nwhere x is a float between 0.0 and 1.0, that should do it \r<br />\n<br />\nGreez,\r<br />\n<br />\nHarry<br />\n",
+    "PostedDate": "2014-08-28T00:43:27.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294174",
+    "ThreadId": "562158",
+    "Html": "\r\n<div dir=\"ltr\"><span style=\"color:rgb(68,68,68); font-size:15px; line-height:21.299999237060547px; background-color:rgb(255,255,255)\">The volume option does not work for directsoundout I get the following error :\r\n</span>\r\n<div style=\"line-height:21.299999237060547px; color:rgb(68,68,68); font-size:15px; background-color:rgb(255,255,255)\">\r\nSetting volume not supported on DirectSoundOut, adjust the volume on your WaveProvider instead</div>\r\n<div style=\"line-height:21.299999237060547px; color:rgb(68,68,68); font-size:15px; background-color:rgb(255,255,255)\">\r\n<br>\r\n</div>\r\n<div style=\"line-height:21.299999237060547px; color:rgb(68,68,68); font-size:15px; background-color:rgb(255,255,255)\">\r\nHow would I set the volume with the waveprovider ?</div>\r\n<br>\r\n<div>\r\n<hr id=\"stopSpelling\">\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2014-08-28T00:57:50.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294176",
+    "ThreadId": "562158",
+    "Html": "ah ok...never worked with it, just had a quick look....\r<br />\n<br />\nWhat you also could do is, use a <em>VolumeWaveProvider16</em>\r<br />\nand pass that one to the play.Init() method<br />\n",
+    "PostedDate": "2014-08-28T01:08:04.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294178",
+    "ThreadId": "562158",
+    "Html": "\r\n<div dir=\"ltr\">Thanks,\r\n<div><br>\r\n</div>\r\n<div>how would I pass the <em style=\"line-height:14.995199203491211px; color:rgb(68,68,68); font-family:Verdana; font-size:11px; background-color:rgb(255,255,255)\">\r\nVolumeWaveProvider16</em><span style=\"color:rgb(68,68,68); font-family:Verdana; font-size:11px; line-height:14.995199203491211px; background-color:rgb(255,255,255)\"> to the play method ?</span><br>\r\n<br>\r\n<div>\r\n<hr id=\"stopSpelling\">\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2014-08-28T01:10:29.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294180",
+    "ThreadId": "562158",
+    "Html": "just as you passed the filereader...the Init() method expects an implementation of the IWaveProvider, so basically you can throw almost anything at it what is a WaveProvider...that is the beauty of the NAudio plugging system, you can simply connect tons of different manipulations to create a processing chain that suits your requirements (:<br />\n<ul>\n<li>create a the VolumeWaveProvider16  with the file reader passed in the constructor</li>\n<li>pass the volume provider to the init() call, that should do the trick</li>\n</ul>\n",
+    "PostedDate": "2014-08-28T01:17:55.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294182",
+    "ThreadId": "562158",
+    "Html": "\r\n<div dir=\"ltr\"><br>\r\nOh ok, so that will replace my Stream ?<br>\r\n<div>\r\n<hr id=\"stopSpelling\">\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2014-08-28T01:24:09.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294183",
+    "ThreadId": "562158",
+    "Html": "in play.Int() ? yes....what you basically do is putting a volume modifier &quot;in front&quot; of your stream crating a chain file reader -&gt; volume modifier -&gt; directsound out instead <br />\n",
+    "PostedDate": "2014-08-28T01:29:23.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294187",
+    "ThreadId": "562158",
+    "Html": "\r\n<div dir=\"ltr\">Oh ok cool, I just lose the ability to now seek through the audio stream.\r\n<div><br>\r\n</div>\r\n<div>\r\n<div>private NAudio.Wave.BlockAlignReductionStream Stream = null;</div>\r\n<div>private NAudio.Wave.DirectSoundOut output = null;</div>\r\n<div>private TimeSpan duration;</div>\r\n<div>private VolumeWaveProvider16 pcm;</div>\r\n<div><br>\r\n</div>\r\n<div>\r\n<div>try</div>\r\n<div>{</div>\r\n<div>var device = (MMDevice)((comboBox1.SelectedItem));</div>\r\n<div>Guid idHere = new Guid();</div>\r\n<div>foreach (var dev in NAudio.Wave.DirectSoundOut.Devices)</div>\r\n<div>{</div>\r\n<div>// MessageBox.Show(device.FriendlyName &#43; &quot; - &quot; &#43; dev.Description.ToString());</div>\r\n<div>if (device.FriendlyName == dev.Description.ToString())</div>\r\n<div>{</div>\r\n<div>idHere = dev.Guid;</div>\r\n<div>}</div>\r\n<div>}</div>\r\n<div>OpenFileDialog open = new OpenFileDialog();</div>\r\n<div>open.Filter = &quot;MP3 File (*.mp3)|*.mp3;&quot;;</div>\r\n<div>if (open.ShowDialog() != DialogResult.OK) return;</div>\r\n<div>DisposeMusic();</div>\r\n<div></div>\r\n<div>output = new DirectSoundOut(idHere, 200);</div>\r\n<div>Mp3FileReader reader = new Mp3FileReader(open.FileName);</div>\r\n<div>NAudio.Wave.WaveStream pcm2 = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(reader);</div>\r\n<div>pcm = new VolumeWaveProvider16(reader);</div>\r\n<div>duration = reader.TotalTime;</div>\r\n<div>label2.Text = duration.Minutes.ToString() &#43; &quot; : &quot; &#43; duration.Seconds.ToString();</div>\r\n<div>timer2.Enabled = true;</div>\r\n<div>Stream = new BlockAlignReductionStream(pcm2);</div>\r\n<div>label4.Text = open.FileName;</div>\r\n<div>// output.Init(pcm);// CANT SEEK <span style=\"font-size:12pt\">WaveProvider</span></div>\r\n<div>output.Init(pcm2);// CAN SEEK <span style=\"font-size:12pt\">WaveStream</span></div>\r\n<div>output.Play();</div>\r\n<div></div>\r\n<div>}</div>\r\n<div>catch (Exception err)</div>\r\n<div>{</div>\r\n<div>MessageBox.Show(&quot;Please make sure you have selected a valid output audio device&quot; &#43; &quot; - &quot; &#43;</div>\r\n<div>err.Message);</div>\r\n<div>}</div>\r\n</div>\r\n<br>\r\n<div>\r\n<hr id=\"stopSpelling\">\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2014-08-28T01:37:10.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294190",
+    "ThreadId": "562158",
+    "Html": "hm...you do Seek() on the reader, right? why shouldnt that work anymore? \r<br />\n<br />\nYou still have the reference to the reader, the VolumeProvider shouldnt change a thing whenmanipulating your stream, well apart from...changing the volume (-: when data is polled from the directsound out object<br />\n",
+    "PostedDate": "2014-08-28T01:47:07.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294195",
+    "ThreadId": "562158",
+    "Html": "\r\n<div dir=\"ltr\"><br>\r\nI seek on the stream like this : Stream.Seek((Stream.WaveFormat.AverageBytesPerSecond * 5), SeekOrigin.Current);//forward\r\n<div>Im abit confused. </div>\r\n<div>Here is my stream and Reader:</div>\r\n<div>Mp3FileReader reader = new Mp3FileReader(open.FileName);</div>\r\n<div><span style=\"background-color:rgb(255,255,255)\">NAudio.Wave.WaveStream pcm2 = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(reader);</span></div>\r\n<div><span style=\"background-color:rgb(255,255,255)\">Stream =new BlockAlignReductionStream(pcm2);</span></div>\r\n<div><span style=\"background-color:rgb(255,255,255)\"><br>\r\n</span></div>\r\n<div><span style=\"background-color:rgb(255,255,255)\">I have now added a volume wave provider like you stated:</span></div>\r\n<div><span style=\"background-color:rgb(255,255,255)\">pcm = new VolumeWaveProvider16(reader);</span></div>\r\n<div><br>\r\n</div>\r\n<div>Now as pcm and pcm2 I can't initialize both can I ?</div>\r\n<div></div>\r\n<div>As I can on play one item. I know they both using the same reader but the seek is done on the stream not the reader. I obviously need to change this Im guessing. Sorry about the questions Im new to this audio library and I know its very powerful so am\r\n trying my best to learn it :D</div>\r\n<div><br>\r\n</div>\r\n<div>\r\n<div></div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2014-08-28T01:58:39.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294199",
+    "ThreadId": "562158",
+    "Html": "\r\n<div dir=\"ltr\">Ok I understand. I now seeking via the reader not the blockaligned stream :) and its all working. Thanks man. IM beginning to understand all of this :)\r\n<br>\r\n<br>\r\n<div>\r\n<hr id=\"stopSpelling\">\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2014-08-28T02:07:20.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

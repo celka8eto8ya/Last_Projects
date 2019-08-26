@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1467251",
+    "ThreadId": "652662",
+    "Html": "I basically need to capture a conversation - the sound played on the headphones, as well as the headset microphone. This then needs to be encoded to GSM610, then sent across the network to a monitor. The network methods is not a problem - I have done that already. I can capture the speaker sound or the mic and encode. I do not seem to understand how to get the mixing and resampling done. Any guidance would be welcome.<br />\n",
+    "PostedDate": "2016-03-18T00:30:27.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1467556",
+    "ThreadId": "652662",
+    "Html": "You need to choose a common sample rate (e.g. 16kHz or 8kHz), and resample the audio captured to that. NAudio comes with several resamplers. The MediaFoundationResampler is the most powerful. I'd buffer up a certain amount of audio from both inputs and then resample and mix them with an IMixingSample provider. Then go to 16 bit and into a GSM encoder. It is quite a complicated bit of code to write, and I'm afraid I don't have  a simple sample to hand, but that's the basic approach I'd take.<br />\n",
+    "PostedDate": "2016-03-21T14:18:29.11-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1467592",
+    "ThreadId": "652662",
+    "Html": "This might help you, as you process the buffers yourself without the hardware:\r<br />\n<br />\n<a href=\"http://mark-dot-net.blogspot.de/2014/07/input-driven-resampling-with-naudio.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.de/2014/07/input-driven-resampling-with-naudio.html</a><br />\n",
+    "PostedDate": "2016-03-22T00:27:28.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468279",
+    "ThreadId": "652662",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nYou need to choose a common sample rate (e.g. 16kHz or 8kHz), and resample the audio captured to that. NAudio comes with several resamplers. The MediaFoundationResampler is the most powerful. I'd buffer up a certain amount of audio from both inputs and then resample and mix them with an IMixingSample provider. Then go to 16 bit and into a GSM encoder. It is quite a complicated bit of code to write, and I'm afraid I don't have  a simple sample to hand, but that's the basic approach I'd take.<br />\n</blockquote>\nAny example of doing voice conversation recording would  be nice. \r<br />\n<br />\nUsing WdlResamplingSampleProvider direct from WasapiLoopbackCapture or WaveIn works quite well. \r<br />\n<br />\nSome of the issues I have run into:<br />\n<ol>\n<li>The event buffers provided by WaveInEventArgs are the same. There does not seem to be separate buffers for each device. Or I do not know where they are. </li>\n<li>I can capture speaker OR mic, not both at the same time. Seems my original message was misread.</li>\n<li>The outputs are in float format. This needs to be converted to byte for transfer over the network. WaveBuffer seems to only go one way, and can't convert float to byte.</li>\n</ol>\n",
+    "PostedDate": "2016-03-28T22:51:29.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468478",
+    "ThreadId": "652662",
+    "Html": "1) the buffer for each device can be found in the eventargs &quot;e.buffer&quot;, if they´re equal you might record the same device twice ;)\r<br />\n2) as far as I know, you can record many devices at the same time\r<br />\n3) you can recieve the bytes of your float data using the method described <a href=\"http://stackoverflow.com/questions/1215326/open-source-c-sharp-code-to-present-wave-form\" rel=\"nofollow\">here</a>. Anyway, you should create a BufferedWaveprovider for each device and put your recorded data into them. Then create a MixingWaveprovider and add all BufferedWaveproviders as input. Finally, on a looped background thread, create a buffer and read the data from the MixingWaveprovider into it. Then you can resample as I mentioned above and send the bytes over network.<br />\n",
+    "PostedDate": "2016-03-30T13:16:57.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

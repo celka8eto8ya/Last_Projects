@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "611113",
+    "ThreadId": "257255",
+    "Html": "<p>I tried to edit the bufferedwaveprovider but it failed. There is always an stackoverflow exception but why?</p>\n<p>Ok i solved problem now:</p>\n<p>If someone else needs that just edit your provider you need to readout the volume( i'm using the Stereo16SampleProvider).</p>\n<p>Create a new method like this:</p>\n<p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> LoadNextChunk(<span style=\"color: blue;\">byte</span>[] source, <span style=\"color: blue;\">int</span> samplePairsRequired)\n        {\n            <span style=\"color: blue;\">int</span> sourceBytesRequired = samplePairsRequired * 4;\n            sourceBuffer = GetSourceBuffer(sourceBytesRequired);\n            \n            sourceSamples = sourceBytesRequired / 2;\n            sourceBuffer = source;\n            sourceWaveBuffer = <span style=\"color: blue;\">new</span> WaveBuffer(sourceBuffer);\n            sourceSample = 0;\n        }\n</pre>\n</div>\n</p>\n<p>&nbsp;</p>\n<p>so you can use the byte[] buffer you have in your Read Method in class bufferedwaveprovider to use this method and you won t get a stackoverlfow.</p>",
+    "PostedDate": "2011-05-11T11:28:54.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

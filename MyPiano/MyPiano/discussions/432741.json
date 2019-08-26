@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "999683",
+    "ThreadId": "432741",
+    "Html": "Hi there,\r<br />\n<br />\nStrange question, maybe.\r<br />\n<br />\nBackground:  So I've got hundreds of mp3 files that are the audio tracks from family recordings.  Wanted to make digital copies of the audio before the original media is ruined. \r<br />\n<br />\nI figured out today that many of them are completely silent - it appears that I had some problem with the recorder and so some of the mp3 files have valid audio (music by a family member or interviews with now deceased relatives - kinda cool, but I digress) but many of them are blank.  They aren't 0-length files, they are just silent for X seconds.  A random sampling says that it happened on and off during the several month process.  Unfortunately I didn't catch it.\r<br />\n<br />\nI was thinking about writing a program that could read them in one by one, determine if there was anything or just silence and then cull out the good ones and report back to me the info about the ones that were silent. \r<br />\n<br />\nI've played around a bit with NAudio to open up mp3s and play them back but that would require me to listen to them all again... not exactly a solution for me.<br />\n\r<br />\nIs it possible to use NAudio to make that determination?  Or does anyone have another idea?<br />\n\r<br />\nThanks so much,\r<br />\nMatt<br />\n",
+    "PostedDate": "2013-02-11T11:30:17.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000617",
+    "ThreadId": "432741",
+    "Html": "To do this, you need to examine the PCM samples individually. Mp3FileReader actually emits PCM in its Read method. It will be even easier if you use AudioFileReader as the samples will come as floating point numbers (with 1.0 as maximum value). Then you just examine each sample in a small range (e.g. 20ms) and check that none go over a certain minimum threshold. If so, you cen say that that block is silent.<br />\n",
+    "PostedDate": "2013-02-13T07:23:07.16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007296",
+    "ThreadId": "432741",
+    "Html": "Mark,\r<br />\n<br />\nThanks for the reply.  I wanted to write my understanding of what you've written and if you don't mind correcting me if I misunderstand, I'd appreciate it.\r<br />\n<br />\nSo, calling AudioFileReader.Read() fills in a byte array and then I can take that buffer, loop through some of the buffer and construct some floats out of the bytes and then compare those floats against the threshold value.  Audio that is truly silent - where nothing was recorded for, say, 1 minute will have values that are 0.0F.  Any audio that has just ambient background noise but nobody talking or no music would have a fairly low value (close to 0.0 but greater than it).<br />\n\r<br />\nThanks for you time!\r<br />\nMatt<br />\n",
+    "PostedDate": "2013-02-26T16:32:26.31-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007416",
+    "ThreadId": "432741",
+    "Html": "AudioFileReader implements ISampleProvider, so you should call the overload of Read that takes a float array and you'll have sample values already. And yes, true silence should be 0.0F for very value (although the encode to MP3 and decode from MP3 might possibly introduce a non-zero value somewhere). The values will be centered around 0.0 - there can be low negative values too<br />\n",
+    "PostedDate": "2013-02-26T23:28:38.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

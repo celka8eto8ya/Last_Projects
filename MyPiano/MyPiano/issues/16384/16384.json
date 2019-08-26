@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Some of my users are randomly getting a \"InvalidParameter calling acmStreamClose\"\r\n\r\nSad thing, I can't reproduce this on my machine and I have no hardware information about the users machine.\r\n\r\nHere is the stacktrace:\r\nat NAudio.Wave.Compression.AcmStream.Dispose(Boolean disposing)\r\nat NAudio.Wave.AcmMp3FrameDecompressor.Dispose()\r\nat NAudio.Wave.Mp3FileReader.Dispose(Boolean disposing)\r\nat System.IO.Stream.Close()\r\nat System.IO.Stream.Dispose()\r\nat NAudio.Wave.WaveChannel32.Dispose(Boolean disposing)\r\nat System.IO.Stream.Close()\r\nat System.IO.Stream.Dispose()\r\nat Espera.Core.Audio.LocalAudioPlayer.Dispose()\r\n\r\nYou can find the source code of the class here:\r\nhttps://github.com/flagbug/Espera/blob/master/Espera/Espera.Core/Audio/LocalAudioPlayer.cs\r\n\r\nSince I have no hardware information, nor information on what files this exception occurs, do you have any idea what goes wrong here?\r\n\r\nCheers,\r\nDennis\r\n",
+    "LastUpdatedDate": "2013-01-16T11:21:03.973-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-01-16T04:57:51.55-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "What could cause a \"InvalidParameter calling acmStreamClose\" MmException?",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16384
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "that's strange. Any chance the MP3 file reader could get disposed twice?",
+      "PostedDate": "2013-01-16T05:40:29.47-08:00",
+      "Id": 86227
+    },
+    {
+      "Message": "Unlikely, but I will add additional checks to be sure. \nIf my users get this exception in the next version of my software, I'll report back.\n\nCheers,\nDennis",
+      "PostedDate": "2013-01-16T11:21:03.973-08:00",
+      "Id": 86256
+    }
+  ]
+}

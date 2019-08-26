@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1136053",
+    "ThreadId": "473810",
+    "Html": "How can i override only some parts of a class within Naudio?<br />\n<br />\nFor example:<br />\n<br />\n<br />\npublic void getBufferSize(out int minSize, out int maxSize, out int preferredSize, out int granularity)<br />\n<pre><code>    {\n        handleException(asioDriverVTable.getBufferSize(pASIOComObject, out minSize, out maxSize, out preferredSize, out granularity), &quot;getBufferSize&quot;);\n    }\n\n</code></pre>\n\nThat in ASIODriver.cs<br />\n<br />\nIf i only want to change that one, do i still have to add all the class files from the source needed?<br />\n<br />\nOr can i override just that part form within my own code?<br />\n",
+    "PostedDate": "2013-12-15T01:33:01.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

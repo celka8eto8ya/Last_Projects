@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "713872",
+    "ThreadId": "283374",
+    "Html": "<p>First off, I am a complete newb with NAudio but I am loving it so far!</p>\n<p>One question, I am decoding long MP3's (an average 60 minutes or more) using the following:</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">using</span> (NAudio.Wave.Mp3FileReader reader = <span style=\"color: blue;\">new</span> NAudio.Wave.Mp3FileReader(r.Cells[<span style=\"color: #a31515;\">\"Path\"</span>].Value.ToString()))\n{\n     <span style=\"color: blue;\">using</span> (NAudio.Wave.WaveStream pcmStream = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(reader))\n     {\n          NAudio.Wave.WaveFileWriter.CreateWaveFile(Guid.NewGuid().ToString() + <span style=\"color: #a31515;\">\".wav\"</span>, pcmStream);\n     }\n}\n</pre>\n</div>\n<p>&nbsp;</p>\n<p>My question is, it is possible to get the progress of the wav file creation so I can show that to the user in a progress bar or some other UI element? &nbsp;If there isn't an out of the box implementation for this, can someone point me in the right direction  on where to start?</p>\n<p>Cheers and thanks NAudio guys / gals!</p>",
+    "PostedDate": "2011-12-18T09:26:15.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713955",
+    "ThreadId": "283374",
+    "Html": "<p>The latest Mp3FileReader returns PCM already so the WaveFormatConversionStream is unnecessary. You should be able to use the position and length properties of the Mp3FileReader to show progress, but to do so, don't use CreateWaveFile directly. Instead copy the few lines of code from CreateWaveFile and put a progress update within the loop.</p>",
+    "PostedDate": "2011-12-18T14:32:17.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715200",
+    "ThreadId": "283374",
+    "Html": "<p>Sweet deal, did exactly as you suggested and works like a charm. &nbsp;Thanks!</p>",
+    "PostedDate": "2011-12-20T19:18:22.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "907532",
+    "ThreadId": "283374",
+    "Html": "\r\n<p>@markheath Could you show some example code of how to show progress bar value of conversion progress? I've been trying to perform your method and I'm lost.</p>\r\n",
+    "PostedDate": "2012-09-02T14:03:06.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908402",
+    "ThreadId": "283374",
+    "Html": "<p>Background worker is too slow for file conversion to be as efficient.</p>\r\n<p>I'm having trouble doing an invoke method. Can u please show us some code?</p>",
+    "PostedDate": "2012-09-04T16:43:23.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908741",
+    "ThreadId": "283374",
+    "Html": "<p>all I meant was to do something like this:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>progressBar.Maximum = mp3FileReader.Length;\r\n<span style=\"color: blue;\">using</span> (WaveFileWriter writer = <span style=\"color: blue;\">new</span> WaveFileWriter(filename, mp3FileReader.WaveFormat))\r\n{\r\n    <span style=\"color: blue;\">byte</span>[] buffer = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[mp3FileReader.WaveFormat.AverageBytesPerSecond * 4];\r\n    <span style=\"color: blue;\">while</span> (<span style=\"color: blue;\">true</span>)\r\n    {\r\n        <span style=\"color: blue;\">int</span> bytesRead = mp3FileReader.Read(buffer, 0, buffer.Length);\r\n        progressBar.Value += bytesRead;\r\n        <span style=\"color: blue;\">if</span> (bytesRead == 0)\r\n            <span style=\"color: blue;\">break</span>;\r\n        writer.Write(buffer, 0, bytesRead);\r\n    }\r\n}\r\n</pre>\r\n</div>\r\nObviously you might want to work on a background thread, and so you would need to make changes to the progress bar values on the GUI thread</p>",
+    "PostedDate": "2012-09-05T09:12:08.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909412",
+    "ThreadId": "283374",
+    "Html": "<p>thanks! works like a charm!</p>",
+    "PostedDate": "2012-09-06T17:54:19.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

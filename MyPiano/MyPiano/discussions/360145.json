@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "850897",
+    "ThreadId": "360145",
+    "Html": "\r\n<p>hi,</p>\r\n<p>I am using&nbsp;WaveInEvent to record from microphone, and its recording files for now in wav format which is taking really huge size in hard disk, so is there any class or function or a way to save a file or bytes as mp3 directly instead of wav ??</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>thanks</p>\r\n",
+    "PostedDate": "2012-06-19T07:09:49.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850902",
+    "ThreadId": "360145",
+    "Html": "<p>the way to do this is to use lame.exe and do on the fly conversion by writing to stdin. I hope to do a blog post on this at some point.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-06-19T07:24:21.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850984",
+    "ThreadId": "360145",
+    "Html": "<p>ya, what I am doing now, I am saving records per hour, and then I am doing&nbsp;conversion&nbsp;of wav file using lame.exe, but really I dont think its good idea to save as wav then perform&nbsp;conversion,&nbsp;</p>\r\n<p>but the questions is, how to use stdin in c# and is there any changes required for WaveInEvent ?</p>",
+    "PostedDate": "2012-06-19T09:09:58.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "852508",
+    "ThreadId": "360145",
+    "Html": "<p>As I said, I plan to write a tutorial at some point, but you can find instructions on using stdin in C# by searching on StackOverflow</p>",
+    "PostedDate": "2012-06-22T02:38:48.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

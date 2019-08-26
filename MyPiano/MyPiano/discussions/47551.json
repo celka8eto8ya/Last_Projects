@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "159207",
+    "ThreadId": "47551",
+    "Html": "Hi All,<br>\r\n<br>\r\nI downloaded source code from this site and tried to open in Visual Studio .NEt 2003. But it does not open. Any suggestions?<br>\r\n<br>\r\n<br>\r\nThanks \r\n",
+    "PostedDate": "2009-02-18T16:55:53.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "159318",
+    "ThreadId": "47551",
+    "Html": "NAudio is developed using Visual Studio .NET 2008. Try downloading the express edition and using that. Also, I have a feeling that VS2003 didn't support .NET 2.0. The NAudio solution uses .NET 2.0 and has one sub-project using .NET 3.5.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-02-19T02:07:36.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

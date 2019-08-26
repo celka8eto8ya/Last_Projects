@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1235681",
+    "ThreadId": "542704",
+    "Html": "Hi guys,\r<br />\n<br />\nI managed to get my simple application up by following some online tutorials\r<br />\n<a href=\"http://www.youtube.com/watch?v=BP2MhB2KQe0\" rel=\"nofollow\">http://www.youtube.com/watch?v=BP2MhB2KQe0</a>\r<br />\n<br />\nBasically what I'm trying to do is to output the waveforms by loading an audio file.\r<br />\nI managed to do it, but under some circumstances that if the length of the audio is too long, it gets cut off from my screen. The good thing is that it just got cut off and all I need to do is to add a horizontal scroll to be able to see the ones that are cut off.\r<br />\n<br />\nI tried doing &quot;waveViewer1.HorizontalScroll.Visible = true;&quot;\r<br />\nThis shows the scrollbar when i load the audio but it doesn't work at all.\r<br />\n<br />\nPlease tell me how I can fix this!\r<br />\nAlso, is it possible to export the waveforms into vector format (SVG)?<br />\n",
+    "PostedDate": "2014-04-19T05:05:27.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239544",
+    "ThreadId": "542704",
+    "Html": "WaveViewer is a half-finished control, and I hope to replace it at some point with a better version, as I have created many different wave-viewer components for other projects.<br />\n",
+    "PostedDate": "2014-04-29T14:13:46.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

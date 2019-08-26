@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1238006",
+    "ThreadId": "543330",
+    "Html": "Hi,\r<br />\nI have read a wav file into waveStream usig new NAudio.Wave.WaveFileReader. After that, I convert the waveStream into float[] buffer.\r<br />\nNow I want to locate the float value of mainOutputStream.CurrentTime of the wav file. Can I know any method can retrieve it?\r<br />\nLet's say the mainOutputStream.CurrentTime is 00:01:08.9720000, can I calculate the float value of at cuurent time 00:01:08.9720000? Any code in Naudio can be used to do that?\r<br />\nHope I describe clearly enough. Thanks a lot.<br />\n",
+    "PostedDate": "2014-04-25T05:58:23.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242939",
+    "ThreadId": "543330",
+    "Html": "well you know the sample rate, so there are (say) 44100 samples per second, and the channel count. So you can use those two numbers to work out the offset into your buffer where the sample for any given time is.<br />\n",
+    "PostedDate": "2014-05-08T02:03:40.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

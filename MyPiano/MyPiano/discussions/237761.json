@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "533517",
+    "ThreadId": "237761",
+    "Html": "\r\n<p>Hi there,</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I have 2 WAV files and would like to do the following,</p>\r\n<p>1.&nbsp; Play WAV1. Wait 2 seconds.</p>\r\n<p>2.&nbsp; Play WAV2. Wait 2 seconds.</p>\r\n<p>3.&nbsp; Play Wav1 and Wav2 simultaneously.</p>\r\n<p>How do I create a MIDI file out of that?&nbsp; Thank you very much.&nbsp; Your library rocks!</p>\r\n<p>Cheers.</p>\r\n<p>Huj</p>\r\n",
+    "PostedDate": "2010-12-09T09:49:48.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "533883",
+    "ThreadId": "237761",
+    "Html": "\r\n<p>MIDI files don't play WAV's. What it sounds like is that you would like to create WAVs with concatenated/mixed audio. In this case you simply use the WaveFileWriter. You can then write the contents of existing files to it one after the other. Write zeros\r\n for silence. Use the WaveMixerStream32 to do mixing.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-12-10T06:33:01.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "533893",
+    "ThreadId": "237761",
+    "Html": "\r\n<p>Thanks Mark for the speedy reply.&nbsp; Cheers.</p>\r\n<p>Huj</p>\r\n",
+    "PostedDate": "2010-12-10T06:46:49.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "533945",
+    "ThreadId": "237761",
+    "Html": "\r\n<p>A follow-up question then.</p>\r\n<p>In Midi, I could do the following,</p>\r\n<p>1. Assign a WAV to an AudioTrack.</p>\r\n<p>2.&nbsp; Then assign AudioTrack to a MIDI channel.</p>\r\n<p>3.&nbsp; Then write MIDI commands to run the various MIDI channels.&nbsp;</p>\r\n<p>If that is true, can I do that with NAudio too?</p>\r\n<p>Thanks.</p>\r\n<p>Huj</p>\r\n",
+    "PostedDate": "2010-12-10T08:11:34.143-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

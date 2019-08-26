@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1366136",
+    "ThreadId": "587591",
+    "Html": "Hello,\r<br />\ndoes anyone know how I can calculate the length of a waveform (in pixels) in the NAudio WaveViewer?\r<br />\nThanks and best regards<br />\n",
+    "PostedDate": "2015-03-17T08:44:59.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366201",
+    "ThreadId": "587591",
+    "Html": "well it has a SamplePerPixel value, so you can calculate it from the length of the file<br />\n",
+    "PostedDate": "2015-03-17T10:03:37.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

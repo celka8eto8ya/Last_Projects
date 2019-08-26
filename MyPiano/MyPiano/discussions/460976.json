@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1102894",
+    "ThreadId": "460976",
+    "Html": "Hi\r<br />\n<br />\nWe received an error report about our software (using NAudio) aborting with an unhandled exception on the following call stack:<br />\n<pre><code>System.NullReferenceException: Object reference not set to an instance of an object.\n   at NAudio.Wave.AcmMp3FrameDecompressor.Dispose()\n   at NAudio.Wave.AcmMp3FrameDecompressor.Finalize()</code></pre>\n\nWe're using NAudio.dll 1.6.0.0\r<br />\n<br />\nAny clues? I guess we can recompile the sources and add a condition in the Dispose(). Strange thing is that on most systems the code works just fine.\r<br />\n<br />\nThanks,\r<br />\nBart<br />\n",
+    "PostedDate": "2013-10-02T12:22:45.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1102911",
+    "ThreadId": "460976",
+    "Html": "hmm, there is a check for null reference in the latest code. Might be worth upgrading to the beta of NAudio 1.7.\r<br />\nIt might be an exception is being raised in the constructor, leaving a half-constructed object to be disposed<br />\n",
+    "PostedDate": "2013-10-02T12:41:50.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1102928",
+    "ThreadId": "460976",
+    "Html": "Thanks Mark, but we're still on .NET 2.0, seems latest sources don't compile on .NET 2.0 due to default parameter specifiers<br />\n",
+    "PostedDate": "2013-10-02T13:47:43.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1102931",
+    "ThreadId": "460976",
+    "Html": "Shame, I'm using .NET 3.5 mainly for extension methods and a bit of LINQ. You could quite easily make the same change against the code for v1.6 though<br />\n",
+    "PostedDate": "2013-10-02T13:54:41.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1102933",
+    "ThreadId": "460976",
+    "Html": "Seems like the best option for now yes. Best regards and thanks for your help Mark!  <br />\n",
+    "PostedDate": "2013-10-02T14:02:53.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1102937",
+    "ThreadId": "460976",
+    "Html": "Just found that indeed it was already fixed:\r<br />\n<br />\n<a href=\"https://naudio.codeplex.com/SourceControl/changeset/bce59d5c93de\" rel=\"nofollow\">https://naudio.codeplex.com/SourceControl/changeset/bce59d5c93de</a>\r<br />\n<br />\nwill apply these changes to the 1.6 codebase!<br />\n",
+    "PostedDate": "2013-10-02T14:15:10.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2013-10-03T13:25:22.707-07:00"
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2013-04-03T23:16:18.81-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "in last version I see problem with PlaybackStopped when .mp3 is end.\r\nHow I can know when mp3 file is play end?\r\n\r\n\r\n\r\nRegards\r\nAlex",
+    "LastUpdatedDate": "2013-04-03T23:16:18.81-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-04-01T17:17:44.53-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "PlaybackStopped",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16392
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Solved\n\n\nRegards\nAlex",
+      "PostedDate": "2013-04-02T13:34:34.3-07:00",
+      "Id": 95703
+    }
+  ]
+}

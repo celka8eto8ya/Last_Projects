@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1240282",
+    "ThreadId": "543977",
+    "Html": "I'm trying to get our corporate voicemails to play in a website. The vms are stored on an imap server. I have sucessfully retrieved the wav file attachments and converted them to mp3 using Naudio.Lame. That solution plays the voicemail on all modern desktop browsers, but no mobile browser is playing the file. What should I be converting the 8-bit mono wav file to for audio playback using HTML5 in desktop browsers as well as mobile browsers?\r<br />\n<br />\nThanks,\r<br />\nJeremy<br />\n",
+    "PostedDate": "2014-05-01T08:58:48.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1240304",
+    "ThreadId": "543977",
+    "Html": "Here is my current code that works to convert from wav to mp3.<br />\n<pre><code>using (var retMs = new MemoryStream())\n            using (var ms = new MemoryStream(wavFile))\n            using (var rdr = new WaveFileReader(ms))\n            {\n                using (var conversionStream = WaveFormatConversionStream.CreatePcmStream(rdr))\n                {\n                    using (var wtr = new LameMP3FileWriter(retMs, conversionStream.WaveFormat,LAMEPreset.STANDARD))\n                    {\n                        conversionStream.CopyTo(wtr);\n                        wtr.Close();\n                        return retMs.ToArray();\n                    }\n                }\n            }</code></pre>\n\n",
+    "PostedDate": "2014-05-01T09:53:17.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242245",
+    "ThreadId": "543977",
+    "Html": "unfortunately I don't think there is one format that all HTML 5 browsers are guaranteed to support, but MP3 would give you a fairly wide reach.<br />\n",
+    "PostedDate": "2014-05-06T12:50:09.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242605",
+    "ThreadId": "543977",
+    "Html": "you may need to upsample to 16kHz (or higher - try 22.05, 32 or 44.1kHz) before converting to MP3 for it to work on all mobile devices<br />\n",
+    "PostedDate": "2014-05-07T07:24:11.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242617",
+    "ThreadId": "543977",
+    "Html": "based on my code above - how would I would I upsample before converting to MP3?<br />\n",
+    "PostedDate": "2014-05-07T07:40:36.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242942",
+    "ThreadId": "543977",
+    "Html": "Use one of the resampler classes such as MediaFoundationResampler, WdlResamplingSampleProvider or even WaveFormatConversionStream <br />\n",
+    "PostedDate": "2014-05-08T02:06:54.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

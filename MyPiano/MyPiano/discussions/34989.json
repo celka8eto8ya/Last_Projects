@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "116254",
+    "ThreadId": "34989",
+    "Html": "From within my Vista C# application I want to change the volume of 2 endpoint devices. In XP-mixer terminology I want to change the volume of the Line-In and Wave. When increasing the volume of the Line-In the volume of the Wave should be descreased by the same amount. However the mixer has been changed in Vista. I want to use the Naudio library but I do not know how to access the XP Wave alternative in Vista?A little help is appreciated.",
+    "PostedDate": "2008-09-04T23:47:19.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "747288",
+    "ThreadId": "298909",
+    "Html": "<p>I must record a internet audio stream&nbsp;with these feautures :</p>\n<p>Speed : 65 Kbps<br />Codec audio : Windows Media Audio 64 Kbps, 44 Khz, stereo</p>\n<p>How can i use Naudio ? is there example ?</p>\n<p>&nbsp;</p>",
+    "PostedDate": "2012-02-08T07:39:07.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "747319",
+    "ThreadId": "298909",
+    "Html": "<p>I'm not sure what NAudio would do for you here. I would just download the audio from the network and save it into a .wma file.</p>",
+    "PostedDate": "2012-02-08T07:55:44.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

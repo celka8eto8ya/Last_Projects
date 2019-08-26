@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1427060",
+    "ThreadId": "638580",
+    "Html": "Hello,\r<br />\n<br />\nI actually tried to use NSpeex (<a href=\"https://nspeex.codeplex.com/\" rel=\"nofollow\">Link</a>) to play Speex files from disk, which didn´t work whatever I tried (always Bandmode error).\r<br />\n<br />\nIs there any example how to use the NAudio <strong>NSpeex plugin for file decoding</strong>? I´d like to have a Wavestream for this format, but in fact the port seems to only decode packets and not reads full files.\r<br />\n<br />\nAny help would be appreciated.\r<br />\n<br />\nCheers.<br />\n",
+    "PostedDate": "2015-05-22T03:54:22.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437360",
+    "ThreadId": "638580",
+    "Html": "Come on, no suggestions? Any advice would be better than nothing. Anyway I want to do it the managed way.<br />\n",
+    "PostedDate": "2015-08-05T05:34:57.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437372",
+    "ThreadId": "638580",
+    "Html": "I'm afraid I have no knowledge at all of the .spx file format. I'd recommend asking over at the NSpeex project for help.<br />\n",
+    "PostedDate": "2015-08-05T06:51:45.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437439",
+    "ThreadId": "638580",
+    "Html": "Ok thanks. About our discussion of the *.flac format and  the rumors for windows 10 flac support I found this interesting site: \r<br />\n<a href=\"https://msdn.microsoft.com/en-us/library/windows/apps/hh986969.aspx\" rel=\"nofollow\">URL</a>\r<br />\n<br />\nSo the rumors are correct. Just for your information ;)<br />\n",
+    "PostedDate": "2015-08-05T14:42:42.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1438295",
+    "ThreadId": "638580",
+    "Html": "Another interesting project I found on the web that could help you with the MediaFoundation translation:\r<br />\n<br />\n<a href=\"http://mfnet.sourceforge.net/\" rel=\"nofollow\">Link</a><br />\n",
+    "PostedDate": "2015-08-12T06:00:31.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

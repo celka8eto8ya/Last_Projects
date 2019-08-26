@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "521121",
+    "ThreadId": "234475",
+    "Html": "\r\n<p>It may be due to my extreme tiredness right now, but I can't seem to figure out the following problem.</p>\r\n<p>I am trying to convert a MP3 file to a WAV file, as WAV is required for the project. However, whenever I try to read from an MP3 File, I get one of the 2 following situations:</p>\r\n<p>1.) No data is read from the file at all.</p>\r\n<p>2.) An infinite amount of data is read and written to a WAV file (1.38 GB in&nbsp;48 sec).</p>\r\n<p>The code pertaining to (1): (Does the same when using a BlockAlignedStream)</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>            WaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(fileName);\r\n            WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(mp3Reader);\r\n            \r\n            <span style=\"color:blue\">byte</span>[] buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[8192];\r\n            <span style=\"color:blue\">using</span>(WaveFileWriter wavWriter = <span style=\"color:blue\">new</span> WaveFileWriter(outFile, pcmStream.WaveFormat))\r\n            {\r\n                <span style=\"color:blue\">int</span> read;\r\n                <span style=\"color:blue\">while</span> ((read = pcmStream.Read(buffer, 0, buffer.Length)) &gt; 0)\r\n                {\r\n                    wavWriter.WriteData(buffer, 0, buffer.Length);\r\n                }\r\n\r\n                wavWriter.Close();\r\n            }</pre>\r\n<p>The code pertaining to (2):</p>\r\n<pre><div style=\"color:black; background-color:white\"><pre>            WaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(fileName);\r\n            WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(mp3Reader);\r\n            WaveStream basStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(pcmStream);\r\n            WaveStream readStream = <span style=\"color:blue\">new</span> WaveChannel32(basStream);            \r\n            <span style=\"color:blue\">byte</span>[] buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[8192];\r\n            <span style=\"color:blue\">using</span>(WaveFileWriter wavWriter = <span style=\"color:blue\">new</span> WaveFileWriter(outFile, pcmStream.WaveFormat))\r\n            {\r\n                <span style=\"color:blue\">int</span> read;\r\n                <span style=\"color:blue\">while</span> ((read = readStream.Read(buffer, 0, buffer.Length)) &gt; 0)\r\n                {\r\n                    wavWriter.WriteData(buffer, 0, buffer.Length);\r\n                }\r\n\r\n                wavWriter.Close();\r\n            }\r\n</pre>\r\n</div>\r\n</pre>\r\n</div>\r\n<p>I'm not certain as to what I'm doing wrong here, any insight/help/smack-on-the-head is appreciated.</p>\r\n",
+    "PostedDate": "2010-11-12T07:32:23.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "521148",
+    "ThreadId": "234475",
+    "Html": "\r\n<p>are you able to grab hold of the latest code from CodePlex? It makes decoding mp3 much easier as it removes need for WaveFormatConversionStream and BlockAlignReduction stream. Just read out of the Mp3FileReader and write straight into the WaveFileWriter</p>\r\n<p>WaveChannel32 is the reason for infinitely long files. It is intended for mixer inputs and is not really what you need here.</p>\r\n",
+    "PostedDate": "2010-11-12T08:22:40.883-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "521154",
+    "ThreadId": "234475",
+    "Html": "\r\n<p>Thanks, I'll go grab that then.</p>\r\n",
+    "PostedDate": "2010-11-12T08:34:53.457-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

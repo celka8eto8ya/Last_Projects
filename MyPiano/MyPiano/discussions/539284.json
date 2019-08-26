@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1223655",
+    "ThreadId": "539284",
+    "Html": "Hello,\r<br />\n<br />\nI was wondering if there were any examples of &quot;watermarking&quot; a wav file.<br />\n\r<br />\nFor example, every 10 seconds, play a 2nd wav file, and then mix with the original wav file, then save that mixed stream as a separate .wav.  I'd imagine this would be possible to automate.<br />\n",
+    "PostedDate": "2014-03-17T12:52:04.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223659",
+    "ThreadId": "539284",
+    "Html": "no examples of exactly this, but you could make it with a MixingSampleProvider and OffsetSampleProvider.\r<br />\nThe best way would be to create a custom ISampleProvider that emitted your watermark at regular intervals and mix that in.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2014-03-17T12:59:54.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1224018",
+    "ThreadId": "539284",
+    "Html": "Thanks again Mark.  I think I have this solved by creating a wav file in my DAW that emits a watermark every 10 seconds for 10 minutes, and then I created my own MixingWaterMarkProvider that mixes the source + watermark wav, and then stops reading once the first source is finished.  \n<br />\n<pre><code> if (samplesRead == 0)\n                    {\n                        sources.RemoveAt(1);\n                        sources.RemoveAt(0);\n                    }\n                    index--;</code></pre>\n\nI'm sure there's a more elegant way to do this in the code, but I'm not quite clever enough to figure it out yet.  Thanks again for creating this!  I'm amazed at how powerful Naudio is every time I use it  - and a lot of fun too!  <br />\n",
+    "PostedDate": "2014-03-18T08:16:50.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

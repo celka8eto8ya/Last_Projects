@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1293165",
+    "ThreadId": "562059",
+    "Html": "Hi,\r<br />\n<br />\nI want to play a raw array of byte in PCM format (8000 Hz, 1 channel, 16 bit)\r<br />\n<br />\nI'm doing the following: (decode is the array of byte in pcm format)<br />\n<pre><code>Stream RawPcmStream = new MemoryStream(decode);\nWaveFormat decodeformat = new WaveFormat(8000, 16, 1);\nRawSourceWaveStream rawstream = new RawSourceWaveStream(RawPcmStream, decodeformat);\nWaveStream pcm = WaveFormatConversionStream.CreatePcmStream(rawstream);\n\nDirectSoundOut output = new NAudio.Wave.DirectSoundOut();\noutput.Init(pcm);\noutput.Play();</code></pre>\n\nDoing this i can only heard noise.\r<br />\n<br />\nCould be that the format of the array of byte decode (pcm) are bad?\r<br />\nthe format need to be in little or big endian?\r<br />\nIn 2's complement or normal?\r<br />\n<br />\nthank for your help<br />\n",
+    "PostedDate": "2014-08-25T09:18:21.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

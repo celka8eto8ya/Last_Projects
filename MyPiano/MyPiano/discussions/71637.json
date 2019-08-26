@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "244353",
+    "ThreadId": "71637",
+    "Html": "<p>Hey,</p>\r\n<p>I'm trying to play raw G.711 ALaw data that I've received over the network using NAudio. Since I didn't expect NAudio to decode ALaw on it's own, I've taken care of that and am now trying to play the resulting short-samples.</p>\r\n<p>I've implemented my own IWaveProvider based on WaveProvider16:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>            <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">class</span> G711WaveProvider : WaveProvider16\r\n            {\r\n                <span style=\"color:Blue\">private</span> <span style=\"color:Blue\">object</span> samplesLock = <span style=\"color:Blue\">new</span> <span style=\"color:Blue\">object</span>();\r\n                <span style=\"color:Blue\">private</span> ManualResetEvent haveData = <span style=\"color:Blue\">new</span> ManualResetEvent(<span style=\"color:Blue\">false</span>);\r\n                <span style=\"color:Blue\">private</span> <span style=\"color:Blue\">int</span> required;\r\n                <span style=\"color:Blue\">private</span> Queue&lt;<span style=\"color:Blue\">short</span>&gt; samples = <span style=\"color:Blue\">new</span> Queue&lt;<span style=\"color:Blue\">short</span>&gt;();\r\n\r\n                <span style=\"color:Blue\">public</span> G711WaveProvider()\r\n                    : <span style=\"color:Blue\">base</span>(8000, 1)\r\n                {\r\n                }\r\n\r\n                <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">override</span> <span style=\"color:Blue\">int</span> Read(<span style=\"color:Blue\">short</span>[] buffer, <span style=\"color:Blue\">int</span> off, <span style=\"color:Blue\">int</span> len)\r\n                {\r\n                    <span style=\"color:Blue\">lock</span> (samplesLock)\r\n                    {\r\n                        <span style=\"color:Blue\">int</span> have = samples.Count;\r\n                        <span style=\"color:Blue\">if</span> (have &gt;= len)\r\n                        {\r\n                            <span style=\"color:Blue\">for</span> (<span style=\"color:Blue\">int</span> i = 0; i &lt; len; i++)\r\n                            {\r\n                                buffer[off + i] = samples.Dequeue();\r\n                            }\r\n                            <span style=\"color:Blue\">return</span> len;\r\n                        }\r\n\r\n                        required = len - have;\r\n                    }\r\n                    haveData.WaitOne();\r\n                    haveData.Reset();\r\n                    <span style=\"color:Blue\">return</span> Read(buffer, off, len);\r\n                }\r\n\r\n                <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">void</span> Feed(<span style=\"color:Blue\">short</span>[] d)\r\n                {\r\n                    <span style=\"color:Blue\">lock</span> (samplesLock)\r\n                    {\r\n                        <span style=\"color:Blue\">foreach</span> (<span style=\"color:Blue\">short</span> s <span style=\"color:Blue\">in</span> d) samples.Enqueue(s);\r\n                        <span style=\"color:Blue\">if</span> (required &gt; 0)\r\n                        {\r\n                            required -= d.Length;\r\n                            <span style=\"color:Blue\">if</span> (required &lt;= 0)\r\n                                haveData.Set();\r\n                        }\r\n                    }\r\n                }\r\n\r\n                <span style=\"color:Blue\">public</span> <span style=\"color:Blue\">new</span> WaveFormat WaveFormat\r\n                {\r\n                    <span style=\"color:Blue\">get</span>\r\n                    {\r\n                        <span style=\"color:Blue\">return</span> WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, 8000, 1, 16000, 2, 16);\r\n                    }\r\n                }\r\n\r\n            }\r\n</pre>\r\n</div>\r\n<p>I've tried a bunch of different WaveFormats, no change. I should also mention that I develop on a Vista 64bit machine and WaveOut didn't work properly (stopped reading samples after filling its default three buffers), so I'm now using DirectSoundOut but only hearing noise.</p>\r\n<p>Any idea on this? I've confirmed using WireShark that the data transferred is the &quot;real deal&quot;.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-11T06:25:02.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244380",
+    "ThreadId": "71637",
+    "Html": "<p>Hi there,</p>\r\n<p>did you know NAudio can already do A-law decompression using the WaveFormatConversionStream?</p>\r\n<p>it works nicely.</p>\r\n<p>The wave format should be the format you are converting your a-law to. I would expect that would be 8kHz, 16 bit mono PCM.</p>\r\n<p>Have you also tried writing your converted A-law to a wav file, just to make sure your conversion stream is working correctly?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-11T09:31:29.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244387",
+    "ThreadId": "71637",
+    "Html": "<p>Hey,</p>\r\n<p>I've implemented a WaveStream that receives the pure byte[]-Data I get over the wire. It reports WaveFormat.CreateALawFormat(8000, 1) as WaveFormat. My WaveFormatConversionStream uses WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, 8000, 1, 16000, 2, 16) as target Format. This combination still yields the same result: noise :(</p>\r\n<p>I've recorded both my previous method and the ConversionStream one using WaveRecorder, playing the resulting wav with VLC results in the same noise I hear through NAudio. I've uploaded that wav <a title=here href=\"http://rapidshare.com/files/291649176/call.wav.html\">http://rapidshare.com/files/291649176/call.wav.html</a></p>\r\n<p>Thanks for answering though :)</p>",
+    "PostedDate": "2009-10-11T10:11:48.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244653",
+    "ThreadId": "71637",
+    "Html": "<p>are you sure your input audio is a-law? I have successfully used NAudio to decompress a-law many times.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-12T06:35:06.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244723",
+    "ThreadId": "71637",
+    "Html": "Hey,<br><br>I receive data over RTP and the payload type sent clearly marks it as<br>G.711 ALaw. Also, the received data does kinda reflect the input: I'm<br>using a third party program to generate the RTP traffic which records<br>from my microphone, and as I speak louder, noise gets louder :o<br><br>Greetings<br><br>2009/10/12 markheath &lt;notifications@codeplex.com&gt;:<br>&gt; From: markheath<br>&gt;<br>&gt; are you sure your input audio is a-law? I have successfully used NAudio to<br>&gt; decompress a-law many times.<br>&gt;<br>&gt; Mark<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt; Read the full discussion online.<br>&gt;<br>&gt; To add a post to this discussion, reply to this email<br>&gt; ([email removed])<br>&gt;<br>&gt; To start a new discussion for this project, email<br>&gt; [email removed]<br>&gt;<br>&gt; You are receiving this email because you subscribed to this discussion on<br>&gt; CodePlex. You can unsubscribe on codePlex.com.<br>&gt;<br>&gt; Please note: Images and attachments will be removed from emails. Any posts<br>&gt; to this discussion will also be available online at codeplex.com",
+    "PostedDate": "2009-10-12T09:19:26.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244784",
+    "ThreadId": "71637",
+    "Html": "<p>Hey,</p>\r\n<p>I'm sorry for having wasted your time. The problem was in my RTP stuff, causing the whole payload to be the first byte of the real payload.</p>\r\n<p>Having fixed that, it works great now. I love NAudio, it's really my kind of library. Great work and thanks :)</p>\r\n<p>Greetings</p>",
+    "PostedDate": "2009-10-12T11:36:52.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "244789",
+    "ThreadId": "71637",
+    "Html": "<p>cool, glad you got it working</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-12T11:47:14.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

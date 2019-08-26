@@ -1,0 +1,61 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:29:38.45-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "The problem is if the header length is not quite correct.  fool.wav is a wave file that plays correctly in most players and reads correctly through the mm api, but fails in naudio \r\n\r\nThe solutions was to hack WaveFormat to set the binary reader to the correct position\r\n\r\n\t\t/// <summary>\r\n\t\t/// Reads a new WaveFormat object from a stream\r\n\t\t/// </summary>\r\n\t\t/// <param name=\"br\">A binary reader that wraps the stream</param>\r\n\t\tpublic WaveFormat(BinaryReader br)\r\n\t\t{\r\n\t\t\tint formatChunkLength = br.ReadInt32();\r\n --> ADDED           long chunkStartPosition = br.BaseStream.Position;\r\n\r\n\t\t\tif(formatChunkLength < 16)\r\n\t\t\t\tthrow new ApplicationException(\"Invalid WaveFormat Structure\");\r\n\t\t\tthis.waveFormatTag = (WaveFormatEncoding) br.ReadUInt16();\r\n\t\t\tthis.channels = br.ReadInt16();\r\n\t\t\tthis.sampleRate = br.ReadInt32();\t\t\t\t\r\n\t\t\tthis.averageBytesPerSecond = br.ReadInt32();\r\n\t\t\tthis.blockAlign = br.ReadInt16();\r\n\t\t\tthis.bitsPerSample = br.ReadInt16();\r\n            if (formatChunkLength > 16)\r\n            {\r\n                \r\n                this.extraSize = br.ReadInt16();\r\n                if (this.extraSize > formatChunkLength - 18)\r\n                {\r\n                    Console.WriteLine(\"Format chunk mismatch\");\r\n                    //RRL GSM exhibits this bug. Don't throw an exception\r\n                    //throw new ApplicationException(\"Format chunk length mismatch\");\r\n\r\n                    this.extraSize = (short) (formatChunkLength - 18);\r\n                }\r\n                \r\n                // read any extra data\r\n                // br.ReadBytes(extraSize);\r\n\r\n            }\r\n\r\nADDED-->            br.BaseStream.Position = chunkStartPosition + formatChunkLength;\r\n}",
+    "LastUpdatedDate": "2012-10-27T00:29:38.45-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-06-08T13:51:22.87-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Format header read for some wav files are incorrect",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 10105
+  },
+  "FileAttachments": [
+    {
+      "FileId": 266441,
+      "FileName": "fool.WAV",
+      "DownloadUrl": ".\\266441"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Sorry about the fix, this screws up compression.  I'll work on it",
+      "PostedDate": "2009-06-08T14:03:48.79-07:00",
+      "Id": 41703
+    },
+    {
+      "Message": "So this fixes both fool.wav and the compression,  it is not right because if extrabytes = 2)\r\n            {\r\n                this.extraSize = br.ReadInt16();\r\n                if (extraSize == 0)\r\n                {\r\n                    br.BaseStream.Position = chunkStartPosition + formatChunkLength;\r\n                    return;\r\n                }\r\n                else if (this.extraSize > remainingSize - 2)\r\n                {\r\n                    Console.WriteLine(\"Format chunk mismatch\");\r\n                    //RRL GSM exhibits this bug. Don't throw an exception\r\n                    //throw new ApplicationException(\"Format chunk length mismatch\");\r\n                }\r\n                this.extraSize = (short)(remainingSize - 2);\r\n            }\r\n            else\r\n            {\r\n                // Needed if remainingSize == 1, this may be impossible\r\n                br.BaseStream.Position = chunkStartPosition + formatChunkLength;\r\n            }\r\n\t\t}",
+      "PostedDate": "2009-06-08T14:41:39.057-07:00",
+      "Id": 41704
+    },
+    {
+      "Message": "checked in a \"fix\" although this WAV file is corrupt (trusting the fmt chunk size not the WaveFormat extra size)",
+      "PostedDate": "2011-05-27T14:29:15.653-07:00",
+      "Id": 41705
+    }
+  ]
+}

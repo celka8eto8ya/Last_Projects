@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "closing as no plan to fix, see comments",
+    "ClosedDate": "2012-09-26T06:21:25.107-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I ran into a problem using WaveOut to play a WaveFormatConversionStream.  It appears that WaveFormatConversionStream.Read is consistently reading only 4072 bytes into a 4800 byte buffer, but that discrepancy is not getting passed on to the WaveInterop.waveOutWrite call.  I modified the WaveOutBuffer.OnDone method as follows\r\n\r\n            header.bufferLength = bytes;    // fix\r\n            WriteToWaveOut();\r\n \r\nNot sure of any negative side effects, but it seems to work so far.",
+    "LastUpdatedDate": "2012-09-26T06:21:25.107-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-02-20T16:15:21.737-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveOutBuffer.OnDone - set header.bufferLength = bytes?",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16340
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "if the wavestream given to the IWaveOut implementer is unable to provide the full number of bytes requested in Read, then effectively your latency is changed. I did it this way to ensure that badly behaving input streams don't cause hundreds of really small buffers to be sent to waveOutWrite. You could use BlockAlignReductionStream which has some built-in buffering.",
+      "PostedDate": "2012-02-26T09:48:44.56-08:00",
+      "Id": 56582
+    }
+  ]
+}

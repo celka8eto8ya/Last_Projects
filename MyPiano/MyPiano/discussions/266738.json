@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "648344",
+    "ThreadId": "266738",
+    "Html": "\r\n<p>I see the WMAFileReader and examined the MP3 network Stream player sample. But seem to be having some trouble bridging the 2. &nbsp;Any advice on how to playback WMA Network streams ?</p>\r\n<p>&nbsp;</p>\r\n<p>Thx</p>\r\n<p>&nbsp;</p>\r\n<p>Evan</p>\r\n",
+    "PostedDate": "2011-07-27T08:45:38.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648831",
+    "ThreadId": "266738",
+    "Html": "<p>I'm afraid this is something I haven't tried myself, but in theory it should be possible. The key thing to remember with network streams is that you can't reposition or ask for stream length. So long as the WMAFileReader doesn't do this, it should be adaptable.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-28T02:15:26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

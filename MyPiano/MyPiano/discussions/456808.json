@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1092313",
+    "ThreadId": "456808",
+    "Html": "Hello community,\r<br />\n<br />\nis it possible to visualize the current input of a specific channel during recording. How can I create a MeteringSampleProvider when I'm using Asio? I just want to implement a &quot;monitor&quot; function to check each input channel by visualizing the volume with the VolumeMeter. I already used the asio recording demo by Mark and adapted it to my needs. But currently i don't have a clue how to solve this problem.\r<br />\n<br />\nThanks \r<br />\nJan<br />\n",
+    "PostedDate": "2013-09-13T07:14:35.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094442",
+    "ThreadId": "456808",
+    "Html": "Get the recorded samples as an interleaved float array, and then examine the values to see the current peak value (maximum sample). No need to use the MeteringSampleProvider unless you are setting up an audio processing signal chain.<br />\n",
+    "PostedDate": "2013-09-19T05:57:45.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

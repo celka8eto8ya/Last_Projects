@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "It appears that we could add a few smarts to the Mp3FileReader and make it so that it would not have to use the Position property on the stream. Not all streams (especially web streams) allow the Seek operation. Also, the Mp3FileReader makes no attempt to check the CanSeek flag on the stream.\r\n\r\nIt would be okay to set stream position if the user wanted to adjust the playback position. However, that functionality should be disabled when the stream does not allow seeking or it should only be functional in some kind of cached data.",
+    "LastUpdatedDate": "2012-11-03T08:10:34.293-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-10-29T14:01:03.04-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "the Mp3FileReader should not set stream position",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16371
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Mp3FileReader is for reading MP3 files. Use the code from the NAudio MP3 streaming demo for streaming MP3s which are not seekable.",
+      "PostedDate": "2012-11-03T08:10:34.293-07:00",
+      "Id": 81583
+    }
+  ]
+}

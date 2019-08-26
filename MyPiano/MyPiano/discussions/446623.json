@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1055134",
+    "ThreadId": "446623",
+    "Html": "Hello, I'm working on a drum sequencer and am relatively new to Naudio so bare with me. So far I have it all working (looping through and playing the samples) but I have a feeling the way I implemented the sample play back will cause the accuracy to decline once more samples are added. This is the basics of what I have so far.\r<br />\n<br />\nI'm using a AudioFileReader &gt; WaveMixerStream32 &gt; AsioOut . I load with mixer.AutoStop = False and AsioOut.Play() . Then in a timer I loop though and check for drum hits for each column per row of the sequencer. If a hit is found then I set the AudioFileReader.Posistion = 0 to play the sample. The problem is there will be a small delay between each sample played (on the same column) since I am using a loop to find each drum hit per row in the column. \r<br />\n<br />\n<strong>Is there a way with Naudio to queue up multiple samples to be played all at once when called to?</strong> \r<br />\n<br />\n(Note that I have taken a look at the drum machine sample provided and am quite blown away at the code since I normally program in vb.net . I am learning C# so any example code I can understand just not full on C# programs)\r<br />\n<br />\nAlso if anyone can suggest a more accurate timer to use in .NET that would be helpful. I'm currently using the System.Windows.Forms.Timer and its not the most accurate. I heard the multimedia timer from winmm.dll is suppose to be the best but I'm not quite sure how to implement it.<br />\n",
+    "PostedDate": "2013-06-10T17:03:47.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1055279",
+    "ThreadId": "446623",
+    "Html": "I recommend you use the same approach I use in the drum machine sample. If understanding C# is hard for you, then try putting it through some of the free online VB to C# converters.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-06-11T02:58:18.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

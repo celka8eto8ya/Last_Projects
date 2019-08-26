@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "892503",
+    "ThreadId": "389364",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I have a problem with this great package.</p>\r\n<p>I need to play some generated sounds without stop for some days. I used a WaveOutEvent instance,&nbsp;WaveMixerStream32 and BufferedWaveProvider. Every thing is great, but after some hours of playing, audio will stop (I mean I don't hear anything) and the\r\n problem exists until I close the program and run it again. I'm pretty sure that It's not related to my program, because I checked it with debugger and found that my program is still writing sound to the provider, but there's no sound out. I should say that\r\n my application is something like this: program will initialize a WaveOutEvent and a WaveMixerStream32 and some BufferedWaveProviders at the first of running and never close or stop them until the program closes by user(It means I should have sounds forever\r\n if user never stop it).&nbsp;</p>\r\n<p>It was really a big shock when I faced this problem. Because my project is at final steps.</p>\r\n<p>Please help me.</p>\r\n<p>Thanks in advance</p>\r\n",
+    "PostedDate": "2012-07-28T01:29:02.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "893083",
+    "ThreadId": "389364",
+    "Html": "<p>that is strange. Is the Read method of the BufferedWaveprovider still being called when the sound stops playing? Did you get a PlaybackStopped event at any point?</p>",
+    "PostedDate": "2012-07-30T08:05:15.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "898303",
+    "ThreadId": "389364",
+    "Html": "\r\n<p>Sorry for delay. it's a little time consuming to catch the problem because it happens after lots of hours.</p>\r\n<p>I did some tests. The&nbsp;PlaybackThread in WaveOutEvent is still alive, but the Read function of BufferedWaveProvider doesn't call.</p>\r\n<p>I write my initialization code, may it helps:</p>\r\n<p>&nbsp;</p>\r\n<pre>BufferedWaveProvider waveProvider;\n\nWaveFormat wf = new WaveFormat(8000, 16, 1);\n\nwaveProvider = new BufferedWaveProvider(wf);\nwaveProvider.DiscardOnBufferOverflow = true;\n\nWaveProviderToWaveStream wpws = new  WaveProviderToWaveStream(waveProvider);\n\n\nWaveOffsetStream wos = new WaveOffsetStream(wpws);\n\nwaveChan32 = new WaveChannel32(wos);\n\nWaveMixerStream32 mixer;\n\nmixer = new WaveMixerStream32();\nmixer.AutoStop = false;\n\nmixer.AddInputStream(waveChan32);</pre>\r\n<p>&nbsp;</p>\r\n<p>I just should say that I add about 30 waveProvider in my mixer and the Read function of none of them will call after this problem.</p>\r\n<p>Also I should say that I tested it on various PC's with different sound cards.</p>\r\n",
+    "PostedDate": "2012-08-10T22:44:30.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "898711",
+    "ThreadId": "389364",
+    "Html": "<p>I found a new thing. When the problem occurs, the Read function of WaveMixerStream32 is calling but the Read function of WaveChannel32 (which should call from WaveMixerStream32) is not calling. Before the problem, it calls correctly.</p>\r\n<p>Please help</p>",
+    "PostedDate": "2012-08-13T03:35:06.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "901239",
+    "ThreadId": "389364",
+    "Html": "<p>I don't know what was my problem for, but I used&nbsp;MixingWaveProvider32 instead of&nbsp;<span>WaveMixerStream32 and the problem solved. But I still like to find what was the problem of the previous method.</span></p>\r\n<p>Thanks</p>",
+    "PostedDate": "2012-08-19T01:42:20.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "904783",
+    "ThreadId": "389364",
+    "Html": "<p>You probably don't need to use WaveOffsetStream which might simplify your code a bit. Are there any actions happening on other threads (such as changing position)? There could be threading issues if Read is called on a different thread to a reposition.</p>",
+    "PostedDate": "2012-08-27T14:20:29.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

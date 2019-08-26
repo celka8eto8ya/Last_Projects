@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "810179",
+    "ThreadId": "348552",
+    "Html": "<p>class AudioFileReader has Volume property, but class&nbsp;Mp3FileReader doesn't have such property. (I use Mp3FileReader for playback from Stream).</p>\n<p>Another property&nbsp;IWavePlayer.Volume is obsolete, so how can I change Volume (and toggle mute on/off) for mp3 playing?</p>",
+    "PostedDate": "2012-03-14T05:45:20.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810286",
+    "ThreadId": "348552",
+    "Html": "<p>AudioFileReader just chains together a bunch of IWaveProviders and ISampleProviders and uses Mp3FileReader under the covers.</p>\r\n<p>In the very latest NAudio code I added a WaveVolumeProvider16 for cases when you want to change the volume without going to floating point.</p>\r\n<p>Also, although IWavePlayer.Volume is obsolete (since not all output models will support it), if you are using WaveOut then you can set the Volume property on that.</p>",
+    "PostedDate": "2012-03-14T08:17:27.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

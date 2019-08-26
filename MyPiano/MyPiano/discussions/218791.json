@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "464926",
+    "ThreadId": "218791",
+    "Html": "Great work with the library.  I have worked with Alvas Audio library and looking at the code here I see much cleaner code in comparison.  Kudos.\r\n\r\n--------------\r\n\r\nFor anyone attempting to encode Mp3s through the ACM on a 64 bit OS (Windows 7/Server 2008) they may appreciate this bit of advice-\r\n\r\nAfter a bit of searching I found a method to install the LAME mp3 encoder onto a 64 bit OS.  For security or other reasons  the default mp3 codec only allows decoding and not encoding.  To install the LAME codec onto a 64 bit OS do the following:\r\n\r\nTaken from here:\r\nhttp://forum.doom9.org/archive/index.php/t-96176.html\r\n\r\nStep 1: Place the LameACM.inf, LameACM.acm files into c:\\temp\\lame\r\nStep 2: Start up the command line and enter &quot;cd c:\\Windows\\SysWow64&quot;\r\nStep 3: enter &quot;rundll32 setupapi.dll,InstallHinfSection DefaultInstall 0 c:\\temp\\lame\\lameACM.inf&quot;\r\n\r\n--------------\r\n\r\nOnce undergoing the above steps the Lame Mp3 driver will now show through the ACM Driver List.\r\n\r\nDuring testing the encoding function in NAudioDemo I run into an issue.  To reproduce:\r\nStart up NAudioDemo\r\nClick 'ACM Format Conversion'\r\nClick 'Encode'\r\nSelect a wave file (ie 'Windows XP Startup.wav') -&gt; Click 'Open'\r\nIn the 'Select Compressed Format:' window for 'Format:' pick 'Lame MP3' -&gt; Click 'OK'\r\nIn the 'Select Output File Name' dialog enter 'Windows XP Startup.mp3' -&gt; Click 'Save'\r\n\r\nAt this point with exceptions turned on for the CLR in visual studio 2008 (go to the menu Debug-&gt;Exceptions) I get an exception during the execution of AcmStream.DestToSource.  More specifically it is calling the API AcmInterop.acmStreamSize and getting the result 'AcmNotPossible'.  According to MSDN: 'The requested operation cannot be performed.'  A bit of an odd reply, don't you think?\r\n\r\nDoes anyone else have any experiences with MP3 encoding in a 64 bit OS using the ACM?\r\n\r\n(edit) an attempt to fix the lack of format",
+    "PostedDate": "2010-07-08T09:06:12.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "466194",
+    "ThreadId": "218791",
+    "Html": "<p>which version of NAudio are you using? is it any better with the latest code?</p>",
+    "PostedDate": "2010-07-12T02:31:14.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "466840",
+    "ThreadId": "218791",
+    "Html": "<blockquote style=\"border:solid .1em #ccc;font-style:italic;margin:.25em 1em 0 1em;padding:0 .25em 0 .25em\"><strong>markheath wrote:</strong><br>\r\n<p>which version of NAudio are you using? is it any better with the latest code?</p>\r\n</blockquote>\r\n<p>Version 1.3.8.0.&nbsp; I only recently downloaded and tested it</p>\r\n<p>I should also note that I took care to make sure that the project started as a 32 bit process.&nbsp; This may seem obvious but it is only to clarify to those who have never seen errors related to 64 bit processes attempting to communicate with a 32 bit DLL</p>",
+    "PostedDate": "2010-07-13T07:47:13.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

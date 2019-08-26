@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1135016",
+    "ThreadId": "473335",
+    "Html": "hello, I've come across a project which needs to deal with a scenario in which \r<br />\nthe chunks of audio ( MP3) are received over a period of time(like every  2 secs)   in &quot;byte arrays&quot;  .\r<br />\nI've  searched the discussions for a combined case of stream and playing from byte[] and couldn't find any.\r<br />\ncould someone please redirect / help me?\r<br />\n<br />\np.s: i'm pretty new to working with Naudio and  playing  mp3 with it in C# ,so introducing demos and examples would be a great help and highly appreciated<br />\n",
+    "PostedDate": "2013-12-12T05:44:27.607-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1138160",
+    "ThreadId": "473335",
+    "Html": "the NAudio demo source code includes an example of receiving streamed MP3 and playing it back.<br />\n",
+    "PostedDate": "2013-12-19T03:55:00.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1138172",
+    "ThreadId": "473335",
+    "Html": "hi thanks fro reply,  that's true, but it's  playing from a url ,and  what I need is to play them from byte arrays with delay over time.any help is appreciated.<br />\n",
+    "PostedDate": "2013-12-19T04:06:02.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140989",
+    "ThreadId": "473335",
+    "Html": "It would be exactly the same. NetworkStream reads byte arrays over the network. <br />\n",
+    "PostedDate": "2013-12-23T12:54:31.63-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "713468",
+    "ThreadId": "283276",
+    "Html": "\r\n<p>&nbsp;Core Audio is not supported in&nbsp; microsoft xp OS&nbsp; on&nbsp;&nbsp; this&nbsp; code&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-family:Consolas; color:#008000; font-size:x-small\"><span style=\"font-family:Consolas; color:#008000; font-size:x-small\"><span style=\"font-family:Consolas; color:#008000; font-size:x-small\"></p>\r\n<p>MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();</p>\r\n</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">\r\n<p>&nbsp;</p>\r\n</span></span></span>\r\n<p></p>\r\n<p><span style=\"font-family:Consolas; color:#008000; font-size:x-small\"></p>\r\n<p><span style=\"font-family:Consolas; color:#008000; font-size:x-small\"></p>\r\n<p><span style=\"font-family:Consolas; color:#008000; font-size:x-small\">&nbsp;device = DevEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);</span></p>\r\n</span>\r\n<p></p>\r\n</span>\r\n<p></p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"></p>\r\n<p>&nbsp;</p>\r\n</span></span></span>\r\n<p></p>\r\n<p><span style=\"font-family:Consolas; color:#008000; font-size:x-small\"></p>\r\n<p><span style=\"font-family:Consolas; color:#008000; font-size:x-small\"></p>\r\n<p><span style=\"font-family:Consolas; color:#008000; font-size:x-small\">&nbsp;tbMaster.Value = (int)(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);</span></p>\r\n</span>\r\n<p></p>\r\n</span>\r\n<p></p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"></p>\r\n<p>&nbsp;</p>\r\n</span></span></span>\r\n<p></p>\r\n<p><span style=\"font-family:Consolas; color:#008000; font-size:x-small\"></p>\r\n<p><span style=\"font-family:Consolas; color:#008000; font-size:x-small\"></p>\r\n<p><span style=\"font-family:Consolas; color:#008000; font-size:x-small\">device.AudioEndpointVolume.OnVolumeNotification &#43;= new AudioEndpointVolumeNotificationDelegate(AudioEndpointVolume_OnVolumeNotification);</span></p>\r\n</span>\r\n<p></p>\r\n</span>\r\n<p></p>\r\n",
+    "PostedDate": "2011-12-16T17:26:37.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713565",
+    "ThreadId": "283276",
+    "Html": "<p>yes, WASAPI is only available for Windows Vista and above</p>",
+    "PostedDate": "2011-12-17T03:39:30.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713993",
+    "ThreadId": "283276",
+    "Html": "\r\n<div dir=\"ltr\"><br>\r\nhi mark im heving a litle problems with sound it self im not 100 procent sure in this im transfering sound over tcp i did try to use evry 50 miliseconds buth didint wok i did ajust on 1000 end that did work good with pople so far sou good buth im sure that\r\n for reason you did 50 miliseconds <font size=\"2\" face=\"Consolas\"><font size=\"2\" face=\"Consolas\"><br>\r\nwaveIn.BufferMilliseconds = 1000 end im using NSpeex on ultra wideband any sugest ?<br>\r\nthank you alote <br>\r\n<br>\r\nSinisa <br>\r\n<br>\r\n</font></font><br>\r\n<p id=\"SkyDrivePlaceholder\">oh by the way im based in newcasle end very nice librery\r\n</p>\r\n<br>\r\n<hr id=\"stopSpelling\">\r\n<br>\r\nFrom: [email removed]<br>\r\nTo: [email removed]<br>\r\nDate: Sat, 17 Dec 2011 03:39:34 -0800<br>\r\nSubject: Re: mmdevice [naudio:283276]<br>\r\n<br>\r\n<br>\r\n<div>From: markheath<br>\r\n<div id=\"ecxThreadNotificationPostBody\">yes, WASAPI is only available for Windows Vista and above<br>\r\n</div>\r\n<div id=\"ecxThreadNotificationFooter\">Read the <a href=\"http://naudio.codeplex.com/discussions/283276#post713565\" target=\"_blank\">\r\nfull discussion online</a>.<br>\r\nTo add a post to this discussion, reply to this email (<a href=\"mailto:naudio@discussions.codeplex.com?subject=[naudio:283276]\">naudio@discussions.codeplex.com</a>)<br>\r\nTo start a new discussion for this project, email <a href=\"mailto:naudio@discussions.codeplex.com\">\r\nnaudio@discussions.codeplex.com</a><br>\r\nYou are receiving this email because you subscribed to this discussion on CodePlex. You can\r\n<a href=\"https://naudio.codeplex.com/discussions/283276/unsubscribe/\" target=\"_blank\">\r\nunsubscribe</a> on CodePlex.com.<br>\r\nPlease note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at CodePlex.com<br>\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2011-12-18T17:30:13.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717464",
+    "ThreadId": "283276",
+    "Html": "<p>the reason to use shorter buffers is simply for low latency. if latency doesn't matter for you, then it will be more stable with bigger buffers</p>",
+    "PostedDate": "2011-12-27T07:46:16.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

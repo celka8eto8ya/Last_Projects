@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1461650",
+    "ThreadId": "650803",
+    "Html": "Anyone know of a good way to detect the pitch of music relative to the A note?\r<br />\n<br />\n95% of western music (except for led zeppelin and a few others) uses A440hz, but A432hz sounds so much better since 432hz resonates perfectly with the ears and the water molecule.\r<br />\nIn case you are interested: <a href=\"http://omega432.com/432-news/testimonials\" rel=\"nofollow\">http://omega432.com/432-news/testimonials</a>\r<br />\n<br />\nI've created a small (free) app to detect the pitch of the music playing in Windows, it works fine with piano and similar instruments, simpler music, but it gets confused when there are too many different instruments being played, especially bass frequencies. The pitch detection I am using is <a href=\"https://pitchtracker.codeplex.com/\" rel=\"nofollow\">https://pitchtracker.codeplex.com/</a> which uses a modified Auto-correlation algorithm.\r<br />\n<br />\nFFT on its own is no good, there are many different types of algorithms to detect pitch, but I'm not sure which one would be the best to use, and if there are existing pitch detection libraries that are coded in C#, but using a c/c++ dll would be fine I suppose.\r<br />\n<br />\nI came across the C based library called Aubio, but before I try it out I would like to gather some guidance or knowledge from you guys.<br />\n",
+    "PostedDate": "2016-02-01T18:07:22.84-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1461939",
+    "ThreadId": "650803",
+    "Html": "Auto-correlation is one of the better algorithms. It's really hard to detect pitch accurately if lots of different instruments are being played at the same time though.<br />\n",
+    "PostedDate": "2016-02-04T06:21:59.8-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462094",
+    "ThreadId": "650803",
+    "Html": "Ok I'll go down that path, thanks Mark.<br />\n",
+    "PostedDate": "2016-02-04T23:51:13.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

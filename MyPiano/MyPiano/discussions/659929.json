@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1489276",
+    "ThreadId": "659929",
+    "Html": "Hi,\r<br />\n<br />\nI create project for converting file and when I want use <strong>AcmInterop</strong> and <strong>AcmFormatSuggestFlags</strong> visual studio say me not exist. But in NAudio.xml file is exist but when I try  <strong>NAudio.Wave.Compression</strong>  I have just \r<br />\n<br />\nAcmDriver\r<br />\nAcmDriverDetailsSupportFlags\r<br />\nAcmFormt\r<br />\nAcmFormatEnumFlags\r<br />\nAcmFormatTags\r<br />\nAcmStream\r<br />\nWaveFilter\r<br />\n<br />\nWhere are the another options ???<br />\n",
+    "PostedDate": "2016-12-05T04:01:11.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

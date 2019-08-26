@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1289632",
+    "ThreadId": "561044",
+    "Html": "Hi,\r<br />\nWasapiOut changes volume for the entire device. Is there a way to change volume just for application?<br />\n",
+    "PostedDate": "2014-08-13T05:11:27.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291684",
+    "ThreadId": "561044",
+    "Html": "well with NAudio you are in control of the samples sent to the soundcard, so normally you'd just adjust the volume yourself before playing the audio<br />\n",
+    "PostedDate": "2014-08-20T06:27:06.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-08-20T13:50:33.923-07:00"
+  },
+  {
+    "Id": "1291825",
+    "ThreadId": "561044",
+    "Html": "tnx for reply.\r<br />\njust figured it out couple hours ago and didnt updated here yet.\r<br />\n<br />\nits hard to find these things without documentation<br />\n",
+    "PostedDate": "2014-08-20T13:54:46.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

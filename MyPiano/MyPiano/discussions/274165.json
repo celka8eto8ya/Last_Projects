@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "677898",
+    "ThreadId": "274165",
+    "Html": "\r\n<p>I use NAudio for microphone data processing in one of my programs. &nbsp;On Windows XP it &nbsp;has always worked fine with the default audio device. &nbsp;Trying to run the same program on Windows Vista and 7, I get a BadDeviceID exception. &nbsp;Investigating\r\n further, it seems that the WaveIn.DeviceCount number is actually 0 on these newer versions of windows, despite having the sound drivers installed properly (I've tried it on two Win 7 desktops and 1 Win Vista laptop), where it is normally at least 1 on my XP\r\n machines. &nbsp;I'm using NAudio 1.4.0.0 with Visual C# Express 2008, and my setup code looks like this:</p>\r\n<p>In constructor:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>waveInStream = <span style=\"color:blue\">new</span> NAudio.Wave.WaveIn();\r\nwaveInStream.DataAvailable &#43;= waveIn_DataAvailable;\r\nwaveInStream.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat((<span style=\"color:blue\">int</span>)samplingRate, 1);\r\n\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Then I have a method that starts the recording:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>waveInStream.StartRecording();\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Any idea why I would be seeing 0 devices on newer versions of windows? &nbsp;</p>\r\n",
+    "PostedDate": "2011-09-28T14:22:00.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "678259",
+    "ThreadId": "274165",
+    "Html": "<p>The problem seems to stem from Windows Vista / 7 disabling the microphone device by default, only enabling it when something is physically plugged in. &nbsp;If something is plugged into the microphone port when starting the program, it actually opens and works  fine. &nbsp;But this program could be started before a mic is plugged in. &nbsp;In this case I guess I could also check the number of devices and only start recording if it's &gt; 0. &nbsp;But, when there are 0 devices initially, is there some callback for when the device number increases, or would I need to start  a timer to check it periodically? &nbsp;Unplugging the line while recording also makes the recording system throw an exception... I'll have to find some way around this. &nbsp;Any suggestions to help me through this? &nbsp;</p>",
+    "PostedDate": "2011-09-29T09:49:11.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "679926",
+    "ThreadId": "274165",
+    "Html": "<p>I fixed the problem in a fork of the NAudio source:</p>\r\n<p><a href=\"http://naudio.codeplex.com/SourceControl/network/Forks/bobasaurus/recordingPullCableFix\">http://naudio.codeplex.com/SourceControl/network/Forks/bobasaurus/recordingPullCableFix</a></p>\r\n<p>This just changes part of the wavein callback code to cleanly stop recording if the recording device has a problem (like being disabled from pulling the cable on some Win 7 boxes). &nbsp;It will call the RecordingStopped event when this happens. &nbsp;I implemented this event handler in my main program's GUI controller, which, if it detects that&nbsp;WaveIn.DeviceCount is 0, will start a timer that will poll&nbsp;WaveIn.DeviceCount until it's back above 0 and restart the recording. &nbsp;I hope this helps anyone else having the same issue. &nbsp;</p>",
+    "PostedDate": "2011-10-04T11:14:42.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685108",
+    "ThreadId": "274165",
+    "Html": "<p>thanks for this bobasaurus, I'll look at merging your fork in next time I get round to doing some work on NAudio</p>",
+    "PostedDate": "2011-10-17T02:43:16.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

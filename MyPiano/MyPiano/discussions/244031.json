@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "558248",
+    "ThreadId": "244031",
+    "Html": "\r\n<h1>My ultimate goal is to create a multiuser voice chat, but for now i just want to send a simple compressed wave across a udp connection and have it played back on the other end perhaps through the buffered wave provider.the easy part is this-- (microphone\r\n &gt; wave&gt; udp&gt; wave &gt; speaker). The problem is the big wave size streamming! So, I want to use GSM 6.10 to compress the wave before i send over the network then on the receiving end i want the compressed wave decompressed via gsm. For example, (microphone&gt;\r\n wave&gt;gsm compression&gt; udp&gt; gsmdecompression&gt;wave&gt;speaker) . How can i format the wave structure to compress in gsm format? Could i get an example of the structure that must be implimented?&nbsp;&nbsp; thanks in advance! i guess i'm trying to\r\n say something like a gsm vocoder. i have been pulling my hair out for months about this simple task!</h1>\r\n",
+    "PostedDate": "2011-01-31T11:55:39.56-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "558548",
+    "ThreadId": "244031",
+    "Html": "\r\n<p>you can use WaveFormatConversionStream to use any ACM codecs installed on your PC to encode the audio. Have a look at the NAudioDemo project for example code.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-01T02:03:43.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "558844",
+    "ThreadId": "244031",
+    "Html": "\r\n<p>Used WaveFormatConversionStream and received the following: &quot;AcmNotPossible calling acmStreamOpen&quot;. Is there a work around so that &nbsp;i &nbsp;can put the wave bytes on the fly into WaveFormat.CreateCustomFormat(WaveFormatEncoding.Gsm610, 1, 8000, 1625,\r\n 65, 0) ?&nbsp;&nbsp;</p>\r\n",
+    "PostedDate": "2011-02-01T10:57:43.68-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "560218",
+    "ThreadId": "244031",
+    "Html": "\r\n<p>ACM not possible means that you don't have an ACM codec on your machine that can do the requested conversion. Use the NAudioDemo app to explore the codecs on your machine and look at their reported set of valid from and to compressions</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-03T08:33:10.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

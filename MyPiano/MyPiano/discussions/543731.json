@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1239301",
+    "ThreadId": "543731",
+    "Html": "Hi,\r<br />\n<br />\nWe have recently been using the NAudio library to write some audio processing and RTP send and receive applications. We have had to make a few modifications to the source code that we downloaded from codeplex (version 1.7.0.14) to achieve certain things. \r<br />\n<br />\nWe are submitting these code changes for a couple of reasons. The first is to see if you think there is in fact a better way of achieving what we were aiming for. The second is, if you think these changes are acceptable, would you consider adding them into the NAudio source code so they are available to us the next time the library is released through NuGet – if and when you are planning a library update of course?\r<br />\n<br />\n<strong>MediaFoundationTransform.cs:</strong>\r<br />\n<br />\nThis class was hardcoded to read in one second at a time which was producing too much latency. We have changed the constructor from this:<br />\n<pre><code>    /// &lt;summary&gt;\n    /// Constructs a new MediaFoundationTransform wrapper\n    /// Will read one second at a time\n    /// &lt;/summary&gt;\n    /// &lt;param name=&quot;sourceProvider&quot;&gt;The source provider for input data to the transform&lt;/param&gt;\n    /// &lt;param name=&quot;outputFormat&quot;&gt;The desired output format&lt;/param&gt;\n    public MediaFoundationTransform(IWaveProvider sourceProvider, WaveFormat outputFormat)\n    {\n        this.outputWaveFormat = outputFormat;\n        this.sourceProvider = sourceProvider;\n        sourceBuffer = new byte[sourceProvider.WaveFormat.AverageBytesPerSecond];\n        outputBuffer = new byte[outputWaveFormat.AverageBytesPerSecond + outputWaveFormat.BlockAlign]; // we will grow this buffer if needed, but try to make something big enough\n    }\n</code></pre>\n\n..to this:<br />\n<pre><code>    /// &lt;summary&gt;\n    /// Constructs a new MediaFoundationTransform wrapper\n    /// &lt;/summary&gt;\n    /// &lt;param name=&quot;sourceProvider&quot;&gt;The source provider for input data to the transform&lt;/param&gt;\n    /// &lt;param name=&quot;outputFormat&quot;&gt;The desired output format&lt;/param&gt;\n    public MediaFoundationTransform(IWaveProvider sourceProvider, WaveFormat outputFormat)\n    {\n        this.outputWaveFormat = outputFormat;\n        this.sourceProvider = sourceProvider;\n\n        // This class has been modified so audio is taken from the source provider and added to the output buffer in 10 milliseconds byte arrays.\n        // Before this change, you would have to wait for 1 second of audio to be buffered before it would be converted.\n        // Calculation:\n        // 1000 milliseconds (i.e. 1 second) / 10 = 100, which is why the source buffer and output buffer average bytes per second is divided by 100.\n        var bufferDiviser = 100;\n        sourceBuffer = new byte[sourceProvider.WaveFormat.AverageBytesPerSecond / bufferDiviser];\n        outputBuffer = new byte[(outputWaveFormat.AverageBytesPerSecond / bufferDiviser) + outputWaveFormat.BlockAlign]; // we will grow this buffer if needed, but try to make something big enough\n    }\n</code></pre>\n\nThere was also a couple of comments dotted around in the class which we have removed just for clarity:<br />\n<pre><code>        // strategy will be to always read 1 second from the source, and give it to the resampler\n        // we always read a full second\n</code></pre>\n\n<strong>WasapiCapture.cs:</strong>\r<br />\n<br />\nWe made a change in here to be able to specify the length of audio in milliseconds that is outputted from the class each time audio becomes available.\r<br />\n<br />\nWe added a private variable:<br />\n<pre><code>    private int audioBufferMillisecondsLength;\n</code></pre>\n\nWe changed the constructors from this:<br />\n<pre><code>    /// &lt;summary&gt;\n    /// Initialises a new instance of the WASAPI capture class\n    /// &lt;/summary&gt;\n    /// &lt;param name=&quot;captureDevice&quot;&gt;Capture device to use&lt;/param&gt;\n    public WasapiCapture(MMDevice captureDevice)\n    {\n        syncContext = SynchronizationContext.Current;\n        audioClient = captureDevice.AudioClient;\n        ShareMode = AudioClientShareMode.Shared;\n\n        waveFormat = audioClient.MixFormat;\n        var wfe = waveFormat as WaveFormatExtensible;\n        if (wfe != null)\n        {\n            try\n            {\n                waveFormat = wfe.ToStandardWaveFormat();\n            }\n            catch (InvalidOperationException)\n            {\n                // couldn't convert to a standard format\n            }\n        }\n    }\n</code></pre>\n\n...to this:<br />\n<pre><code>        /// &lt;summary&gt;\n        /// Initialises a new instance of the WASAPI capture class\n        /// &lt;/summary&gt;\n        /// &lt;param name=&quot;captureDevice&quot;&gt;Capture device to use&lt;/param&gt;\n        public WasapiCapture(MMDevice captureDevice) : \n                   this(captureDevice, 100)\n        {\n        }\n\n        /// &lt;summary&gt;\n        /// Initialises a new instance of the WASAPI capture class\n        /// &lt;/summary&gt;\n        /// &lt;param name=&quot;captureDevice&quot;&gt;Capture device to use&lt;/param&gt;\n        /// &lt;param name=&quot;audioBufferMillisecondsLength&quot;&gt;Length of the audio buffer milliseconds&lt;/param&gt;\n        public WasapiCapture(MMDevice captureDevice, int audioBufferMillisecondsLength)\n        {\n              this.audioBufferMillisecondsLength = audioBufferMillisecondsLength;\n              syncContext = SynchronizationContext.Current;\n              audioClient = captureDevice.AudioClient;\n              ShareMode = AudioClientShareMode.Shared;\n\n              waveFormat = audioClient.MixFormat;\n              var wfe = waveFormat as WaveFormatExtensible;\n              if (wfe != null)\n              {\n                  try\n                  {\n                      waveFormat = wfe.ToStandardWaveFormat();\n                  }\n                  catch (InvalidOperationException)\n                  {\n                      // couldn't convert to a standard format\n                  }\n              }\n          }\n</code></pre>\n\nIn the InitializeCaptureDevice function, we then changed the following line from this:<br />\n<pre><code>        long requestedDuration = REFTIMES_PER_MILLISEC * 100;\n</code></pre>\n\n... to this:<br />\n<pre><code>        long requestedDuration = REFTIMES_PER_MILLISEC * this.audioBufferMillisecondsLength;\n</code></pre>\n\nThanks<br />\n",
+    "PostedDate": "2014-04-29T06:45:03.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1307954",
+    "ThreadId": "543731",
+    "Html": "Hello,\r<br />\n<br />\nany update on this issue/solution? I have the same problem: I need to send RTP packets instead of the default 100 milliseconds I need to send 20 milliseconds and this seems the easiest way to do it. Is there any other solution to this issue or is this the best way to do it?\r<br />\n<br />\nRegards,\r<br />\nIstvan<br />\n",
+    "PostedDate": "2014-09-25T00:07:24.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1307995",
+    "ThreadId": "543731",
+    "Html": "Hi,\r<br />\n<br />\nNo I haven't had any updates on this. We are still using a modified NAudio library with the changes above in order to resolve our issues.\r<br />\n<br />\nRegards,\r<br />\ncuffindall<br />\n",
+    "PostedDate": "2014-09-25T02:45:45.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1308296",
+    "ThreadId": "543731",
+    "Html": "Hi,\r<br />\n<br />\nthanks for the update and the code modifications. It seems that we will use this as well. It works great for me :) Hopefully one day it will get into a build.\r<br />\n<br />\nRegards,\r<br />\nIstvan<br />\n",
+    "PostedDate": "2014-09-26T02:17:51.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1308955",
+    "ThreadId": "543731",
+    "Html": "yes, sorry haven't had time to process this contribution yet. Would probably want to make the MFT buffer size configurable (maybe as a number of milliseconds). <br />\n",
+    "PostedDate": "2014-09-29T09:18:21.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1335333",
+    "ThreadId": "543731",
+    "Html": "@cuffindall: Thanks for sharing your mods.\r<br />\n<br />\n@markheath: Yes. For the MediaFoundationTransform constructor change, I've done the following  so that the application can control the buffer size\r<br />\n<br />\nin NAudio\\MediaFoundation\\MediaFoundationTransform.cs<br />\n<pre><code>    /// &lt;summary&gt;\n    /// Constructs a new MediaFoundationTransform wrapper\n    /// &lt;/summary&gt;\n    /// &lt;param name=&quot;sourceProvider&quot;&gt;The source provider for input data to the transform&lt;/param&gt;\n    /// &lt;param name=&quot;outputFormat&quot;&gt;The desired output format&lt;/param&gt;\n    /// &lt;param name=&quot;bufferLenMs&quot;&gt;Source buffer size in Miliseconds&lt;/param&gt;\n    public MediaFoundationTransform(IWaveProvider sourceProvider, WaveFormat outputFormat, int bufferLenMs = 10)\n    {\n        this.outputWaveFormat = outputFormat;\n        this.sourceProvider = sourceProvider;\n\n        int bufferDiviser = 1000 / bufferLenMs;\n        sourceBuffer = new byte[sourceProvider.WaveFormat.AverageBytesPerSecond / bufferDiviser];\n        outputBuffer = new byte[(outputWaveFormat.AverageBytesPerSecond / bufferDiviser) + outputWaveFormat.BlockAlign];\n    }\n</code></pre>\n\nAnd applied the new parameter to the constructors for MediaFoundationResampler in NAudio\\Wave\\WaveProviders\\MediaFoundationResampler.cs as well<br />\n",
+    "PostedDate": "2014-12-21T10:44:01.457-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

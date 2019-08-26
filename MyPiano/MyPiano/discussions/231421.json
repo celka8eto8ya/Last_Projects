@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "509164",
+    "ThreadId": "231421",
+    "Html": "<p>Hi,</p>\r\n<p>I'm currently working working in a music recognition project. What I'm looking for is a library to convert an audio file (I'm currently using wav but I can change it if it's needed) to a Midi file. Is this library suitable for this job?</p>\r\n<p>Which classes should I use?</p>\r\n<p>Thanks in advance,</p>\r\n<p>&nbsp;</p>\r\n<p>Best Regards form Argentina,</p>\r\n<p>Matias</p>",
+    "PostedDate": "2010-10-19T00:01:50.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "509230",
+    "ThreadId": "231421",
+    "Html": "<p>I'm afraid NAudio does not have this capability. You need a pitch detector to detect the pitch and convert to MIDI. WAV to MIDI is possible with monophonic audio sources, but extremely difficult with polyphonic.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-19T02:22:36.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

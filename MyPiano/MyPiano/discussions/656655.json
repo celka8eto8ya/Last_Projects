@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1479680",
+    "ThreadId": "656655",
+    "Html": "Hi All,<br />\n<br />\n_<strong>Edit</strong>: I changed the WaveOut object to NumberOfBuffers = 1 and it's now working. Now I have to figure out how to extend this class for stereo. Any advice is welcome._<br />\n<br />\nI'm trying to get the AdsrSampleProvider to work. My audio plays fine through the speakers but it doesn't produce any Adsr effect to the sound. I have also tried changing the AttackSeconds and ReleaseSeconds properties with no effect. The test audio file is 16-bit mono. I've saved it to MP3 and WAV formats, but neither format produces the effect. <br />\n<br />\nHere's my code. Does anyone see any obvious mistakes?<br />\n<pre><code>IWavePlayer waveOutDevice = null;\nstring fname = @&quot;C:\\TestAudio\\MyAudioMono.wav&quot;;\nWaveOut outputDeviceWaveOut = new WaveOut()\n                {\n                    DesiredLatency = 100,\n                    NumberOfBuffers = 2,\n                };\noutputDeviceWaveOut.DeviceNumber = 0;\nwaveOutDevice = outputDeviceWaveOut;                \nAudioFileReader arFile = new AudioFileReader(fname);  // sampler reader\nAdsrSampleProvider adsrSamplr = new AdsrSampleProvider(arFile);\nwaveOutDevice.Init(adsrSamplr);\nwaveOutDevice.Play();                    </code></pre>\n\nMy ultimate goal is to generalize this sampler for stereo then create other samplers for effects like reverb, echo, etc. I'll be glad to share if I can get them working.<br />\n",
+    "PostedDate": "2016-07-24T06:44:22.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479692",
+    "ThreadId": "656655",
+    "Html": "The AdsrSampleProvider has four properties that control the effect:<br />\n<pre><code>        AttackSeconds\n        SustainLevel\n        DecayRate\n        ReleaseSeconds</code></pre>\n\nIs there a place where I can find valid value ranges (min and max value ) for each of these properties?            \r<br />\n",
+    "PostedDate": "2016-07-24T10:38:50.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479704",
+    "ThreadId": "656655",
+    "Html": "Hi again Theseus,\r<br />\nI don't know why the ADSR didn't work with more than a single buffer, however I just tried to use it myself and ran into the &quot;mono only&quot; issue. All my media are likely to be stereo so it would be good to get this working. Are you working on it?\r<br />\nSid<br />\n",
+    "PostedDate": "2016-07-24T16:40:54.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479732",
+    "ThreadId": "656655",
+    "Html": "Hi sidprice,\r<br />\nYes, I'm still working with the ADSR code. I'm a novice with DSP and don't yet understand how the buffers get written with the sampler so this may take a while to get it working with stereo.<br />\n",
+    "PostedDate": "2016-07-25T04:19:44.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479930",
+    "ThreadId": "656655",
+    "Html": "Adapting AdsrSampleProvider for stereo was fairly simple. I just modified a few lines of code in the AdsrSampleProvider class Read method. This mod was based on the code in the FadeInOutSampleProvider class so I don't claim any points for original thinking.<br />\n<pre><code>       public int Read(float[] buffer, int offset, int count)\n        {\n            if (adsr.State == EnvelopeGenerator.EnvelopeState.Idle) return 0; // we've finished\n            var samples = source.Read(buffer, offset, count);\n            int sample = 0;\n            int numChannels = source.WaveFormat.Channels;\n            float adsrValue = 1.0f;\n\n            while (sample &lt; count)\n            {\n                adsrValue = adsr.Process();\n                for (int ch = 0; ch &lt; numChannels; ch++)\n                {\n                    buffer[offset + sample++] *= adsrValue; \n                }\n            }\n            return samples;\n        }</code></pre>\n\n",
+    "PostedDate": "2016-07-27T06:01:47.397-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

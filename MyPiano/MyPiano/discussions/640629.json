@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1432431",
+    "ThreadId": "640629",
+    "Html": "I've been trying to get the exact real time values from MIDI files in order to use the data in my Guitar Hero style game. I've successfully managed to get it to work, but as soon as a tempo change occurs that changes the tempo greatly (think 125BPM to 117BPM) I start getting really big values which are way off, and then when the BPM goes back to 125 the values go back to normal.<br />\n<pre><code>float time = (note.AbsoluteTime / midiFile.DeltaTicksPerQuarterNote) * (currentMicrosecondsPerQuarterNote / 1000000f);</code></pre>\n\nThat is what I've been using, and if possible could someone either explain what's wrong or tell me how to fix it?<br />\n",
+    "PostedDate": "2015-06-30T04:41:44.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433177",
+    "ThreadId": "640629",
+    "Html": "I think you have to take into account historic tempo changes in order to successfully convert MIDI ticks into absolute time in seconds. So unfortunately, there is no easy way. Basically each note has a delta number of ticks, and so its time must be calculated based on the time of the previous event.<br />\n",
+    "PostedDate": "2015-07-06T00:12:22.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "285660",
+    "ThreadId": "83113",
+    "Html": "<p>Hi Mark,</p>\r\n<p>I am currently wondering if it is possible to select the playback device as seen in WaveOut?</p>\r\n<p>AFAIK DirectSound lets you choose the device for playback and even has a default device. Are you planning to implement that as well or do you have any particular reason why you left that out?</p>\r\n<p>thanks,</p>\r\n<p>Christoph</p>",
+    "PostedDate": "2010-02-04T00:41:30.853-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "416961",
+    "ThreadId": "83113",
+    "Html": "<p>Hi Christoph,</p>\r\n<p>I didn't write this particular DirectSoundOut implementation, but I agree it would be a nice feature to support device selection. Hopefully we can provide that in a future version</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-03-11T06:39:15.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "416963",
+    "ThreadId": "83113",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"http://naudio.codeplex.com/WorkItem/View.aspx?WorkItemId=12061\">here</a> to go to the work item and continue the discussion.",
+    "PostedDate": "2010-03-11T06:39:46.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

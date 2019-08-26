@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1485073",
+    "ThreadId": "658410",
+    "Html": "I am very New to NAudio Library and as well as develop audio type of file I have question that how do we get audio input from each channel of Mixer use USB Audio Interface connect to PC (Support ASIO), So this mixer support 8 Channel of Audio Input.\r<br />\n<br />\nThe idea of application is like this<br />\n<ul>\n<li>when user press on channel 1 button it will get channel 1 input to capture the voice of speaker on that particular channel</li>\n<li>\nwhen user press channel 2 button it will get voice from channel 2 (as separate Channel)<br />\n</li>\n</ul>\nSo I just wondering which library class I should use and is there any source code example or best practice for this kind of scenario (I am using C# to Develop)\r<br />\n<br />\nThank You<br />\n",
+    "PostedDate": "2016-10-01T07:29:05.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485251",
+    "ThreadId": "658410",
+    "Html": "The ASIOOut class is probably best for this approach, as its the only one likely to give you access to the 8 input channels. This lets you subscribe to AudioAvailable from which you can access the raw ASIO buffers for best performance, which I'd recommend for your usage.<br />\n",
+    "PostedDate": "2016-10-04T06:23:44.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

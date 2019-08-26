@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1212708",
+    "ThreadId": "534105",
+    "Html": "Hi, I would like to ask how to chunk specific part of the song? Let's say I have 2 minutes length song and I want my program to chunk 30 seconds each into 4 parts so that user can click and play the selected 30 seconds. Any library of Naudio can provide the function of chunk the song or wavestream? Thanks a lot.<br />\n",
+    "PostedDate": "2014-02-22T22:24:29.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213216",
+    "ThreadId": "534105",
+    "Html": "OffsetSampleProvider is for this very purpose. Read my blog post about it <a href=\"http://mark-dot-net.blogspot.co.uk/2012/09/naudio-offsetsampleprovider.html\" rel=\"nofollow\">here</a>.<br />\n",
+    "PostedDate": "2014-02-23T14:09:25.137-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

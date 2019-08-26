@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1213810",
+    "ThreadId": "534887",
+    "Html": "My goal is to be able to record audio and then place this into a byte[] in order to undergo some novelty encryption before I finally save the file. How do I go about recording the audio and converting this to a byte array? Thanks<br />\n",
+    "PostedDate": "2014-02-24T08:46:19.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213812",
+    "ThreadId": "534887",
+    "Html": "you'll get the audio as a byte array when you record it, in the DataAvailable event args.<br />\n",
+    "PostedDate": "2014-02-24T08:49:49.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213841",
+    "ThreadId": "534887",
+    "Html": "Thanks Mark,\r<br />\n<br />\nSo something along the lines of this should work?\r<br />\n<br />\nsourceStream.DataAvailable += new EventHandler&lt;NAudio.Wave.WaveInEventArgs&gt;(WaveinStream_DataAvailable);\r<br />\n<br />\nvoid WaveinStream_DataAvailable(object sender, NAudio.Wave.WaveInEventArgs e)\r<br />\n{<br />\n<pre><code>  byte[] data;\n  data = e.Buffer;</code></pre>\n\n}<br />\n",
+    "PostedDate": "2014-02-24T09:16:58.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213842",
+    "ThreadId": "534887",
+    "Html": "yes, remember to check what e.BytesRecorded is, as the Buffer may be longer than the number of bytes recorded.<br />\n",
+    "PostedDate": "2014-02-24T09:18:23.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213867",
+    "ThreadId": "534887",
+    "Html": "Brilliant, all seems to be working. Just a quick question, is the DataAvailable event called each time the buffer is full or when the recording has been stopped? Last question I promise .<br />\n",
+    "PostedDate": "2014-02-24T09:44:37.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213909",
+    "ThreadId": "534887",
+    "Html": "It's called several times a second usually (100ms is a typical buffer size). Be sure to copy the data out immediately, as the buffers can get reused.<br />\n",
+    "PostedDate": "2014-02-24T10:46:41.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

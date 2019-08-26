@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi,\r\n\r\na wave file extracted from a video with ffmpeg seems not to be read correctly by WaveFileReader.\r\n\r\nThe wave file can be played in any standard player (MS, VLC, ...) but when opened with WaveFileReader sample count is 0 and all data goes into the ExtraChunks.\r\n\r\nI am not very familiar with the wave file format, so maybe I do something wrong and it isn't a bug in WaveFileReader. \r\n\r\nIt would be nice if someone could have a look and confirm this.\r\n\r\ncommand line for FFMPEG:\r\n```\r\nffmpeg -i myvideo.mp4 -vn -acodec pcm_f32le -ar 44100 -f wav -ac 1 myaudiofromvideo.wav\r\n```\r\n\r\nCall in my source code to open the file:\r\n```\r\nWaveFileReader rd = new WaveFileReader(myaudiofromvideo.wav);\r\n```\r\n\r\nIf anything else is needed from my side, please ask.\r\n\r\nRegards,\r\nT.\r\n\r\nEdit:\r\nOh by the way:\r\nOS: Windows 7 x64 (compiling for x86)\r\nIDE: Visual Studio 2013 Desktop Express\r\nNAudio Runtime Version: v2.0.50727\r\nNAudio Version: 1.7.1.17",
+    "LastUpdatedDate": "2014-10-23T12:10:02.977-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-10-23T10:36:46.633-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "[SOLVED] WaveFileReader reads data to ExtraChunks only",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16457
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Okay just checked and downloaded the latest source code ...\nThe issue seems to be solved somewhen after the stable 1.7 release ...\n\nI will stick with the source code then instead of Nuget.\n\nBye.",
+      "PostedDate": "2014-10-23T11:54:52.467-07:00",
+      "Id": 163073
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1449624",
+    "ThreadId": "646619",
+    "Html": "I made application that runs speech synthesis and saves it to a wave file with naudio. That file is played. \r<br />\nI would like to create memory stream and play from it without creating wave file. Is there an example of memory stream usage?<br />\n",
+    "PostedDate": "2015-10-25T02:04:22.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449990",
+    "ThreadId": "646619",
+    "Html": "Yes, you can output the Microsoft speech synthesizer to a MemoryStream. Flush it, but don't dispose it when it's done. Then you can simply set the Position of that MemoryStream back to 0, and pass it into a WaveFileReader.<br />\n",
+    "PostedDate": "2015-10-28T05:40:07.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1450605",
+    "ThreadId": "646619",
+    "Html": "Mark,\r<br />\n<br />\nIn general I know what should be done but I can't make it working. Any link to working example would be appreciated.<br />\n",
+    "PostedDate": "2015-11-01T03:00:18.503-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

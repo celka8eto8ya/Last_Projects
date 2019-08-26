@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "954363",
+    "ThreadId": "406355",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>In the series Mediafoundation ;-)</p>\r\n<p><br>\r\nI did a little test streaming (http://radio.reaper.fm/stream/) under MediaFoundationReader.</p>\r\n<p>It works. you just change a few little routine GetLength.</p>\r\n<p><br>\r\nI did not find any indication of loading buffer.</p>\r\n<p>&nbsp;</p>\r\n<p>Modification ::: MediaFoudationReader.cs</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>Add :\r\n\r\n<span style=\"color:green\">// Detect if Streaming</span>\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">bool</span> IsStreamingUrl = <span style=\"color:blue\">false</span>;\r\n\r\nIn CreateReader :\r\n<span style=\"color:blue\">protected</span> <span style=\"color:blue\">virtual</span> IMFSourceReader CreateReader(MediaFoundationReaderSettings settings)\r\n{\r\n<span style=\"color:green\">//var uri = new Uri(file);</span>\r\n\t\t\t\r\n        IMFSourceReader reader;\r\n\r\n\t<span style=\"color:green\">//string fileTest = &quot;http://radio.reaper.fm/stream/&quot;;</span>\r\n\t\t\r\n<span style=\"color:green\">// change for FileName with a Accent</span>\r\n\tUri nUrl = <span style=\"color:blue\">null</span>;\r\n\t<span style=\"color:blue\">string</span> str = <span style=\"color:#a31515\">&quot;&quot;</span>;\r\n\t<span style=\"color:blue\">if</span> (Uri.TryCreate(file, UriKind.Absolute, <span style=\"color:blue\">out</span> nUrl))\r\n\t{\r\n\t\tstr = nUrl.ToString();\r\n\t}\r\n\t<span style=\"color:blue\">else</span>\r\n\t{\r\n\t\tstr = nUrl.AbsoluteUri;\r\n\t}\r\n\r\n<span style=\"color:green\">// Detect Mode Streaming</span>\r\n<span style=\"color:blue\">if</span> (nUrl.Scheme != <span style=\"color:#a31515\">&quot;file&quot;</span>)\r\n<span style=\"white-space:pre\">\t</span>IsStreamingUrl = <span style=\"color:blue\">true</span>;\r\n\r\n   MediaFoundationInterop.MFCreateSourceReaderFromURL(str, <span style=\"color:blue\">null</span>, <span style=\"color:blue\">out</span> reader);\r\n\r\n........\r\n}\r\n\r\n\r\n\r\nIn GetLength :\r\n\r\n <span style=\"color:blue\">private</span> <span style=\"color:blue\">long</span> GetLength(IMFSourceReader reader)\r\n {\r\n\t<span style=\"color:blue\">if</span> (IsStreamingUrl)\r\n\t\t<span style=\"color:blue\">return</span> 0;  // Return 0 !!!!\r\n....\r\n\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-12-11T00:16:28.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954553",
+    "ThreadId": "406355",
+    "Html": "\r\n<p>good idea. I've implemented it a little differently, as sometimes streaming MP3 can report its duration. Basically we check if the duration presentation attribute is available and if so we use it</p>\r\n",
+    "PostedDate": "2012-12-11T06:31:45.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

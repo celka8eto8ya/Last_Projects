@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "643012",
+    "ThreadId": "265325",
+    "Html": "\r\n<p>How can I play shadowmario.wav?&nbsp; It is an embedded resource, not in the resx.</p>\r\n",
+    "PostedDate": "2011-07-15T08:58:25.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643173",
+    "ThreadId": "265325",
+    "Html": "<p>bump!</p>",
+    "PostedDate": "2011-07-15T16:28:42.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643200",
+    "ThreadId": "265325",
+    "Html": "<p>No point in bumping.</p>\r\n<p>There isn't enough detail in your&nbsp;original&nbsp;question any way. Perhaps you can post a bit more detail about what you are trying to do and what you mean when you say embedded resource &amp; what type of project your developing &amp; what language &amp; even better some code that you have tried which isn't working for you...</p>",
+    "PostedDate": "2011-07-15T19:54:56.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

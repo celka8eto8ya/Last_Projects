@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "717827",
+    "ThreadId": "284347",
+    "Html": "\r\n<p>Hi, I have 2 identical USB microphones and I would like to start recording sound(with WaveIn) at the same time from both microphones. I tried to use 2 System.Threading.Thread&rsquo;s with the WaveCallbackInfo.FunctionCallback() option when initiating the\r\n WaveIn class. Also I used 2 different device numbers. But the first recording(wav file) in the first thread I started, is a smaller and unrecognized file. But the second recording(wav file) in the second thread I started, records and plays the file perfectly.\r\n Does Naudio support multithreading or/and recording from multiple sources. If so, does anybody have any suggestions/examples for me to achieve my goal?</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>...\r\n\t\tThread tWaveRecord = <span style=\"color:blue\">new</span> Thread(StartRecording);\r\n\t\ttWaveRecord.IsBackground = <span style=\"color:blue\">true</span>;\r\n\r\n\t\tThread tWaveRecord2 = <span style=\"color:blue\">new</span> Thread(StartRecording2);\r\n\t\ttWaveRecord2.IsBackground = <span style=\"color:blue\">true</span>;\r\n\t\t\r\n\t\ttWaveRecord.Start();\r\n\t\ttWaveRecord2.Start();\r\n...\t\t\r\n\r\n\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> StartRecording()\r\n        {\r\n            waveIn = <span style=\"color:blue\">new</span> WaveIn(WaveCallbackInfo.FunctionCallback());\r\n            waveIn.DeviceNumber = 0;\r\n            waveIn.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat(96000, 1);\r\n\r\n            writer = <span style=\"color:blue\">new</span> WaveFileWriter(outputFilename, waveIn.WaveFormat);\r\n\r\n            waveIn.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveIn_DataAvailable);\r\n            waveIn.RecordingStopped &#43;= <span style=\"color:blue\">new</span> EventHandler(waveIn_RecordingStopped);\r\n            waveIn.StartRecording();\r\n            Debug.WriteLine(<span style=\"color:#a31515\">&quot;Start Recording&quot;</span>);\r\n        }\r\n\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> StartRecording2()\r\n        {\r\n            waveIn2 = <span style=\"color:blue\">new</span> WaveIn(WaveCallbackInfo.FunctionCallback());\r\n            waveIn2.DeviceNumber = 3;\r\n            waveIn2.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat(96000, 1);\r\n\r\n            writer2 = <span style=\"color:blue\">new</span> WaveFileWriter(outputFilename2, waveIn2.WaveFormat);\r\n\r\n            waveIn2.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveIn_DataAvailable2);\r\n            waveIn2.RecordingStopped &#43;= <span style=\"color:blue\">new</span> EventHandler(waveIn_RecordingStopped2);\r\n            waveIn2.StartRecording();\r\n            Debug.WriteLine(<span style=\"color:#a31515\">&quot;Start Recording 2&quot;</span>);\r\n        }\r\n</pre>\r\n</div>\r\n...\r\n<p></p>\r\n",
+    "PostedDate": "2011-12-28T03:46:30.28-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "719799",
+    "ThreadId": "284347",
+    "Html": "<p>it ought to work. Have you tried it using window callbacks instead of function callbacks?</p>",
+    "PostedDate": "2012-01-03T06:07:08.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "720702",
+    "ThreadId": "284347",
+    "Html": "<p>Window callbacks generated some other errors. What I have learned from MSDN for System.IO.Stream is \"public <span class=\"input\">static</span> (<span class=\"input\">Shared</span> in Visual  Basic) members of this type are thread safe. Any instance members are not  guaranteed to be thread safe\". WaveFileWriter is derived from System.IO.Stream so I am not using&nbsp;WaveFileWriter.</p>",
+    "PostedDate": "2012-01-05T02:03:38.857-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "720703",
+    "ThreadId": "284347",
+    "Html": "<p>WaveFileWriter is perfectly thread safe so long as you write to it from the same thread. This will definitely be the case with windowed callbacks, and also I expect function callbacks will be the same. There is also no need to start new threads for your StartRecording functions.</p>",
+    "PostedDate": "2012-01-05T02:12:30.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

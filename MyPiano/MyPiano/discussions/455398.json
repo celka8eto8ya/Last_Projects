@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1087953",
+    "ThreadId": "455398",
+    "Html": "Hi All,\r<br />\nI'm still trying to learn some basics with naudio.\r<br />\n<br />\nI have a windows form with two comboboxes and I'm using the code from the naudio demo to populate my asio devices.\r<br />\nSorry for the VB. <br />\n<pre><code>        Public Sub New()\n\n            InitializeComponent()\n            \n            For Each device In NAudio.Wave.AsioOut.GetDriverNames()\n                Me.comboBoxAsioDevice.Items.Add(device)\n            Next device\n            If Me.comboBoxAsioDevice.Items.Count &gt; 0 Then\n                Me.comboBoxAsioDevice.SelectedIndex = 0\n            End If\n\n\n        End Sub</code></pre>\n\nI've also figured out the way to display the channel names<br />\n<pre><code>        Private Sub comboBoxAsioDevice_SelectedIndexChanged(sender As Object, e As EventArgs) Handles comboBoxAsioDevice.SelectedIndexChanged\n            comboAsioChannel.Items.Clear()\n\n            Using asioOut As New AsioOut\n                For i As Integer = 0 To asioOut.DriverOutputChannelCount - 1 Step +2\n                    comboAsioChannel.Items.Add(String.Format(&quot;{0} / {1}&quot;, asioOut.AsioOutputChannelName(i), asioOut.AsioOutputChannelName(1 + i)))\n                Next\n            End Using\n        End Sub</code></pre>\n\nMy question is that when I change the device in comboBoxAsioDevice, how can I get the channel names in my comboAsioChannel (comboBox2) for the selected device to change as well?\r<br />\n<br />\nAny help would greatly be appreciated.\r<br />\nThanks, Wyatt<br />\n",
+    "PostedDate": "2013-09-03T14:46:37.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1088152",
+    "ThreadId": "455398",
+    "Html": "looks like the AsioOut you create is always for the default device. Use the constructor that takes a driver name or driver index.<br />\n",
+    "PostedDate": "2013-09-04T03:12:30.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

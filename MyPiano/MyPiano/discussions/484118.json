@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1151105",
+    "ThreadId": "484118",
+    "Html": "Hello.\r<br />\nI want to record audio using 2 microphones on the same time and save it just in one file mp3.\r<br />\nI don't know exactly how to do this. It's even possible using NAudio?\r<br />\nWhich class should I use?<br />\n",
+    "PostedDate": "2014-01-08T14:49:11.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151816",
+    "ThreadId": "484118",
+    "Html": "You'd need to use two instances of WaveIn or WasapiCapture\r<br />\nthen you'd need to mix them. On the fly is harder, but possible if you know what you;re doing.\r<br />\nProbably easiest to save both to WAV file with WaveFileWriter, then use AudioFileReader, MixingSampleProvider and WaveFileWriter to mix to WAV.\r<br />\nThen finally convert WAV to MP3. (e.g. using LAME)<br />\n",
+    "PostedDate": "2014-01-10T07:51:56.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

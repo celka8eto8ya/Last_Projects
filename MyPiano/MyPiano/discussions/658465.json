@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1485254",
+    "ThreadId": "658465",
+    "Html": "Hi all, I am new to NAudio so I apologize in advance for my ignorance. I was testing around just getting an MP3 file to play and I am having a difficult time.\r<br />\n<br />\nHere is my code:\r<br />\n<br />\nusing NAudio.Wave;\r<br />\nnamespace ConsoleApplication2\r<br />\n{<br />\n<pre><code>class Program\n{\n    static void Main(string[] args)\n    {\n        WaveOutEvent waveOut = new WaveOutEvent();\n        WaveStream mp3Reader = new Mp3FileReader(&quot;e:\\\\wonka.mp3&quot;);\n        waveOut.Init(mp3Reader);\n        waveOut.Play();\n        mp3Reader.Dispose();\n        waveOut.Dispose();\n    }\n}</code></pre>\n\n}\r<br />\n<br />\nSo when I run that code nothing happens at all but I notice for a split second in the volume mixer the application appears as if it is starting to do something and then it vanishes. I have verified that I can play the file e:\\wonka.mp3 in a lot of other ways.\r<br />\n<br />\nI also had one other question while I am here. Is it possible to pass an audio &quot;file&quot; directly to NAudio from a byte[] rather than writing it to disk first and then passing it to the reader?<br />\n",
+    "PostedDate": "2016-10-04T06:56:59.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485255",
+    "ThreadId": "658465",
+    "Html": "The <code>Play</code> method just begins playback - it doesn't block until playback stops. So you must pause now until you want to stop or until the <code>PlaybackStopped</code> event is fired.\r<br />\nA simple solution for your app could be to sleep in a loop waiting for the <code>PlaybackState</code> to get set to <code>Stopped</code>. \r<br />\nAnd <code>Mp3FileReader</code> has a constructor that takes a stream so you could pass in a <code>MemoryStream</code> based on your byte array<br />\n",
+    "PostedDate": "2016-10-04T07:02:46.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485256",
+    "ThreadId": "658465",
+    "Html": "Is there an async/background way to play the file? Once I get this working in a &quot;basic&quot; way I am going to use NAudio in a WPF application and I can't pause or loop until the file is done playing. Sorry if I misunderstand.<br />\n",
+    "PostedDate": "2016-10-04T07:10:27.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485258",
+    "ThreadId": "658465",
+    "Html": "well in WPF make the <code>WaveOutEvent</code> and <code>Mp3FileReader</code> a member of your class. Then just call <code>Init</code> and <code>Play</code> and it will play in the background. When the <code>PlaybackStopped</code> event fires, you can clean up.<br />\n",
+    "PostedDate": "2016-10-04T07:40:06.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485261",
+    "ThreadId": "658465",
+    "Html": "Okay, I am still a little confused as to why the console application won't play the entire file.\r<br />\n<br />\nI have implemented the PlaybackStopped event and it fires instantly.\r<br />\n<br />\nWhat is the correct way to call waveOut.Play() so that it will continue playing until the end of the file?\r<br />\n<br />\nBy the way sorry if I am ignorant I am just following the example here:\r<br />\n<br />\n<a href=\"https://github.com/naudio/NAudio/wiki/Playing-an-Audio-File\" rel=\"nofollow\">https://github.com/naudio/NAudio/wiki/Playing-an-Audio-File</a>\r<br />\n<br />\nis that example current?<br />\n",
+    "PostedDate": "2016-10-04T07:50:22.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485267",
+    "ThreadId": "658465",
+    "Html": "Nevermind, I got the example working properly in a WPF application it must just be because I was doing this in a console.\r<br />\n<br />\nthanks.<br />\n",
+    "PostedDate": "2016-10-04T08:27:12.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485272",
+    "ThreadId": "658465",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-size:11.0pt; font-family:\">The problem with your console application is that the file starts playing and then you dispose the object and exit the application before the file is finished playing.</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Sid</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<p><i><span style=\"font-size:11.0pt; font-family:\">Sid Price</span></i></p>\r\n<p><i><span style=\"font-size:11.0pt; font-family:\">Desktop Application and Embedded System Design</span></i></p>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2016-10-04T09:00:27.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

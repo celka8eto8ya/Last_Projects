@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1237812",
+    "ThreadId": "543269",
+    "Html": "Is there anything built into NAudio that converts a stereo SampleProvider into a mono?  I need to ensure the file is mono for my panningProvider to work.<br />\n",
+    "PostedDate": "2014-04-24T19:16:37.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239493",
+    "ThreadId": "543269",
+    "Html": "It would be very easy to write a StereoToMonoSampleProvider.  (there is StereoToMonoProvider16 which you can see the source for - the sample provider only version would be much simpler). In the read, just mix the desired amount from left and right into a single value.<br />\n",
+    "PostedDate": "2014-04-29T12:05:05.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239561",
+    "ThreadId": "543269",
+    "Html": "Thanks for the pointer Mark.  I think I have a working example here - hopefully this helps someone else too:<br />\n<pre><code> public int Read(float[] buffer, int offset, int count)\n        {\n            int sourceSamplesRequired = count * 2;\n            int outIndex = offset;\n            EnsureSourceBuffer(sourceSamplesRequired);\n            int sourceSamplesRead = source.Read(sourceBuffer, 0, sourceSamplesRequired);\n            for (int n = 0; n &lt; sourceSamplesRead; n+=2)\n            {\n                var left = sourceBuffer[n];\n                var right = sourceBuffer[n + 1];\n\n                var outSample = left + right;\n\n                buffer[outIndex++] = outSample;\n            }\n            return sourceSamplesRead / 2;\n        }</code></pre>\n\n",
+    "PostedDate": "2014-04-29T15:10:21.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239562",
+    "ThreadId": "543269",
+    "Html": "exactly right. only thing I'd consider changing is dividing outSample by two to protect against clipping. (e.g. if signal was already same in left and right channel). I'd probably do it with a LeftVolume and RightVolume property to use as a multiplier on the samples, allowing you to mix as much of each side in as you want<br />\n",
+    "PostedDate": "2014-04-29T15:15:25.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

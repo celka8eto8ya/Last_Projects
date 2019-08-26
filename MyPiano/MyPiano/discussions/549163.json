@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1258048",
+    "ThreadId": "549163",
+    "Html": "Hi all,\r<br />\n<br />\nI have the following issue: I have situation where I hear in a SIP endpoint application a very long played beep tone in the headset where I don't know where it is coming from. Beside the possibility that it can come from the RTP stream I want also to check if anything is wrong on the client machine itself as there are also wav files played locally in some situations. The tone is played for a quite long time so it makes it really impossible to work with the application.\r<br />\n<br />\nMy question is now if it is possible to record everything I hear in an USB headset and if there is  a way of identifying from where this stream is sent to the headset? Or if you have any other idea how I can identify from where this beep tone is coming. \r<br />\n<br />\nThank you very much, I appreciate every comment I get.\r<br />\n<br />\nBr,\r<br />\nUzay<br />\n",
+    "PostedDate": "2014-06-19T13:57:20.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260968",
+    "ThreadId": "549163",
+    "Html": "to record everything you hear, look at WasapiLoopbackCapture.\r<br />\nAs for telling where it came from, I'm afraid NAudio can't help you with that.<br />\n",
+    "PostedDate": "2014-06-29T15:41:50.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

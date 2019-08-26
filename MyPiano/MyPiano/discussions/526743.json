@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1198110",
+    "ThreadId": "526743",
+    "Html": "Hi\r<br />\n<br />\nI'm struggling with my c# implementation which uses the NAudio library\r<br />\n<br />\nIs there API documentation available? Would be easier to understand the classes...\r<br />\n<br />\nTa<br />\n",
+    "PostedDate": "2014-01-26T08:06:20.45-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1200136",
+    "ThreadId": "526743",
+    "Html": "hi, the documentation for NAudio can be found in the Documentation section above, and also in the <a href=\"http://mark-dot-net.blogspot.co.uk/search/label/NAudio\" rel=\"nofollow\">many blog-posts I have written about NAudio</a>. In addition, all the public classes and methods of NAudio have XML documentation which should show up as intellisense. Also, I made <a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">a Pluralsight course</a> (subscribers only I'm afraid) which goes into a lot of depth.<br />\n",
+    "PostedDate": "2014-01-28T13:27:51.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

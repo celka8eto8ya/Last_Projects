@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1463073",
+    "ThreadId": "651247",
+    "Html": "I am creating a DMX control system for stage lighting, and I plan to use NAudio to allow for sound activation of patterns and pre-programmed shows. Ideally, the user would be able to see the levels of different frequencies in the spectrum and select functions when the frequency gets to a certain level. I have looked around and tried to find a tutorial on getting an audio spectrum, and all I could find was how to display the waveform of a file. Any help that you could provide would be greatly appreciated.\r<br />\n<br />\nThanks,\r<br />\nRobbieC97<br />\n",
+    "PostedDate": "2016-02-13T06:19:56.65-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464109",
+    "ThreadId": "651247",
+    "Html": "there is a basic spectrum analyzer demo in the NAudio WPF demo which should get you pointed in the right direction. It takes the FFT of every block of 1024 samples to do this.<br />\n",
+    "PostedDate": "2016-02-23T04:50:24.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

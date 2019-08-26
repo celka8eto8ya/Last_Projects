@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "262019",
+    "ThreadId": "76629",
+    "Html": "<p>I'm trying to use NAudio to respond to events from a MIDI hardware controller. However, I do not actually have a physical controller yet. Is there some way to emulate a controller through software in a way that NAudio will see the software controller as a hardware device?</p>\r\n<p>I tried installing the virtual keyboard controller <a href=\"http://www.vimidi.com/\">ViMidi </a>and routed it to an input of Midi Yoke. I was able to view my input into ViMidi through <a href=\"http://www.midiox.com/\">Midi-Ox</a>, but NAudio.Midi.MidiIn.NumberOfDevices still returned 0.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-30T13:23:45.627-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "266317",
+    "ThreadId": "76629",
+    "Html": "<p>if NumberOfDevices returns 0, then there is not much you can do. What are you actually doing with the MIDI events once you receive them though? Is there any need for them to come through the MIDI in APIs?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-12-11T08:52:50.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

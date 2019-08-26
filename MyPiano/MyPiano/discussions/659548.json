@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1488363",
+    "ThreadId": "659548",
+    "Html": "Hello, I have managed to combine NAudio's MixingSampleProvider and MeteringSampleProvider together into one class, in order to provide a volume peak display for the sample provider in real time.\r<br />\n<br />\nIt actually works as expected but only if I use WaveOut.\r<br />\nIf I use AsioOut instead, when the AsioOut is played I get an error to the effect that &quot;This object belongs to a different thread, and the calling thread cannot access the object&quot;.\r<br />\n(No such error occurs with WaveOut)\r<br />\n<br />\nThe following is the Read Function of my custom ISampleProvider (translated from VB to C#):<br />\n<pre><code>public int Read(float[] buffer, int offset, int count)\n{\n    int outputSamples = 0;\n    this.sourceBuffer = BufferHelpers.Ensure(this.sourceBuffer, count);\n    lock (sources) {\n        //cycle through each input source, backwards\n        for (int sourceindex = sources.Count - 1; sourceindex &gt;= 0; sourceindex += -1) {\n\n            if (sources(sourceindex).hasData) {\n                int samplesRead = sources(sourceindex).Read(this.sourceBuffer, 0, count);\n                int outIndex = offset;\n\n                for (int inIndex = 0; inIndex &lt;= samplesRead - 2; inIndex += 2) {\n                    if (inIndex &gt;= outputSamples) {\n                        buffer(outIndex) = this.sourceBuffer(inIndex) * MasterVolFac;\n                        buffer(outIndex + 1) = this.sourceBuffer(inIndex + 1) * MasterVolFac;\n                    } else {\n                        buffer(outIndex) += this.sourceBuffer(inIndex) * MasterVolFac;\n                        buffer(outIndex + 1) += this.sourceBuffer(inIndex + 1) * MasterVolFac;\n                    }\n//*******************  for metering display\n                    if (ShowOutputMeters) {\n                        for (int chno = 0; chno &lt;= channels - 1; chno++) {\n                            thissampleValue = Math.Abs(buffer(offset + inIndex + chno));\n                            maxSamples(chno) = Math.Max(maxSamples(chno), thissampleValue);\n                            sampleCount += 1;\n                            if (sampleCount &gt;= SamplesPerNotification) {\n                                if (StreamVolume != null) {\n                                    StreamVolume(this, args);\n                                }\n                                sampleCount = 0;\n                                Array.Clear(maxSamples, 0, channels);\n                            }\n                        }\n                    }\n                    //******************\n                    outIndex += 2;\n                }\n\n                outputSamples = Math.Max(samplesRead, outputSamples);\n\n            }\n\n        }\n\n    }\n\n    return outputSamples;\n}</code></pre>\n\nCheers,\r<br />\nMichael<br />\n",
+    "PostedDate": "2016-11-18T23:38:33.497-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489200",
+    "ThreadId": "659548",
+    "Html": "You can only change the UI on the UI thread. In WinForms this is done with Control.BeginInvoke, and in WPF you use the Dispatcher for this. It depends on the threading model for WaveOut whether audio processing happens on the UI thread, but with ASIO it's always a background thread<br />\n",
+    "PostedDate": "2016-12-03T14:51:56.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489221",
+    "ThreadId": "659548",
+    "Html": "Ah, Thanks! That solved it for Asio.\r<br />\n<br />\nMoved my UI update code from the StreamVolume event handler to a different Sub called &quot;UpdateMeters&quot; and changed the event handler code to:<br />\n<pre><code>        MaxSampleValues = e.MaxSampleValues  'To use in updating Sub\n        If Not Dispatcher.CheckAccess() Then\n            Dispatcher.BeginInvoke(DispatcherPriority.Background, Sub() UpdateMeters())\n        End If</code></pre>\n\nWorks fine, thx.<br />\n",
+    "PostedDate": "2016-12-04T05:19:22.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

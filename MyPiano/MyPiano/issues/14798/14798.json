@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Hi,\nin WaveFileReader.TryReadFloat data is read by Read(value, 0, x), with x, for example, =2 for 16 bits per sample.\nHowever, if the wav file is multichannel, say 6 channels, each sample has 12 bytes. So the Read method throws an exception \"Must read complete blocks\".",
+    "LastUpdatedDate": "2013-01-09T02:48:15.57-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-11-30T07:21:35.313-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveFileReader.TryReadFloat does not consider channel count",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 14798
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I am having the same problem.\nIs this fix?\nDid you find a solution to this?\n\n",
+      "PostedDate": "2011-11-15T02:57:57.1-08:00",
+      "Id": 48979
+    },
+    {
+      "Message": "This will be fixed in NAudio 1.7 with a new method called ReadSampleFrame. This will return an array of floats, one per channel, or null at end of file. I've marked TryReadFloat as Obsolete.",
+      "PostedDate": "2013-01-09T02:48:02.38-08:00",
+      "Id": 85602
+    }
+  ]
+}

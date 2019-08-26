@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hello! \r\nI have problem when trying to get NAudio from Nuget in my Windows Phone 8 project.\r\nHere is log from console:\r\nPM> Install-Package NAudio -Pre\r\nSuccessfully installed 'NAudio 1.7-alpha01'.\r\nSuccessfully uninstalled 'NAudio 1.7-alpha01'.\r\nInstall failed. Rolling back...\r\nInstall-Package : Could not install package 'NAudio 1.7-alpha01'. You are trying to install this package into a project that targets 'W\r\nindowsPhone,Version=v8.0', but the package does not contain any assembly references or content files that are compatible with that fram\r\nework. For more information, contact the package author.\r\nAt line:1 char:1\r\n+ Install-Package NAudio -Pre\r\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (:) [Install-Package], InvalidOperationException\r\n    + FullyQualifiedErrorId : NuGetCmdletUnhandledException,NuGet.PowerShell.Commands.InstallPackageCommand",
+    "LastUpdatedDate": "2014-09-01T00:22:26.4-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-12-02T12:35:43.963-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "windows phone 8 project support",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 5,
+    "Id": 16376
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I'm afraid there is no Windows Phone 8 support at this time. Windows Store apps is next on the agenda.",
+      "PostedDate": "2012-12-04T05:23:16.973-08:00",
+      "Id": 83515
+    }
+  ]
+}

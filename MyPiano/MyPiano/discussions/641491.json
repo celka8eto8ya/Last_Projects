@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1434754",
+    "ThreadId": "641491",
+    "Html": "Hi!<br />\n<br />\nMy problem is (hopefully) not big, but I managed to get stuck with it now for a long time... I'd be very thankful if anybody could help me with it.<br />\nSo the situation is: I have to record microphone input in my app, then play it back through the audio output.<br />\nActually I am writing a Tox client and I am trying to play back the received audio frames, but you can see that the two things are almost identical. In case of Tox, I just receive the frames from the network, not from my mic. <a href=\"https://github.com/uruk/WinTox/blob/audio/WinTox/ViewModel/CallViewModel.cs\" rel=\"nofollow\">https://github.com/uruk/WinTox/blob/audio/WinTox/ViewModel/CallViewModel.cs</a><br />\n<br />\nSo I made a simplified application to demonstrate my solution for the mic-to-output problem so far:<br />\n<a href=\"https://github.com/uruk/NAudioTest/blob/master/NAudioTest/MainPage.xaml.cs\" rel=\"nofollow\">https://github.com/uruk/NAudioTest/blob/master/NAudioTest/MainPage.xaml.cs</a><br />\n<br />\nIt works (after you give permission to the app to use your mic manually through the settings charm), but the audio played back is nowhere near my normal voice. What am I doing wrong?<br />\n<br />\nThanks for help in advance,<br />\nPeter<br />\n",
+    "PostedDate": "2015-07-17T03:54:50.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437188",
+    "ThreadId": "641491",
+    "Html": "sounds like a format issue. Can you recognize your voice at all? What happens if you just record at the default WasapiCapture wave format (i.e. don't set it explicitly)?<br />\n",
+    "PostedDate": "2015-08-04T06:47:00.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1450033",
+    "ThreadId": "641491",
+    "Html": "Sorry for not replying for so long! I managed to solve my problem with audio graphs since then. (<a href=\"https://msdn.microsoft.com/en-us/library/windows/apps/xaml/mt203787.aspx\" rel=\"nofollow\">https://msdn.microsoft.com/en-us/library/windows/apps/xaml/mt203787.aspx</a>)\r<br />\nStill many thanks for your response!<br />\n",
+    "PostedDate": "2015-10-28T07:27:33.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "638544",
+    "ThreadId": "264202",
+    "Html": "\r\n<div>\r\n<p>I am implementing a Media Player and using NAudio to play my files. Is there any way to increase the playback speed like (2X or 4X) while the sound is playing. Code samples will be appreciated.</p>\r\n<p>Thanks in Advance Cheers.</p>\r\n</div>\r\n",
+    "PostedDate": "2011-07-06T22:41:18.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "638590",
+    "ThreadId": "264202",
+    "Html": "<p>have provided an answer on StackOverflow:</p>\r\n<p>http://stackoverflow.com/questions/6606094/how-to-change-playback-speed-using-naudio-c</p>\r\n<p>(I tend to answer there because Google is better at finding answers on that site than here, so it is more useful for people in the future with the same problem)</p>",
+    "PostedDate": "2011-07-07T00:23:42.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "638639",
+    "ThreadId": "264202",
+    "Html": "<p>Thanks for your prompt reply. Will check it out and post my result</p>",
+    "PostedDate": "2011-07-07T02:33:02.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

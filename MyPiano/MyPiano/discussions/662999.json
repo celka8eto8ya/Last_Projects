@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1496547",
+    "ThreadId": "662999",
+    "Html": "Hello <br />\n<br />\nI record from the mic and I need to compress &amp; normalize the wav file that I record. I would like to use SimpleCompressorStream  for compressing but I can't find any example how to do that. I also wonder how to normalize the file too <br />\n<br />\nAt the moment my record method looks like that:<br />\n<pre><code>public void Record(String strFile)\n    {            \n        m_WaveSource = new WaveIn();\n        m_WaveSource.WaveFormat = new WaveFormat(44100, 1);\n\n        m_WaveSource.DataAvailable += new EventHandler&lt;WaveInEventArgs&gt;(DataAvailable);\n        m_WaveSource.RecordingStopped += new EventHandler&lt;StoppedEventArgs&gt;(RecordingStopped);\n\n        m_WaveFile = new WaveFileWriter(strFile, _WaveSource.WaveFormat);\n\n        m_WaveSource.StartRecording();\n    }</code></pre>\n\n<pre><code>       void DataAvailable(object sender, WaveInEventArgs e)\n        {\n            if (m_WaveFile != null)\n            {\n                m_WaveFile.Write(e.Buffer, 0, e.BytesRecorded);\n                \n                double sum = 0;\n                for (var i = 0; i &lt; e.BytesRecorded; i = i + 2)\n                {\n                    double sample = BitConverter.ToInt16(e.Buffer, i) / 32768.0;\n                    sum += (sample * sample);\n                }\n                double rms = Math.Sqrt(sum / (e.BytesRecorded / 2));\n                var decibel = 20 * Math.Log10(rms);\n                \n              \n                VolumeMeter.Value = decibel;\n                m_WaveFile.Flush();\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2017-05-17T11:19:58.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496550",
+    "ThreadId": "662999",
+    "Html": "SimpleCompressorStream is a ISampleProvider implementing class. Meaning, it is thought to be used for output driven systems (PULL, like a output device).<br />\n<br />\nI see two options here:<br />\n<br />\n1) Pass the data to a BufferedWaveProvider -&gt; .ToSampleProvider -&gt; SimpleCompressorStream -&gt; Read the data out again (PULL system)<br />\n2) Manually parse the data, as u did above, copy the SimpleCompressorStream functions and objects in the class and process it directly (PUSH system)<br />\n<br />\nI strongly recommend the first option. It has also the nice benift, that you don´t have to parse the format yourself, is well tested and optimized.<br />\n",
+    "PostedDate": "2017-05-17T12:06:24.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496552",
+    "ThreadId": "662999",
+    "Html": "Do you have an example for me how to do option 1? I'm pretty new to the entire audio topic and not sure if I understood what I shall do<br />\n",
+    "PostedDate": "2017-05-17T12:22:23.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496553",
+    "ThreadId": "662999",
+    "Html": "In VB I´d do it that way (fast pseudo code):<br />\n<pre><code>\nPrivate BWP as BufferedWaveProvider\nPrivate COMP as SimpleCompressorStream \n\nSub DataAvailable(Bayval sender as object, e as WaveInEventArgs)\n\nIf BWP is Nothing then\nBWP = new BufferedWaveProvider(e.Waveformat)\nCOMP = new SimpleCompressorStream(BWP.ToSampleProvider)\nEnd If\n\nBWP.AddSamples(e.Buffer, 0, e.BytesRecorded)\n\nDim SampCount as Integer = e.BytesRecorded / (e.WaveFormat.BitsPerSample / 8)\n\nDim Samples(SampCount - 1) as Single\n\nCOMP.Read(Samples, 0, SampCount)\n\n// Display the compressed samples stored in &quot;Samples&quot;, write to file etc.\n\nNext\n\nEnd Sub</code></pre>\n\n",
+    "PostedDate": "2017-05-17T12:36:29.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496566",
+    "ThreadId": "662999",
+    "Html": "Thank you for your example but I'm sorry I don't manage to convert this to my C# code because the parameters of <br />\n<pre><code>BWP = new BufferedWaveProvider(e.Waveformat)\nCOMP = new SimpleCompressorStream(BWP.ToSampleProvider)\n</code></pre>\n\nare not fitting for me and I have no idea what to put there. The first line: e has no value called WaveFormat. I only have that from my record method in m_WaveSource.WaveFormat . I tried to use that but then I have the problem that the secondline isn't working the SimpleCompressorStream wants a wav stream object which I haven't...<br />\n",
+    "PostedDate": "2017-05-18T02:16:43.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496580",
+    "ThreadId": "662999",
+    "Html": "Oh, alright I was wrong. SimpleCompressorStream doenst implement ISampleProvider, but WaveStream.\r<br />\n<br />\nIn this case simply change the second line to:<br />\n<pre><code>COMP = new SimpleCompressorStream(BWP)</code></pre>\n\nAnd it should work. Discard the sample code and just call the read method of COMP.\r<br />\n<br />\nFor the Waveformat you are right, just pass the waveformat of the input device here.<br />\n",
+    "PostedDate": "2017-05-18T10:16:11.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496654",
+    "ThreadId": "662999",
+    "Html": "I finally managed to make it work that way:<br />\n<pre><code>WaveFileReader audio = new WaveFileReader(strFile);\n            \n            string strCompressedFile = &quot;&quot;;\n\n            byte[] WaveData = new byte[audio.Length];\n            \n            SimpleCompressorStream Compressor = new SimpleCompressorStream(audio);\n            Compressor.Enabled = true;\n\n            if (Compressor.Read(WaveData, 0, WaveData.Length) &gt; 0)\n            {\n                strCompressedFile = &quot;xxx.wav&quot;;               \n            \n                WaveFileWriter CompressedWaveFile = new WaveFileWriter(strCompressedFile, audio.WaveFormat);\n                CompressedWaveFile.Write(WaveData, 0, WaveData.Length);\n                CompressedWaveFile.Flush();                                                     \n\n            } </code></pre>\n\n",
+    "PostedDate": "2017-05-22T09:28:33.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1457299",
+    "ThreadId": "649357",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-family:\">Hello Sir,</span></p>\r\n<p><span style=\"font-family:\"></span></p>\r\n<p><span style=\"font-family:\">I have developed one player using NADUIO and its working fine, but now I have got a small problem. where the compressed Wave file cannot be played through waveoutevent player, as I am getting an error stating “</span><span style=\"font-size:12.0pt; font-family:\">NoDriver\r\n calling acmFormatSuggest”. So, Kindly let me know how to play the compressed </span>\r\n<span style=\"font-family:\">Wave file </span><span style=\"font-size:12.0pt; font-family:\">using WAVEOUTEVENT player.</span></p>\r\n<p><span style=\"font-size:12.0pt; font-family:\">Thank’s in Advance!!!</span></p>\r\n<p><span style=\"font-size:12.0pt; font-family:\"></span></p>\r\n<p><span style=\"font-size:12.0pt; font-family:\"></span></p>\r\n<p><span style=\"font-size:12.0pt; font-family:\">Thank You.</span></p>\r\n<p><span style=\"font-size:12.0pt; font-family:\">Athivarathan.S</span></p>\r\n<p><span style=\"font-size:12.0pt; font-family:\">&#43;91-9500351051</span></p>\r\n</div>\r\n",
+    "PostedDate": "2015-12-27T21:58:04.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457331",
+    "ThreadId": "649357",
+    "Html": "this means you have no ACM codecs installed on the computer that can decode that particular codec. <br />\n",
+    "PostedDate": "2015-12-28T05:28:26.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457676",
+    "ThreadId": "649357",
+    "Html": "Or in other words: you´d have to decode the file yourself or by an extra library.<br />\n",
+    "PostedDate": "2015-12-31T19:14:46.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

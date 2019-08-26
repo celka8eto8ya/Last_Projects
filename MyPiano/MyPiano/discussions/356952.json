@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "840301",
+    "ThreadId": "356952",
+    "Html": "\r\n<p>Hi, I have created my own WaveViewer control. Actually this is th copied code with some additional possibilities.</p>\r\n<p>One of them is cutting part of file. I do it this way:<br>\r\n1. I copy part of file before cut position to new stream<br>\r\n2. I copy part of file after cut position to new stream(this one in 1 point)<br>\r\n3. I save new stream as temporary file<br>\r\n4. I close both streams(the original and new - temporary)<br>\r\n5. I copy new temporary file to the old - original file<br>\r\n6. I delete temporary file.</p>\r\n<p>When I cut selected part of wave for the first time, everything works fine. But when I cut another part(do the second cut), I get error: &quot;the file is being used by another process&quot; - meaning the original file - while copying.</p>\r\n<p>This is my code:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> CutSelection(<span style=\"color:blue\">string</span> fileName)\r\n{\r\n<span style=\"color:green\">//get start and end time of the selection</span>\r\n  TimeSpan startTime = GetSelectionStartTime();\r\n  TimeSpan endTime = GetSelectionEndTime();\r\n \r\n<span style=\"color:green\">//change the times to position in bytes</span>\r\n  <span style=\"color:blue\">int</span> bytesPerMilisecond = waveStream.WaveFormat.AverageBytesPerSecond / 1000;\r\n  <span style=\"color:blue\">int</span> startPos = (<span style=\"color:blue\">int</span>)startTime.TotalMilliseconds * bytesPerMilisecond;\r\n  startPos = startPos - startPos % waveStream.WaveFormat.BlockAlign;\r\n \r\n  <span style=\"color:blue\">int</span> endPos = (<span style=\"color:blue\">int</span>)endTime.TotalMilliseconds * bytesPerMilisecond;\r\n            endPos = endPos - endPos % waveStream.WaveFormat.BlockAlign;\r\n \r\n<span style=\"color:green\">//create new file - its name ends with  &quot;_&quot;</span>\r\n  <span style=\"color:blue\">using</span> (WaveFileWriter writer = <span style=\"color:blue\">new</span> WaveFileWriter(fileName&#43;<span style=\"color:#a31515\">&quot;_&quot;</span>, waveStream.WaveFormat))\r\n  {\r\n      <span style=\"color:blue\">byte</span>[] buffer = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[1024];\r\n      <span style=\"color:blue\">int</span> bytesRead = 0;\r\n      <span style=\"color:blue\">int</span> bytesRequired = 0;\r\n \r\n<span style=\"color:green\">//before</span>\r\n      waveStream.Position = 0;\r\n      <span style=\"color:blue\">while</span> (waveStream.Position &lt; startPos)\r\n      {\r\n          bytesRequired = (<span style=\"color:blue\">int</span>)(startPos - waveStream.Position);\r\n          <span style=\"color:blue\">if</span> (bytesRequired &gt; 1024) bytesRequired = 1024;\r\n \r\n          bytesRead = waveStream.Read(buffer, 0, bytesRequired);\r\n          writer.Write(buffer, 0, bytesRead);\r\n      }\r\n \r\n<span style=\"color:green\">//after</span>\r\n      waveStream.Position = endPos;\r\n      <span style=\"color:blue\">while</span> (waveStream.Position &lt; waveStream.Length)\r\n      {\r\n          bytesRequired = (<span style=\"color:blue\">int</span>)(waveStream.Length - waveStream.Position);\r\n          <span style=\"color:blue\">if</span> (bytesRequired &gt; 1024) bytesRequired = 1024;\r\n \r\n          bytesRead = waveStream.Read(buffer, 0, bytesRequired);\r\n          writer.Write(buffer, 0, bytesRead);\r\n      }\r\n  }<span style=\"color:green\">//using</span>\r\n \r\n<span style=\"color:green\">//close the original file(fileName)</span>\r\n  waveStream.Close();\r\n  waveStream.Dispose();\r\n  waveStream = <span style=\"color:blue\">null</span>;\r\n \r\n<span style=\"color:green\">//copy new file to the original - here is the error - only at second time</span>\r\n  File.Copy(fileName &#43; <span style=\"color:#a31515\">&quot;_&quot;</span>, fileName, <span style=\"color:blue\">true</span>);\r\n \r\n<span style=\"color:green\">//delete temporary file</span>\r\n  File.Delete(fileName &#43; <span style=\"color:#a31515\">&quot;_&quot;</span>);\r\n \r\n<span style=\"color:green\">//create waveStream from new file</span>\r\n  waveStream = <span style=\"color:blue\">new</span> WaveFileReader(fileName);\r\n  \r\n<span style=\"color:green\">//and invalidate control</span>\r\n  <span style=\"color:blue\">this</span>.Invalidate();\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>So why do I get this error? What's wrong?</p>\r\n",
+    "PostedDate": "2012-05-24T02:48:59.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840830",
+    "ThreadId": "356952",
+    "Html": "<p>do you have a windows explorer window open? sometimes I find that Windows seems to examine new WAv files as they are created</p>",
+    "PostedDate": "2012-05-25T02:16:47.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "841563",
+    "ThreadId": "356952",
+    "Html": "\r\n<p>No, all explorer windows are closed. When I try to delete it from Windows, I get error message saying that this file is being used by vshost32.exe</p>\r\n",
+    "PostedDate": "2012-05-28T02:45:14.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847532",
+    "ThreadId": "356952",
+    "Html": "<p>are you sure you're not trying to create the same file twice?</p>",
+    "PostedDate": "2012-06-11T08:47:26.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

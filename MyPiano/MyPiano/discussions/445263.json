@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1049884",
+    "ThreadId": "445263",
+    "Html": "I am newer to NAudio,i have a mp3 url likes :  <a href=\"http://www.abc.com/sample.mp3\" rel=\"nofollow\">http://www.abc.com/sample.mp3</a>\r<br />\nand want to download it with socket and store it into byte[] .code likes<br />\n<pre><code>quequ&lt;byte[]&gt; _queue;\n......\n\n    nBytes = _socket.Receive(recvBuffer, 0, 10240, SocketFlags.None);\n    _queue.Enqueue(recvBuffer);\n\n......</code></pre>\n\nI read the demo code of <strong>Mp3StreamingDemo</strong> and know that Mp3Frame  should be used to decode,but it always null.\r<br />\nwhat should i do?can some one helps me.<br />\n",
+    "PostedDate": "2013-05-28T20:21:47.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1050507",
+    "ThreadId": "445263",
+    "Html": "either it doesn't contain an MP3 file, or there is not a complete MP3 frame in there.<br />\n",
+    "PostedDate": "2013-05-30T02:08:37.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

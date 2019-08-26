@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1111367",
+    "ThreadId": "463345",
+    "Html": "Hello,<br />\n<br />\nI am hoping that I can take my high quality 16 bit 44.1 audio stream an encode in realtime using something like OGG Vorbis.  I've been playing around with some of the encoders built into NAUDIO but none of them seem to output in very high quality.  Has anyone tried to do this before?<br />\n<br />\nWould I be better off encoding as MP3 in realtime?<br />\n",
+    "PostedDate": "2013-10-23T21:22:43.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1111862",
+    "ThreadId": "463345",
+    "Html": "you could try using the MediaFoundationEncoder that is available in the preview release of NAudio 1.7<br />\n",
+    "PostedDate": "2013-10-24T14:57:33.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

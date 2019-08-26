@@ -1,0 +1,154 @@
+[
+  {
+    "Id": "1112241",
+    "ThreadId": "463610",
+    "Html": "How does the buffering work?\r<br />\n<br />\nFor example, if i set 10ms buffer with 2 streams, it will be 20ms total i guess?\r<br />\n<br />\nBut what is best, 20ms with 1 stream or 10ms with 2 streams?<br />\n",
+    "PostedDate": "2013-10-25T13:03:26.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112272",
+    "ThreadId": "463610",
+    "Html": "what buffers are you talking about?<br />\n",
+    "PostedDate": "2013-10-25T14:35:21.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112300",
+    "ThreadId": "463610",
+    "Html": "These:<br />\n<pre><code>            BufferNumber.Value = SendStream.NumberOfBuffers = 2;\n            BufferLength.Value = SendStream.BufferMilliseconds = 5;</code></pre>\n\n",
+    "PostedDate": "2013-10-25T17:09:45.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1112986",
+    "ThreadId": "463610",
+    "Html": "So SendStream is WaveOut or WaveIn then?\r<br />\nIf so, there's no way you'll get it as low as 5ms. \r<br />\nNormally you have two buffers. For playback, one is being filled while the other is being played, then they swap. Same for record. One is being recorded into, while your app is reading out of the other one.\r<br />\nSo latency is actually only the size of one buffer when you have two buffers.<br />\n",
+    "PostedDate": "2013-10-28T04:05:39.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113386",
+    "ThreadId": "463610",
+    "Html": "In this it´s for WaveIn.\r<br />\n<br />\nAh okay that´s understandable, and well it´s not like i am expecting 5ms. \r<br />\nI am just wondering, what it the optimal setting, is it 2 buffers at 5ms, or 1 buffer at 10ms.\r<br />\n<br />\nFrom your standpoint i am guessing 2 buffers at 5ms should be more stable.<br />\n",
+    "PostedDate": "2013-10-28T13:52:36.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113387",
+    "ThreadId": "463610",
+    "Html": "2 buffers. And you'll likely miss buffers if you try as low as 5ms. 50ms is more realistic for the waveIn functions.<br />\n",
+    "PostedDate": "2013-10-28T13:59:07.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113402",
+    "ThreadId": "463610",
+    "Html": "Good. Yeah i know, though i wonder, is there a way to troubleshoot this?\r<br />\n<br />\nMeaning i can let it run and see oh, 100 buffers got missed during 1 hour, etc?\r<br />\n<br />\nCause just listening isn´t that optimal for diagnostics.<br />\n",
+    "PostedDate": "2013-10-28T14:25:27.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113404",
+    "ThreadId": "463610",
+    "Html": "you could try a Stopwatch, and count how many buffers you receive in a given time. Compare that to how many should have been received<br />\n",
+    "PostedDate": "2013-10-28T14:29:31.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113407",
+    "ThreadId": "463610",
+    "Html": "How can i check how many i should receive?\r<br />\nI don´t really have a way to know that, i just change the number/length of the buffers.<br />\n",
+    "PostedDate": "2013-10-28T14:31:25.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113589",
+    "ThreadId": "463610",
+    "Html": "think about it this way, if a buffer is 10ms long, how many buffers are there in 1 second?<br />\n",
+    "PostedDate": "2013-10-29T04:43:51.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113855",
+    "ThreadId": "463610",
+    "Html": "I suck at math, but i would guess 100?\r<br />\n10*100 = 1000, and 1000 milliseconds should be 1 second i think.\r<br />\n<br />\nBut even if i know that, i have no idea to know if the buffer get´s through or is discarded etc, i just hear the constant stream of audio, it´s impossible for me to detect it accurately by listening.<br />\n",
+    "PostedDate": "2013-10-29T14:56:55.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113860",
+    "ThreadId": "463610",
+    "Html": "that's right. so use .NET's stopwatch class to time how long you've recorded for, and in the DataAvailable event, increment a counter.<br />\n",
+    "PostedDate": "2013-10-29T15:19:05.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1114056",
+    "ThreadId": "463610",
+    "Html": "So you mean, i should start 2 counters. \r<br />\n<br />\n1 from the start of the recording, and 1 that runs as long as data is available, and when it´s not, it will simply just pause for that moment, them compare them?\r<br />\n<br />\nWill have to find a way to do it, but should work, great idea;)<br />\n",
+    "PostedDate": "2013-10-30T03:08:33.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1116581",
+    "ThreadId": "463610",
+    "Html": "no I mean just start a .NET stopwatch which is measuring real time, and then have an integer that you increment whenever you get a DataAvailable event. When the stoppedrecording event fires, stop the stopwatch. Then you can compare stopwatch.elapsedmilliseconds with the integer that counted DataAvailable events and see if they match up.<br />\n",
+    "PostedDate": "2013-11-01T09:29:44.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130826",
+    "ThreadId": "463610",
+    "Html": "Okay i am trying to achieve this, is this correct:<br />\n<pre><code>                    while (connect)\n                    {\n                        TestTimer += 1;\n                        Test2.BeginInvoke((Action)(() =&gt; { Test2.Text = String.Format(&quot;TestTimer: {0} CallTimer: {1}&quot;, TestTimer, calltimer.ElapsedMilliseconds / 5); }));\n                        ReceivedData = udpReceive.Receive(ref remoteIEP);\n                        waveProvider.AddSamples(ReceivedData, 0, ReceivedData.Length);\n                        if (Record)\n                            waveWriter.Write(ReceivedData, 0, ReceivedData.Length);\n                    }\n</code></pre>\n\ncalltimer starts when the call begins and is run at it´s own thread counting real time.<br />\nTestTimer as you can see just adds up each loop.<br />\n<br />\nAs the buffer is 5ms, i need to divide the calltimer by 5.<br />\n<br />\nI think this is correct, but not sure.<br />\n<br />\n<br />\nEDIT:<br />\n<br />\nThough when i think of it, as they run on different threads they aren´t even in sync to begin with.<br />\n",
+    "PostedDate": "2013-12-02T02:34:54.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130838",
+    "ThreadId": "463610",
+    "Html": "yes, this is the basic approach I was meaning. You would have a small error due to not starting them at the same instant. But over a long period, you'd find any discrepancies.<br />\n",
+    "PostedDate": "2013-12-02T03:21:09.003-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130885",
+    "ThreadId": "463610",
+    "Html": "Good, seems to work.\r<br />\n<br />\nI notice that the problem i have seems to be if i use something else, like rewind skip forward in a video, that takes a bit CPU.\r<br />\nAnd for some reason stuff like that takes priority over my application, anything that can take some fast CPU power at some point.\r<br />\n<br />\nI use:\r<br />\n<br />\nSystem.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.RealTime;\r<br />\n<br />\nAs well as giving the threads highest priority in the application itself.\r<br />\n<br />\nSo do you have any idea why it´s not always at top priority and &quot;pauses&quot; if something needs the CPU for a bit?\r<br />\n(Btw the application uses very little CPU as you can guess, and my CPU is a quadcore 4ghz so performance wise, it doesn´t make sense to me)<br />\n",
+    "PostedDate": "2013-12-02T05:20:32.303-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130886",
+    "ThreadId": "463610",
+    "Html": "remember .NET is a garbage collected language. The garbage collector will kick in at some point, and none of your code can run during that time. So if your buffers are really small (5ms), there is a good chance you'll miss one<br />\n",
+    "PostedDate": "2013-12-02T05:22:45.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130887",
+    "ThreadId": "463610",
+    "Html": "Well missing one at some point isn´t a problem.\r<br />\n<br />\nBut as i miss much when i use something that takes much CPU is really a problem however.\r<br />\n<br />\nI am guessing though, it may have to do with the DataAvailable thread, as i can´t control the priority on that one if i remember correctly.<br />\n",
+    "PostedDate": "2013-12-02T05:24:59.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

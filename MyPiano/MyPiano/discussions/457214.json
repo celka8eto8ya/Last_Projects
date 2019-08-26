@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1093652",
+    "ThreadId": "457214",
+    "Html": "Hi everyone,\r<br />\ni'm using WasapiCaptureRT to recording audio data from my endpoint device in loopback recording mode.\r<br />\n<br />\nI don't want to recording the microphone, just the speakers, my question is, i'm forced to set the microphone capability just to loopback record? There's any way to workaround this? It's very strange the software ask to allow microphone when i'm not use the device to recording.\r<br />\n<br />\nThanks\r<br />\nDiego<br />\n",
+    "PostedDate": "2013-09-17T10:24:35.4-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094440",
+    "ThreadId": "457214",
+    "Html": "hi, the Windows RT support is still quite early. It might be possible to use loopback recording without asking permission. I'd recommend experimenting with the source code yourself<br />\n",
+    "PostedDate": "2013-09-19T05:54:31.173-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

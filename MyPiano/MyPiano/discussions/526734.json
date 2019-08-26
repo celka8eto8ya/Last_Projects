@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1198090",
+    "ThreadId": "526734",
+    "Html": "Dear Experts, \r<br />\n<br />\nI have a PCM file Byte array , 16 bits , 8KHz sample rate , signed , Mono. I need to increase the volume of this data eg by 3 times current volume. My approach is :\r<br />\n 1- convert this byte array of single ( samples are 16 bits so each 2 bytes will be one &quot;Int16&quot; number\r<br />\n<br />\n2- multiply this value by 4.\r<br />\n4- covert this number back to bytes\r<br />\n5-save to byte array.\r<br />\n<br />\nIs this approach the correct &amp; fast one . or you have another ideas.\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2014-01-26T06:51:07.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198254",
+    "ThreadId": "526734",
+    "Html": "Your multiplier in step 2 is wrong...  You'll want to calculate a 4.5 decibel increase to come up with the correct one.  You only have to calculate it once.\r<br />\n<br />\nTry looking on $SEARCH_ENGINE for &quot;PCM amplitude to decibels&quot; for the appropriate formula.\r<br />\n<br />\nI'd also recommend looking at WaveBuffer for a simpler way to do steps 1, 4 &amp; 5.<br />\n",
+    "PostedDate": "2014-01-26T11:54:09.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198360",
+    "ThreadId": "526734",
+    "Html": "Dear ioctlLR , \r<br />\n<br />\nGreat and simple. Thanks man. really appreciated.<br />\n",
+    "PostedDate": "2014-01-26T14:21:58.827-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "hi,\r\n\r\njust want to ask is there any examples on peak normalization and average normalization for multiple waves\r\n\r\nthanks",
+    "LastUpdatedDate": "2014-08-21T01:19:42.56-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-08-17T22:04:02.79-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "multiple wave normalization",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16450
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "not at the moment I'm afraid. Also, make sure it really is normalization you want. Usually a limiter or compressor is a more appropriate choice",
+      "PostedDate": "2014-08-20T06:24:21.447-07:00",
+      "Id": 155819
+    },
+    {
+      "Message": "ok thanks, i think i go to limiter to prevent clipping...",
+      "PostedDate": "2014-08-21T01:19:42.56-07:00",
+      "Id": 155901
+    }
+  ]
+}

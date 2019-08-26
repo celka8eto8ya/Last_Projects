@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1489101",
+    "ThreadId": "659864",
+    "Html": "I've noticed that I cannot decode files with NAudio that are MPEG Audio Layer 2 compressed. I understand that this is a codec issue, but I am having difficulties finding the right codec for it. \r<br />\n<br />\nQDesign seemed to have developed a layer-2 ACM codec but they no longer exist. It is a bit of a bummer, since a regular Media Player on my Windows Machine has no problems playing back the file. \r<br />\nDoes anyone have a suggestion or perhaps a hyperlink to a working (ACM) codec? \r<br />\nAnother way might be to use DirectShow for decoding. If there is some info on how to use DShow together with NAudio, I'd be happy to know it.\r<br />\n<br />\nThanks in advance!\r<br />\n<br />\n~Rob<br />\n",
+    "PostedDate": "2016-12-01T07:25:35.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

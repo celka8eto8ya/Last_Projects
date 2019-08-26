@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2013-08-05T09:06:43.84-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "Made a post in the forum about it.\r\n\r\nNot exactly sure if it´s just me that have done something wrong, but i can´t see what the issue can be so.\r\n\r\nWhen i use .Dataavailable and send it through UDP and play it on receive, it works perfectly. BUT, it stops playing after about 5 secs.\r\n\r\nIt´s always the same time, and Only when i use WasapiLoopBack. It´s like Dataavailable is looking at a buffer that´s 5 seconds, and just waiting for it to run out, even though it should be infinite as it´s a loopback and it´s recording.\r\n\r\nHow i concluded it´s not working correctly is that if i play it directly, like Asioout(Waloop);(you get it).\r\nIt will play just fine, so the \"data\" is there.\r\n\r\nI have tried it both at 32bit (original float) and downsampling to 16 bit. Both at Stereo.\r\n\r\n```\r\n       void SendWaloop(object sender, NAudio.Wave.WaveInEventArgs e)\r\n       {\r\n\r\n               byte[] newArray16Bit = new byte[e.BytesRecorded / 2];\r\n               short two;\r\n               float value;\r\n               for (int i = 0, j = 0; i < e.BytesRecorded; i += 4, j += 2)\r\n               {\r\n                   value = (BitConverter.ToSingle(e.Buffer, i));\r\n                   two = (short)(value * short.MaxValue);\r\n\r\n                   newArray16Bit[j] = (byte)(two & 0xFF);\r\n                   newArray16Bit[j + 1] = (byte)((two >> 8) & 0xFF);\r\n               }\r\n               if (connect == true && MuteMic.Checked == false)\r\n               {\r\n                   udpClient.Send(newArray16Bit, newArray16Bit.Length, otherPartyIP.Address.ToString(), 1500);\r\n               }\r\n           \r\n           }\r\n```\r\n\r\nThre shouldn´t be any problem and i don´t receive any errors. So i can´t understand what´s wrong, the only thing i can think of, is that it´s not working correctly.",
+    "LastUpdatedDate": "2014-03-17T09:16:19.097-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-08-03T22:03:28.057-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "CantReproduce"
+    },
+    "Summary": "WasapiLoopbackCapture - Dataavailable not working as intended.",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16405
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Okej this can be ignored, it got solved somehow, i must have messed up as usual;S",
+      "PostedDate": "2013-08-04T19:33:53.097-07:00",
+      "Id": 108519
+    },
+    {
+      "Message": "Hi mark. Mind if you share us you solution? Any help will be greatly appreciated.",
+      "PostedDate": "2014-03-10T00:29:16.19-07:00",
+      "Id": 136359
+    },
+    {
+      "Message": "I don't think there was an actual problem here. If you are having a similar problem, ask on the discussion section",
+      "PostedDate": "2014-03-17T09:16:19.097-07:00",
+      "Id": 137087
+    }
+  ]
+}

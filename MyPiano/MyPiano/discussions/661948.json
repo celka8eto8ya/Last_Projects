@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1494104",
+    "ThreadId": "661948",
+    "Html": "I am new to this library, and just checked documentation, but couldn't find anything on mid/side channel processing. What I want to do is take a wav file, split it on mid and side channels, then  replace the side channel with another mono audio file and finally encode it all together back to wav. Would be even better if I could do all of this with mp3. Any help is appreciated...<br />\n",
+    "PostedDate": "2017-03-15T10:16:24.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

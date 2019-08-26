@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1315116",
+    "ThreadId": "570285",
+    "Html": "Hi,\r<br />\n<br />\nI'm trying to accomplish some tasks, but can't find the appropriate way of achieving this. Hope someone can help me out. I'll try to describe the use case in short:\r<br />\n<br />\nI've got a server side application that is sending audio to clients. I'm sending audio frames at regular intervals. I'm using MixingSampleProvider for mixing inputs. I then use SampleToWaveProvider16 and try reading a buffer of samples and send these buffers (if available) to the clients. This works without problems.\r<br />\n<br />\nI also have a WaveMixerStream32 that will use WaveChannel32 and WaveFileReader to mix audio tracks and use MediaFoundationResampler().ToSampleProvider() to get a resampled sampleprovider that I use as input for the MixingSampleProvider. So these audio tracks are correctly mixed and send to the clients.\r<br />\n<br />\nI also have a class that will recieve audio from clients. I receive this audio by an event that will provide me byte[] of audio on a regular interval.\r<br />\n<br />\nNow what I'm trying to accomplish is:<br />\n<ol>\n<li>Record the audio (in memory) that is received from the clients (it's ok if the audio of all clients is combined in one mixed recorded stream). So I can listen back to the received audio.</li>\n<li>\nInclude the audio that is received from the clients to the MixingSampleProvider or WaveMixerStream32 so that it is send to the clients while recording.<br />\n</li>\n</ol>\nSo the main question is how can I create en in-memory buffer that contains the received byte[] frames that I receive each interval and connect it to one of the mixers so I can listen to it while recording and when recording is paused?\r<br />\n<br />\nHope the usecase is clear, if not let me know and I'll try to elaborate it a bit more.<br />\n",
+    "PostedDate": "2014-10-20T14:02:52.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1315940",
+    "ThreadId": "570285",
+    "Html": "The general approach is to use a BufferedWaveProvider (call ToSampleProvider on it if you need to mix it with something), and put audio you receive into that as it arrives.\r<br />\nBufferedWaveProvider can be configured to return a never-ending stream of silence if no audio has been received, which prevents the audio playback from stopping automatically. The NetworkChatDemo in the NAudioDemo application (part of NAudio source code) is a good place to start looking to see how to do this<br />\n",
+    "PostedDate": "2014-10-23T01:54:27.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

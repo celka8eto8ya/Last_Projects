@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "939433",
+    "ThreadId": "402639",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>I was wondering if NAudio would playback a .DAT File from a DDP fileset?</p>\r\n<p>The format for the DAT file from DDP is always 44.1 Stereo 16bit.</p>\r\n<p>Thanks, Wyatt</p>\r\n",
+    "PostedDate": "2012-11-09T16:40:39.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939498",
+    "ThreadId": "402639",
+    "Html": "<p>Is it PCM, and is the byte ordering little endian? If so you could just use a RawSourceAudioStream, passing in a new WaveFormat(44100,16,2) and a FileStream to the .DAT file.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-11-09T23:46:24.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "939680",
+    "ThreadId": "402639",
+    "Html": "\r\n<p>Would it be possible to do this from the source, like was metioned in this thread?</p>\r\n<p>http://naudio.codeplex.com/discussions/254145</p>\r\n<p>Edit: Or could I get some kind of example from this post?</p>\r\n<p>http://naudio.codeplex.com/discussions/85827</p>\r\n<p>or how could I use it in this code?</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>    <span style=\"color:blue\">Private</span> <span style=\"color:blue\">Sub</span> btnPlay_Click(sender <span style=\"color:blue\">As</span> <span style=\"color:blue\">Object</span>, e <span style=\"color:blue\">As</span> EventArgs) <span style=\"color:blue\">Handles</span> btnPlay.Click\n        <span style=\"color:blue\">If</span> Label1.Text = <span style=\"color:blue\">Nothing</span> <span style=\"color:blue\">Then</span>\n            <span style=\"color:blue\">Dim</span> wavFile <span style=\"color:blue\">As</span> <span style=\"color:blue\">String</span>\n            OpenWavFile.InitialDirectory = <span style=\"color:#a31515\">&quot;&quot;</span>\n            wavFile = OpenWavFile.ShowDialog()\n            wavFile = OpenWavFile.FileName\n            Label1.Text = wavFile\n        <span style=\"color:blue\">Else</span>\n            wave = <span style=\"color:blue\">New</span> NAudio.Wave.WaveFileReader(Label1.Text)\n            output = <span style=\"color:blue\">New</span> AsioOut(comboBoxAsioDriver.Text)\n            output.Init(<span style=\"color:blue\">New</span> NAudio.Wave.WaveChannel32(wave))\n            output.Play()\n            btnPlay.Enabled = <span style=\"color:blue\">False</span>\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">If</span>\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Sub</span>\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-11-10T11:45:44.45-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940103",
+    "ThreadId": "402639",
+    "Html": "<p>I've tried to figure this out. Does this look correct?</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>    <span style=\"color: blue;\">Private</span> <span style=\"color: blue;\">Sub</span> btnPlay_Click(sender <span style=\"color: blue;\">As</span> <span style=\"color: blue;\">Object</span>, e <span style=\"color: blue;\">As</span> EventArgs) <span style=\"color: blue;\">Handles</span> btnPlay.Click\r\n        <span style=\"color: blue;\">If</span> Label1.Text = <span style=\"color: blue;\">Nothing</span> <span style=\"color: blue;\">Then</span>\r\n            <span style=\"color: blue;\">Dim</span> wavFile <span style=\"color: blue;\">As</span> <span style=\"color: blue;\">String</span>\r\n            OpenWavFile.InitialDirectory = <span style=\"color: #a31515;\">\"\"</span>\r\n            wavFile = OpenWavFile.ShowDialog()\r\n            wavFile = OpenWavFile.FileName\r\n            Label1.Text = wavFile\r\n        <span style=\"color: blue;\">Else</span>\r\n            <span style=\"color: blue;\">Dim</span> file <span style=\"color: blue;\">As</span> <span style=\"color: blue;\">New</span> FileStream(Label1.Text, FileMode.Open, FileAccess.Read)\r\n            <span style=\"color: blue;\">Dim</span> format <span style=\"color: blue;\">As</span> <span style=\"color: blue;\">New</span> WaveFormat(44100, 16, 2)\r\n            <span style=\"color: blue;\">Dim</span> rawStream <span style=\"color: blue;\">As</span> <span style=\"color: blue;\">New</span> RawSourceWaveStream(file, format)\r\n\r\n            output = <span style=\"color: blue;\">New</span> AsioOut(comboBoxAsioDriver.Text)\r\n            output.Init(<span style=\"color: blue;\">New</span> NAudio.Wave.WaveChannel32(rawStream))\r\n            output.Play()\r\n            btnPlay.Enabled = <span style=\"color: blue;\">False</span>\r\n        <span style=\"color: blue;\">End</span> <span style=\"color: blue;\">If</span>\r\n    <span style=\"color: blue;\">End</span> <span style=\"color: blue;\">Sub</span>\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2012-11-11T21:06:37.35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940136",
+    "ThreadId": "402639",
+    "Html": "<p>yes this is fine, although the WaveChannel32 is redundant in this case. Also, only use ASIO if you have a particular need for very low latency.</p>",
+    "PostedDate": "2012-11-11T23:10:25.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

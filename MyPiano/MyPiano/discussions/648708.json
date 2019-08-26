@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1455789",
+    "ThreadId": "648708",
+    "Html": "Hi,\r<br />\n<br />\nI am having problems attempting to create network chat between a regular C# console app using naudio and a raspberry pi 2 using the NAudio universal library. Right now I am just trying to get it to go from the Raspberry pi to the C# console app.\r<br />\n<br />\nI believe my issue is in my limited understanding of which codecs are actually the same between the two. My network communication is successful however I hear only static for a few seconds then a buffer overflow error.\r<br />\n<br />\nThe following is my code on the RPi:<br />\n<pre><code>        public void record()\n        {\n\n            if (recorder == null)\n            {\n                recorder = new WasapiCaptureRT();\n                recorder.DataAvailable += RecorderOnDataAvailable;\n            }\n\n            if (reader != null)\n            {\n                reader.Dispose();\n                reader = null;\n            }\n            recorder.StartRecording();\n           \n        }\n\n        private async void RecorderOnDataAvailable(object sender, WaveInEventArgs waveInEventArgs)\n        {\n            if (reader == null)\n            {\n                recordStream = new MemoryStream();\n                reader = new RawSourceWaveStream(recordStream, recorder.WaveFormat);\n\n            }\n                writer.WriteBytes(waveInEventArgs.Buffer);\n                await writer.StoreAsync();\n            \n                \n           \n        }</code></pre>\n\nAnd on the C# app:<br />\n<pre><code>     public void test()\n        {\n            udpListener = new UdpClient(listenPort);\n            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, listenPort);\n            var _format = WaveFormat.CreateIeeeFloatWaveFormat(44100,1);\n\n\n            waveOut = new WaveOut();\n            waveProvider = new BufferedWaveProvider(_format);\n            waveProvider.BufferDuration = new TimeSpan(1,0,0);\n            waveOut.Init(waveProvider);\n            waveOut.Play();\n            connected = true;\n            var state = new ListenerThreadState { EndPoint = groupEP };\n            ThreadPool.QueueUserWorkItem(ListenerThread, state);\n        }\n\n        private void ListenerThread(object state)\n        {\n            var listenerThreadState = (ListenerThreadState)state;\n            var endPoint = listenerThreadState.EndPoint;\n            try\n            {\n                while (connected)\n                {\n                    byte[] b = udpListener.Receive(ref endPoint);\n                    waveProvider.AddSamples(b, 0, b.Length);\n\n                }\n            }\n            catch (SocketException)\n            {\n                // usually not a problem - just means we have disconnected\n            }\n        }</code></pre>\n\nAny help would be appreciated!\r<br />\n<br />\nThanks,\r<br />\nDan<br />\n",
+    "PostedDate": "2015-12-13T16:47:46.45-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457821",
+    "ThreadId": "648708",
+    "Html": "first, you're likely capturing stereo audio, so the volume of data sent will be very high. I'd also try to find ways to reduce the volume of audio being sent. IEEE float at 44.1kHz is not very efficient.\r<br />\n<br />\nWhy not start by capturing the audio to a WAV file, and saving a few seconds. This might highlight any mismatches of WaveFormat.<br />\n",
+    "PostedDate": "2016-01-03T13:23:17.883-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

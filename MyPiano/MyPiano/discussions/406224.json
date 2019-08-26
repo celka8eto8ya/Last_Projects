@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "953853",
+    "ThreadId": "406224",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>First of all I just want to say that I've been researching this for a couple of days without any luck. I've browsed and search through the discussion board without finding an answer.</p>\r\n<p>I was wondering if someone could explain the function &quot;AcmMp3FrameDecompressor.DecompressFrame&quot; for me, what does it actually do?</p>\r\n<p>I have a mp3 stream coming in and I do as follow:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><pre><div style=\"color:black; background-color:white\"><pre><span style=\"color:blue\">using</span>(<span style=\"color:blue\">var</span> ms = <span style=\"color:blue\">new</span> MemoryStream(streamBuffer)\n{\n      <span style=\"color:blue\">var</span> frame = Mp3Frame.LoadFromStream(ms);\n      <span style=\"color:blue\">var</span> f = <span style=\"color:blue\">new</span> WaveFormat();\n      <span style=\"color:blue\">var</span> format = <span style=\"color:blue\">new</span> Mp3WaveFormat(frame.SampleRate,\n                        frame.ChannelMode == ChannelMode.Mono ? 1 : 2,          frame.FrameLength, frame.BitRate);\n\n      <span style=\"color:blue\">if</span> (decompress == <span style=\"color:blue\">null</span>)\n          decompress = <span style=\"color:blue\">new</span> AcmMp3FrameDecompressor(f);\n\n      decompressed = decompress.DecompressFrame(frame, buffer, 0);\n}</pre>\n</div>\n</pre>\n<br></pre>\r\n<p>What does the &quot;DecompressFrame&quot; actually give me? I'm after a way to convert the incoming mp3 stream into for example A-law format. Is this the correct way? I understand that in order to actually get A-law I have to later convert it to A-law format using\r\n &quot;WaveFormat.CreateALawFormat&quot;, but first I need to understand what I get from that function mentioned above.</p>\r\n</div>\r\n",
+    "PostedDate": "2012-12-10T03:40:24.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953936",
+    "ThreadId": "406224",
+    "Html": "\r\n<p>DecompressFrame turns MP3 into PCM. You cannot go directly from MP3 to A-law. You must go to PCM first. Also, a-law is almost always 8kHz mono, so you would need to resample as well. And really sure you want to convert it to A-law? Unless you are integrating\r\n with some antiquated telephony hardware, I can think of no reason to want to do this. Any music you use this on will sound horrible.</p>\r\n<p>I have written a detailed article on CodeProject about how to convert between any audio formats which you can access\r\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\">\r\nhere</a>.</p>\r\n",
+    "PostedDate": "2012-12-10T06:15:59.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "953964",
+    "ThreadId": "406224",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>markheath wrote:</strong><br>\r\n<p>DecompressFrame turns MP3 into PCM. You cannot go directly from MP3 to A-law. You must go to PCM first. Also, a-law is almost always 8kHz mono, so you would need to resample as well. And really sure you want to convert it to A-law? Unless you are integrating\r\n with some antiquated telephony hardware, I can think of no reason to want to do this. Any music you use this on will sound horrible.</p>\r\n<p>I have written a detailed article on CodeProject about how to convert between any audio formats which you can access\r\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\">\r\nhere</a>.</p>\r\n</blockquote>\r\n<p>Thank you got the explanation. There's no music, only speech, so PCM is used by default in the software. I was hoping it was PCM coming from the DecompressFrame function, so that makes life alot easier for me :).</p>\r\n<p>Again, thank you for the response! I'll check out your article as well.&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-10T06:52:36.35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

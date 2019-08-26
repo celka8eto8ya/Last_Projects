@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "256851",
+    "ThreadId": "75055",
+    "Html": "<p>First of all, thank you for providing this library - I am new to a/v and to .Net (coming from a Java background).&nbsp; I have a simple task really, yet I can't seem to figure out a way of accomplishing it.&nbsp; I would like to mute and unmute linein (there is an annoying 'pop' when I switch on linein device, and I'd like to just mute it for 1000 ms for the startup).&nbsp; Any pointers greatly appreciated.</p>\r\n<p>Kurt</p>",
+    "PostedDate": "2009-11-13T10:05:02.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "257113",
+    "ThreadId": "75055",
+    "Html": "<p>Okay, I partially have this working.&nbsp; I'm enumerating the mixerlines and can mute linein, but I can't un-mute it?&nbsp; Is this a bug, or am I not doing something correct?\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\"><br>if</span> (control.ControlType == MixerControlType.Mute)\r\n{\r\n\r\n    BooleanMixerControl muteControl = (BooleanMixerControl)control;\r\n    <span style=\"color:Blue\">if</span> (b)\r\n    {\r\n        muteControl.Value = <span style=\"color:Blue\">true</span>; <span style=\"color:Green\">// this works</span>\r\n    }\r\n    <span style=\"color:Blue\">else</span>\r\n    {\r\n        muteControl.Value = <span style=\"color:Blue\">false</span>; <span style=\"color:Green\">// this doesn't</span>\r\n    }\r\n}\r\n</pre>\r\n</div>\r\n</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-14T09:37:54.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "257429",
+    "ThreadId": "75055",
+    "Html": "<p>hmmm, not sure why. The mixer controls are a real pain to work with. Have you been able to step through the code and make sure the call to the mixer api is sending a sensible looking value?</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-16T02:24:30.203-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "258743",
+    "ThreadId": "75055",
+    "Html": "<p>When I get a change I will see what I can do to try that - I'm using VS 2005, so at the moment I'm not able to compile NAudio from src and am only using the binary dist.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-19T09:16:02.897-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043306",
+    "ThreadId": "75055",
+    "Html": "Hi there. Thanks for this great library. I just encountered the same problem as kward. Using the MixerControlType.Mute works for mute but not for un-mute. Will there be a fix for this issue in future releases? I just want to know if someone is working on that before I might start diving into that part of the code.\r<br />\n<br />\nThanks,\r<br />\nMarkus<br />\n",
+    "PostedDate": "2013-05-14T04:17:55.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043911",
+    "ThreadId": "75055",
+    "Html": "hi Markus, no there is no active development on the mixer API at the moment. It was one of the first bits of NAudio I did, back when I didn't have a clue about how to do P/Invoke, and hasn't turned out to be particularly useful to me, so it hasn't had much attention apart from a few occasional bugfixes. Another problem with the API is that since Windows Vista it has become very difficult to work out exactly which mixer control is which. But if you want to contribute a fix to the Mute control it would be greatly appreciated.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-05-15T07:51:13.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

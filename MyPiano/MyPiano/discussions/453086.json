@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1079269",
+    "ThreadId": "453086",
+    "Html": "Hi.\r<br />\nI just need to get fft from any part of my music.\r<br />\nFor example the whole, seconds 30-50 etc then save the fft data in an array.\r<br />\nCause almost all the common using files are mp3, I first convert it to wav. Beside.<br />\n<pre><code>Mp3FileReader mp3 = new Mp3FileReader(&quot;test.mp3&quot;);\nWaveStream pcm = WaveFormatConversionStream.CreatePcmStream(mp3);</code></pre>\n\n",
+    "PostedDate": "2013-08-11T09:59:34.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082726",
+    "ThreadId": "453086",
+    "Html": "Mp3FileReader already emits PCM. \r<br />\nI'd then convert to a Sample provider (see SampleProviderConverters.ConvertWaveProviderIntoSampleProvider), so you can easily read out floating point samples and pass them into the FFT. You typically perform FFT on a smaller section than 20 seconds at a time. For example 1024 samples at a time (it has to be a power of 2).<br />\n",
+    "PostedDate": "2013-08-20T08:22:15.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

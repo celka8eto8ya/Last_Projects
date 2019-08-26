@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "647280",
+    "ThreadId": "266499",
+    "Html": "\r\n<p>hi,</p>\r\n<p>Can I know the db range for file ?</p>\r\n<p>I know how to get the db for magnitude value of fft result but I want to know the db range for draw line with the numbers before I play the file.</p>\r\n<p>There are method to do this? (maybe with the file parameters?)</p>\r\n<p>Thanks in advance.</p>\r\n",
+    "PostedDate": "2011-07-25T11:42:32.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647629",
+    "ThreadId": "266499",
+    "Html": "<p>its bit depth * 6</p>",
+    "PostedDate": "2011-07-26T02:51:36.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

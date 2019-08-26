@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "582325",
+    "ThreadId": "250165",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I use NAudio to play Midievents on my PC like that:</p>\r\n<pre>MidiOut midiOut = new MidiOut(0);\r\n\r\nmidiOut.Send(MidiMessage.ChangePatch(Instrument, Channel).RawData);\r\n\r\nmidiOut.Send(MidiMessage.StartNote(Note, Velocity, Channel).RawData);</pre>\r\n<p>But for example I have a Midifile that plays over 16 Intruments at the same time,</p>\r\n<p>but i can't play it on my PC with more than 16 Instruments at the same time, because MidiOut only accept 16 Channels.</p>\r\n<pre></pre>\r\n<p><span id=\"x_result_box\" lang=\"en\"><span title=\"Zur Anzeige alternativer Übersetzungen klicken\">I</span>\r\n<span title=\"Zur Anzeige alternativer Übersetzungen klicken\">don't know</span> <span title=\"Zur Anzeige alternativer Übersetzungen klicken\">\r\nhow</span> to <span title=\"Zur Anzeige alternativer Übersetzungen klicken\">solve</span>\r\n<span title=\"Zur Anzeige alternativer Übersetzungen klicken\">this</span> <span title=\"Zur Anzeige alternativer Übersetzungen klicken\">\r\nproblem</span><span title=\"Zur Anzeige alternativer Übersetzungen klicken\">,</span></span><span id=\"x_result_box\" lang=\"en\">\r\n<span title=\"Zur Anzeige alternativer Übersetzungen klicken\">although</span> <span title=\"Zur Anzeige alternativer Übersetzungen klicken\">\r\nthe</span> Windows Media<span title=\"Zur Anzeige alternativer Übersetzungen klicken\">player</span>\r\n<span title=\"Zur Anzeige alternativer Übersetzungen klicken\">can</span> <span title=\"Zur Anzeige alternativer Übersetzungen klicken\">\r\nplay it</span></span><span id=\"x_result_box\" lang=\"en\"><span title=\"Zur Anzeige alternativer Übersetzungen klicken\">, so please</span>\r\n<span title=\"Zur Anzeige alternativer Übersetzungen klicken\">help!</span></span></p>\r\n",
+    "PostedDate": "2011-03-17T13:47:19.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "583848",
+    "ThreadId": "250165",
+    "Html": "<p>MIDI only has 16 channels. How do you know that your MIDI file plays over 16 instruments at once?</p>",
+    "PostedDate": "2011-03-21T10:12:28.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "584014",
+    "ThreadId": "250165",
+    "Html": "<p>I created an own MIDI file and watch it in \"Synthesia\" or \"TS-MIDI Editor\",</p>\n<p><span id=\"result_box\" lang=\"en\"><span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">You can</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">set</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">only</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">16</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">channels</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">in a</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">track</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">but if you</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">have</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">more</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">tracks</span><span title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">,</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">you</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">can</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">set</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">an additional 16</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">channels</span><span title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">, each with</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">different</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">instruments</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">that are</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">played</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">at the same</span> <span class=\"hps\" title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">time</span><span title=\"Zur Anzeige alternativer &Uuml;bersetzungen klicken\">.</span></span></p>",
+    "PostedDate": "2011-03-21T14:15:57.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588691",
+    "ThreadId": "250165",
+    "Html": "<p>ok, yes you could have multiple tracks in a midi file, but to play it back you would need multiple synthesizers (i.e. more than one midi output port). Windows Media player probably makes a couple of instances of the Windows integrated MIDI synth</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-30T02:44:38.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588861",
+    "ThreadId": "250165",
+    "Html": "<p>oh ok but is there also a option with Naudio to do it like WMP ?</p>",
+    "PostedDate": "2011-03-30T08:07:09.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "589302",
+    "ThreadId": "250165",
+    "Html": "<p>I suppose you could create two instances of MidiOut and see if that works</p>",
+    "PostedDate": "2011-03-31T01:11:50.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "590174",
+    "ThreadId": "250165",
+    "Html": "<p><span id=\"result_box\" lang=\"en\"><span class=\"hps\" title=\"Click for alternate translations\">So</span> <span class=\"hps\" title=\"Click for alternate translations\">I</span> <span class=\"hps\" title=\"Click for alternate translations\"> tried</span> <span class=\"hps\" title=\"Click for alternate translations\">it this way</span><span title=\"Click for alternate translations\">:</span></span></p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MidiOut midiOut_1_pc = new MidiOut(0);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MidiOut midiOut_2_pc = new MidiOut(0);</p>\n<p><span id=\"result_box\" lang=\"en\"><span class=\"hps\" title=\"Click for alternate translations\">But</span> <span class=\"hps\" title=\"Click for alternate translations\">it</span> <span class=\"hps\" title=\"Click for alternate translations\"> doesn't work</span><span title=\"Click for alternate translations\">:</span> </span> \"AlreadyAllocated calling midiOutOpen\".</p>\n<p><span id=\"result_box\" lang=\"en\"><span class=\"hps\" title=\"Click for alternate translations\">This works</span><span title=\"Click for alternate translations\">:</span></span></p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MidiOut midiOut_1_pc = new MidiOut(0);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MidiOut midiOut_2_keyboard = new MidiOut(1);</p>\n<p><span id=\"result_box\" lang=\"en\"><span class=\"hps\" title=\"Click for alternate translations\">But</span> <span class=\"hps\" title=\"Click for alternate translations\">then</span> <span class=\"hps\" title=\"Click for alternate translations\"> the second</span> <span class=\"hps\" title=\"Click for alternate translations\">MidiOut</span> <span class=\"hps\" title=\"Click for alternate translations\">isn't</span> <span class=\"hps\" title=\"Click for alternate translations\"> my</span> <span class=\"hps\" title=\"Click for alternate translations\">PC</span><span title=\"Click for alternate translations\">.</span></span></p>",
+    "PostedDate": "2011-04-01T06:12:22.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "590914",
+    "ThreadId": "250165",
+    "Html": "<p>that's a shame. I'm afraid I don't know what approach Windows Media Player takes</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-03T07:00:09.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "590937",
+    "ThreadId": "250165",
+    "Html": "<p>Okay, thanks anyway</p>",
+    "PostedDate": "2011-04-03T09:09:25.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003529",
+    "ThreadId": "250165",
+    "Html": "Have a look at the <a href=\"http://www.nerds.de/en/loopbe30.html\" rel=\"nofollow\">http://www.nerds.de/en/loopbe30.html</a> or the (free 1 virtual midi device) this opens up to 30 virtual midi devices at the same time.  You could split channels 16-31 to a virtual midi device and play it on it's 0-15 channels.  Don't know if it would work; worth a try.<br />\n",
+    "PostedDate": "2013-02-19T09:18:25.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

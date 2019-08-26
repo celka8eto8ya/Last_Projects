@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1028900",
+    "ThreadId": "439902",
+    "Html": "Can i fetch amplitude of wav file at specified interval, say for example i want to check audio amplitude of wav file at 4.5sec.<br />\n",
+    "PostedDate": "2013-04-11T02:29:09.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1030596",
+    "ThreadId": "439902",
+    "Html": "WaveFileReader lets you examine each sample individually. For &quot;amplitude&quot;, often you will actually look for the maximum sample value over a short period.<br />\n",
+    "PostedDate": "2013-04-15T06:19:21.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

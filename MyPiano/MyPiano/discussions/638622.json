@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1427171",
+    "ThreadId": "638622",
+    "Html": "Hi.  I'm struggling with the below exception using WaveFileWriter.  This exception occurs intermittently --  most times this works fine.  Code snippet below:<br />\n<pre><code>MemoryStream s = new MemoryStream();\nMemoryStream newStream = new MemoryStream();\n\nint length = 0;\nbyte[] buffer = null;\nint read = 0;   \n\nMixingSampleProvider mixer2 = new MixingSampleProvider(_samples);\nSampleToWaveProvider16 mixer3 = new SampleToWaveProvider16(mixer2);\n\nlength = mixer3.WaveFormat.AverageBytesPerSecond*Convert.ToInt32(position.TotalSeconds); //position is a Timespan calculated to be the total duration of the WAV files\nbuffer = new byte[length]; \n\nWaveFileWriter waveFileWriter = new WaveFileWriter(new IgnoreDisposeStream(s), mixer3.WaveFormat);\n\nwhile ((read = mixer3.Read(buffer, 0, buffer.Length)) &gt; 0)\n{\n    waveFileWriter.Write(buffer, 0, read);\n}\n\nwaveFileWriter.Flush();\nwaveFileWriter.Close();\nwaveFileWriter.Dispose();   \n\ns.WriteTo(newStream);</code></pre>\n\nHere are the details of the Exception:<br />\n<pre><code>\nSystem.IndexOutOfRangeException was caught\n  HResult=-2146233080\n  Message=Index was outside the bounds of the array.\n  Source=NAudio\n  StackTrace:\n       at NAudio.Wave.SampleProviders.Pcm16BitToSampleProvider.Read(Single[] buffer, Int32 offset, Int32 count)\n       at NAudio.Wave.SampleProviders.OffsetSampleProvider.Read(Single[] buffer, Int32 offset, Int32 count)\n       at NAudio.Wave.SampleProviders.MixingSampleProvider.Read(Single[] buffer, Int32 offset, Int32 count)\n       at NAudio.Wave.SampleProviders.OffsetSampleProvider.Read(Single[] buffer, Int32 offset, Int32 count)\n       at NAudio.Wave.SampleProviders.MixingSampleProvider.Read(Single[] buffer, Int32 offset, Int32 count)\n       at NAudio.Wave.SampleProviders.SampleToWaveProvider16.Read(Byte[] destBuffer, Int32 offset, Int32 numBytes)\n       at GamedayRadio.HalfInning.Process() in xxxxxx\n  InnerException: </code></pre>\n\nThanks in advance for any help/ideas/pointers/direction you can provide.<br />\n",
+    "PostedDate": "2015-05-22T12:44:42.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430272",
+    "ThreadId": "638622",
+    "Html": "my main suggestion would be to be sure that the number of bytes you are reading is an exact multiple of the BlockAlign. I'd probably also need to see the full signal chain and how you are using those OffsetSampleProviders to be sure.<br />\n",
+    "PostedDate": "2015-06-12T09:58:48.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

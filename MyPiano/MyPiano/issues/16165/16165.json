@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 3,
+    "Custom": "",
+    "Description": "First off, really great library. I'm writing a music player/library manger and this has made the ugly business of audio out much easier.\n\nThis error is popping up seemingly randomly every once in a while when I close the input stream. It's happening on the code starting at line 212 in AcmStream.cs:\n\n                MmResult result = AcmInterop.acmStreamClose(streamHandle, 0);\n                streamHandle = IntPtr.Zero;\n                if (result != MmResult.NoError)\n                {\n                    throw new MmException(result, \"acmStreamClose\");\n                }\n\nresult is getting returned as a",
+    "LastUpdatedDate": "2011-07-26T08:58:54.05-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-06-24T14:15:43.977-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "InvalidParameter calling acmStreamClose in AcmStream.Dispose(bool disposing)",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16165
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "that's odd. what is the result value? What version of NAudio are you using & what OS & what ACM codec are you using?",
+      "PostedDate": "2011-06-24T14:56:36.187-07:00",
+      "Id": 41788
+    },
+    {
+      "Message": "Ah, sorry I hadn't replied, the error is pretty infrequent and I didn't think I had posted this question yet.\r\nThat said, I had the error again. When it happens result has a value of MmResult.InvalidParameter.\r\n\r\nI'm running WinXP I'm using the AcmMp3FrameDecompressor. The NAudio version is probably from around early-mid June, not sure if there is an easy way to check.",
+      "PostedDate": "2011-07-26T08:20:16.467-07:00",
+      "Id": 41789
+    },
+    {
+      "Message": "perhaps somehow we are closing the same handle twice, or closing a handle when the acmStreamOpen had failed? ",
+      "PostedDate": "2011-07-26T08:58:54.05-07:00",
+      "Id": 41790
+    }
+  ]
+}

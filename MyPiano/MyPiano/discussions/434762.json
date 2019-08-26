@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1007881",
+    "ThreadId": "434762",
+    "Html": "Hi! Firstly i want to say big thanks for NAudio, it's very useful tool.\r<br />\nI am trying to get several icecast mp3 streams and show it on progressbar. It works fine, but i have a little problem, after some time my progressbar fade, looks like a frozen. My code is based on Mp3StreamingDemo and i need some help to understand reasons of this situation.\r<br />\n<br />\nCould you help me to understand this part of code? It writes to my listbox &quot;Buffer getting full, taking a break&quot; many times.<br />\n<pre><code>                        if (bufferedWaveProvider != null &amp;&amp; bufferedWaveProvider.BufferLength - bufferedWaveProvider.BufferedBytes &lt; bufferedWaveProvider.WaveFormat.AverageBytesPerSecond / 4)\n                        {\n                            formobj.addtolistbox(&quot;Buffer getting full, taking a break &quot;);\n                            Thread.Sleep(500);\n                        }</code></pre>\n\nMaybe i should insert bufferedWaveProvider.ClearBuffer(); there?<br />\n",
+    "PostedDate": "2013-02-27T14:06:48.663-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007889",
+    "ThreadId": "434762",
+    "Html": "If you call Thread.Sleep on your GUI-Thread your progressbar will freeze because new WindowMessages won't be processed for the next 500 ms. \r<br />\nDon't call this on your GUI-Thread. But I don't know whats your exactly your problem. The bufferedWaveProvider buffers audiodata from your mp3-stream into a buffer(see the name -&gt; bufferedWaveProvider -&gt; buffers wave).  If this buffer is getting full you stop buffering for a while so the buffer can get empty. If it is filled with less than 75% of the space you will buffer again. \r<br />\n<br />\nBut you may would have to explain us your problem a bit more in detail.<br />\n",
+    "PostedDate": "2013-02-27T14:14:36.703-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007912",
+    "ThreadId": "434762",
+    "Html": "Thanks for reply. The problem is that progressbar doesn't change (keep freeze state) and throws that message (&quot;Buffer getting full, taking a break&quot;) in infinite loop. It seems that buffer can't get full. But if i add &quot;bufferedWaveProvider.ClearBuffer();&quot; after &quot;Thread.Sleep(500);&quot; it works ok. I can't understand the reason of that.<br />\n<br />\nP.S. about 10 seconds it works fine but then occurs this problem<br />\n",
+    "PostedDate": "2013-02-27T15:11:35.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008326",
+    "ThreadId": "434762",
+    "Html": "Are you sure you are playing the buffer? \r<br />\nThe princip of that buffering system is quite easy: \r<br />\nOn the one end you have webstream and on the other there is your output device. \r<br />\nWhat you are doing ist just to read mp3-data from the webstream, decode the mp3 data to pcm and write them into a buffer. So the buffer is used by your buffering mechanism to store data in and is also used by your outputdevice like DirectSoundOut to read data from and send the raw data from the buffer to your speaker. \r<br />\n<br />\nIf you won't play the stream you will keep up buffering data into the buffer. But you won't remove any data from the buffer. -&gt; &quot;Buffer getting full&quot;. \r<br />\nIf you call bufferedWaveProvider.ClearBuffer() you will remove ALL buffered data from your buffer so it won't be full anymore. But that should not be the goal to reach. \r<br />\nThe buffer should be cleared by your outputdevice. Your outputdevice reads data and removes the read data. So if it removes the data you won't have to call ClearBuffer(). The 500 ms sleeping is built in if the buffer is getting filled up faster than the outputdevice requests and removes data from it. So you will pause the buffering mechanism for 500 ms by calling Thread.Sleep(500) and your outputdevice will have the chance to remove enough data. If not Sleep(500) is called again until the buffer is just filled up with about 75% of data.<br />\n",
+    "PostedDate": "2013-02-28T09:33:38.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008654",
+    "ThreadId": "434762",
+    "Html": "Thanks, filoe. In my case, i read the buffer, decode to pcm and write into a buffer. Then i take any one pcm point value and show its level on my progressbar (because firstly i need to indicate if that stream is working now). But i have a button on my form which provides oppotunity to listen this stream. So if i press the button my buffer clears by outputdevice and in cycle too. Is it bad decision?<br />\n",
+    "PostedDate": "2013-03-01T00:31:15.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008656",
+    "ThreadId": "434762",
+    "Html": "I don't know why do you try to readout the level of a pcm value. This is not necessary. If you can't create a connection to the stream you will get an webexception and if the stream is not a mp3-stream you will get an exception if you try to decode the frames. \r<br />\n<br />\nSo why? <br />\n",
+    "PostedDate": "2013-03-01T00:41:15.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008669",
+    "ThreadId": "434762",
+    "Html": "Well, because my program provides monitoring of some radio station, so i need to know that some music plays or if there is a silence right now. Connection could be ok, but with silence or some noise for listeners<br />\n",
+    "PostedDate": "2013-03-01T01:10:51.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008673",
+    "ThreadId": "434762",
+    "Html": "Hmmm double post?\r<br />\nDon't check the level of &quot;pcm point value&quot;. Work with exceptions to indicate whether the stream works. \r<br />\n&quot;In my case, i read the buffer, decode to pcm and write into a buffer.&quot; ist not correct.\r<br />\n&quot;In my case, i read the stream, decode to pcm and write into a buffer.&quot; is correct.<br />\n",
+    "PostedDate": "2013-03-01T01:15:30.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008684",
+    "ThreadId": "434762",
+    "Html": "sorry, i just tried to renew the page. And yes, english isn't my native language :)<br />\n<br />\nI work with exceptions but it's very desirable to indicate in progressbar because it's very informative. Besides, it works fine but not very steady (for a long time) yet<br />\n",
+    "PostedDate": "2013-03-01T01:39:33.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008738",
+    "ThreadId": "434762",
+    "Html": "I am german =&gt; my english is also very bad :).\r<br />\nBut you may tell me what exactly fails after some time? If I am right you want to display the amount of buffered data? Where is your problem?\r<br />\n<br />\nPS: Deutsch?<br />\n",
+    "PostedDate": "2013-03-01T03:31:19.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

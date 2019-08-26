@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "645713",
+    "ThreadId": "266095",
+    "Html": "\r\n<p>Hey everybody. I have got a question. Can I use NAudio within a Mono Application? I dont need Sound output or Recording. &nbsp;I just want to encode and decode a mp3 stream.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks a lot.</p>\r\n<p>&nbsp;</p>\r\n<p>pdelvo</p>\r\n",
+    "PostedDate": "2011-07-21T11:32:34.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "646185",
+    "ThreadId": "266095",
+    "Html": "<p>No, NAudio cannot encode MP3 even on Windows. To decode MP3, it uses ACM or DMO MP3 decoders, which you won't be able to access with mono. I did make a managed MP3 decoder (nlayer.codeplex.com), but haven't had time to integrate this into NAudio properly yet,</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-07-22T08:52:56.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1371129",
+    "ThreadId": "590875",
+    "Html": "How? :)<br />\n<pre><code>afr = new AudioFileReader(open.FileName);\nwod = new WaveOut();</code></pre>\n\nI've tried changing the volume property on both. While changing the volume on the <strong>AudioFileReader</strong> works on the next play, changing it on the <strong>output device</strong> has no effect at all.<br />\n",
+    "PostedDate": "2015-03-21T13:34:43.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1371147",
+    "ThreadId": "590875",
+    "Html": "You can use a VolumeSampleProvider to do this. <br />\n<br />\nHere's an example from my project:<br />\n<pre><code>aReader = new AudioFileReader(file);\nvsp = new VolumeSampleProvider(aReader.ToSampleProvider());\nwaveOutDevice.Init(vsp);\nwaveOutDevice.Play();</code></pre>\n\nYou can then set vsp.Volume while the song is playing.<br />\n",
+    "PostedDate": "2015-03-21T16:17:36.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-03-22T09:09:14.083-07:00"
+  },
+  {
+    "Id": "1373711",
+    "ThreadId": "590875",
+    "Html": "<strong>Thank you!</strong>\r<br />\n<br />\nFor everyone else, reading this sometime, the <strong>VolumeSampleProvider</strong> is located under:<br />\n<pre><code>NAudio.Wave.SampleProviders.VolumeSampleProvider</code></pre>\n\n",
+    "PostedDate": "2015-03-22T09:12:29.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "645621",
+    "ThreadId": "266070",
+    "Html": "\r\n<p>How to play wavs with naudio from inside a windows service unter Windows Vista / Windows 7?</p>\r\n<p>I need non-exclusiv sound = service will play sound while other devices also add sound to the out channel (speakers).</p>\r\n",
+    "PostedDate": "2011-07-21T08:27:39.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647607",
+    "ThreadId": "266070",
+    "Html": "<p>Haven't done this myself, but I'd try using DirectSoundOut</p>",
+    "PostedDate": "2011-07-26T02:16:37.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

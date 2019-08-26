@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "681140",
+    "ThreadId": "275067",
+    "Html": "\r\n<p>I'd like to be able to record an audio segment over the microphone and convert the segment into an array of data about the segment's wavelengths, amplitudes, and frequencies. Is NAudio a good tool to do this and could you help me out with a code sample?\r\n I believe it has something to do with converting it using FFT(?) but unfortunately I'm very new to this.</p>\r\n<p>My ultimate goal would be to record a second audio segment over the microphone and compare the data points to determine if the two segment sound similar.</p>\r\n<p>Thanks for any help you can give!</p>\r\n<p>Adam</p>\r\n",
+    "PostedDate": "2011-10-06T22:05:42.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685115",
+    "ThreadId": "275067",
+    "Html": "<p>NAudio will capture the audio as a set of PCM audio samples. To get information about frequencies you need to pass those samples into an FFT (using a windowing function first). It can be hard to understand if you are new to digital audio, but there are a lot of good articles about on FFTs.</p>",
+    "PostedDate": "2011-10-17T02:58:58.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

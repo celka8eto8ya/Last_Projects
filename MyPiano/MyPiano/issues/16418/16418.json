@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi Mark, what type of decoders are needed to read ogg format using NAudio MFT Reader?\r\nWill Vorbis decoder works ? I have tried by installing vorbis ogg decoder which is of 64 bit on windows server 2012(64 bit). But I am unable to read ogg file using MFTReader.",
+    "LastUpdatedDate": "2013-11-20T06:03:34.393-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-11-20T03:51:47.757-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "ogg support in NAudio 1.7",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16418
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "it would have to be a Media Foundation Decoder for that to work, and I guess it probably isn't. I'd recommend using Yuval Naveh's code to read ogg files: https://code.google.com/p/practicesharp/source/browse/#svn%2Ftrunk%2FNAudioOggVorbis%2FLibrary",
+      "PostedDate": "2013-11-20T06:03:34.393-08:00",
+      "Id": 123646
+    }
+  ]
+}

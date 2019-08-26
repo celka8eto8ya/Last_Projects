@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1014704",
+    "ThreadId": "436497",
+    "Html": "Hello,\r<br />\nWriting NAudio.Wave.WaveInEventArgs buffer to new byte array, then (attempting to)convert those elements to PCM values via BitConverter.ToInt16. However, the signal is littered with peaks and noise. When I dumped into excel to view output from converted array(just recorded single tone) it had the semblence of correct sine wave/frequency buried amidst all sorts of errant samples. (I also tried reversing to account for endianess). When I choose WaveFileWriter and render as .wav, it sounds perfect. So something is getting lost in translation.\r<br />\n<br />\nWhat object would convert the buffer to Linear PCM samples?\r<br />\n<br />\nThank You<br />\n",
+    "PostedDate": "2013-03-13T10:11:10.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1014957",
+    "ThreadId": "436497",
+    "Html": "I think I may stumbled upon the answer by iterating by 2 through the byte array. That way the BitConverter.ToInt16 method combines two byte elements into a 16 bit integer.<br />\n",
+    "PostedDate": "2013-03-13T19:00:09.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1015283",
+    "ThreadId": "436497",
+    "Html": "yes, each pair of bytes is a sample if you are recording 16 bit audio<br />\n",
+    "PostedDate": "2013-03-14T07:24:16.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

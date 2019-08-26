@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1215814",
+    "ThreadId": "535822",
+    "Html": "I'm having problems to play a sound file stored in a database.<br />\n<br />\nWhen I read the table and get the column blob (is a MySQL 5.6 db), I put it in a byte array, since it's how it's being saved in the db.<br />\n<br />\nAnd here start the problem: no matter how I tried to use this array, I cannot play it! I tried converting the byte array to a MemoryStream, using <a href=\"http://naudio.codeplex.com/discussions/440826\" rel=\"nofollow\">this example</a>, as a base, but when it tries to convert the memory stream to a WaveStream through Mp3FileReader(), it raises a NullReferenceException:<br />\n<br />\n<img src=\"http://s4.postimg.org/scxsxrr25/Null_Reference.png\" alt=\"Image\" /><br />\n<br />\nThis is just a proof of concept program, that's why I didn't signed the Playback event.<br />\n<br />\nCan someone help me with this?<br />\n<br />\nRegards,<br />\n<br />\nAlberto T. Simon<br />\n",
+    "PostedDate": "2014-02-27T12:51:35.453-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215861",
+    "ThreadId": "535822",
+    "Html": "is the byte array null?\r<br />\nCan you show us the full stack trace from the exception?\r<br />\nAre you sure it's an MP3 file (do File.WriteAllBytes and try to play it with MediaPlayer)<br />\n",
+    "PostedDate": "2014-02-27T14:17:24.433-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215866",
+    "ThreadId": "535822",
+    "Html": "Perhaps byte[] bytes parsed is null or empty?<br />\n",
+    "PostedDate": "2014-02-27T14:23:37.42-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215894",
+    "ThreadId": "535822",
+    "Html": "The byte array is not null: <br />\n<img src=\"http://s22.postimg.org/dpcmrmnv5/ms_Content.png\" alt=\"Image\" /><br />\n<br />\nThis already works with SoundPlayer(), except that I have some compressed files that does not work with SoundPlayer(): that's why I'm trying to use NAudio.<br />\n<br />\nIn the example above all the files I try to play (PCM or compressed) are raising the same error.<br />\n<br />\nThis is the exception detail:<br />\n<pre><code>System.NullReferenceException was unhandled\n  HResult=-2147467261\n  Message=Object reference not set to an instance of an object.\n  Source=NAudio\n  StackTrace:\n       at NAudio.Wave.Mp3FileReader..ctor(Stream inputStream, FrameDecompressorBuilder frameDecompressorBuilder)\n       at NAudio.Wave.Mp3FileReader..ctor(Stream inputStream)\n       at TestNAudio.Form1.PlayFromMemoryStream(Byte[] bytes) in c:\\Users\\Alberto\\Documents\\Visual Studio 2012\\Projects\\TestNAudio\\TestNAudio\\Form1.cs:line 131\n       at TestNAudio.Form1.button3_Click(Object sender, EventArgs e) in c:\\Users\\Alberto\\Documents\\Visual Studio 2012\\Projects\\TestNAudio\\TestNAudio\\Form1.cs:line 86\n       at System.Windows.Forms.Control.OnClick(EventArgs e)\n       at System.Windows.Forms.Button.OnClick(EventArgs e)\n       at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\n       at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)\n       at System.Windows.Forms.Control.WndProc(Message&amp; m)\n       at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)\n       at System.Windows.Forms.Button.WndProc(Message&amp; m)\n       at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)\n       at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)\n       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n       at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG&amp; msg)\n       at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)\n       at System.Windows.Forms.Application.Run(Form mainForm)\n       at TestNAudio.Program.Main() in c:\\Users\\Alberto\\Documents\\Visual Studio 2012\\Projects\\TestNAudio\\TestNAudio\\Program.cs:line 19\n       at System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)\n       at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)\n       at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()\n       at System.Threading.ThreadHelper.ThreadStart_Context(Object state)\n       at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)\n       at System.Threading.ThreadHelper.ThreadStart()\n  InnerException: </code></pre>\n\n",
+    "PostedDate": "2014-02-27T15:23:41.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215913",
+    "ThreadId": "535822",
+    "Html": "What NAudio version are you using?\r<br />\n<br />\nHave you tried the latest source?<br />\n",
+    "PostedDate": "2014-02-27T17:51:11.8-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216218",
+    "ThreadId": "535822",
+    "Html": "Version 1.7.0.15, I got it last week.<br />\n",
+    "PostedDate": "2014-02-28T09:19:11.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216353",
+    "ThreadId": "535822",
+    "Html": "could  you dump the blob of bytes to a file and upload it?\r<br />\n<br />\nthe code looks fine so it is possible that the byte array has an issue<br />\n",
+    "PostedDate": "2014-02-28T16:43:22.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

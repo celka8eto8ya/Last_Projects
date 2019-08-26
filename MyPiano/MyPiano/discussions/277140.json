@@ -1,0 +1,130 @@
+[
+  {
+    "Id": "689063",
+    "ThreadId": "277140",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I try to play file that contain raw pcm but with no success.</p>\r\n<p>the file has no header but i know his format.</p>\r\n<p>I tried to read the file into RawSourceWaveStream with the right format&nbsp;and then do CreatePcmStream and CreateWaveFile but when I play the file with win media player i ear just noise i tried&nbsp;also other options to save or play the file with NAudio\r\n but always i getting just noise.</p>\r\n<p>Actually i get the raw pcm&nbsp; from the net but first i want play a local raw pcm.</p>\r\n<p>Thanks in advance</p>\r\n",
+    "PostedDate": "2011-10-25T08:11:00.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "689461",
+    "ThreadId": "277140",
+    "Html": "<p>I must say that cooledit can play the file when i gave him the right format&nbsp;so no problem with file or his format.</p>\r\n<p>Do i need to build the header in myself?</p>\r\n<p>Thanks!</p>",
+    "PostedDate": "2011-10-26T01:31:17.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "689466",
+    "ThreadId": "277140",
+    "Html": "<p>If you get the WaveFormat right the WAV file should play no problem. Can you post a code snippet?</p>",
+    "PostedDate": "2011-10-26T01:33:44.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690123",
+    "ThreadId": "277140",
+    "Html": "<p>The following&nbsp;example work fine with a regular wave file (file with header) but make noise with raw bytes.</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">void</span> On_Receive(<span style=\"color: blue;\">byte</span>[] stream)\r\n{\r\n    <span style=\"color: blue;\">if</span> (activeFormat == <span style=\"color: blue;\">null</span>)\r\n        activeFormat = <span style=\"color: blue;\">new</span> WaveFormat(8000,16,1);\r\n\r\n    <span style=\"color: blue;\">if</span> (bufferedSampleStream == <span style=\"color: blue;\">null</span>)\r\n    {\r\n        bufferedSampleStream = <span style=\"color: blue;\">new</span> BufferedSampleStream(activeFormat);\r\n        inputStream = <span style=\"color: blue;\">new</span> WaveChannel32(bufferedSampleStream);\r\n    }\r\n\r\n    bufferedSampleStream.AddSamples(stream, 0, stream.Length);\r\n}\r\n\r\n<span style=\"color: blue;\">void</span> playTimer_Tick(<span style=\"color: blue;\">object</span> sender, EventArgs e)\r\n{\r\n    <span style=\"color: blue;\">if</span> (waveOutDevice == <span style=\"color: blue;\">null</span>)\r\n    {\r\n        waveOutDevice = <span style=\"color: blue;\">new</span> WaveOut{DesiredLatency = 200};\r\n        waveOutDevice.Init(inputStream);\r\n    }\r\n\r\n    inputStream.Sample += inputStream_Sample;\r\n\r\n    <span style=\"color: blue;\">if</span> (bufferedSampleStream != <span style=\"color: blue;\">null</span>)\r\n    {\r\n        playTime += PlayTimeInterval/60;\r\n        <span style=\"color: blue;\">var</span> bufferedSeconds = bufferedSampleStream.TotalTime.TotalSeconds;\r\n\r\n        <span style=\"color: blue;\">if</span> (bufferedSeconds &lt; MinimumTimeToPlay &amp;&amp; playbackState == StreamingPlaybackState.Playing)\r\n        {\r\n            <span style=\"color: green;\">// some stuff</span>\r\n        }\r\n        <span style=\"color: blue;\">else</span> <span style=\"color: blue;\">if</span> (bufferedSeconds &gt;=MinimumTimeToPlay &amp;&amp; playbackState == StreamingPlaybackState.Buffering)\r\n       {\r\n           waveOutDevice.Play();\r\n           playbackState == StreamingPlaybackState.Playing\r\n       }\r\n    }\r\n\r\n}\r\n</pre>\r\n<pre>I tried also to take bytes and create a new wave file but the file created also have just noise.</pre>\r\n</div>",
+    "PostedDate": "2011-10-27T01:39:36.78-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690130",
+    "ThreadId": "277140",
+    "Html": "<p>If I builed the header in myself I can play the file but I must build the header for each stream arrived. i think its strange...</p>\n<p>I build it like that:</p>\n<p>in On_Receive method that i wrote in prev. post i add this:</p>\n<div style=\"background-color: white; color: black;\">\n<pre><span style=\"color: blue;\">var</span> temp = AddHeader();\r\n<span style=\"color: blue;\">var</span> newStream = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[stream.length + temp.Length];\r\ntemp.CopyTo(newStream, 0);\r\nstream.CopyTo(newStream, 46);\r\nstream = <span style=\"color: blue;\">null</span>;\r\nstream = newStream;\r\n</pre>\n</div>\n<p>and this is the AddHeader method:</p>\n<div style=\"background-color: white; color: black;\">\n<pre><span style=\"color: blue;\">private</span> <span style=\"color: blue;\">byte</span>[] AddHeader()\r\n{\r\n    <span style=\"color: blue;\">var</span> outStream = <span style=\"color: blue;\">new</span> MemoryStream(46) <span style=\"color: green;\">// header size</span>\r\n    <span style=\"color: blue;\">var</span> binWriter = <span style=\"color: blue;\">new</span> BinaryWriter(outStream, System.Text.Encoding.ASCII);\r\n    binWriter.Write(System.Text.Encoding.ASCII.GetBytes(<span style=\"color: #a31515;\">\"RIFF\"</span>));\r\n    binWriter.Write((<span style=\"color: blue;\">int</span>)0);\r\n    binWriter.Write(System.Text.Encoding.ASCII.GetBytes(<span style=\"color: #a31515;\">\"WAVE\"</span>));\r\n    binWriter.Write(System.Text.Encoding.ASCII.GetBytes(<span style=\"color: #a31515;\">\"fmt \"</span>));\r\n    binWriter.Write((<span style=\"color: blue;\">int</span>)18);\r\n    binWriter.Write((<span style=\"color: blue;\">short</span>)activeFormat.Encoding);\r\n    binWriter.Write((<span style=\"color: blue;\">short</span>)activeFormat.Channels);\r\n    binWriter.Write((<span style=\"color: blue;\">int</span>)activeFormat.SampleRate);\r\n    binWriter.Write((<span style=\"color: blue;\">int</span>)activeFormat.AverageBytesPerSecond);\r\n    binWriter.Write((<span style=\"color: blue;\">short</span>)activeFormat.BlockAlign);\r\n    binWriter.Write((<span style=\"color: blue;\">short</span>)activeFormat.BitPerSample);\r\n    binWriter.Write((<span style=\"color: blue;\">short</span>)0);\r\n    binWriter.Write(System.Text.Encoding.ASCII.GetBytes(<span style=\"color: #a31515;\">\"data\"</span>));\r\n    binWriter.Write((<span style=\"color: blue;\">int</span>)0);\r\n    <span style=\"color: blue;\">return</span> outStream.ToArray();\r\n}\r\n</pre>\n<pre>so I can play it but i must did it every time new stream arrived </pre>\n<pre>and also i here a little noise every short time (i think its happen in beggin of every stream)</pre>\n<pre>p.s. dont look for syntax errors, i write the code manually because i couldnt copy/paste it.</pre>\n<pre>Thanks!</pre>\n<pre><strong>Edit</strong></pre>\n<pre>I tried also to add the data length for the SubChenk2Size and the all stream - 8 for the ChunkSize but still i ear a little noise sometimes</pre>\n</div>",
+    "PostedDate": "2011-10-27T01:59:27.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690132",
+    "ThreadId": "277140",
+    "Html": "<p>You don't need to do this yourself, just use WaveFileWriter which does this all for you</p>",
+    "PostedDate": "2011-10-27T02:01:05.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690139",
+    "ThreadId": "277140",
+    "Html": "<p>but i want to add the stream to BufferedSampleStream and the to WaveChannel32 and play it when it arrive, i dont want to write it.</p>\r\n<p>anyway i tried to add the stream (raw bytes pcm) to WaveFileWriter and give him the format and the file was created but contain just noise.</p>\r\n<p>i'm lost :-(</p>\r\n<p>please help me :-)</p>",
+    "PostedDate": "2011-10-27T02:21:35.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690141",
+    "ThreadId": "277140",
+    "Html": "<p>you only need to add the WAV file header if you are writing to a file. All streams in NAudio have a WaveFormat property, and as long as this is set correctly, the right thing will happen.</p>\r\n<p>if your WAV file contains just noise, then it is very likely that you are using the wrong WaveFormat</p>",
+    "PostedDate": "2011-10-27T02:24:53.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690143",
+    "ThreadId": "277140",
+    "Html": "<p>I understand and its make sense</p>\r\n<p>but if the format is wrong&nbsp;how i can play it when i add the header with this format?</p>\r\n<p>and also i can play it in cooledit&nbsp;with this format</p>\r\n<p>maybe there&nbsp;are more settings except the encoding, rate, channels, and bit depth?</p>\r\n<p>or maybe the problem is when i try to add the bufferedSampleStream to the WaveChannel32 stream?</p>",
+    "PostedDate": "2011-10-27T02:32:08.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690147",
+    "ThreadId": "277140",
+    "Html": "<p>something else came up in my head, there is a difference in your lib between bif/little endian?</p>\n<p>the file is Motorola (MSB, LSB).</p>\n<p>this is a problem?</p>",
+    "PostedDate": "2011-10-27T02:42:40.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690150",
+    "ThreadId": "277140",
+    "Html": "<p>that is likely your problem. WAV files are always in Intel byte order, use AIFF files for the other way round</p>",
+    "PostedDate": "2011-10-27T02:43:46.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690151",
+    "ThreadId": "277140",
+    "Html": "<p>Thanks! :-)</p>\r\n<p>I'll try it and let you know.</p>",
+    "PostedDate": "2011-10-27T02:45:49.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690154",
+    "ThreadId": "277140",
+    "Html": "<p>can you give direction how to do that?</p>\r\n<p>There is an AiffFileReader class but its expect to aiff header and my stream contains only raw data.</p>\r\n<p>I can build the header and add it to the begin of the stream but i guess its not the right way.</p>\r\n<p>There is a methods of endian utils that i can use?</p>\r\n<p>Thanks again</p>",
+    "PostedDate": "2011-10-27T02:59:23.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690156",
+    "ThreadId": "277140",
+    "Html": "<p>I'd just swap every two bytes in your byte array</p>",
+    "PostedDate": "2011-10-27T03:00:19.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690217",
+    "ThreadId": "277140",
+    "Html": "<p>i did a long lunch break...</p>\r\n<p>anyway i did your suggestion and it WORK!</p>\r\n<p>thank you very much! :-)</p>",
+    "PostedDate": "2011-10-27T05:28:25.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "690220",
+    "ThreadId": "277140",
+    "Html": "<p>great! glad you got it sorted</p>",
+    "PostedDate": "2011-10-27T05:29:37.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

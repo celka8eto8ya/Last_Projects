@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1243225",
+    "ThreadId": "544749",
+    "Html": "hi,\r<br />\nhow do I add a beat to my out up ?\r<br />\nso Right now i have this:<br />\n<pre><code> for (int n = 0; n &lt; sampleCount; n++)\n        {\n            buffer[n+offset] = (float)(Amplitude * Math.Sqrt((2 * Math.PI * sample * Frequency) / sampleRate));\n            sample++;\n            if (sample &gt;= sampleRate) sample = 0;\n        }</code></pre>\n\nand <br />\n<pre><code>int sampleRate = WaveFormat.SampleRate;\n        for (int n = 0; n &lt; sampleCount; n++)\n        {\n            buffer[n+offset] = (float)(Amplitude * Math.Sin((2 * Math.PI * sample * Frequency) / sampleRate));\n            sample++;\n            if (sample &gt;= sampleRate) sample = 0;\n        }\n        return sampleCount;</code></pre>\n\nI want to keep that but add a beat to it\r<br />\nto have 500Hz Frequency with a 10 Hz beat...\r<br />\nis this something I can do ?<br />\n",
+    "PostedDate": "2014-05-08T11:41:16.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1243256",
+    "ThreadId": "544749",
+    "Html": "ok i  changed my code  to this:<br />\n<pre><code>  public override int Read(float[] buffer, int offset, int sampleCount)\n    {\n        int sampleRate = WaveFormat.SampleRate;\n        if (Beat == 0)\n        {\n            f2 = 0;\n        }\n        else\n        {\n            f2 = Frequency - Beat;\n        }\n        for (int n = 0; n &lt; sampleCount; n++)\n        {\n            buffer[n + offset] = (float)(Amplitude * Math.Sin((2 * Math.PI * sample * Frequency) / sampleRate)) + (float)(Amplitude * Math.Sin((2 * Math.PI * sample * f2) / sampleRate));\n            sample++;\n            if (sample &gt;= sampleRate) sample = 0;\n        }\n        return sampleCount;\n    }</code></pre>\n\nwill this give me beat ?\r<br />\n<br />\nI read some where that f2 = F1 - Fbeat\r<br />\nis that true?<br />\n",
+    "PostedDate": "2014-05-08T12:42:04.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244552",
+    "ThreadId": "544749",
+    "Html": "I'm afraid I don;t have experience trying to add a beat to a frequency, but I'd recommend you write your audio to a file and look at it in a wave editor, and see what your code is actually creating. <br />\n",
+    "PostedDate": "2014-05-12T13:23:52.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "805115",
+    "ThreadId": "347217",
+    "Html": "\r\n<p>Hi, NAudio experts ;)</p>\r\n<p>I'm new to this library, and I nedd to create application that shows separate left and right channel of a wave or mp3 audio while recording or playing sound.</p>\r\n<p>I managed to draw signal on waveformPainter control while recording but i don't know how to show left and right channel on a diferent views while playing, also I managed to draw signal on one WaveViewer control that shows signal of both channels.</p>\r\n<p>Since this application in future will need to handle fft on signal and all sort of other things (e.g. effects), I need access to this channels but I don't know where to start.</p>\r\n<p>So if anyone could help me or provide me with information (example) how to do that I would be very gratefull.</p>\r\n<p>thx</p>\r\n",
+    "PostedDate": "2012-03-04T03:20:59.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808418",
+    "ThreadId": "347217",
+    "Html": "<p>Audio samples are interleaved left, right etc, so you would need to split out the signals and send one to each of two mono waveform renderers.</p>",
+    "PostedDate": "2012-03-10T01:46:47.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "809766",
+    "ThreadId": "347217",
+    "Html": "<p>as mark said in a pcm stream left and right is always next to each other. this means:</p>\r\n<p>left|right|left|right</p>\r\n<p>how big these blocks are is stored in the waveformat. just take a look at bitspersample<br />that means if you have a 16bit stream each block is 2 byte long<br />left|right|left|right<br />&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - byte<br />if you have a 24 bit stream you have to take 3 bytes... should be everything clear now :)</p>",
+    "PostedDate": "2012-03-13T10:58:00.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "809819",
+    "ThreadId": "347217",
+    "Html": "<p>Yes thanks ;)</p>",
+    "PostedDate": "2012-03-13T12:41:17.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

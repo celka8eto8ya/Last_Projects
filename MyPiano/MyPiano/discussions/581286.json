@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1353711",
+    "ThreadId": "581286",
+    "Html": "Hi, I need to make an online sound processor in ASP.NET, and I decided to use NAudio for my project. However, I have some problems with visualization of waves. The class &quot;WaveViewer&quot; is written only for windows forms, it uses onPaint method, but PaintEventArgs are not supported in ASP.NET. Is it possible to make this class work somehow in my web application, and if not, does anyone have any idea how could I do this in some other way?\r<br />\nI'm relatively new to sound processing, so every help is appreciated.\r<br />\nThanks...<br />\n",
+    "PostedDate": "2015-02-18T06:17:28.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354431",
+    "ThreadId": "581286",
+    "Html": "You can use similar code to Windows forms to write code to an image file. Then your webserver could serve up the image file.<br />\n",
+    "PostedDate": "2015-02-20T11:16:49.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354464",
+    "ThreadId": "581286",
+    "Html": "Thanks for the answer, but I actually need to add many other options to my wave viewer, like selecting parts of my wave to which I'm going to apply some effects, or selecting start position for playing... Any thoughts on that?<br />\n",
+    "PostedDate": "2015-02-20T12:59:15.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354465",
+    "ThreadId": "581286",
+    "Html": "Well if this is a website, you'll have to do a lot of the work client-side, which NAudio can't help you with. You could get NAudio to create the image of the waveform, but in JavaScript handle the user mouse interactions to select ranges and set positions.<br />\n",
+    "PostedDate": "2015-02-20T13:01:52.58-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

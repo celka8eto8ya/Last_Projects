@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "910997",
+    "ThreadId": "395141",
+    "Html": "\r\n<p>Hi, I've just started using Naudio (I'm using it in Unity3d) and I've got some troubles on the file OggEncoder.cs &nbsp;(downloaded from&nbsp;<a href=\"http://daisy.trac.cvsdude.com/urakawa-sdk/browser/trunk/csharp/audio/NAudio/FileFormats/Ogg/OggEncoder.cs?rev=1346\">http://daisy.trac.cvsdude.com/urakawa-sdk/browser/trunk/csharp/audio/NAudio/FileFormats/Ogg/OggEncoder.cs?rev=1346</a>).\r\n It gives me some compile errors and I've found that that file isn't in the latest release, so... Isn't it supported? Or there is another way to convert a wav file to ogg with Naudio libraries?</p>\r\n",
+    "PostedDate": "2012-09-11T08:41:21.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "911023",
+    "ThreadId": "395141",
+    "Html": "<p>I'm afraid that class is no longer a supported part of NAudio. It was written a long time ago and never worked properly.</p>",
+    "PostedDate": "2012-09-11T09:14:14.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "911313",
+    "ThreadId": "395141",
+    "Html": "<p>Understood :( I'm beating my head everywhere to find a way to do that in c# mono-compatible! Anyway thanks, I've got another question but I'll search&nbsp;a bit and ask that in another discussion eventually!</p>",
+    "PostedDate": "2012-09-11T23:50:08.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

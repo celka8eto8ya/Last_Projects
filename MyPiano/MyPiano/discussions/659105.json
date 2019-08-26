@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1487217",
+    "ThreadId": "659105",
+    "Html": "Hello,<br />\n<br />\nI want to find RMS amplitude in db of a wav file (16 bit PCM) using NAudio but my values seem to be way off. Can someone help me how to do this. The code I have is<br />\n<br />\n static  void CheckAmplitude(string srcPath)<br />\n<pre><code>    {\n\n        using (WaveFileReader audiowave = new NAudio.Wave.WaveFileReader(srcPath))\n        {\n            byte[] fileBuffer = new byte[audiowave.Length];\n            int read = audiowave.Read(fileBuffer, 0, fileBuffer.Length);\n            short[] sampleBuffer = new short[read / 2];\n            Buffer.BlockCopy(fileBuffer, 0, sampleBuffer, 0, read);\n            double rms = rootMeanSquare(sampleBuffer);\n        }</code></pre>\n\n}<br />\n<pre><code>   private static double rootMeanSquare(short[] x)\n    {\n        double sum = 0;\n        for (int i = 0; i &lt; x.Length; i++)\n        {\n            double Tmp;\n           Tmp = x[i] / 32768f;\n            sum += (Tmp *Tmp);\n\n        }\n        return Math.Sqrt(sum / x.Length);\n    }</code></pre>\n\n",
+    "PostedDate": "2016-11-01T11:12:33.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487413",
+    "ThreadId": "659105",
+    "Html": "Reading from a samplePovider is easier than converting the data yourself... use extension WaveFileReader.ToSampleProvider()\r<br />\n<br />\nThe formula in the function itself seems correct.<br />\n",
+    "PostedDate": "2016-11-04T17:40:15.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

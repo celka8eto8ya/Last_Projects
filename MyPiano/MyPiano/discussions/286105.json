@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "725005",
+    "ThreadId": "286105",
+    "Html": "\r\n<p>I'd like to know how to convert wav file to gsm file.</p>\r\n<p>I found mp3-&gt;wav conversion sample, but I couldn't find the way to convert wav-&gt;gsm.</p>\r\n<p>Can you help me?</p>\r\n<p>Thanks in advance.</p>\r\n",
+    "PostedDate": "2012-01-13T14:14:10.79-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "729876",
+    "ThreadId": "286105",
+    "Html": "<p>you use the WaveFormatConversionStream. Have a look at the NAudioDemo project which comes with NAudio, which shows how you can use the installed ACM codecs on your machine.</p>",
+    "PostedDate": "2012-01-24T05:17:24.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

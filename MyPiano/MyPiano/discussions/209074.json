@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "430096",
+    "ThreadId": "209074",
+    "Html": "<p>I have a device that can hook up to a USB port.</p>\r\n<p>This device will send audio data over the connection.</p>\r\n<p>What I want to do is:</p>\r\n<p>1) Catch that stream</p>\r\n<p>2) Save it to a .WAV file</p>\r\n<p>&nbsp;</p>\r\n<p>Saving it to a .WAV file is the easy part. I'm trying to figure out how to select a USB port with Naudio, but I haven't had any luck yet. I've only been able to address the audio card of my machine, but I need to get it from the USB port. Is this possible with Naudio, or will I need an external library to handle USB connections?</p>",
+    "PostedDate": "2010-04-12T09:44:18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "431533",
+    "ThreadId": "209074",
+    "Html": "<p>hi WebDevHobo,</p>\r\n<p>NAudio does not have any low-level USB access, so unless its a USB soundcard, you will need to find another library</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-04-15T09:15:31.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "431544",
+    "ThreadId": "209074",
+    "Html": "<p>I did a bit of looking up, and found this library.</p>\r\n<p>http://sourceforge.net/projects/libusbdotnet/</p>\r\n<p>I'll be checking how well I can make the 2 libraries work toghether.</p>",
+    "PostedDate": "2010-04-15T09:46:55.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

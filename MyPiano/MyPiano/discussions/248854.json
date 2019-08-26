@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "577153",
+    "ThreadId": "248854",
+    "Html": "\r\n<p>Project version available in downloads section is a bit old now.<br>\r\nAlso there are quite a few differences between latest version and one in the downloads section.</p>\r\n<p>When will be available new downloadble version? <br>\r\nI am confused should I use recommended version (presumably stable) or newer with new features and goodies?</p>\r\n",
+    "PostedDate": "2011-03-08T05:44:35.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "577173",
+    "ThreadId": "248854",
+    "Html": "<p>yes, I really need to get a new version uploaded (will be NAudio 1.4). Use the latest source code and build it yourself is the recommendation for all new projects.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-08T06:23:00.497-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "941333",
+    "ThreadId": "403111",
+    "Html": "\r\n<p>Hi All,</p>\r\n<p>I was wondering if there was a way to display the asio channel offset in pair for stereo?</p>\r\n<p>eg channel offset 0 is the first channel on my card. Is it possable to display that as</p>\r\n<p>Channel 1&#43;2?</p>\r\n<p>Thanks, Wyatt</p>\r\n",
+    "PostedDate": "2012-11-13T18:33:11.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941399",
+    "ThreadId": "403111",
+    "Html": "\r\n<p>I'm not sure what you mean. What you display is up to you. If you are using channel offset 0 and writing two channels, you can call that &quot;Channel 1+2&quot; if you want.</p>\r\n",
+    "PostedDate": "2012-11-13T22:42:03.113-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941693",
+    "ThreadId": "403111",
+    "Html": "\r\n<p>I mean is there a way to get the number of Asio Channels, and display them to a combo box?</p>\r\n<p>Like there is for WaveOut.DeviceCount, but add AsioOut.ChannelCount?</p>\r\n",
+    "PostedDate": "2012-11-14T09:26:57.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941699",
+    "ThreadId": "403111",
+    "Html": "\r\n<p>I recently checked in a change that adds properties for this (DriverInputChannelCount and DriverOutputChannelCount)</p>\r\n",
+    "PostedDate": "2012-11-14T09:31:45.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941793",
+    "ThreadId": "403111",
+    "Html": "\r\n<p>Any chance of a code snippet, or could it be included in the NAudio Demo?</p>\r\n<p>Thanks, Wyatt</p>\r\n",
+    "PostedDate": "2012-11-14T12:13:24.03-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942644",
+    "ThreadId": "403111",
+    "Html": "\r\n<p>Just call those properties on AsioOut. They return integers.</p>\r\n",
+    "PostedDate": "2012-11-16T02:37:53.353-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942892",
+    "ThreadId": "403111",
+    "Html": "\r\n<p>Thanks Mark.</p>\r\n<p>Is there a way to get AsioOut.GetCapabilities?</p>\r\n<p>Sorry for the confusion.</p>\r\n<p>Heres what I'm trying to do.</p>\r\n<p>Here's an example on a windows form with a button and listbox using WaveOut.</p>\r\n<p>Is it possible to do this with AsioOut?</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>    <span style=\"color:blue\">Private</span> <span style=\"color:blue\">Sub</span> Button2_Click(sender <span style=\"color:blue\">As</span> System.Object, e <span style=\"color:blue\">As</span> System.EventArgs) <span style=\"color:blue\">Handles</span> Button2.Click\r\n\r\n        ListBox1.Items.Add(<span style=\"color:#a31515\">&quot;Wave in :&quot;</span>)\r\n        <span style=\"color:blue\">Dim</span> waveInDevices <span style=\"color:blue\">As</span> <span style=\"color:blue\">Integer</span> = WaveIn.DeviceCount\r\n        <span style=\"color:blue\">For</span> waveInDevice <span style=\"color:blue\">As</span> <span style=\"color:blue\">Integer</span> = 0 <span style=\"color:blue\">To</span> waveInDevices - 1\r\n            <span style=\"color:blue\">Dim</span> deviceInfo <span style=\"color:blue\">As</span> WaveInCapabilities = WaveIn.GetCapabilities(waveInDevice)\r\n            ListBox1.Items.Add(<span style=\"color:#a31515\">&quot;Device {0}: {1}, {2} channels&quot;</span> & <span style=\"color:#a31515\">&quot; , &quot;</span> & Convert.ToString(waveInDevice) & <span style=\"color:#a31515\">&quot; , &quot;</span> & Convert.ToString(deviceInfo.ProductName))\r\n        <span style=\"color:blue\">Next</span> waveInDevice\r\n        ListBox1.Items.Add(<span style=\"color:#a31515\">&quot;Wave out :&quot;</span>)\r\n        <span style=\"color:blue\">Dim</span> waveOutDevices <span style=\"color:blue\">As</span> <span style=\"color:blue\">Integer</span> = waveOut.DeviceCount\r\n        <span style=\"color:blue\">For</span> waveOutDevice <span style=\"color:blue\">As</span> <span style=\"color:blue\">Integer</span> = 0 <span style=\"color:blue\">To</span> waveOutDevices - 1\r\n            <span style=\"color:blue\">Dim</span> deviceInfo <span style=\"color:blue\">As</span> WaveOutCapabilities = WaveOut.GetCapabilities(waveOutDevice)\r\n            ListBox1.Items.Add(<span style=\"color:#a31515\">&quot;Device {0}: {1}, {2} channels&quot;</span> & <span style=\"color:#a31515\">&quot; , &quot;</span> & Convert.ToString(waveOutDevices) & <span style=\"color:#a31515\">&quot; , &quot;</span> & Convert.ToString(deviceInfo.ProductName))\r\n        <span style=\"color:blue\">Next</span>\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Sub</span>\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-16T09:59:46.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "943166",
+    "ThreadId": "403111",
+    "Html": "\r\n<p>unfortunately I you have to open the ASIO device to query it for channel count, so you'd have to write your own code that creates a new instance of AsioOut for each driver and asks it for these properties.</p>\r\n",
+    "PostedDate": "2012-11-17T00:54:50.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944274",
+    "ThreadId": "403111",
+    "Html": "\r\n<p>Thanks Mark.</p>\r\n<p>I finally made some progress on this. I can get the right offset numbers to display in a combobox, but I don't know how to convert that to read what I want it to.</p>\r\n<p>My card is 16 channels, and I want stereo only.</p>\r\n<p>Does this look correct?</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        <span style=\"color:blue\">Dim</span> mycount <span style=\"color:blue\">As</span> <span style=\"color:blue\">New</span> AsioOut\n\n        <span style=\"color:blue\">For</span> i <span style=\"color:blue\">As</span> <span style=\"color:blue\">Integer</span> = 0 <span style=\"color:blue\">To</span> mycount.DriverOutputChannelCount - 2 <span style=\"color:blue\">Step</span> &#43;2\n\n            ComboBox1.Items.Add(i)\n        <span style=\"color:blue\">Next</span>\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-19T15:32:46.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944574",
+    "ThreadId": "403111",
+    "Html": "\r\n<p>sure, if your combo box only needs to display a number. You'd normally use a String.Format to do something like String.Format(&quot;Channels {0}-{1}&quot;, i, i+1)</p>\r\n<p>then use the selected combo box index to work out the offset you want to use when opening Asio for playback.</p>\r\n",
+    "PostedDate": "2012-11-20T07:04:56.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

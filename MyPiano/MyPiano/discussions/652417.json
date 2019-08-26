@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1466480",
+    "ThreadId": "652417",
+    "Html": "I'm using WaveOut and AudioFileReader to play MP3 files.\r<br />\n<br />\nI can start playing a song using the following code, attached to my &quot;Play&quot; button.<br />\n<pre><code>void StartPlaying()\n{\n            _audioFileReader = new AudioFileReader(GetRandomSongFilename());\n            _waveOutDevice.Init(_audioFileReader);\n            _waveOutDevice.Play();\n}</code></pre>\n\nThis works fine.\r<br />\n<br />\nI added a &quot;Stop&quot; button which runs the following code:<br />\n<pre><code>void StopPlaying()\n{\n            _waveOutDevice.Stop();\n}\n</code></pre>\n\nThis works fine too. The song stops playing.\r<br />\n<br />\nI can now click my &quot;Play&quot; button again, and it chooses another song and it starts playing. So far, so good.\r<br />\n<br />\nNext, I added a &quot;Skip&quot; button, which should skip to the next song.  It runs the following code:<br />\n<pre><code>void SkipTrack()\n{\n            StopPlaying();\n            StartPlaying();\n}</code></pre>\n\nWhen I run this code, both the current song and the new song play at the same time!\r<br />\n<br />\nI'm not quite sure why when StopPlaying() and StartPlaying() are activated by two separate button clicks, everything works fine, and only the second song plays, but if they are activated by the same button click, then both songs play.\r<br />\n<br />\nInterestingly enough, I tried adding a call to Application.DoEvents() in between the StopPlaying() and StartPlaying(), and that DID fix the problem. However, this is not a good solution because I am now moving this code to a non-Winforms application, so I don't have access to Application.DoEvents().\r<br />\n<br />\nHow else can I fix this?\r<br />\n<br />\n-Joe<br />\n",
+    "PostedDate": "2016-03-10T23:14:12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466585",
+    "ThreadId": "652417",
+    "Html": "Playback has not really stopped until you get the <code>PlaybackStopped</code> event. Also <code>Init</code> is not really designed to be called more than once. The safe solution is to create a new <code>WaveOut</code> for the new playback.<br />\n",
+    "PostedDate": "2016-03-11T12:46:21.677-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466608",
+    "ThreadId": "652417",
+    "Html": "That worked, thanks!<br />\n",
+    "PostedDate": "2016-03-11T19:40:53.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

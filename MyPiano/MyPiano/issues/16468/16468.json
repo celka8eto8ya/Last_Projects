@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "AudioSessionControl2, AudioSessionManager2 (from CoreAudioApi) and other classes are not implemented.\r\nI can not change sound or mute specific program. (Sample can be found here: http://whenimbored.xfx.net/2011/01/core-audio-for-net/)",
+    "LastUpdatedDate": "2015-02-16T07:03:11.987-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-02-13T06:15:38.257-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Audio sessions from CoreAudioAPI are not implemented",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16468
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "agreed, would be nice to get this into NAudio",
+      "PostedDate": "2015-02-13T12:51:24.603-08:00",
+      "Id": 174558
+    },
+    {
+      "Message": "I am working on this feature.",
+      "PostedDate": "2015-02-15T11:43:02.8-08:00",
+      "Id": 174632
+    },
+    {
+      "Message": "awesome. Just a couple of things to note:\n\n1. A move to GitHub is imminent, so if you create a CodePlex fork, please bear in mind you'll need to recreate your changes in Git\n\n2. If you are using any code from the blog you linked to, please ask permission from the author. It is important to me that NAudio only contains code that we have got permission to use.",
+      "PostedDate": "2015-02-16T02:42:03.2-08:00",
+      "Id": 174649
+    },
+    {
+      "Message": "1. Please, wait for my commit before moving this repository to github :)\nI already completed changes to library and now I almost completed demo \"Volume Mixer\" (which similar to Windows 7 Volume Mixer panel).\n2. It is seems to me that you already asked permission from Ray Molenkamp: http://naudio.codeplex.com/discussions/463620\nI can paste licence header to files.\n\n",
+      "PostedDate": "2015-02-16T06:22:27.09-08:00",
+      "Id": 174659
+    },
+    {
+      "Message": "1. Ah, shame. I'm literally just about to announce the transition. Might be a bit of a pain to sort this out, but will definitely be sure to get your feature in assuming no problems with the implementation. The demo sounds awesome!\n2. Great. As a general rule I avoid putting loads of license header stuff into files unless the original author insists on it being there",
+      "PostedDate": "2015-02-16T07:03:11.987-08:00",
+      "Id": 174660
+    }
+  ]
+}

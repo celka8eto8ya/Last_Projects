@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1422975",
+    "ThreadId": "636753",
+    "Html": "Hello, I'm absoloutely new developer in c#.<br />\n\r<br />\nI saw this answer by Mark Heath:\r<br />\n<br />\n<a href=\"http://stackoverflow.com/questions/6777340/how-to-join-2-or-more-wav-files-together-programatically\" rel=\"nofollow\">http://stackoverflow.com/questions/6777340/how-to-join-2-or-more-wav-files-together-programatically</a>\r<br />\n<br />\nI tried to use it with win8 store app but I saw that several classes like WaveFileReader and others are unavailable.\r<br />\n<br />\nI have two wav files each in 0.5sec duration. I try to play a merged new wav that contains those files according to a binary string(&quot;10101011101&quot;-for example) : 1=file_1.wav,  0=file_2.wav\r<br />\n<br />\nIs there anyway using NAudio to make this possible?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2015-05-05T05:21:05.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

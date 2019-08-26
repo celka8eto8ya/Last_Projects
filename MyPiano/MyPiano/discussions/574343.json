@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1329792",
+    "ThreadId": "574343",
+    "Html": "On my second computer I am getting the error unable to create sink writer but not on my first any ideas what could be the cause?<br />\n<pre><code>  using (var reader7 = new NAudio.Wave.MediaFoundationReader(wavePath))\n  {\n      using (var encoder = new NAudio.Wave.MediaFoundationEncoder(mediaType))\n      {\n          encoder.Encode(Path.GetTempPath() + &quot;Final&quot; + uniqueCounter + &quot;.aac&quot;, reader7); //this line\n      }\n  }</code></pre>\n\nI have checked and mediaType is a valid aac type.<br />\n",
+    "PostedDate": "2014-12-08T06:47:23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1337514",
+    "ThreadId": "574343",
+    "Html": "Most likely means there is no AAC encoder installed on your OS. You can try the NAudioWpfDemo to enumerate the MFTs installed on your machine<br />\n",
+    "PostedDate": "2014-12-28T07:58:43.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

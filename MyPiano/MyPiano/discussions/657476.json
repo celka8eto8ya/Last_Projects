@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1482216",
+    "ThreadId": "657476",
+    "Html": "Hello. In which direction I must go, if need two thing at the same time,  play two (or several) audio files simultaneously and at the same time get Real-Time Analysis of both with actual Peak and RMS size value on display. <br />\n",
+    "PostedDate": "2016-08-27T16:32:58.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482444",
+    "ThreadId": "657476",
+    "Html": "What you need to do is first of all use AudioFileReaders for each of the files, and then pass them into a MixingSampleProvider. Then, you would need to pass the MixingSampleProvider into a custom ISampleProvider whose Read method reads from the source, and performs any real-time analysis of the samples. You can see some basic examples of this in the NAudio demo projects.<br />\n",
+    "PostedDate": "2016-08-30T13:03:23.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

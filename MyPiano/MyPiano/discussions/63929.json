@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "217374",
+    "ThreadId": "63929",
+    "Html": "<p>When I attempt to use AsioOut, the application crashes with the following stack track -</p>\r\n<p>&nbsp;</p>\r\n<pre>System.IndexOutOfRangeException was unhandled\r\n  Message=&quot;Index was outside the bounds of the array.&quot;\r\n  Source=&quot;NAudio&quot;\r\n  StackTrace:\r\n       at NAudio.Wave.Asio.ASIOSampleConvertor.ConvertorShortToIntGeneric(IntPtr inputInterleavedBuffer, IntPtr[] asioOutputBuffers, Int32 nbChannels, Int32 nbSamples) in C:\\Users\\john\\Documents\\Downloads\\naudio_1_2_source\\naudio\\NAudio\\Wave\\Asio\\ASIOSampleConvertor.cs:line 112\r\n       at NAudio.Wave.AsioOut.driver_BufferUpdate(IntPtr[] bufferChannels) in C:\\Users\\john\\Documents\\Downloads\\naudio_1_2_source\\naudio\\NAudio\\Wave\\WaveOutputs\\AsioOut.cs:line 211\r\n       at NAudio.Wave.Asio.ASIODriverExt.BufferSwitchCallBack(Int32 doubleBufferIndex, Boolean directProcess) in C:\\Users\\john\\Documents\\Downloads\\naudio_1_2_source\\naudio\\NAudio\\Wave\\Asio\\ASIODriverExt.cs:line 283\r\n  InnerException: \r\n</pre>\r\n<p>I'm attempting to play a 1 Channel 48k 16bit Stream.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-07-29T16:04:16.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

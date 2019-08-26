@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1081759",
+    "ThreadId": "453703",
+    "Html": "how to amplify .wav file ?\r<br />\ni am developing a desktop application. In which i change the pitch, speed, amplification of wave file. i have done pitch and speed using NAudio library. but can't done amplification.\r<br />\ni don't want to play directly. i want that i give wave stream to a function that amplify the wave and return wave stream.<br />\n",
+    "PostedDate": "2013-08-17T20:36:46.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1082707",
+    "ThreadId": "453703",
+    "Html": "use VolumeProvider16 or VolumeSampleProvider and set Volume to a value greater than 1 to amplify<br />\n",
+    "PostedDate": "2013-08-20T07:41:47.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083603",
+    "ThreadId": "453703",
+    "Html": "mark,<br />\ni used VolumeSampleProvider as you told me...but no change occure at output file. i changed the volume value in volule sample provider. but not effecting, my code is below...<br />\n<br />\nvar mySample = new <a href=\"mailto:AudioFileReader(@&quot;C:\\Users\\zaheer\\Desktop\\tmp_ItnaBhiNaChahoMujhe.wav&quot;);\nNAudio.Wave.SampleProviders.VolumeSampleProvider\" rel=\"nofollow\">AudioFileReader(@\"C:\\Users\\zaheer\\Desktop\\tmp_ItnaBhiNaChahoMujhe.wav\");\nNAudio.Wave.SampleProviders.VolumeSampleProvider</a> vol = new  NAudio.Wave.SampleProviders.VolumeSampleProvider(mySample); <br />\n<pre><code>        vol.Volume = (float)3.0;\n        //WaveFileWriter.CreateWaveFile(@&quot;C:\\Users\\zaheer\\Desktop\\out.wav&quot;, vol.mySample .);\n</code></pre>\n\nplease tell me how it will change the gain of  audio file. <br />\nm very thank full to you.<br />\n",
+    "PostedDate": "2013-08-22T05:51:17.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085905",
+    "ThreadId": "453703",
+    "Html": "Should work if you use CreateWaveFile16 which takes an ISampleProvider (you need a fairly recent version of NAudio for this)<br />\n<pre><code>WaveFileWriter.CreateWaveFile16(@&quot;C:\\Users\\zaheer\\Desktop\\out.wav&quot;, vol);</code></pre>\n\n",
+    "PostedDate": "2013-08-28T12:21:29.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1086086",
+    "ThreadId": "453703",
+    "Html": "thanx mark....\r<br />\ni got it !<br />\n",
+    "PostedDate": "2013-08-29T03:02:37.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

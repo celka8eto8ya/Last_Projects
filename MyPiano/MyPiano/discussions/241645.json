@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "548747",
+    "ThreadId": "241645",
+    "Html": "\r\n<p>Dear great creator of this beautiful library,</p>\r\n<p>When will the next N-Audio library update will emerge?</p>\r\n<p>Will there be updates for the MIDI?</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you,</p>\r\n<p>&nbsp;</p>\r\n<p>Distorsion13</p>\r\n",
+    "PostedDate": "2011-01-13T07:56:15.253-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "550438",
+    "ThreadId": "241645",
+    "Html": "\r\n<p>thanks Distorsion13,</p>\r\n<p>there will hopefully be a new release of NAudio early this year. There are no big changes for MIDI planned a the moment I am afraid.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-17T03:30:58.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

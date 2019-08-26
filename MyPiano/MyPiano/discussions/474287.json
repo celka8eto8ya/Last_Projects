@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1136773",
+    "ThreadId": "474287",
+    "Html": "Currently the ASIO implementation doesn´t allow this from what i can see,\r<br />\nYou are forced to Initialize it with a waveprovider first.\r<br />\n<br />\nInitRecordAndPlayback(waveIn, 2, 48000);\r<br />\n<br />\nLike this.\r<br />\nYou have to Playback to use Record.\r<br />\n<br />\nIsn´t there a way to only use the Record function, as i think there should be, i don´t think it´s limited to see both, but then again i am not into the ASIO specifics.<br />\n",
+    "PostedDate": "2013-12-16T09:43:19.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1137957",
+    "ThreadId": "474287",
+    "Html": "set the first parameter to null to record only<br />\n",
+    "PostedDate": "2013-12-18T16:36:48.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1138075",
+    "ThreadId": "474287",
+    "Html": "Ah, didn´t know that, thanks.\r<br />\n<br />\nAnother thing though, about the - e.GetAsInterleavedSamples();\r<br />\n<br />\nCan you make an example of that one?\r<br />\n<br />\nAs i can´t get how to use it correctly, as it want´s you to write: e.GetAsInterleavedSamples(ByteArray);\r<br />\n<br />\nThe problem with that is, you don´t know the size of the byte array, so you have to do like this:\r<br />\n<br />\nvar bytearray = new byte[e.GetAsInterleavedSamples().Length);\r<br />\n<br />\ne.GetAsInterleavedSamples();\r<br />\n<br />\nWhich is wrong, as i get an &quot;error&quot; saying that you can improve performance by only using: e.GetAsInterleavedSamples(bytarray); then reusing the bytearray.\r<br />\n<br />\nI am a bit confused how to get that working.<br />\n",
+    "PostedDate": "2013-12-18T21:59:10.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1138166",
+    "ThreadId": "474287",
+    "Html": "use e,BytesRecorded to size the array. With ASIO you alwatys know the buffer size in advance anyway. This is a performance optimisation. ASIO is for ultra low latency work, and should only be used if you are happy to do more low level byte manipulation yourself.<br />\n",
+    "PostedDate": "2013-12-19T03:59:26.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1138196",
+    "ThreadId": "474287",
+    "Html": "e.BytesRecorded doesn´t exist on ASIO.<br />\n<br />\nAnd yeah i am more than happy to play around with low level byte manipulation. Sorry for asking so many questions though, i try to figure most out myself.<br />\n<pre><code>    private void AsioTesting(object sender, AsioAudioAvailableEventArgs e)\n    {\n\n        float[] samplearray = e.GetAsInterleavedSamples();\n        var byteArray = new byte[samplearray.Length * 4];\n        Buffer.BlockCopy(samplearray, 0, byteArray, 0, byteArray.Length);\n        var byteArray2 = Float16Bit(byteArray.Length, byteArray);\n        if (connect)\n        {\n            if (AudioDevice != &quot;Wasapi Loopback&quot;)\n                SendQueue.Add(Float16Bit(byteArray.Length, byteArray));\n            if (AsioRecord)\n            {\n                waveWriterYour.Write(byteArray2, 0, byteArray2.Length);\n            }\n        }\n    }\n</code></pre>\n\nHere is my code, though i think it´s unoptimized, as i know you said in another topic to use,<br />\nWavebuffer instead of BlockCopy, but i don´t know how to do that, as it want´s &quot;Short&quot; samples, ASIO gives &quot;Float&quot;.<br />\n<br />\nAnd as you can see, i am using e.GetAsInterleavedSamples() wrong, and can´t find the length, except by using &quot;.Length&quot; from it, which in turns means i am using it wrong.<br />\n",
+    "PostedDate": "2013-12-19T05:24:36.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140980",
+    "ThreadId": "474287",
+    "Html": "With ASIO, the buffer size is constant. The easy way is just to make a large buffer. It can be larger than the needed size. The function returns the number of bytes written.<br />\n",
+    "PostedDate": "2013-12-23T12:30:42.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1145840",
+    "ThreadId": "474287",
+    "Html": "Ah so if i set it to, let´s say 1024bytes, then write e.GetAsInterleavedSamlples(bytes), it will turn it to 233bytes (if that is the size)?\r<br />\nand thusly i can move around without worrying about the &quot;empty bytes&quot;?<br />\n",
+    "PostedDate": "2014-01-03T14:07:36.883-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151332",
+    "ThreadId": "474287",
+    "Html": "yes, just read out the number of samples actually returned<br />\n",
+    "PostedDate": "2014-01-09T05:38:06.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

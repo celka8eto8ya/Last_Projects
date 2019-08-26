@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1103175",
+    "ThreadId": "461041",
+    "Html": "Trying to build on Windows Server 2008 R2 but it will not compile.\r<br />\n<br />\nI am guessing that this is because there are features missing in Windows 2008. What ones are these?\r<br />\n<br />\nHave tried Desktop Experience but that has had no effect\r<br />\n<br />\nThanks,\r<br />\nBen<br />\n",
+    "PostedDate": "2013-10-03T06:45:53.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1103176",
+    "ThreadId": "461041",
+    "Html": "what doesn't compile? what error message are you getting?<br />\n",
+    "PostedDate": "2013-10-03T06:47:25.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1103181",
+    "ThreadId": "461041",
+    "Html": "Apologies for the vagueness; when building my application:\r<br />\n<br />\nType or namespace MediaFoundationResampler could not be found. Are you missing a using directive or assembly reference?\r<br />\n<br />\nUsing Naudio 1.6<br />\n",
+    "PostedDate": "2013-10-03T06:53:09.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1103182",
+    "ThreadId": "461041",
+    "Html": "it's new for NAudio 1.7, shortly to be released\r<br />\nIf you know how to use NuGet, you can install the latest beta:\r<br />\n<a href=\"https://www.nuget.org/packages/NAudio\" rel=\"nofollow\">https://www.nuget.org/packages/NAudio</a><br />\n",
+    "PostedDate": "2013-10-03T06:56:30.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1103185",
+    "ThreadId": "461041",
+    "Html": "Ah thanks for your help, can't believe I overlooked this!<br />\n",
+    "PostedDate": "2013-10-03T07:11:12.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

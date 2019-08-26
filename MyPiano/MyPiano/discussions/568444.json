@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1308390",
+    "ThreadId": "568444",
+    "Html": "I am currently learning how to use NAudio and I am having a bit of a problem getting MidiOut to play a Midi OnNote event.  Below is the code I wrote that should make a 1 second piano sound using the Microsoft GS Wavetable Synth. However, all I get is silence. Any help trying to figure this out would be greatly appreciated.\r<br />\n<br />\nusing System;\r<br />\nusing System.Collections.Generic;\r<br />\nusing System.Linq;\r<br />\nusing System.Text;\r<br />\nusing System.Threading.Tasks;\r<br />\nusing NAudio.Midi;\r<br />\nusing System.Threading;\r<br />\n<br />\nnamespace NAudioMIDISpike\r<br />\n{<br />\n<pre><code>class Program\n{\n    static void Main(string[] args)\n    {\n        MidiOut mOut = new MidiOut(0);\n        mOut.Send(MidiMessage.StartNote(60, 120, 0).RawData);\n        Thread.Sleep(1000);\n        mOut.Send(MidiMessage.StartNote(60, 0, 1).RawData);\n        Thread.Sleep(1000);\n        mOut.Close();\n        mOut.Dispose();\n    }\n}</code></pre>\n\n}<br />\n",
+    "PostedDate": "2014-09-26T07:33:15.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1308954",
+    "ThreadId": "568444",
+    "Html": "It all depends on what MIDI out device 0 actually is. If it's not a software synthesizer then you won't hear anything.<br />\n",
+    "PostedDate": "2014-09-29T09:13:28.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1309079",
+    "ThreadId": "568444",
+    "Html": "Thanks for the reply, Mark. Device 0 is the Microsoft Synth and it plays just fine with the demo programs I ran. The only difference seems to be the demo programs run in a windows application like WPF or WinForms, and the code above is running in a console application. It may be possible that there is a threading issue of some type that is keeping MidiOut to play the MidiMessages sent to it.<br />\n",
+    "PostedDate": "2014-09-29T16:48:04.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1309958",
+    "ThreadId": "568444",
+    "Html": "Yes, I guess there may be an need for a windows message queue for MidiOut to work. To be honest, I don't really use it much myself, so it's not a part of NAudio that's been exercised extensively.<br />\n",
+    "PostedDate": "2014-10-02T09:12:40.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

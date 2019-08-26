@@ -1,0 +1,51 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "not a bug",
+    "ClosedDate": "2012-09-26T06:26:37.8-07:00",
+    "CommentCount": 1,
+    "Custom": "",
+    "Description": "There's a juicy memory leak in NAudio, due to the inability to successfully Dispose the IWavePlayer object.\n\nI have the following classes:\nGameBoard - the ongoing game.\nSound - the sound event (attached)\n\nIn the GameBoard, I use the Sound class like this:\npublic void Score()\n{\npoints++;\nSound s = new Sound(\"win.wav\", 80, 0, this);\ns.Play();\n}\n\nThen I have a loop over the List<Sound> sounds variable (board.sounds in the attached class), to dispose the open Sound objects.\nFor one, the IWavePlayer never return that it is not playing, even if there is no sound. So I had to add a start time to check if the sound have been playing through in the Dispose() method.\n\nThe Dispose still fails, though. After some time the system runs out of memory.\n\nPlease give me feedback on this.",
+    "LastUpdatedDate": "2012-09-26T06:26:37.8-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-12-14T05:56:36.17-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "IWavePlayer Memory Leak",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 14883
+  },
+  "FileAttachments": [
+    {
+      "FileId": 266446,
+      "FileName": "Sound.cs",
+      "DownloadUrl": ".\\266446"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "the memory leak is in your application - the Dispose method doesn't always call Dispose. I usually use a timer to see if the WaveFileReader has reached its end, and then Dispose the playback device, or simply have one playback device with a mixer and add sounds to it for playback. For the next NAudio, I hope to include an example of how fire and forget audio playback might be achieved, which is what you seem to be after.",
+      "PostedDate": "2011-06-14T15:07:51.293-07:00",
+      "Id": 41753
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "802732",
+    "ThreadId": "346606",
+    "Html": "\r\n<p>I've been writing an app that records chunks of input audio to multiple files, with gaps between, but I discovered that if I try a call sequence which essentially boils down to this:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>WasapiCapture client = <span style=\"color:blue\">new</span> WasapiCapture();\r\n<span style=\"color:green\">// set up output processor for file 1</span>\r\nclient.StartRecording();\r\n<span style=\"color:green\">// wait for end of content for file 1</span>\r\nclient.StopRecording();\r\n<span style=\"color:green\">// set up output processor for file 2</span>\r\nclient.StartRecording();\r\n\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>then the second StartRecording() fails inside InitializeCaptureDevice() at the call to audioClient.Initialize()</p>\r\n<p>I was able to work around this by disposing of my WasapiCapture client and constructing a new one each time, because my system load was low enough that I didn't care about the needless thread destroy/create and whatever the overhead of fetching a new IAudioClient\r\n might be. In other circumstances all that unnecessary work might be a problem though.</p>\r\n<p>I see the MS documentation for IAudioClient states that &quot;the client must successfully call\r\n<strong>Initialize</strong> once <em>and only once</em> to initialize the audio stream between the client and the device&quot; (italics mine), so I'm thinking some strategy where NAudio remembers the WaveFormat it uses in a call to audioClient.Initialize() and on\r\n subsequent calls to InitializeCaptureDevice(), throws if a recording is active, does nothing if the WaveFormat has not changed, or disposes the old audioClient and initializes a new one if the WaveFormat has changed. Doing something like that would probably\r\n also need some modification to CaptureThread so that it didn't exit until the WasapiCapture object is disposed.</p>\r\n",
+    "PostedDate": "2012-02-28T10:34:44.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "804399",
+    "ThreadId": "346606",
+    "Html": "<p>yes, WasapiCapture just works for one-time recording, and it is best to create a new one. Probably is something that should be fixed in a future NAudio. Will turn this into a work item.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-03-02T06:05:44.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "804400",
+    "ThreadId": "346606",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"http://naudio.codeplex.com/workitem/16341\">here</a> to go to the work item and continue the discussion.",
+    "PostedDate": "2012-03-02T06:06:01.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

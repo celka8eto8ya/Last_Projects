@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1048335",
+    "ThreadId": "444913",
+    "Html": "Hi There.\r<br />\nI wanna Realize for instance the peak of the particular music and something like that. Get data from any part of the music in which for example what is the highest pulse is in this second and what is the lowest.\r<br />\nCan I get some data like that with NAudio? \r<br />\nYou know, I just don't have any experience in signal analyzing or working on music signals so Would you please guide me in this purpose?\r<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2013-05-24T10:09:07.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1052700",
+    "ThreadId": "444913",
+    "Html": "You should probably start by looking at the NAudio demo code that draws waveforms. This takes short chunks of audio (e.g. 100ms) and finds the highest and lowest sample values during that time.<br />\n",
+    "PostedDate": "2013-06-04T09:20:24.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

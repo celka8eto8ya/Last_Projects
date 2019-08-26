@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "462898",
+    "ThreadId": "218211",
+    "Html": "Hello,\r\n\r\nI have a web application using NAudio that works great on my development machine (Windows XP, IIS 5.1), but when I put it on the server (Windows 2003 Server 32-bit, IIS 6), I get the following error:\r\n\r\nNoDriver calling waveInOpen\r\nException Details: NAudio.MmException: NoDriver calling waveInOpen\r\n\r\n[MmException: NoDriver calling waveInOpen]\r\n   NAudio.MmException.Try(MmResult result, String function) in C:\\Documents and Settings\\ploeb\\Desktop\\ISM Project\\Source Code\\ISM\\NAudio\\Wave\\MmeInterop\\MmException.cs:39\r\n   NAudio.Wave.WaveIn.OpenWaveInDevice() in C:\\Documents and Settings\\ploeb\\Desktop\\ISM Project\\Source Code\\ISM\\NAudio\\Wave\\MmeInterop\\WaveIn.cs:148\r\n   NAudio.Wave.WaveIn.StartRecording() in C:\\Documents and Settings\\ploeb\\Desktop\\ISM Project\\Source Code\\ISM\\NAudio\\Wave\\MmeInterop\\WaveIn.cs:157\r\n\r\n\r\nCan you please help??\r\n\r\nThanks,\r\nPaul",
+    "PostedDate": "2010-07-02T16:27:18.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "466200",
+    "ThreadId": "218211",
+    "Html": "<p>does the server have a soundcard? is its driver properly installed?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-07-12T02:42:03.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

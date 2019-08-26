@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "562668",
+    "ThreadId": "245122",
+    "Html": "\r\n<p>Is it possible to increase to volume of a mp3 file by a specified number of decibels? &nbsp;I am currently using naudio to combine mp3's, but I need the ability to modify their volume levels.</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-02-08T07:07:15.627-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "562815",
+    "ThreadId": "245122",
+    "Html": "\r\n<p>If not with mp3, what is the easiest way to do this against a .wav ?</p>\r\n",
+    "PostedDate": "2011-02-08T10:57:35.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569493",
+    "ThreadId": "245122",
+    "Html": "<p>The way you do it is to decode MP3 to PCM, then use something like the WaveChannel32 class to change volume levels. Then convert back to 16 bit for WAV and re-encode to MP3 using LAME.</p>",
+    "PostedDate": "2011-02-21T02:05:24.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1070271",
+    "ThreadId": "450541",
+    "Html": "How to convert a FLV file containt AAC audio format to a Mp3 file with Naudio ?<br />\n",
+    "PostedDate": "2013-07-18T18:36:04.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070480",
+    "ThreadId": "450541",
+    "Html": "you could see if the MediaFoundationReader can access the audio stream from the FLV, but apart from that I don't think there is an easy way to do this with NAudio<br />\n",
+    "PostedDate": "2013-07-19T06:58:23.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

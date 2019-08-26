@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1224644",
+    "ThreadId": "539548",
+    "Html": "Hi~ \r<br />\n<br />\nNetwork to the pcm (16bit, 38.1Khz sample rate, 1-Channel (Mono)) data to me. \r<br />\nThe size of received data at a time of about 0.43 seconds 16384byte and audio data. \r<br />\nUsing BufferedWaveProvider and IWavePlayer play with the noise is heard. \r<br />\n<br />\nTo play its PCM data in real-time, what should I do?<br />\n",
+    "PostedDate": "2014-03-19T20:37:11.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1224689",
+    "ThreadId": "539548",
+    "Html": "I'm not sure exactly what you are asking. A buffered wave provider is the best way to play audio you are receiving over the network in real-time.\r<br />\nAlso, 38.1kHz is a very non-standard sample rate. Are you sure that is correct?<br />\n",
+    "PostedDate": "2014-03-20T01:09:42.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

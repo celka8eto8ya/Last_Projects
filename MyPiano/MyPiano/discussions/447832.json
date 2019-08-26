@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1059680",
+    "ThreadId": "447832",
+    "Html": "I'm working on a application where notifications are various sounds a user selects and they can choose a single sound or a repeating sound until acknowledged by the end user. I have that working fine...the problem is when multiple repeating sounds are triggered at the same time, it does play all the sounds but they are clipped. Is it possible to repeat multiple sounds in their entirety?<br />\n",
+    "PostedDate": "2013-06-21T08:22:42.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1059980",
+    "ThreadId": "447832",
+    "Html": "what code are you using to play the audio? <br />\n",
+    "PostedDate": "2013-06-22T23:36:41.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

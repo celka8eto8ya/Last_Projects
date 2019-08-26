@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Hallo,\r\n\r\nI have a problem playing Microsoft Text to Speech with WASAPI. I basically get an error (Not a WAVE file - no RIFF header) when the WaveFileReader tries to read the audioStream. As you can see in the code below I tried to convert the audioStream coming from Microsoft Text to Speech by using the RawSourceWaveStream and the WaveFormatConversionStream. Unfortunately that doesn't work. I need to play the audio with WASAPI because I want to select a specific device to play the audio with.\r\n\r\n```\r\nusing (SpeechSynthesizer synth = new SpeechSynthesizer())\r\n            using (MemoryStream streamAudio = new MemoryStream())\r\n            {\r\n                // Create a SoundPlayer instance to play the output audio file.\r\n                System.Media.SoundPlayer m_SoundPlayer = new System.Media.SoundPlayer();\r\n\r\n                SpeechAudioFormatInfo speechFormat = new SpeechAudioFormatInfo(EncodingFormat.Pcm, 32000, 8, 2, 8000, 2, null);\r\n\r\n               //synth.SelectVoice(AppSettings.VoiceName);\r\n\r\n                // Configure the synthesizer to output to an audio stream.\r\n                synth.SetOutputToAudioStream(streamAudio,speechFormat);\r\n\r\n                // Speak a phrase.\r\n                synth.Speak(\"Hallo Jonas wie gehts es dir?\");\r\n                streamAudio.Position = 0;\r\n                synth.SetOutputToNull();\r\n\r\n                _wasapiOut = new WasapiOut(device, AudioClientShareMode.Shared, false, 2000);\r\n\r\n                RawSourceWaveStream s = new RawSourceWaveStream(streamAudio, new WaveFormat(32000, 8, 2));\r\n                WaveStream ws = WaveFormatConversionStream.CreatePcmStream(s);\r\n\r\n                _reader = new WaveFileReader(streamAudio);\r\n                _wasapiOut.Init(_reader);\r\n                _wasapiOut.Play();\r\n            }\r\n```\r\n\r\nI hope somebody can help me :)",
+    "LastUpdatedDate": "2014-08-08T05:21:49.317-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-08-07T09:21:57.487-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Playing Microsoft TTS with WASAPI ",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16449
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I solved it. I had to set the Encoding of the SpeechAudioFormatInfo to ALaw and the RawSourceWaveStream has to instantiate also a Alaw Format. The WaveFileReader is then pointless and wasapi can simply Init it.\n\n```\nALawFormat = new SpeechAudioFormatInfo(EncodingFormat.ALaw, 44100, 8, 1, 1, 2, null);\n\n...\n\nRawSourceWaveStream s = new RawSourceWaveStream(memoryStream, WaveFormat.CreateALawFormat(44100, 1));\n\nws = WaveFormatConversionStream.CreatePcmStream(reader);\n\n_wasapiOut.Init(ws);\n_wasapiOut.Play();\n```",
+      "PostedDate": "2014-08-08T04:33:25.817-07:00",
+      "Id": 154901
+    },
+    {
+      "Message": "great. glad you got it working",
+      "PostedDate": "2014-08-08T05:21:49.317-07:00",
+      "Id": 154904
+    }
+  ]
+}

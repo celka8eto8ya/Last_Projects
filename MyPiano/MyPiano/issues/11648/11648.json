@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": "",
+    "Description": "When trying to assign new value to the BooleanMixerControl, I get the exception \"InvalidParameter calling mixerSetControlDetails\".\n\nI had a look into the source of BooleanMixerControl(.cs - 1.3 beta Oct. 10 2009), and it seems that the Set part of Value property actually doesn't pass the new value to the mixerControlDetails - it's commented out:\n\n\t\tpublic bool Value \n\t\t{\n\t\t\tget \n\t\t\t{\n\t\t\t\tGetControlDetails(); // make sure we have the latest value\n\t\t\t\treturn (boolDetails.fValue == 1);\n\t\t\t}\n\t\t\tset \n\t\t\t{\n\t\t\t\t//GetControlDetails();\n\t\t\t\t//MixerInterop.MIXERCONTROLDETAILS_BOOLEAN boolDetails = (MixerInterop.MIXERCONTROLDETAILS_BOOLEAN) Marshal.PtrToStructure(mixerControlDetails.paDetails,typeof(MixerInterop.MIXERCONTROLDETAILS_BOOLEAN));\n\t\t\t\t//boolDetails.fValue = (value) ? 1 : 0;\n\t\t\t\t// TODO: pin the memory\n                MmException.Try(MixerInterop.mixerSetControlDetails(mixerHandle, ref mixerControlDetails, MixerFlags.Value | mixerHandleType), \"mixerSetControlDetails\");\n\t\t\t}\n\t\t}\n Anyways, if the value doesn't get passed, where is the invalid paramer exception coming from?\nI tried to fix this and marshal the value the same way it is done in the signed mixer control:\n\nset \n\t\t\t{\n                boolDetails.fValue = Convert.ToInt32(value);\n                Marshal.StructureToPtr(boolDetails, mixerControlDetails.paDetails, false);\n                MmException.Try(MixerInterop.mixerSetControlDetails(mixerHandle, ref mixerControlDetails, MixerFlags.Value | mixerHandleType), \"mixerSetControlDetails\");\n                Marshal.FreeHGlobal(mixerControlDetails.paDetails);\n\t\t\t}\n\nBut I still get the InvalidParameter exception. I think I'll tinker with this a bit more, but I would like to know if there was something which made you comment the code out in the original version before geetting too deep into the problem (I.e. if there were some underlying problems I can't know about at this level).",
+    "LastUpdatedDate": "2012-03-02T12:37:06.007-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-01-27T19:14:29.637-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "BooleanMixerControl doesn't update the value",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 4,
+    "Id": 11648
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "\t\tpublic bool Value \n\t\t{\n\t\t\tget \n\t\t\t{\n\t\t\t\tGetControlDetails(); // make sure we have the latest value\n\t\t\t\treturn (boolDetails.fValue == 1);\n\t\t\t}\n\t\t\tset \n\t\t\t{\n                GetControlDetails();\n                MixerInterop.MIXERCONTROLDETAILS_BOOLEAN m = new MixerInterop.MIXERCONTROLDETAILS_BOOLEAN();\n                m.fValue = Convert.ToInt32(value);                \n                IntPtr buffer = Marshal.AllocCoTaskMem(Marshal.SizeOf(m));\n                Marshal.StructureToPtr(m, buffer, false);\n                mixerControlDetails.paDetails = buffer;                \n                MmException.Try(MixerInterop.mixerSetControlDetails(mixerHandle, ref mixerControlDetails, MixerFlags.Value | mixerHandleType), \"mixerSetControlDetails\");\n\t\t\t}\n\t\t}\t\t\n\t}\n",
+      "PostedDate": "2011-10-25T07:03:02.043-07:00",
+      "Id": 47877
+    }
+  ]
+}

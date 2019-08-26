@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1126167",
+    "ThreadId": "470356",
+    "Html": "Dear Sir , \r<br />\n<br />\nI am trying to send audio file to serial port ( GSM ). I need to send the bytes in sequence in order to be heared by the receipient phone. the needed format is  signed 16bit PCM 8000 Hz file. I have made some success by sending the PCM itself \r<br />\n<br />\n   Dim fileByte() As Byte = My.Computer.FileSystem.ReadAllBytes(&quot;c:\\k29.pcm&quot;)\r<br />\n   Dim n As Integer = 16 / 2\r<br />\n   For x As Integer = 0 To fileByte.Length - n - 1 Step n<br />\n<pre><code>sPortSound.Write(fileByte, x, n)</code></pre>\n\nNext\r<br />\n<br />\nno , I need to play MP3 directly to serial port. I need to get the PCM bytes , and send it to the serial port. I guess that MP3 file reader class will open the MP3 file and decompress to PCM. Am I right , in this case how to loop through bytes to send it to the serial port.\r<br />\n<br />\nPlease assume that the recorded MP3 is compressed from PCM file that is 16 bit,8KHz, so we do not need to convert file to the required sampling &amp; bit rate.\r<br />\n<br />\n Thanks for support<br />\n",
+    "PostedDate": "2013-11-18T11:29:49.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126173",
+    "ThreadId": "470356",
+    "Html": "you can just call Read on the Mp3FileReader to read into a byte array, and this will be filled with PCM.<br />\n",
+    "PostedDate": "2013-11-18T11:44:33.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126213",
+    "ThreadId": "470356",
+    "Html": "I tried the below code , but I am hearing a very strange sound on the  other side. I know I am missing something like sample rate<br />\n<pre><code>Dim sf As New Mp3FileReader(&quot;c:\\play.mp3&quot;)\nDim fileByte(sf.Length) As Byte\nsf.Read(fileByte, 0, sf.Length)\n    Dim n As Integer = 2\n    For x As Integer = 0 To fileByte.Length - n - 1 Step n\n        sPortSound.Write(fileByte, x, n)\n    Next</code></pre>\n\n",
+    "PostedDate": "2013-11-18T13:12:39.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126508",
+    "ThreadId": "470356",
+    "Html": "not possible to tell from your code what is wrong. I'd usually recommend reading out of the MP3 file in smaller chunks (e.g. a second at a time). \r<br />\nMost MP3s decompress to 16 bit, stereo, 44.1kHz<br />\n",
+    "PostedDate": "2013-11-19T05:33:41.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126798",
+    "ThreadId": "470356",
+    "Html": "Dear markheath , <br />\n<br />\nThanks for your feedback.. I will struggling/fighting to get it resolved. I still want to confirm with you that :-<br />\n<ul>\n<li>the code above , the MP3FileReader will read the MP3 file and converts it to PCM data ?</li>\n<li>\nhow do i determine the chunk size ? and on which interval I should send it to the serial port. when i determine the MPRFilerReader properties , it shows the the loaded file format  is {16 bit PCM: 16kHz 2 channels}. May be it is 2 channel and I am send both channels. How can I split data for one channel , and read the other , or can i combine both into one channel and send to the serial port ?<br />\n</li>\n</ul>\nCan I send you the MP3 file to play with ?<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-11-19T15:21:31.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127598",
+    "ThreadId": "470356",
+    "Html": "Yes, MP3FileReader emits PCM from its Read method\r<br />\nThe chunk size will depend entirely on what the device on the other end of your serial port is expecting. \r<br />\nTo convert stereo to mono, you can discard a channel or mix them together. There are StereoToMono classes in NAudio that will help you do this. If you have access to Pluralsight, watch the &quot;Changing Audio Formats&quot; of <a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">this course</a>, in which I go into a lot of detail about how to do this.<br />\n",
+    "PostedDate": "2013-11-21T08:47:18.827-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1137623",
+    "ThreadId": "470356",
+    "Html": "Thanks so much , works great. I am really surprised.\r<br />\n<br />\nThanks,\r<br />\nWaleed<br />\n",
+    "PostedDate": "2013-12-18T09:16:21.69-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1142517",
+    "ThreadId": "470356",
+    "Html": "hi waleed makram i m seen your code and trying work with same as u do please help me how u fix this i m successfuly dial number to gsm modem after call established i want to play mp3 file like u do\r<br />\n<br />\nDim sf As New Mp3FileReader(&quot;c:\\play.mp3&quot;)\r<br />\nDim fileByte(sf.Length) As Byte\r<br />\nsf.Read(fileByte, 0, sf.Length)<br />\n<pre><code>Dim n As Integer = 2\nFor x As Integer = 0 To fileByte.Length - n - 1 Step n\n    sPortSound.Write(fileByte, x, n)\nNext\n</code></pre>\n\nThanks \r<br />\nZahid<br />\n",
+    "PostedDate": "2013-12-27T04:43:20.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1238395",
+    "ThreadId": "470356",
+    "Html": "Hi Zahid,\r<br />\n<br />\nAny Progress , I am still have the same issue , and not work for me. Please advice if you made any progress.\r<br />\n<br />\nRegards,\r<br />\nWaleed<br />\n",
+    "PostedDate": "2014-04-26T11:28:32.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1259106",
+    "ThreadId": "470356",
+    "Html": "yes waleed i m successfully send wave or mp3 file data to serial port please email me at <a href=\"mailto:zahid.mahmood2010@gmail.com\" rel=\"nofollow\">zahid.mahmood2010@gmail.com</a> i will send u code<br />\n",
+    "PostedDate": "2014-06-23T22:43:27.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

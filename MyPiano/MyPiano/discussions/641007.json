@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1433338",
+    "ThreadId": "641007",
+    "Html": "Hey there!\r<br />\n<br />\nSo i was wondering if i can make an application that does what the application called &quot;Sing!&quot; does?\r<br />\n<br />\n*This Sing! application can be found in both App store and Android(Play) store.\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2015-07-07T02:01:41.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433542",
+    "ThreadId": "641007",
+    "Html": "I'm not familiar with Sing!, but playing backing tracks, recording audio and applying effects can all be achieved with NAudio. It will be a fair amount of work though. Also, you didn't say what platform you are targetting.<br />\n",
+    "PostedDate": "2015-07-08T04:24:19.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

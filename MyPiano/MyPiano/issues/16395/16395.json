@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Adjusting volume is currently unsupported in DirectSoundOut. Recommendation is to use WaveOut instead",
+    "ClosedDate": "2013-05-03T08:30:50.727-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Im pretty new to Naudio, and im trying to change the volume of my DirectSoundOut\r\n\r\nWhen i try to change it nothing happens even if i pause and play the song again\r\n\r\ndim stream As NAudio.Wave.BlockAlignReductionStream = Nothing\r\ndim output As DirectSoundOut = New DirectSoundOut()\r\n\r\nPublic Sub volume(ByVal vol_in As Single)\r\n        output.Volume = vol_in\r\nEnd Sub\r\n",
+    "LastUpdatedDate": "2013-05-03T08:30:50.727-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-05-01T04:55:41.483-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "AsDesigned"
+    },
+    "Summary": "Trying to change volume",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16395
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "What version of NAudio are you using? In the latest you can't set the DirectSoundOut volume property as it simply doesn't work properly. The recommended way is to adjust the values of your samples. Or use WaveOut instead.",
+      "PostedDate": "2013-05-03T08:11:27.683-07:00",
+      "Id": 99303
+    }
+  ]
+}

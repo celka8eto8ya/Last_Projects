@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1196822",
+    "ThreadId": "525662",
+    "Html": "Hi, I just starting to use naudio. I currently creating a seekbar that can seek to any position of the song I want using C#. It is something like MP3 Player function. I have successfully load the song Totaltime into trackbar but fail to seek the song and the seekbar also fail to run as the song start playing. Below is my current code for the seekbar:\r<br />\n<br />\nprivate void TrackPosition_ValueChanged(object sender, System.EventArgs e)\r<br />\n {<br />\n<pre><code>        TrackPosition.Minimum = 0;\n\n        TrackPosition.Maximum = (int)mainOutputStream.TotalTime.TotalSeconds;\n\n        TrackPosition.Value = (int)mainOutputStream.CurrentTime.TotalSeconds;\n\n        mainOutputStream.Position = mainOutputStream.Position + TrackPosition.Value;</code></pre>\n\n} \r<br />\n<br />\nThe TrackPosition is the seekbar I mentioned and I have loaded the song Totaltime into the seekbar but I fail to seek the song and make the seekbar run when the song is playing.\r<br />\nDo I left out something? Or anything wrong with the code? Sorry if I done anything wrong, I new to C#. Thanks for the help.<br />\n",
+    "PostedDate": "2014-01-24T22:48:53.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1196901",
+    "ThreadId": "525662",
+    "Html": "Try this:<br />\n<pre><code>TrackPosition.Minimum = 0;\n\nTrackPosition.Maximum = mainOutputStream.TotalTime.TotalSeconds;\n\nTrackPosition.Value = mainOutputStream.CurrentTime.TotalSeconds;\n\nmainOutputStream.Position = TrackPosition.Value;</code></pre>\n\n",
+    "PostedDate": "2014-01-25T00:55:07.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1197007",
+    "ThreadId": "525662",
+    "Html": "Hi K24A3, thx for replying. I have tried your method. The song start over again when I click the seekbar and the seekbar still cant run and cant seek the song. If you have other method you can share it out. My code may be not correct, I do not know. So far, it still can run. Just cant seek the song and run when the song is played.<br />\n",
+    "PostedDate": "2014-01-25T02:14:12.607-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1197079",
+    "ThreadId": "525662",
+    "Html": "Are you using Forms or WPF?\r<br />\n<br />\nIf WPF, you can Bind the trackbar to the Position property.\r<br />\n<br />\nIf you are using forms, you need to use a Timer and call mainOutputStream.CurrentTime to update the trackbar position value every 250ms or so.\r<br />\n<br />\nIf you download the NAudio source code and have a look at the sample apps you can see how it works.<br />\n",
+    "PostedDate": "2014-01-25T03:21:07.573-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1197150",
+    "ThreadId": "525662",
+    "Html": "Hi K24A3, thx for the help!! I required a timer. Thx for telling me. My seekbar run perfectly after I added in a timer. Thx for the help. TQ<br />\n",
+    "PostedDate": "2014-01-25T05:07:37.69-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1415484",
+    "ThreadId": "525662",
+    "Html": "Greetings;\r<br />\n<br />\nI'm trying to do the same here. But thats not working for me.\r<br />\nI can Make the TrackBar to Auto Slide During Track Play but Cannot Seek.\r<br />\nCan anyone help me out understanding what i'm doing wrong?<br />\n<pre><code>nAudio Class:\n\n        #region Member Variables\n        public WaveOutEvent WOE;\n        public AudioFileReader AFR;\n        #endregion\n\n #region [TrackBar]\n        /* TrackBar Time and Position*/\n        public int trkBar_lenght;\n        public int trkBar_Lenght { get { return trkBar_lenght; } set { trkBar_lenght = value; } }\n\n        public int trkBar_curTime;\n        public int trkBar_CurTime { get { return trkBar_curTime; } set { trkBar_curTime = value; } }\n\n        public int trkBar_curPos;\n        public int trkBar_CurPos { get { return trkBar_curPos; } set { trkBar_curPos = value; } }\n\n        public string curTime;\n        public string CurTime { get { return curTime; } set { curTime = value; } }\n\n        public void Set_CurTime()\n        {\n            if (WOE == null) { curTime = &quot;00:00&quot;; }\n            else if (WOE != null) \n            { \n                curTime = AFR.CurrentTime.ToString(&quot;mm\\\\:ss&quot;);\n                trkBar_curTime = (int)AFR.CurrentTime.TotalSeconds;\n            }\n        }\n\n        public string trk_lenght;\n        public string trk_Lenght { get { return trk_lenght; } set { trk_lenght = value; } }\n\n        public void Set_Lenght()\n        {\n            if (WOE == null) { trk_lenght = &quot;&quot;; }\n            else if (WOE != null) \n            { \n                trk_lenght = AFR.TotalTime.ToString(&quot;mm\\\\:ss&quot;);\n                trkBar_lenght = (int)AFR.TotalTime.TotalSeconds;\n            }\n        }\n\n        #endregion\n\nMain Form:\n\n        private void trkBar_Scroll(object sender, EventArgs e)\n        {\n            NAUDIO.trkBar_CurTime = trkBar.Value;\n        }\n\n        private void trkBar_ValueChanged(object sender, EventArgs e)\n        {\n            trkBar.Minimum = 0;\n            trkBar.Maximum = NAUDIO.trkBar_Lenght;\n        }\n\n        private void tmr_TrkTime_Tick(object sender, EventArgs e)\n        {\n            trkBar.Value = NAUDIO.trkBar_CurTime;\n\n            NAUDIO.Set_CurTime();\n            txt_CurrTime.Text = NAUDIO.CurTime;\n            txt_trkLenght.Text = NAUDIO.trk_Lenght;\n        }\n\n</code></pre>\n\n",
+    "PostedDate": "2015-04-18T04:53:42.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

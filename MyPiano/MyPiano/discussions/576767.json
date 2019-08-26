@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1338771",
+    "ThreadId": "576767",
+    "Html": "I updated a answer found at <a href=\"http://stackoverflow.com/a/6778791/7532\" rel=\"nofollow\">http://stackoverflow.com/a/6778791/7532</a> from C# to VB but I get a strange result. The audio is faster than it should be and the 3 wav files (5 seconds, 1 second and 6 second) amount to a file of just over 6 seconds. All the files have the same waveformat (22050Hz Rate, mono, 32bit float).\r<br />\n<br />\nIn this project I am using NAudio.\r<br />\n<br />\nMy code:<br />\n<pre><code>Public Shared Sub Concatenate(outputFile As String, sourceFiles As IEnumerable(Of String))\n    Dim buffer As Byte() = New Byte(1023) {}\n    Dim waveFileWriter As WaveFileWriter = Nothing\n    Try\n        For Each sourceFile As String In sourceFiles\n            Using reader As New WaveFileReader(sourceFile)\n                If waveFileWriter Is Nothing Then\n                    ' first time in create new Writer\n                    waveFileWriter = New WaveFileWriter(outputFile, reader.WaveFormat)\n                Else\n                    If Not reader.WaveFormat.Equals(waveFileWriter.WaveFormat) Then\n                        Throw New InvalidOperationException(&quot;Can't concatenate WAV Files that don't share the same format&quot;)\n                    End If\n                End If\n                Dim read As Integer\n                While (reader.Read(buffer, 0, buffer.Length) &gt; 0)\n                    read = reader.Read(buffer, 0, buffer.Length)\n                    waveFileWriter.Write(buffer, 0, read)\n                End While\n            End Using\n        Next\n    Finally\n        If waveFileWriter IsNot Nothing Then\n            waveFileWriter.Dispose()\n        End If\n    End Try\nEnd Sub\n</code></pre>\n\nThe function will be called like this:<br />\n<pre><code>Dim m_oEnum As IEnumerable(Of String) = New List(Of String)() From {&quot;c:\\1.wav&quot;, &quot;c:\\2.wav&quot;, &quot;c:\\3.wav&quot;}\nConcatenate(&quot;c:\\joined.wav&quot;, m_oEnum)</code></pre>\n\nCan anyone help me with this? I have a suspicion that it may have something to do with the sample format being 32 bit float.<br />\n",
+    "PostedDate": "2015-01-03T12:20:29.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340542",
+    "ThreadId": "576767",
+    "Html": "the main problem with this conversion into VB.NET is that you are calling reader.Read twice in the while loop and ignoring the results of the first. Just do While true, and then if read = 0 break out of the while loop<br />\n",
+    "PostedDate": "2015-01-09T15:12:58.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

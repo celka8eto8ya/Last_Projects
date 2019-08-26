@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "956889",
+    "ThreadId": "406984",
+    "Html": "\r\n<p>Hi</p>\r\n<p>&nbsp;</p>\r\n<p>i am working on the project that uses web stream to play audio using Naudio Library, i need to show the slider for the playing audio and also to allow seek position backward/forward for the streaming audio.</p>\r\n<p>&nbsp;</p>\r\n<p>Is there any way that we can feature out the length of audio playback time and can allow seeking track for at least to the portion of the track that has been already downloaded or cached.</p>\r\n<p>Thanks if anyone can help with the sample code.</p>\r\n<p>Thank</p>\r\n<p>Ajay</p>\r\n",
+    "PostedDate": "2012-12-17T04:10:29.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "956894",
+    "ThreadId": "406984",
+    "Html": "\r\n<p>it can be done, but it is a little tricky. Essentially you'd need to keep hold of the audio you'd already downloaded in some kind of memory buffer or temporary file. I'm afraid there is no sample code. One thing that you might want to check out is the new\r\n MediaFoundationReader in the very latest NAudio code (you'll probably have to download and build it yourself). That can actually do repositioning on streaming files and works surprisingly well. I don't know if you can tell how far it has downloaded though.</p>\r\n",
+    "PostedDate": "2012-12-17T04:17:36.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

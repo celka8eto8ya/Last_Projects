@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1286677",
+    "ThreadId": "559966",
+    "Html": "I am looking at the source code, and trying to find a way to keep track of the Audio Time.\r<br />\nNot Duration but actual device timer.\r<br />\n<br />\n<a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/dd370859(v=vs.85).aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-us/library/windows/desktop/dd370859(v=vs.85).aspx</a>\r<br />\npu64DevicePosition [out]\r<br />\n<br />\nThat most likely.\r<br />\n<br />\nPretty much what this application those: <a href=\"http://forum.exkode.com/index.php?topic=324.0\" rel=\"nofollow\">http://forum.exkode.com/index.php?topic=324.0</a><br />\n",
+    "PostedDate": "2014-08-05T14:17:29.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1286898",
+    "ThreadId": "559966",
+    "Html": "yes, this is supported in NAudio. Have a look at the GetPosition method on the IWavePosition interface which is inplemented by WasapiOut. However, I did some recent fixes to IAudioClockClient, so you might find it best if you build from the latest source.<br />\n",
+    "PostedDate": "2014-08-06T02:56:42.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1287602",
+    "ThreadId": "559966",
+    "Html": "Looked at it.\r<br />\n<br />\nHmm, trying to find a way to use it to add silence when recording if it's skipping stuff.\r<br />\nNormally use StopWatch, but as it's going by the PC clock it's not correct.\r<br />\n<br />\nI would have to have it check each WaveInEvent, any ideas?<br />\n",
+    "PostedDate": "2014-08-07T07:56:41.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1288853",
+    "ThreadId": "559966",
+    "Html": "The GetPosition is only implemented for Output correct?<br />\nSo it's no use when recording, except if it's the same device perhaps.<br />\n<br />\nAlso this error persists: <a href=\"https://naudio.codeplex.com/discussions/550673\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/550673</a><br />\n",
+    "PostedDate": "2014-08-11T06:32:17.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1296849",
+    "ThreadId": "559966",
+    "Html": "Okay it worked in the latest source as you suggested.\r<br />\n<br />\nDo you have any idea how to compare the DevicePosition to the PC QPC?\r<br />\ntrying to figure that out, as DevicePosition is supposed to be the SoundCards QPC.<br />\n",
+    "PostedDate": "2014-08-30T16:18:55.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

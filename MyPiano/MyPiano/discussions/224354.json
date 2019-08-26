@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "483108",
+    "ThreadId": "224354",
+    "Html": "<p>&nbsp;Hi,</p>\r\n<p>&nbsp;This lib is amazing, you really did a good job and thank you for sharing it to all of us!</p>\r\n<p>I can't find out how can I change instrument on a channel, could you help me with that please?</p>\r\n<p>I kept trying like this, but didn't work out...</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>midiout.Send(<span style=\"color:blue\">new</span> PatchChangeEvent(0,1,30).GetAsShortMessage());            \r\nmidiout.Send(<span style=\"color:blue\">new</span> NoteOnEvent(0, 1, 0, 127, 100).GetAsShortMessage());\r\n</pre>\r\n</div>\r\n</p>\r\n<p>It just ignores the patch change every time, please tell me what am I doing wrong.</p>\r\n<p>(I noticed that if I change the channel to ten, it will switch to drums, but couldn't get the other instruments)</p>\r\n<p>Thanks a lot!</p>\r\n<p>Best regards,</p>\r\n<p>Bela Tamas</p>",
+    "PostedDate": "2010-08-21T10:41:37.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "485625",
+    "ThreadId": "224354",
+    "Html": "<p>you need to read the manual for your synthesizer to see what kind of patch changes it needs</p>",
+    "PostedDate": "2010-08-27T04:40:53.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

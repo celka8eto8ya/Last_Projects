@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1422818",
+    "ThreadId": "636684",
+    "Html": "I'm trying to use NAudio to play sound in a game context, using <a href=\"http://mark-dot-net.blogspot.co.uk/2014/02/fire-and-forget-audio-playback-with.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.co.uk/2014/02/fire-and-forget-audio-playback-with.html</a> as my guide. I've run into a bit of a snag, though. Playing a sound seems to set a playback position in the provider object, and I'm unclear on how to reset that or make a copy decoupled from the cached sound. This means that trying to play two instances of the same sound overlapping doesn't start a new sound but rather doubles the existing one, and once a sound has played once it effectively can't be played again.\r<br />\n<br />\nIs this indicative of me having done something wrong, or intended behavior? My implementation passes sound around as sample providers, and I've gotten a sense from looking around that handling wave providers instead would maybe avoid this. Is that a red herring, or a good lead?\r<br />\n<br />\nI'd post sample code, but I'm not sure quite what part would be useful to excerpt, and the current state is a bit messy with attempted fixes and work-arounds, so I thought it'd be better to ask those prelim questions first.<br />\n",
+    "PostedDate": "2015-05-04T12:20:22.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449177",
+    "ThreadId": "636684",
+    "Html": "Sorry for long delay replying. \r<br />\n<br />\nYes, to play two versions of the sound, create a new ISampleProvider (with a RawSourceWaveStream reading from memory). It's because <code>Read</code> will be called independently on each one<br />\n",
+    "PostedDate": "2015-10-20T11:32:07.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

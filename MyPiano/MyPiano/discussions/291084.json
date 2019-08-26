@@ -1,0 +1,194 @@
+[
+  {
+    "Id": "737673",
+    "ThreadId": "291084",
+    "Html": "\r\n<p>I've been trying in my application to convert a PCM file to GSM610 format using the following error.</p>\r\n<p>&quot;AcmNotPossible calling acmStreamOpen&quot;</p>\r\n<p>I had a look though the&nbsp;earlier&nbsp;discussion and its been suggested to try it though the demo applicaiton. Howerver using the demo applicaiton im getting the same&nbsp;error.</p>\r\n<p>I can confirm that I have it installed on my system. i can see the codec looking at them though windows media player technical information.</p>\r\n<p>Please advise?</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2012-02-03T04:02:43.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "737674",
+    "ThreadId": "291084",
+    "Html": "<p>not all conversions can be performed in one step. Probably it is the sample rate. Try downsampling to 8kHz PCM first.</p>",
+    "PostedDate": "2012-02-03T04:07:38.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "737680",
+    "ThreadId": "291084",
+    "Html": "<p>thanks for the fast reply.</p>\r\n<p>&nbsp;</p>\r\n<p>I've&nbsp;just gone though using the demo app converting it to all the pcm options then trying to converter them to gsm610.</p>\r\n<p>&nbsp;</p>\r\n<p>I can the same error for all of them</p>",
+    "PostedDate": "2012-02-03T04:30:52.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "737681",
+    "ThreadId": "291084",
+    "Html": "<p>what exactly is the format of the file you are trying to convert to GSM? It probably needs to be mono, 8kHz, 16 bit</p>",
+    "PostedDate": "2012-02-03T04:32:14.337-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "737702",
+    "ThreadId": "291084",
+    "Html": "<p>I'm&nbsp;trying from mono 8khz 16bit to GSM 6.10 8khz mono</p>",
+    "PostedDate": "2012-02-03T05:20:25.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "743037",
+    "ThreadId": "291084",
+    "Html": "<p>that should work, can you post a code snippet of your call into WaveFormatConversionStream?</p>",
+    "PostedDate": "2012-02-06T05:41:04.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "797561",
+    "ThreadId": "291084",
+    "Html": "<p>here you go</p>\r\n<pre><span>using</span>&nbsp;(<span>WaveFileReader</span>&nbsp;reader&nbsp;<span>=</span>&nbsp;<span>new</span>&nbsp;<span>WaveFileReader</span>(Input))\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>using</span>&nbsp;(<span>WaveFormatConversionStream</span>&nbsp;Conveter&nbsp;<span>=</span>&nbsp;<span>new</span>&nbsp;<span>WaveFormatConversionStream</span>(<span>WaveFormat</span><span>.</span>CreateCustomFormat(<span>WaveFormatEncoding</span><span>.</span>Gsm610,&nbsp;<span>8000</span>,\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>1</span>,&nbsp;<span>16000</span>,&nbsp;<span>2</span>,&nbsp;<span>16</span>),&nbsp;reader))\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>WaveFileWriter</span><span>.</span>CreateWaveFile(Output,&nbsp;Conveter);\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</pre>",
+    "PostedDate": "2012-02-23T06:00:39.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "797580",
+    "ThreadId": "291084",
+    "Html": "<p>try using <strong>Gsm610WaveFormat </strong>instead:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (WaveFileReader reader = <span style=\"color: blue;\">new</span> WaveFileReader(Input))\r\n{\r\n    <span style=\"color: blue;\">using</span> (<span style=\"color: blue;\">var</span> Conveter = <span style=\"color: blue;\">new</span> WaveFormatConversionStream(<span style=\"color: blue;\">new</span> Gsm610WaveFormat()), reader))\r\n    {\r\n        WaveFileWriter.CreateWaveFile(Output, Conveter);\r\n    }\r\n}\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2012-02-23T06:12:16.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "797689",
+    "ThreadId": "291084",
+    "Html": "<p>i get a slightly different error doing that.</p>\r\n<p>AcmNotPossible calling acmStreamSize &nbsp;&nbsp;</p>\r\n<p>at NAudio.MmException.Try(MmResult result, String function)&nbsp; &nbsp;</p>\r\n<p>at NAudio.Wave.Compression.AcmStream.SourceToDest(Int32 source)&nbsp;</p>\r\n<p>&nbsp;at NAudio.Wave.WaveFormatConversionStream.SourceToDest(Int32 source)&nbsp; &nbsp;</p>\r\n<p>at NAudio.Wave.WaveFormatConversionStream..ctor(WaveFormat targetFormat, WaveStream sourceStream)</p>",
+    "PostedDate": "2012-02-23T07:16:01.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "800483",
+    "ThreadId": "291084",
+    "Html": "<p>you'll need to do your own loop to use buffer sizes that are multiples of GSM block align. Look in the ssource for the code to WaveFileWriter.CreateWaveFile - it is only a few lines of code.</p>",
+    "PostedDate": "2012-02-26T08:55:08.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805543",
+    "ThreadId": "291084",
+    "Html": "<p>I don't suppose you could shed a little more light on this please?&nbsp; I'm trying to do the same PCM to GSM conversion and get exactly the same error.</p>\r\n<p>From what I can gather, the issue is with moving from a block align of 2 to 65, but I don't know how to deal with this.&nbsp; Do I need to create a new class deriving from WaveStream to pass to the conversion stream?&nbsp;</p>\r\n<p>My ultimate goal is to insert a period of silence into a GSM file, so what I'm doing is converting to PCM, inserting the appropriate empty bytes and then converting back to GSM.&nbsp; Is there a better way to do this?</p>\r\n<p>Thanks,<br />Chris</p>",
+    "PostedDate": "2012-03-05T06:49:28.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805547",
+    "ThreadId": "291084",
+    "Html": "<p>Here is the full source code for CreateWaveFile:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>        <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">static</span> <span style=\"color: blue;\">void</span> CreateWaveFile(<span style=\"color: blue;\">string</span> filename, IWaveProvider sourceProvider)\r\n        {\r\n            <span style=\"color: blue;\">using</span> (WaveFileWriter writer = <span style=\"color: blue;\">new</span> WaveFileWriter(filename, sourceProvider.WaveFormat))\r\n            {\r\n                <span style=\"color: blue;\">byte</span>[] buffer = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">byte</span>[sourceProvider.WaveFormat.AverageBytesPerSecond * 4];\r\n                <span style=\"color: blue;\">while</span> (<span style=\"color: blue;\">true</span>)\r\n                {\r\n                    <span style=\"color: blue;\">int</span> bytesRead = sourceProvider.Read(buffer, 0, buffer.Length);\r\n                    <span style=\"color: blue;\">if</span> (bytesRead == 0)\r\n                        <span style=\"color: blue;\">break</span>;\r\n                    writer.Write(buffer, 0, bytesRead);\r\n                }\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n</p>\r\n<p>The problem is simply that the size of the buffer ought to be a multiple of 65. Make it 65000 or something. Then it should work.</p>\r\n<p>As for how to insert silence, your way is fine. The only alternative is to create one 65 byte block of GSM silence (don't know what that looks like), and insert those blocks. However, even that may produce artefacts if the GSM codec stores state between consecutive blocks.</p>",
+    "PostedDate": "2012-03-05T06:55:03.89-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805578",
+    "ThreadId": "291084",
+    "Html": "<p>Thanks for the quick reply.</p>\r\n<p>Where should I be calling that code then?&nbsp; Trying the example you posted in reply to jonny, I get the exception when initialising the conversion stream.&nbsp; It doesn't ever get as far as calling CreateWaveFile.</p>",
+    "PostedDate": "2012-03-05T07:40:56.22-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805583",
+    "ThreadId": "291084",
+    "Html": "<p>OK, are you definitely using the Gsm610WaveFormat class?</p>\r\n<p>Also, before you can go to GSM 610, you already need to have resampled to 8kHz, if your audio was originally at a higher sample rate</p>",
+    "PostedDate": "2012-03-05T07:45:27.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805636",
+    "ThreadId": "291084",
+    "Html": "<p>Yes, I'm using the Gsm610WaveFormat class and I've already ensured the PCM is at 8kHz.</p>\r\n<p>I've also tried generating the PCM file myself so that I know it's at the correct sample rate.&nbsp; Should the following work?</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">string</span> pcmFilepath = <span style=\"color: #a31515;\">@\"D:\\Temp\\GeneratedPCM.wav\"</span>;\r\n<span style=\"color: blue;\">string</span> gsmFilepath = <span style=\"color: #a31515;\">@\"D:\\Temp\\ConvertedGSM.wav\"</span>;\r\n\r\n<span style=\"color: blue;\">int</span> sampleRate = 8000;\r\nWaveFormat pcmFormat = <span style=\"color: blue;\">new</span> WaveFormat(sampleRate, 16, 1);\r\n\r\n<span style=\"color: green;\">// Generate 8 kHz PCM audio:</span>\r\n<span style=\"color: blue;\">using</span> (WaveFileWriter pcmWriter = <span style=\"color: blue;\">new</span> WaveFileWriter(pcmFilepath, pcmFormat))\r\n{\r\n   <span style=\"color: blue;\">int</span> frequency = 440;\r\n   <span style=\"color: blue;\">short</span> amplitude = 10000;\r\n   <span style=\"color: blue;\">int</span> duration = 2;\r\n   <span style=\"color: blue;\">double</span> omega = frequency * 2 * Math.PI / sampleRate;\r\n\r\n   <span style=\"color: blue;\">short</span>[] buffer = <span style=\"color: blue;\">new</span> <span style=\"color: blue;\">short</span>[100];\r\n   <span style=\"color: blue;\">int</span> bufferPos = 0;\r\n\r\n   <span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; sampleRate * duration; i++)\r\n   {\r\n       <span style=\"color: blue;\">short</span> sample = (<span style=\"color: blue;\">short</span>)(amplitude * Math.Sin((<span style=\"color: blue;\">double</span>)i * omega));\r\n       buffer.SetValue(sample, bufferPos);\r\n       bufferPos++;\r\n\r\n       <span style=\"color: blue;\">if</span> (bufferPos == buffer.Length)\r\n       {\r\n           pcmWriter.WriteSamples(buffer, 0, buffer.Length);\r\n           bufferPos = 0;\r\n       }\r\n   }\r\n}\r\n\r\n<span style=\"color: green;\">// Convert to GSM:</span>\r\n<span style=\"color: blue;\">using</span> (WaveFileReader reader = <span style=\"color: blue;\">new</span> WaveFileReader(pcmFilepath))\r\n{\r\n   <span style=\"color: blue;\">using</span> (WaveFormatConversionStream converter = <span style=\"color: blue;\">new</span> WaveFormatConversionStream(<span style=\"color: blue;\">new</span> Gsm610WaveFormat(), reader))\r\n   {\r\n       WaveFileWriter.CreateWaveFile(gsmFilepath, converter);\r\n   }\r\n}\r\n<br />\r\n</pre>\r\n</div>\r\nThanks for helping by the way!</p>",
+    "PostedDate": "2012-03-05T08:57:31.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805648",
+    "ThreadId": "291084",
+    "Html": "<p>there is an ACM demo in the NAudioDemo app that will tell you what ACM codecs you have installed on your system. Check that there is actually a GSM one there. What version of Windows are you running on?</p>",
+    "PostedDate": "2012-03-05T09:06:16.463-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805655",
+    "ThreadId": "291084",
+    "Html": "<p>I've tried that and I can see the corresponding entry for the GSM format I'm trying to convert to:</p>\r\n<p>===========================================<br />Format Tag 1: GSM 6.10<br />&nbsp;&nbsp; Standard Format Count: 4<br />&nbsp;&nbsp; Support Flags: Codec<br />&nbsp;&nbsp; Format Tag: Gsm610, Format Size: 20<br />&nbsp;&nbsp; Formats:<br />&nbsp;&nbsp; ===========================================</p>\r\n<p>.....</p>\r\n<p>&nbsp;&nbsp; Format 0: 8.000 kHz, Mono<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FormatTag: Gsm610, Support Flags: Codec<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WaveFormat: Gsm610 8000Hz Channels: 1 Bits: 0 Block Align: 65, AverageBytesPerSecond: 1625 (13.0 kbps), Extra Size: 2<br />&nbsp;&nbsp; ===========================================</p>\r\n<p>&nbsp;</p>\r\n<p>I'm running Windows 7 Pro, 32-bit.&nbsp; If it makes any difference, I can save as GSM using GoldWave audio editor.</p>",
+    "PostedDate": "2012-03-05T09:24:25.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805656",
+    "ThreadId": "291084",
+    "Html": "<p>Can you convert your PCM file using the Encode button in the NAudioDemo app?</p>",
+    "PostedDate": "2012-03-05T09:26:29.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805662",
+    "ThreadId": "291084",
+    "Html": "<p>Nope.&nbsp; I get the same \"AcmNotPossible calling acmStreamSize\" error.</p>",
+    "PostedDate": "2012-03-05T09:32:36.33-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805663",
+    "ThreadId": "291084",
+    "Html": "<p>and that is in the WaveFormatConversionStream constructor? or in CreateWaveFile?</p>",
+    "PostedDate": "2012-03-05T09:34:47.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805671",
+    "ThreadId": "291084",
+    "Html": "<p>That's in the constructor again.</p>\r\n<p>Stack trace:</p>\r\n<p>at NAudio.MmException.Try(MmResult result, String function) in D:\\\\VS Projects\\\\NAudio 1.5\\\\NAudio\\\\Wave\\\\MmeInterop\\\\MmException.cs:line 39<br />at NAudio.Wave.Compression.AcmStream.SourceToDest(Int32 source) in D:\\\\VS Projects\\\\NAudio 1.5\\\\NAudio\\\\Wave\\\\Compression\\\\AcmStream.cs:line 75<br />at NAudio.Wave.WaveFormatConversionStream.SourceToDest(Int32 source) in D:\\\\VS Projects\\\\NAudio 1.5\\\\NAudio\\\\Wave\\\\WaveStreams\\\\WaveFormatConversionStream.cs:line 55<br />at NAudio.Wave.WaveFormatConversionStream..ctor(WaveFormat targetFormat, WaveStream sourceStream) in D:\\\\VS Projects\\\\NAudio 1.5\\\\NAudio\\\\Wave\\\\WaveStreams\\\\WaveFormatConversionStream.cs:line 46<br />at NAudioDemo.AcmPanel.EncodeFile() in D:\\\\VS Projects\\\\NAudio 1.5\\\\NAudioDemo\\\\AcmDemo\\\\AcmPanel.cs:line 126<br />at NAudioDemo.AcmPanel.buttonEncode_Click(Object sender, EventArgs args) in D:\\\\VS Projects\\\\NAudio 1.5\\\\NAudioDemo\\\\AcmDemo\\\\AcmPanel.cs:line 33\"</p>",
+    "PostedDate": "2012-03-05T09:39:29.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805679",
+    "ThreadId": "291084",
+    "Html": "<p>OK, will have to try to debug this one myself. I suspect sending in non block aligned values is confusing it</p>",
+    "PostedDate": "2012-03-05T09:48:02.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805804",
+    "ThreadId": "291084",
+    "Html": "<p>OK, fixed the bug and checked in this evening. You can build your own copy of NAudio, or if you know how to use NuGet to get a pre-release version, you can get it from the NuGet gallery:</p>\r\n<p>https://nuget.org/packages/NAudio/1.5.3-beta</p>",
+    "PostedDate": "2012-03-05T13:43:40.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "806113",
+    "ThreadId": "291084",
+    "Html": "<p>That's fantastic, thanks!&nbsp;</p>\r\n<p>Works a charm.</p>",
+    "PostedDate": "2012-03-06T03:11:54.753-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

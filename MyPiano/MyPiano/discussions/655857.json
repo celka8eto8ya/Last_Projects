@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1477151",
+    "ThreadId": "655857",
+    "Html": "Guys im trying to implement the piano roll control as mark guided in his blog. But a null reference exception is thrown in the midi events class. \r<br />\n<br />\n<img src=\"http://i64.tinypic.com/1z1baf6.jpg\" alt=\"Image\" />\r<br />\n<br />\n<img src=\"http://i67.tinypic.com/2580740.jpg\" alt=\"Image\" />\r<br />\n<br />\ncan someone please explain what's wrong <br />\n",
+    "PostedDate": "2016-06-24T01:58:55.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1477265",
+    "ThreadId": "655857",
+    "Html": "well either notecanvas or notecanvas.children is likely to be null. Use the debugger to find out which.<br />\n",
+    "PostedDate": "2016-06-25T08:47:24.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1477496",
+    "ThreadId": "655857",
+    "Html": "Thanks mark .. :) it's working now<br />\n",
+    "PostedDate": "2016-06-28T09:46:45.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

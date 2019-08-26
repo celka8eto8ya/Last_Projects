@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1291458",
+    "ThreadId": "561616",
+    "Html": "I can't get any of the demo programs included with your source code to build.\r<br />\n<br />\nThey all report this:\r<br />\n<br />\nA project with an Output Type of Class Library canot be Started directly. In order to debug this project add an executable project to this solution which references the library project. Ste the executable project as the startup project.\r<br />\n<br />\n???<br />\n",
+    "PostedDate": "2014-08-19T12:12:27.4-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291641",
+    "ThreadId": "561616",
+    "Html": "just select which demo project you want to run, right click it and select &quot;set as startup project&quot;. <br />\n",
+    "PostedDate": "2014-08-20T03:58:29.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

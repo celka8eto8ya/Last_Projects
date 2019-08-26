@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "I want to use the StreamMediaFoundationReader class in my application, to process the signal form the microphone in real time (i.e. without using disk I/O). I tried adding StreamMediaFoundationReader.cs to the project, but it threw a bunch of reference errors when I tried to compile. So, I looked up the required source code, added those files and tried again, and again...\r\n\r\nSo far, I have added these files to the project, with no end in sight:\r\n\t\r\n\tAcmInterop.cs\r\n\tAcmStream.cs\r\n\tAcmStreamHeaderStatusFlags.cs\r\n\tAudioCapture.cs\r\n\tMp3FrameDecompressor.cs\r\n\tNAudio.Wave.cs\r\n\tStreamMediaFoundationReader.cs\r\n\t\r\nAm I doing this the hard way? Can I install a library or do I just have to keep iterating as I've been doing, until there are no more reference issues?\r\n\r\nThanks!\r\n- Al",
+    "LastUpdatedDate": "2017-06-05T14:47:42.077-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2017-05-29T18:37:03.017-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "How to integrate StreamMediaFoundationReader into a project?",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16516
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Yes, the normal way to use NAudio is to reference the DLL - easiest to just use NuGet, or get the source and build yourself. The StreamMediaFoundationReader class is relatively new and is not supported on all operating systems.",
+      "PostedDate": "2017-06-03T09:18:35.847-07:00",
+      "Id": 208523
+    },
+    {
+      "Message": "Thank, Mark.",
+      "PostedDate": "2017-06-05T03:45:29.727-07:00",
+      "Id": 208525
+    },
+    {
+      "Message": "Sorry, still struggling. When I use thee NuGet package, my project build throws a missing reference error for StreamMediaFoundationReader. I have confirmed that 'StreamMediaFoundationReader.cs' is in the compile include list in 'NAudio.csproj', so I don't know what is wrong.\n\nDo I need another 'using' statement? (I only have 'using NAudio' and 'using NAudio.Wave')",
+      "PostedDate": "2017-06-05T14:47:42.077-07:00",
+      "Id": 208528
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1304527",
+    "ThreadId": "567385",
+    "Html": "I really want to work with NAudio on Windows phone!!!!! Please!!!! <br />\n",
+    "PostedDate": "2014-09-14T07:25:18.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1304909",
+    "ThreadId": "567385",
+    "Html": "sure I'd love to add Win Phone support. Sadly time hasn't permitted this year (NAudio is just a spare time project for me), but hopefully in the not too distant future.<br />\n",
+    "PostedDate": "2014-09-15T11:20:40.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305017",
+    "ThreadId": "567385",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nsure I'd love to add Win Phone support. Sadly time hasn't permitted this year (NAudio is just a spare time project for me), but hopefully in the not too distant future.<br />\n</blockquote>\nThank you so much! I used SharpDX API on <a href=\"http://sharpdx.org/\" rel=\"nofollow\">http://sharpdx.org/</a> and decode a mp3 stream to PCM. I realy want to make spectrum from this PCM but i can, I do not really know much about this mechanism. Do you have any suggestions for me? ^^ <br />\n",
+    "PostedDate": "2014-09-15T19:21:02.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

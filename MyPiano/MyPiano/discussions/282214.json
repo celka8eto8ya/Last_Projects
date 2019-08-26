@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "709102",
+    "ThreadId": "282214",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I've been trying, without much success, to get ASIO working, using a Blackmagic Intensity video capture care which offers ASIO drivers. I'm using only four source files from NAudio: ASIODriver, ASIODriverExt, ASIOSampleConvertor (sic), and ASIOStructures.\r\n I commented out the&nbsp;SampleConvertor method as it isn't referred to elsewhere in those four files, and caused a huge dependency tree around WaveFormat.</p>\r\n<p>I have it working to the point where I can&nbsp;GetASIODriverByName() and interrogate the device for channel numbers and names, selected and available sample rates, etc. There are a few glitches, including the fact that it claims to have zero inputs and\r\n eight outputs, but it seems to be working to some degree.</p>\r\n<p>I can call init() with IntPtr.Zero as SysRef (basically the HWND argument). I'm writing a console app and don't have a HWND to give it, but all accounts state that zero should be fine here and the driver does not complain.</p>\r\n<p>I can't get it to accept a createBuffers() call. Here's what I'm doing, where drv is the ASIODriver instance:</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>                drv.init(IntPtr.Zero);\r\n\r\n                ASIOBufferInfo buf = <span style=\"color:blue\">new</span> ASIOBufferInfo();\r\n                buf.isInput = <span style=\"color:blue\">true</span>;\r\n                buf.channelNum = 0;\r\n                buf.pBuffer0 = Marshal.AllocHGlobal(960 * 16);\r\n                buf.pBuffer1 = Marshal.AllocHGlobal(960 * 16);\r\n\r\n                ASIOCallbacks cbs = <span style=\"color:blue\">new</span> ASIOCallbacks();\r\n                cbs.pbufferSwitch = <span style=\"color:blue\">new</span> ASIOCallbacks.ASIOBufferSwitchCallBack(BufferSwitched);\r\n                \r\n\r\n                IntPtr bufptr = Marshal.AllocHGlobal(Marshal.SizeOf(buf));\r\n                Marshal.StructureToPtr(buf, bufptr, <span style=\"color:blue\">false</span>);\r\n\r\n                drv.createBuffers(bufptr, 1, 960 * 16, cbs);\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Buffer sizes are hardcoded for convenience while experimenting, would of course be dynamically calculated ordinarily.</p>\r\n<p>Running that causes this:</p>\r\n<p>Error code [ASE_InvalidParameter] while calling ASIO method &lt;createBuffers&gt;, DeckLink ASIO Driver open Failure!</p>\r\n<p>The C# wrapper seems to expose an awful lot of COM interop to the user - I'd be happy to help in any way I can with improving things, but can anyone suggest what might be going on here?</p>\r\n<p>I appreciate it may also be a fault in the Blackmagic driver, but I can't really tell from here.</p>\r\n<p>Best,</p>\r\n<p>HF</p>\r\n",
+    "PostedDate": "2011-12-07T17:37:32.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710846",
+    "ThreadId": "282214",
+    "Html": "<p>have you tried using the ASIOOut class? This is intended to hide the complexity of these C# wrappers from the user</p>",
+    "PostedDate": "2011-12-12T03:40:42.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

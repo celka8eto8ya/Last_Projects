@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1461050",
+    "ThreadId": "650620",
+    "Html": "Sorry for my bad english.<br />\nWhen i am using NAudioDemo -&gt; Mp3StreamingDemo and want to play some music from <br />\n<a href=\"https://psv4.vk.me/c5229/u3789329/audios/83d7001b2435.mp3?extra=EuT4XcYMZ4DwwCtDnQ-cYXrE3mrQhlLkw-WTCqArVxsWBKaB0hHsPyEIHaQXVJ8zm34RvQeDDjpIEM6cwVVDwh-KC2KVZI0VCZReYpQMdkfb2Ag,131\" rel=\"nofollow\">TEXT</a><br />\nfor example, i get a weird audio slowing down. What the matter of this?<br />\n(I ve tried to use DMO frame decompressor and I ve got <strong>&quot;System.NullReferenceException&quot; in NAudio.dll</strong>) exception)<br />\nAbout 95% audios from same website is playing successfully (<a href=\"https://psv4.vk.me/c611926/u300849181/audios/28263fc7a64a.mp3?extra=OD76mBUVDf8CW56QeNzHeCD3oLahrHyQpB99hvIw8WByyWe66rRRj7ASNexTeEz-ZGQU-V6ZGWN_5GezQ-t1x-zKQUhXtjQQtRSt7sIKSebZXOI,175\" rel=\"nofollow\">TEXT</a>, for example). But with another 5% I get a 50% speed, if i use Acm frame decompressor<br />\n",
+    "PostedDate": "2016-01-28T05:41:54.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1461071",
+    "ThreadId": "650620",
+    "Html": "Ok, I found the problem, but still can't solve it. <br />\n<pre><code>private static IMp3FrameDecompressor CreateFrameDecompressor(Mp3Frame frame)\n        {\n            WaveFormat waveFormat = new Mp3WaveFormat(frame.SampleRate, frame.ChannelMode == ChannelMode.Mono ? 1 : 2,\n               frame.FrameLength, frame.BitRate);\n            return new DmoMp3FrameDecompressor(waveFormat);\n        }</code></pre>\n\nframe has a wrong SampleRate property in some audios. <br />\n<a href=\"https://psv4.vk.me/c5229/u3789329/audios/83d7001b2435.mp3?extra=EuT4XcYMZ4DwwCtDnQ-cYXrE3mrQhlLkw-WTCqArVxsWBKaB0hHsPyEIHaQXVJ8zm34RvQeDDjpIEM6cwVVDwh-KC2KVZI0VCZReYpQMdkfb2Ag,131\" rel=\"nofollow\">TEXT</a><br />\nthis song has 44100 Hz sample rate, but frame.SampleRate is 32000 Hz.<br />\nHow can i solve this problem?<br />\n<br />\nAlso Dmo decompressor started work when I set argument sampleRate of Mp3WaveFormat constructor in true sample rate value of song manually<br />\n",
+    "PostedDate": "2016-01-28T06:58:47.943-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1461074",
+    "ThreadId": "650620",
+    "Html": "I think this is caused by junk (album art?) at the start of MP3 files getting mis-recognised as valid MP3 frames. One way to work around this is to keep reading frames until you've had a certain number in a row with the same format, and ignoring any before that.<br />\n",
+    "PostedDate": "2016-01-28T07:09:05.58-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1461081",
+    "ThreadId": "650620",
+    "Html": "Ok, I solved the problem. thx<br />\n",
+    "PostedDate": "2016-01-28T07:58:35.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1127452",
+    "ThreadId": "470701",
+    "Html": "I'm getting an WaveBadFormat calling waveOutOpen error when trying to playback a wav file in a remote desktop session. Both my code and the nAudio example code produces the same error. The wav file format is mono, bit rate 256kbps, audio sample size 16bit, Audio sample rate 16kHz, Audio format PCM. nAudio does everything else I need and is a great piece of code but this could be a show stopper for my application. Any help with this would most appreciated.<br />\n",
+    "PostedDate": "2013-11-21T02:29:54.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127475",
+    "ThreadId": "470701",
+    "Html": "The emulated soundcard in RDP is very fussy about what formats it supports. Try playing stereo, and try playing 44.1kHz. Once you've found out what works, you can convert your audio from mono to stereo, or resample it to allow it to play.<br />\n",
+    "PostedDate": "2013-11-21T03:45:30.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127503",
+    "ThreadId": "470701",
+    "Html": "Thanks Mark for coming back so quickly. Ive tried several different samples but still get the same error. I have tried to play the files via windows media and the playback works fine on the remote desktop. Do you have a sample of wave file that works via RDP that you could send me?<br />\n",
+    "PostedDate": "2013-11-21T05:02:22.23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127588",
+    "ThreadId": "470701",
+    "Html": "Afraid not, but you can quite easily test by using a RawSourceWaveStream with an empty MemoryStream and a WaveFormat of your choosing to see what WaveFormat values your RDP session will allow. Obviously the RDP session must be set up to play audio as well.\r<br />\n<br />\nYou can also try searching through the forums here as you are not the first person to have issues with RDP.<br />\n",
+    "PostedDate": "2013-11-21T08:34:34.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

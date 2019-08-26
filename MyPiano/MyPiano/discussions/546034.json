@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1247628",
+    "ThreadId": "546034",
+    "Html": "ok i am having problems getting my sound wave to come out just right. There is a ticking sound in there and I do not know why !!! \r<br />\nI am trying to do a isochronic tones generator. but the  frequency is not coming out right. I run it in a fft so that is how I know.\r<br />\n<br />\nok here is my code: <br />\n<pre><code>\n                            if (counter2 &gt;= Beat)\n                            {\n                                for (int t = 0; t &lt; 10000; t++)\n                                {\n                                    wavefile.WriteSample(0F);\n                                    wavefile.WriteSample(0F);\n                                    \n                                }\n\n                                counter2 = 0;\n                            }\n                            else\n                            {\n                             \n                               wavefile.WriteSample((float)Math.Abs(Amplitude3 * (Math.Sin((Math.PI * n * (Frequency3/2) /44100D)))));\n                               wavefile.WriteSample((float)Math.Abs(Amplitude3 * (Math.Sin((Math.PI * n * (Frequency3/2) / 44100D)))));\n                                counter2 = counter2 + (1D / 44100D);     \n                            }\n                        }\n                        wavefile.Flush();\n                        wavefile.Dispose();\n                        file.Add(save1.FileName);</code></pre>\n\nI had ( Math.Sin(( 2*Math.PI * n * (Frequency3) /44100D) but I had to change it up... after running it in my FTT... it the Frequency was too hight .. I do not know why.. it was like double what it should be \r<br />\n<br />\nbut it is still off \r<br />\nthis is how it sounds:\r<br />\n<a href=\"https://onedrive.live.com/redir?resid=CC8AF223519E2440!114&amp;authkey=!ADGTKdZEpF4F4Q4&amp;ithint=file%2c.wav\" rel=\"nofollow\">https://onedrive.live.com/redir?resid=CC8AF223519E2440!114&authkey=!ADGTKdZEpF4F4Q4&ithint=file%2c.wav</a><br />\n",
+    "PostedDate": "2014-05-20T15:44:19.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248104",
+    "ThreadId": "546034",
+    "Html": "Markheath?\r<br />\nanyone ?<br />\n",
+    "PostedDate": "2014-05-21T12:11:08.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248853",
+    "ThreadId": "546034",
+    "Html": "Can you make the sound you want with a synthesizer? I would probably go about this by combining Signal generators using a mixer, or passing them through LFOs to modulate the amplitude.<br />\n",
+    "PostedDate": "2014-05-23T05:55:21.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248913",
+    "ThreadId": "546034",
+    "Html": "IDK can I\r<br />\nhow would I write a single sinusoidal waveform with only 180Hz  frequency at a 10Hz beat\r<br />\nI want  a 180Hz signal  to  drop to 0  at a 10 Hz frequency\r<br />\n<br />\nlike in this picture:\r<br />\n<br />\n<a href=\"http://upload.wikimedia.org/wikipedia/commons/b/bb/Isochronic-toes.svg\" rel=\"nofollow\">http://upload.wikimedia.org/wikipedia/commons/b/bb/Isochronic-toes.svg</a>\r<br />\n<br />\nit should sound like this \r<br />\n<a href=\"http://mynoise.net/NoiseMachines/isochronicBrainwaveGenerator.php\" rel=\"nofollow\">http://mynoise.net/NoiseMachines/isochronicBrainwaveGenerator.php</a> <br />\n",
+    "PostedDate": "2014-05-23T07:26:14.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

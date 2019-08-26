@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1216873",
+    "ThreadId": "536333",
+    "Html": "Hi Mark,<br />\n<br />\nthis code works on 32bit windows xp but on 64bit windows 7 raises exception! (on any cpu configuration)<br />\n<br />\nBufferedWaveProvider myBufferedWaveProvider = new BufferedWaveProvider(NAudio.Wave.WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, 8000, 1, 16000, 1, 16));<br />\nmyWaveOut.Init(myBufferedWaveProvider);<br />\n<br />\nany help?<br />\n",
+    "PostedDate": "2014-03-02T01:59:12.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217744",
+    "ThreadId": "536333",
+    "Html": "you've created an invalid WaveFormat (blockalign should be 2). Use new WaveFormat(8000, 1) instead to create a 16 bit mono 8kHz PCM format<br />\n",
+    "PostedDate": "2014-03-03T02:15:38.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1218793",
+    "ThreadId": "536333",
+    "Html": "Thanks Mark<br />\n",
+    "PostedDate": "2014-03-03T23:36:22.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1055442",
+    "ThreadId": "446697",
+    "Html": "Hi, I need help with playing from MemoryStream\r<br />\nI'm working on recorder that can continue record to existing file. For this I use general stream for WaveOut and WaveIn. Everything work fine except one moment:\r<br />\nwhen I start playing the file and changing Current Time Position then from time to time instead of normal sound I have scream or loud noise (I don't know how to describe it on English :) ).\r<br />\n<br />\nI created the file like this:<br />\n<pre><code>using (var fileWaveStream = new MediaFoundationReader(FileName))\n                    {\n                        var buffer = new byte[fileWaveStream.Length];\n                        var readBytes = fileWaveStream.Read(buffer, 0,\n                        buffer.Length);\n                        AudioMemoryStream.Write(buffer, 0, readBytes);\n                        AudioStream = new RawSourceWaveStream(\n                                       AudioMemoryStream,    \n                                       fileWaveStream.WaveFormat);\n                     }</code></pre>\n\nWhat is wrong with such approach? Maybe I need to use something instead of RawSourceWaveStream? \r<br />\nBut I need to have MemoryStream as I'm reading from it and also writing WaveIn data to the end of that file.<br />\n",
+    "PostedDate": "2013-06-11T08:28:37.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1055831",
+    "ThreadId": "446697",
+    "Html": "the loud noise when you reposition is probably you repositioning by something that is not a multiple of BlockAlign. Also, you can't write to a memory stream while reading from it. There will be a conflict over what the current Position is.<br />\n",
+    "PostedDate": "2013-06-12T06:40:13.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1056080",
+    "ThreadId": "446697",
+    "Html": "<blockquote>\nthe loud noise when you reposition is probably you repositioning by something that is not a multiple of BlockAlign<br />\n</blockquote>\nNo, it isn't related, I have such issue when change stream time, and I have such issue from time to time (One time I have noise and in another time after scroling to the same time position everything works fine). <br />\n<blockquote>\nAlso, you can't write to a memory stream while reading from it<br />\n</blockquote>\nYes, I understand it, I don't do this. I described playing and recording because this explains why I use Memory Stream (this is importand because I don't have this issue when playing using MediaFoundationReader or Mp3FileReader etc.)<br />\n",
+    "PostedDate": "2013-06-12T14:22:03.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1074473",
+    "ThreadId": "446697",
+    "Html": "Hi Mark, sorry for the late response, have a LOT of todo items :(\r<br />\nI discovered my problem and want to share this with you and other guys (who knows, maybe others will have the same):\r<br />\n<br />\nIn my function which change current time I had this one<br />\n<pre><code>_audioStream.CurrentTime = TimeSpan.FromSeconds(positionInSeconds);</code></pre>\n\nwhere _audioStream is instance of RawSourceWaveStream. And if after this operation our stream position was odd number (and in mono we have 2 bytes for sample, so not odd number indicate that we move stream position to the middle of some sample) than we will have very loudness noise.\r<br />\n<br />\nMy fix is to add this lines after changing of stream position<br />\n<pre><code>if (_audioMemoryStream.Position % 2 != 0)\n{\n    _audioMemoryStream.Seek(1, SeekOrigin.Current);\n}</code></pre>\n\nIt's tested only for mono audio and I believe that general fix is to move position considering BlockAlogn (from WaveFormat).<br />\n",
+    "PostedDate": "2013-07-29T14:21:00.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

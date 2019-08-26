@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1017194",
+    "ThreadId": "437083",
+    "Html": "Hi,all I want to use NAudio in my current project in which I have to recognize numbers with camera and play different wav file for each number.\r<br />\nSo If I have one number its ok, but when I have 5 numbers =&gt; 5 sounds I have to mix them all, so how can I do this with NAudio. Lets say I recognize 4 images, so I have to play 4 mixed wave files in loop while numbers are in camera point of view of view.\r<br />\nThx in advance to anyone who read this. :)<br />\n",
+    "PostedDate": "2013-03-18T10:19:31.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1017559",
+    "ThreadId": "437083",
+    "Html": "The MixingSampleProvider is my recommended way of doing mixing. In the WPF demo app, there is an example of a drum machine showing how you might go about mixing together multiple simultaneous sounds. <br />\n",
+    "PostedDate": "2013-03-19T03:12:16.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

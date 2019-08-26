@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1463998",
+    "ThreadId": "651634",
+    "Html": "Calling Pause() and Play() a few times (3-4 times in many cases) creates a deadlock for me. Digging down the problem I found that there are two threads, one in the Pause() function and the other in the Callback(), both trying to acquire lock on waveOutLock, thus creating a deadlock.\r<br />\n<br />\nI see that this issue has been raised several times before. On one such occasion the proposed solution was to simply move the following line in the Pause() function ABOVE the lock statement:<br />\n<pre><code>     playbackState = PlaybackState.Paused;</code></pre>\n\nI read that the author of Naudio accepted this solution and said he was going to incorporate this into NAudio. But as of the current version this line is still BELOW the lock statement, thus causing the deadlock. Was this change ever incorporated and then reverted back for some reason? (I just checked and it DOES solve my problem).<br />\n",
+    "PostedDate": "2016-02-22T12:15:38.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1484753",
+    "ThreadId": "651634",
+    "Html": "this change has now been made<br />\n",
+    "PostedDate": "2016-09-27T02:45:21.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

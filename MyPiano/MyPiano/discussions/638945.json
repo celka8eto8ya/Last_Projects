@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1428069",
+    "ThreadId": "638945",
+    "Html": "Hi,\r<br />\n<br />\nI'm new to naudio and i look for some method for programmatically playing a piece of mp3 file. I mean from time t1 to time t2. \r<br />\n<br />\nDoes anybody knows wich method of naudio can do this?<br />\n",
+    "PostedDate": "2015-05-29T15:08:23.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441682",
+    "ThreadId": "638945",
+    "Html": "Combine Mp3FileReader with OffsetSampleProvider<br />\n",
+    "PostedDate": "2015-08-24T07:25:54.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

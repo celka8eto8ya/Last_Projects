@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Is there a plan for silverlight support?",
+    "LastUpdatedDate": "2012-10-05T15:11:12.543-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-01-25T09:51:49.89-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Silverlight support",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 4,
+    "Id": 11624
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "lots of NAudio simply won't work on silverlight as it wraps unmanaged APIs. However, I would like to release an assembly in the future that makes the reusable bits available for Silverlight.",
+      "PostedDate": "2010-01-26T01:37:28.533-08:00",
+      "Id": 41714
+    },
+    {
+      "Message": "Agreed, there are several useable bits within NAudio - MP3Frame for example.  I use a very similar class to parse out mp3 samples while streaming on the Silverlight client.",
+      "PostedDate": "2010-07-13T08:01:48.8-07:00",
+      "Id": 41715
+    }
+  ]
+}

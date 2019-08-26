@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "994225",
+    "ThreadId": "431438",
+    "Html": "\r\n<p><span>Is there a way amplify/normalize a wave file?</span></p>\r\n<p><span>I need to raise the volume of files!</span></p>\r\n<p><span style=\"font-size:10pt\">Hope you can help me</span></p>\r\n<p>Regards</p>\r\n<p><span style=\"font-size:10pt\">Rodrigo</span></p>\r\n<p><span><br>\r\n</span></p>\r\n",
+    "PostedDate": "2013-01-30T08:59:54.503-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994541",
+    "ThreadId": "431438",
+    "Html": "Try the AudioFileReader, which will give you IEEE float as an ISampleProvider. This will allow you to easily examine the value of each sample as it comes through. You amplify by multiplying each sample by a value &gt; 1. AudioFileReader has a Volume property that will do this for you.\r<br />\n<br />\nTo write back to a wav file, you'd use a SampleToWaveProvider16 to get back to 16 bit (and will clip if necessary), then pass that into WaveFileWriter.CreateWaveFile.\r<br />\n<br />\nNormalizing, is the process of amplifying by the largest amount possible without actually clipping. It isn't actually a particularly useful feature as a single sample close to the maximum value means that you can't amplify the volume at all. It is much better to use dynamic range compression, which is a more complex algorithm. I've got an example in SimpleCompressor class, but it needs a bit of work to be easily inserted into the signal chain at this point.<br />\n",
+    "PostedDate": "2013-01-30T23:38:07.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

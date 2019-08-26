@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "1458874",
+    "ThreadId": "649903",
+    "Html": "I spent some time playing with the project and finally figured out how to create a waveform visualization in WPF using NAudio (it is mostly already done in the WPF demo project if you download this solution). \r<br />\n<br />\nThe problem I'm facing now is that the visualization is created upon actual playback and renders only part of the playing audio at a time. I need to get the waveform of the entire audio without actually playing it. Can anyone help me with this?\r<br />\n<br />\nBest Regards,\r<br />\nShujaat<br />\n",
+    "PostedDate": "2016-01-12T00:07:14.687-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459522",
+    "ThreadId": "649903",
+    "Html": "In winforms NAudio provides a <strong>WaveViewer</strong> control that displays a Wavestream.<br />\n",
+    "PostedDate": "2016-01-16T15:48:22.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459530",
+    "ThreadId": "649903",
+    "Html": "Thanks a bunch Freefall. I was able to use <strong>WaveStream.ToSampleProvider()</strong> with a <strong>Read()</strong> loop to compute the waveform points and then use my custom WPF control (with a <strong>Polygon</strong> in it) to draw the entire audio waveform in the control.<br />\n",
+    "PostedDate": "2016-01-16T21:34:56.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1477999",
+    "ThreadId": "649903",
+    "Html": "@Shujee, could you provide a small piece of code which you used to generate the waveform?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2016-07-04T00:28:07.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1478002",
+    "ThreadId": "649903",
+    "Html": "Has been quite some time since I worked on that project. I just spent some time and tried to gather the pieces. It is part of a large project, so I can't provide a working solution off hand, but the following will hopefully take you a long way.<br />\n<pre><code>  private WaveOut playbackDevice = new WaveOut() { DesiredLatency = 100, NumberOfBuffers=2};\n\n  public void Load(string fileName)\n  {\n        var fileStream = new WaveFileReader(fileName);\n\n        var fileProvider = new WaveFileReader(fileStream);\n        playbackDevice.Init(fileProvider);\n\n        var SampleProvider = fileStream.ToSampleProvider();\n        var Values = GetWaveForm(SampleProvider, fileStream.WaveFormat, fileStream.Length, fileStream.WaveFormat.SampleRate / 10);\n\n        //Now you can do whatever you want (e.g. plot them) with the Values.\n  }\n\n  private List&lt;MinMax&gt; GetWaveForm(ISampleProvider provider, WaveFormat format, long length, int notificationCount)\n    {\n      int bufferSize = format.ConvertLatencyToByteSize((((WaveOut)playbackDevice).DesiredLatency + ((WaveOut)playbackDevice).NumberOfBuffers - 1) / ((WaveOut)playbackDevice).NumberOfBuffers);\n      var buf = new float[bufferSize];\n      int samplesRead = 0;\n      int count = 0;\n\n      List&lt;MinMax&gt; Values = new List&lt;MinMax&gt;((int)(length / notificationCount));\n\n      float maxValue = 0, minValue = 0;\n      while ((samplesRead = provider.Read(buf, 0, buf.Length)) &gt; 0)\n      {\n        for (int n = 0; n &lt; samplesRead; n += format.Channels)\n        {\n          maxValue = Math.Max(maxValue, buf[n]);\n          minValue = Math.Min(minValue, buf[n]);\n          count++;\n          if (count &gt;= notificationCount &amp;&amp; notificationCount &gt; 0)\n          {\n            Values.Add(new MinMax(minValue, maxValue));\n            minValue = maxValue = count = 0;\n          }\n        }\n      }\n\n      return Values;\n    }</code></pre>\n\nYou'll need to import NAudio.Wave and System.Collections.Generic namespaces into the module. Also this may have some compilation errors since I haven't tested, but fixing them should be trivial.<br />\n",
+    "PostedDate": "2016-07-04T00:56:38.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1478004",
+    "ThreadId": "649903",
+    "Html": "Thanks for the quick response <a href=\"mailto:@Shujee.\r\n\r\nI\" rel=\"nofollow\">@Shujee.\r\n\r\nI</a> was able to get rid of the compilation errors\r<br />\n<br />\nI was wondering if you could guide me as to how would I plot the obtained values. Meaning the Min, Max value pairs that your function returns, how would I plot it on a graph? Should i take their averages or something like that?\r<br />\n<br />\nI really don't have any theoretical knowledge as to how the audio is managed.<br />\n",
+    "PostedDate": "2016-07-04T01:15:38.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1478015",
+    "ThreadId": "649903",
+    "Html": "The values returned by the function are Y-axis averages of left and right channels. The X-axis values would be the playback time itself. You could even use the loop counter as the X-axis value when you plot the graph.\r<br />\n<br />\nPlotting itself is merely the process of placing a dot at each X,Y pair and then interconnecting all the points; much the same way as we do in manual (hand-drawn) charting. How you do this in code depends upon the platform/language you're using. In WinForms, you would use Graphics class methods such as DrawLine to plot it. In my case I was using WPF, so I used a PolyLine control and set its Points collection in a loop. The key here is that plotting these values has nothing whatsoever to do with NAudio. You need to know how to do basic drawing in the language/platform you're using.\r<br />\n<br />\nHope that gets you going.<br />\n",
+    "PostedDate": "2016-07-04T03:57:13.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480355",
+    "ThreadId": "649903",
+    "Html": "Can the above process be executed on a video file or is it necessary to first convert the video file to audio?<br />\n",
+    "PostedDate": "2016-08-04T01:09:45.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482087",
+    "ThreadId": "649903",
+    "Html": "you can use MediaFoundationReader to access the audio from a video file<br />\n",
+    "PostedDate": "2016-08-25T08:02:08.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482091",
+    "ThreadId": "649903",
+    "Html": "@markheath, could you share some piece of code as a reference point for me? Thanks<br />\n",
+    "PostedDate": "2016-08-25T08:43:11.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482092",
+    "ThreadId": "649903",
+    "Html": "<code>MediaFoundationReader</code> is an <code>ISampleProvider</code> so you can just pass it into a method like <code>GetWaveForm</code> as shown above<br />\n",
+    "PostedDate": "2016-08-25T08:45:07.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

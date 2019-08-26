@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "OS: Windows Server 2012R2\r\nNAudio Version: 1.7.1.17\r\n\r\n----------------------------------------- Exception -------------------------------\r\nException: \"An unhandled exception of type 'System.Runtime.InteropServices.COMException' occurred in NAudio.dll\r\nAdditional information: Exception from HRESULT: 0xC00D4A44'\r\n\r\nwriter.DoFinalize() - line 232, MediaFoundationEncoder.cs\r\n\r\nI was attempting to convert several wav files to mp3 files when I came across this error.  Sample code that should recreate the error:\r\n\r\n----------------------------------------- My Source -------------------------------\r\n```\r\nNAudio.MediaFoundation.MediaFoundationApi.Startup();\r\nusing(NAudio.Wave.WaveFileReader readerStream = new NAudio.Wave.WaveFileReader(file))\r\n{\r\n    using(NAudio.Wave.WaveStream waveStream = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(readerStream))\r\n    {\r\n        NAudio.Wave.MediaFoundationEncoder.EncodeToMp3(waveStream, file + \".mp3\");\r\n    }\r\n}\r\nNAudio.MediaFoundation.MediaFoundationApi.Shutdown();\r\n```\r\n\r\n----------------------------------------- Cause -------------------------------\r\nThe writer is performing writes on a sample basis asynchronously to the thread making the writer.WriteSample() method.  Therefore, sometimes the queued bytes to write out via the writer have not been written when writer.DoFinalize() is called inside PerformEncode() causing a COMException to be thrown since apparently DoFinalize() does not wait for the writer to become flush before disposal.\r\n\r\n----------------------------------------- Solution -------------------------------\r\n```\r\nprivate void PerformEncode(IMFSinkWriter writer, int streamIndex, IWaveProvider inputProvider)\r\n{\r\n    int maxLength = inputProvider.WaveFormat.AverageBytesPerSecond * 4;\r\n    var managedBuffer = new byte[maxLength];\r\n\r\n    writer.BeginWriting();\r\n\r\n    long position = 0;\r\n    long duration = 0;\r\n    do\r\n    {\r\n        duration = ConvertOneBuffer(writer, streamIndex, inputProvider, position, managedBuffer);\r\n        position += duration;\r\n    } while (duration > 0);\r\n\r\n    //We are going to check the stats of the writer and ensure no more bytes are queued before we call DoFinalize()\r\n    MF_SINK_WRITER_STATISTICS stats = new MF_SINK_WRITER_STATISTICS();\r\n    stats.cb = Marshal.SizeOf(stats);\r\n    bool finished = false;\r\n\r\n    while (!finished)\r\n    {\r\n        writer.GetStatistics(streamIndex, stats);\r\n\r\n        if (stats.dwByteCountQueued == 0)\r\n            finished = true;\r\n        else\r\n            System.Threading.Thread.Sleep(100);  //sleeping could be optional, but don't want to hog the CPU\r\n    }\r\n    //End workaround\r\n\r\n    writer.DoFinalize();\r\n}\r\n```",
+    "LastUpdatedDate": "2014-04-29T14:06:31.183-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-04-21T12:11:48.407-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudio.Wave.MediaFoundationEncoder.PerformEncode throws MF_E_SINK_NO_SAMPLES_PROCESSED (0xC00D4A44)",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16439
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks, I'll try to get this into a future NAudio",
+      "PostedDate": "2014-04-29T14:06:31.183-07:00",
+      "Id": 145127
+    }
+  ]
+}

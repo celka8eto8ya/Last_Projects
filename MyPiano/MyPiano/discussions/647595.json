@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1452488",
+    "ThreadId": "647595",
+    "Html": "Hi,\r<br />\n<br />\n I have already developed an audio player. I wish I could play the sounds by the microphone (RecordingDevice) for use my application on all Voice/Cam Apps (Skype and other). \r<br />\n<br />\nIt's possible ?\r<br />\n<br />\nRegard,<br />\n",
+    "PostedDate": "2015-11-16T00:09:10.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1452558",
+    "ThreadId": "647595",
+    "Html": "Sadly, this type of things is not possible without using a &quot;Virtual Audio Cable&quot; which allows you to effectively connect the output of one sound device to the input of another.<br />\n",
+    "PostedDate": "2015-11-16T06:02:43.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1452980",
+    "ThreadId": "647595",
+    "Html": "Ok,<br />\n<br />\nCan you make this driver?<br />\nIf so what would your price?<br />\n<br />\nI made an audio player, I want the sounds are played on the &quot;Virtual Audio Cable&quot; and the latter returns the sound on the mic by default.<br />\n<br />\nYou think's it's possible ?<br />\n<br />\nRegard<br />\n",
+    "PostedDate": "2015-11-18T07:07:31.453-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453100",
+    "ThreadId": "647595",
+    "Html": "You could try <a href=\"http://software.muzychenko.net/eng/vac.htm\" rel=\"nofollow\">this one</a>\r<br />\n<br />\nMaking a custom one would be a lot of work, as it involves creating a Windows Device Driver<br />\n",
+    "PostedDate": "2015-11-18T23:36:39.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

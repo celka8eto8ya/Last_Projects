@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1226864",
+    "ThreadId": "540188",
+    "Html": "I have a problem with saving my audio file on hard drive. I'm using a WaveChannel32 class fron Naudio to make a Pan Effect on my played sound. I want to save an audio on disk with changed Pan Values. But when i want save, it a stream is endless and file grows up to big data Wav file. Here is my code where i used it:<br />\n<br />\nMaking a stream:<br />\n<pre><code> if (dialog.FileName.EndsWith(&quot;.mp3&quot;))\n            {\n                pcm = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(new NAudio.Wave.Mp3FileReader(dialog.FileName));\n\n            } else if (dialog.FileName.EndsWith(&quot;.wav&quot;)) {\n                pcm = new NAudio.Wave.WaveChannel32(new NAudio.Wave.WaveFileReader(dialog.FileName));               \n            }\n\n            stream = new NAudio.Wave.BlockAlignReductionStream(pcm); \n\n            if (stream == null) return;\n\n            /* Wave Channel new instance (Pan) */\n            wave_channel = new WaveChannel32(stream);\n            wave_channel.Pan = panSlider1.Pan;\n\n            /* Volume Meter */\n            sample_channel = new SampleChannel(wave_channel, true);\n            sample_channel.PreVolumeMeter += OnPostVolumeMeter;\n\n            /* Volume Slider */\n            sample_channel.Volume = volumeSlider1.Volume;\n\n            realtime_stream = new MeteringSampleProvider(sample_channel);\n            realtime_stream.StreamVolume += OnPostVolumeMeter;\n            \n            /* Wave out initialize */\n            wavo = new WaveOut();\n            wavo.Init(sample_channel);\n            wavo.Stop();</code></pre>\n\nSaving a wav file code:<br />\n<pre><code>  WaveStream ch = wave_channel; \n            long outputLenght = 0; \n\n            using (var writer = new WaveFileWriter(save_file_dialog.FileName + &quot;.wav&quot;, ch.WaveFormat)) { \n                byte[] buffer = new byte[ch.WaveFormat.AverageBytesPerSecond * 4]; \n                while (true) { \n                    int bytesread = ch.Read(buffer, 0, buffer.Length); \n                    if (bytesread == 0) { \n                        break; \n                    } \n                    outputLenght += bytesread; \n                    if (outputLenght &gt; Int32.MaxValue) { \n                        throw new InvalidOperationException(&quot;Plik nie może być większy niż 2GB&quot;); \n                    }\n                    Console.WriteLine(buffer.Length);\n                    Console.WriteLine(bytesread);\n                    writer.Write(buffer, 0, bytesread); \n                } \n            } </code></pre>\n\nHow can i save it on hard drive with the same time as original?<br />\n",
+    "PostedDate": "2014-03-26T04:41:25.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239510",
+    "ThreadId": "540188",
+    "Html": "See this post on <a href=\"http://mark-dot-net.blogspot.co.uk/2014/03/how-to-record-and-play-audio-at-same.html\" rel=\"nofollow\">saving and playing audio</a> at the same time<br />\n",
+    "PostedDate": "2014-04-29T12:26:14.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1244394",
+    "ThreadId": "545098",
+    "Html": "Hello,\r<br />\nI would like to create .mid MIDI songs with NAudio and play them with Media Player.\r<br />\nI can create a MidiEventCollection and fill it with many NoteOnEvent, prepare for export and export the song. Then I can listen to it with Media Player, it's quite simple and effective.\r<br />\nI can mix drums (chanel 10) with Piano (chanel 1-9 and 11-15).\r<br />\nBut how can I play others instruments than piano?\r<br />\nI miss something like a command for selecting the defaut instrument to play on a specified chanel (for example guitar on chanel 1, organ on chanel 2...)\r<br />\nIs it possible to do that with NAudio, and if so, how to do it?\r<br />\nThank you.<br />\n",
+    "PostedDate": "2014-05-12T08:08:41.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244555",
+    "ThreadId": "545098",
+    "Html": "Add patch change events for the other channels.<br />\n",
+    "PostedDate": "2014-05-12T13:26:26.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-12T23:33:35.573-07:00"
+  },
+  {
+    "Id": "1244674",
+    "ThreadId": "545098",
+    "Html": "Oh! So easy!\r<br />\nIt works really fine.\r<br />\nI can even change the instrument after some notes without changing the chanel.\r<br />\nThank you.<br />\n",
+    "PostedDate": "2014-05-12T23:33:32.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

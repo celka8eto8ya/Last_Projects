@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Done in changeset 11675",
+    "ClosedDate": "2008-06-15T01:40:13.13-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "Rather than using a thread-sleep, wait on an event for a buffer-fill for WASAPI",
+    "LastUpdatedDate": "2008-06-15T01:40:13.13-07:00",
+    "PlannedForRelease": "1.2 Beta",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-06-11T05:53:58.24-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Implement WASAPI Event-Driven Model",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 6340
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

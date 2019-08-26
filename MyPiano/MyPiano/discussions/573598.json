@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1327470",
+    "ThreadId": "573598",
+    "Html": "Hi,<br />\n<br />\nI have a problem concerning processing two files, mixing them together and saving the output in readable wave format. The Processing is just adjusting volume of the second file accordingly to the volume of the first one (i.e. envelope controlling). I load both of them to the AudioFileReader. I pick where to save 'writer' (which is a WaveFileWriter) using SaveFileDialog and i adjust its WaveFormat accordingly to what WaveFormat first input file has: <br />\n<pre><code>writer = new WaveFileWriter(saveDialog.FileName, firstReader.WaveFormat);</code></pre>\n\nThen this method gets triggered:<br />\n<pre><code>{\n/* \n * In one loop: filling both buffers, adjusting volume, mixing and saving the output \n */\n\nfirstBuffer = new float[firstReader.WaveFormat.SampleRate * 2];\nsecondBuffer = new float[secondReader.WaveFormat.SampleRate * 2];\n\nint firstBytesRead = 0;\nint secondBytesRead = 0;\ndo\n{\n    //reading:\n    firstBytesRead = firstReader.Read(firstBuffer, 0, firstBuffer.Length);\n    secondBytesRead = secondReader.Read(secondBuffer, 0, secondBuffer.Length);\n\n    //processing:\n    for (int i = 0; i &lt; firstBuffer.Length; i++)\n    {\n        firstBuffer[i] /= 2;  //volume rescaling\n\n        // if secondBufer isn't empty - adjust the volume and mix it with firstBuffer\n        if (secondBytesRead &gt; 0)\n        {\n            secondBuffer[i] *= firstBuffer[i]*VOLUME_RATIO;\n            firstBuffer[i] += secondBuffer[i];\n        }\n    }\n\n    //writting:\n    writer.WriteSamples(firstBuffer, 0, firstBytesRead);\n} while (firstBytesRead &gt; 0);\n\nMessageBox.Show(&quot;Completed succesfully&quot;, &quot;Done!&quot;);\n}</code></pre>\n\nThe output is created and i can play it in Winamp (but not in a different player). The problem is that I would like to use my output as an input for another processing cycle, i.e. simply loading output and chaining (adjusting volume and mixing) it with another file. Unfortunately i get FormatException while loading this output. It says:<br />\n <br />\n<em>An unhandled exception of type 'System.FormatException' occurred in NAudio.dll</em><br />\n<em>Additional information: Invalid WAV file - No fmt chunk found</em><br />\n<br />\nWhy it's invalid .wav file if i used WaveFormat from existing, proper .wav file? How can i provide this fmt chunk to my output?<br />\n<br />\nThanks in advance for any help<br />\n<br />\n<strong>EDIT: I didn't dispose after writing. Sorry for the mess, stupid mistake and i don't know how to delete this post...</strong><br />\n",
+    "PostedDate": "2014-11-30T15:27:33.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-11-30T15:37:16.21-08:00"
+  },
+  {
+    "Id": "1340620",
+    "ThreadId": "573598",
+    "Html": "no problem, glad you found a solution<br />\n",
+    "PostedDate": "2015-01-10T01:30:24.967-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

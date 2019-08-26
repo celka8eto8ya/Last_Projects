@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1294173",
+    "ThreadId": "562312",
+    "Html": "\r\n<div dir=\"ltr\">The volume option does not work for directsoundout I get the following error :\r\n<div>Setting volume not supported on DirectSoundOut, adjust the volume on your WaveProvider instead</div>\r\n<div><br>\r\n</div>\r\n<div>How would I set the volume with the waveprovider ?</div>\r\n</div>\r\n",
+    "PostedDate": "2014-08-28T00:55:50.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

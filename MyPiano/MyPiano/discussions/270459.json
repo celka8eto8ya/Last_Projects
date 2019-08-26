@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "663553",
+    "ThreadId": "270459",
+    "Html": "\r\n<p>I'm following the tutorials located <a href=\"http://opensebj.blogspot.com/search?q=wavefilewriter\" target=\"_blank\">\r\nhere.</a>&nbsp;If you read through the second tutorial (Direct-To-Disk recoding via the NAudio WaveMixerStream32 Class), you will see that the function&nbsp;WriteMixStreamOut is called within the Read() override function. However, when I run my program, nothing\r\n calls the Read function, thus nothing is recorded. How can I remedy this?</p>\r\n",
+    "PostedDate": "2011-08-25T16:15:07.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "667711",
+    "ThreadId": "270459",
+    "Html": "<p>I didn't write that tutorial, but it has a link to sample code so I suggest you download that and follow it through in the debugger</p>",
+    "PostedDate": "2011-09-05T06:35:17.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

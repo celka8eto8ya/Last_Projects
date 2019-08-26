@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "905105",
+    "ThreadId": "393353",
+    "Html": "\r\n<p>I have an application where I need the ability to loop the audio stream from the input to the speakers.&nbsp; I am currently doing this with WaveIn and DirectSoundOut.&nbsp;</p>\r\n<p>Everything here works except that the DirectSoundOut says that it does not support volume when I get down to that line of code. How can I change the volume of the audio being sent to the speakers? If it means I cannot use DirectSoundOut that is fine, but\r\n what would I use?</p>\r\n<p>I'm setting up using the code below:</p>\r\n<div style=\"background-color:white; color:black\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> button1_Click(<span style=\"color:blue\">object</span> sender, EventArgs e)\r\n{\r\n    <span style=\"color:blue\">if</span> (waveIn == <span style=\"color:blue\">null</span>)\r\n    {\r\n        waveIn = <span style=\"color:blue\">new</span> WaveIn();\r\n        waveIn.WaveFormat = <span style=\"color:blue\">new</span> NAudio.Wave.WaveFormat(sampleRate, bitsPerSample, channels);\r\n        \r\n        <span style=\"color:blue\">if</span> (waveOut == <span style=\"color:blue\">null</span>)\r\n        { \r\n            WaveInProvider waveInProvider = <span style=\"color:blue\">new</span> WaveInProvider(waveIn);\r\n            waveOut = <span style=\"color:blue\">new</span> DirectSoundOut();\r\n            waveOut.Init(waveInProvider);\r\n        }\r\n\r\n        waveOut.Volume = volumeSlider1.Volume;\r\n\r\n        waveIn.StartRecording();\r\n        waveOut.Play();\r\n    }\r\n}</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-08-28T06:50:28.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "908750",
+    "ThreadId": "393353",
+    "Html": "<p>Either use WaveOut/WaveOutEvent instead, or you would need to modify the levels of each sample (e.g. using VolumeWaveProvider16)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-09-05T09:18:20.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

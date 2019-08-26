@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1259618",
+    "ThreadId": "549633",
+    "Html": "Hello,\r<br />\nI faced a problem with recording loopback device having more then 2 channels<br />\n<pre><code>public MMDevice Device;\nprivate WasapiCapture _waveIn;\n.....\n.....\n_waveIn = IsLoopback ? new WasapiLoopbackCapture(Device) : new WasapiCapture(Device);\n\n               _waveIn.DataAvailable += OnDataAvailable;\n               _waveIn.RecordingStopped += OnRecordingStopped;\n               _waveIn.StartRecording();</code></pre>\n\nIt crashes on <em>StartRecording</em> with &quot;Unsupported Wave Format&quot; error\r<br />\nError is coming from <em>WasapiCapture.InitializeCaptureDevice()</em> while it  calls<br />\n<pre><code>if (!audioClient.IsFormatSupported(ShareMode, WaveFormat))\n            {\n                throw new ArgumentException(&quot;Unsupported Wave Format&quot;);\n            }</code></pre>\n\nIs there any walk around this problem? Can I change MMDevice wave format?<br />\n",
+    "PostedDate": "2014-06-25T05:11:42.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260308",
+    "ThreadId": "549633",
+    "Html": "I investigated what is happening. There is a constructor of WasapiCapture class in NAudio library<br />\n<pre><code> public WasapiCapture(MMDevice captureDevice)\n        {\n            syncContext = SynchronizationContext.Current;\n            audioClient = captureDevice.AudioClient;\n            ShareMode = AudioClientShareMode.Shared;\n\n            waveFormat = audioClient.MixFormat;\n            var wfe = waveFormat as WaveFormatExtensible;\n            if (wfe != null)\n            {\n                try\n                {\n                    waveFormat = wfe.ToStandardWaveFormat();\n                }\n                catch (InvalidOperationException)\n                {\n                    // couldn't convert to a standard format\n                }\n            }\n        }</code></pre>\n\nIt is using WaveFormat.ToStandardWaveFormat(). I tried to comment out part which changes format to standard one<br />\n<pre><code>            //var wfe = waveFormat as WaveFormatExtensible;\n            //if (wfe != null)\n            //{\n            //    try\n            //    {\n            //        waveFormat = wfe.ToStandardWaveFormat();\n            //    }\n            //    catch (InvalidOperationException)\n            //    {\n            //        // couldn't convert to a standard format\n            //    }\n            //}</code></pre>\n\nSo in my case I just leaving original<br />\n[NAudio.Wave.WaveFormatExtensible] = {32 bit PCM: 44kHz 6 channels wBitsPerSample:32 dwChannelMask:1551 subFormat:00000003-0000-0010-8000-00aa00389b71 extraSize:22}<br />\n<br />\nNow I'm getting data. Though I didn't find what to do with this format yet. Actually I need only two channels left and right. <br />\nAny suggestions aprpeciated.<br />\n",
+    "PostedDate": "2014-06-27T01:42:30.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260311",
+    "ThreadId": "549633",
+    "Html": "OK makes sense. The conversion to a standard format was because lots of users write the WasapiCapture direct to WAV file using the WaveFormat, but if it is a WaveFormatExtensible (which WASAPI always seems to use), then a lot of players won't play the file).\r<br />\n<br />\nIf you only need two channels, then you need to keep every 8 bytes (two 32 bit samples) and throw away 16 (remaining four channels).<br />\n",
+    "PostedDate": "2014-06-27T01:48:52.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260315",
+    "ThreadId": "549633",
+    "Html": "The problem is that I don't know in advance what will be format. 1 channel, 2 or 6,8. As I'm recording both Mic and speakers I downmixing to 1 channel speakers and to another mic. Sometimes I use MediaFoundationTransform to adjust Samplerate \r<br />\nI'm wandering if MediaFoundationTransform can help me with this transformation as well?<br />\n",
+    "PostedDate": "2014-06-27T01:58:32.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260410",
+    "ThreadId": "549633",
+    "Html": "It looks like MediaFoundationTransform is the solution<br />\n<ul>\n<li>I'm leaving the original format in WasapiCapture as shown above</li>\n<li>saving data to buffer</li>\n<li>\npassing it through <em>MediaFoundationTransform</em>. At the end I have format I need with number of channels I  need.<br />\n</li>\n</ul>\nThanks a lot Mark for creating such a great library<br />\n",
+    "PostedDate": "2014-06-27T06:38:56.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260411",
+    "ThreadId": "549633",
+    "Html": "great, glad you found a solution<br />\n",
+    "PostedDate": "2014-06-27T06:40:05.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

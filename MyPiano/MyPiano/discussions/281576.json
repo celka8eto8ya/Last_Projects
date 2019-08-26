@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "706336",
+    "ThreadId": "281576",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I am new to here and fresh to split mp3.</p>\r\n<p>My purpose is to split mp3 at the point where just after the mp3 played the specified word.</p>\r\n<p>For example, there are many time that broadcaster say &quot;This is &quot; in a mp3,&nbsp; then my program with some audio library would split the whole mp3 to many small mp3 which are started at &quot;This is&quot;.</p>\r\n<p>Is NAudio a good library to match my requirement?</p>\r\n<p>Thank you.</p>\r\n",
+    "PostedDate": "2011-12-02T01:49:58.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713277",
+    "ThreadId": "281576",
+    "Html": "<p>NAudio can split MP3 files, but you need to understand how they are constructed. Read <a href=\"http://stackoverflow.com/questions/6094287/naudio-to-split-mp3-file\">my answer at StackOverflow</a></p>",
+    "PostedDate": "2011-12-16T08:45:01.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

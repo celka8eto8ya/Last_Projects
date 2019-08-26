@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "568365",
+    "ThreadId": "246592",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp;</p>\r\n<p>I am new to NAudio. I am trying to record a conversation in communicator. As per the microsoft documentation I think I have to do a LoopBack recording.</p>\r\n<p>So in AudioClient I trind to Initialize using first two parameters as shared and loopback.&nbsp;</p>\r\n<p>&nbsp;int hresult = audioClientInterface.Initialize(AudioClientShareMode.Shared, AudioClientStreamFlags.Loopback, bufferDuration, periodicity, waveFormat, ref audioSessionGuid);&nbsp;&nbsp;</p>\r\n<p>I am getting an exception like below.&nbsp;</p>\r\n<p>Exception from HRESULT: 0x88890003</p>\r\n<p>my hresult value&nbsp;is&nbsp;-2004287485</p>\r\n<p>&nbsp;</p>\r\n<p>Can anybody tell me the reason and how I can correct it??</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Jorge</p>\r\n",
+    "PostedDate": "2011-02-17T23:40:12.357-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569513",
+    "ThreadId": "246592",
+    "Html": "<p>You'll have to use google to get the exact meaning of that error code. What OS are you using? And what waveFormat are you trying to record in?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-21T02:37:59.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "570093",
+    "ThreadId": "246592",
+    "Html": "<p>My OS is Windows 7 Enterprise Edition, and I am recording in wav format.</p>",
+    "PostedDate": "2011-02-22T02:06:59.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "570115",
+    "ThreadId": "246592",
+    "Html": "<p>I mean what sample rate &amp; bit depth etc (do a waveFormat.ToString())</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-22T03:19:07.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "571911",
+    "ThreadId": "246592",
+    "Html": "<p>This is the wav format.</p>\r\n<p>it's the devices mixformat and the device is a usb handset.</p>\r\n<p>\"32 bit PCM: 44kHz 1 channels wBitsPerSample:32 dwChannelMask:4 subFormat:00000003-0000-0010-8000-00aa00389b71 extraSize:22\"</p>",
+    "PostedDate": "2011-02-24T20:24:49.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572032",
+    "ThreadId": "246592",
+    "Html": "<p>can you open it in exclusive mode?</p>",
+    "PostedDate": "2011-02-25T01:56:53.463-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573041",
+    "ThreadId": "246592",
+    "Html": "<p>No,</p>\r\n<p>it also throws exception&nbsp;</p>\r\n<p>Exception from HRESULT: 0x88890003</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-02-27T21:39:02.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573233",
+    "ThreadId": "246592",
+    "Html": "<p>ok, I would suggest you find some forums where WASAPI is discussed and find out the meaning of those error codes</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-28T05:46:49.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573664",
+    "ThreadId": "246592",
+    "Html": "<p>Thanks Mark.</p>",
+    "PostedDate": "2011-02-28T21:43:35.8-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621930",
+    "ThreadId": "246592",
+    "Html": "<p>For those still looking for HRESULT: 0x88890003 description and other exceptions see</p>\n<p><a href=\"http://hi.baidu.com/littlexizf/blog/item/c4675cf609c6d330bc3109c4.html\">http://hi.baidu.com/littlexizf/blog/item/c4675cf609c6d330bc3109c4.html</a></p>\n<table>\n<tbody>\n<tr>\n<td>0x88890003</td>\n<td>AUDCLNT_E_WRONG_ENDPOINT_TYPE</td>\n</tr>\n</tbody>\n</table>\n<p>Description :&nbsp;The AUDCLNT_STREAMFLAGS_LOOPBACK flag is set but the endpoint device is a capture device, not a rendering device.</p>\n<p><a href=\"http://msdn.microsoft.com/en-us/library/dd370875(v=vs.85).aspx\">http://msdn.microsoft.com/en-us/library/dd370875(v=vs.85).aspx</a></p>\n<p>Also, reason for failure to Initialize explained copied from msdn :</p>\n<p>The AUDCLNT_STREAMFLAGS_LOOPBACK flag enables loopback recording. In loopback recording, the audio engine copies the audio stream that is being played by a rendering endpoint device into an audio endpoint buffer so that a&nbsp;<a href=\"http://msdn.microsoft.com/en-us/library/dd371455(v=vs.85).aspx\">WASAPI</a>&nbsp;client can capture the stream. If this flag is set, the&nbsp;<strong>IAudioClient::Initialize</strong>&nbsp;method attempts to open a capture buffer on the rendering device. This flag is valid only for a rendering device and only if the&nbsp;<strong>Initialize</strong>&nbsp;call sets the&nbsp;<em>ShareMode</em>&nbsp;parameter to AUDCLNT_SHAREMODE_SHARED. Otherwise the&nbsp;<strong>Initialize</strong>&nbsp;call will fail. If the call succeeds, the client can call the&nbsp;<a href=\"http://msdn.microsoft.com/en-us/library/dd370873(v=vs.85).aspx\"><strong>IAudioClient::GetService</strong></a>&nbsp;method to obtain an&nbsp;<a href=\"http://msdn.microsoft.com/en-us/library/dd370858(v=vs.85).aspx\"><strong>IAudioCaptureClient</strong></a>&nbsp;interface on the rendering device. For more information, see&nbsp;<a href=\"http://msdn.microsoft.com/en-us/library/dd316551(v=vs.85).aspx\">Loopback Recording</a>.</p>",
+    "PostedDate": "2011-06-02T05:08:33.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudio Core",
+      "DisplayName": "NAudio Core"
+    },
+    "ClosedComment": "Resampler DMO stream is now created in the playback thread",
+    "ClosedDate": "2008-06-14T14:45:36.02-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "The WASAPI Out class needs to create a Resampler DMO object on its background thread so it can be used from a STAThreaded application.",
+    "LastUpdatedDate": "2008-06-14T14:45:36.02-07:00",
+    "PlannedForRelease": "1.2 Beta",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-06-11T05:49:54.24-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WASAPI Out with Resampler DMO to work in STAThread",
+    "Type": {
+      "Name": "Task",
+      "Id": 2
+    },
+    "VoteCount": 1,
+    "Id": 6339
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "430296",
+    "ThreadId": "209133",
+    "Html": "<p>Hi</p>\r\n<p>If a file is played using <a href=\"http://voicerecorder.codeplex.com/\">http://voicerecorder.codeplex.com/</a>&nbsp;&nbsp;how can I make a transition from playing state to stopped state , if the audio file has played out its length ? can I associate an event with this &nbsp;?</p>",
+    "PostedDate": "2010-04-12T22:37:27.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "431534",
+    "ThreadId": "209133",
+    "Html": "<p>have a look at the <strong>waveOut_PlaybackStopped</strong> method in the <strong>AudioPlayer</strong> class in VoiceRecorder to see how this happens.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-04-15T09:17:35.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

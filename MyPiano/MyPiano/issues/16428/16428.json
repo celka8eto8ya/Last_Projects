@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "It could be good fiture to add beat-per-minute detection int library.\r\nProbably, it's already done, but I cany find?",
+    "LastUpdatedDate": "2014-01-20T14:48:36.3-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-01-20T13:40:18.103-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "BPM detection",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16428
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Unfortunately, NAudio does not contain a BPM detection algorithm. If a good open source one can be found and has a suitable licence, it could perhaps be ported to C#, but this is not actually a trivial task. I actually wrote about this in a [blog post](http://mark-dot-net.blogspot.co.uk/2014/01/five-audio-processing-tasks-that-are.html) recently.",
+      "PostedDate": "2014-01-20T14:48:36.3-08:00",
+      "Id": 130991
+    }
+  ]
+}

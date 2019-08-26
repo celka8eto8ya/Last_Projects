@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1472742",
+    "ThreadId": "654417",
+    "Html": "Say I had a range of music applications (iTunes, Spotify, and Chrome). I want to determine if audio is playing and which application is playing audio. I can get and save music, playing through the speakers (wasapiloopback). I just don't know if it's possible to track down which application is doing it.<br />\n<br />\nI'm writing in VB.NET.<br />\n",
+    "PostedDate": "2016-05-07T13:53:45.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1472854",
+    "ThreadId": "654417",
+    "Html": "Have a look at core audio api included in naudio<br />\n",
+    "PostedDate": "2016-05-09T06:07:51.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

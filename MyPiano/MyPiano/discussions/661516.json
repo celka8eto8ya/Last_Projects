@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1493105",
+    "ThreadId": "661516",
+    "Html": "Hello, I am trying desperately to convert a WMA byte stream to a WAV, first I've tried this code:<br />\n<pre><code>    System.IO.File.WriteAllBytes(&quot;wmatemp.wma&quot;, data);\n    WMAFileReader fileReader = new WMAFileReader(&quot;wmatemp.wma&quot;);\n    WaveStream waveStream = WaveFormatConversionStream.CreatePcmStream(fileReader);\n    WAV wav = new WAV(AudioMemStream(waveStream).ToArray());</code></pre>\n\nBut everytime I run the program, when it reaches the point where it has to create the fileReader, it crashes, without throwing exception, I found this error in the error log:\r<br />\n&quot;The thread tried to read from or write to a virtual address for which it does not have the appropriate access.&quot;\r<br />\nMy second attempt was with this code:<br />\n<pre><code>MemoryStream wmastream = new MemoryStream(data);\n        StreamMediaFoundationReader fileReader = new StreamMediaFoundationReader(wmastream);\n        \n        WaveStream waveStream = WaveFormatConversionStream.CreatePcmStream(fileReader);\n        WAV wav = new WAV(AudioMemStream(waveStream).ToArray());</code></pre>\n\nAt this point the program doesn't crash but it still throws an exception, that is \r<br />\n&quot;Requestes feature is not implemented&quot;\r<br />\nI would appreciate any type of help, thank you ! <br />\n",
+    "PostedDate": "2017-02-22T11:59:16.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

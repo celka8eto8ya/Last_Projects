@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1453930",
+    "ThreadId": "648116",
+    "Html": "Hi,\r<br />\n<br />\nI was wondering, are you able to obtain all the samples from a wav file, to do filtering of samples in naudio? How would you obtain all the samples from a wav file and put them into a 16bit float array?<br />\n",
+    "PostedDate": "2015-11-28T05:52:25.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1454718",
+    "ThreadId": "648116",
+    "Html": "Source chain needed: AudioFileReader -&gt; ToSampleProvider -&gt; Read method (recieve samples into buffer)\r<br />\n<br />\nThis buffer contains a packet of samples, that u can pass to other functions then.\r<br />\n<br />\n10s google and u could have achived this on your own...<br />\n",
+    "PostedDate": "2015-12-05T08:42:21.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

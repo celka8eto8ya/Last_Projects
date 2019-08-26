@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1479770",
+    "ThreadId": "656678",
+    "Html": "I have a problem knowing when a source stream has stopped playing. If one is playing a single source stream into a WaveOut device then it is easy, just catch the event the WaveOut raises. My signal chain is a little more complex than that since I have multiple source streams being played through a mixer to the WaveOut. Basically what I have is Other providers may be added later):\r<br />\n<br />\n&lt;AudioFileReader&gt;&lt;FadeInOutSampleProvider&gt;&lt;MixingSampleProvider&gt;&lt;WaveOut&gt;\r<br />\n<br />\nThe MixingSampleProvider can have multiple inputs.\r<br />\n<br />\nThe FadeInOutSampleProvider I have modified to return zero bytes when it enters &quot;Silence&quot; state.\r<br />\n<br />\nMy issue is that I need to know when the source is silenced at the end of a fade out so that the source and that signal chain may be disposed where necessary. The fade out can occur at almost any time because the application sequences a number of files and some of the files are marked to be &quot;exclusive&quot; so any playing file must be faded out and then any resources used by it disposed.\r<br />\n<br />\nIs there a way of detecting this? It seems that the &quot;MixingSampleProvider&quot; is almost doing this when the &quot;ReadFully&quot; property is true, it removes the input from the mixer. Maybe a solution is to add an event when this occurs?\r<br />\n<br />\nAny ideas would be much appreciated,\r<br />\nSid<br />\n",
+    "PostedDate": "2016-07-25T14:09:27.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480184",
+    "ThreadId": "656678",
+    "Html": "yes, for playback to stop, the provider being passed to WaveOut must return 0 from the Read method. To dispose mixer inputs, I've sometimes created a simple wrapper using the decorator pattern, that converts an ISampleProvider into something that can run a custom action after its Read method returns 0. In the future I'd like to add a better way of handling this in the MixingSampleProvider (probably raising events when inputs are removed).<br />\n",
+    "PostedDate": "2016-08-01T04:55:01.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480420",
+    "ThreadId": "656678",
+    "Html": "Mark, Since I wrote this I have reorganized my signal chain a little because I needed to have sample rate conversion and also handle mono files seamlessly. Inspired by your SampleChannel I have put together a channel signal flow that meets my needs. Each of these channels feeds the MixiingSampleProvider and I made a small change to that class to add an EndOfMedia event that is raised when the &quot;read&quot; method returns zero samples My mixer class then catches this event and takes the required action. It was very simple to add requiring only the definition of the event and raising it at the appropriate place.<br />\n<pre><code>    public class MixerEndOfMediaEventArgs : EventArgs\n    {\n        /// &lt;summary&gt;\n        /// The stream that ended\n        /// &lt;/summary&gt;\n        public ISampleProvider source {get;set;}\n    }\n\n    public event EventHandler&lt;MixerEndOfMediaEventArgs&gt; EndOfMedia;\n</code></pre>\n\nAnd this small update to the &quot;Read&quot; method of MixingSampleProvider:<br />\n<pre><code>                    if (samplesRead == 0)\n                    {\n                        args.source = sources[index];\n                        EndOfMedia(this,args);\n                        sources.RemoveAt(index);\n                    }\n                    index--;</code></pre>\n\nSid<br />\n",
+    "PostedDate": "2016-08-04T16:36:36.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483311",
+    "ThreadId": "656678",
+    "Html": "hi Sid, I've just added something similar to this. Let me know if it meets your needs. Thanks for the suggestion<br />\n",
+    "PostedDate": "2016-09-09T15:43:53.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483494",
+    "ThreadId": "656678",
+    "Html": "\r\n<div>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Thanks Mark, I am focused on a different part of my project right now but I have pulled the updates and will take a look ASAP.</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Thanks again,</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\">Sid</span></p>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<p><i><span style=\"font-size:11.0pt; font-family:\">Sid Price</span></i></p>\r\n<p><i><span style=\"font-size:11.0pt; font-family:\">Desktop Application and Embedded System Design</span></i></p>\r\n</div>\r\n<p><span style=\"font-size:11.0pt; font-family:\"></span></p>\r\n<div>\r\n<div style=\"border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0in 0in 0in\">\r\n<p><b><span style=\"font-size:11.0pt; font-family:\"></span></b></p>\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2016-09-12T09:05:28.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1490439",
+    "ThreadId": "660402",
+    "Html": "Is there a reason that the WaveFileWriter.Dispose method closes the underlying stream, but the LameMP3FileWriter.Dispose method does not?\r<br />\n<br />\nThat seems to make it hard to handle both file types the same way.<br />\n",
+    "PostedDate": "2016-12-29T16:11:19.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491936",
+    "ThreadId": "660402",
+    "Html": "I think this is a ownership issue and I assume:<br />\n<ul>\n<li>WaveFileWriter creates the filestream it writes to and is therefore the owner</li>\n<li>\nLameMP3FileWriter uses a unmanaged object which creates the filestream and is therefore not the owner<br />\n</li>\n</ul>\n=&gt; To be sure you should look at the source code (on github, the source on codeplex is really outdated)<br />\n",
+    "PostedDate": "2017-01-30T10:47:11.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

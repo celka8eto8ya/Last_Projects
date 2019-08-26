@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1235078",
+    "ThreadId": "542529",
+    "Html": "Hello,\r<br />\n<br />\nI'm build an application that must split recorded sound from microphone into separate files to send via POST, this way i can send files on fly and dont have wait for the final output file.\r<br />\nHow can i do that? and also only start recordering when detect some voice input, cutting all mute sound?\r<br />\n<br />\nSplit example: Create a WAV file every x seconds\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2014-04-17T08:13:06.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242255",
+    "ThreadId": "542529",
+    "Html": "Well you'd record all the time, and then check each sample to see if it goes above your minimum threshold. If so, you'd create a WaveFileWriter and start writing. Once you got a buffer with silence, close the WAV file. To split files, just create a new WaveFileWriter once you've written more than the max duration you want in a WAV file.<br />\n",
+    "PostedDate": "2014-05-06T13:11:40.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

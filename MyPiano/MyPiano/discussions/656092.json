@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1477998",
+    "ThreadId": "656092",
+    "Html": "I have a WAV file for which I would like to generate a waveform graph which NAudio generates in the demo application i.e. AudioPlaybackDemo. The sample generates the graph at run time while the audio is been played.\r<br />\n<br />\nWhat I would like is to get the exact same graph generated without playing it.\r<br />\n<br />\nI tried the code <a href=\"http://stackoverflow.com/questions/19265793/unable-to-get-wave-form-image-for-audio-using-naudio\" rel=\"nofollow\">here</a> but it seems to be not accurate. \r<br />\n<br />\nAny help is greatly appreciated. \r<br />\nThanks<br />\n",
+    "PostedDate": "2016-07-04T00:18:57.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1484449",
+    "ThreadId": "656092",
+    "Html": "I recently open sourced <a href=\"https://github.com/naudio/NAudio.WaveFormRenderer\" rel=\"nofollow\">WaveFormRenderer</a> which shows various techniques for generating a WaveForm with NAudio<br />\n",
+    "PostedDate": "2016-09-22T11:26:34.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

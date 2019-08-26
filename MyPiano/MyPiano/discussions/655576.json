@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1476267",
+    "ThreadId": "655576",
+    "Html": "Dear Mark, congratulations for the work done. Do you ever thought about the possibility of adding to framework an implementation of IWavePlayer for PortAudio? Something like PortAudioOut... \r<br />\nNAudio would be portable to other platforms like Mac and Linux.\r<br />\nI await your comments...<br />\n",
+    "PostedDate": "2016-06-14T15:43:22.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1477273",
+    "ThreadId": "655576",
+    "Html": "It's not something I've ever needed myself, but it could be useful. It could be made as an extension project for NAudio.<br />\n",
+    "PostedDate": "2016-06-25T09:01:26.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

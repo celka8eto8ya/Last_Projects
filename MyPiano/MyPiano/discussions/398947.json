@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "925158",
+    "ThreadId": "398947",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I get an exception when play sound by NAudio's WaveOut</p>\r\n<p>Like:</p>\r\n<p>&nbsp;</p>\r\n<p>AcmStreamHeader dispose was not called</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp; at AcmStreamHeader.Finalized()</p>\r\n<p>&nbsp;&nbsp;&nbsp; H:\\test\\naudio_source\\NAudio\\Wave\\Compression\\AcmStreamHeader.cs(117)</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you !!</p>\r\n",
+    "PostedDate": "2012-10-11T03:32:42.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "929434",
+    "ThreadId": "398947",
+    "Html": "<p>did you remember to dispose your WaveStream when you finished playing?</p>",
+    "PostedDate": "2012-10-19T07:39:12.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955858",
+    "ThreadId": "398947",
+    "Html": "\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-12-13T17:18:10.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

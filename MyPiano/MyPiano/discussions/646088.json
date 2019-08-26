@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1448109",
+    "ThreadId": "646088",
+    "Html": "Hi, I want to use a pitch shifting algotihm that transposes Samples in high quality. I created a SampleProvider and pass the buffer to the FFT function then, but have the problem, that the FFT function desires a size of 1024, 2048, 4096 etc. that doesn´t match the count of the read method, which is 4410 (NumBuffers=3, Latency=150ms). So if i take a FFT Size of 4096 i still miss some frames (314), which lowers quality very much.<br />\n<br />\nIs there any workaround to read in FFTSize blocks and still ensure a gapless and smooth playback? I mean instead of setting it up through the waveout device, which actually isn´t supported.<br />\n<br />\nMany thanks, Freefall.<br />\n",
+    "PostedDate": "2015-10-11T14:45:26.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448222",
+    "ThreadId": "646088",
+    "Html": "You don't always get the chance to specify the exact size of sound-card buffers. My solution to this which you can see in the WPF demo I think was the <code>SampleAggregator</code>, which buffered up audio and when it got say 4096 samples, it calculated the FFT and raised an event. This makes it irrelevant what size the buffers are.<br />\n",
+    "PostedDate": "2015-10-12T12:47:29.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448743",
+    "ThreadId": "646088",
+    "Html": "Hey Mark, thanks this is a good idea. I´ll try that :)<br />\n",
+    "PostedDate": "2015-10-15T14:38:47.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448894",
+    "ThreadId": "646088",
+    "Html": "Ok I tested it and it doesn´t work. This just puts the missed samples to next read iteration and so on...\r<br />\n<br />\nI`m very unhappy with this solution. A in-place pitch shifting of exactly each iteration of read would be best.<br />\n",
+    "PostedDate": "2015-10-17T04:18:26.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449996",
+    "ThreadId": "646088",
+    "Html": "Well if you need exact control of the buffer sizes, then I suggest working with ASIO, which is much easier to control.<br />\n",
+    "PostedDate": "2015-10-28T05:44:45.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1451213",
+    "ThreadId": "646088",
+    "Html": "No solution for me either, as I as well as many others, don´t have asio drivers installed.\r<br />\n<br />\nFor best compability to the system I want to stay on WaveOut. I wonder that it isn´t possible to set a buffer size here.<br />\n",
+    "PostedDate": "2015-11-06T11:00:03.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

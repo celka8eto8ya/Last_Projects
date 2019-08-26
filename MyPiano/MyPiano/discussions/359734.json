@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "849452",
+    "ThreadId": "359734",
+    "Html": "\r\n<p>Hi, I am using Naudio (1.5) in a non-GUI application and I see an occassional &quot;Wavefile not closed&quot; messageBox at shutdown. I dont want the application stuck due to an open messagebox since this is intended for untrained users who dont even interact with\r\n the PC directly. An exception or log message would be ok since it can be handled silently and other parts of app can continue to run.</p>\r\n<p>Is there a way to disable the messageboxes? User trial starts in couple of days!</p>\r\n<p>tks,</p>\r\n<p>nan</p>\r\n",
+    "PostedDate": "2012-06-15T03:22:44.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "849453",
+    "ThreadId": "359734",
+    "Html": "<p>these are Debug.Asserts and are warning you that you did not dispose of something correctly. There are some heavy-handed ways of disabling Debug.Assert (e.g. http://stackoverflow.com/questions/2854024/how-to-prevent-debug-assert-to-show-a-modal-dialog). Alternatively, get the NAudio code and do a release build and these won't be included. In the future I plan for official releases of NAudio to be done with release builds, but I have tended to use debug builds in the past as I find these asserts helpful for tracking down problems.</p>",
+    "PostedDate": "2012-06-15T03:27:00.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "849476",
+    "ThreadId": "359734",
+    "Html": "<p>thanks mark, that was super fast!!</p>\r\n<p>yes, I agree that they are useful just that I have not yet tested all code paths so cant predict where else they may pop up. I will try the release build too.</p>\r\n<p>thanks once again for the prompt response and keep up the great work!</p>\r\n<p>nan</p>",
+    "PostedDate": "2012-06-15T04:45:47.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

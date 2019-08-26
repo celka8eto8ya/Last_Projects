@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1252464",
+    "ThreadId": "547434",
+    "Html": "I can't for the life of me figure out how to get my sql query results to display on separate lines in the listbox on mainform. Without using the INAudioPlugin I can do this no problem but using this I can't seem to accomplish what I want. I can get my results to the listbox but all are on a single line. How can I accomplish this using the plugin?\r<br />\n<br />\nIn my mainform.cs I have the following:<br />\n<pre><code>    [ImportingConstructor]\n    public MainForm([ImportMany] IEnumerable&lt;AudioPlugin&gt; content)\n    {\n        InitializeComponent();\n        listBox.DisplayMember = &quot;Name&quot;;\n        foreach (var listing in content)\n        {\n            listBox.Items.Add(listing);\n        }\n    }</code></pre>\n\nIn my recordingpanel.cs I have the following:<br />\n<pre><code>  [Export(typeof(INAudioPlugin))]\n    public class RecordingPanelPlugin : AudioPlugin\n    {\n        private string _customer { get; set; }\n\n        public void ConnectionString()\n        {\n            using (var conn = new SqlCeConnection(&quot;Data Source=MyDatabase.sdf;Password=pass;Persist Security Info=True&quot;))\n            {\n                conn.Open();\n                var comm = new SqlCeCommand(&quot;SELECT * FROM main&quot;, conn);\n                SqlCeDataReader reader = comm.ExecuteReader();\n\n                while (reader.Read())\n                {\n                    _customer += (string)(reader[&quot;CustomerName&quot;]);\n                }\n            }\n        }\n\n\n        public string Name\n        {\n            get\n            {\n                ConnectionString();\n                return _customer;\n            }\n        }\n\n        public Control CreatePanel()\n        {\n            return new RecordingPanel();\n        }\n    }</code></pre>\n\nPlease help. I have spent literally hours trying to figure this out. I have output the results to a listbox as well but when I try to use the plugin they still input in a single string. If I do a Console.WriteLine I see each result on a separate line as I expect.<br />\n",
+    "PostedDate": "2014-06-03T09:10:58.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1252616",
+    "ThreadId": "547434",
+    "Html": "I guess I was rethinking this. I removed the Import/Export from each class and instead just decide to execute my query on the mainform.cs to populate the listbox. Then I pass my listbox.SelectedItem over to my recordingpanel.cs. Everything is working as expected now.<br />\n",
+    "PostedDate": "2014-06-03T14:53:57.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-06-04T12:35:02.753-07:00"
+  },
+  {
+    "Id": "1252985",
+    "ThreadId": "547434",
+    "Html": "EDIT: Removed Duplicate Post<br />\n",
+    "PostedDate": "2014-06-04T12:33:36.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

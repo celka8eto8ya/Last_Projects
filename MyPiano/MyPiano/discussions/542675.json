@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1235519",
+    "ThreadId": "542675",
+    "Html": "Does anyone know if it is possible to convert midi to mp3 using Naudio?<br />\n",
+    "PostedDate": "2014-04-18T12:45:18.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239540",
+    "ThreadId": "542675",
+    "Html": "Not easily I'm afraid. You'd need at least a synthesizer to do that, and depending on what sort of MIDI, probably a software sampler. Both can be made in NAudio, but it would be a lot of work. I'd recommend finding a good GM SoundFont and using a DAW to do the conversion.<br />\n",
+    "PostedDate": "2014-04-29T14:04:57.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

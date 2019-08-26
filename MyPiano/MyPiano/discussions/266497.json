@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "647273",
+    "ThreadId": "266497",
+    "Html": "\r\n<div>\r\n<p>I wan to be able to output custom sounds mp3's to applications like chatroulette. I can either do that be a 'virtual microphone' and then select it in chatroulette (like an iso is an virtual cd drive). Or by outputting the mp3 to the wave in with NAudio.</p>\r\n<p>This doesn't seem to work (as in DOES compile, DOES Excecute, but the recorder doesnt show any sounds).</p>\r\n<pre><code><span>&nbsp;</span><span>Dim</span><span> DSO </span><span>As</span><span> </span><span>New</span><span> DirectSoundOut</span><span>(</span><span>DirectSoundOut</span><span>.</span><span>DSDEVID_DefaultCapture</span><span>)</span><span><br>&nbsp; &nbsp; </span><span>Dim</span><span> mp3 </span><span>As</span><span> WaveStream </span><span>=</span><span> </span><span>New</span><span> Mp3FileReader</span><span>(</span><span class=\"str\">&quot;D:\\Muziek\\Irish rebel songs\\Athenrye - The armagh sniper.mp3&quot;</span><span>)</span><span><br>&nbsp; &nbsp; DSO</span><span>.</span><span>Init</span><span>(</span><span>mp3</span><span>)</span><span><br>&nbsp; &nbsp; DSO</span><span>.</span><span>Play</span><span>()</span><span><br></span></code></pre>\r\n</div>\r\n",
+    "PostedDate": "2011-07-25T11:33:23.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648909",
+    "ThreadId": "266497",
+    "Html": "<p>I've answered on StackOverflow</p>",
+    "PostedDate": "2011-07-28T05:37:09.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

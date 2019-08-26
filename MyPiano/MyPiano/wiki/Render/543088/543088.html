@@ -1,0 +1,16 @@
+<div class="wikidoc">
+<p>You can create simple ID3v2 tags in NAudio by constructing a dictionary of IDs (4 character strings) and values. Here’s a simple example:</p>
+<pre>
+Dictionary&lt;string, string&gt; tags = new Dictionary&lt;string, string&gt;
+{
+ { &quot;TIT2&quot;, &quot;Song title&quot; },
+ { &quot;TPE1&quot;, &quot;Artist name&quot; },
+ { &quot;TYER&quot;, &quot;2012&quot; }, /* year of the song */
+ { &quot;COMM&quot;, &quot;Extra comment info&quot; },
+ { &quot;TCON&quot;, &quot;(110)Satire&quot; } /* genre */ 
+};
+var tag = Id3v2Tag.Create(tags);</pre>
+<p>And then you can write this to your MP3 Stream (usually a FileStream)&#160; using the RawData property:</p>
+<pre>
+output.Write(tag.RawData, 0, tag.RawData.Length);</pre>
+</div><div class="ClearBoth"></div>

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "WasapiOut only exposes the audio endpoint volume via the Volume property, and not the volume for the channels in the current IAudioClient instance.\r\n\r\nThe interface is simple enough, so I'm happy to write up a patch/pull-request, but how would you like to expose it on WasapiOut? rename current .Volume to EndpointVolume, and return AudioStreamVolume object from an AudioStreamVolume property? Don't rename and add the additional AudioStreamVolume object? etc...\r\n\r\nThoughts?\r\n\r\nThanks,\r\nBill\r\n",
+    "LastUpdatedDate": "2015-02-19T23:42:45.657-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-02-19T15:22:05.42-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Expose IAudioStreamVolume from WasapiOut",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16470
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "hi Bill, Volume can't be renamed as it implements an interface on IWaveOut. \nProbably have a property called AudioStreamVolume, and return\nAs a general rule I've tried to avoid exposing the COM interfaces directly as public methods on the core classes, and made a wrapper class to make the public API a little more idiomatic for .NET (e.g. probably returning a float[] instead of a float* from GetAllVolumes).\n\nBTW do you know NAudio is moving source control to GitHub (github.com/naudio/NAudio) so pull requests should be done over there now.",
+      "PostedDate": "2015-02-19T23:40:02.23-08:00",
+      "Id": 174937
+    },
+    {
+      "Message": "Also, this pull request https://github.com/naudio/NAudio/pull/4/files may well impact what you plan to do, so might be worth waiting until we've ironed out the issues with that (crashes on Vista), before submitting yours",
+      "PostedDate": "2015-02-19T23:42:45.657-08:00",
+      "Id": 174938
+    }
+  ]
+}

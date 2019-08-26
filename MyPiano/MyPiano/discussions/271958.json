@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "669237",
+    "ThreadId": "271958",
+    "Html": "\r\n<p>Hi, i'm new to NAudio projects and it's very cool!</p>\r\n<p>I'm creating an audio player, i want to know if it's possibile to increment the max volume of a song!</p>\r\n<p>I've seen also Skype voice changer but when i increment the max volume the song starts to croak!</p>\r\n<p>Can i have some explanation about this problem and how can i fix it?</p>\r\n<p>Thanks in advance!</p>\r\n<p>Invictus93</p>\r\n",
+    "PostedDate": "2011-09-08T10:55:51.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "671784",
+    "ThreadId": "271958",
+    "Html": "<p>You should generally increase the Windows volume rather than the volume of the audio data itself, or you will likely get overflow / clipping (going above 0dB). Most music has already had its dynamic range compressed heavily, so there is little to no scope for increasing its volume at the sample level.</p>",
+    "PostedDate": "2011-09-14T09:17:10.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,226 @@
+[
+  {
+    "Id": "931561",
+    "ThreadId": "400583",
+    "Html": "\r\n<p>Hi all!&nbsp;</p>\r\n<p>Sorry if this is already discussed question, I tried but couldn't find an answer here.</p>\r\n<p>I need to allow user to listen some part of MP3 file. To do this I&nbsp;basically follow example from documentation, my code looks like this:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> Mp3FileReader _mp3Reader; \r\n<span style=\"color:blue\">private</span> WaveOut _wavePlayer; \r\n<span style=\"color:blue\">private</span> Timer _timer;\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">double</span>? _endSec;\r\n\r\n\r\n\t\t<span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Play( <span style=\"color:blue\">double</span> startSec, <span style=\"color:blue\">double</span>? endSec )\r\n\t\t{\r\n\t\t\t_endSec = endSec;\r\n\r\n\t\t\t_mp3Reader.CurrentTime = <span style=\"color:blue\">new</span> TimeSpan( (<span style=\"color:blue\">long</span>)( startSec * 10000000 ) );\r\n\r\n\t\t\t_wavePlayer.Play();\r\n\r\n\t\t\t_timer.Start();\r\n\t\t}\r\n\r\n\r\n\t\t<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> Timer_Tick( <span style=\"color:blue\">object</span> sender, EventArgs e )\r\n\t\t{\r\n\t\t\t<span style=\"color:blue\">if</span>( _endSec.HasValue &amp;&amp; _mp3Reader.CurrentTime.TotalSeconds &gt;= _endSec.Value )\r\n\t\t\t\tStop();\r\n\t\t}\r\n\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Everething is great at first time. But when I click Play next time I hear a distinct noise during the first miliseconds of playback. If at the end of the previous playback there was silence, then there will be no noise next time, if at the end of the previous\r\n playback was loud sound, then noise will be loud.</p>\r\n<p>It looks like some internal sound buffer is left with a few milliseconds of sound from previous playback, and so next playback first plays that leftover of previous playback. Is there some way to clear these internal buffers? have you met such problem and\r\n what are solutions for it?</p>\r\n<p>Thanks!</p>\r\n<p>Sergey P.</p>\r\n",
+    "PostedDate": "2012-10-24T03:32:02.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931579",
+    "ThreadId": "400583",
+    "Html": "<p>Hi,</p>\r\n<p>I have the same problem. Not only with the MP3 file (wav too) and all type of drivers (Wave, WASAPI, ASIO).</p>\r\n<p>More generally, it remains a part of the buffer already read.</p>\r\n<p>The number of remaining sample is proportional to the latency.</p>\r\n<p>To make a simple test must be PLAY (listen to the song to a highlight). PAUSE and then move to the position (quiet time) and then PLAY. there is data in the buffer.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-10-24T04:10:16.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931581",
+    "ThreadId": "400583",
+    "Html": "<p>If you reposition, you should stop. Pause is supposed to keep things in the buffer, and WaveOut has no knowledge that you have repositioned.</p>\r\n<p>Stopping however should flush the buffers, and if it isn't doing that there is a bug somewhere.</p>",
+    "PostedDate": "2012-10-24T04:13:18.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931585",
+    "ThreadId": "400583",
+    "Html": "<p>Same problem with a Stop :-((</p>",
+    "PostedDate": "2012-10-24T04:15:30.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931597",
+    "ThreadId": "400583",
+    "Html": "\r\n<p>I think this is not really a bug, euhmmm</p>\r\n<p>But one way to do it.</p>\r\n<p>In your demo after every STOP, &nbsp;you unload fileStream waveOut and reset with each PLAY.</p>\r\n<p>The problem arises when initializing the beginning, and playing with Play, Pause, Stop</p>\r\n<p>I do not know the structure of SergeyPo but I think it is the same problem.</p>\r\n",
+    "PostedDate": "2012-10-24T04:32:10.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931637",
+    "ThreadId": "400583",
+    "Html": "<p>Hi!</p>\r\n<p>I don't use Pause, only Play and Stop -- exactly as in my code excerpt. So, obviously there is something with Stop method - it doesn't clear buffer.</p>",
+    "PostedDate": "2012-10-24T05:15:15.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931669",
+    "ThreadId": "400583",
+    "Html": "<p>Hi, I've found the bug. It's not in any of the output devices. It is in the Mp3FileReader class. The MP3 decoder needs to be alerted that you have repositioned. I've prototyped a fix, but it is a breaking change as it modifies the IMp3FrameDecompressor interface, so I'll need to think about how best to introdduce the change.</p>",
+    "PostedDate": "2012-10-24T05:48:37.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931701",
+    "ThreadId": "400583",
+    "Html": "<p>I've checked in a fix. If you build the very latest NAudio you should be able to test it out for yourself. I'll hopefully get a new build up on NuGet soon.</p>",
+    "PostedDate": "2012-10-24T06:32:25.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931768",
+    "ThreadId": "400583",
+    "Html": "<p>Mark, thank you for such a quick response!</p>\r\n<p>I've downloaded and compiled the latest version of source codes but the bug is still here. :(</p>\r\n<p>Can you check fix again?</p>",
+    "PostedDate": "2012-10-24T08:00:21.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931773",
+    "ThreadId": "400583",
+    "Html": "<p>Can you try the Simple Audio Playback demo in NAudio Demo and click the MP3 test button. It will ask you to select an MP3 file and then bring up a very simple form with Play Stop and Rewind. Click Play, then Stop, then Rewind, and then Play again. You shouldn't hear any left-over buffer sound if my fix worked properly. Let me know how you get on with that, and then we'll see if there is another unresolved issue.</p>",
+    "PostedDate": "2012-10-24T08:03:19.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931794",
+    "ThreadId": "400583",
+    "Html": "<p>Yes congratulations to speed for the update.</p>\r\n<p>For me the problem is gone :-))</p>",
+    "PostedDate": "2012-10-24T08:32:36.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931814",
+    "ThreadId": "400583",
+    "Html": "<p>Hi, Mark!</p>\r\n<p>I tried&nbsp;<span>Simple Audio Playback demo -- the left-over is still here. You can try this file if you like&nbsp;<a href=\"http://www.filedropper.com/testaudio\">http://www.filedropper.com/testaudio</a>&nbsp;but actually I can reproduce it on any MP3 file, just you need to press Stop at the moment when sound is loud.</span></p>",
+    "PostedDate": "2012-10-24T09:06:20.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931834",
+    "ThreadId": "400583",
+    "Html": "<p>that's strange. It was a very reproducable problem before my fix, and I couldn't hear it at all afterwards. I'll try with your file if I get a chance..</p>",
+    "PostedDate": "2012-10-24T09:30:33.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931837",
+    "ThreadId": "400583",
+    "Html": "<p>I should also ask what soundcard and OS you are using. NAudio calls waveOutReset when you press stop which the soundcard drivers are supposed to respond to by immediately releasing all the buffers. Sometimes cheap soundcards don't behave quite how you expect though.</p>",
+    "PostedDate": "2012-10-24T09:35:01.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931870",
+    "ThreadId": "400583",
+    "Html": "<p>OS: Windows XP SP3</p>\r\n<p>Audio chipset is on motherboard.</p>\r\n<p>Motherboard: ASUS P5KPL-AM</p>\r\n<p>Audio: VIA High Definition Audio</p>\r\n<p>I also updated to newest drivers from ASUS web site (not so new actually) -- this didn't help. So drivers are -- version 6.0.1.7600, date 21/10/2009.</p>\r\n<p>Hope this will help.&nbsp;</p>",
+    "PostedDate": "2012-10-24T10:18:20.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931878",
+    "ThreadId": "400583",
+    "Html": "<p>OK, well to diagnose the problem further, we'll need to break it down. For example, instead of using WaveOut, try WaveOutEvent and DirectSoundOut. Also, what does your constructor for WaveOut look like?</p>\r\n<p>Another test is to play WAV files instead of MP3s. Does the same issue happen?</p>\r\n<p>And if you have any other soundcard, e.g. a USB headset, see if the problem occurs with that instead.</p>",
+    "PostedDate": "2012-10-24T10:31:31.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932159",
+    "ThreadId": "400583",
+    "Html": "<p>Hi, Mark!</p>\r\n<p>Here is results:</p>\r\n<ul>\r\n<li>Mp3FileReader +&nbsp;WaveOut or&nbsp;WaveOutEvent or&nbsp;DirectSoundOut = plays but with left-over noise</li>\r\n<li>WaveFileReader +&nbsp;WaveOut or&nbsp;WaveOutEvent = plays good!</li>\r\n<li>WaveFileReader +&nbsp;DirectSoundOut = silence</li>\r\n</ul>\r\n<p>I'll try to test code on another computer tomorrow.</p>\r\n<p>Here is the code that I used for these tests -- the simplest one:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> System;\r\n<span style=\"color: blue;\">using</span> System.Collections.Generic;\r\n<span style=\"color: blue;\">using</span> System.ComponentModel;\r\n<span style=\"color: blue;\">using</span> System.Data;\r\n<span style=\"color: blue;\">using</span> System.Drawing;\r\n<span style=\"color: blue;\">using</span> System.Linq;\r\n<span style=\"color: blue;\">using</span> System.Text;\r\n<span style=\"color: blue;\">using</span> System.Windows.Forms;\r\n<span style=\"color: blue;\">using</span> NAudio.Wave;\r\n\r\n<span style=\"color: blue;\">namespace</span> NAudioTest\r\n{\r\n\t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">partial</span> <span style=\"color: blue;\">class</span> Form1 : Form\r\n\t{\r\n\t\t<span style=\"color: blue;\">public</span> Form1()\r\n\t\t{\r\n\t\t\tInitializeComponent();\r\n\t\t}\r\n\r\n\t\t<span style=\"color: blue;\">private</span> Mp3FileReader _reader;\r\n\t\t<span style=\"color: green;\">//private WaveFileReader _reader;</span>\r\n\r\n\t\t<span style=\"color: green;\">//private WaveOut _wavePlayer;</span>\r\n\t\t<span style=\"color: green;\">//private WaveOutEvent _wavePlayer;</span>\r\n\t\t<span style=\"color: blue;\">private</span> DirectSoundOut _wavePlayer;\r\n\r\n\t\t<span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> Form1_Load( <span style=\"color: blue;\">object</span> sender, EventArgs e )\r\n\t\t{\r\n\t\t\t_reader = <span style=\"color: blue;\">new</span> Mp3FileReader( <span style=\"color: #a31515;\">@\"C:\\Temp\\NAudioTest\\test2.mp3\"</span> );\r\n\t\t\t<span style=\"color: green;\">//_reader = new WaveFileReader( @\"C:\\Temp\\NAudioTest\\test2.wav\" );</span>\r\n\r\n\t\t\t<span style=\"color: green;\">//_wavePlayer = new WaveOut();</span>\r\n\t\t\t<span style=\"color: green;\">//_wavePlayer = new WaveOutEvent();</span>\r\n\t\t\t_wavePlayer = <span style=\"color: blue;\">new</span> DirectSoundOut();\r\n\r\n\t\t\t_wavePlayer.Init( _reader );\r\n\t\t}\r\n\r\n\t\t<span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> btPlay_Click( <span style=\"color: blue;\">object</span> sender, EventArgs e )\r\n\t\t{\r\n\t\t\t_reader.CurrentTime = <span style=\"color: blue;\">new</span> TimeSpan();\r\n\r\n\t\t\t_wavePlayer.Play();\r\n\t\t}\r\n\r\n\t\t<span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> btStop_Click( <span style=\"color: blue;\">object</span> sender, EventArgs e )\r\n\t\t{\r\n\t\t\t_wavePlayer.Stop();\r\n\t\t}\r\n\t}\r\n}\r\n\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2012-10-25T00:17:45.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932165",
+    "ThreadId": "400583",
+    "Html": "<p>OK, are you 100% sure you have my <a href=\"http://naudio.codeplex.com/SourceControl/changeset/83c2d5b2e527\">latest checkin</a>. You need to go to the \"<strong>Source Code</strong>\" tab above or download the change I uploaded yesterday <a href=\"http://naudio.codeplex.com/SourceControl/changeset/83c2d5b2e527#\">here</a>.</p>",
+    "PostedDate": "2012-10-25T00:25:36.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932220",
+    "ThreadId": "400583",
+    "Html": "<p>I was sure but I'have done this right now again :) - noise is still here.</p>\r\n<p>Here is&nbsp;<a href=\"http://www.filedropper.com/naudiotest\">http://www.filedropper.com/naudiotest</a></p>\r\n<p>I put this small test project together with test files and compiled NAudio (in Release mode) - on your computer it should work without nouse as I understand.</p>",
+    "PostedDate": "2012-10-25T01:38:53.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932233",
+    "ThreadId": "400583",
+    "Html": "<p>Hi Sergey, I've tried your app and I can't hear any problems. You're saying you hear some noise at the start when you press play?</p>\r\n<p>Let me know how you get on with testing on other computers.</p>\r\n<p>Another test you can do is create a new output device every time you press play. i.e.</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> btPlay_Click( <span style=\"color: blue;\">object</span> sender, EventArgs e )\r\n{\r\n    <span style=\"color: blue;\">if</span> (_wavePlayer != <span style=\"color: blue;\">null</span>)\r\n        _wavePlayer.Dispose();            \r\n    _wavePlayer = <span style=\"color: blue;\">new</span> DirectSoundOut();\r\n    _wavePlayer.Init( _reader );\r\n\r\n    _reader.CurrentTime = <span style=\"color: blue;\">new</span> TimeSpan();\r\n    _wavePlayer.Play();\r\n}\r\n</pre>\r\n</div>\r\nThis will help us narrow down whether it is the WavePlayer or the MP3 reader that is the source of your issue.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-10-25T01:49:55.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932299",
+    "ThreadId": "400583",
+    "Html": "<p>&gt; You're saying you hear some noise at the start when you press play?</p>\r\n<p>Yes, correct. And this is \"left-over\" sound, because I don't hear it first time and I don't hear it if I pressed Stop when there was silence in the sound, but I hear it when I pressed Stop and there was loud sound at this moment. The louder a sound was when I pressed Stop, the louder will be noise at next Play.</p>\r\n<p>I tried your workaround with recreating of _wavePlayer -- this didn't help.</p>\r\n<p>I tried code that recreates everething at every Play:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>\t\t<span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> btPlay_Click( <span style=\"color: blue;\">object</span> sender, EventArgs e )\r\n\t\t{\r\n\t\t\t<span style=\"color: blue;\">if</span>( _wavePlayer != <span style=\"color: blue;\">null</span> )\r\n\t\t\t\t_wavePlayer.Dispose();\r\n\t\t\t<span style=\"color: blue;\">if</span>( _reader != <span style=\"color: blue;\">null</span> )\r\n\t\t\t\t_reader.Dispose();\r\n\r\n\t\t\t_reader = <span style=\"color: blue;\">new</span> Mp3FileReader( <span style=\"color: #a31515;\">@\"C:\\Temp\\NAudioTest\\test2.mp3\"</span> );\r\n\t\t\t_wavePlayer = <span style=\"color: blue;\">new</span> DirectSoundOut();\r\n\t\t\t_wavePlayer.Init( _reader );\r\n\r\n\t\t\t_reader.CurrentTime = <span style=\"color: blue;\">new</span> TimeSpan();\r\n\t\t\t_wavePlayer.Play();\r\n\t\t}\r\n\r\n</pre>\r\n</div>\r\n</p>\r\n<p>This code plays sound correctly. But I can't use this as workaround because your&nbsp;Mp3FileReader (as far as I understand) scans through all frame headers in MP3 file and this can take some noticeable time for really big MP3 files (by the way, it's great that you implemented Mp3FileReader this way, because this allows correct positioning inside MP3 -- something that Windows Media Player or WinAmp don't do correctly -- this fact really was big surprise for me).</p>\r\n<p>I'll test on another computer tomorrow. Thanks for all your efforts to resolve this issue!</p>",
+    "PostedDate": "2012-10-25T03:46:35.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932301",
+    "ThreadId": "400583",
+    "Html": "<p>OK, so its definitely the MP3FileReader, and clearly the changes I made to AcmMp3FrameDecompressor aren't working for you.</p>\r\n<p>I am now wondering if maybe you have a different ACM MP3 codec installed on your machine. Can you use the NAudioDemo utility to examine what codecs you have installed on your system, and see what is there. Also, are you running your executable as x86 or x64?</p>",
+    "PostedDate": "2012-10-25T03:50:07.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932328",
+    "ThreadId": "400583",
+    "Html": "<p>Application runs as 32 bit. Below is list from \"NAudioDemo.exe \\ ACM Format Conversion\":</p>\r\n<p>===========================</p>\r\n<p>Long Name: Кодек IMA ADPCM (Microsoft)</p>\r\n<p>Short Name: Microsoft IMA ADPCM</p>\r\n<p>Driver ID: 1527664</p>\r\n<p>---</p>\r\n<p>Long Name: Кодек ADPCM (Microsoft)</p>\r\n<p>Short Name: MS-ADPCM</p>\r\n<p>Driver ID: 1611616</p>\r\n<p>---</p>\r\n<p>Long Name: Кодек CCITT G.711 A-Law и u-Law (Microsoft)</p>\r\n<p>Short Name: Microsoft CCITT G.711</p>\r\n<p>Driver ID: 1885552</p>\r\n<p>---</p>\r\n<p>Long Name: Кодек GSM 6.10 (Microsoft)</p>\r\n<p>Short Name: Microsoft GSM 6.10</p>\r\n<p>Driver ID: 1885960</p>\r\n<p>---</p>\r\n<p>Long Name: Кодек DSP Group TrueSpeech&trade;</p>\r\n<p>Short Name: TrueSpeech(TM)</p>\r\n<p>Driver ID: 1886368</p>\r\n<p>---</p>\r\n<p>Long Name: Microsoft G.723.1 CODEC</p>\r\n<p>Short Name: Microsoft G.723.1</p>\r\n<p>Driver ID: 1886776</p>\r\n<p>---</p>\r\n<p>Long Name: Windows Media Audio</p>\r\n<p>Short Name: WM-AUDIO</p>\r\n<p>Driver ID: 1887184</p>\r\n<p>---</p>\r\n<p>Long Name: Sipro Lab Telecom ACELP.net audio codec</p>\r\n<p>Short Name: ACELP.net</p>\r\n<p>Driver ID: 1887592</p>\r\n<p>---</p>\r\n<p>Long Name: Indeo&reg; audio software</p>\r\n<p>Short Name: Indeo&reg; audio software</p>\r\n<p>Driver ID: 1888000</p>\r\n<p>---</p>\r\n<p>Long Name: Fraunhofer IIS MPEG Layer-3 Codec (advanced)</p>\r\n<p>Short Name: MPEG Layer-3 Codec&nbsp;</p>\r\n<p>Driver ID: 1888408</p>\r\n<p>---</p>\r\n<p>Long Name: Конвертор PCM Microsoft</p>\r\n<p>Short Name: MS-PCM</p>\r\n<p>Driver ID: 1857096</p>\r\n<p>=========================</p>\r\n<p>Do you need details from bottom text box of&nbsp;\"NAudioDemo.exe \\ ACM Format Conversion\"?</p>",
+    "PostedDate": "2012-10-25T04:51:50.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932359",
+    "ThreadId": "400583",
+    "Html": "<p>OK, one more thing to try. The constructor for Mp3FileReader lets you pass in a factory object that creates a frame decompressor. Create a class like this:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">class</span> CustomMp3FrameDecompressor : IMp3FrameDecompressor\r\n{\r\n    <span style=\"color: blue;\">private</span> AcmMp3FrameDecompressor decompressor;\r\n    <span style=\"color: blue;\">private</span> WaveFormat waveFormat;\r\n\r\n    <span style=\"color: blue;\">public</span> CustomMp3FrameDecompressor(WaveFormat waveFormat)\r\n    {\r\n        decompressor = <span style=\"color: blue;\">new</span> AcmMp3FrameDecompressor(waveFormat);\r\n        <span style=\"color: blue;\">this</span>.waveFormat = waveFormat;\r\n    }\r\n\r\n    <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">int</span> DecompressFrame(Mp3Frame frame, <span style=\"color: blue;\">byte</span>[] dest, <span style=\"color: blue;\">int</span> destOffset)\r\n    {  \r\n        <span style=\"color: blue;\">return</span> decompressor.DecompressFrame(frame,dest,destOffset);\r\n    }\r\n\r\n    <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> Reset()\r\n    {\r\n        decompressor.Dispose();\r\n        decompressor = <span style=\"color: blue;\">new</span> AcmMp3FrameDecompressor(waveFormat);\r\n    }\r\n\r\n    <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> Dispose()\r\n    {\r\n        decompressor.Dispose();\r\n    }\r\n\r\n    <span style=\"color: blue;\">public</span> WaveFormat OutputFormat \r\n    {\r\n        <span style=\"color: blue;\">get</span> { <span style=\"color: blue;\">return</span> decompressor.OutputFormat; }\r\n    }                     \r\n}\r\n</pre>\r\n</div>\r\n</p>\r\n<p>And then when you create a new Mp3FileReader, pass it in</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">new</span> Mp3FileReader(fileName, (wf) =&gt; <span style=\"color: blue;\">new</span> CustomMp3FrameDecompressor(wf));\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2012-10-25T05:45:50.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932401",
+    "ThreadId": "400583",
+    "Html": "\r\n<p>Wow! Great, this works! :)</p>\r\n<p>Do you need some more information to track why simple approach doesn't work?</p>\r\n<p>And what does this mean that we need to create&nbsp;CustomMp3FrameDecompressor -- does this has any drawbacks?</p>\r\n",
+    "PostedDate": "2012-10-25T06:47:13.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932413",
+    "ThreadId": "400583",
+    "Html": "<p>Well the fix I made before passed a flag into the codec that is supposed to tell the codec that we have repositioned and it should flush its internal state. However, it seems that your codec was ignoring that flag, so this solution closes the codec and reopens it when you reposition. Ideally I'd like to find a fix inside AcmMp3FrameDecompressor itself as this might not perform too well if you are repositioning during playback.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-10-25T07:00:39.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932439",
+    "ThreadId": "400583",
+    "Html": "<p>I tried this workaround on big MP3 file (187 MB, 4 hours) -- no noticable delay -- so this works well for me.</p>\r\n<p>Write if you'll need any more information or testing from my side, I will be glad to help you fix this problem completely, if you'll decide to do this.</p>\r\n<p>You do a great job -- NAudio is very easy to use and it calculates duration of MP3 correctly (something that Windows Media Player control does wrong). Thanks!</p>",
+    "PostedDate": "2012-10-25T07:34:01.11-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "932442",
+    "ThreadId": "400583",
+    "Html": "<p>thanks SergeyPo,</p>\r\n<p>The way I'm trying to do this with the AcmMp3FrameConverter is calling into <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/dd742924%28v=vs.85%29.aspx\">acmStreamConvert</a> with the ACM_STREAMCONVERTF_START flag set. As far as I can see, that is how you are supposed to do a reposition, and I'm surprised the codec on your machine doesn't seem to be responding to it correctly.</p>\r\n<p>Mark</p>\r\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;\">\r\n<pre style=\"font-family: Consolas; font-size: 13; color: black; background: white;\"><span style=\"color: green;\">ACM_STREAMCONVERTF_START</span>\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-10-25T07:39:57.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "649804",
+    "ThreadId": "267113",
+    "Html": "\r\n<p>Hi all, I'm trying to record sound from my line-in, convert it to MP3 and stream it over the internet.</p>\r\n<p>I got the internet part covered and am at the point of actually grabbing sound of my Line-in. I used the WISAPI method as done in the example application. The problem, though, is in the actual conversion.</p>\r\n<p>When I run the ACM conversion example, I am unable to convert any WAV file at all. The one I recorded using the example mentioned earlier will complain it's not PMC and when I use a perfectly playing WAV file from my music collection, ACM will throw an error\r\n I can't find anything about on the internet: acmNotPossible calling acmStreamSize.</p>\r\n<p>I have the latest LAME ACM installed and confirmed it to be working by using VLC streaming, for the record.</p>\r\n<p>Perhaps I'm just taking the hard way, could anyone help getting my chain up and running? I imagine the following:\r\n<em>Record line-in to Wav(or other?) MemoryStream</em> -&gt; <em>Encode MemoryStream to Mp3 MemorySystem</em> -&gt;\r\n<strong>Stream Mp3 MemoryStream to connected sockets</strong></p>\r\n<p>The bold part is already working fine :) The italic parts aren't :( Just to clarify.</p>\r\n<p>All help is greatly appreciated!</p>\r\n<p>Lennard Fonteijn</p>\r\n",
+    "PostedDate": "2011-07-29T15:06:43.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "668017",
+    "ThreadId": "267113",
+    "Html": "<p>ACM is not a particularly easy way of encoding MP3s. I have heard of people using LAME.exe, sending audio data to stdin and reading it out of stdout. This might be a better way of working, but I've not tried it myslelf.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-09-06T03:10:00.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "692280",
+    "ThreadId": "267113",
+    "Html": "<p>Hello, I know that Boost is able to record mp3 on the fly (Link: http://www.un4seen.com/forum/?topic=4875.0) . I also would like to know if it is possible to do it with NAUDIO.</p>\n<p>It is done in BASS through this line (in rectest.c):</p>\n<p>BASS_Encode_Start(rchan, \"lame --alt-preset standard - bass.mp3\", BASS_ENCODE_AUTOFREE,NULL,0)</p>\n<p>&nbsp;</p>\n<p>How to do this with NAUDIO?</p>\n<p>Thanks</p>",
+    "PostedDate": "2011-11-01T11:32:34.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

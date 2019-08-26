@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1495588",
+    "ThreadId": "662603",
+    "Html": "I'm having a problem with NAudio 1.8 when creating a .wav file from a G711 RTP stream. Can anyone help?\r<br />\n<br />\nThe wav files created by NAudio have loud machine-gun noise that obscures the voice audio. Intelligible audio is present, but it's masked by the pulsating, clicking noise.  Wireshark plays audio from the pcap files without a problem. Wireshark shows the sample rate is 8K ulaw.\r<br />\n<br />\nHere's my code:\r<br />\n<br />\nif (wavOutput == null)\r<br />\n{\r<br />\n  string today = DateTime.Now.ToString(&quot;yyyy-MM-dd&quot;);\r<br />\n  wavOutput = new WaveFileWriter(&quot;D:\\Calls\\&quot; + today + &quot;\\&quot; + CallID + &quot;.wav&quot;, new WaveFormat(8000, 16, 1));\r<br />\n}\r<br />\n<br />\nfor (int index = 0; index &lt; udpPacket.PayloadData.Length; index++)\r<br />\n{\r<br />\n   short pcm = MuLawDecoder.MuLawToLinearSample(udpPacket.PayloadData[index]);\r<br />\n   wavOutput.WriteByte((byte)(pcm &amp; 0xFF));\r<br />\n   wavOutput.WriteByte((byte)(pcm &gt;&gt; 8));<br />\n<h2>}</h2>\n",
+    "PostedDate": "2017-04-18T21:12:14.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495696",
+    "ThreadId": "662603",
+    "Html": "The error is in these lines I assume:<br />\n<blockquote>\nwavOutput.WriteByte((byte)(pcm &amp; 0xFF));<br />\nwavOutput.WriteByte((byte)(pcm &gt;&gt; 8));<br />\n</blockquote>\nRest seems correct to me. I recommend to use &quot;bitconverter.getbytes()&quot; instead.<br />\n",
+    "PostedDate": "2017-04-21T13:29:02.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495710",
+    "ThreadId": "662603",
+    "Html": "Freefall, thanks for the idea.  Unfortunately, I get the same result when using bitconverter.getbytes().  Also, I confirmed I am calling wavOutput.Dispose().   Other ideas?<br />\n",
+    "PostedDate": "2017-04-21T19:33:25.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495728",
+    "ThreadId": "662603",
+    "Html": "Noise may be also caused by the g711 compression, anyway, if wireshark plays it better there might be a bug in the NAudio mulaw decoder...<br />\n",
+    "PostedDate": "2017-04-23T05:01:17.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496064",
+    "ThreadId": "662603",
+    "Html": "I am having the exact same issue. It does not matter if I convert my file using nAudio, Sox, Switch, Audacity, whatever, it comes out with the exact same sound as described by Daryl. The only way the audio comes out clean is when I play it or convert it in Wireshark. \r<br />\n<br />\nI really want to make nAudio work as it is a simple clean solution I can put into my app.\r<br />\n<br />\nWireshark shows this: \r<br />\nPayload type: ITU-T G.711 PCMU (0)\r<br />\nSample Rate (Hz): 8000\r<br />\n<br />\nI am using the following nAudio code from my app:<br />\n<pre><code>        Stream tmpMemStream = new FileStream(inFileName, FileMode.Open, FileAccess.Read);\n        var waveFormat = WaveFormat.CreateMuLawFormat(8000, 1);\n        var reader = new RawSourceWaveStream(tmpMemStream, waveFormat);\n        using (WaveStream convertedStream = WaveFormatConversionStream.CreatePcmStream(reader))\n        {\n            WaveFileWriter.CreateWaveFile(outFileName, convertedStream);\n        }\n        tmpMemStream.Close();\n</code></pre>\n\nStill I get that ratcheting noise over my phone call audio which is barely audible in the background.\r<br />\n<br />\nTo assist I have posted the wav file here so you can give it a listen:\r<br />\n<a href=\"https://services.streamwrite.com/images/output.wav\" rel=\"nofollow\">https://services.streamwrite.com/images/output.wav</a>\r<br />\n<br />\nAny help would be greatly appreciated!\r<br />\n-Marco.<br />\n",
+    "PostedDate": "2017-05-03T17:16:02.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496175",
+    "ThreadId": "662603",
+    "Html": "Hmm, looks like a recurring noise in each paket. You could try to send a silent stream, extract the noise and then subtract it from your voice stream.<br />\n",
+    "PostedDate": "2017-05-06T03:05:14.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496176",
+    "ThreadId": "662603",
+    "Html": "Some other options: use the managed speex port (NSpeex), the managed vorbis port (NVorbis) or write your own encoder/decoder...<br />\n",
+    "PostedDate": "2017-05-06T03:06:48.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497248",
+    "ThreadId": "662603",
+    "Html": "Daryl did you solve this? <br />\n",
+    "PostedDate": "2017-06-29T03:34:00.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497361",
+    "ThreadId": "662603",
+    "Html": "I'm back!  I'm still scratching my head to why I get this repeating distortion across my audio once its been converted.  I'm using the following code:<br />\n<pre><code>        if (type == PacketType.RTP)\n        {\n            var packet = PacketDotNet.Packet.ParsePacket(raw.LinkLayerType, raw.Data);\n            var udpPacket = PacketDotNet.UdpPacket.GetEncapsulated(packet);\n\n            // Only write out RTP packets to wav, and not RTPC\n            if (udpPacket.SourcePort != this.CalleeRTCPPort || udpPacket.SourcePort != this.CallerRTCPPort)\n            {\n                if (wavOutput == null)\n                {\n                    wavOutput = new WaveFileWriter(&quot;Calls\\\\&quot; + CallID + &quot;.wav&quot;, new WaveFormat(8000, 16, 1));\n\n                }\n\n                for (int index = 0; index &lt; udpPacket.PayloadData.Length; index++)\n                {\n                    // assuming this is MuLaw, need to handle other formats like g729, g726 etc\n                    //short pcm = MuLawDecoder.MuLawToLinearSample(udpPacket.PayloadData[index]);\n\n                    short pcm = ALawDecoder.ALawToLinearSample(udpPacket.PayloadData[index]);\n\n                    wavOutput.WriteByte((byte)(pcm &amp; 0xFF));\n                    wavOutput.WriteByte((byte)(pcm &gt;&gt; 8));\n\n                }\n</code></pre>\n\nAny help would be much appreciated<br />\n",
+    "PostedDate": "2017-07-10T08:01:27.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

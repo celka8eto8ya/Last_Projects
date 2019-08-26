@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1043711",
+    "ThreadId": "443682",
+    "Html": "I have a problem with a .wav-file that has an invalid chunk length in its header. In the WaveFileReader.cs the section <br />\n<pre><code>                if (chunkLength &lt; 0 || chunkLength &gt; stream.Length - stream.Position)\n                {\n                    Debug.Assert(false, String.Format(&quot;Invalid chunk length {0}, pos: {1}. length: {2}&quot;,\n                        chunkLength, stream.Position, stream.Length));\n                    // an exception will be thrown further down if we haven't got a format and data chunk yet,\n                    // otherwise we will tolerate this file despite it having corrupt data at the end\n                    break;\n                }\n</code></pre>\n\ncauses a popup-window because of the debug assertion. However, the .wav-file can be played without a problem. So I guess NAudio 1.5 is a debug-build. Is it possible to deliver NAudio 1.5 as a release-build instead of the debug version? That would help a lot.\r<br />\n<br />\nThanks &amp; Best regards\r<br />\nKay<br />\n",
+    "PostedDate": "2013-05-15T00:56:03.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043733",
+    "ThreadId": "443682",
+    "Html": "hi Kay, I'd recommend switching to NAudio 1.6 which is a release build. If you really must have 1.5, then rebuild the source in Release mode.<br />\n",
+    "PostedDate": "2013-05-15T01:40:29.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043736",
+    "ThreadId": "443682",
+    "Html": "Hi Mark, I can switch to 1.6 also. I just didn't know that 1.6 is a release-build. \r<br />\n<br />\nThanks a lot!\r<br />\nKay<br />\n",
+    "PostedDate": "2013-05-15T01:43:50.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

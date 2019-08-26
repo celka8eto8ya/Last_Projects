@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "604904",
+    "ThreadId": "255722",
+    "Html": "\r\n<p>The full performance of .NET 4 is much better, especially the speed of GC</p>\r\n",
+    "PostedDate": "2011-04-29T08:52:30.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "605430",
+    "ThreadId": "255722",
+    "Html": "<p>You can use NAudio in a .NET 4 project and get any performance benefits it brings. NAudio needs to keep supporting users on the previous version of the CLR though.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-01T01:22:10.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

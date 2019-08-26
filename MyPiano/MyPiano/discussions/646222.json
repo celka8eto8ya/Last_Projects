@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1448563",
+    "ThreadId": "646222",
+    "Html": "I'm using WasapiOut with a class derived from WaveProvider16, since I'm getting streamed data in from the network and playing it out.\r<br />\n<br />\nProblem is, when my Read routine gets called, what is 'supposed' to be a short[] buffer is actually a byte[] buffer. I was trying to use Array.Copy to slam some PCM 16 data into the buffer, but it throws an exception due to the incompatible types.\r<br />\n<br />\nAny idea how to get an actual short[] buffer passed to my Read routine?<br />\n",
+    "PostedDate": "2015-10-14T17:24:24.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1448884",
+    "ThreadId": "646222",
+    "Html": "The reason you are seeing this is because NAudio uses a trick under the covers to prevent unnecessary coping of memory. This is the <code>WaveBuffer</code> class, and uses unions to make a <code>byte[]</code> look like its a <code>short[]</code>. Unfortunately, <code>Array.Copy</code> uses reflection under the hood and gets confused. I think you'll find <code>Buffer.BlockCopy</code> will do the trick instead, but remember to pass the count parameter as a number of bytes.<br />\n",
+    "PostedDate": "2015-10-17T02:30:09.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

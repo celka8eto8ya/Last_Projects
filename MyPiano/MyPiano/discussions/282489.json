@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "710248",
+    "ThreadId": "282489",
+    "Html": "\r\n<p>Hi there,</p>\r\n<p>I have a remote REST web service hosted on a 3rd party hosting provider.</p>\r\n<p>The WCF service method takes in a Stream. The stream is always an mp3, passed through from an iPhone app.</p>\r\n<p>I need to convert the stream back into a wav file. i can do this on my local machine fine but obviously not having access to the remote servers i cannot install a codec on the machine.</p>\r\n<p>So i found <a title=\"this\" href=\"http://stackoverflow.com/questions/5652388/naudio-error-nodriver-calling-acmformatsuggest\">\r\nthis</a> (changed to DmoMp3FrameDecompressor) thread here, and duly recompiled my NAudio and republished. Now i get a different error:</p>\r\n<p><em>Retrieving the com class factory for component with CSLID bbeea841-0a63-4f52-a7ab-a9b3a84ed38</em> etc etc</p>\r\n<p>This has something to do with 64 bit vs 32 bit according to <a title=\"this\" href=\"http://stackoverflow.com/questions/6342517/retrieving-the-com-class-factory-for-component-with-clsid-xxxx-failed-due-to-t\">\r\nthis </a>here. so i changed, as suggested both my service and naudio build platform target to x86. I recompiled NAudio and republished the service.</p>\r\n<p>IT STILL DOESNT WORK! im not sure if its my host who doesnt have the DirectX Media Object or what the story is. I found this post\r\n<a title=\"here\" href=\"http://stackoverflow.com/questions/5221294/naudio-in-windows-azure-windows-server-2008-r2\">\r\nhere</a> which suggested the 32 bit process, but im not sure what to do next?</p>\r\n<p>What can i do? is it easier to plead with the host to install the ACM codec? if so which one? ive heard installing the codec on the windows server 2008 box doesnt work, so how can i do this?</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-12-10T05:28:48.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710418",
+    "ThreadId": "282489",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Ive struggled the entire day with this issue. Is it worth me asking my host to install the Msacm32.dll or whatever else is needed? would installing windows media player on the server do the trick?</p>",
+    "PostedDate": "2011-12-10T21:50:22.293-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710658",
+    "ThreadId": "282489",
+    "Html": "<p>I've chatted to my host, who have said they will not install anything obviosuly being a shared web server. The other option is to reference this dll in the bin folder, although im not sure if its possible to do dllimports like this, or if this would even work. Have you got any other ideas as to how i could simply decode an mp3 stream into a wav stream?</p>",
+    "PostedDate": "2011-12-11T16:33:00.647-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "710835",
+    "ThreadId": "282489",
+    "Html": "<p>If the ACM codec or the DMO object aren't installed then your only option would be a fully managed MP3 decoder. I actually made one, available at nlayer.codeplex.com, but the interface needs to be cleaned up a bit before it is easy to use.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-12T03:29:07.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "712927",
+    "ThreadId": "282489",
+    "Html": "<p>Thank you Mark,</p>\r\n<p>Ill give that a go!</p>",
+    "PostedDate": "2011-12-15T13:43:46.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

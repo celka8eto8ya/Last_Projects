@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1209218",
+    "ThreadId": "532243",
+    "Html": "Hello sir i have following code to play raw file.my raw file duration is 25 second. this code is working fine but after sometime my program play raw file very slow almost 50% speed and my raw file duration is increase 36 second when i restart my pc and run my program its working normaly again. i need to restart my pc every one hour to work correctly please check what is wrong with  my code  here is my code\r<br />\n<br />\nTry<br />\n<pre><code>        Dim rawStream = File.OpenRead(&quot;C:\\myFile.raw&quot;)\n        Dim waveFormat = New NAudio.Wave.WaveFormat(8000, 16, 1)\n        Dim rawSource = New RawSourceWaveStream(rawStream, waveFormat)\n        Dim audioBufferSize = 320\n        Dim offset As Integer = 0\n        Dim buffer As Byte() = New Byte(audioBufferSize - 1) {}\n        Dim buffer2 As Byte() = New Byte(320) {}\n        While (rawSource.Read(buffer2, offset, audioBufferSize) &gt; 0)\n            msport.Write(buffer2, offset, audioBufferSize)\n            Thread.Sleep(20)\n        End While\n    Catch ex As Exception\n        MsgBox(ex.ToString)\n    End Try</code></pre>\n\n",
+    "PostedDate": "2014-02-16T21:27:23.697-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209382",
+    "ThreadId": "532243",
+    "Html": "Not sure but perhaps the &quot;Thread.Sleep(20)&quot; line is causing the problem?<br />\n",
+    "PostedDate": "2014-02-17T04:41:26.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209386",
+    "ThreadId": "532243",
+    "Html": "If its playing at 50%, you're probably sending the wrong sample rate / channel count.\r<br />\nReally you should be looking for help in the documentation of whatever serial port audio device you are using. NAudio isn't necessary at all in the code sample you are showing. All it does is sends the contents of a raw file to msport.<br />\n",
+    "PostedDate": "2014-02-17T04:45:36.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209416",
+    "ThreadId": "532243",
+    "Html": "but sir if i sending wrong sample rate channel count then why this code working perfactly for sometime its happened after 30 min or 40 min or after one hour when my raw file playing speed slow then i checked gsm modem default software and play file gsm modem with default software its working perfactly.<br />\n",
+    "PostedDate": "2014-02-17T06:07:14.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209487",
+    "ThreadId": "532243",
+    "Html": "well you're probably sending audio too fast or slow. But this has nothing to do with NAudio. NAudio is contributing nothing to your code, and you don't need RawSourceWaveStream at all.<br />\n",
+    "PostedDate": "2014-02-17T08:03:47.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

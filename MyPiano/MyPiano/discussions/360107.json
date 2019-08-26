@@ -1,0 +1,114 @@
+[
+  {
+    "Id": "850751",
+    "ThreadId": "360107",
+    "Html": "\r\n<p>hi,</p>\r\n<p>I am trying to develop windows service to record sound when computer started, so I developed class to record voice and I test everything on windows application and it works fine, then I try this class in console application and windows service, I found out&nbsp;waveIn_DataAvailable\r\n is not triggered ! even after&nbsp;waveIn.StartRecording(); so I could not grab data to save them in file path.</p>\r\n<p>here is my code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        <span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> BeginRecording()\r\n        {\r\n            BeginMonitoring();\r\n            <span style=\"color:blue\">if</span> ((timerIsBetweenTimes.Enabled) || (timerIsEnabled.Enabled))\r\n            {\r\n                timerIsBetweenTimes.Stop();\r\n                timerIsEnabled.Stop();\r\n            }\r\n\r\n            <span style=\"color:blue\">if</span> (recordingState != RecordingState.Monitoring)\r\n            {\r\n                <span style=\"color:green\">//throw new InvalidOperationException(&quot;Can't begin recording while we are in this state: &quot; &#43; recordingState.ToString());</span>\r\n                <span style=\"color:blue\">return</span>;\r\n            }\r\n            <span style=\"color:blue\">if</span> (!Directory.Exists(wavPath))\r\n            {\r\n                Directory.CreateDirectory(wavPath);\r\n            }\r\n            <span style=\"color:blue\">if</span> (!wavPath.EndsWith(&quot;\\\\&quot;))\r\n            {\r\n                wavPath &#43;= &quot;\\\\&quot;;\r\n            }\r\n            <span style=\"color:blue\">string</span> recDateTimeStr = String.Format(<span style=\"color:#a31515\">&quot;{0:yyyyMMdd_HHmm}&quot;</span>, DateTime.Now);\r\n            <span style=\"color:blue\">string</span> waveFileName = <span style=\"color:#a31515\">&quot;LMRC_&quot;</span> &#43; machineId &#43; <span style=\"color:#a31515\">&quot;_&quot;</span> &#43; recDateTimeStr &#43; <span style=\"color:#a31515\">&quot;.wav&quot;</span>;\r\n            writer = <span style=\"color:blue\">new</span> WaveFileWriter(wavPath &#43; waveFileName, recordingFormat);\r\n            recordingState = RecordingState.Recording;\r\n            waveIn.StartRecording();\r\n            eventLog1.WriteEntry(<span style=\"color:#a31515\">&quot;StartRecording at: &quot;</span> &#43; String.Format(<span style=\"color:#a31515\">&quot;{0:yyyyMMdd_HHmm}&quot;</span>, DateTime.Now), System.Diagnostics.EventLogEntryType.Information);\r\n\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        <span style=\"color:blue\">public</span> <span style=\"color:blue\">bool</span> BeginMonitoring()\r\n        {\r\n            <span style=\"color:blue\">if</span> (recordingState != RecordingState.Stopped)\r\n            {\r\n                <span style=\"color:green\">//throw new InvalidOperationException(&quot;Can't begin monitoring while we are in this state: &quot; &#43; recordingState.ToString());</span>\r\n                <span style=\"color:blue\">return</span> <span style=\"color:blue\">false</span>;\r\n            }\r\n            getConfigurations();\r\n            <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> n = 0; n &lt; WaveIn.DeviceCount; n&#43;&#43;)\r\n            {\r\n                <span style=\"color:blue\">string</span> str = WaveIn.GetCapabilities(n).ProductName.ToLower();\r\n                <span style=\"color:blue\">if</span> (str.Contains(deviceName))\r\n                {\r\n                    deviceNo = n;\r\n                    <span style=\"color:blue\">break</span>;\r\n                }\r\n            }\r\n            RecordingFormat = <span style=\"color:blue\">new</span> WaveFormat(sampleRate, channels);\r\n            waveIn = <span style=\"color:blue\">new</span> WaveIn();\r\n            waveIn.DeviceNumber = deviceNo;\r\n            waveIn.DataAvailable &#43;= waveIn_DataAvailable;\r\n            waveIn.RecordingStopped &#43;= <span style=\"color:blue\">new</span> EventHandler(waveIn_RecordingStopped);\r\n            waveIn.WaveFormat = recordingFormat;\r\n\r\n            TryGetVolumeControl();\r\n            recordingState = RecordingState.Monitoring;\r\n            <span style=\"color:blue\">return</span> <span style=\"color:blue\">true</span>;\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        <span style=\"color:blue\">void</span> waveIn_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n        {\r\n            eventLog1.WriteEntry(<span style=\"color:#a31515\">&quot;waveIn_DataAvailable at: &quot;</span> &#43; String.Format(<span style=\"color:#a31515\">&quot;{0:yyyyMMdd_HHmm}&quot;</span>, DateTime.Now), System.Diagnostics.EventLogEntryType.Information);\r\n            <span style=\"color:blue\">byte</span>[] buffer = e.Buffer;\r\n            <span style=\"color:blue\">int</span> bytesRecorded = e.BytesRecorded;\r\n            WriteToFile(buffer, bytesRecorded);\r\n        }\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> WriteToFile(<span style=\"color:blue\">byte</span>[] buffer, <span style=\"color:blue\">int</span> bytesRecorded)\r\n        {\r\n            eventLog1.WriteEntry(<span style=\"color:#a31515\">&quot;WriteToFile at: &quot;</span> &#43; String.Format(<span style=\"color:#a31515\">&quot;{0:yyyyMMdd_HHmm}&quot;</span>, DateTime.Now), System.Diagnostics.EventLogEntryType.Information);\r\n            <span style=\"color:blue\">if</span> (recordingState == RecordingState.Recording || recordingState == RecordingState.RequestedStop)\r\n            {\r\n                <span style=\"color:blue\">if</span> (RecordedTimeMilliSeconds &gt;= recPeriod)\r\n                {\r\n                    Stop();\r\n                }\r\n                <span style=\"color:blue\">else</span>\r\n                {\r\n                    <span style=\"color:blue\">try</span>\r\n                    {\r\n                        writer.WriteData(buffer, 0, bytesRecorded);\r\n                    }\r\n                    <span style=\"color:blue\">catch</span>\r\n                    {\r\n                    }\r\n                }\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>please help !</p>\r\n",
+    "PostedDate": "2012-06-19T01:52:54.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850753",
+    "ThreadId": "360107",
+    "Html": "<p>use WaveInEvent instead of WaveIn when using a console or windows service, since there is no message queue to process the callbacks</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-06-19T02:05:41.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850792",
+    "ThreadId": "360107",
+    "Html": "\r\n<p>thanks very much I will try it !</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-06-19T03:41:06.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850795",
+    "ThreadId": "360107",
+    "Html": "<p>need to get the very latest NAudio. It's available as a preview build on nuget: http://nuget.org/packages/naudio, or you can build it yourself from the latest source</p>",
+    "PostedDate": "2012-06-19T03:42:22.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850796",
+    "ThreadId": "360107",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>use WaveInEvent instead of WaveIn when using a console or windows service, since there is no message queue to process the callbacks</p>\r\n<p>Mark</p>\r\n</blockquote>\r\n<p>hi Mark,</p>\r\n<p>where I can find&nbsp;WaveInEvent Class? on which namespace? because its not included in&nbsp;NAudio.Wave</p>",
+    "PostedDate": "2012-06-19T03:42:50.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850816",
+    "ThreadId": "360107",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>need to get the very latest NAudio. It's available as a preview build on nuget: http://nuget.org/packages/naudio, or you can build it yourself from the latest source</p>\r\n</blockquote>\r\n<p>hi, how can i get latest source code?</p>",
+    "PostedDate": "2012-06-19T04:38:55.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850821",
+    "ThreadId": "360107",
+    "Html": "<p>I have downloaded version 1.5.4 using nuget but I didnt find&nbsp;<span>WaveInEvent, please help</span></p>\r\n<p><span>here is snapshot of version:&nbsp;</span></p>\r\n<p><br /> <img src=\"http://i46.tinypic.com/anod9c.jpg\" alt=\"\" /></p>\r\n<p>&nbsp;</p>\r\n<p><span><br /></span></p>",
+    "PostedDate": "2012-06-19T04:54:43.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850822",
+    "ThreadId": "360107",
+    "Html": "<p>you need to get the prerelease version from nuget. Or get the latest code by clicking \"source code\" above this discussion.</p>",
+    "PostedDate": "2012-06-19T04:58:35.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850829",
+    "ThreadId": "360107",
+    "Html": "<p>isn't version 1.5.4 is the&nbsp;released&nbsp;one?</p>",
+    "PostedDate": "2012-06-19T05:08:15.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850836",
+    "ThreadId": "360107",
+    "Html": "<p>ok I get it, thank u very much, its version 1.5.8 :)</p>",
+    "PostedDate": "2012-06-19T05:15:51.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850851",
+    "ThreadId": "360107",
+    "Html": "<p>glad you've found it. I increment the third part of the number every time I release an NAudio build for any reason, and so it is not necessarily related to the prerelease number.</p>",
+    "PostedDate": "2012-06-19T05:50:18.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "857837",
+    "ThreadId": "360107",
+    "Html": "<p>Hi Mark,</p>\r\n<p>I have the same problem but i couldn't find the release 1.5.8. could you give me the link please?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-07-05T06:02:59.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "869292",
+    "ThreadId": "360107",
+    "Html": "<p>you can either build the code yourself, or use Nuget to pick up a pre-release build</p>\r\n<p>http://nuget.org/packages/naudio</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-07-16T02:54:36.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "903518",
+    "ThreadId": "360107",
+    "Html": "<p>Thanks Mark!</p>",
+    "PostedDate": "2012-08-24T04:04:21.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

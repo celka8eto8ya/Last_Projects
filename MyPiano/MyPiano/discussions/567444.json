@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1304755",
+    "ThreadId": "567444",
+    "Html": "Hello Everyone !!\r<br />\n<br />\n I am very new to coding or in other words a noob.I want to record any pc audio being played be it a song playing ,a mouse click or both together.I want to record in the most superior quality possible as that is the priority.May be this explains what I mean record the digital signal being inputed to my sound card rather than converting analog signal back to digital....I looked into Stream To Disk function and various other methods to record but am not able to compile the inference.Please note the recorded audio has to streamed in real time or Low latency.So if there is a more direct and fast way to do so please let me know.I have a very basic understanding of my requirement as record the audio in a buffer then stream the buffer via TCP or UDP.I think WASAPI is good option considering the fact that its fast and widely supported.Later if this goes well I ll work on ASIO ...which as of now seems very optimistic !!!\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2014-09-15T04:18:30.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

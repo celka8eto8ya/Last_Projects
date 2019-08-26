@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1028324",
+    "ThreadId": "439758",
+    "Html": "Hello!<br />\nI'd like to create a program witch streams sound to an another client, and replays the sound.<br />\nWhen I call the WaveOut.Play() method, a high pitched beep like sound is hearable (It won't show itself with zero volume, I'm sure that the Waveout.Play() produces it, and not the stream source)<br />\nIn every 100ms I create a memorystream from the buffer of the microphone, and send it through network. On the another client theese memorystream objects become Enqueued into a Queue, and I call the WaveOut.Play() on each dequeued (converted into IWaveProvider) memorystream object, and call Thread.Sleep(100). It works almost flawlesly with one critical issue: that high pitched sound is present in every 100ms (I call the WaveOut.Play() in every 100ms on the freshly dequeued memorystream). <br />\n<br />\nHow could I make that high piched sound disappear, when WaveOut.Play() Begins to play and ends to play the 100ms long chunk? I tried to call immediately the WaveOut.volume = 0.0F and the Thread.Sleep(5) and resume the volume in every 100 ms, but it caused &quot;choppy audio&quot;. (also timing if the sleeps is a hard thing to do.)<br />\n<br />\nI am looking forward for your answers.<br />\n",
+    "PostedDate": "2013-04-10T03:01:22.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1028524",
+    "ThreadId": "439758",
+    "Html": "For network streaming I strongly recommend using BufferedWaveProvider as the NetworkChatDemo project in NAudio does. Calling WaveOut.Play every 100 ms is inevitably going to cause audio artefacts.<br />\n",
+    "PostedDate": "2013-04-10T09:10:41.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1028581",
+    "ThreadId": "439758",
+    "Html": "I did not know about the BufferedStreamWaveprovider. Now it is working properly. Thank you very much markheath!\r<br />\nLet me ask an another question. I enhanced my project with the BufferedStreamWaveprovider. Now I hear three high-pitched sound after the WaveOut.Play(). With a Thread.Sleep(500) immediately after WaveOut.Play() solves the problem, but does a proper solution exist about this problem?<br />\n",
+    "PostedDate": "2013-04-10T10:48:59.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1028595",
+    "ThreadId": "439758",
+    "Html": "you should not hear high-pitched sound. Try writing the audio to a WAV file instead of playing and listen to that to see if it has the high pitched sound<br />\n",
+    "PostedDate": "2013-04-10T11:22:07.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1051945",
+    "ThreadId": "439758",
+    "Html": "Hi i have similar problem .\r<br />\ni have 2 WaveProvider32 (sine providers) that pass to MultiplexingWaveProvider that pass to MultiplexingWaveProvider32Stereo,\r<br />\nthe MultiplexingWaveProvider32Stereo looks like that:<br />\n<pre><code>    public int Read(byte[] buffer, int offset, int count)\n    {                    \n        int sampleRead = m_MultiplexingWaveProvider.Read(buffer, offset, count);\n        WaveBuffer waveBuffer = new WaveBuffer(buffer);\n\n        if (m_WaveFileWriter != null)\n        {\n            for (int i = 0; i &lt; sampleRead / 4; i++)\n            {\n                m_WaveFileWriter.WriteSample(waveBuffer.FloatBuffer[i]);\n            }\n        }            \n        return sampleRead;            \n    }\n</code></pre>\n\nit means he read the buffer and also writing to file. \r<br />\nsometimes i get in the begining of the stream beeps that take 5-10 seconds .\r<br />\nwhat i do wrong?<br />\n",
+    "PostedDate": "2013-06-02T23:45:44.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1052164",
+    "ThreadId": "439758",
+    "Html": "nothing obviously wrong there, although WaveBuffer is overkill - you can just call Write on the WaveFileWriter and pass buffer in.\r<br />\nYou say you are passing sine providers in, so a beep is exactly what you should expect to hear.<br />\n",
+    "PostedDate": "2013-06-03T07:47:34.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

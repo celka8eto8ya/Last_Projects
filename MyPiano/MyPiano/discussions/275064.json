@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "681121",
+    "ThreadId": "275064",
+    "Html": "\r\n<p>Has anyone ever looked at adding LTC Decoding to this like <a href=\"http://ltcsmpte.sourceforge.net/\">\r\nhttp://ltcsmpte.sourceforge.net/</a>?</p>\r\n",
+    "PostedDate": "2011-10-06T20:26:03.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "681156",
+    "ThreadId": "275064",
+    "Html": "<p>It's not something I've ever needed, but I am open to contributions to NAudio if someone were to port something like this to C#</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-10-06T23:35:10.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1330180",
+    "ThreadId": "574433",
+    "Html": "Hello,\r<br />\n<br />\nI'm looking to use NAudio for Onset Detection and am currently trying to draw from a number of different sources (<a href=\"http://www.badlogicgames.com/wordpress/?cat=18&amp;paged=3\" rel=\"nofollow\">http://www.badlogicgames.com/wordpress/?cat=18&paged=3</a> , <a href=\"http://channel9.msdn.com/coding4fun/articles/AutotuneNET\" rel=\"nofollow\">http://channel9.msdn.com/coding4fun/articles/AutotuneNET</a>) but my overall lack of understanding of how NAudio works is leaving me at a bit of a loss.\r<br />\n<br />\nMy basic goals at the moment are to;<br />\n<ul>\n<li>Successfully load a .wav. file and be able to access the PCM data of that file.</li>\n<li>Check if that .wav file is in stereo, and if so, average the two channels into one.</li>\n<li>\nCheck/Know if the data is in 16bit signed integer and convert it to float<br />\n</li>\n</ul>\nHowever, I can't really be sure whether I'm on the track with these because of the following issues.\r<br />\n<br />\nFirst off, if I load a .wav audio file using a WaveFileReader<br />\n<pre><code>wavReader = new WaveFileReader(mPath);</code></pre>\n\ndoes wavReader now contain the PCM data for that audio file? And if so, where is it stored and how is it structured?\r<br />\n<br />\nSecondly, if I assume that wavReader contains the data 16bit signed integers, will the following code convert that data into floats?<br />\n<pre><code>stream32 = new Wave16ToFloatProvider(wavReader);</code></pre>\n\nApologies for the basic questions, but I haven't been having any luck finding these things out from the documentation and attempting to sort through variables in debug isn't casting any light on the situation either.\r<br />\n<br />\nJust for reference, I am attempting to use NAudio in a Unity project, with the 'NAudio' and 'NAudio.WindowsMediaFormat' dll's situated in the 'Plugins' folder of my project.\r<br />\n<br />\nAny help would be greatly appreciated!<br />\n",
+    "PostedDate": "2014-12-09T08:33:21.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1337536",
+    "ThreadId": "574433",
+    "Html": "WaveFileReader will return data from the read method in whatever format is in the WAV file. This might be PCM 16 bit (which is most common), but it can in fact be almost anything. If it is 16 bit, then Wave16ToFloatProvider will do what you want, or more simply, use the ToSampleProvider() extension method to get the ability to read floating point samples directly without having to extract them from byte arrays<br />\n",
+    "PostedDate": "2014-12-28T12:23:01.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

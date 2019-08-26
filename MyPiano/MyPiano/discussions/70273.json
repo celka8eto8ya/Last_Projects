@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "239335",
+    "ThreadId": "70273",
+    "Html": "<p>Hi,</p>\r\n<p>I'm very new to your NAudio Framework, but I'm surprised how easy programming seems compared to other frameworks like portaudio.</p>\r\n<p>I read your tutorial 5 carefully, because I am interested in recording sounds from multiple sound sources, four in my case. Is it possible to do this? Can the WaveIn class handle more than two channels? I have a Maya Soundcard, that offers me the possibility to record from 4 sound sources.</p>\r\n<p><br>Thank you in advance.</p>",
+    "PostedDate": "2009-09-27T15:13:36.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "239439",
+    "ThreadId": "70273",
+    "Html": "<p>Hi,</p>\r\n<p>I have never tried to record four inputs using NAudio. I suspect it would be down to whether the soundcard manufacturers have supported this for WaveIn. Give it a try and see what happens.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-09-28T01:51:02.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

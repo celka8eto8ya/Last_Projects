@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "952054",
+    "ThreadId": "405763",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp; &nbsp;I have created player using NAudio and now I have to add VOLUME METER. I use the following code.</p>\r\n<p>&nbsp;</p>\r\n<p>WaveOut Player = new WaveOut();</p>\r\n<p>string fileName;</p>\r\n<p>AudioFileReader FileReader;</p>\r\n<p>FileReader = new AudioFileReader(fileName);</p>\r\n<p>Player.Init(FileReader);</p>\r\n<p>Player.Play();</p>\r\n<p>&nbsp;</p>\r\n<p>How I add volume meter to my player... from where I get value for Volume meter..</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks & Regards,</p>\r\n<p>Hinshin</p>\r\n",
+    "PostedDate": "2012-12-05T22:17:17.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

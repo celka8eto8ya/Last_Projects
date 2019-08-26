@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "919580",
+    "ThreadId": "397436",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>I has tested the condition, but it always return true result.</pre>\r\n<pre>This is the code:</pre>\r\n<pre><br><pre><div style=\"color:black; background-color:white\"><pre>playerDevice.Init(mp3Reader);\n\n<span style=\"color:blue\">if</span> (mp3Reader.CurrentTime &lt; mp3Reader.TotalTime)\n       {                \n            playerDevice.Play();           \n       }\n<span style=\"color:blue\">else</span>\n       {            \n            playerDevice.Stop();   \n            playerDevice.Dispose();\n            playerDevice = <span style=\"color:blue\">null</span>;\n            MessageBox.Show(<span style=\"color:#a31515\">&quot;Playback end.&quot;</span>);\n       } \n</pre>\n</div>\n</pre>\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-09-30T00:09:06.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919607",
+    "ThreadId": "397436",
+    "Html": "<p>I has fixed it using DispatcherTimer class to call the method every second.</p>",
+    "PostedDate": "2012-09-30T02:39:14.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

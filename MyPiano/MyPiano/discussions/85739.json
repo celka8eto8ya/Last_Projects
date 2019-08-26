@@ -1,0 +1,138 @@
+[
+  {
+    "Id": "291998",
+    "ThreadId": "85739",
+    "Html": "<p>Hi,</p>\r\n<p>I have used the example (<a href=\"http://opensebj.blogspot.com/2009/04/naudio-tutorial-5-recording-audio.html\">here</a>) in my program, and its working great.</p>\r\n<p>However, I would like to implement a &quot;record on sound detected&quot; function.</p>\r\n<p>So is there any way to get the amplitude or threshold of the sound, as I want to &quot;record&quot; the sound only if it is over a certain limit?&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Need some guidance, as I am new to the sound stuff.</p>",
+    "PostedDate": "2010-02-17T22:14:39.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "292351",
+    "ThreadId": "85739",
+    "Html": "<p>Hi Becoz,</p>\r\n<p>You will need to monitor what is happening through the source that you want to record until you find the event in the audio stream which will trigger your recording. So if you are looking to record audio data (from here on in I will refer to this as <span style=\"text-decoration:underline\">saving</span> the audio data, it's an important distinction) you will still need to capture (aka record) the data from the audio stream, check if the event has occurred (the volume level on the stream coming in) and then decide if you want to save the data. If you don't want to save the data then you trow it away and check the next block.</p>\r\n<p>Think of it like recording a concert. Your going to still be listing to the concert and the concert is still going to be playing even if your not recording (i.e. saving) the data that you hear. So effectively what you want to do is not to stop recording the data but to stop saving it until an event you are looking for occurs.</p>\r\n<p>To answer the part about the event, being the level of the volume, look at the sample code provided in the application with NAudio, there is a peak meter there which you could reuse the code from to help you identify when a peak level has been reached.</p>\r\n<p>~DSebJ</p>",
+    "PostedDate": "2010-02-18T13:24:29.627-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "292525",
+    "ThreadId": "85739",
+    "Html": "<p>Hi DSebJ,</p>\r\n<p>I have devised an alternative solution after referencing some of the code samples from Coding4Fun.com. Below is the method that I will call before saving. If the method returns true, it means&nbsp;that it is over thethreshold limit.</p>\r\n<p>After amiring my code for a few minutes, I discovered a new problem. I want to implement &quot;recording&quot; using multiple microphones.&nbsp;Is there anyway to&nbsp;differenciate the different microphones, or come up with a list of available microphones?</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">private</span> <span style=\"color:Blue\">double</span> AudioThresh = 0.8;\r\n<span style=\"color:Blue\">private</span> <span style=\"color:Blue\">double</span> AudioThresh2 = 0.09;\r\n\r\n<span style=\"color:Blue\">private</span> <span style=\"color:Blue\">bool</span> ProcessData(WaveInEventArgs e)\r\n        {\r\n            <span style=\"color:Blue\">bool</span> result = <span style=\"color:Blue\">false</span>;\r\n\r\n            <span style=\"color:Blue\">bool</span> Tr = <span style=\"color:Blue\">false</span>;\r\n            <span style=\"color:Blue\">double</span> Sum2 = 0;\r\n            <span style=\"color:Blue\">int</span> Count = e.BytesRecorded / 2;\r\n            <span style=\"color:Blue\">for</span> (<span style=\"color:Blue\">int</span> index = 0; index &lt; e.BytesRecorded; index += 2)\r\n            {\r\n                <span style=\"color:Blue\">double</span> Tmp = (<span style=\"color:Blue\">short</span>)((e.Buffer[index + 1] &lt;&lt; 8) | e.Buffer[index + 0]);\r\n                Tmp /= 32768.0;\r\n                Sum2 += Tmp * Tmp;\r\n                <span style=\"color:Blue\">if</span> (Tmp &gt; AudioThresh)\r\n                    Tr = <span style=\"color:Blue\">true</span>;\r\n            }\r\n            Sum2 /= Count;\r\n\r\n            <span style=\"color:Green\">// If the Mean-Square is greater than a threshold, set a flag to indicate that noise has happened</span>\r\n            <span style=\"color:Blue\">if</span> (Tr || Sum2 &gt; AudioThresh2)\r\n            {\r\n                result = <span style=\"color:Blue\">true</span>;\r\n            }\r\n            <span style=\"color:Blue\">else</span>\r\n            {\r\n                result = <span style=\"color:Blue\">false</span>;\r\n            }\r\n\r\n            <span style=\"color:Blue\">return</span> result;\r\n        }\r\n</pre>\r\n</div>\r\n<p>Thanks in advance,</p>\r\n<p>BecoZ</p>",
+    "PostedDate": "2010-02-19T00:44:42.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "415047",
+    "ThreadId": "85739",
+    "Html": "<p>Hi everybody,<br>After a week of search I 've found this post.<br>I've the same problem like becos, I need to make an interrupt at each peak on my audio stream.<br>I don't need to record only listening micro, I need to detect a peak every second on a silent stream.<br>I've VS2005 and the sample are in VS2008 in think I try to use it but it is to complex for my application .<br>Thanks for your help</p>\r\n<p>DECORME S&eacute;bastien</p>",
+    "PostedDate": "2010-03-06T13:25:35.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "415102",
+    "ThreadId": "85739",
+    "Html": "<p>&nbsp;</p>\r\n<p>To <a id=\"ctl00_ctl00_MasterContent_Content_PostRepeater_ctl06_UserNameLink\" style=\"text-decoration:underline;color:#3e62a6\" href=\"http://www.codeplex.com/site/users/view/sdecorme\">sdecorme</a>,</p>\r\n<p>I am not sure what you mean by this part of your post:</p>\r\n<pre style=\"color:#000000;font-family:Consolas, 'Courier New', Courier, monospace;font-size:1em;margin:8px\">&quot;I need to make an interrupt at each peak on my audio stream.&quot;</pre>\r\n<p>However, if you want to detect a sound that is louder or higher in pitch as compared to the normal environment noise (even in a complete silent place,there are still sounds), I have a code snippet that might help.</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Green\">//edit the value of the variable accordingly</span>\r\n<span style=\"color:Blue\">double</span> AudioThresh = 0.02\r\n\r\n\r\n<span style=\"color:Green\">//When button Test is clicked, start listening for sound</span>\r\n<span style=\"color:Blue\">private</span> <span style=\"color:Blue\">void</span> btnTest_Click(<span style=\"color:Blue\">object</span> sender, EventArgs e)\r\n{\r\n\twaveInStream = <span style=\"color:Blue\">new</span> WaveIn(44100, 2);\r\n\twaveInStream.DataAvailable += <span style=\"color:Blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveInStream_DataAvailable);\r\n\r\n\twaveInStream.StartRecording();\r\n\r\n}\r\n\r\n<span style=\"color:Green\">//Handler for the sound listener</span>\r\n<span style=\"color:Blue\">private</span> <span style=\"color:Blue\">void</span> waveInStream_DataAvailable(<span style=\"color:Blue\">object</span> sender, WaveInEventArgs e)\r\n{\r\n\r\n\t<span style=\"color:Blue\">bool</span> result = ProcessData(e);\r\n\t<span style=\"color:Blue\">if</span> (result)\r\n\t{\r\n\t\tMessageBox.Show(<span style=\"color:#A31515\">&quot;peak in sound?&quot;</span>);\r\n\t}\r\n\t<span style=\"color:Blue\">else</span>\r\n\t{\r\n\t\t<span style=\"color:Green\">//no peak in sound</span>\r\n\t}\r\n\r\n\r\n}\r\n\r\n\r\n<span style=\"color:Green\">//calculate the sound level based on the AudioThresh</span>\r\n<span style=\"color:Blue\">private</span> <span style=\"color:Blue\">bool</span> ProcessData(WaveInEventArgs e)\r\n{\r\n\t<span style=\"color:Blue\">bool</span> result = <span style=\"color:Blue\">false</span>;\r\n\r\n\t<span style=\"color:Blue\">bool</span> Tr = <span style=\"color:Blue\">false</span>;\r\n\t<span style=\"color:Blue\">double</span> Sum2 = 0;\r\n\t<span style=\"color:Blue\">int</span> Count = e.BytesRecorded / 2;\r\n\t<span style=\"color:Blue\">for</span> (<span style=\"color:Blue\">int</span> index = 0; index &lt; e.BytesRecorded; index += 2)\r\n\t{\r\n\t\t<span style=\"color:Blue\">double</span> Tmp = (<span style=\"color:Blue\">short</span>)((e.Buffer[index + 1] &lt;&lt; 8) | e.Buffer[index + 0]);\r\n\t\tTmp /= 32768.0;\r\n\t\tSum2 += Tmp * Tmp;\r\n\t\t<span style=\"color:Blue\">if</span> (Tmp &gt; AudioThresh)\r\n\t\t\tTr = <span style=\"color:Blue\">true</span>;\r\n\t}\r\n\tSum2 /= Count;\r\n\r\n\t<span style=\"color:Green\">// If the Mean-Square is greater than a threshold, set a flag to indicate that noise has happened</span>\r\n\t<span style=\"color:Blue\">if</span> (Tr || Sum2 &gt; AudioThresh)\r\n\t{\r\n\t\tresult = <span style=\"color:Blue\">true</span>;\r\n\t}\r\n\t<span style=\"color:Blue\">else</span>\r\n\t{\r\n\t\tresult = <span style=\"color:Blue\">false</span>;\r\n\t}\r\n\t<span style=\"color:Blue\">return</span> result;\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>The <span style=\"color:#0000ff\">AudioThresh </span>variable determines the threshold for the calculation. If the computed result in the <span style=\"color:#0000ff\">ProcessData </span>method is greater than AudioThresh, it means that there is a rise in sound levels (therefore, a peak). For my own implementation, I usually sets&nbsp;<span style=\"color:#0000ff\">AudioThresh </span>to a value between 0.02 and 0.03 in a normal environment where no music is played, no one is talking, no sudden noise (well, you get the idea).</p>\r\n<p>&nbsp;</p>\r\n<p>Do indicate if this post helped, so that future programmers who encounter this problem can simply read this thread instead of spawning a new topic.</p>\r\n<p>&nbsp;</p>\r\n<p>Hope I helped,</p>\r\n<p>BecoZ</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-06T22:54:55.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "415146",
+    "ThreadId": "85739",
+    "Html": "<p>Thanks becoz,<br>I've done it , it works but I've precision problem .<br>The peak is recorded on a silent channel , I use it to make synchronisation between the video/audio stream and a serial data emission.<br>Is there a way to know what is the delay between the&nbsp; sound peak and the peak detection ?<br>How is generated the WaveInEventArgs ? apparently it is a buffer&nbsp; because of the sum in the processdata.<br>Is it possible to accelerate the acquisition rate ?</p>\r\n<p>Thanks you</p>",
+    "PostedDate": "2010-03-07T05:09:36.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "415163",
+    "ThreadId": "85739",
+    "Html": "<p><strong><em>&quot;I've done it , it works but I've precision problem .&quot;</em></strong></p>\r\n<p>If you have a precision problem because you are using threshold values instead of frequency or amplitude, you will have better luck coding in c++, as they have such codes over there, and no one has ported them to c# yet(to my knowledge).</p>\r\n<p><em><strong>&quot;Is there a way to know what is the delay between the&nbsp; sound peak and the peak detection ?&quot;</strong></em></p>\r\n<p>I have used this method of sound detection, in which I will save the sound to an audio file when a peak is detected, and only stops if there are no sounds that are over the threshold for 3 seconds. I can say that its quite accurate, as everything I said is recorded,with no parts missing.</p>\r\n<p><strong><em>&quot;How is generated the WaveInEventArgs ? apparently it is a buffer&nbsp; because of the sum in the processdata.&quot;</em></strong></p>\r\n<p>If you debug your project, you will be able to see that the sound is captured and stored as byte[]. The processdata method is a method created by me to calculate the average size of the byte[], so as to see if the sound level exeeds the threshold.</p>\r\n<p><em><strong>&quot;Is it possible to accelerate the acquisition rate ?&quot;</strong></em></p>\r\n<p>WaveIn does not allow you to change the rate. It will invoke the handler whenever there is data(sound) available.</p>",
+    "PostedDate": "2010-03-07T07:19:50.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "415229",
+    "ThreadId": "85739",
+    "Html": "<p>Thanks for all this precision</p>\r\n<p><br>How can I select on wich channel I want to work , I try<br>waveInStream = new WaveIn(44100, 1);<br>and<br>waveInStream = new WaveIn(44100, 2);<br>but it make no difference .</p>\r\n<p>What the byte[] means exactly, is there any documentation about this array , and how it work .<br>Maybe my problem came from the byte[] decoding , I found some noise that sould no be on the audio stream.</p>\r\n<p>Thanks</p>",
+    "PostedDate": "2010-03-07T14:21:42.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "431457",
+    "ThreadId": "85739",
+    "Html": "<p>hi !</p>\r\n<p>I have to do a C# application to detect sound on the microphone , and when the sound is detected ,to play a message.I 've already writen the part of playing the message , but now I have to detect the moment when to inject that message.I don't know...i think an ideea could be to capture from the sound card , and when I detect changes in the audio signal it means that sound appeares in the microphone and then i can call the playing function.But I need some help in writing the C# code. So...can anybody help me with this?</p>\r\n<p>Thanks , Catalina</p>",
+    "PostedDate": "2010-04-15T07:04:38.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "431470",
+    "ThreadId": "85739",
+    "Html": "<p><strong>What the byte[] means exactly, is there any documentation about this array , and how it work.</strong></p>\r\n<p>&nbsp;I am not sure if there are any documentation about this array. However, you can try searching with keywords such as &quot;WaveIn API&quot;.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>I have to detect the moment when to inject that message...</strong></p>\r\n<p>&nbsp;In my example above, I have already set the condition</p>\r\n<pre style=\"font-size:1em;font-family:Consolas, 'Courier New', Courier, monospace\"><span style=\"color:green\">//Handler for the sound listener</span>\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> waveInStream_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n{\r\n\r\n\t<span style=\"color:blue\">bool</span> result = ProcessData(e);\r\n\t<span style=\"color:blue\">if</span> (result)\r\n\t{\r\n\t\tMessageBox.Show(<span style=\"color:#a31515\">&quot;peak in sound?&quot;</span>);\r\n\t}\r\n\t<span style=\"color:blue\">else</span>\r\n\t{\r\n\t\t<span style=\"color:green\">//no peak in sound</span>\r\n\t}\r\n\r\n\r\n}</pre>\r\n<pre style=\"font-size:1em;font-family:Consolas, 'Courier New', Courier, monospace\"></pre>\r\n<pre style=\"font-size:1em;font-family:Consolas, 'Courier New', Courier, monospace\">If the result is true, it means sound is detected. So just put you code inside the <span style=\"color:#0000ff\">if.</span></pre>\r\n<pre style=\"font-size:1em;font-family:Consolas, 'Courier New', Courier, monospace\">If your playing of a message means playing a sound, do note that the sound you played can be picked up by the sound detection function.</pre>",
+    "PostedDate": "2010-04-15T07:20:31.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "431477",
+    "ThreadId": "85739",
+    "Html": "<p>Hi again !</p>\r\n<p>yes, playing a message is playing a sound.In fact the message was a text message that I converted into speech with SAPI. That voice message has to be injected in a call when somebody answers the phone.The part with dialing the number is done (I used a modem for this) ,the part with the voice message is done too...I just need to detect when somebody answered the phone.My coordinator teacher told me that in order to know when to play the message(in fact the sound) I have to capture sound from the sound card and when I detect changes in the audio signal it means that the call was answered so I can play the message.So..I will try to use your example...maybe it will help me.If you have any ideea and you want to help me...it would be great.</p>\r\n<p>Thanks !</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-04-15T07:37:53.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "431484",
+    "ThreadId": "85739",
+    "Html": "<p><strong>...when I detect changes in the audio signal...</strong></p>\r\n<p>Well, I have no idea how you will want to detect when a person have picked up the phone. My suggestion will be to determine the threshold such that it will not detect the dialing sound.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>My coordinator teacher...</strong></p>\r\n<p>Wow, does this mean you are doing a school project? I am glad I helped you someway or another, as I am also a student at a local polytechnic, and have done sound detection as one of the many modules in my final year school project. We students should help each other,lol.</p>",
+    "PostedDate": "2010-04-15T07:54:25.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "431486",
+    "ThreadId": "85739",
+    "Html": "<p>Yes, I am doing my diploma project. I am student at a technical university too.Well...I hope I will find something to help me.I will try to use your example above,maybe it's good for me too :).</p>",
+    "PostedDate": "2010-04-15T07:59:44.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "465617",
+    "ThreadId": "85739",
+    "Html": "<p>Maybe someone could help with a conversion to vb.net. How do I get the value from&nbsp;or call it. I am new to this and working on a simple project (I think) that will detect audio from my sound card.</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<pre>Imports System\r\nImports System.Collections.Generic\r\nImports System.ComponentModel\r\nImports System.Data\r\nImports System.Drawing\r\nImports System.Text\r\nImports System.Windows.Forms\r\nImports NAudio.Wave\r\nImports System.Diagnostics\r\n\r\nPublic Class Form1\r\n    Private AudioThresh As Double = 0.09\r\n    Private waveInStream As WaveInStream\r\n    Private WaveIn As WaveIn\r\n    'When button Test is clicked, start listening for sound\r\n\r\n    Private Sub btnTest_Click(ByVal sender As Object, ByVal e As EventArgs)\r\n        'waveInStream = WaveIn(44100, 1)\r\n        AddHandler waveInStream.DataAvailable, AddressOf waveInStream_DataAvailable\r\n        'waveInStream.StartRecording()\r\n    End Sub\r\n\r\n    'Handler for the sound listener\r\n    Private Sub waveInStream_DataAvailable(ByVal sender As Object, ByVal e As WaveInEventArgs)\r\n        Dim result As Boolean = ProcessData(e)\r\n        If result Then\r\n            MessageBox.Show(&quot;peak in sound?&quot;)\r\n            'no peak in sound\r\n        Else\r\n        End If\r\n    End Sub\r\n\r\n    'calculate the sound level based on the AudioThresh\r\n    Private Function ProcessData(ByVal e As WaveInEventArgs) As Boolean\r\n        Dim result As Boolean = False\r\n        Dim Tr As Boolean = False\r\n        Dim Sum2 As Double = 0\r\n        Dim Count As Integer = e.BytesRecorded / 2\r\n        For index As Integer = 0 To e.BytesRecorded - 1 Step 2\r\n            Dim Tmp As Double = CShort((e.Buffer(index + 1) &lt;&lt; 8) Or e.Buffer(index + 0))\r\n            Tmp /= 32768.0\r\n            Sum2 += Tmp * Tmp\r\n            If Tmp &gt; AudioThresh Then\r\n                Tr = True\r\n            End If\r\n        Next\r\n        Sum2 /= Count\r\n        ' If the Mean-Square is greater than a threshold, set a flag to indicate that noise has happened\r\n        If Tr OrElse Sum2 &gt; AudioThresh Then\r\n            result = True\r\n            MsgBox(&quot;yes&quot;)\r\n\r\n        Else\r\n            result = False\r\n            MsgBox(&quot;no&quot;)\r\n\r\n        End If\r\n        Return result\r\n    End Function\r\n\r\nEnd Class</pre>\r\n</p>",
+    "PostedDate": "2010-07-09T13:39:28.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1209432",
+    "ThreadId": "85739",
+    "Html": "Hi guys, this example is good and working.\r<br />\n<br />\nBut I need to make a comparasion a little more precise instead of comparing against that &quot;over a certain limit&quot; be compared to a stored sound? say a specific tone of a short duration?, how could it? \r<br />\n<br />\nAnd instead of listening to the microphone, I hear a WAVE file previously stored? \r<br />\n<br />\nIt would be a sound recognition but not VOICE<br />\n",
+    "PostedDate": "2014-02-17T06:30:19.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1210587",
+    "ThreadId": "85739",
+    "Html": "nobody???<br />\n",
+    "PostedDate": "2014-02-19T07:56:06.197-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1213535",
+    "ThreadId": "85739",
+    "Html": "comparing two recorded sounds is very difficult. For example, if the polarity is reversed, or one is timeshifted a few ms, or one is at a slightly different speed, then most  comparison algorithms will say the sounds are completely different, even though they will sound almost identical to the human ear.<br />\n",
+    "PostedDate": "2014-02-24T01:43:34.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

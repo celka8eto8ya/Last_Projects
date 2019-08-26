@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1342356",
+    "ThreadId": "577802",
+    "Html": "Hello,\r<br />\n<br />\nI wanted to know what time uni the NoteOnEvent uses for AbsoluteTime? I did not find any hint on that.\r<br />\nIs this the number of ticks? The absolut time could then be calculated via the deltaTicksPerQuarterNode and the millisecondsPerQuarterNode?\r<br />\n<br />\nKind regards,\r<br />\nSimonRu<br />\n",
+    "PostedDate": "2015-01-15T13:01:05.853-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1342359",
+    "ThreadId": "577802",
+    "Html": "yes, that's right. It's simple so long as there were no tempo changes.<br />\n",
+    "PostedDate": "2015-01-15T13:06:17.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

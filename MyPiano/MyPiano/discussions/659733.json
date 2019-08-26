@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1488828",
+    "ThreadId": "659733",
+    "Html": "Hi everyone...\r<br />\n<br />\nI got an issue with the MediaFoundationResampler. I try to resample a Wavestream to 32000 Hz. If I feed the resampler with very short samples (60 bytes) the resampler outputs just bytes containing zeros. If I change the format to 44100 Hz it works fine. Every samplerate below 32000 -&gt; the same. Changing the bitdepth or the amount of channels does nothing.\r<br />\n<br />\nThe file is a IEEE float (32bit, 44100Hz, stereo) wav and I read it in by using a WaveFileReader.\r<br />\n<br />\nCode:<br />\n<pre><code>var outFormat = new WaveFormat(32000, 16, 1);\nint bps = (int)inStream.WaveFormat.AverageBytesPerSecond;\nfloat diff = (int)outFormat.AverageBytesPerSecond;\ndiff /= bps;\n\nusing (var Resampler = new MediaFoundationResampler(inStream, outFormat))\n{\n          bytes = new byte[(int)(inStream.Length * diff)];\n          Resampler.Read(bytes, 0, (int)bytes.Length);\n }</code></pre>\n\nAny idea or known issue?<br />\n",
+    "PostedDate": "2016-11-27T04:13:06.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

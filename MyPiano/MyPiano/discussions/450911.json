@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1071730",
+    "ThreadId": "450911",
+    "Html": "Hi, i just start working with Naudio. Im traing to find something like balance. I need to play 2 wave on different channels. example on left side 100Hz and 115 on right. Can I do this in very simple way? I really need help its for my project in biofeedback. <br />\n",
+    "PostedDate": "2013-07-23T04:49:21.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072153",
+    "ThreadId": "450911",
+    "Html": "you need two sginal generators each feeding into a panning sample provider (one panned hard left, one right), then mix the two stereo signals together with a mixing sample provider<br />\n",
+    "PostedDate": "2013-07-24T01:35:15.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

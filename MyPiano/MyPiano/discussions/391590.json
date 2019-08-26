@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "899272",
+    "ThreadId": "391590",
+    "Html": "\r\n<p>Hi im trying to create a 24-bit WAVE file following the last example given by Mark here:</p>\r\n<p><a href=\"http://mark-dot-net.blogspot.se/2011/04/how-to-use-wavefilewriter.html\">Sound Code: How to Use WaveFileWriter</a></p>\r\n<p>The wave data generates as it should by the loop, but the resulting wavfile is only OK to open in VLC, all other programs flags for corrupt wave file header. (WaveLab 6, MediaPlayer, Quicktime, etc.)</p>\r\n<p>Any suggestions why the header could be corrupt? (this is true for both 16/24-bit wave files)</p>\r\n<p>Regards Jonas</p>\r\n",
+    "PostedDate": "2012-08-14T12:33:16.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "900835",
+    "ThreadId": "391590",
+    "Html": "<p>I'm not sure what you mean by corrupt. You would need to compare the WAV header created by NAudio, with one with the same format created by a different program that does play correctly in these programs. Then you can use the WaveFileReader to read both and see what the differences are.</p>",
+    "PostedDate": "2012-08-17T13:07:42.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

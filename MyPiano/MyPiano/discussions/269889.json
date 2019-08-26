@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "661353",
+    "ThreadId": "269889",
+    "Html": "\r\n<p>I fixed a crash problem i was having when disposing of an object. In the Disconnect() function of WaveCallbackInfo I added a InvokeRequired check to fix my issue.<br>\r\n<br>\r\nIn &quot;WaveCallbackInfo.cs&quot;<br>\r\n</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">delegate</span> <span style=\"color:blue\">void</span> FuncCallbackDelegate();\r\n\r\n        <span style=\"color:blue\">internal</span> <span style=\"color:blue\">void</span> Disconnect()\r\n        {\r\n            <span style=\"color:blue\">if</span> (waveOutWindow != <span style=\"color:blue\">null</span>)\r\n            {\r\n                <span style=\"color:blue\">if</span> (!waveOutWindow.InvokeRequired)\r\n                    waveOutWindow.Close();\r\n                <span style=\"color:blue\">else</span>\r\n                    waveOutWindow.Invoke(<span style=\"color:blue\">new</span> FuncCallbackDelegate(waveOutWindow.Close));\r\n\r\n                waveOutWindow = <span style=\"color:blue\">null</span>;\r\n            }\r\n            <span style=\"color:blue\">if</span> (waveOutWindowNative != <span style=\"color:blue\">null</span>)\r\n            {\r\n                waveOutWindowNative.ReleaseHandle();\r\n                waveOutWindowNative = <span style=\"color:blue\">null</span>;\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p>In BufferedWaveProvider i seemd to have a problem settings the BufferDuration below 1 second.<br>\r\n_provider.BufferDuration = TimeSpan.FromMilliseconds(500d);</p>\r\n<p>I'm not sure exactly what was happening but I modified the set parameter to cast the (int) WaveFormat.AverageBytesPerSecond to a (double) and it seem to fix the math problems...<br>\r\n<br>\r\nIn &quot;BufferedWaveProvider.cs&quot;<br>\r\n</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> TimeSpan BufferDuration\r\n        {\r\n            <span style=\"color:blue\">get</span>\r\n            {\r\n                <span style=\"color:blue\">return</span> TimeSpan.FromSeconds((<span style=\"color:blue\">double</span>)BufferLength / WaveFormat.AverageBytesPerSecond);\r\n            }\r\n            <span style=\"color:blue\">set</span>\r\n            {\r\n                BufferLength = (<span style=\"color:blue\">int</span>)(value.TotalSeconds * (<span style=\"color:blue\">double</span>)WaveFormat.AverageBytesPerSecond);\r\n            }\r\n        }<br><br><br>Are these real fixes? Or was i doing something wrong to begin with? haha; enlighten me\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2011-08-21T19:41:51.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "663125",
+    "ThreadId": "269889",
+    "Html": "<p>ideally you shouldn't be using an instance of WaveOut from multiple threads at the same time, which is what you seem to be doing.</p>\r\n<p>As for the BufferDuration fix, you now run the risk of creating a BufferLength that is not block aligned with the setter. Might not be an issue, but it would mean that the bufferduration getter wouldn't be accurate.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-08-25T03:30:03.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "629074",
+    "ThreadId": "261735",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>My Application need to write (record) the current playing song into MP3 file stream. I know there is a class &quot;<span style=\"color:#2b91af\">WaveFileWriter</span>&quot; which is used to write .wav file. I wanted to know</p>\r\n<p>1. How to write current chunk of buffer into MP3 Stream.</p>\r\n<p>2. Which place of NAudio exactly I should plug-in my code to write the current chunk. ( I used\r\n<strong>OnDone</strong> function of WaveOutBuffer to grab the current chunk to write into wave format)</p>\r\n<p>3. Is there any class <span style=\"color:#2b91af\">MP3FileWriter ?? </span></p>\r\n<p>Thanks<span style=\"color:#2b91af\">,<br>\r\n</span></p>\r\n",
+    "PostedDate": "2011-06-16T23:52:09.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629075",
+    "ThreadId": "261735",
+    "Html": "<p>No, I'm afraid there is no MP3 writer in NAudio. I recommend using LAME</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-16T23:55:18.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

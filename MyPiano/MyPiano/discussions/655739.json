@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1476893",
+    "ThreadId": "655739",
+    "Html": "Ah, I managed to read a wav in to a byte[] called waveByteArray, and now want to write it back out again.<br />\n<br />\nIn the old nAudio, this used the WaveFileWriter. But in a UWP that's no longer there.  What I see is WaveFileWriterRT.<br />\n<br />\nSo how do I get there from here? <br />\nI created the destination file in a user picked location:<br />\n<pre><code>            StorageFile destination = await storageFolder.CreateFileAsync(&quot;thisIsAtest.wav&quot;, CreationCollisionOption.ReplaceExisting);</code></pre>\n\nI created the wav source provider:<br />\nvar result = reader.Read(wavByteArray, 0, (int)reader.Length);<br />\n<br />\nand tried to write it out like this:<br />\nawait WaveFileWriterRT.CreateWaveFileAsync(destination.Path, reader);<br />\n<br />\nI get an empty file.  Suggestions? Examples?<br />\nThanks.<br />\n<br />\n!! Nevermind  Got something to work by doing this.<br />\n<pre><code>                stream = await  destination.OpenAsync(FileAccessMode.ReadWrite);\n                WaveFileWriterRT wfr_RT;\n                wfr_RT = new WaveFileWriterRT(stream.AsStream(), waveformat);\n                await wfr_RT.WriteAsync(wavByteArray, 0, (int)reader.Length);\n                await wfr_RT.FlushAsync();</code></pre>\n\n",
+    "PostedDate": "2016-06-20T13:50:08.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1477269",
+    "ThreadId": "655739",
+    "Html": "great, glad you got it working<br />\n",
+    "PostedDate": "2016-06-25T08:55:41.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudioDemo",
+      "DisplayName": "NAudioDemo"
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-26T23:56:14.803-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "In this section of Read:\r\n\r\n            if (samplesRead < count)\r\n            {\r\n                Array.Clear(buffer, offset + samplesRead, count - samplesRead);\r\n                samplesRead = count;\r\n            }\r\n\r\nbuffer is being Cleared as a byte[] at runtime, but the next 2 parameters are sample based (ie off by factor of 4).\r\n\r\nRead parameter signature is a float[] so this does confuse me a bit.   i worked around by ()*4 the 2nd 2 params.",
+    "LastUpdatedDate": "2012-10-26T23:56:14.803-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-09-08T13:01:33.353-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "drumsamplepatternprovider array clear",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16362
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "good spot, the WaveBuffer hack confuses Array.Clear, so it isn't really safe to use in this fuction. I'll replace it with a for loop setting the values to 0.",
+      "PostedDate": "2012-09-08T13:47:50.053-07:00",
+      "Id": 76517
+    },
+    {
+      "Message": "I've checked in a fix. Please let me know if it works for you. thanks",
+      "PostedDate": "2012-09-08T14:05:20.163-07:00",
+      "Id": 76519
+    },
+    {
+      "Message": "that looks fine.\n",
+      "PostedDate": "2012-09-12T13:14:50.807-07:00",
+      "Id": 76781
+    }
+  ]
+}

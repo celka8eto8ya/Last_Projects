@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1323713",
+    "ThreadId": "572489",
+    "Html": "Hi...\r<br />\n<br />\nIn windows 7, if you open the Sound panel / Recording tab, you will see the &quot;sound bar&quot; changing whenever you talk in the microphone (please check the image attached). It will just show you that the microphone is receving something.\r<br />\n<br />\nI`ve seen the NAudio wpf demo and saw that you are doing the same thing in the WASAPI capture demo, but i need to start recording. So how does windows make it so that it always displays the sound bar changes without having to record anything ?\r<br />\n<br />\n<img src=\"http://d64.imgup.net/Untitled798e.png\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2014-11-19T02:22:16.613-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1325907",
+    "ThreadId": "572489",
+    "Html": "Hello lebhero,\r<br />\n<br />\nI´d guess that he used CoreAudioApi for that. Checkout NAudio.CoreAudioApi for Volume values of sound mixer.\r<br />\n<br />\nKind regards\r<br />\n<br />\nFreefall<br />\n",
+    "PostedDate": "2014-11-25T06:04:24.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

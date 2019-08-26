@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "When using WaveIn to transmit bursts of audio, buffer is null every other recording period. This wasn't the case in the last official release.\r\n\r\nNoticed that the WaveIn Callback was missing in the latest build, but was there in the official release:\r\n\r\nif (buffer == null) { return; }",
+    "LastUpdatedDate": "2012-10-06T03:48:22.067-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-04-11T12:52:10.327-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveInEvent - Buffer is null",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16347
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I'm not sure I understand this bug report. Can you test with the latest code and see if it is still there, and provide more info if it is",
+      "PostedDate": "2012-10-06T03:48:22.067-07:00",
+      "Id": 78794
+    }
+  ]
+}

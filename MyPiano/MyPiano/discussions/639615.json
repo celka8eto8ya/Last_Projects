@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1429429",
+    "ThreadId": "639615",
+    "Html": "Hi,\r<br />\nI use BufferedWaveProvider to play a PCM audio without common wav file header.\r<br />\nThe file is approximately 400MB.\r<br />\nMy program offers a function that allows users to decide which point to start and how long to play. But if I use BufferedWaveProvider bwp=new BufferedWaveProvider(new WaveFormat()) every time when clicking the Play button, the memory that my program uses will add another more 400MB. So how to dispose it after using it ?\r<br />\nI tried to call bwp.ClearBuffer() but it seems nothing happens.\r<br />\nAnd if I only initialize bwp on the Form Load event, then the memory usage is no longer a problem. However, this will cause NAudio.dll throw a Buffer Full exception if I aborted a longer play and then play a shorter one.\r<br />\n<br />\nMy code is as follows:\r<br />\nBufferedWaveProvider bwp=new BufferedWaveProvider(new WaveFormat());\r<br />\nWaveOut wo=new WaveOut();\r<br />\nFileStream fs = new FileStream(FilePath, FileMode.Open);<br />\n<pre><code>        BinaryReader br = new BinaryReader(fs);\n        byte[] b = new byte[44100];\n        br.BaseStream.Position = POS;\n        bwp.BufferLength = LEN;\n        int bytesread, i = 0;\n        while (i &lt; bwp.BufferLength)\n        {\n            bytesread = br.Read(b, 0, b.Length);\n            if (bytesread != 0 &amp;&amp; br.BaseStream.Position &lt;POS+ LEN)\n            {\n                i += bytesread;\n                bwp.AddSamples(b, 0, bytesread);\n            }\n            else\n            {\n                i = bwp.BufferLength;\n            }\n        }\n        wo.Init(bwp);\n        wo.Play();\n        br.Dispose();\n        fs.Dispose();\n</code></pre>\n\nThanks ahead,\r<br />\nJoy,Sun<br />\n",
+    "PostedDate": "2015-06-07T04:49:36.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1429441",
+    "ThreadId": "639615",
+    "Html": "RawSourceStream is what you want here, rather than BufferedWaveProvider, which is for playing real-time streamed data.<br />\n",
+    "PostedDate": "2015-06-07T07:17:42.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-06-21T21:29:31.847-07:00"
+  }
+]

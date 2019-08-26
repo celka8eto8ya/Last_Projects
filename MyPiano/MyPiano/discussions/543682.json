@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1239131",
+    "ThreadId": "543682",
+    "Html": "Hi,\r<br />\n<br />\nMany samples covers the WaveFileReader. It seems to work fine for a gsm610 encoded wave file. But what if, you already have the file as a stream (ex.  a MemoryStream). For ex. read in using a restful http service (not using NAudio classes). \r<br />\n<br />\nHow do I use that stream with the NAudio classes to play it?\r<br />\n<br />\nFurthermore, is there some safe technique to get information about waveformat, bitrate, etc. from the MemoryStream?<br />\n",
+    "PostedDate": "2014-04-29T00:03:13.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239497",
+    "ThreadId": "543682",
+    "Html": "When you say the file as a stream, do you mean it is actually a WAV file, or just the GSM610 data? Look at the NAudio Network Chat demo to see how GSM610 can be decoded and put into a BufferedWaveProvider to play it as it arrives.<br />\n",
+    "PostedDate": "2014-04-29T12:12:45.41-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

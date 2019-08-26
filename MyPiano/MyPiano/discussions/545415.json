@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1245671",
+    "ThreadId": "545415",
+    "Html": "Hello,\r<br />\n<br />\nI would need to add seconds of silence at the beginning of WaveFileReader or WaveChannel32 before playback.\r<br />\n<br />\nIs possible?\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2014-05-15T03:20:55.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248903",
+    "ThreadId": "545415",
+    "Html": "Sure, it's quite easy really, especially if you are using SampleProviders (call .ToSampleProvider on your WaveFileReader). Then you can just pass it through the <a href=\"http://mark-dot-net.blogspot.co.uk/2012/09/naudio-offsetsampleprovider.html\" rel=\"nofollow\">OffsetSampleProvider</a><br />\n",
+    "PostedDate": "2014-05-23T07:15:30.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249178",
+    "ThreadId": "545415",
+    "Html": "Thanks<br />\n",
+    "PostedDate": "2014-05-24T07:04:18.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

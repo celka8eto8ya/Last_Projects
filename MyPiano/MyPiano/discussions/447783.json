@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1059482",
+    "ThreadId": "447783",
+    "Html": "Hello Mark,<br />\n<br />\nI have written a code for generating waveform from a music file using NAudio.<br />\n<br />\nI am creating a waveform image using the generated stream using NAudio library.<br />\n<br />\nBut I noticed that the created waveform has issues with the audio file I uploaded.As an example I just uploaded Jay-Z - Open Letter.mp3 and created waveform.But its totally different from Soundcloud wave style. In sound cloud the waves and the sound is matching well..but the waves created using NAudio does not created as the audio.<br />\n<br />\n<br />\nThis is the Soundcloud Generated waveform for this audio<br />\n<a href=\"https://soundcloud.com/life-times/jay-z-open-letter-1\" rel=\"nofollow\">https://soundcloud.com/life-times/jay-z-open-letter-1</a><br />\n<br />\nThis is the Waveform created from NAudio Stream<br />\n<a href=\"http://www.fileconvoy.com/dfl.php?id=g901900263dc42a4799931336523b40195f606d58d\" rel=\"nofollow\">http://www.fileconvoy.com/dfl.php?id=g901900263dc42a4799931336523b40195f606d58d</a><br />\n<br />\nI am using c# asp.net.This is my code for generating waveform using NAudio stream<br />\n<pre><code>private void WriteToFile(string SongID,string strPath, byte[] Buffer)\n        {\n            try{\n            // Create a file\n            int samplesPerPixel = 128;\n            long startPosition = 0;\n            FileStream newFile = new FileStream(GeneralUtils.Get_SongFilePath() + &quot;/&quot; + strPath, FileMode.Create);\n\n            // Write data to the file\n            newFile.Write(Buffer, 0, Buffer.Length); \n            newFile.Close();\n\n            float[] data = FloatArrayFromByteArray(Buffer);\n\n            Bitmap bmp = new Bitmap(1170, 100);\n\n            int BORDER_WIDTH = 5;\n            int width = bmp.Width - (2 * BORDER_WIDTH);\n            int height = bmp.Height - (2 * BORDER_WIDTH);\n                \n            NAudio.Wave.Mp3FileReader reader = new NAudio.Wave.Mp3FileReader(path, wf =&gt; new NAudio.FileFormats.Mp3.DmoMp3FrameDecompressor(wf));\n            NAudio.Wave.WaveChannel32 channelStream = new NAudio.Wave.WaveChannel32(reader);\n           \n            int bytesPerSample = (reader.WaveFormat.BitsPerSample / 8) * channelStream.WaveFormat.Channels;\n            \n            using (Graphics g = Graphics.FromImage(bmp))\n            {\n\n                g.Clear(Color.White);\n                Pen pen1 = new Pen(Color.Gray);\n                int size = data.Length;\n                \n                string hexValue1 = &quot;#009adf&quot;; \n                Color colour1 = System.Drawing.ColorTranslator.FromHtml(hexValue1);\n                pen1.Color = colour1;\n\n                Stream wavestream = new NAudio.Wave.Mp3FileReader(path, wf =&gt; new NAudio.FileFormats.Mp3.DmoMp3FrameDecompressor(wf));\n             \n                wavestream.Position = 0;\n                int bytesRead1;\n                byte[] waveData1 = new byte[samplesPerPixel * bytesPerSample];\n                wavestream.Position = startPosition + (width * bytesPerSample * samplesPerPixel);\n\n                for (float x = 0; x &lt; width; x++)\n                {\n                    short low = 0;\n                    short high = 0;\n                    bytesRead1 = wavestream.Read(waveData1, 0, samplesPerPixel * bytesPerSample);\n                    if (bytesRead1 == 0)\n                        break;\n                    for (int n = 0; n &lt; bytesRead1; n += 2)\n                    {\n                        short sample = BitConverter.ToInt16(waveData1, n);\n                        if (sample &lt; low) low = sample;\n                        if (sample &gt; high) high = sample;\n                    }\n                    float lowPercent = ((((float)low) - short.MinValue) / ushort.MaxValue);\n                    float highPercent = ((((float)high) - short.MinValue) / ushort.MaxValue);\n                    float lowValue = height * lowPercent;\n                    float highValue = height * highPercent;\n                    g.DrawLine(pen1, x, lowValue, x, highValue);\n                  \n                }\n            }\n\n            string filename = Server.MapPath(&quot;../WaveForms/&quot; + SongID + &quot;_scrubprog.jpg&quot;);\n            bmp.Save(filename);\n            bmp.Dispose();\n\n}</code></pre>\n\nCan you help me to draw this image accurately? Is there any issue on my for loops?<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-06-20T23:41:55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1059549",
+    "ThreadId": "447783",
+    "Html": "looks like you are using a low value for samplesPerPixel, especially since you don't seem to be taking stereo into account<br />\n",
+    "PostedDate": "2013-06-21T02:27:01.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1059562",
+    "ThreadId": "447783",
+    "Html": "I didnt understand.\r<br />\n<br />\nYou mean if I put a high value for samplesPerPixel, then this would be ok?\r<br />\nHow to add stereo for this code?\r<br />\n<br />\nPlease hep me<br />\n",
+    "PostedDate": "2013-06-21T03:21:12.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1060264",
+    "ThreadId": "447783",
+    "Html": "Hi Mark,<br />\n<br />\nSamples per pixel value was changed as you told.<br />\nBut the waveform does not match with the sounds in audio file yet.<br />\n<pre><code>            int samplesPerPixel;\n                \n            NAudio.Wave.Mp3FileReader reader = new NAudio.Wave.Mp3FileReader(path, wf =&gt; new NAudio.FileFormats.Mp3.DmoMp3FrameDecompressor(wf));\n            double Audiotime = reader.TotalTime.TotalSeconds;\n            int samplerate = reader.Mp3WaveFormat.SampleRate;\n            \n            //800 is the width of the image\n            samplesPerPixel = Convert.ToInt16((Audiotime * samplerate) / 800);\n            int bytesPerSample = (reader.WaveFormat.BitsPerSample / 8);</code></pre>\n\n",
+    "PostedDate": "2013-06-24T00:40:06.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

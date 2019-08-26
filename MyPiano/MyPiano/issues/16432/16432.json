@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "If i clear BufferedWaveProvider when its empty, i get an exception that it doesn't point to an object.\r\n\r\nThis should be fixed, or rather, adjustable, as in some cases one could want to be certain that it's empty, and not want to close the application (or force Try/Catch) just because it happened to be empty).",
+    "LastUpdatedDate": "2014-02-25T01:49:28.58-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-02-24T20:17:48.563-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "BufferedWaveProvider \"Clear when Empty\"",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16432
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I can't see anything in the code that would cause this. Can you post a short code snippet that reproduces this issue?",
+      "PostedDate": "2014-02-24T23:56:41.557-08:00",
+      "Id": 134639
+    },
+    {
+      "Message": "Simply make a BufferedWaveProvider.\nThen use ClearBuffer().\n\nThis will cause the issue.\n\nDon't do it after Adding samples or anything, as that will work.\nBut clearing buffer when there is none, should simply ignore it.",
+      "PostedDate": "2014-02-25T01:11:04.503-08:00",
+      "Id": 134646
+    },
+    {
+      "Message": "The following code works just fine for me:\n\n```\nvar b = new BufferedWaveProvider(new WaveFormat());\nb.ClearBuffer();\n```\n\nWhat version of NAudio are you using?",
+      "PostedDate": "2014-02-25T01:38:20.317-08:00",
+      "Id": 134649
+    },
+    {
+      "Message": "Hmm weird, i can't do that.\n\n1.7-alpha06 (prerelease)",
+      "PostedDate": "2014-02-25T01:48:19.69-08:00",
+      "Id": 134651
+    },
+    {
+      "Message": "Okay i updated, now it works, thought i had the latest, seems i was wrong:)",
+      "PostedDate": "2014-02-25T01:49:28.58-08:00",
+      "Id": 134652
+    }
+  ]
+}

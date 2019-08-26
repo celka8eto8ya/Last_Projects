@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "130372",
+    "ThreadId": "39293",
+    "Html": "Sir<br>\r\n<br>\r\nI know you have answered a question similar to this one in a previous post but maybe you would be willing to provide sample code.<br>\r\n<br>\r\nI have an application that needs to play incomming ULAW (8000 samples, 8 bit, 1 channel --64Kbps) data that is recieves from  UDP datagrams (800 Bytes each). I am pretty sure I could write all of the data to a file, add a header, and then play the file. But more ideal would be a solution that would buffer the data and then play it without the extra file operations. <br>\r\n<br>\r\n<br>\r\nAny suggestions about how to do this would be appreciated.<br>\r\n<br>\r\nThanks<br>\r\n<br>\r\n<br>\r\n",
+    "PostedDate": "2008-11-05T17:11:03.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

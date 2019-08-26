@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "133610",
+    "ThreadId": "40265",
+    "Html": "Hello, <br>\r\n<br>\r\nI need to make a small audio player developped as an XBAP application (XBAP is a XAML app running in IE or Firefox). XBAP apps have the restriction that they are not allowed to access any local file.<br>\r\n<br>\r\nSo does NAUDIO create any temp file on the system it runs on ?<br>\r\nCan NAUDIO stream over HTTP and buffer in memory ?<br>\r\n<br>\r\nThanks\r\n",
+    "PostedDate": "2008-11-19T03:18:24.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "135057",
+    "ThreadId": "40265",
+    "Html": "NAudio doesn't create any temporary files. You can easily stream from any source or even generate your own waveforms by simply deriving from WaveStream and supplying the data in the Read function.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-11-25T02:11:34.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

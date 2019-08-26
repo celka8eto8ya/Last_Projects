@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "236657",
+    "ThreadId": "69540",
+    "Html": "<p>Using the WaveInStream, I'm capturing data from the microphone, if I were to package up this data and send it across a network, what's the best way to play it at the other end? I can't find any class which accepts a MemoryStream and plays it (or a stream, or byte array).</p>",
+    "PostedDate": "2009-09-20T13:35:46.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "238007",
+    "ThreadId": "69540",
+    "Html": "<p>Please see:</p>\r\n<p>http://stackoverflow.com/questions/184683/play-audio-from-a-stream-using-c</p>",
+    "PostedDate": "2009-09-23T13:20:55.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "238278",
+    "ThreadId": "69540",
+    "Html": "<p>That technique needs to know the complete length of the stream though, I want to receive the data and start playing it even as I'm receiving more.</p>\r\n<p>Should I maybe have a buffer of 1 second (however many bytes that is) and play that buffer when it's full, which would work so long as latency was less than one second, I believe.</p>",
+    "PostedDate": "2009-09-24T05:25:30.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "238308",
+    "ThreadId": "69540",
+    "Html": "<p>There is no need to know the length in advance. I would create a derived class from WaveStream that in its Read method returned buffered audio received over the network. If you have run out of data you can either return a zeroed out buffer, or return 0 bytes if you want playback to stop.</p>\r\n<p>The example on stackoverflow shows it stopping when Position &gt;= Length, but there is no reason for that to be the case.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-09-24T07:09:04.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "238310",
+    "ThreadId": "69540",
+    "Html": "<p>Ahh ok, apologies for my terminal stupidity about all this, I've never done any kind of audio programming before :/</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks very much!</p>",
+    "PostedDate": "2009-09-24T07:21:13.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

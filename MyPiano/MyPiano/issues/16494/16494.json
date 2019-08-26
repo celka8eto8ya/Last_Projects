@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello - I got stuck trying to play a sound from my Unity Assets:\r\n\r\n\r\nusing UnityEngine;\r\nusing System.Collections;\r\nusing System;\r\nusing System.IO;\r\nusing NAudio;\r\nusing NAudio.Wave;\r\n\r\npublic class NaudioLooper : MonoBehaviour \r\n\t{\r\n\t\t\r\n\t\tpublic AudioClip asWs;\r\n\r\n\tpublic class StartEndLoopReader{\r\n\r\n\t\tpublic TimeSpan _start;\r\n\t\tpublic TimeSpan _end;\r\n\t\tpublic NAudio.Wave.WaveStream _stream;\r\n\r\n\t\t\tpublic StartEndLoopReader(NAudio.Wave.WaveStream stream, TimeSpan start, TimeSpan end)\r\n\t\t\t{\r\n\t\t\t\t_stream = stream;\r\n\t\t\t\t_stream.CurrentTime = start;\r\n\t\t\t\t_start = start;\r\n\t\t\t\t_end = end;\r\n\t\t\t\t//return null;\r\n\t\t\t}\r\n\t}\r\n\r\n\t\r\n\tvoid Start(){\r\n\t\tTimeSpan _startInp =new TimeSpan (0, 0, 2);\r\n\t\tTimeSpan _endInp = new TimeSpan (0, 0, 4);\r\n\t\tNAudio.Wave.WaveStream _streamInp= new NAudio.Wave.WaveFileReader(@\"Asset/Media/Tepotten_coolEditTilret 1w.wav\");\r\n\t\tNAudio.Wave.WaveOutEvent wo = new NAudio.Wave.WaveOutEvent();\r\n\t\tStartEndLoopReader reader  = new StartEndLoopReader( _streamInp,\t _startInp, _endInp);\r\n\t\t\r\n\t\two.Init(reader);\r\n\t\two.Play();\r\n\t}\r\n\t\r\n\tpublic int Read(byte[] array, int offset, int count)\r\n\t{\r\n\t\tDebug.Log(_stream.CurrentTime);\r\n\t\tif (_stream.CurrentTime>_end)\r\n\t\t{\r\n\t\t\t// back to start to loop\r\n\t\t\t// if you want to stop here, return 0 instead.\r\n\t\t\t_stream.CurrentTime = _start;\r\n\t\t}\r\n\t\t\r\n\t\treturn _stream.Read(array, offset, count);\r\n\t}\r\n\t\t\r\n\t\t#region IWaveProvider Members\r\n\t\tpublic WaveFormat WaveFormat\r\n\t\t{\r\n\t\t\tget { return _stream.WaveFormat; }\r\n\t\t}\r\n\t\t#endregion\r\n\t}\r\n\r\n\r\n[its based on my workarounds from http://www.ceus-now.com/setting-playback-start-end-points-in-naudio/ ... where I (admit, quite in deperation) tried make StartEndLoopReader a class instead]\r\n\r\nFor now the \"wo.Init(reader);\" line causes me the biggest problems.\r\n - what to do?\r\n\r\n/best regards",
+    "LastUpdatedDate": "2016-05-24T07:00:01.587-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-05-24T07:00:01.587-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Naudio and Unity for looping section",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16494
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

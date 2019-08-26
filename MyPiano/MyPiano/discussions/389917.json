@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "894393",
+    "ThreadId": "389917",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp;</p>\r\n<p>What is the best way to convert a WAV file created by NAudio (from a MP3 source file) to a PCM file? I need to have a&nbsp;16Khz 16bit PCM output file. I tried to use &nbsp;the following piece of code but I receive the&nbsp;<strong>A&quot;cmNotPossible calling\r\n acmStreamSize&quot;&nbsp;</strong>error<strong>:</strong></p>\r\n<p>......</p>\r\n<p><strong></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>WaveStream waveStream = <span style=\"color:blue\">new</span> WaveFileReader(outputFileName);\r\n\r\n                        WaveFormat targetFormat = <span style=\"color:blue\">default</span>(NAudio.Wave.WaveFormat);\r\n\r\n                        targetFormat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, 16000, 1, 16000, 1, 16);\r\n\r\n                        <span style=\"color:blue\">using</span> (WaveStream convertedStream = <span style=\"color:blue\">new</span> WaveFormatConversionStream(targetFormat, waveStream))\r\n                        {\r\n                            WaveFileWriter.CreateWaveFile(pcmFilename, convertedStream);\r\n                        }\r\n</pre>\r\n</div>\r\n</strong>I just need to remove the first 44 bytes of the WAV file.\r\n<p></p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2012-08-01T16:40:53.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "895585",
+    "ThreadId": "389917",
+    "Html": "<p>are you sure that wav header is always 44 bytes long?<br />take a look at the documentation</p>\r\n<p>by the way you don t have to remove anything. If you convert the file it will only convert the audio data.</p>",
+    "PostedDate": "2012-08-04T13:03:28.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "895688",
+    "ThreadId": "389917",
+    "Html": "<p>I think so (I read different documentations on the net). In my case, it works because when I remove the first&nbsp;44 bytes of my Naudio Wave file, the result is a PCM file containing only the data. The file is valid because the remote service I use can decode it without problem.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-08-05T03:18:48.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896000",
+    "ThreadId": "389917",
+    "Html": "<p>To create a raw PCM file from a WAV file just read from a WaveFileReader and write everything you read out into a FileStream</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-08-06T06:00:33.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896045",
+    "ThreadId": "389917",
+    "Html": "<p>Thanks Mark, I'll give it a try.</p>",
+    "PostedDate": "2012-08-06T07:19:21.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

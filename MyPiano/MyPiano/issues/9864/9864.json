@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "The NAudio.Midi namespace currently contains a SysexEvent class to handle System Exclusive messages. However, those message are neither received nor sent with MidiIn and MidiOut objects, since they do not register buffers to receive or send them.",
+    "LastUpdatedDate": "2012-10-05T15:01:38.507-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-04-25T23:39:36.78-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Support for System Exclusive events (SysEx)",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 9864
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Great library in the making, however I agree with the above and there are C# examples kicking around on how to prepare the buffers etc.\r\nWithout this, any app wanting to use SysEx has to completely step outside the libarary which is a shame.\r\nIt would also be useful to be able to sub class this type to create function specific SysEx messages and there is no way of creating an instance with predefined data\r\nand the private on  \"private byte[] data;\" prevents anything creative without a bit of relection.",
+      "PostedDate": "2009-08-19T12:45:25.8-07:00",
+      "Id": 41702
+    }
+  ]
+}

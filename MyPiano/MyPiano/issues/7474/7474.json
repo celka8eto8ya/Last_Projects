@@ -1,0 +1,80 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "ASIO now much more stable in NAudio 1.5",
+    "ClosedDate": "2012-09-26T06:04:50.573-07:00",
+    "CommentCount": 8,
+    "Custom": "",
+    "Description": "The callback delegates aren't pinned and for example the asio driver sdk sample crashed immediately, surprised it didn't happen for the developer of this great lib! Here's the simplest fix I came up with:\n\nasiodriver.cs:\n\n        public void createBuffers(IntPtr bufferInfos, int numChannels, int bufferSize, ref ASIOCallbacks callbacks) \n        {\n            pinnedcallbacks = Marshal.AllocHGlobal(Marshal.SizeOf(callbacks)); //+\n            Marshal.StructureToPtr(callbacks, pinnedcallbacks, false); //+\n            handleException(asioDriverVTable.createBuffers(pASIOComObject, bufferInfos, numChannels, bufferSize, pinnedcallbacks), \"createBuffers\");\n        }\n        static IntPtr pinnedcallbacks; //+\n\n        public ASIOError disposeBuffers()\n        {\n            Marshal.FreeHGlobal(pinnedcallbacks); //+\n            return asioDriverVTable.disposeBuffers(pASIOComObject);\n        }\n\n\npublic delegate ASIOError ASIOcreateBuffers(IntPtr _pUnknown, IntPtr bufferInfos, int numChannels, int bufferSize, IntPtr callbacks); //-ref ASIOCallbacks",
+    "LastUpdatedDate": "2012-09-26T06:04:50.573-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2008-09-02T04:20:30.807-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "small fix for ASIO crashes",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7474
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Small change to above that doesn't really have practical effect in my tests but who knows:\r\n\r\n        public ASIOError disposeBuffers()\r\n        {\r\n            ASIOError result = asioDriverVTable.disposeBuffers(pASIOComObject);\r\n            Marshal.FreeHGlobal(pinnedcallbacks); //+\r\n            return result;\r\n        }\r\n",
+      "PostedDate": "2008-09-02T04:33:57.587-07:00",
+      "Id": 41672
+    },
+    {
+      "Message": "And I suppose you could do just\r\nIntPtr pinnedcallbacks; //+\r\nwithout the static otherwise there might be problems if someone wanted for some reason to instantiate many asio drivers...\r\n",
+      "PostedDate": "2008-09-02T04:40:40.32-07:00",
+      "Id": 41673
+    },
+    {
+      "Message": "thanks for reporting this & the suggested fix. The ASIO interop code is still quite new. I will make your changes when I get the chance. Hopefully it will resolve some other strange crashes we were seeing with some ASIO drivers",
+      "PostedDate": "2008-09-03T15:14:00.79-07:00",
+      "Id": 41674
+    },
+    {
+      "Message": "I've had a go with this code, and sadly it doesn't fix the crashes I get with my Line6 TonePort interface. Will need to spend a bit more time investigating to get reliable ASIO.",
+      "PostedDate": "2008-10-19T14:21:33.023-07:00",
+      "Id": 41675
+    },
+    {
+      "Message": "Can somebody provide some new suggestions or maybe even a solution for these asio crashes? I can't get it working properly.\r\nStarting the driver is Ok, but it crashes on disposing and/or reloading. \r\n",
+      "PostedDate": "2011-07-22T01:07:42.323-07:00",
+      "Id": 41676
+    },
+    {
+      "Message": "@Knoerzer - have you tried with the very latest code from source control? Things have improved quite a bit since this bug was reported",
+      "PostedDate": "2011-07-22T01:30:14.097-07:00",
+      "Id": 41677
+    },
+    {
+      "Message": "Yes, my starting point was the 1.4 Release. I have adapted the code to my needs (multi input/output support), but I don't think, that the crash has something to do with these adaptions, because they are localized above the driver.\r\nThe interop base is still the same. And after long time of debugging I cannot find any reason in my code for this crash. The trace is lost in disposeBuffers() and Marshal.Release(pAsioComObject).\r\nHad you tested your Line6 or any other device with the actual naudio version?\r\n\r\n",
+      "PostedDate": "2011-07-22T02:03:59.87-07:00",
+      "Id": 41678
+    },
+    {
+      "Message": "there have been bugfixes since 1.4",
+      "PostedDate": "2011-07-22T02:33:07.893-07:00",
+      "Id": 41679
+    }
+  ]
+}

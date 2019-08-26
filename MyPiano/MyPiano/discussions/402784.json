@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "939981",
+    "ThreadId": "402784",
+    "Html": "\r\n<p>I'm trying to convert from .wav to .aiff and notice there is an example of how to convert a .aiff to .wav using the AiffFileReader but there doesn't appear to be an AiffFileWriter which I'd hoped there would be.</p>\r\n<p>Is there a way to use NAudio to convert .wav files to .aiff files?</p>\r\n",
+    "PostedDate": "2012-11-11T12:55:41.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940141",
+    "ThreadId": "402784",
+    "Html": "<p>Unfortunately there is no AiffFileWriter in NAudio. If someone were to contribute a working one to the project I would be glad to include it. You may be able to work out how to create one yourself by examining the code for the reader.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-11-11T23:28:22.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940146",
+    "ThreadId": "402784",
+    "Html": "<p>Thanks for the prompt response Mark, I'll take a look at that</p>",
+    "PostedDate": "2012-11-11T23:54:42.573-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945892",
+    "ThreadId": "402784",
+    "Html": "\r\n<p>Hi Mark and Keith,</p>\r\n<p>You're more than welcome to use the AiffFileWriter that I wrote, which is here: &nbsp;http://giawa.com/tutorials/src/AiffFileWriter.cs</p>\r\n<p>It depends on an IEEE floating point library, which is here: &nbsp;http://giawa.com/tutorials/src/IEEE.cs</p>\r\n<p>The AiffFileReader currently included with NAudio has its own IEEE floating point conversion methods (I wrote it before the AiffFileWrite, so I didn't think to put it in its own static class). &nbsp;It should be pretty straight forward to consolidate the whole\r\n thing to work with the IEEE.cs provided.</p>\r\n<p>Hope this helps,</p>\r\n<p>Giawa</p>\r\n",
+    "PostedDate": "2012-11-22T15:17:45.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "946016",
+    "ThreadId": "402784",
+    "Html": "\r\n<p>Much appreciated!</p>\r\n",
+    "PostedDate": "2012-11-23T00:53:39.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "946022",
+    "ThreadId": "402784",
+    "Html": "\r\n<p>hi Giawa, this is brilliant. I'll try to get this into NAudio for v1.7</p>\r\n<p>thanks so much</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-23T01:07:01.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "946112",
+    "ThreadId": "402784",
+    "Html": "\r\n<p>I've committed the new class, although haven't had a chance to test it yet. Any chance you could do a quick code review for me. The change is\r\n<a href=\"http://naudio.codeplex.com/SourceControl/changeset/656277cc67ba\">here</a>.</p>\r\n<p>many thanks for this contribution.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2012-11-23T05:35:20.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947307",
+    "ThreadId": "402784",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>I built the latest source and quickly tested both the AiffFileReader and AiffFileWriter. &nbsp;Seems to work well! &nbsp;Here's some quick example code to test out the new writer.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>OpenFileDialog open = <span style=\"color:blue\">new</span> OpenFileDialog();\nopen.Filter = <span style=\"color:#a31515\">&quot;WAVE File (*.wav)|*.wav;&quot;</span>;\n<span style=\"color:blue\">if</span> (open.ShowDialog() != System.Windows.Forms.DialogResult.OK) <span style=\"color:blue\">return</span>;\n\nSaveFileDialog save = <span style=\"color:blue\">new</span> SaveFileDialog();\nsave.Filter = <span style=\"color:#a31515\">&quot;AIFF File (*.aif)|*.aif;&quot;</span>;\n<span style=\"color:blue\">if</span> (save.ShowDialog() != System.Windows.Forms.DialogResult.OK) <span style=\"color:blue\">return</span>;\n\nAiffFileWriter.CreateAiffFile(save.FileName, <span style=\"color:blue\">new</span> WaveFileReader(open.FileName));</pre>\r\n</div>\r\n<p>Cheers,</p>\r\n<p>Giawa</p>\r\n",
+    "PostedDate": "2012-11-26T14:20:20.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "947619",
+    "ThreadId": "402784",
+    "Html": "\r\n<p>that's great. thanks again</p>\r\n",
+    "PostedDate": "2012-11-27T05:09:06.717-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

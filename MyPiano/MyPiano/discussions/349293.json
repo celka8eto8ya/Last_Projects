@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "812871",
+    "ThreadId": "349293",
+    "Html": "\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>Hi,<br><br>I am using NAudio to record audio on a computer and broadcast it to another computer using UDP.<br>Unfortunately, when I try to Play the received data using WaveOut it throws an error saying &quot;Not a WAVE file - no RIFF header&quot;.<br>How can I play the audio data in bytes through WaveOut? I am able to play the sound using DirectSound.<br>Below is the  code I am using.<br><br>MemoryStream ms = <span style=\"color:blue\">new</span> MemoryStream(audioData);\r\n                TrimmedWaveStream = <span style=\"color:blue\">new</span> TrimWaveStream(<span style=\"color:blue\">new</span> WaveFileReader(ms));\r\n                waveOutStream.Init(TrimmedWaveStream);\r\n                waveOutStream.Play();\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Thanks in Adavnce...</p>\r\n<p>Libin</p>\r\n",
+    "PostedDate": "2012-03-20T02:32:28.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "812872",
+    "ThreadId": "349293",
+    "Html": "<p>you can't use WaveFileReader, because what is in your MemoryStream is not a WAVE file. Use RawSourceWaveStream instead.</p>",
+    "PostedDate": "2012-03-20T02:35:26.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "812879",
+    "ThreadId": "349293",
+    "Html": "<p>Thanks Mark, its just worked fine...</p>",
+    "PostedDate": "2012-03-20T02:50:07.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

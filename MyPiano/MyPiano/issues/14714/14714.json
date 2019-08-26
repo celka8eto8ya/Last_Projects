@@ -1,0 +1,80 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Closing this issue. Bug was reported in NAudio 1.3 and WaveOutEvent is preferred to function callbacks now.",
+    "ClosedDate": "2012-10-27T00:20:56.43-07:00",
+    "CommentCount": 8,
+    "Custom": "",
+    "Description": "Hello,\n\nI've been using NAudio in my app for a little while and in some circumstances not easily reproducible I get two distinct errors. One is InvalidOperationException with the message \"Handle is not initialized.\". This happens in the thread created by NAudio. This is the call stack:\n\n   at System.Runtime.InteropServices.GCHandle.FromIntPtr(IntPtr value)\n   at System.Runtime.InteropServices.GCHandle.op_Explicit(IntPtr value)\n   at NAudio.Wave.WaveOut.Callback(IntPtr hWaveOut, WaveMessage uMsg, Int32 dwUser, WaveHeader wavhdr, Int32 dwReserved)\n\nThe other error is this: \"A callback was made on a garbage collected delegate of type 'NAudio!NAudio.Wave.WaveInterop+WaveCallback::Invoke'. This may cause application crashes, corruption and data loss. When passing delegates to unmanaged code, they must be kept alive by the managed application until it is guaranteed that they will never be called.\".\n\nTo play audio, I fire up a worker thread where I do this:\n\n            using (var blockAlignedStream = new BlockAlignReductionStream(playData.Stream))\n            {\n                using (var waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))\n                {\n                    waveOut.Init(blockAlignedStream);\n                    waveOut.Play();\n                    \n                    while (waveOut.PlaybackState == PlaybackState.Playing)\n                    {\n                        Thread.Sleep(100);\n                    }\n                }\n            }\n\nI am not sure where I picked up this code but it seems to work 95% of the time. Any clues? Thanks!",
+    "LastUpdatedDate": "2012-10-27T00:20:56.43-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-11-19T04:10:45.063-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "InvalidOperationException and \"CallbackOnCollectedDelegate was detected\" while playing",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 14714
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "what version of the code are you using? It surprises me that the WaveOut.callback member could get garbage collected before the WaveOut object itself gets GCed sinced it is referenced in the Init method. Do you get this at the end of the file or part-way through?",
+      "PostedDate": "2010-11-21T06:16:08.767-08:00",
+      "Id": 41741
+    },
+    {
+      "Message": "I am currently using NAudio 1.3.8.0. Oh and my apologies. I wanted to open a discussion, not a new issue but I could not remedy it once I realized. But it does sound like a bug so it may as well remain an issue.\r\n\r\nThe error always occurs after all content is successfully played, never in the middle. I am running Win7 x64 with the app built in x86 config, if that matters. I could try to reproduce the problem in a self contained sample.",
+      "PostedDate": "2010-11-22T01:28:42.223-08:00",
+      "Id": 41742
+    },
+    {
+      "Message": "what happens if you put a waveOut.Stop(); Thread.Sleep(100); after the last while loop (i.e. before dispose)? does that get rid of the exceptions?",
+      "PostedDate": "2010-11-24T06:48:07.23-08:00",
+      "Id": 41743
+    },
+    {
+      "Message": "Yes, it does seem to help a bit. It is much more harder to reproduce now but after some time of testing I have managed to get InvalidOperationException twice (described above). The other issue did not occur so far. I will do more tests to see if it rears its ugly head. So, usability has improved but it is still unstable. I can reproduce the issue on average once in 15-20 plays. It used to be about 1 in 5-10 before.",
+      "PostedDate": "2010-11-25T01:07:56.023-08:00",
+      "Id": 41744
+    },
+    {
+      "Message": "that is very strange. Usually in a call to waveOutReset with function callbacks, you get all callbacks happening instantaneously on other threads. I don't think I have ever seen additional callbacks come later. What soundcard do you have?\r\n\r\nCan you try this out with the latest NAudio from the source code tab?",
+      "PostedDate": "2010-11-26T04:05:46.583-08:00",
+      "Id": 41745
+    },
+    {
+      "Message": "My sound card is Realtek AC'97 Audio. Does that give you any hints? I will try to download full source and use that. I will report my findings.",
+      "PostedDate": "2010-11-26T10:52:55.767-08:00",
+      "Id": 41746
+    },
+    {
+      "Message": "Ok, I have finally been able to try out with your latest source code. I have downloaded naudio-64392.zip and tried that. It was even harder for me to reproduce the problem and when I did, I got an InvalidOperationException (\"Handle not initialized\") at line 309: \"GCHandle hBuffer = (GCHandle)wavhdr.userData;\" in WaveOut.cs. Luckily I was smart enough to copy the PDB too.\r\n\r\nDoes that give you any hints? Do you think this is sound card related?",
+      "PostedDate": "2010-12-01T03:32:21.7-08:00",
+      "Id": 41747
+    },
+    {
+      "Message": "Are you able to test this again with the latest code? There have been some more WaveOut function callback fixes, but more importantly, there is now an Event callback model available, meaning you can avoid function callbacks altogether, which should make for a more reliable model.",
+      "PostedDate": "2011-05-27T14:47:50.373-07:00",
+      "Id": 41748
+    }
+  ]
+}

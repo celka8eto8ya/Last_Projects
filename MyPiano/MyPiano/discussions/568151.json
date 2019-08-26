@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1307323",
+    "ThreadId": "568151",
+    "Html": "Hi!\r<br />\n<br />\nI need to loop AudioFiles that will be played along with other audio sources via a MultiplexingWaveProvider (and then Asio). So I need to convert the AudioFile Stream to the same format as all the other audio sources have. They have IeeeFloat Mono.\r<br />\n<br />\nMy code for now looks like this:<br />\n<pre><code>switch (Path.GetExtension(filename))\n         {\n            case &quot;.mp3&quot;:\n               _noiseStream = new Mp3FileReader(filename);\n               break;\n            case &quot;.wav&quot;:\n               _noiseStream = new WaveFileReader(filename);\n               break;\n         }\n\n         _noiseStereoToMono = new StereoToMonoProvider16(_noiseStream) { LeftVolume = 1, RightVolume = 1 };\n         _noiseW16ToFloat = new Wave16ToFloatProvider(_noiseStereoToMono);\n         _noiseProviderToStream = new WaveProviderToWaveStream(_noiseW16ToFloat);\n         _noiseLoopStream = new LoopStream(_noiseProviderToStream, () =&gt;\n         {\n            Console.WriteLine(&quot;looping&quot;);\n            //https://naudio.codeplex.com/discussions/406515\n            _noiseStream.Position = 0;\n         });</code></pre>\n\nAs you can see, I have a WaveProvider inside the LoopStream (<a href=\"http://mark-dot-net.blogspot.co.at/2009/10/looped-playback-in-net-with-naudio.html\" rel=\"nofollow\">from here</a>). WaveProviders don't have a Position-Property to set. I found this thread (<a href=\"https://naudio.codeplex.com/discussions/406515\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/406515</a>) where Mark says that you have to modify the position of the source stream for getting this to work. I did this with invoking an action at the looping-point.\r<br />\n<br />\nMy modified Read-Method from the LoopStream:<br />\n<pre><code>public override int Read(byte[] buffer, int offset, int count)\n      {\n         int totalBytesRead = 0;\n\n         while (totalBytesRead &lt; count)\n         {\n            int bytesRead = sourceStream.Read(buffer, offset + totalBytesRead, count - totalBytesRead);\n            if (bytesRead == 0)\n            {\n               if (sourceStream.Position == 0 || !EnableLooping)\n               {\n                  // something wrong with the source stream\n                  break;\n               }\n               // loop\n               //https://naudio.codeplex.com/discussions/406515\n               if (loopingAction == null)\n               {\n                  sourceStream.Position = 0;\n               }\n               else\n               {\n                  loopingAction.Invoke();\n               }\n            }\n            totalBytesRead += bytesRead;\n         }\n         return totalBytesRead;\n      }</code></pre>\n\nThe Action which will be called is in the previous code block (<code>_noiseStream.Position = 0;</code>). Doing this, sadly leads to Exceptions.\r<br />\nIndexOutOfRange-Exception in the Read-Method of the StereoToMonoProvider16 at line<br />\n<pre><code>short left = sourceWaveBuffer.ShortBuffer[sample];</code></pre>\n\nI think I need some sort of locking. What is the best way to do it? Or would you suggest a complete different way to loop back to position 0 (instead of the action.invoke())?\r<br />\n<br />\n<br />\nStefan<br />\n",
+    "PostedDate": "2014-09-23T03:29:03.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1316720",
+    "ThreadId": "568151",
+    "Html": "Any ideas?<br />\n",
+    "PostedDate": "2014-10-27T04:02:05.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1320978",
+    "ThreadId": "568151",
+    "Html": "I can't quite understand how this could happen. The reposition should be happening on the playback thread so locking should not be the issue. I also can't see how that line could return an index out of range exception unless the source provider returned more from it's Read method than was required.\r<br />\n<br />\nIf you are able to debug into NAudio, then it would be interesting to know what the values of sourceBytesRead and sourceBytesRequired are.<br />\n",
+    "PostedDate": "2014-11-11T09:39:49.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1417106",
+    "ThreadId": "568151",
+    "Html": "Sorry. It has been quite a while, but now this problem is getting acute again (I'm refactoring some old code).\r<br />\n<br />\nHere are some values from the read methode of the <code>StereoToMonoProvider16</code>:\r<br />\nRead is called with the parameters buffer.length=2048, offset=324, count=1886\r<br />\n<br />\nwhen the IndexOutOfRange-Exception happens\r<br />\nsourceBytesRead = 3772\r<br />\nsourceBytesRequired = 3772\r<br />\nsamplesRead = 1886\r<br />\nin the for loop: sample = 1734, destOffset = 1029<br />\n",
+    "PostedDate": "2015-04-23T05:55:40.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1417117",
+    "ThreadId": "568151",
+    "Html": "well, actually I can just add the LoopStream right after the FileReader and THEN add the StereoToMono and the other things after that. I think thats the right way to do it ;)\r<br />\n<br />\nLike this:<br />\n<pre><code>         switch (Path.GetExtension(filename))\n         {\n            case &quot;.mp3&quot;:\n               _noiseStream = new Mp3FileReader(filename);\n               break;\n            case &quot;.wav&quot;:\n               _noiseStream = new WaveFileReader(filename);\n               break;\n         }\n\n         _noiseLoopStream = new LoopStream(_noiseStream);\n\n         _noiseStereoToMono = new StereoToMonoProvider16(_noiseLoopStream) { LeftVolume = 1, RightVolume = 1 };\n         _noiseW16ToFloat = new Wave16ToFloatProvider(_noiseStereoToMono);\n         _noiseProviderToStream = new WaveProviderToWaveStream(_noiseW16ToFloat);</code></pre>\n\n",
+    "PostedDate": "2015-04-23T06:27:30.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-04-23T06:27:36.55-07:00"
+  },
+  {
+    "Id": "1421859",
+    "ThreadId": "568151",
+    "Html": "Loopstream Needs a Wavestream as Input, because it uses the <strong>Position</strong> Property for Looping (which a sampleprovider doesn´t supply).<br />\n",
+    "PostedDate": "2015-04-30T10:43:49.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

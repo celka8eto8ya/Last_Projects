@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1009369",
+    "ThreadId": "435145",
+    "Html": "I try running below code: <br />\n<pre><code>            NAudio.Midi.MidiOut mo = new NAudio.Midi.MidiOut(0);\n            mo.Volume = 100;\n            mo.Send(NAudio.Midi.MidiMessage.ChangePatch(0, 1).RawData);\n            mo.Send(NAudio.Midi.MidiMessage.StartNote(60, 127, 1).RawData);\n            Thread.Sleep(5000);</code></pre>\n\nbut it is not playing any sound. What's wrong?\r<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2013-03-02T18:08:43.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010019",
+    "ThreadId": "435145",
+    "Html": "what's connected to that MIDI out device?<br />\n",
+    "PostedDate": "2013-03-04T08:06:42.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010352",
+    "ThreadId": "435145",
+    "Html": "I want to play MIDI sound out to speaker.<br />\n",
+    "PostedDate": "2013-03-04T21:24:49.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010444",
+    "ThreadId": "435145",
+    "Html": "MIDI doesn't make any sound on its own, it needs to be connected to a synthesizer. What is connected to MIDI out device 0?<br />\n",
+    "PostedDate": "2013-03-05T01:54:00.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1022221",
+    "ThreadId": "435145",
+    "Html": "Sorry, I misunderstood. There is way to render midi sound out to speaker?<br />\n",
+    "PostedDate": "2013-03-27T23:29:14.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1022627",
+    "ThreadId": "435145",
+    "Html": "MIDI messages must be sent to a synthesizer, not to a speaker. The synthesizer is responsible for sending sound to the speaker.<br />\n",
+    "PostedDate": "2013-03-28T13:43:42.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1123196",
+    "ThreadId": "435145",
+    "Html": "Hi Mark,\r<br />\nI have also tried to use the code above and got no sound.\r<br />\nI don't have any &quot;real&quot; synthesizer&quot; connected to my computer, but I do have soundfonts that I use for Midi playback, and also the default microsoft GS wavetable,\r<br />\nHow can I use them for playback / recording?\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2013-11-13T15:58:10.897-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1123521",
+    "ThreadId": "435145",
+    "Html": "well it would need to appear as a MIDI out device in order to be usable easily from NAudio, and I'm not sure the MS synthesizer does this.<br />\n",
+    "PostedDate": "2013-11-14T07:50:05.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1123577",
+    "ThreadId": "435145",
+    "Html": "Actually I have only one device in my MidiOut, and when getting it's info I get \r<br />\nManufacturer = Microsoft\r<br />\nNotes = 32\r<br />\nProductName = &quot;Microsoft GS Wavetable Synth&quot;\r<br />\nTechnology = SoftwareSynth\r<br />\n..\r<br />\nBut still no sound.. any idea?\r<br />\n<br />\nApart from that, is there any tutorial/documentation on how to use soundFonts to play the notes that I read? besides a few short code snippets I found nothing.\r<br />\n<br />\nThank again<br />\n",
+    "PostedDate": "2013-11-14T09:49:03.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1123580",
+    "ThreadId": "435145",
+    "Html": "I'm afraid not. I've never used the wavetable synth. \r<br />\n<br />\nTo use soundfonts you would need to create your own software synthesizer. This is quite a big task. If you are interested in some of the basic principles, and you are a Pluralsight subscriber you can watch the module on mixing and effects in my NAudio course (<a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio</a>) in which I build a very basic synthesizer.<br />\n",
+    "PostedDate": "2013-11-14T09:52:58.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1123586",
+    "ThreadId": "435145",
+    "Html": "I have already created a basic software synthesizer in the past, reading the samples from external mp3 files (no effects, pitch wheel etc.), \r<br />\ndoes the course include using soundFonts?<br />\n",
+    "PostedDate": "2013-11-14T09:59:45.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1124040",
+    "ThreadId": "435145",
+    "Html": "No, as I've said, NAudio only offers very basic parsing of SoundFont files, nothing more. It was one of the first features I ever wrote back in 2003, and I haven't used it since. The course shows playing WAV samples, and pitch shifting them to the appropriate note.<br />\n",
+    "PostedDate": "2013-11-15T09:20:24.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1286342",
+    "ThreadId": "559822",
+    "Html": "hi<br />\nI use MixingWaveProvider32 to get a mixture of the three signals.<br />\nBut while playing I hear the clicks at regular intervals  ~ 1 second (stuttering, I do not know how to be more precise to call this sound).<br />\nWhat could be the problem?<br />\n<pre><code>var sineWaveProvider = new SineWaveProvider32();\nsineWaveProvider.SetWaveFormat(44100, 2);\nsineWaveProvider.Frequency = 261.6f;\nsineWaveProvider.Amplitude = 0.5f;\n                \nvar sineWaveProvider2 = new SineWaveProvider32();\nineWaveProvider2.SetWaveFormat( 44100, 2 );\nsineWaveProvider2.Frequency = 329.6f;\nsineWaveProvider2.Amplitude = 0.5f;\n                \nvar sineWaveProvider3 = new SineWaveProvider32();\nsineWaveProvider3.SetWaveFormat( 44100, 2 );\nsineWaveProvider3.Frequency = 392.0f;\nsineWaveProvider3.Amplitude = 0.5f;\n\nvar providersList = new List&lt;WaveProvider32&gt;();\nprovidersList.Add(sineWaveProvider);\nprovidersList.Add(sineWaveProvider2);\nprovidersList.Add(sineWaveProvider3);\n                \nvar mixer = new MixingWaveProvider32(providersList);\n\n\nrecorder = new WaveRecorder( mixer, @&quot;C:\\1.wav&quot; );\n                waveOut = new WaveOut();\n                waveOut.Init( recorder );\n                waveOut.Play();\n\n\n\npublic class SineWaveProvider32 : WaveProvider32 {\n        int sample;\n\n        public SineWaveProvider32 ( ) {\n            Frequency = 1000;\n            Amplitude = 0.25f; // let's not hurt our ears            \n        }\n\n        public float Frequency { get; set; }\n        public float Amplitude { get; set; }\n\n        public override int Read ( float[] buffer, int offset, int sampleCount ) {\n            int sampleRate = WaveFormat.SampleRate;\n            for ( int n = 0; n &lt; sampleCount; n++ ) {\n                buffer[n + offset] = (float) (Amplitude * Math.Sin( (2 * Math.PI * sample * Frequency) / sampleRate ));\n                //sample++;\n                // http://mark-dot-net.blogspot.ru/2009/10/playback-of-sine-wave-in-naudio.html\n                // Rudi's comment\n                // fix Bad work with stereo \n                if ( this.WaveFormat.Channels == 1 || (n + offset) % 2 == 0 ) sample++; \n                if ( sample &gt;= sampleRate ) sample = 0;\n            }</code></pre>\n\n",
+    "PostedDate": "2014-08-05T00:53:42.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1286757",
+    "ThreadId": "559822",
+    "Html": "stuttering occurs when the value of the frequency is an integer number<br />\nWith 500Hz no stuttering. at 500.1 - there is stuttering. Does anyone have any idea why there is stuttering?<br />\n",
+    "PostedDate": "2014-08-06T00:03:46.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1286891",
+    "ThreadId": "559822",
+    "Html": "it's the line setting sample to 0. Comment that out and see if it improves things. \r<br />\nAlternatively make sample a double and subtract sampleRate from it rather than setting it to zero.<br />\n",
+    "PostedDate": "2014-08-06T02:40:51.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

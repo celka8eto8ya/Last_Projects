@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1023926",
+    "ThreadId": "438709",
+    "Html": "I can't seem to get NAudio to read an MP3 file. It works fine on my local machine, but fails with &quot;NoDriver calling acmFormatSuggest&quot; in production. The line it fails on in creating the NAudio.Wave.Mp3FileReader.\r<br />\n<br />\nI've created a small app that replicates the error (below) on a Win 2008 R2, 64bit machines. I've verified that the code is running in 32bit (same as IIS - which is what needs to work).<br />\n<pre><code>using System;\n\nnamespace NAudioTest\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            try\n            {\n                using (var rdr = new NAudio.Wave.Mp3FileReader(&quot;Test.mp3&quot;))\n                {\n                    Console.WriteLine(&quot;Duration: {0}&quot;, rdr.TotalTime);\n                }\n            }\n            finally\n            {\n                Console.ReadKey();\n            }\n        }\n    }\n}\n</code></pre>\n\nWe also have LAME.exe running on this machine and it works just fine, so the machine should have the appropriate codecs. I started the audio service just in case that would help, but it didn't.\r<br />\n<br />\nAny ideas?<br />\n",
+    "PostedDate": "2013-04-01T14:08:38.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1023947",
+    "ThreadId": "438709",
+    "Html": "I was able to find a work-around, but I wouldn't mind figuring out why this is a problem in case I need to do more than just get duration with NAudio in the future.\r<br />\n<br />\nHere's the work-around (adapted from <a href=\"http://stackoverflow.com/a/13269914/320\" rel=\"nofollow\">http://stackoverflow.com/a/13269914/320</a>)...<br />\n<pre><code>public static TimeSpan GetMediaDuration(string srcPath)\n{\n    var duration = 0.0;\n    using (var fs = System.IO.File.OpenRead(srcPath))\n    {\n        var frame = Mp3Frame.LoadFromStream(fs);\n        while (frame != null)\n        {\n            duration += (double)frame.SampleCount / (double)frame.SampleRate;\n            frame = Mp3Frame.LoadFromStream(fs);\n        }\n    }\n    return TimeSpan.FromSeconds(duration);\n}\n</code></pre>\n\n",
+    "PostedDate": "2013-04-01T14:54:28.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

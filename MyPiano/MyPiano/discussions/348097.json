@@ -1,0 +1,274 @@
+[
+  {
+    "Id": "808466",
+    "ThreadId": "348097",
+    "Html": "\r\n<p>Can you please reply as early as possible for my Ima Adpcm Error which i already posted .......</p>\r\n",
+    "PostedDate": "2012-03-10T05:54:08.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808467",
+    "ThreadId": "348097",
+    "Html": "<p>where did you post the error?</p>",
+    "PostedDate": "2012-03-10T05:56:04.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808905",
+    "ThreadId": "348097",
+    "Html": "<p>Hi,</p>\r\n<p>i am using following Wave Format for recoding a audio file.</p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><font face=\"Consolas\" size=\"2\">\r\n<p>waveIn =</p>\r\n</font></span></span><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\"><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\"><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\">New</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"> </span></span><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">WaveIn</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"> <span style=\"font-family: Consolas; font-size: x-small;\">()<span style=\"font-family: Consolas; font-size: x-small;\"> </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">waveIn.WaveFormat =</span></span></span><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\"><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\"><span style=\"font-family: Consolas; color: #0000ff; font-size: x-small;\">New</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"> </span></span><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\"><span style=\"font-family: Consolas; color: #2b91af; font-size: x-small;\">WaveFormat</span></span></span><span style=\"font-family: Consolas; font-size: x-small;\"> <span style=\"font-family: Consolas; font-size: x-small;\">(8000, 1)</span></span></p>\r\n</p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">\r\n<p>inputformat = waveIn.WaveFormat</p>\r\n</span></span></p>\r\n<p>\r\n<p><span style=\"font-family: Consolas;\">Now,i need to Encode/Compress these recorded audio file into Ima Adpcm Format.And,I also seen the discussion about this issue in your forum.There you said,</span></p>\r\n</p>\r\n<p><span style=\"font-family: Consolas;\">\"Simply add a short in there. Extra size means how many extra bytes there are on top of the original WaveFormat structure. You need a variable to hold that data (a short because you have two extra bytes). And you should also set the contents of that extra data according to the specification of the specific WaveFormatTag you are using\"</span></p>\r\n<p><span style=\"font-family: Consolas;\">private class MyWaveFormat:WaveFormat<br />{<br />short extraData;<br /><br />public MyWaveFormat(WaveFormatEncoding WaveFormatTag, short BitsPerSample, short Channels, int AverageBytesPerSecond, short BlockAlign, int SampleRate, short ExtraSize)<br />{<br />base.extraSize = ExtraSize;<br />base.averageBytesPerSecond = AverageBytesPerSecond;<br />base.bitsPerSample = BitsPerSample;<br />base.blockAlign = BlockAlign;<br />base.channels = Channels;<br />base.sampleRate = SampleRate;<br />base.waveFormatTag = WaveFormatTag;<br />}<br />}</span></p>\r\n<p><span style=\"font-family: Consolas;\">But i am not getting how to set&nbsp; contents \"ExtraData\" corresponding to Extra Size.</span></p>\r\n<p><span style=\"font-family: Consolas;\">I also tried&nbsp; to set Extrqa Data using following Methods,but still i am getting the Same Error \"\"AcmNotPossible Calling the AcmStreamOpen\"\"</span></p>\r\n<p><span style=\"font-family: Consolas;\">ptr=Waveformat.MarshalToPtr&nbsp;(inputformat)</span></p>\r\n<p><span style=\"font-family: Consolas;\">TargetFormat=waveformat.MarshalFromPtr(ptr)</span></p>\r\n<p><span style=\"font-family: Consolas;\">Can you Please guide me About this problem&nbsp; as early as possible.<br /></span></p>\r\n<p><span style=\"font-family: Consolas;\">Regards,</span></p>\r\n<p><span style=\"font-family: Consolas;\">Chandan k.s</span></p>\r\n<p><span style=\"font-family: Consolas;\">&nbsp;</span></p>\r\n<p><span style=\"font-family: Consolas;\"></span>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"></span></p>\r\n&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-03-11T21:12:01.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "809005",
+    "ThreadId": "348097",
+    "Html": "<p>Hi,</p>\r\n<p>Whether it is possible to play a Encoded file using ... following method directly?</p>\r\n<p>&nbsp;PlayOutputFile.Play()</p>",
+    "PostedDate": "2012-03-12T03:30:54.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "809093",
+    "ThreadId": "348097",
+    "Html": "<p>Hi,</p>\r\n<p>Even though i installed LameAcm on my system,its not listing in the Format Combo box&nbsp;</p>",
+    "PostedDate": "2012-03-12T07:35:37.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "809342",
+    "ThreadId": "348097",
+    "Html": "<p>No, NAudio does not allow you to play compressed audio directly. I don't know why your LAME Acm is not showing up. Are you sure it installed correctly?</p>",
+    "PostedDate": "2012-03-12T15:23:06.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "809420",
+    "ThreadId": "348097",
+    "Html": "<p>&nbsp;</p>\r\n<p>Hi,</p>\r\n<p>i am using following Wave Format for recoding a audio file.</p>\r\n<p><span><span style=\"font-family: Consolas; font-size: x-small;\">&nbsp;</span></span></p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\">\r\n<p>waveIn =New&nbsp;WaveIn&nbsp;()&nbsp;</p>\r\n</span></p>\r\n<p><span>waveIn.WaveFormat =</span><span>New</span><span>&nbsp;</span><span>WaveFormat</span><span>&nbsp;(8000, 1)</span></p>\r\n<p>inputformat = waveIn.WaveFormat</p>\r\n<p>&nbsp;</p>\r\n<p>Now,i need to Encode/Compress these recorded audio file into Ima Adpcm Format.And,I also seen the discussion about this issue in your forum.There you said,</p>\r\n<p>\"Simply add a short in there. Extra size means how many extra bytes there are on top of the original WaveFormat structure. You need a variable to hold that data (a short because you have two extra bytes). And you should also set the contents of that extra data according to the specification of the specific WaveFormatTag you are using\"</p>\r\n<p><span>private class MyWaveFormat:WaveFormat<br />{<br />short extraData;<br /><br />public MyWaveFormat(WaveFormatEncoding WaveFormatTag, short BitsPerSample, short Channels, int AverageBytesPerSecond, short BlockAlign, int SampleRate, short ExtraSize)<br />{<br />base.extraSize = ExtraSize;<br />base.averageBytesPerSecond = AverageBytesPerSecond;<br />base.bitsPerSample = BitsPerSample;<br />base.blockAlign = BlockAlign;<br />base.channels = Channels;<br />base.sampleRate = SampleRate;<br />base.waveFormatTag = WaveFormatTag;<br />}<br />}</span></p>\r\n<p><span>But i am not getting how to set&nbsp; contents \"ExtraData\" corresponding to Extra Size.</span></p>\r\n<p><span>I also tried&nbsp; to set \"\"ExtraData\"\" using following Methods,but still i am getting the Same Error \"\"AcmNotPossible Calling the AcmStreamOpen\"\"</span></p>\r\n<p><span>ptr=Waveformat.MarshalToPtr&nbsp;(inputformat)</span></p>\r\n<p><span>TargetFormat=waveformat.MarshalFromPtr(ptr)</span></p>\r\n<p><span>Can you Please guide me About this problem&nbsp; as early as possible.<br /></span></p>\r\n<p><span>Regards,</span></p>\r\n<p><span>Chandan k.s</span></p>\r\n<p><span>&nbsp;</span></p>",
+    "PostedDate": "2012-03-12T21:29:02.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "809452",
+    "ThreadId": "348097",
+    "Html": "<p>Look <a href=\"http://icculus.org/SDL_sound/downloads/external_documentation/wavecomp.htm\">here at the WAVE_FORMAT_DVI_ADPCM</a> structure definition. You'll need to find appropriate values for the wSamplesPerBlock value, but you can do that by examining the extra bytes reported by the NAudioDemo ACM screen for the IMA ADPCM codec</p>",
+    "PostedDate": "2012-03-13T00:43:21.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "809475",
+    "ThreadId": "348097",
+    "Html": "<p>How i need to make use of those extra bytes...? . Also,CreateCustomWaveFormat() wont woks for this Ima Adpcm WaveFormat,So which method i need to use for Ima Adpcm &nbsp;Encoding...?</p>",
+    "PostedDate": "2012-03-13T02:04:31.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "809556",
+    "ThreadId": "348097",
+    "Html": "<p>&nbsp;I tried in this way by creating &nbsp;<strong>My_ImaAdpcmWaveFormat method </strong>Ima Adpcm class,and i am passing that Extra Byte value,since Extra Byte in Hexadecimal,i converted that to Decimal,then passed to these Function.</p>\r\n<p>public<strong> My_ImaAdpcmWaveFormat</strong>(int sampleRate, int channels, int bitsPerSample,<strong>int sampleperblock</strong>)&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; {&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp;this.waveFormatTag = WaveFormatEncoding.DviAdpcm; // can also be ImaAdpcm - they are the same&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp;this.sampleRate = sampleRate;&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp;this.channels = (short)channels;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp;this.bitsPerSample = (short)bitsPerSample; // TODO: can be 3 or 4&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp;this.extraSize = 2;// &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp;this.blockAlign = 0; //TODO &nbsp; &nbsp;//Also i tried for blockalign and avgbytespersecond also i assigned values&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; this.averageBytesPerSecond = 0; //TODO&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp;<strong> this.samplesPerBlock = short(sampleperblock);</strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>\r\n<p>}</p>\r\n<p>Then,when i excecute following line,</p>\r\n<p>convertedStream=NewWaveFormatConversionStream(NewImaAdpcmWaveFormat(InputFormat.SampleRate,InputFormat.Channels,InputFormat.bitspersample,63745), Reader) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>Getting the same error \"<span>\"AcmNotPossible Calling the AcmStreamOpen\"\"</span>.So <strong>\"&nbsp;How i need to make use of those extra bytes...?\"</strong></p>",
+    "PostedDate": "2012-03-13T05:33:03.903-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "809563",
+    "ThreadId": "348097",
+    "Html": "<p>you need to look very carefully at the values returned in the NAudioDemo application. This shows what the ACM codec is expecting from a WaveFormat. The WaveFormat you pass in must be <strong>exactly </strong>the same.</p>",
+    "PostedDate": "2012-03-13T05:43:23.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810008",
+    "ThreadId": "348097",
+    "Html": "<p>Ya,i tried the way you said.but still i am getting the same error .</p>\r\n<p>public &nbsp;ImaAdpcmWaveFormat(int sampleRate, int channels, int bitsPerSample,int sperblock)&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; {&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;this.waveFormatTag = WaveFormatEncoding.DviAdpcm; // can also be ImaAdpcm - they are the same&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.sampleRate = sampleRate;&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.channels = (short)channels;&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.bitsPerSample = (short)bitsPerSample; // TODO: can be 3 or 4&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.extraSize = 2;// &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.blockAlign = 256; //TODO&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.averageBytesPerSecond = 4055; //TODO&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.samplesPerBlock = (short)sperblock; // TODO&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>}</p>\r\n<p>Above values which i am assigning are same as &nbsp;NaudioDemo Application values.</p>\r\n<p>&nbsp; &nbsp;Format 0: 8.000 kHz, 4 Bit, Mono&nbsp; &nbsp; &nbsp; FormatTag: DviAdpcm, Support Flags: Codec&nbsp; &nbsp; &nbsp; WaveFormat: DviAdpcm 8000Hz Channels: 1 Bits: 4 Block Align: 256, &nbsp; &nbsp; AverageBytesPerSecond: 4055 (32.4 kbps), Extra Size: 2&nbsp; &nbsp; &nbsp; Extra Bytes:&nbsp; &nbsp; &nbsp; F9 01&nbsp;</p>\r\n<p>In my code i wrote like this,</p>\r\n<p>&nbsp;convertedStream = New WaveFormatConversionStream(New ImaAdpcmWaveFormat(8000, 1, 4, 2048), Reader)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WaveFileWriter.CreateWaveFile(CurrentFile, convertedStream)</p>\r\n<p>Since Extra Bytes in Hexa Decimal,i converted it into Decimal.</p>",
+    "PostedDate": "2012-03-13T21:47:36.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810030",
+    "ThreadId": "348097",
+    "Html": "<p>Like this way also i tried.....&nbsp;<strong>63745 is the Decimal value of Extra Byte:F901&nbsp;</strong></p>\r\n<p><strong><br /></strong></p>\r\n<p>&nbsp;TargetFormat = ImaAdpcmWaveFormat.MyImaAdpcmWaveFormat(8000, 1, 4, 63745)</p>\r\n<p>convertedStream = New WaveFormatConversionStream(TargetFormat, Reader)</p>\r\n<p>public static ImaAdpcmWaveFormat MyImaAdpcmWaveFormat(int sampleRate, int channels, int bitsPerSample, float sperblock)&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; {</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWaveFormat ImaAdpcmWformat = new ImaAdpcmWaveFormat();</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWformat.waveFormatTag = WaveFormatEncoding.DviAdpcm; // can also be ImaAdpcm - they are the same&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWformat.sampleRate = sampleRate;&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWformat.channels = (short)channels;&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWformat.bitsPerSample = (short)bitsPerSample; // TODO: can be 3 or 4&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp;ImaAdpcmWformat.extraSize = 2;// &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp;ImaAdpcmWformat.blockAlign = 256; //TODO&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; ImaAdpcmWformat.averageBytesPerSecond = 4055; //TODO&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; ImaAdpcmWformat.samplesPerBlock = (short)sperblock; // TODO&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp;return ImaAdpcmWformat;&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>}</p>\r\n<p>Same error i am getting.</p>",
+    "PostedDate": "2012-03-13T23:18:53.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810055",
+    "ThreadId": "348097",
+    "Html": "<p>I think you must be getting close now. Try 505 as the samplesPerBlock value (intel byte order is the other way round so this is 0x01F9)</p>\r\n<p>Also, make sure that the thing you are converting is 8kHz, mono, 16 bit PCM, since ACM codecs do not usually support changing sample rates or number of channels.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-03-14T00:13:18.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810056",
+    "ThreadId": "348097",
+    "Html": "<p>Also i converted \"F9\" and \"01\" separately to Decimal ,Then i got the value&nbsp;\"249\" &amp; \"01\".</p>\r\n<p>now i assigned&nbsp;\"249\" &amp; \"01\" &nbsp;to SamplesPerBlock.</p>\r\n<p>but same error.</p>",
+    "PostedDate": "2012-03-14T00:15:59.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810057",
+    "ThreadId": "348097",
+    "Html": "<p>Your class should have a single private variable of type short. Set it to 505.</p>",
+    "PostedDate": "2012-03-14T00:19:39.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810098",
+    "ThreadId": "348097",
+    "Html": "<p>Ya ,now its Encoding,but when i try to play the Encoded Audio File using \"&nbsp;System.Diagnostics.Process.Start(outputFileName)\",i am getting the error stating that</p>\r\n<p>\"Windows Media Player encountered a problem while playing the file\"</p>\r\n<p>and i tried using following steps to play the Encoded Audio,but getting the error&nbsp;&nbsp;\"Invalid WAV file - No data chunk found\" .</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;wavePlayer = New WaveOut() &nbsp;&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FileRdr = New AudioFileReader(CurrentFile) &nbsp; &nbsp; &nbsp;&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;wavePlayer.Init(FileRdr)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; wavePlayer.Play()</p>\r\n<p>And above Stpes are working fine for all other Encoded Wave Format Audio Files.</p>\r\n<p>Please reply as early as possible.</p>\r\n<p>Regards ,</p>\r\n<p>chandan.ks</p>",
+    "PostedDate": "2012-03-14T02:07:13.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810105",
+    "ThreadId": "348097",
+    "Html": "<p>what is the code you are using to create the WAV file?</p>",
+    "PostedDate": "2012-03-14T02:28:06.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810110",
+    "ThreadId": "348097",
+    "Html": "<p>&nbsp;waveIn = New WaveIn()</p>\n<p>waveIn.WaveFormat = New WaveFormat(8000, 16, 1)</p>\n<p>&nbsp;writer = New WaveFileWriter(CurrentFile, waveIn.WaveFormat)</p>\n<p>where currentfile contains newly cretaed file path.</p>\n<p>Also Event Handler i added followed by above lines.</p>\n<p>&nbsp;AddHandler waveIn.DataAvailable, AddressOf waveIn_DataAvailable &nbsp;&nbsp;</p>\n<p>&nbsp;AddHandler waveIn.RecordingStopped, AddressOf waveIn_RecordingStopped</p>",
+    "PostedDate": "2012-03-14T02:39:21.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810111",
+    "ThreadId": "348097",
+    "Html": "<p>yes, but where are you writing data to the writer? And where are you closing it?</p>",
+    "PostedDate": "2012-03-14T02:40:26.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810113",
+    "ThreadId": "348097",
+    "Html": "<p>In &nbsp;this method i am writing to the writer,</p>\r\n<p>&nbsp;Private Sub waveIn_DataAvailable(ByVal sender As Object, ByVal e As WaveInEventArgs)</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; Try<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If (Me.InvokeRequired) Then&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Me.BeginInvoke(New waveIn_DataAvailable(AddressOf waveIn_DataAvailable), sender, e)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Else<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If writer IsNot Nothing Then&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; writer.Write(e.Buffer, 0, e.BytesRecorded)&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; secondsRecorded = (writer.Length / writer.WaveFormat.AverageBytesPerSecond)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If (secondsRecorded &gt;= 60) Then&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;StopRecording(sender)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;End If<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; End If</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; End If<br />&nbsp; &nbsp; &nbsp; &nbsp; Catch ex As Exception&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; MsgBox(ex.Message)&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; End Try<br />&nbsp; &nbsp; End Sub</p>\r\n<p>&nbsp;</p>\r\n<p>here, i am closing</p>\r\n<p>Private Sub waveIn_RecordingStopped(ByVal sender As Object, ByVal e As EventArgs)<br />&nbsp; &nbsp; &nbsp; &nbsp; Try<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If (Me.InvokeRequired) Then&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Me.BeginInvoke(New waveIn_RecordingStopped(AddressOf waveIn_RecordingStopped), sender, e)&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; Else&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; waveIn.Dispose()&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; waveIn = Nothing&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; writer.Close()&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; writer = Nothing</p>\r\n<p><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; End If<br />&nbsp; &nbsp; &nbsp; &nbsp; Catch ex As Exception&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; MsgBox(ex.Message)&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; End Try&nbsp; &nbsp;</p>\r\n<p>End Sub</p>",
+    "PostedDate": "2012-03-14T02:46:33.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810114",
+    "ThreadId": "348097",
+    "Html": "<p>&nbsp;</p>\r\n<p>&nbsp;waveIn = New WaveIn()</p>\r\n<p>waveIn.WaveFormat = New WaveFormat(8000, 16, 1)</p>\r\n<p>&nbsp;writer = New WaveFileWriter(CurrentFile, waveIn.WaveFormat)</p>\r\n<p>where currentfile contains newly cretaed file path.</p>\r\n<p>Also Event Handler i added followed by above lines.</p>\r\n<p>&nbsp;AddHandler waveIn.DataAvailable, AddressOf waveIn_DataAvailable &nbsp;&nbsp;</p>\r\n<p>&nbsp;AddHandler waveIn.RecordingStopped, AddressOf waveIn_RecordingStopped</p>",
+    "PostedDate": "2012-03-14T02:49:26.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810117",
+    "ThreadId": "348097",
+    "Html": "<p>and you are absolutely sure you are calling writer.Close / dispose?</p>",
+    "PostedDate": "2012-03-14T02:56:29.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810119",
+    "ThreadId": "348097",
+    "Html": "<p>ya ya writer.close() and writer.dispose() both statements are excuting once after Stop Recording Button pressed.</p>",
+    "PostedDate": "2012-03-14T03:02:30.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810130",
+    "ThreadId": "348097",
+    "Html": "<p>Recorded Audio File is working fine,, once after encoding to Ima Adpcm Format ,audio file is not working.But if i encode the recorded audio file to other formats,and then if i try to play that encoded file,its working fine.</p>",
+    "PostedDate": "2012-03-14T03:14:22.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810131",
+    "ThreadId": "348097",
+    "Html": "<p>OK, so show me the code that converts your recorded Audio file into IMA ADPCM</p>\r\n<p>Also, try converting the file using the NAudio demo application</p>",
+    "PostedDate": "2012-03-14T03:16:00.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810133",
+    "ThreadId": "348097",
+    "Html": "<p>&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; TargetFormat = ImaAdpcmWaveFormat.MyImaAdpcmWaveFormat(8000, 1, 4, 505) &nbsp;&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;convertedStream = New WaveFormatConversionStream(TargetFormat, Reader)</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WaveFileWriter.CreateWaveFile(CurrentFile, convertedStream)</p>\r\n<p>&nbsp;</p>\r\n<p><strong>MyImaAdpcmWaveFormat class:</strong></p>\r\n<p>&nbsp;public static ImaAdpcmWaveFormat MyImaAdpcmWaveFormat(int sampleRate, int channels, int bitsPerSample, float samplesperblock)&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; {&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWaveFormat ImaAdpcmWformat = new ImaAdpcmWaveFormat();<br />&nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWformat.waveFormatTag = WaveFormatEncoding.ImaAdpcm; //</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWformat.sampleRate = sampleRate;&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWformat.channels = (short)channels;&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ImaAdpcmWformat.bitsPerSample = (short)bitsPerSample; // TODO: can be 3 or 4&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ImaAdpcmWformat.extraSize = 2;// &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ImaAdpcmWformat.blockAlign = 256; //TODO&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWformat.averageBytesPerSecond = 4055; //TODO&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; ImaAdpcmWformat.samplesPerBlock = (short)samplesperblock; // TODO&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; return ImaAdpcmWformat;&nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; }</p>",
+    "PostedDate": "2012-03-14T03:22:15.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810136",
+    "ThreadId": "348097",
+    "Html": "<p>Nudio Demo Application is working fine.but i dont want to launch the dialog box crates by AcmFormatChoose Function.</p>",
+    "PostedDate": "2012-03-14T03:29:04.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810152",
+    "ThreadId": "348097",
+    "Html": "<p>well I can't see anything wrong with your code. If your WaveFormat is the same as the one that NAudioDemo uses, then it should work. Possibly there is an issue with CreateWaveFile. Try this code and step through it in the debugger and see what you are managing to read. It might be that the buffer size might need to be set to an exact multiple of blockAlign. (e.g. 1024 bytes)</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public static void CreateWaveFile(string filename, IWaveProvider sourceProvider)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (WaveFileWriter writer = new WaveFileWriter(filename, sourceProvider.WaveFormat))<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte[] buffer = new byte[sourceProvider.WaveFormat.AverageBytesPerSecond * 4];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while (true)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int bytesRead = sourceProvider.Read(buffer, 0, buffer.Length);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (bytesRead == 0)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writer.Write(buffer, 0, bytesRead);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-03-14T04:23:44.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810176",
+    "ThreadId": "348097",
+    "Html": "<p>For Above Wave Format only,Simply i replaced the&nbsp;</p>\r\n<p>&nbsp; byte[] buffer = new byte[sourceProvider.WaveFormat.AverageBytesPerSecond * 4] &nbsp;by&nbsp;</p>\r\n<p><span>&nbsp;byte[] buffer = new byte[sourceProvider.WaveFormat.BlockAlign* 4]</span></p>\r\n<p><span>&nbsp;i traced NaudioDemo code,in same way my code is going.</span>&nbsp;i guess everything is going in write way.But not getting why Encoded File is not able to play.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-03-14T05:37:55.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810205",
+    "ThreadId": "348097",
+    "Html": "<p><span>CreateWaveFile() method you posted is same as which i am already using.</span></p>\n<p>Can you please try once by your self considering above WaveFormat Structure .</p>\n<p>Please reply as early as possible</p>\n<p>Regards,</p>\n<p>chandan ks</p>",
+    "PostedDate": "2012-03-14T06:16:56.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810673",
+    "ThreadId": "348097",
+    "Html": "<p>&nbsp;</p>\r\n<p><strong>Can you please try once by your self considering above WaveFormat Structure .</strong></p>",
+    "PostedDate": "2012-03-15T00:33:48.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "811305",
+    "ThreadId": "348097",
+    "Html": "<p>Hi Mark,</p>\n<p>LameAcm is getting listed in the Format combobox Windows xp and other OS,But mine is Windows -7,may that is the issue....?</p>\n<p>If that is the case,what i need to do...?</p>",
+    "PostedDate": "2012-03-16T02:14:28.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "815897",
+    "ThreadId": "348097",
+    "Html": "<p>Hi Mark,</p>\r\n<p>CreateWaveFile() method you posted is same as which i am already using.</p>\r\n<p>Can you please try once by your self considering above WaveFormat Structure .</p>\r\n<p>Please reply as early as possible</p>\r\n<p>Regards,&nbsp;</p>\r\n<p>Chandan</p>",
+    "PostedDate": "2012-03-26T22:40:52.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

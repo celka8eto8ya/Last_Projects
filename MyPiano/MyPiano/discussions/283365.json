@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "713831",
+    "ThreadId": "283365",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>Firstly, I really want to thank Mr Mark for his great effort here.</p>\r\n<p>Now my question, I want to get the amplitude of each mp3 frame as I go through the file to use it in visualizing the mp3 data.</p>\r\n<p>If it's not&nbsp;possible would you recommend other ways to visualize the file by ?</p>\r\n<p>Note: I don't use WPF . &nbsp;</p>\r\n",
+    "PostedDate": "2011-12-18T07:13:35.143-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713958",
+    "ThreadId": "283365",
+    "Html": "<p>You can only visualise MP3 by decoding it to PCM, and then showing waveforms/level meters the same way you do with WAV files (see NAudioDemo for an example).</p>",
+    "PostedDate": "2011-12-18T14:33:36.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "714038",
+    "ThreadId": "283365",
+    "Html": "<p>when I open Source Code section an error occures but I could get the source code from another site but it uses an eventargs that visualize the data while playing.</p>\r\n<p>maybe that source code wasn't write , so do you have a link for the source code ?</p>",
+    "PostedDate": "2011-12-18T22:35:25.027-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "714082",
+    "ThreadId": "283365",
+    "Html": "<p>You can always get the very latest code from here: http://naudio.codeplex.com/SourceControl/list/changesets</p>\r\n<p>And the latest release (1.5) is here: http://naudio.codeplex.com/releases/view/79035</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-12-19T00:55:58.23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "714152",
+    "ThreadId": "283365",
+    "Html": "<p>Thanks a lot Mr Mark, I downloaded the source code and I'm checking it now</p>",
+    "PostedDate": "2011-12-19T03:36:48.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717421",
+    "ThreadId": "283365",
+    "Html": "<p>sorry for disturbing you again but the demo project visualize audio while playing it and it uses an event StreamVolumeEventArgs.</p>\r\n<p>but what I want to do is to visualize the audio file after loading it directly using the data of frames , just like sound editing programs.</p>",
+    "PostedDate": "2011-12-27T04:56:34.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717451",
+    "ThreadId": "283365",
+    "Html": "<p>You just open the audio file and read all the data out of it, using the points reported along the way by StreamVolumeEventArgs</p>",
+    "PostedDate": "2011-12-27T07:10:03.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "717460",
+    "ThreadId": "283365",
+    "Html": "<p>you may have a look on this:http://naudio.codeplex.com/discussions/284190</p>",
+    "PostedDate": "2011-12-27T07:27:27.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "719164",
+    "ThreadId": "283365",
+    "Html": "<p>thank you Mr Mark and thefiloe, I could finally read the data successfully</p>",
+    "PostedDate": "2012-01-01T07:08:05.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1292727",
+    "ThreadId": "561933",
+    "Html": "I tried to use the AiffWriter method for the first time and found something odd.  Maybe someone can see what it might be.\r<br />\n<br />\nI read in an 8 bit mono 22050Hz wav file.  And wrote it back out using both an AiffFileWriter, and the WavFileWriter.  The results of the AiffFileWriter showed that the sign of the waveform data got all goofed up.  See linked pic. \r<br />\n<a href=\"http://imgur.com/6t2GOeh\" rel=\"nofollow\">TEXT</a>\r<br />\n<br />\n<img src=\"http://imgur.com/6t2GOeh\" alt=\"Image\" />\r<br />\n<br />\nIs this an inherent issue with the Aiff conversion, that it might not know what to make of 8 bit files in their conversion to Big Endian or something?  That's what it looks like to me.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2014-08-23T08:08:46.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1292736",
+    "ThreadId": "561933",
+    "Html": "I hacked at the source a bit and ended up with the following solution for 8bit AIFF writes:\r<br />\n<br />\nNAudio's AIFF writer did not seem to handle 8bit files (as you see above).  So I loaded the source code of AiffFileWriter, and re-wrote the Write() method to remove the part where it plays around with 'swapped data' which I think gummed it up.  If you look at that waveform above, the only thing wrong is that it's offset -127 bits compared with the byte[] it was being sent.  I removed the swapped data re-alignment code, and added that offset back, and viola.  Sine waves again.<br />\n\r<br />\nI did not check how WaveFileWriter deals with that offset, it probably adds it back as well.\r<br />\n<br />\n<em>Edited from AiffFileWriter.cs</em><br />\n<pre><code>  public override void Write(byte[] data, int offset, int count)\n        {\n            byte[] swappedData = new byte[data.Length];\n\n            for (int i = 0; i &lt; data.Length; i++)\n            {\n                swappedData[i] = (byte)(data[i]+128); // just adding back the offset. \n            }\n            outStream.Write(swappedData, offset, count);\n            dataChunkSize += count;\n        }</code></pre>\n\n",
+    "PostedDate": "2014-08-23T09:44:51.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1293205",
+    "ThreadId": "561933",
+    "Html": "I think this is more of a general issue with the Aiff functions overall.<br />\n<br />\nI tried to use AiffFileReader to read an 8-bit .aif file, and got a byte[] array full of garbage.  It has essentially the same issue as the AiffFileWriter had.  It doesn't deal with the signed 8-bit value very well.<br />\n<br />\nTo fix it, on line 244 of AiffFileReader.cs, I converted the value back to a signed 8bit.  Now it works.  See what you think.<br />\n<pre><code>                    if (WaveFormat.BitsPerSample == 8)\n                    {\n                        array[i] = (byte)(buffer[i]+128);\n                    }</code></pre>\n\n",
+    "PostedDate": "2014-08-25T11:18:21.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1293456",
+    "ThreadId": "561933",
+    "Html": "Hi!\r<br />\n<br />\nPlease forgive me for answering without any real indepth knowledge, but I got curious and had nothing better to do (-:\r<br />\n<br />\nHm, checking AIFF and WAV specification on the net on the fly, they state that (8bit) samples are stored as unsigned byte values\r<br />\n<br />\nFrom: <a href=\"http://amigan.1emu.net/reg/AIFF.txt\" rel=\"nofollow\">http://amigan.1emu.net/reg/AIFF.txt</a>  (via <a href=\"http://wayback.archive.org/\" rel=\"nofollow\">http://wayback.archive.org/</a>)\r<br />\n<strong>AIFF: Audio Interchange File Format File</strong>\r<br />\n<br />\n[...]<br />\n<blockquote>\nSound Data Chunk<br />\nThe Sound Data Chunk contains the actual sample frames.<br />\n  #define \tSoundDataID\t'SSND'\t/<em> ckID for Sound Data Chunk \t</em>/<br />\n  typedef struct {<br />\nID\t\tckID;<br />\nlong\t\tckSize;<br />\n<br />\nunsigned long\toffset;<br />\nunsigned long\tblockSize;<br />\nunsigned char\tSoundData [];  &lt;-----------------<br />\n   }  SoundDataChunk;<br />\n</blockquote>\nFrom <a href=\"http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/riffmci.pdf\" rel=\"nofollow\">http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/riffmci.pdf</a>\r<br />\n<strong>Multimedia Programming Interface and Data Specifications 1.0</strong> (~ Page 58)\r<br />\n<br />\nWAVE FORMAT CATEGORIES\r<br />\n<br />\nPCM( FORMAT\r<br />\n Data Format of the Samples<br />\n<pre><code>Sample  Size                  Data Format                   Maximum Value                             Minimum Value\nOne to eight bits           Unsigned integer                  255 (0xFF)                                       0\nNine or more bits          Signed integer i            Largest positive value of i             Most negative value of i</code></pre>\n\n(consider this reply as obsolete if they changed the format definitions in the meantime)\r<br />\n<br />\nHope that helps,\r<br />\n<br />\nHarry<br />\n",
+    "PostedDate": "2014-08-26T03:01:12.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

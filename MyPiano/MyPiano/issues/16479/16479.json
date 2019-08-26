@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "I'm trying to mix IEEE signals with an app in exclusive mode, but on some devices it doesn't seem to play sound at all.  \r\n\r\nSome details:\r\nBitrates of 16 or 24 work equally well with any sample rate. \r\nThe app attempts to use 44.1kHz sample rate. If it fails, it switches to 48kHz.\r\nHowever, the playback is higher pitched when switching to 48kHz.\r\nThe app is runs in exclusive mode by default in an attempt to force 44.1kHz.\r\n\r\nSo on this device:\r\nhttp://www.officedepot.com/a/products/488121/HP-Pavilion-X2-2-in-1/\r\nexclusive mode can't find 44.1kHz so it switches to 48kHz upon which it immediately fails and does not play sound at all.\r\n\r\nThe exception I get is similar to the one I receive when attempting to use the NAudio demo:\r\nhttps://i.imgur.com/xRLvTEo.png\r\n\r\nAny insight would be extremely helpful. Thanks!\r\n",
+    "LastUpdatedDate": "2015-07-08T09:40:37.047-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-07-07T17:01:27.453-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Unsupported Wave Format issues",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16479
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Yes, you can't assume your soundcard will necessarily support all wave formats in exclusive mode\nYou need to resample your audio to play at 48kHz if it is 44.1kHz audio",
+      "PostedDate": "2015-07-08T04:20:35.37-07:00",
+      "Id": 187038
+    },
+    {
+      "Message": "Makes sense. Thank you for your prompt response! ",
+      "PostedDate": "2015-07-08T09:40:37.047-07:00",
+      "Id": 187044
+    }
+  ]
+}

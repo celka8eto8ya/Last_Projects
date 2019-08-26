@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "982331",
+    "ThreadId": "428258",
+    "Html": "\r\n<p>This is my code to draw it (ripped almost entirely from the demo app):</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>            <span style=\"color:blue\">this</span>.volumeSlider.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));\n            <span style=\"color:blue\">this</span>.volumeSlider.Location = <span style=\"color:blue\">new</span> System.Drawing.Point(358, 267);\n            <span style=\"color:blue\">this</span>.volumeSlider.Name = <span style=\"color:#a31515\">&quot;volumeSlider1&quot;</span>;\n            <span style=\"color:blue\">this</span>.volumeSlider.Size = <span style=\"color:blue\">new</span> System.Drawing.Size(96, 16);\n            <span style=\"color:blue\">this</span>.volumeSlider.TabIndex = 11;\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>It's not throwing any errors at me, it just isn't drawing, regardless of where on the form I place it. Any suggestions?</p>\r\n",
+    "PostedDate": "2013-01-02T07:23:34.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

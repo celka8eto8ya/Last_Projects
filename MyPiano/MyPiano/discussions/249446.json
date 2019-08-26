@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "579550",
+    "ThreadId": "249446",
+    "Html": "\r\n<p>Excellent project! Thank you. I try to play quad sound. The sound cart is supports up to 8 channels. The problem is when I create waveprovider with 4 channels WaveOut.Init generates exeption &quot;WaveBadFormat calling waveOutOpen&quot;. 2 channels are OK. Does the\r\n NAudio support any number of channels or there is a limitation?</p>\r\n",
+    "PostedDate": "2011-03-12T12:59:40.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "579946",
+    "ThreadId": "249446",
+    "Html": "<p>it probably depends on your sound card driver. it might not support multi-channel output using WaveOut (or you might need to open multiple WaveOut devices). How about trying DirectSound or WASAPI. In an ideal world I would say ASIO, but unfortunately the ASIO support in NAudio is unreliable at the moment.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-14T03:56:39.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "580144",
+    "ThreadId": "249446",
+    "Html": "<p>I suspected a driver, but as I see now the root of the problem is WaveFormat. In accordance with msdn it is able to play only mono or stereo. To play more channels it has to be WaveFormatExtensible then you are able to define more then two channels different bit resolution etc. I am afraid it is impossible to define the structure within c#.</p>\r\n<pre>typedef struct {\r\n  WAVEFORMATEX  Format;\r\n  union {\r\n    WORD  wValidBitsPerSample;\r\n    WORD  wSamplesPerBlock;\r\n    WORD  wReserved;\r\n  } Samples;\r\n  DWORD   dwChannelMask; \r\n  GUID    SubFormat;\r\n} WAVEFORMATEXTENSIBLE, *PWAVEFORMATEXTENSIBLE;</pre>\r\n<p>I will try as well ASIO.</p>",
+    "PostedDate": "2011-03-14T11:10:40.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

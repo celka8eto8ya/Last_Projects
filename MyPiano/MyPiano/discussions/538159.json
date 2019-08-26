@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1219892",
+    "ThreadId": "538159",
+    "Html": "I have been looking at the OPC UA Specification parts, however they do not give you a list of classes and function and tell you how they work. Is there something like that?\r<br />\n<br />\nAlso the server, the 1st thing it does is creates an Object right?\r<br />\none of Server ?\r<br />\nwhat are the steps from the Server point of view ?<br />\n",
+    "PostedDate": "2014-03-06T07:24:30.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1219969",
+    "ThreadId": "538159",
+    "Html": "does this have anything to do with NAudio?<br />\n",
+    "PostedDate": "2014-03-06T09:30:37.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1220011",
+    "ThreadId": "538159",
+    "Html": "sorry about that...\r<br />\nI post this is the wrong place<br />\n",
+    "PostedDate": "2014-03-06T11:19:21.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

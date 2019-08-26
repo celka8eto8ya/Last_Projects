@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "629522",
+    "ThreadId": "261851",
+    "Html": "\r\n<p>Volume property of IWavePlayer is marked obsolete. There is Volume property in WaveOut class though.<br>\r\nI was using WaveOut via the interface until I wanted to adjust the volume; after which I had to switch to concrete reference instead of interface.<br>\r\nWhat is the new way of adjusting volume while still using IWavePlayer abstraction? And why was it marked obsolete?</p>\r\n",
+    "PostedDate": "2011-06-18T03:29:47.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "629675",
+    "ThreadId": "261851",
+    "Html": "<p>It's because not all implementers of IWavePlayer can or will be able to support volume changes. If you are happy just using WaveOut then ignore the IWavePlayer interface and use Volume on WaveOut. Just include an IWaveProvider/ISampleProvider/WaveStream in your audio pipeline that supports modifying the volume. This gives you the added flexibility of boosting the volume beyond 100% if you need to (although remember to clip before sending to the soundcard).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-06-19T00:04:24.543-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

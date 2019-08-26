@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1092772",
+    "ThreadId": "456913",
+    "Html": "Hello Community,\r<br />\n<br />\nwhen i'm recording with 16 Bit int, the property of the event argument responses with &quot;Int32LSB&quot;. The Wav File has the correct information (16Bit LSB, checked with SOX). I need the SampleType (actually its size) to calculate the running time. Is there an offset or why am i getting the wrong information?\r<br />\n<br />\nCheers\r<br />\nJan<br />\n",
+    "PostedDate": "2013-09-14T18:10:40.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1093107",
+    "ThreadId": "456913",
+    "Html": "this value comes direct from the ASIO driver. It might be that there are 16 bit samples in a 32 bit integer. How are you creating the WAV file that has the correct information?<br />\n",
+    "PostedDate": "2013-09-16T07:22:18.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1093134",
+    "ThreadId": "456913",
+    "Html": "Hi mark,\r<br />\n<br />\nI used your code from the NAudio Demo. This is the AudioAvailable Function:<br />\n<pre><code>void asioOut_AudioAvailable(object sender, AsioAudioAvailableEventArgs e)\n                {\n                    // audio output is dumped to wav file\n                    // output format is ALWAYS 32Bit float, convert with sox if required\n                    var samples = e.GetAsInterleavedSamples();\n                  \n                    wavWriter.WriteSamples(samples, 0, samples.Length);\n                \n                    sampleType = e.AsioSampleType ;\n                    //Console.WriteLine((int)sampleType);\n                }</code></pre>\n\nThe Wav-Writer is initialized with fixed settings, maybe that's the trick?!<br />\n<pre><code>this.wavWriter = new WaveFileWriter(wavPath, new WaveFormat(sampleFrq, channels));</code></pre>\n\nAnd when hitting the &quot;Stop&quot;button:<br />\n<pre><code>private void Stop()\n        {\n            this.asioOut.Stop();\n            //this.asioOut.Pause();\n            if (this.wavWriter != null)\n            {\n                this.asioOut.AudioAvailable -= asioOut_AudioAvailable;\n                this.wavWriter.Flush();//test\n                this.wavWriter.Close();//test\n                this.wavWriter.Dispose();\n                this.wavWriter = null;\n            }\n            this.recStateTimer.Enabled = false;\n            CleanUp();\n            gbDevice.Enabled= true;\n            SetButtonStates();\n        }</code></pre>\n\nCheers \r<br />\nJan<br />\n",
+    "PostedDate": "2013-09-16T07:59:10.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1093573",
+    "ThreadId": "456913",
+    "Html": "that WaveFormat is a 16 bit one, and it is WriteSamples that is converting from 32 bit into 16<br />\n",
+    "PostedDate": "2013-09-17T08:08:56.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1093974",
+    "ThreadId": "456913",
+    "Html": "Alright,\r<br />\ntwo questions left:\r<br />\n<br />\n1.) this means that my 16 Bit Integer is stored as 32Bit,? Or are the samples in the puffer already interleaved? \r<br />\n2.) When using a 24 Bit (usually signed?? )  int stream storing as 24Bit wave file, this means two conversions? 24Bit (configured) --&gt; 32Bit Float (GetAsInterleavedSamples) --&gt;    24 Bit Wav (wav writer) . Is there any loss of precision during that conversion?? (Especially from int to float)\r<br />\n<br />\nCheers\r<br />\nJan<br />\n",
+    "PostedDate": "2013-09-18T05:19:38.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094450",
+    "ThreadId": "456913",
+    "Html": "1) the ASIO driver is providing 32 bit samples. They are not interleaved left/right unless you call &quot;GetAsInterleavedSamples&quot;\r<br />\n2) yes, if you want to directly access the ASIO samples, use the IntPtrs in the event args which point directly at the ASIO buffers for each channel. Then you can avoid conversions.<br />\n",
+    "PostedDate": "2013-09-19T06:04:44.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094590",
+    "ThreadId": "456913",
+    "Html": "i just want to dump the buffers. I suppose, you don't suggest accessing the asio buffers directly, otherwise there would not be &quot;GetAsInterleavedSamples&quot;.<br />\n<br />\nDuring debugging i captured this:<br />\n <img src=\"http://i40.tinypic.com/mj0duf.jpg\" alt=\"Image\" /><br />\n<br />\nJust for my understanding. In this case i've got 512 samples per buffer, and two pointers (one for each channel?). The distance between thoses addresses is 2048 (4 byte per sample), which means that this are the start addresses for channel one and channel two. Could you explain how GetAsInterleavedSamples is doing the conversion? <br />\nNow i know that the 16 bit samples configured by the driver are stored as  32 bit, which is ok. The higher bits of the 32 bit integer are just cut off by the wavewriter, but what should i do when converting from 32 bit int to 32bit float? Usually i should add dither. <br />\nCheers<br />\nJan<br />\n<br />\n[edit]<br />\nToday i did some test with an moto express,. Recording 4 channels, 96khz and 24 bit works fine. I also tried other combinations. When is set the wavwriter to 32 bit  (the asioout is just initialized with samplerate and number of channels, and no playback device) it crashed....<br />\n<br />\nWavWriter:<br />\n<img src=\"http://abload.de/img/error3259e9n.jpg\" alt=\"Image\" /><br />\n<br />\nMessage: <br />\n<br />\n<img src=\"http://abload.de/img/err32_24pfku.jpg\" alt=\"Image\" /><br />\n<br />\nSampleFormat of buffer:<br />\n<img src=\"http://abload.de/img/error3259e9n.jpg\" alt=\"Image\" /><br />\n<br />\nThe interface uses 24Bit....... the buffer are represented as 32 int... <br />\n<br />\nWhats happening when i use a wave writer which uses 16 Bit as output format?<br />\n",
+    "PostedDate": "2013-09-19T11:10:47.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1096894",
+    "ThreadId": "456913",
+    "Html": "Take a look at the source code for GetAsInterleavedSamples - it should help you understand how NAudio is reading the values from the ASIO buffers\r<br />\n<a href=\"https://naudio.codeplex.com/SourceControl/latest#NAudio/Wave/WaveOutputs/AsioAudioAvailableEventArgs.cs\" rel=\"nofollow\">https://naudio.codeplex.com/SourceControl/latest#NAudio/Wave/WaveOutputs/AsioAudioAvailableEventArgs.cs</a>\r<br />\n<br />\nGetAsInterleavedSamples is just a helper method. My assumption is that people who are working with ASIO are doing so because they need ultra-low latency, so they may prefer to use the IntPtrs directly<br />\n",
+    "PostedDate": "2013-09-20T04:54:13.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

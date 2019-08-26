@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "936449",
+    "ThreadId": "401874",
+    "Html": "\r\n<p>So I have&nbsp;void waveInStream_DataAvailable(object sender, WaveInEventArgs e)</p>\r\n<p>How do I deal with e.Buffer to create an object that&nbsp;WaveMixerStream32 can add with&nbsp;AddInputStream?</p>\r\n",
+    "PostedDate": "2012-11-04T15:49:40.42-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "937174",
+    "ThreadId": "401874",
+    "Html": "<p>Use BufferedWaveProvider for this. I'd recommend using MixingSampleProvider if possible instead. WaveMixerStream32 is awkward to work with.</p>",
+    "PostedDate": "2012-11-06T03:21:59.783-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "937310",
+    "ThreadId": "401874",
+    "Html": "\r\n<p>How to marry&nbsp;MixingSampleProvider with args.Buffer from&nbsp;&nbsp;void OnMicServerExecute(object sender, DataReceivedEventArgs args)</p>\r\n<p>ie: How to convert args.buffer byte[] to float[] for MixingSampleProvider.Read?</p>\r\n",
+    "PostedDate": "2012-11-06T07:27:36.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938743",
+    "ThreadId": "401874",
+    "Html": "<p>use a Pcm16BitToSampleProvider to turn your BufferedWaveProvider into a SampleProvider</p>",
+    "PostedDate": "2012-11-08T12:47:26.28-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938876",
+    "ThreadId": "401874",
+    "Html": "\r\n<p>I don't see the question to your answer.</p>\r\n",
+    "PostedDate": "2012-11-08T16:55:04.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

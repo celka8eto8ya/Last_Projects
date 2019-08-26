@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "981027",
+    "ThreadId": "427852",
+    "Html": "\r\n<p>Naudio includes a demo of MP3 stream player, but is there a demo for creating the MP3 stream?</p>\r\n<p>I'm hoping to take the line-in from computer A, send it over the local network, and play it on the headphones on computer B.</p>\r\n<p>Perhaps I could use the Network chat demo as is; but I coudn't figure out which IP address to use in the panel; i.e. do I type in the IP address of the remote computer I want to chat with?</p>\r\n<p>Thanks,</p>\r\n<p>Jake</p>\r\n",
+    "PostedDate": "2012-12-27T15:01:26.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981119",
+    "ThreadId": "427852",
+    "Html": "\r\n<p>If I understand you correctly, with my bad english, you want to transfer the sound from &quot;line-in&quot; to another computer?</p>\r\n",
+    "PostedDate": "2012-12-27T23:15:14.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981336",
+    "ThreadId": "427852",
+    "Html": "\r\n<p>If you want to encode MP3, then you'd need an MP3 encoder, which is not part of NAudio. Read my article on\r\n<a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\">\r\nconverting audio formats</a> if you want to get a good understanding of how to convert between audio formats uning NAudio</p>\r\n",
+    "PostedDate": "2012-12-28T08:14:56.613-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981360",
+    "ThreadId": "427852",
+    "Html": "\r\n<p>@kripto289: yes - that is what I want. Also, thanks for the code snippets.</p>\r\n<p>@markheath: great article. Since it is just over the house LAN, I will probably start with an un-encoded stream.</p>\r\n",
+    "PostedDate": "2012-12-28T08:58:07.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981676",
+    "ThreadId": "427852",
+    "Html": "\r\n<p>Update - I have it working un-encoded. Turned out to be straight forward once I had the above examples sorted out.</p>\r\n<p>Jake</p>\r\n",
+    "PostedDate": "2012-12-29T14:55:51.933-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

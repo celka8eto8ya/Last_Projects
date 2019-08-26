@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "914076",
+    "ThreadId": "395935",
+    "Html": "\r\n<p>My case is to fade in/out a mp3 file. Searched the forum, looks I need to conver it to wav first, after editing, I need to convert the wav back to mp3 again.</p>\r\n<p>I am reading the APIs from NAudio. Wondering if this API can be used for this purpose.</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-09-18T05:55:24.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "914288",
+    "ThreadId": "395935",
+    "Html": "<p>Yes, you can use NAudio to do most of this. The AudioFileReader class will read the MP3 file. Then use FadeInOutSampleProvider to perform the fade. Then you would convert to WAV file using WaveFileWriter and SampleToWaveProvider16. Finally, you'd need to use something like LAME.exe to re-encode as MP3</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-09-18T12:51:06.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "914429",
+    "ThreadId": "395935",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>Yes, you can use NAudio to do most of this. The AudioFileReader class will read the MP3 file. Then use FadeInOutSampleProvider to perform the fade. Then you would convert to WAV file using WaveFileWriter and SampleToWaveProvider16. Finally, you'd need to  use something like LAME.exe to re-encode as MP3</p>\r\n<p>Mark</p>\r\n</blockquote>\r\n<p>Hi Mark,</p>\r\n<p>Which version of release have the APIs you pointed out? I am reading NAudio v1.5 release. But I couldn't find&nbsp;</p>\r\n<p><span>. FadeInOutSampleProvider</span></p>\r\n<p><span>.&nbsp;<span>SampleToWaveProvider16 (Is it NAudio.Wave.WaveProvider16?)</span></span></p>\r\n<p>As both wav and mp3 are from WaveStream, can I use WaveFormatConversionStream to convert wav to mp3? I like to stick to NAudio only if possible.</p>\r\n<p>Thanks!</p>\r\n<p><span>Valimo</span></p>",
+    "PostedDate": "2012-09-18T22:23:47.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917037",
+    "ThreadId": "395935",
+    "Html": "<p>You might need to get the very latest NAudio release either by building the code yourself or visiting the <a href=\"https://nuget.org/packages/NAudio/1.5\">NuGet page</a> and picking up a beta release.</p>\r\n<p>You can't convert WAV to MP3 because Windows does not come with an ACM that can do this. I usually recommend using LAME to do this.</p>",
+    "PostedDate": "2012-09-24T23:34:46.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1263993",
+    "ThreadId": "551038",
+    "Html": "I am relatively new to NAudio and would like to understand more about the project's status. When I saw that the last minor version release was almost a year ago I thought maybe development was ceasing. However when I clone the repo and look at the history there are lots of active commits.\r<br />\n<br />\nIs there any plan to institute more of a rigid release process with stable branches or release tags?\r<br />\n<br />\nThanks,<br />\n",
+    "PostedDate": "2014-07-09T07:02:26.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1263998",
+    "ThreadId": "551038",
+    "Html": "hi,\r<br />\n<br />\nNAudio development is done in my spare time, and so releases happen when I have time to devote to the project. I try to do one point release a year batching up lots of changes at once, with minor bugfix releases appearing on NuGet as they are needed. This year I have been extremely busy with other projects (especially creating courses for Pluralsight) so time for working on NAudio has unfortunately been fairly limited. I hope to find some time to devote to catching up a bit later this year though, as there are a few outstanding contributions I need to process.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2014-07-09T07:12:14.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1264058",
+    "ThreadId": "551038",
+    "Html": "Hi Mark,\r<br />\n<br />\nThanks for the quick response. That all makes sense. It's such a great project, I hope you are able to continue to grow it and your team.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2014-07-09T09:41:04.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

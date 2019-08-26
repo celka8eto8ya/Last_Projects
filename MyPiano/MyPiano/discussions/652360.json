@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1466321",
+    "ThreadId": "652360",
+    "Html": "Hi, is there any way to play a WaveStream on many soundcards at the same time?<br />\n<br />\nI actually use code like this, but it introduces some delay I´d wish to remove:<br />\n<pre><code>Private Sub PlayOnAllSoundcards(Byval FilePath as String, Byval CardIDs() as Integer)\n     For Each SoundcardID as Integer in CardIDs\n         Dim SourceReader as new AudioFileReader(FilePath)\n         Dim WaveOut as new WaveOutEvent() with {.DeviceNumber = SoundcardID}\n         WaveOut.Init(SourceReader)\n         WaveOut.Play()\n     Next\nEnd Sub</code></pre>\n\nCreating multiple Reader and Output objects introduces obv. some latency. All inputs are in the Wformat (44100,2,16).<br />\n<br />\nI´ve looked at your <a href=\"https://github.com/naudio/NAudio/blob/master/NAudio/Wave/WaveProviders/MultiplexingWaveProvider.cs\" rel=\"nofollow\">MultiplexingWaveProvider</a> source as you wrote in your <a href=\"http://mark-dot-net.blogspot.de/2012/01/handling-multi-channel-audio-in-naudio.html\" rel=\"nofollow\">article</a>, <strong>it would send output to several soundcards</strong>, but it still has <strong>only one Read method</strong> - therefore not usable to Init in many WaveOut objects. Right?<br />\n<br />\nMy questions in detail:<br />\n<br />\n<strong>So how to play audio professionally on several soundcards?</strong><br />\n<br />\n<strong>And how to set channel matrices (for virtual surround sound) like CSCore does?</strong><br />\n<br />\nThanks in advance, it would pretty much boost my <a href=\"http://www.codeproject.com/Articles/990040/MultiWave-a-portable-multi-device-NET-audio-player\" rel=\"nofollow\">Media Player</a>!<br />\n<br />\nPS: I love NAudio architecture. And still reading your blog for NAudio news :)<br />\n",
+    "PostedDate": "2016-03-09T17:55:40.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466598",
+    "ThreadId": "652360",
+    "Html": "To play the same file on multiple soundcards the easiest way is actually still to create multiple readers and output devices.  But there is no easy way to keep them in sync. It might be possible to have a bunch of BufferedWaveProviders, one for each output device, and when one runs out, we read from the single audio file reader and put the audio into all the bufferedwaveproviders.\r<br />\n<br />\nIdeally for multi-channel audio you'd open a single audio device and play a multi-channel stream to it, rather than open more than one soundcard. I've not tried this myself with anything other than ASIO though.<br />\n",
+    "PostedDate": "2016-03-11T14:10:52.03-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466604",
+    "ThreadId": "652360",
+    "Html": "Hmm, but that buffering wouldn´t sync them if I understand correctly. They would have to start perfectly parallel and process with exactly the same speed to make that work, right?\r<br />\n<br />\nIf you could figure out a sample that would be great.<br />\n",
+    "PostedDate": "2016-03-11T16:49:19.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

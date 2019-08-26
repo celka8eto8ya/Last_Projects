@@ -1,0 +1,138 @@
+[
+  {
+    "Id": "591276",
+    "ThreadId": "252413",
+    "Html": "\r\n<p>Hi Mark,</p>\r\n<p>It seems that the panning rules are hard coded in the&nbsp;WaveChannel32.AdjustVolume:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>  <span style=\"color:green\">// implement better panning laws. </span>\r\n  <span style=\"color:blue\">float</span> leftVolume = (pan &lt;= 0) ? volume : (volume * (1 - pan) / 2.0f);\r\n  <span style=\"color:blue\">float</span> rightVolume = (pan &gt;= 0) ? volume : (volume * (pan &#43; 1) / 2.0f);\r\n</pre>\r\n<pre><br></pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<pre>I don't understand why the channel volume gets maximum value if it is below or above zero? I think it should be a linear mix.</pre>\r\n<pre>For example: pan of -0.5 would make left volume always equal to volume regardless of the pan value. Only the right volume would change in that case. Seems wrong.</pre>\r\n<pre><br></pre>\r\n<pre>Could you please extract this logic out into a virtual method that can be overridden?</pre>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><br></pre>\r\n<pre>Thanks,</pre>\r\n<pre>Yuval Naveh</pre>\r\n<pre>Author of Practice# - <a href=\"http://code.google.com/p/practicesharp/\">http://code.google.com/p/practicesharp/</a></pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-04-04T05:59:31.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "591277",
+    "ThreadId": "252413",
+    "Html": "<p>Its a tough one. The issue is if you say it is a liear mix then if you pan centrally you half the maximum amplitude on each channel. I've not investigated the algorithms behind pan laws used in pro consoles, but I suppose it would be good if WaveChannel32's pan law function was virtual so you could override it</p>",
+    "PostedDate": "2011-04-04T06:05:00.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "591318",
+    "ThreadId": "252413",
+    "Html": "<p>Hi Mark,</p>\n<p>Linear mix is indeed not the only way to do it.</p>\n<p>It seems that the problem with panning is that energy levels of sound are made of sum of squares of the amplitudes for each channels, not the plain sum of&nbsp;amplitudes.</p>\n<p>I found these article that explain the problems and solutions:</p>\n<p><a href=\"http://booki.flossmanuals.net/csound/_v/1.0/b-panning-and-spatialization/\">http://booki.flossmanuals.net/csound/_v/1.0/b-panning-and-spatialization/</a></p>\n<p><a href=\"http://www.rosspenniman.com/Pro_Files/Stereo_Position_Simulator.pdf\">http://www.rosspenniman.com/Pro_Files/Stereo_Position_Simulator.pdf</a>&nbsp;(See diagram on page 3: Square Root Gain Curves)</p>\n<p>&nbsp;</p>\n<p>Making the method virtual is a good solution for sure, but you might want to provide a better default panning logic based on this information.</p>\n<p>Thanks,</p>\n<p>Yuval</p>",
+    "PostedDate": "2011-04-04T07:28:14.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "591344",
+    "ThreadId": "252413",
+    "Html": "<p>yes, the slightly odd current implementation is based on requirements for a commercial telephony application that was one of the first applications to use NAudio</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-04-04T08:04:11.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "591442",
+    "ThreadId": "252413",
+    "Html": "<p>If I may suggest a solution:</p>\n<p>I would recommend using the Strategy Design Pattern for the panning algorithms, by providing a base interface (or class).</p>\n<p>This way you can keep the existing one and name it for example TelephonyPanStrategy, and also add other panning strategy classes as: LinearMixPanStrategy, SquareRootPanStrategy, SinPanStrategy etc.</p>\n<p>Then the user of WaveChannel32 can pick the the desired panning strategy using a property (PanStrategy). The built in strategies can be created as static instances, I think the default should be SquareRoot (just not the current telephony one).</p>\n<p>&nbsp;</p>\n<p>Yuval</p>",
+    "PostedDate": "2011-04-04T10:44:31.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "591723",
+    "ThreadId": "252413",
+    "Html": "<p>OK, so I started playing around and implementing it using the design I purposed. It is really clean and simple.</p>\r\n<p>In a few days, I'll send you the changes, just want to test properly first.</p>\r\n<p>Let me know if this path is OK, don't want to waste our time on this, but I would like to help make NAudio have proper panning.</p>\r\n<p>Yuval</p>",
+    "PostedDate": "2011-04-04T17:50:51.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592844",
+    "ThreadId": "252413",
+    "Html": "<p>Hi Yuval, I'd be interested to see your changes and hopefully they can be easily incorporated into NAudio. So long as we choose a good default panning law it should be fine.</p>\r\n<p>MMark</p>",
+    "PostedDate": "2011-04-06T08:14:55.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592859",
+    "ThreadId": "252413",
+    "Html": "<p>Sure, great.</p>\r\n<p>The beauty of this design is that the default can be chosen by the user in runtime. In fact I added a Telephony panning (your current panning) as one strategy, since existing functionality must be kept.</p>\r\n<p>I already have a test application that does panning from side to side with all three strategies (Telephony, Square Root and Sinus). Linear panning was not added since it is faulty.. but I that would also be very easy to add. Maybe I'll add it just to show why it should not be used..</p>\r\n<p>In a few days I'll finish it and send the source codes to your private email. I think it would be a piece of cake for you to incorporate these changes into NAudio.</p>\r\n<p>Yuval</p>",
+    "PostedDate": "2011-04-06T08:38:55.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "592893",
+    "ThreadId": "252413",
+    "Html": "<p>Cool. the issue that is hard to decide is what the gain for a centrally panned signal is. If you have 0dB in the centre, do you have +3dB or more when panned to one side to get constant volume and risk clipping, or do you make it -3dB in the centre, meaning that when you are just panning a single mono input centrally, you lose a bit of volume?</p>",
+    "PostedDate": "2011-04-06T09:16:17.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "612079",
+    "ThreadId": "252413",
+    "Html": "<p>Hi Mark,<br />Sorry for the very long delay - spring break, kids, work..you get it.. ;)<br /><br />I uploaded a demo of how to pan NAudio input channels:<br />http://code.google.com/p/practicesharp/downloads/detail?name=NAudioPan.zip<br /><br /><br />The demo shows three Panning Strategies (Classes):<br />1. TelephonyPanStrategy - The default panning strategy found in 'Stock' NAudio<br />2. SinPanStrategy - A panning that using a sinus function<br />3. SquareRootPanStrategy - A panning that uses a square root function<br /><br /><br />There are two NAudio files that are needed: (Please look in zip under sub folder:&nbsp;NAudioChangedFiles)<br />1. NAudio\\Wave\\WaveStreams\\PanStrategies.cs - NEW file, contains the the IPanStrategy interface and three implementations for panning strategies<br />2. NAudio\\Wave\\WaveStreams\\WaveChannel32.cs - Modified file. I took out the hard coded telephony logic that existed in the original file, and refactored it.<br />Also the code supports dynamic choice of a panning strategy through a method: &nbsp;\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>SetPanStrategy()\r\n</pre>\r\n</div>\r\n<br />Please note that I've used NAudio 1.3.15, but I don't think it would make a big difference for 1.4.X<br /><br />Please let me know if you have any questions - I would prefer if this feature gets incorporated into NAudio so that I don't have my own private branch.<br />Thanks,Yuval<br /><br />&nbsp;<br /><br /><br /></p>",
+    "PostedDate": "2011-05-12T16:18:09.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "612568",
+    "ThreadId": "252413",
+    "Html": "<p>thanks for this. The pan strategies look great. I may incorporate them  into WaveChannel32 in a slightly different way. I may also attempt to  upgrade the pan laws to allow setting the centre volume. Will get it in  for NAudio 1.5<br /> <br /> Mark</p>",
+    "PostedDate": "2011-05-13T13:08:48.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613296",
+    "ThreadId": "252413",
+    "Html": "<p>No problem, glad to assist you.</p>\r\n<p>Any rough idea when NAudio 1.5 should be out? No pressure, just so that I plan.</p>\r\n<p>Thanks,</p>\r\n<p>Yuval</p>",
+    "PostedDate": "2011-05-16T05:22:58.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613308",
+    "ThreadId": "252413",
+    "Html": "<p>I'm not in a hurry to get it out, but there's quite a bit going on so it might be in the next few months. There will be a new way to construct 32 bit floating point mixing engines to make writing effects etc much easier. WaveChannel32 will therefore become a less important part of the framework (but there will be an equivalent replacement).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-16T05:39:27.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613607",
+    "ThreadId": "252413",
+    "Html": "<p>hi Yuval,</p>\r\n<p>have a look <a href=\"http://naudio.codeplex.com/SourceControl/changeset/view/73574#1835400\">here</a> for a sneak peak at how panning will be done with NAudio 1.5. Classes like WaveChannel32 (which will be a less important part of the library) will be composed of a chain of several smaller sample providers such as the panning sample provider.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-16T15:29:01.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613609",
+    "ThreadId": "252413",
+    "Html": "<p>Hi Mark,</p>\r\n<p>That is very cool! I like it!</p>\r\n<p>I'm just a little worried over re-writing the whole integration layer above NAudio. Let's hope it would be easy and in particular stable.</p>\r\n<p>&nbsp;</p>\r\n<p>Cheers</p>\r\n<p>Yuval</p>",
+    "PostedDate": "2011-05-16T15:33:20.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613613",
+    "ThreadId": "252413",
+    "Html": "<p>Well none of the existing classes will go away or change very much. You don't need to use the new sample providers directly if you don't want to. I might completely re-implement WaveChannel32 using the new stuff, but leaving its public interface pretty much the same.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-16T15:40:34.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "613623",
+    "ThreadId": "252413",
+    "Html": "<p>Yes I agree, the public interface should remain intact for backwards compatibility.</p>\r\n<p>It would make the transition much easier, otherwise some of the users might not upgrade for a long time if at all - there is a risk of branching into two NAudio repositories ('old' and 'new' styles).</p>\r\n<p>1.5 looks more like 2.0 - changes are&nbsp;quite major.</p>\r\n<p>Yuval</p>",
+    "PostedDate": "2011-05-16T16:04:35.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

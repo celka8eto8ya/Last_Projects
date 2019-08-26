@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "According to msdn, the size of the MIXERCONTROLDETAILS.paDetails buffer should be:\r\n\r\n(http://msdn.microsoft.com/en-us/library/dd757294(v=vs.85).aspx)\r\n_For MIXERCONTROL_CONTROLF_MULTIPLE controls, the size of this buffer should be the product of the __cChannels, cMultipleItems and cbDetails__ members of the MIXERCONTROLDETAILS structure. For controls other than MIXERCONTROL_CONTROLF_MULTIPLE types, the size of this buffer is the product of the cChannels and cbDetails members of the MIXERCONTROLDETAILS structure._\r\n\r\nBut the buffer size is now calculated as: __mixerControlDetails.cbDetails * mixerControlDetails.cChannels__\r\nThis will make the mixerGetControlDetails method to write beyond the allocated memory, and thereby corrupting the heap.\r\n\r\nAttached is a patch file that will calculate the buffer size correctly.",
+    "LastUpdatedDate": "2013-03-11T14:49:08.373-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-03-08T03:57:29.663-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "heap corruption for MixerControl.GetControlDetails when MIXERCONTROL_CONTROLF_MULTIPLE flag is set.",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16390
+  },
+  "FileAttachments": [
+    {
+      "FileId": 635444,
+      "FileName": "MixerControl.patch",
+      "DownloadUrl": ".\\635444"
+    }
+  ],
+  "Comments": []
+}

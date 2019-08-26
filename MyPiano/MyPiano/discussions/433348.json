@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1002132",
+    "ThreadId": "433348",
+    "Html": "I'd like to read the data off a wave, say that the wave has different tones at every half second or so, what I'd like to do is split them up and read off which frequency they have.. how would i do this with NAudio?\r<br />\n<br />\nIs there also a way to read this data off a live linein/mic input? Where would I find the data to do so?\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2013-02-16T00:35:27.963-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002748",
+    "ThreadId": "433348",
+    "Html": "What NAudio does is give you access to the raw samples. If you want to do pitch detection, you would need to feed those samples into an FFT (read this article: <a href=\"http://channel9.msdn.com/coding4fun/articles/AutotuneNET\" rel=\"nofollow\">http://channel9.msdn.com/coding4fun/articles/AutotuneNET</a>) or an auto-correlation algorithm (not provided with NAudio).<br />\n",
+    "PostedDate": "2013-02-18T03:12:56.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

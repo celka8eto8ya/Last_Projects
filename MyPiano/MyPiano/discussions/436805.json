@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1016032",
+    "ThreadId": "436805",
+    "Html": "I would like to be able to determine the sound or audio level of an mp3 stream. I see how to do it using a device. However, if there are other sounds playing on the system, I believe this will reflect other sounds coming through the speaker/device and give a false reading. Any help or direction would be appreciated. --Thanks<br />\n",
+    "PostedDate": "2013-03-15T10:46:45.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016265",
+    "ThreadId": "436805",
+    "Html": "Simply take a look at the Naudiodemo shown on the front page: <a href=\"http://i3.codeplex.com/Download?ProjectName=naudio&amp;DownloadId=46923\" rel=\"nofollow\">http://i3.codeplex.com/Download?ProjectName=naudio&DownloadId=46923</a><br />\n",
+    "PostedDate": "2013-03-16T01:27:47.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016303",
+    "ThreadId": "436805",
+    "Html": "... But not from a device.\r<br />\n<br />\nFrom what I have tested, all the examples are getting the audio level from the sound card and not the stream. If I have some other application playing sound, it will also show audio levels from the sound card device.\r<br />\n<br />\nHere is another example. Lets say I have two streams going at the same exact time, both playing music. how would I detect or display audio levels of each stream independently. I do not want to get the audio level from the device (sound card), as this will show the combined audio levels.<br />\n",
+    "PostedDate": "2013-03-16T05:47:08.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016601",
+    "ThreadId": "436805",
+    "Html": "Again see my previous answer. \r<br />\nThe Naudiodemo uses realtime level detection of a stream playback. So where's your problem. Just try it out yourself. Play anything on your computer and take a look at the Demoapp. There won't be any level shown.<br />\n",
+    "PostedDate": "2013-03-17T07:01:20.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1018550",
+    "ThreadId": "436805",
+    "Html": "Ok, I see what you're talking about. The demo does have both examples. However, I have been testing with code form the demo and cannot seem to get both examples combined. I need to stream a mp3, monitor volume level, and be able to adjust the volume too.\r<br />\n<br />\nI found this snipit and it seems to work. But I can't integrate it into my test class. I'm confused as to how to use the SampleProviders.\r<br />\n<br />\n......................................................................................................\r<br />\nvar player = new NAudio.Wave.WaveOut();\r<br />\nvar file = new <a href=\"mailto:NAudio.Wave.AudioFileReader(@&quot;D:\\Media\\World's\" rel=\"nofollow\">NAudio.Wave.AudioFileReader(@\"D:\\Media\\World's</a> Largest Flash Mob - Audio.mp3&quot;);\r<br />\nvar meter = new NAudio.Wave.SampleProviders.MeteringSampleProvider(file);\r<br />\nmeter.StreamVolume += (s, e) =&gt; Console.WriteLine(&quot;{0} - {1}&quot;, e.MaxSampleValues[0], e.MaxSampleValues[1]);\r<br />\nplayer.Init(new NAudio.Wave.SampleProviders.SampleToWaveProvider(meter));\r<br />\nvar form = new Form();\r<br />\nform.Load += (s, e) =&gt; player.Play();\r<br />\nform.FormClosed += (s, e) =&gt; player.Dispose();\r<br />\nform.ShowDialog();\r<br />\n......................................................................................................\r<br />\n<br />\nAlso, here is my test class that I'm working on for proof of concept. I would like to be able to create the class, adjust volume, and monitor the output/sample levels. Here is how I'm calling the class to test it.\r<br />\n<br />\n......................................................................................................\r<br />\nusing (TestStream _Stream = new <a href=\"mailto:TestStream(@&quot;http://radio.reaper.fm/stream/&quot;))\" rel=\"nofollow\">TestStream(@\"http://radio.reaper.fm/stream/\"))</a><br />\n{<br />\n<pre><code>_Stream.Play();\nSystem.Threading.Thread.Sleep(2000);\n_Stream.SetVolume(0.5f); // Decrease Volume\nSystem.Threading.Thread.Sleep(2000);\n_Stream.SetVolume(1.5f); // Over Increase Volume\nSystem.Threading.Thread.Sleep(2000);\n_Stream.SetVolume(1); // Set Back To Normal\nSystem.Threading.Thread.Sleep(30000);\n_Stream.Stop();\nSystem.Threading.Thread.Sleep(1000);</code></pre>\n\n}\r<br />\n......................................................................................................\r<br />\n<br />\nHere is my test class with the basics\r<br />\n<br />\n......................................................................................................\r<br />\npublic class TestStream : IDisposable\r<br />\n{<br />\n<pre><code>private System.Threading.Thread _StreamThread;\nprivate System.IO.Stream _Stream = new System.IO.MemoryStream();\nprivate NAudio.Wave.WaveStream _WaveStream;\nprivate NAudio.Wave.WaveOut _WaveOut;\nprivate const long _ChunkSize = 16384; // Testing (64k=65536, 32k=32768 16k=16384)\n\npublic void Dispose()\n{\n    if (_WaveOut.PlaybackState != NAudio.Wave.PlaybackState.Stopped)\n    {\n        this.Stop();\n    }\n    _WaveStream.Close();\n    _WaveStream.Dispose();\n    _WaveOut.Dispose();\n    _Stream.Close();\n    _Stream.Dispose();\n    _StreamThread.Abort();\n    _StreamThread.Join();\n    System.Diagnostics.Debug.WriteLine(&quot;=&gt; Disposed&quot;);\n}\n\npublic TestStream(string UriString)\n{\n    _StreamThread = new System.Threading.Thread(delegate(object o)\n                    {\n                        System.Net.WebResponse response = System.Net.WebRequest.Create(UriString).GetResponse();\n                        using (var stream = response.GetResponseStream())\n                        {\n                            byte[] buffer = new byte[_ChunkSize];\n                            int read;\n                            while ((read = stream.Read(buffer, 0, buffer.Length)) &gt; 0)\n                            {\n                                var pos = _Stream.Position;\n                                _Stream.Position = _Stream.Length;\n                                _Stream.Write(buffer, 0, read);\n                                _Stream.Position = pos;\n                            }\n                        }\n                    });\n    _StreamThread.Start();\n    System.Diagnostics.Debug.WriteLine(&quot;=&gt; Initialized&quot;);\n}\n\npublic void Play()\n{\n    if (_Stream.Length &lt; _ChunkSize * 5) // What increment should this be?\n    {\n        System.Diagnostics.Debug.WriteLine(&quot;=&gt; Buffering&quot;);\n        while (_Stream.Length &lt; _ChunkSize * 5)\n        { // Pre-buffering some data to allow NAudio to start playing\n            System.Threading.Thread.Sleep(1000);\n        }\n    }\n    _Stream.Position = 0;\n    _WaveStream = new NAudio.Wave.BlockAlignReductionStream(NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(new NAudio.Wave.Mp3FileReader(_Stream)));\n    _WaveOut = new NAudio.Wave.WaveOut(NAudio.Wave.WaveCallbackInfo.FunctionCallback());\n    _WaveOut.Init(_WaveStream);\n    _WaveOut.Play();\n    System.Diagnostics.Debug.WriteLine(&quot;=&gt; Playing&quot;);\n}\n\npublic void Stop()\n{\n    _WaveOut.Stop();\n    System.Diagnostics.Debug.WriteLine(&quot;=&gt; Stopped&quot;);\n}\n\npublic void SetVolume(float Volume)\n{\n    // Adjust Volume for this stream\n}\n\nprivate void WriteVolumeMeterValues(object sender, NAudio.Wave.SampleProviders.StreamVolumeEventArgs e)\n{\n    System.Diagnostics.Debug.WriteLine(String.Format(&quot;VolumeMeter: {0} &lt;==&gt; {1}&quot;, e.MaxSampleValues[0], e.MaxSampleValues[1]));\n}\n</code></pre>\n\n}\r<br />\n......................................................................................................\r<br />\n<br />\nIf you or anyone reading this thread has any input or help, I would be appreciate it. If there is a better way to achieve my three goals, I would love some feedback.\r<br />\n<br />\nThanks in Advance<br />\n",
+    "PostedDate": "2013-03-20T14:14:18.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

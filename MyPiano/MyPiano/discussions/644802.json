@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1443872",
+    "ThreadId": "644802",
+    "Html": "Hi Team,\r<br />\n<br />\nI have developed WaveOutEvent Player. In this player i have implemented &quot;FadeInOut&quot; and &quot;Volume meter&quot;  options. Both are working fine,But the problem is  can't work the same time FadeInout/Volumemeter. Only one will work at the same time.\r<br />\n<br />\nEX:\r<br />\nFadeInOut--&gt; Player.Init(new SampleToWaveProvider(fadeInOut));\r<br />\nVolume meter--&gt; Player.Init(new SampleToWaveProvider(postVolumeMeter));\r<br />\n<br />\nPlease help me to do this both in a single player.\r<br />\n<br />\nThanks \r<br />\nAthivarathan.S<br />\n",
+    "PostedDate": "2015-09-10T03:55:02.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443888",
+    "ThreadId": "644802",
+    "Html": "Stop creating a new thread with same question. I already answered this in your last thread.\r<br />\n<br />\nSpamming is NOT the way to solve things.<br />\n",
+    "PostedDate": "2015-09-10T05:11:07.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

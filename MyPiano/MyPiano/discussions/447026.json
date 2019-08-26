@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "1056632",
+    "ThreadId": "447026",
+    "Html": "I'm working on a drum sequencer and would like to have a volume meter for each sample. I know how to setup a single VolumeMeter but am unable to figure out how I would go about init the MeteringSampleProvider when using the WaveMixerStream32 for multiple samples. I've tried adding the MeteringSampleProvider to the mixer but the mixer wants a WaveStream. I have also looked at the demo program but that only deals with 1 volume meter not using a mixer.\r<br />\n<br />\nThis is my current audio flow:\r<br />\nAudioFileReader &gt; WaveChannel32 (used for panning) &gt; WaveMixerStream32 &gt; AsioOut\r<br />\n<br />\nHow would I go about fitting in MeteringSampleProvider in that mix? <br />\n",
+    "PostedDate": "2013-06-13T19:36:11.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1056787",
+    "ThreadId": "447026",
+    "Html": "WaveChannel32 and WaveMixerStream32 are both fairly old classes, and you might find it much easier going the SampleProvider route throughout. Use a PanningSampleProvider, and a MixingSampleProvider.\r<br />\n<br />\nConvert between WaveProvider and SampleProvider using SampleProviderConverters.ConvertWaveProviderIntoSampleProvider, and SampleToWaveProvider or SampleToWaveProvider16. There are extension methods in the latest 1.7 alpha releases to simplify this process.<br />\n",
+    "PostedDate": "2013-06-14T03:30:50.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1056969",
+    "ThreadId": "447026",
+    "Html": "Yeah I was thinking the anwser was probably to use the MixingSampleProvider. As for the PanningSampleProvider it will only take a mono input. Is there anything else that does panning that will take a stereo input?\r<br />\n<br />\nOver all would this seem right using SampleProvider's?\r<br />\n<br />\nAudioFileReader &gt; [Something here for panning] &gt; MeteringSampleProvider &gt; MixingSampleProvider &gt; AsioOut\r<br />\n<br />\nOr if there is nothing that will take stereo input for panning would this seem right?\r<br />\n<br />\nAudioFileReader &gt; WaveChannel32  &gt; WaveToSampleProvider &gt; MeteringSampleProvider &gt; MixingSampleProvider &gt; AsioOut<br />\n",
+    "PostedDate": "2013-06-14T08:41:46.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1056977",
+    "ThreadId": "447026",
+    "Html": "depends what you mean by &quot;panning&quot; with a stereo signal. Is it more like balance you want? I'd probably just make my own SampleProvider that let me adjust left and right channel volumes separately. \r<br />\nYour second pipeline should work OK too.<br />\n",
+    "PostedDate": "2013-06-14T08:45:15.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057020",
+    "ThreadId": "447026",
+    "Html": "After some thought I see what you mean now. I decided to try out my second pipeline to see the results but ran into a problem. How would I go about generating a constant stream of silence to keep the AsioOut open since MixingSampleProvider does not have .AutoStop . I get &quot;Object reference not set to an instance of an object.&quot; when trying to add an input after the asioOut.Init(mixer) . Here is my test code if it helps (sorry it's in vb). &quot;mixer.AddMixerInput(meterSampleProvider)&quot; is the line that throws the exception.<br />\n<pre><code>    Dim asioOut As AsioOut\n    Dim reader As AudioFileReader\n    Dim waveChannel As WaveChannel32\n    Dim waveToSample As WaveToSampleProvider\n    Dim meterSampleProvider As MeteringSampleProvider\n    Dim mixer As MixingSampleProvider\n\n    Private Sub Form1_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load\n        For Each device In AsioOut.GetDriverNames()\n            comboBoxAsioDevice.Items.Add(device)\n        Next\n        If comboBoxAsioDevice.Items.Count &gt; 0 Then\n            comboBoxAsioDevice.SelectedIndex = 0\n        End If\n\n        asioOut = New AsioOut(comboBoxAsioDevice.Text)\n        asioOut.ChannelOffset = GetUserSpecifiedChannelOffset()\n        asioOut.Init(mixer)\n        asioOut.Play()\n    End Sub\n\n    Private Function GetUserSpecifiedChannelOffset() As Integer\n        Dim channelOffset As Integer = 0\n        Integer.TryParse(textBoxChannelOffset.Text, channelOffset)\n        Return channelOffset\n    End Function\n\n    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click\n            reader = New AudioFileReader(&quot;C:\\samples\\snare.wav&quot;)\n            waveChannel = New WaveChannel32(reader)\n            waveToSample = New WaveToSampleProvider(waveChannel)\n            meterSampleProvider = New MeteringSampleProvider(waveToSample)\n            mixer.AddMixerInput(meterSampleProvider)\n\n            waveChannel.Position = 0\n    End Sub</code></pre>\n\n",
+    "PostedDate": "2013-06-14T10:14:02.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057068",
+    "ThreadId": "447026",
+    "Html": "I think I may have found the problem. \r<br />\n<br />\n&quot;asioOut.Init(mixer)&quot; throws &quot;SampleRate is not supported&quot;. I'm not sure where the sample rate for the MixingSampleProvider is set.<br />\n",
+    "PostedDate": "2013-06-14T12:16:13.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057091",
+    "ThreadId": "447026",
+    "Html": "Ok I got it working after much trial and error and demo referencing. The working code is below if anyone needs a VB example.<br />\n<pre><code>Dim asioOut As AsioOut\n\n    Dim reader As AudioFileReader\n    Dim waveChannel As WaveChannel32\n    Dim waveToSample As WaveToSampleProvider\n    Dim meterSampleProvider As MeteringSampleProvider\n    Dim mixer As MixingSampleProvider\n    Dim sampleToWave As SampleToWaveProvider\n    Dim waveFormat As WaveFormat\n\n    Private Sub Form1_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load\n        For Each device In AsioOut.GetDriverNames()\n            comboBoxAsioDevice.Items.Add(device)\n        Next\n        If comboBoxAsioDevice.Items.Count &gt; 0 Then\n            comboBoxAsioDevice.SelectedIndex = 0\n        End If\n\n        waveFormat = NAudio.Wave.WaveFormat.CreateIeeeFloatWaveFormat(44100, 2)\n      \n        mixer = New MixingSampleProvider(waveFormat)\n\n        reader = New AudioFileReader(&quot;C:\\samples\\snare.wav&quot;)\n        waveChannel = New WaveChannel32(reader)\n        waveToSample = New WaveToSampleProvider(waveChannel)\n        meterSampleProvider = New MeteringSampleProvider(waveToSample)\n        AddHandler meterSampleProvider.StreamVolume, AddressOf OnPostVolumeMeter\n        mixer.AddMixerInput(meterSampleProvider)\n\n        sampleToWave = New SampleToWaveProvider(mixer)\n\n        asioOut = New AsioOut(comboBoxAsioDevice.Text)\n        asioOut.ChannelOffset = GetUserSpecifiedChannelOffset()\n        asioOut.Init(sampleToWave)\n\n        asioOut.Play()\n    End Sub\n\n    Private Function GetUserSpecifiedChannelOffset() As Integer\n        Dim channelOffset As Integer = 0\n        Integer.TryParse(textBoxChannelOffset.Text, channelOffset)\n        Return channelOffset\n    End Function\n\n    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click\n      'play the sample\n        waveChannel.Position = 0\n      \n    End Sub\n\n    Public Sub OnPostVolumeMeter(sender As Object, e As StreamVolumeEventArgs)\n        VolumeMeter1.Amplitude = e.MaxSampleValues(0)\n    End Sub</code></pre>\n\n",
+    "PostedDate": "2013-06-14T13:54:08.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057125",
+    "ThreadId": "447026",
+    "Html": "One problem I noticed with the above is that meterSampleProvider.StreamVolume event is continually raised despite any sound playing or not. Would this be because I'm using WaveChannel32 in the pipeline? Any ideas how I would get the .StreamVolume event to only trigger when a sample is played? I fear once many samples are added the continual triggering of the .StreamVolume event may start to cause performance issues.<br />\n",
+    "PostedDate": "2013-06-14T16:54:53.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1059981",
+    "ThreadId": "447026",
+    "Html": "if the event is being raised, it means that audio is being pulled through the meterSampleProvider - you are probably playing silence. <br />\n",
+    "PostedDate": "2013-06-22T23:37:45.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1060079",
+    "ThreadId": "447026",
+    "Html": "Yeah that's what I was thinking. So would it be the AudioSampleProvider or WaveChannel32 outputting silence? I'm thinking the WaveChannel32. I'd like to keep the mixer always initialized and I'm assuming if I stop the silence output that it will auto stop the Asio. Is there a way around this?<br />\n",
+    "PostedDate": "2013-06-23T08:38:57.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1060363",
+    "ThreadId": "447026",
+    "Html": "the StreamVolume event is meant to fire - this is the design of MeteringSampleProvider. If you don't want that, then stop playing, or unsubscribe from the event. Or ignroe the event when the volume is 0<br />\n",
+    "PostedDate": "2013-06-24T06:08:44.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

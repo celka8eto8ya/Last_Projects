@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "280326",
+    "ThreadId": "81645",
+    "Html": "<p>Hi,</p>\r\n<p>I'm working on project which involves recording audio (whilst playing audio at the same time), and applying filters (using fft, FiR, etc.) on the recorded data.</p>\r\n<p>I was wondering what the best way to go about doing this would be, given that I don't really want to write any sounds out to .wav files (in the early stages</p>\r\n<p>at least, where the audio is originally recorded).&nbsp; I don't think memory is an issue, and the 16-bit, 44.1khz mono sound being recorded will not be too long</p>\r\n<p>(meaning i can afford to have the whole thing sitting in an array in memory if need be).&nbsp; I can probably pick up the details from the sample applications and</p>\r\n<p>the like, but the general way to go about doing this is a problem for me - and using WPF (which im new to) will take some time for me to learn.</p>\r\n<p>Any help is appreciated,</p>\r\n<p>&nbsp;</p>\r\n<p>Dylan.</p>",
+    "PostedDate": "2010-01-21T17:57:38.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "280455",
+    "ThreadId": "81645",
+    "Html": "<p>have a look at my <a href=\"http://skypefx.codeplex.com\">Skype Voice Changer</a> project which shows how to apply effects using NAudio. At the moment there is no example code of playing back what you are recording in realtime (mainly because the latency will be very poor with NAudio), but I am hoping that at some point in the future we will have some example code.</p>",
+    "PostedDate": "2010-01-22T01:45:14.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

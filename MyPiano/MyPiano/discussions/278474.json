@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "694373",
+    "ThreadId": "278474",
+    "Html": "\r\n<p>Hello all.&nbsp; Is it possible to from the microphone to Flac?&nbsp; Another option is to record to wav and convert it to flac.&nbsp; Thank you for your help.</p>\r\n",
+    "PostedDate": "2011-11-05T20:29:06.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "705312",
+    "ThreadId": "278474",
+    "Html": "<p>NAudio includes no build in FLAC conversion. It can record from the microphone though. You could call a command-line tool to convert WAV to FLAC afterwards perhaps</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-11-30T07:53:35.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "571912",
+    "ThreadId": "247519",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Is there any way using NAudio I can send (play) an audio from a file as input for a mic?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2011-02-24T20:26:46.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572039",
+    "ThreadId": "247519",
+    "Html": "<p>I'm not quite sure what you mean? NAudio can take microphone or file as an input, and send to speakers or file as an output?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-25T02:19:15.303-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573043",
+    "ThreadId": "247519",
+    "Html": "<p>The scenario is</p>\r\n<p>I am on a communicator call and I want to play a voice which I already recorded as an mp3 should be played through mic so that the user on the other end can hear it.</p>\r\n<p>Here I can completely automate the cal using Lync API. record the call using N Audio , But to record &nbsp;I should first send something through mic , :) right?</p>\r\n<p>That's what am trying to do.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-02-27T21:43:03.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573230",
+    "ThreadId": "247519",
+    "Html": "<p>you can't fake microphone input into a third party app with NAudio unfortunately. You would need a virtual device driver. Alternatively, perhaps the communicator API might let you send an audio file?</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-28T05:44:28.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573747",
+    "ThreadId": "247519",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Can you advice any feasible virtual drivers?</p>\r\n<p>I tried one Virtual Audio Cable but I cannot find it usefull.</p>\r\n<p>Thanks</p>",
+    "PostedDate": "2011-03-01T02:57:09.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574324",
+    "ThreadId": "247519",
+    "Html": "<p>I'm afraid I don't know of any</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-02T03:05:33.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

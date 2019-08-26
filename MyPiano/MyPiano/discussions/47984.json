@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "160087",
+    "ThreadId": "47984",
+    "Html": "Hi,<br>\r\n<br>\r\nI have looked at your demo apps and read your blog. I want to write a mixer application that runs on Vista that is similar to the Vista mixer (soundvol.exe) but with more functionality and&nbsp; much better looking. I want to use the .Net framework and use WPF for the UI.<br>\r\n<br>\r\nCan I use your library to do all the interop stuff so that I can concentrate on the functionality? Also are there any similar .Net mixer apps that you know of?<br>\r\n<br>\r\nMany thanks<br>\r\n<br>\r\nSurfRat<br>\r\n",
+    "PostedDate": "2009-02-20T03:03:42.573-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "161342",
+    "ThreadId": "47984",
+    "Html": "Hi SurfRat,<br>\r\n<br>\r\nThere is some wrapping of the mixer... API's in NAudio. Have a look in the NAudio.Mixer namespace. It is some of the earliest code I wrote for NAudio and could perhaps do with some improvements. There is also a good C# example of a Windows Mixer on CodeProject which may be worth looking at.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-02-24T02:42:02.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "162681",
+    "ThreadId": "47984",
+    "Html": "Hi Mark,<br>\r\n<br>\r\nThanks for the help. I have just seen that your latest build has a mixer section with unit tests... awesome. Can't wait to check out what you have done. Thanks for all your hard work.<br>\r\n<br>\r\nCheers<br>\r\n<br>\r\nSurfRat.<br>\r\n",
+    "PostedDate": "2009-02-27T03:13:39.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "162729",
+    "ThreadId": "47984",
+    "Html": "Hi SurfRat, <br>\r\n<br>\r\nI have needed to use the Mixer API recently, so I have been dusting off the old code a bit. Hopefully I will be able to get it into a bit more of a usable form before too long.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-02-27T05:40:07.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "163486",
+    "ThreadId": "47984",
+    "Html": "Hi Mark,<br>\r\n<br>\r\nI spent some time on the weekend going through your code and the &quot;Vista Core Audio API Master Volume Control&quot; project by Ray M on Codeproject. Ray&nbsp; says that &quot;Although Vista does per-application audio settings, Microsoft has not\r\nopend up the APIs to enumerate Sessions. So it will not be possible to\r\nmake a <em>sndvol.exe</em>-like application.&quot; <br>\r\n<br>\r\nI want to make a Sndvol type app but I need access to all the endpoints. There is a very nice app called Power Mixer http://www.actualsolution.com/power_mixer/&nbsp; which works well with Vista. Surely this can be done by acessing the correct API's? <br>\r\n<br>\r\nThanks<br>\r\n<br>\r\nSurfRat<br>\r\n",
+    "PostedDate": "2009-03-02T07:14:39.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "164364",
+    "ThreadId": "47984",
+    "Html": "Hi SurfRat,<br>\r\n<br>\r\nUnfortunately I think you can't emulate the Vista mixer to adjust per app volumes. MS deliberately chose not to allow this behaviour. You can do something like the XP mixer though, adjusting per device volumes.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-03-04T08:27:04.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

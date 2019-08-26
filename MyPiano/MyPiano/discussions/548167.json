@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1254792",
+    "ThreadId": "548167",
+    "Html": "I am trying to build a waveform graph for universal audio source using Xamarin + NAudio. First it seemed like WaveViewer is doing what I need to do. So I have ported it to Xamarin. But now it seems to me it's kind of hardcoded to 16 bits WAV files (as it read 2 byte samples independent on file type).\r<br />\n<br />\nAre there any better samples for that? I looked at WPF sample but didn't found the place where the low-level magic happens yet (I see only glossy WPF controls and bindings for now).<br />\n",
+    "PostedDate": "2014-06-10T06:38:17.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1255540",
+    "ThreadId": "548167",
+    "Html": "WaveViewer is a very rudimentary control and will be removed in the future from NAudio. I always just build by own waveform control for new projects, as I've found that the requirements vary dramatically. \r<br />\n<br />\nI hope to blog about how to do this at some point in the future. I have an upcoming pluralsight course in which I'll be building a waveform rendering control. You can also see what I built in the <a href=\"http://pluralsight.com/training/Courses/TableOfContents/audio-programming-naudio\" rel=\"nofollow\">NAudio pluralsight course</a> WinForms waveform demo if you are a subscriber,<br />\n",
+    "PostedDate": "2014-06-12T04:42:34.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1255618",
+    "ThreadId": "548167",
+    "Html": "yeah, that's worked, thank you! <br />\n",
+    "PostedDate": "2014-06-12T08:17:12.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

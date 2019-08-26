@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1232252",
+    "ThreadId": "541715",
+    "Html": "Hi,<br />\nI've got WPF project, main window contains calss that contains naudio &quot;player&quot;, also im using SampleAggregator to get FFT. So thats actually all stuff. Now, when fft &quot;ready&quot; event fires, it goes to parent class then by next event goes to main window (so i can draw  something like spectrograph), but I cant update controls directly because <em>blah-blah-blah</em> different thread, ok, im trying to use invoke and here goes super-duper-thing ( or im totally dumb ... this can be the reason too actually )).<br />\n<pre><code>public void a_FFTCalculated(object sender, FftEventArgs e)\n        {\n            FFTPoly.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =&gt;\n            {                    \n                * draw our super-duper-spectrograph *\n            }));</code></pre>\n\n<pre><code>public void a_FFTCalculated(object sender, FftEventArgs e)\n        {\n            FFTPoly.Dispatcher.BeginInvoke (DispatcherPriority.Render, new Action(() =&gt;\n            {                    \n                * draw our super-duper-spectrograph *\n            }));</code></pre>\n\nAlmost same, except async way, but using Invoke - everything will be fine, but if im trying to use BeginInvoke some strange ( like stretched fft ) data appears about every second.<br />\n<br />\nI just cant understand how anyway this could happen :)<br />\n<br />\nThanks anyway :)<br />\n",
+    "PostedDate": "2014-04-09T04:49:47.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1232698",
+    "ThreadId": "541715",
+    "Html": "Ok, glad to see so many responses :)\r<br />\n<br />\nSo, ill make lil test app here <a href=\"http://www.sendspace.com/file/i9apu3\" rel=\"nofollow\">http://www.sendspace.com/file/i9apu3</a>\r<br />\n<br />\nMabye im doing something wrong or in some terrible way so the whole world could collapse?\r<br />\nAll i need is to have fully independent ( async ) spectrograph ... \r<br />\n<br />\nWell, thanks for watching, thats all folks :)<br />\n",
+    "PostedDate": "2014-04-10T00:27:58.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1232721",
+    "ThreadId": "541715",
+    "Html": "One of the things I try to do in NAudio is avoid creating too much work for the garbage collector. So the FFT buffer that is provided in the event is reused for the next one, meaning it gets cleared out after the event handler completes. Probably SampleAggregator should be updated to have at least two buffers that it alternates between. It's part of the reason why SampleAggregator is not actually part of the NAudio library yet. <br />\n",
+    "PostedDate": "2014-04-10T01:47:16.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1232727",
+    "ThreadId": "541715",
+    "Html": "Thanks for Your answer :)\r<br />\n<br />\nYou are absolutely right :)\r<br />\nchanging to ( dirty way :) )<br />\n<pre><code>                    FastFourierTransform.FFT(true, m, fftBuffer);\n                    FftCalculated(this, new FftEventArgs(fftBuffer));\n                    fftPos = 0;\n                    fftBuffer = new Complex[fftLength];</code></pre>\n\nAnd all works just fine :)\r<br />\n<br />\nThanks again!<br />\n",
+    "PostedDate": "2014-04-10T02:08:55.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

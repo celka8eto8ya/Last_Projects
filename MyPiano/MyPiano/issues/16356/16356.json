@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:00:59.84-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I've got a very big mp3 recording (a 4 hours recording) that I need to process. When openned with Mp3FileReader I get a Length of -1 755 258 880. At first I thought the problem was that the file was to big a file, bigger than a long Length!!!, but then I took a look at Lenght implementation:\r\n\r\npublic override long Length\r\n{\r\n    get\r\n    {\r\n        return this.totalSamples * this.bytesPerSample;\r\n    }\r\n}\r\n\r\nThe problem here is that both totalSamples and bytesPerSample are ints, and the result of multiplying two ints is another int, so, fr a file being bigger in bytes than int.MaxValue (as is mine), the Length property won't be correct even if the file is smaller ib bytes than long.MaxValue.\r\nI've fixed Length implementation as follows, but it would be nice to check all similar scenarios.\r\n\r\npublic override long Length\r\n{\r\n    get\r\n    {\r\n        return ((long)this.totalSamples) * this.bytesPerSample;\r\n    }\r\n}\r\n\r\nThanks a lot,\r\n\r\nAmanda",
+    "LastUpdatedDate": "2012-10-27T00:00:59.84-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-06-19T04:23:35.693-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Mp3FileReader.Length property calculated as int instead of as long",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16356
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "thanks for reporting. I'll fix this by making totalSamples a long, which could also potentially overflow on really long MP3 files",
+      "PostedDate": "2012-06-19T05:05:30.49-07:00",
+      "Id": 68263
+    }
+  ]
+}

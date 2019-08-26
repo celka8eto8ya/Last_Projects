@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "709229",
+    "ThreadId": "282241",
+    "Html": "\r\n<p>Hi, I'm new to NAudio. Unfortunately I didn't find any documentation, just couple oof articles and you tube videos showing how to do things.</p>\r\n<p>What I want to do is record voice and show its waveform. I want to view volume meter as well and be able to change the volume of microphone. In the end I want to write the recorded stream to database. So far I was able to show the waveform and volume meter,\r\n but I would like to do this in a different way.</p>\r\n<p>To show volume meter I draw on panel(I don't know how to use NAudio.Gui.VolumeMeter). To show waveForm I use NAudio.Gui.WaveFormPainter, but I would like to use NAudio.Gui.WaveViewer. But this control requires wave stream and I don't have any idea how to\r\n record to wave stream.</p>\r\n<p>So far my code looks like that:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">//this is one class</span>\r\n\r\n<span style=\"color:blue\">private</span> WaveIn input = <span style=\"color:blue\">null</span>;\r\n<span style=\"color:blue\">private</span> WaveFileWriter waveWriter = <span style=\"color:blue\">null</span>;\r\n\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> StartRecord(<span style=\"color:blue\">int</span> DeviceIndex, <span style=\"color:blue\">int</span> sampleRate, <span style=\"color:blue\">int</span> bits, <span style=\"color:blue\">int</span> channels, <span style=\"color:blue\">string</span> FileName)\r\n{\r\n   CloseAll(); <span style=\"color:gray\">///</span><span style=\"color:green\">disposes input and waveWriter</span>\r\n\r\n   input = <span style=\"color:blue\">new</span> WaveIn();\r\n   input.DeviceNumber = DeviceIndex;\r\n   input.WaveFormat = <span style=\"color:blue\">new</span> WaveFormat(sampleRate, bits, channels);\r\n   input.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(input_DataAvailable);\r\n   waveWriter = <span style=\"color:blue\">new</span> WaveFileWriter(FileName, input.WaveFormat);\r\n\r\n   input.StartRecording();\r\n   \r\n}\r\n\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> input_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n{\r\n    <span style=\"color:blue\">if</span> (waveWriter == <span style=\"color:blue\">null</span>) <span style=\"color:blue\">return</span>;\r\n            \r\n    <span style=\"color:blue\">if</span> (OnVolumePeak != <span style=\"color:blue\">null</span>) <span style=\"color:green\">//onVolumePeak is my event</span>\r\n    {\r\n        <span style=\"color:blue\">float</span> max = 0;\r\n\r\n        <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> index = 0; index &lt; e.BytesRecorded; index &#43;= 2)\r\n        {\r\n            <span style=\"color:blue\">short</span> sample = (<span style=\"color:blue\">short</span>)((e.Buffer[index&#43;1]&lt;&lt;8) | (e.Buffer[index]) );\r\n            <span style=\"color:blue\">float</span> sample16 = sample / 16384f;\r\n\r\n            max = Math.Max(sample16, max);\r\n        }\r\n\r\n        OnVolumePeak(<span style=\"color:blue\">this</span>, max);\r\n\r\n    }\r\n    waveWriter.WriteData(e.Buffer, 0, e.BytesRecorded);\r\n    waveWriter.Flush();\r\n}\r\n\r\n<span style=\"color:green\">//and part of code from another class:</span>\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> OnVolumePeak(<span style=\"color:blue\">object</span> Sender, <span style=\"color:blue\">float</span> max)\r\n{\r\n    waveformPainter.AddMax(max); <span style=\"color:green\">//paint waveForm </span>\r\n    <span style=\"color:blue\">int</span> vu = (<span style=\"color:blue\">int</span>)Math.Round(max*100);\r\n    <span style=\"color:blue\">if</span>(vu &gt; 100) vu = 100;\r\n    PaintPB(vu);\r\n}\r\n\r\n<span style=\"color:green\">//this one paints my volume meter</span>\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> PaintPB(<span style=\"color:blue\">int</span> value)\r\n{\r\n    Graphics gr = vmPanel.CreateGraphics();\r\n    gr.Clear(<span style=\"color:blue\">this</span>.BackColor);\r\n            \r\n    gr.FillRectangle(Brushes.Green, 0, 100 - value, vmPanel.Width, vmPanel.Height);\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>I would like to use WaveViewer instead of WaveFormPainter, but I don't know how. I would also like to add volume control, but I don't know how. I have seen .Net Voice Recorder, but I didn't find source code anywhere. Just some parts here:\r\n<a href=\"http://channel9.msdn.com/coding4fun/articles/NET-Voice-Recorder\">http://channel9.msdn.com/coding4fun/articles/NET-Voice-Recorder</a>&nbsp;which is not enough for me. Can someone help me? Because I try to do this for about a week.</p>\r\n",
+    "PostedDate": "2011-12-08T03:12:50.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "709233",
+    "ThreadId": "282241",
+    "Html": "<p>Hi, the source code for Voice Recorder is available here:</p>\r\n<p>voicerecorder.codeplex.com</p>",
+    "PostedDate": "2011-12-08T03:16:42.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "709240",
+    "ThreadId": "282241",
+    "Html": "<p>No, I can't find source there.</p>\r\n<p>This is list of all files in the download:</p>\r\n<p>GalaSoft.MvvmLight.dll<br />GalaSoft.MvvmLight.Extras.dll<br />GalaSoft.MvvmLight.Extras.xml<br />GalaSoft.MvvmLight.xml<br />NAudio.dll<br />System.Windows.Interactivity.dll<br />System.Windows.Interactivity.xml<br />VoiceRecorder.application<br />VoiceRecorder.Audio.dll<br />VoiceRecorder.Audio.pdb<br />VoiceRecorder.Core.dll<br />VoiceRecorder.Core.pdb<br />VoiceRecorder.exe<br />VoiceRecorder.exe.config<br />VoiceRecorder.exe.manifest<br />VoiceRecorder.pdb<br />VoiceRecorder.vshost.application<br />VoiceRecorder.vshost.exe<br />VoiceRecorder.vshost.exe.config<br />VoiceRecorder.vshost.exe.manifest</p>\r\n<p>plus some directories with I think language resources: System.Windows.Interactivity.resources.dll</p>",
+    "PostedDate": "2011-12-08T03:38:54.677-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "709243",
+    "ThreadId": "282241",
+    "Html": "<p>click the tab that says Source Code</p>",
+    "PostedDate": "2011-12-08T03:48:51.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "709247",
+    "ThreadId": "282241",
+    "Html": "<p>Ofcourse. I was there earlier but somehow I didn't see download ;) THX.</p>",
+    "PostedDate": "2011-12-08T04:01:38.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "709567",
+    "ThreadId": "282241",
+    "Html": "<p>&nbsp;For&nbsp; get Volume</p>\r\n<p>// in the&nbsp;&nbsp; volumeslider property</p>\r\n<p>privite void&nbsp; volumeSlider1_VolumeChanged(object sender,EventArg e)</p>\r\n<p>if (this.waveOut != null)</p>\r\n<p>{</p>\r\n<p>this.WaveOut.Volume =volumeSlider.Volume;</p>\r\n<p>}</p>\r\n<p>}</p>\r\n<p>&nbsp;to&nbsp; recive</p>\r\n<p>var waveOut = new WaveOut();</p>\r\n<p>waveOut.Volume=volumeSlider1;</p>\r\n<p>wave</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-12-08T14:28:28.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

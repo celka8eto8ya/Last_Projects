@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1229937",
+    "ThreadId": "541064",
+    "Html": "I am using NAudio in a windows forms application.\r<br />\n<br />\nI want to have a meter display while the user is recording audio.\r<br />\n<br />\nThe problem I am getting is that every second MaxSampleValues from a mono sampleChannel_PreVolumeMeter is 0 (zero).\r<br />\n<br />\n....<br />\n<pre><code>        sampleChannel = new SampleChannel(bufferedWaveProvider2, false);\n        sampleChannel.PreVolumeMeter += sampleChannel_PreVolumeMeter;\n        Trace.WriteLine(string.Format(&quot;sampleChannel.WaveFormat = {0}, {1}&quot;, sampleChannel.WaveFormat, sampleChannel.WaveFormat.Channels));\n</code></pre>\n\n....<br />\n<pre><code>   void sampleChannel_PreVolumeMeter(object sender, StreamVolumeEventArgs e)\n    {\n        if (e.MaxSampleValues[0] != 0)\n        {\n            volumeMeterRecord.Amplitude = e.MaxSampleValues[0];\n            wfPainterPreVolume.AddMax(e.MaxSampleValues[0]);\n        }\n\n            Trace.WriteLine(string.Format(&quot;sampleChannel_PreVolumeMeter {0}&quot;, e.MaxSampleValues[0].ToString()));\n\n    }\n</code></pre>\n\nSample Output\r<br />\n<br />\nMode=Debug\r<br />\nsampleChannel.WaveFormat = IeeeFloat, 1\r<br />\nsampleChannel_PreVolumeMeter 0.06512451\r<br />\nsampleChannel_PreVolumeMeter 0\r<br />\nsampleChannel_PreVolumeMeter 0.04870605\r<br />\nsampleChannel_PreVolumeMeter 0\r<br />\nsampleChannel_PreVolumeMeter 0.1290894\r<br />\nsampleChannel_PreVolumeMeter 0\r<br />\nsampleChannel_PreVolumeMeter 1\r<br />\nsampleChannel_PreVolumeMeter 0\r<br />\n<br />\nMy work around is working - (ignore the 0 (zero) samples)  but I don't understand why it is needed...<br />\n",
+    "PostedDate": "2014-04-03T08:38:14.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1235780",
+    "ThreadId": "541064",
+    "Html": "I have pretty much the same problem.\r<br />\n<br />\nIt seems that <strong>AudioFileReader</strong> always turned mono into stereo...\r<br />\n<br />\nIn my case :<br />\n<pre><code>AudioFileReader newAudio = new AudioFileReader(path);\nbyte[] data = new byte[100];\nint read =  newAudio.Read(data, 0, data.Length);\n for (int i = 0; i &lt; read; i += 2)\n{\nSystem.Console.WriteLine(BitConverter.ToInt16(data,i));\n}</code></pre>\n\nand here is what I get : <br />\n<pre><code>0\n0\n-18432\n0\n14464\n0\n-18432\n0\n-18432\n0\n14528\n0\n-18176\n0\n14592\n0\n-18240\n0\n14464\n0\n-18432\n0\n14336\n0\n-18304\n0\n14528\n0\n...</code></pre>\n\nSo halft the time its zero...\r<br />\nAnyone know how to have an issue for this please ?<br />\n",
+    "PostedDate": "2014-04-19T13:31:12.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

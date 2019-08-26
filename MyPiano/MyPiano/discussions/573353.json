@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1326772",
+    "ThreadId": "573353",
+    "Html": "Hi Mark. I am looking for advice from you. Please review my code. Below is WaveinEvent<br />\n<pre><code>  void wi_DataAvailable(object sender, WaveInEventArgs e)\n    {\n\n        byte[] source = e.Buffer;\n        Stream  byteStream12 = new MemoryStream(source);\n      byte []  bt  = ConvertNonSeekableStreamToByteArray(byteStream12);\n      Buffer.BlockCopy(bt, 0, resampleStream.SourceBuffer, 0, bt.Length);\n\n        int sourceBytesConverted = 0;\n        var convertedBytes = resampleStream.Convert(bt.Length, out sourceBytesConverted);\n        if (sourceBytesConverted != bt.Length)\n        {\n            MessageBox.Show(&quot;We didn't convert everything {0} bytes in, {1} bytes converted&quot;);\n        }\n        var converted = new byte[convertedBytes];\n\n        Buffer.BlockCopy(resampleStream.DestBuffer, 0, converted, 0, convertedBytes);\n               MemoryStream byteStream = new MemoryStream(converted);\n                             WaveFormat waveFormat = new  WaveFormat(8000,16,1);\n                                           RawSourceWaveStream rawSourceWaveStream = new RawSourceWaveStream(byteStream, waveFormat);\n\n                                                         int audioBufferSize = 320;\n                                                          int offset = 0;\n\n                                                          byte[] buffer2 = new byte[320];\n\n\n                                                          while (rawSourceWaveStream.Read(buffer2, offset, audioBufferSize - offset) &gt; 0)\n                                                          {\n\n                                                                  MemoryStream byteStream133 = new MemoryStream(buffer2);\n                                                                  WaveFormat waveFormat33 = WaveFormat.CreateMuLawFormat(32000, 1);\n                                                                  RawSourceWaveStream rawSourceWaveStream133 = new RawSourceWaveStream(byteStream133, waveFormat33);\n                                                                  WaveStream pcmStream133 = WaveFormatConversionStream.CreatePcmStream(rawSourceWaveStream133);\n                                                                  byte[] decoded133 = ConvertNonSeekableStreamToByteArray(pcmStream133);\n\n\n                                                                  bufferedWaveProvider.AddSamples(decoded133, 0, decoded133.Length);\n                                                                  // cleanup\n                                                                  byteStream133.Close();\n                                                                  byteStream133.Dispose();\n                                                                  rawSourceWaveStream133.Close();\n                                                                  rawSourceWaveStream133.Dispose();\n                                                                  pcmStream133.Close();\n                                                                  pcmStream133.Dispose();\n\n                                                                   MemoryStream byteStream1 = new MemoryStream(converted);\n\n                                                                  PauseForMilliSeconds(20);\n                                                              }\n                                                          }\n\n\n\n\n</code></pre>\n\nPlease Note that i to improve the quality the changes can be made after below mentioned line in above given code:\r<br />\n_ Buffer.BlockCopy(resampleStream.DestBuffer, 0, converted, 0, convertedBytes);_\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2014-11-27T04:45:30.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1326989",
+    "ThreadId": "573353",
+    "Html": "No one is here to help me out ? I tried different formats and  different waveformat but none of them worked for me. :(\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2014-11-28T04:03:53.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327078",
+    "ThreadId": "573353",
+    "Html": "What is resampleStream? And what is this code actually trying to achieve? It isn't obvious to me what exactly you are trying to do here.<br />\n",
+    "PostedDate": "2014-11-28T09:07:34.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327153",
+    "ThreadId": "573353",
+    "Html": "Thanks for the reply mark.In first  I was trying to write byte array to serial port instead of\r<br />\n<br />\nbufferedWaveProvider.AddSamples(decoded133, 0, decoded133.Length); \r<br />\n<br />\nline in above code. But i was not hearing clear voice on other side of the phone line so i first tried to listen this on my computer so used  mentioned line in my code.\r<br />\nBut it is playing same distorted sounds as playing on other side of the line while i write the byte array to serial port.\r<br />\n<br />\nresampleStream is <br />\n<pre><code>var resampleStream = new AcmStream(new WaveFormat(8000, 16, 1),  WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm   , 8000, 1,8000 * 1, 1, 8));\n</code></pre>\n\nThanks in advance.<br />\n",
+    "PostedDate": "2014-11-28T22:08:22.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327168",
+    "ThreadId": "573353",
+    "Html": "But what wave format is the device at the other end of the serial port actually expecting. Is it really 8 bit linear PCM? Or could it be mu or a -law?\r<br />\n<br />\nTo troubleshoot issues like this I recommend taking a divide and conquer approach. First, instead of sending your audio to the serial port, write it to a WAV file. Listen to the WAV file in Windows Media Player. Does it sound distorted or OK?\r<br />\n<br />\nThen create a simple voice recording at the format you plan to send to the serial port. Play that through the serial port by sending it's data a few hundred milliseconds at a time. Does that sound OK?\r<br />\n<br />\nBy answering these questions you will discover which part of the overall system isn't working correctly.<br />\n",
+    "PostedDate": "2014-11-29T00:25:53.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-11-30T22:34:56.74-08:00"
+  },
+  {
+    "Id": "1327176",
+    "ThreadId": "573353",
+    "Html": "Yes , By changing it to muLaw i can hear voice clearly but there is a background click voice after every second. What changes should be done to overcome this problem.<br />\n",
+    "PostedDate": "2014-11-29T01:42:27.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-11-29T03:38:17.33-08:00"
+  }
+]

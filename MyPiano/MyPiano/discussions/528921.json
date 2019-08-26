@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1202660",
+    "ThreadId": "528921",
+    "Html": "I would like to convert any (supported ofcourse) audio format I can throw at NAudio to any (supported ofcourse) audio format NAudio can write. So I might throw a wavefile, mp3 or aiff file at it, specify the output filename and some parameters (samplerate, bit depth, channels) and have NAudio do the heavy lifting / figure out what to do exactly.<br />\n<br />\nThere is an <code>AudioFileReader</code> which is supposed to read all supported filetypes but there is no <code>AudioFileWriter</code>, is there?<br />\n<br />\nI guess I need to read the input, convert it to &quot;raw audio&quot; at the input's samplerate/bits/channels and then output it thru some writer? I assume I would need the <code>WaveFormatConversionStream</code> for this?<br />\n<br />\nBecause my input and desired output are specified by the user I don't want to have all kinds of <code>ConvertXXXToYYY()</code> methods but one method that handles the conversion. I was hoping something along the lines of:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">public</span> function Convert(<span style=\"color:Blue;\">string</span> inFile, <span style=\"color:Blue;\">string</span> outFile, Format waveFormat) {\n    <span style=\"color:Blue;\">using</span> (<span style=\"color:Blue;\">var</span> reader = <span style=\"color:Blue;\">new</span> AudioFileReader(inFile))\n    <span style=\"color:Blue;\">using</span> (<span style=\"color:Blue;\">var</span> resampler = <span style=\"color:Blue;\">new</span> WaveFormatConversionStream(waveFormat, reader))\n    {\n        AudioFileWriter.CreateFile(outFile, resampler);\n    }\n}\r\n</pre></div>(This is just a mockup). Is it possible to achieve this without writing lots of code?<br />\n",
+    "PostedDate": "2014-02-04T12:43:16.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1204402",
+    "ThreadId": "528921",
+    "Html": "Have a look at the MediaFoundationEncoder class and where it is used in the sample apps in the NAudio source.<br />\n",
+    "PostedDate": "2014-02-07T08:33:21.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

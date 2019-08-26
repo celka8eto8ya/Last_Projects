@@ -1,0 +1,14 @@
+<div class="wikidoc"><h1>MixDiff</h1>
+MixDiff is a simple utility for comparing two or more versions of a mix. This is particularly handy when suffering from &quot;ear fatigue&quot;. This is where you have been listening to the same audio for so long, you seem to lose your ability to make good mixing choices. MixDiff allows you to quickly A-B your latest version of your mix with a previous version, to see if you really have improved things. MixDiff also serves as a sample application, to demonstrate the WaveOut playback capabilities of the NAudio library.<br /><br />MixDiff offers the following features:
+<ul><li>Ability to compare up to four different mixes</li>
+<li>When switching from hearing one file to another, gives you the option to carry on from the same location, rewind to the start of the file, or rewind a set number of seconds</li>
+<li>Can shuffle the files, (and optionally insert copies into empty slots), for a true double-blind listening test, allowing for more objective evaluation.</li>
+<li>Allows time-shifting individual mixes to allow them to line up better</li>
+<li>Allows volume-adjusting individual mixes to allow for a fairer comparison when volume levels do not match</li>
+<li>Can save and reload settings from previous comparisons</li></ul>
+<br />Possible future features include
+<ul><li>Support for MP3</li>
+<li>Ability to arbitrarily reposition within a file</li></ul>
+<br />What MixDiff is not good for:
+<ul><li>Comparing different sample rates for the same mix - all mixes must be of the same sample rate. It is worth pointing out, that even if MixDiff allowed you to open files of different bit rates, Windows would probably sample-rate convert one of them to be the same as the other anyway (due to us using the MME APIs).</li>
+<li>Comparing different bit depths for the same mix - although you can use MixDiff to do this, MixDiff first converts the files to 32 bit before passing it to the MME APIs, which will in turn convert them back to (most likely) 16 bit. </li></ul></div><div class="ClearBoth"></div>

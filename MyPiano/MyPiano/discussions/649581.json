@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1457926",
+    "ThreadId": "649581",
+    "Html": "First of all. I want to say thanks for this great library and....\r<br />\n<br />\nI have been trying to use NAudio with WaveEngine because it seems it's supported but i cannot make it work.  Any help would be appreciated.\r<br />\n<br />\nI get this error,<br />\n<pre><code>n unhandled exception of type 'System.IO.FileLoadException' occurred in WaveEngine.Adapter.dll\n\nAdditional information: No se puede cargar el archivo o ensamblado 'NAudio, Version=1.7.0.11, Culture=neutral, PublicKeyToken=6e72eaf7d6c3c55b' ni una de sus dependencias. La definición del manifiesto del ensamblado no coincide con la referencia al ensamblado. (Excepción de HRESULT: 0x80131040)</code></pre>\n\nMore information on <a href=\"http://forum.waveengine.net/forum/general/9953-naudio-library-compile-error\" rel=\"nofollow\">http://forum.waveengine.net/forum/general/9953-naudio-library-compile-error</a><br />\n",
+    "PostedDate": "2016-01-04T12:19:53.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1458058",
+    "ThreadId": "649581",
+    "Html": "Issue was solved. I had to use the naudio version that comes with the engine.<br />\n",
+    "PostedDate": "2016-01-05T06:12:07.58-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

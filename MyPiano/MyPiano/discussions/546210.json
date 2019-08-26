@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1248317",
+    "ThreadId": "546210",
+    "Html": "Hi Mark,\r<br />\nPlease this is very urgent for me.\r<br />\nThanks for previous discussion .I have stuck with a problem in my project.I want to set some values like -compression (Threshold,Ratio,Attacktime,Release time ,Makeup gain) from AudioPlaybackPanel.cs class. Please let me know step by step how I can set those values it will relay very helpful for me.\r<br />\n<br />\nI can set compression from AudioPlaybackPanel.cs. I use DSPEffectStream.cs class for set the compression value but &quot;this.fileWaveStream = new DSPEffectStream(compress1, m_eqE__ffect)&quot;\r<br />\nthis code make shuttering on my song.In below we have set my code.<br />\n<pre><code>private WaveStream fileWaveStream;\npublic WaveChannel32 wavechannel32;\n\nprivate ISampleProvider CreateInputStream(string fileName)\n        {\n           \n                compress1.Attack = Convert.ToDouble(objsetting.Attack);\n                compress1.Release = Convert.ToDouble(objsetting.Release);\n                compress1.Threshold = -10 - (20 + objsetting.Threshold) * 0.2;// trkDBSettings.Value; \n                compress1.Ratio = objsetting.Ratio + 2;\n                compress1.VolumeStatus1L = objsetting.VolumeStatus1L;\n                compress1.VolumeStatus2R = objsetting.VolumeStatus2R;\n                \n                this.fileWaveStream = new DSPEffectStream(compress1, m_eqEffect);\n               \n                return postVolumeMeter;\n            }\n            \n        }</code></pre>\n\n",
+    "PostedDate": "2014-05-22T03:18:59.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248763",
+    "ThreadId": "546210",
+    "Html": "Hi Mark,\r<br />\n<br />\nI use compression technique from skype voice changer it's working good on higher specification machine(like pentium 4,i-3 and upper version machine) but when i use this compression technique  on lower specification machine(particularly-Intel Atom D2550, 1.83Ghz CPU, 4GB Ram, Win7) song shutter(splatter). Why is happen i don't know?If you want i can provide the code also please reply as soon as possible it's very urgent for me.<br />\n",
+    "PostedDate": "2014-05-23T01:25:53.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248841",
+    "ThreadId": "546210",
+    "Html": "Make sure you do a Release build. That will speed up performance a bit.\r<br />\nBut apart from that, you'll just need to look at ways to performance profile your code and manually tune it.<br />\n",
+    "PostedDate": "2014-05-23T05:28:52.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1250721",
+    "ThreadId": "546210",
+    "Html": "HI Mark,\r<br />\nI have stuck with applying compression logic Using Naudio project.Can you please suggest how to applying dynamic range compression on naudio project.I use Skype voice changer logic but No output come.Please suggest how to approach step by step.<br />\n",
+    "PostedDate": "2014-05-28T23:03:40.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260974",
+    "ThreadId": "546210",
+    "Html": "hi, the compressor in Skype Voice Changer is my only working sample at the moment. I hope to provide more code samples in the future.<br />\n",
+    "PostedDate": "2014-06-29T15:50:58.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "841553",
+    "ThreadId": "357351",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">&nbsp;</span></span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"></p>\r\n<p>&nbsp;</p>\r\n</span></span></span>\r\n<p></p>\r\n<p><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\"><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\"><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\">void</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">\r\n midiIn_MessageReceived(</span></span><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\"><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\"><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\">object</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">\r\n sender, </span></span><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\">MidiInMessageEventArgs</span></span></span><span style=\"font-family:Consolas; font-size:x-small\">\r\n<span style=\"font-family:Consolas; font-size:x-small\">e) </p>\r\n<p></p>\r\n<p>{</p>\r\n<p></p>\r\n</span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">&nbsp;</span></span></span>\r\n<p><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\"><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\"><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\">string</span></span></span><span style=\"font-family:Consolas; font-size:x-small\">\r\n</span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">message = e.MidiEvent.ToString();</span></span></p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">&#65279;}</span></span></p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">&nbsp;</span></span></p>\r\n<p>&nbsp;</p>\r\n<p>System.NullReferenceException was unhandled<br>\r\n&nbsp; Message=Object reference not set to an instance of an object.<br>\r\n&nbsp; StackTrace:<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at window6.SliderBarKnob1.&lt;&gt;c__DisplayClass2.&lt;midiIn_MessageReceived&gt;b__0() in C:\\Users\\Gr.xaml.cs:line 179<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at MS.Internal.Threading.ExceptionFilterHelper.TryCatchWhen(Object source, Delegate method, Object args, Int32 numArgs, Delegate catchHandler)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Threading.DispatcherOperation.InvokeImpl()<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Threading.DispatcherOperation.InvokeInSecurityContext(Object state)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ExecutionContext.runTryCode(Object userData)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Runtime.CompilerServices.RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(TryCode code, CleanupCode backoutCode, Object userData)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean ignoreSyncCtx)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Threading.DispatcherOperation.Invoke()<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Threading.Dispatcher.ProcessQueue()<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Threading.Dispatcher.WndProcHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean&amp; handled)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean&amp; handled)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at MS.Internal.Threading.ExceptionFilterHelper.TryCatchWhen(Object source, Delegate method, Object args, Int32 numArgs, Delegate catchHandler)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Threading.Dispatcher.InvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at MS.Win32.UnsafeNativeMethods.DispatchMessage(MSG&amp; msg)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Threading.Dispatcher.PushFrameImpl(DispatcherFrame frame)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Threading.Dispatcher.PushFrame(DispatcherFrame frame)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Application.RunDispatcher(Object ignore)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Application.RunInternal(Window window)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Application.Run(Window window)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Application.Run()<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ThreadHelper.ThreadStart_Context(Object state)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean ignoreSyncCtx)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ThreadHelper.ThreadStart()<br>\r\n&nbsp; InnerException:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\">&nbsp;</span>some times when reciv midi, no idea what message is coming, have this problem.<br>\r\nIf you know what cause this, can tellme how can skip this problem with a example?</p>\r\n<p>THK!</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n",
+    "PostedDate": "2012-05-28T02:11:03.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847663",
+    "ThreadId": "357351",
+    "Html": "<p>is it e.MidiEvent itself that is null?</p>\r\n<p>or is a null reference occurring in the ToString?</p>\r\n<p>If you set your debugger to break on all errors you should be able to find this out</p>",
+    "PostedDate": "2012-06-11T14:59:12.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850539",
+    "ThreadId": "357351",
+    "Html": "\r\n<p>Hi Mark<br>\r\nAfter try all what&nbsp; can never can fix this problem.<br>\r\nI asume is a bug.<br>\r\n<br>\r\nPlease can take a look on this?<br>\r\n<br>\r\nInside the zip file i provide with virtual midi wire, called midi loop be 1</p>\r\n<p>Please install that.<br>\r\n<br>\r\nThen you can see my example.<br>\r\nFor test&nbsp; do this:<br>\r\n<br>\r\n1 install midi virtual wire appz included.<br>\r\n2 the run the software i include in the zip, run vsthost.exe appz, is just a vst host appz.<br>\r\nInside that software setup midi device to port of midi loop be 1, use the same port for MIDI IN and MIDI OUT<br>\r\n3, Now open my example, setup in same way midi in and midi out, then click on go to win1 button.<br>\r\nYou can see the error.</p>\r\n<p>Hoppe you can helpme with this, 100% stuck on this.<br>\r\n<br>\r\nHere the download:&nbsp;&nbsp;&nbsp; <a href=\"http://www.todosaca.com/files.zip\">\r\nhttp://www.todosaca.com/files.zip</a></p>\r\n<p>&nbsp;</p>\r\n<p>Please letme know!&nbsp; :)<br>\r\n<br>\r\n<br>\r\n</p>\r\n",
+    "PostedDate": "2012-06-18T13:14:20.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "851294",
+    "ThreadId": "357351",
+    "Html": "<p>Please tellme if can reproduce the test.<br /><br />Bets regards.</p>",
+    "PostedDate": "2012-06-19T19:27:58.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "852486",
+    "ThreadId": "357351",
+    "Html": "<p>Mark sorry for insist, i know you handle the projetc in your free times.<br />Please asap you cna take a look on this, i borken my head trying to figure checkingthe source code f your lib why this happen but no idea yet.<br />Thankyou!</p>",
+    "PostedDate": "2012-06-22T01:55:25.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "852507",
+    "ThreadId": "357351",
+    "Html": "<p>hi GrobotoX. I'm afraid I don't have a lot of time to look into individual problems. I did try to set up your system, but I didn't get an error when clicking on the go to win1 button</p>",
+    "PostedDate": "2012-06-22T02:34:45.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "852523",
+    "ThreadId": "357351",
+    "Html": "<p>LOL!<br />Mark you helpme in anyway!<br />After see you cnat reproduce this test i dicover the version of midi loopbe1 i have installed no is the latest and that is what cause the problem.<br />After install the latest version the smae i send to you problem stoped!!&nbsp; :)<br />Awesome!</p>\r\n<p>Thankyou man!</p>",
+    "PostedDate": "2012-06-22T03:15:52.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

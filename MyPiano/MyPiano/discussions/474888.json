@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1138203",
+    "ThreadId": "474888",
+    "Html": "I want to draw a square wave chart. And then, i want to do  the dBA and dBC  audio filtering this wav. \r<br />\n<img src=\"http://blogs.msdn.com/blogfiles/dawate/WindowsLiveWriter/IntrotoAudioProgrammingPart4Algorithmsfo_C19B/image_thumb_2.png\" alt=\"Image\" />.<br />\n",
+    "PostedDate": "2013-12-19T05:47:06.503-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1140979",
+    "ThreadId": "474888",
+    "Html": "There's a signal generator class in NAudio that can be used to generate square waves. That might be a good place for you to start.<br />\n",
+    "PostedDate": "2013-12-23T12:29:07.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

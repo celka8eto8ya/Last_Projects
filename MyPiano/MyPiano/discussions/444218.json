@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1045762",
+    "ThreadId": "444218",
+    "Html": "Where is an appropriate place to discuss NAudio 1.7-aplha builds?<br />\n\r<br />\nI am very interested in using MediaFoundationReader.  I have used it to some success, but I cannot detect stream end in order to play another file.  The stream just repeats forever.\r<br />\n<br />\n<strong>Snippet:</strong><br />\n<pre><code>// fileWaveStream is of type WaveStream\nFileWaveStream = new MediaFoundationReader(fileNameToPlay,\n                     new MediaFoundationReader.MediaFoundationReaderSettings\n                        {\n                            RepositionInRead = true,\n                            RequestFloatOutput = false,\n                            SingleReaderObject = false\n                        });\n// Waveplayer is of type IWavePlayer\n wavePlayer.Init(FileWaveStream);\n wavePlayer.Play();\n</code></pre>\n\n",
+    "PostedDate": "2013-05-19T13:52:03.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1045895",
+    "ThreadId": "444218",
+    "Html": "That's very strange and unexpected. What sort of a file are you playing?\r<br />\nWhen you say &quot;repeats&quot; forever, do you mean it goes back to the start again? Or does it play silence?<br />\n",
+    "PostedDate": "2013-05-20T01:34:57.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1046199",
+    "ThreadId": "444218",
+    "Html": "The file format I am using is either mp3 for flac.  I installed the mfFlac codec to support flac in media foundation.  <a href=\"http://sourceforge.net/projects/mfflac/\" rel=\"nofollow\">http://sourceforge.net/projects/mfflac/</a><br />\n\r<br />\nInterestingly enough in further testing the Waveplayer.PlaybackState never sets to PlaybackState.Stopped.  So it gets to the end of the stream and just stops.  The reason for the repeat was code I have to detect a threading problem ( <a href=\"https://naudio.codeplex.com/discussions/357995\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/357995</a>  ) where waveplayer would start to play a track and just stop. I have updated the code to also check if we are at the end of the stream and fire off the next track.  While this works it doesnt seem ideal.\r<br />\n<br />\nAny ideas on why wavePlayer isnt changing to PlaybackState.Stopped state at the end of the stream?<br />\n",
+    "PostedDate": "2013-05-20T14:10:46.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1046542",
+    "ThreadId": "444218",
+    "Html": "What IWavePlayer implementation are you using?\r<br />\nThe idea is that FileWaveStream's Read method should return 0 when it reaches the end. Then the wavePlayer knows that it can stop playing. So you could start by writing a simple test that keeps calling Read on your FileWaveStream (e.g. into a buffer of 1024) and ensure that it eventually returns 0.<br />\n",
+    "PostedDate": "2013-05-21T07:37:16.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1086960",
+    "ThreadId": "444218",
+    "Html": "Sorry for very long delay in response.  I had to work on another project.  It turns out I was not hooking the stop event.  I am now using Waveplayer.PlaybackStopped += WaveplayerPlaybackStopped; and it works as expected.<br />\n",
+    "PostedDate": "2013-08-31T13:08:10.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

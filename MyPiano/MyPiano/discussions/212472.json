@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "442254",
+    "ThreadId": "212472",
+    "Html": "<p>I am developing an application in VB.NET. I want to check from this application whether any audio is currently being played by the sound card or not. Would I be able to do this using NAudio?&nbsp; I tried all the existing code available but was not successful in achieving this. It would be really helpful to get some clues or code that will direct me. I am using VB.NET, .NET 2.0 and Windows Vista.</p>",
+    "PostedDate": "2010-05-12T13:34:49.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "443684",
+    "ThreadId": "212472",
+    "Html": "you might find that some of the CoreAudio API wrappers will let you do what you want, although I have not tried this personally\r\n\r\nMark",
+    "PostedDate": "2010-05-17T02:20:01.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

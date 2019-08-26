@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1207822",
+    "ThreadId": "531688",
+    "Html": "Hi mark,\r<br />\n<br />\nI've been using NAudio for the past few day mixing two wave file with this format :\r<br />\n<br />\nNew Encoding: ALaw\r<br />\nNew SampleRate: 8000\r<br />\nNew BitsPerSample: 8\r<br />\nNew Channels: 1\r<br />\nNew Block Align Channels: 1\r<br />\nNew Bits per Second: 8000\r<br />\n<br />\nas I found, first I should convert them into a 32 bit floating and then add converted stream to WaveMixerStream32 as input stream but all my efforts goes wrong!\r<br />\nI got these errors trying different codes :\r<br />\n<br />\n&quot;Must be IEEE floating point Parameter name: waveProvider.WaveFormat&quot;\r<br />\n&quot;Unsupported source encoding&quot;\r<br />\n...\r<br />\n<br />\nwhat sould I do in converting and mixing process?<br />\n",
+    "PostedDate": "2014-02-13T03:12:13.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207902",
+    "ThreadId": "531688",
+    "Html": "first decompress the A-law to PCM (use WaveFormatConversionStream.CreatePcmStream), and then can convert to a SampleProvider to do your mixing with a MixingSampleProvider.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2014-02-13T06:15:36.367-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1207926",
+    "ThreadId": "531688",
+    "Html": "Thanks Mark,\r<br />\n<br />\nI found my full answer in this post : <a href=\"https://naudio.codeplex.com/discussions/251475\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/251475</a>\r<br />\nbut still have some problems! I wrote below code according to discussions # 251475 :<br />\n<pre><code>        WaveFileReader r1 = new WaveFileReader(...);\n        WaveFileReader r2 = new WaveFileReader(...);\n\n        WaveFormat OutputWaveFormat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.Pcm, 8000, 1, 16000, 2, 16);\n        WaveFormat InputWaveFormat = WaveFormat.CreateALawFormat(8000, 1);\n\n        WaveFormatConversionStream ConversionStream1 = new WaveFormatConversionStream(OutputWaveFormat, r1);\n        WaveFormatConversionStream ConversionStream2 = new WaveFormatConversionStream(OutputWaveFormat, r2);\n\n        WaveChannel32 WaveChannel32_1 = new WaveChannel32(ConversionStream1);\n        WaveChannel32 WaveChannel32_2 = new WaveChannel32(ConversionStream2);\n\n        WaveMixerStream32 mixer32 = new WaveMixerStream32();\n        mixer32.AddInputStream(WaveChannel32_1);</code></pre>\n\n(*)         mixer32.AddInputStream(WaveChannel32_2);<br />\n<pre><code>        Wave32To16Stream stereo16 = new Wave32To16Stream(mixer32);\n        StereoToMonoProvider16 mono16 = new StereoToMonoProvider16(m_Wave32To16Stream);\n</code></pre>\n\nafter line (*) I have data in this sequence :  0   0   32   60    0    0    32   60    0    0    59    126   0    0    59    126 ...\r<br />\nbut after applying Wave32To16Stream, I have a sequence of just zeros in stereo16 and so in mono16!!\r<br />\nwhat should I do in this step?<br />\n",
+    "PostedDate": "2014-02-13T06:52:01.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

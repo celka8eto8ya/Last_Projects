@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "when I record audio there is lots of unnecessary sounds recorded .. this will we the nice feature .. to reduce noise",
+    "LastUpdatedDate": "2016-08-18T08:54:56.477-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-08-18T06:14:51.29-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Noise reduction",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16498
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I'm afraid NAudio doesn't include a noise reduction algorithm at the moment. It's something I'd be glad to include if anyone submitted",
+      "PostedDate": "2016-08-18T08:54:56.477-07:00",
+      "Id": 203652
+    }
+  ]
+}

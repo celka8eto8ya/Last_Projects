@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "170463",
+    "ThreadId": "50867",
+    "Html": "Hi,<br>\r\n<br>\r\nI've been working on a class to reverse a stream but have come across a statement, which I'm not sure of the reasons behind but stops the function I've developed from working under all scenarios. It actually only works in a scenario where the wave sample being loaded is less than a second..<br>\r\n<br>\r\nIt relates to this:<br>\r\n<br>\r\nbyte[] sourceBuffer;<br>\r\n<br>\r\n/// &lt;summary&gt;<br>\r\n/// Helper function to avoid creating a new buffer every read<br>\r\n/// &lt;/summary&gt;<br>\r\nbyte[] GetSourceBuffer(int bytesRequired)<br>\r\n{<br>\r\n<blockquote>if (sourceBuffer == null || sourceBuffer.Length &lt; bytesRequired)<br>\r\n{<br>\r\n<blockquote>sourceBuffer = new byte[Math.Min(sourceStream.WaveFormat.AverageBytesPerSecond,bytesRequired)];<br>\r\n</blockquote>}<br>\r\nreturn sourceBuffer;<br>\r\n</blockquote>}<br>\r\n<br>\r\nThe part I'm not sure about is under what scenarios you would require a buffer of bytes smaller than that being requested? <br>\r\n<br>\r\nThe reason for asking this question is because of how I am trying to setup the buffer for storing the result of the reversed wave. I'm not sure if this is the best approach so if any one can think of an alternative I'm open to suggestions.After I create an instance of WaveChannel32, via a reader stream, I try to read the complete contents of the WaveChannel32 stream in to another temporary byte array. However when I invoke the channelStream read method as such:<br>\r\n<br>\r\nchannelStream.Read(reversedSample, 0, (int)channelStream.Length);<br>\r\n<br>\r\nAn error is thrown, &quot;Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.&quot; when the actual Read method is called on the stream:<br>\r\n<br>\r\nint read = sourceStream.Read(sourceBuffer, 0, sourceBytesRequired);<br>\r\n<br>\r\nBecause the souurceBuffer is smaller than sourceBytesRequired<br>\r\n<br>\r\nHowever I think this issue will always occur when the requested read amount is more than an average seconds worth of bytes for playback. The other thing to note is the decision on the size of sourceBytesRequired is made before the read call; I've pasted the read line and the two preceding lines from the Read method, which actually calculate how long the sourceBytesRequired amount should be.<br>\r\n<br>\r\nint sourceBytesRequired = (numBytes - bytesWritten) / 2;<br>\r\nbyte[] sourceBuffer = GetSourceBuffer(sourceBytesRequired);<br>\r\nint read = sourceStream.Read(sourceBuffer, 0, sourceBytesRequired);<br>\r\n<br>\r\nI hope this makes sense and that I haven't missed anything in this analysis; I checked for all references to this method in the NAudio project and could only find two references, both from the Read method, one for Mono and one for Stero.<br>\r\n<br>\r\nIf I have got this right, could I request that you replace this line in WaveChannel32:<br>\r\nsourceBuffer = new byte[Math.Min(sourceStream.WaveFormat.AverageBytesPerSecond,bytesRequired)];<br>\r\n<br>\r\nwith this line:<br>\r\nsourceBuffer = new byte[bytesRequired];<br>\r\n<br>\r\nThanks.<br>\r\n<br>\r\nCheers,<br>\r\nSebastian \r\n",
+    "PostedDate": "2009-03-21T18:37:40.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "171238",
+    "ThreadId": "50867",
+    "Html": "Hi Sebastian,<br>\r\nYes, might be a bug. I'll take a look at the code and see if I can remember why I did that. I'll fix it if necessary<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-03-24T02:40:35.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "171781",
+    "ThreadId": "50867",
+    "Html": "Hi Mark,<br>\r\n<br>\r\nMuch appreciated, I'll work on the next tutorial under the assumption that this is OK to change; if not I'll update the tutorial afterward ;-)<br>\r\n<br>\r\nCheers,<br>\r\nSebastian<br>\r\n",
+    "PostedDate": "2009-03-25T04:04:53.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

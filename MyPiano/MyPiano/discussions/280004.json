@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "700184",
+    "ThreadId": "280004",
+    "Html": "\r\n<p>Hello.</p>\r\n<p>&nbsp;</p>\r\n<p>I am working on a streaming app and I want to track the duration (in seconds) of the amount of the stream that has been played. My streaming source provides the duration (in seconds) at the beginning of the stream and I would like to display a progressbar,\r\n but I need a way of tracking how much of the stream has been played. This is an MP3 stream and thus I am following the 'Streaming MP3 example', but I am at a loss on how to track the amount of played stream.</p>\r\n<p>&nbsp;</p>\r\n<p>Any help would be greatly appreciated.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2011-11-18T06:37:46.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "701247",
+    "ThreadId": "280004",
+    "Html": "<p>once you have converted to PCM, the AverageBytesPerSecond property of the resulting WaveFormat can be used in conjunction with the total number of bytes Read out of the converted stream to keep track of progress. You might need to create a simple IWaveProvider implementation to wrap around your playback IWaveProvider to keep track of this number.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-11-21T07:36:11.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "701392",
+    "ThreadId": "280004",
+    "Html": "<p>Thanks Mark.</p>\r\n<p>I went a little more primitive than your suggestion. I am simply tracking the amount of real time that has passed while the WaveOut device is in the play state.</p>",
+    "PostedDate": "2011-11-21T11:44:48.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

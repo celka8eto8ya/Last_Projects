@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1252638",
+    "ThreadId": "547480",
+    "Html": "ok this is an example:<br />\n<pre><code>        Frequency = 180 Hz\n        Amplitude = 0.5 db\n        Beat = 4 Hz\n         waveform sampling rate is 44100 Hz\n</code></pre>\n\nok\r<br />\n<br />\n1) Which the information above, does that mean that every 11025 samples there should be an beat ( meaning 0 s).  I should add 0  ?  The math I used was  number for sample = (1D / Beat) / ( 1D/44100D)\r<br />\n<br />\n2)  if I solve for λ( wavelength) and make sure I do not start adding 0s before the  λ starts again will that stop noise/ distortion in my tone ?  I get ticks in my wave files, but if I do not interrupt the  λ there should be no distortion or ticks right ? \r<br />\n<br />\n3) From the information above  λ should be   (1/44100) / (180)\r<br />\nλ= 1.2597631645250692869740488788108e-7s\r<br />\nλ ( wavelength) =  C/ F  \r<br />\n",
+    "PostedDate": "2014-06-03T17:11:06.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1253003",
+    "ThreadId": "547480",
+    "Html": "FYI\r<br />\nI am using an Sine wave.\r<br />\n<br />\nf(t) = Amplitude * Sin(PI * Frequency * T / 44100D);<br />\n",
+    "PostedDate": "2014-06-04T13:08:13.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1253451",
+    "ThreadId": "547480",
+    "Html": "anyone?<br />\n",
+    "PostedDate": "2014-06-05T12:34:02.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1253933",
+    "ThreadId": "547480",
+    "Html": "markheath\r<br />\n<br />\ndo you know ?<br />\n",
+    "PostedDate": "2014-06-06T20:04:38.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1255026",
+    "ThreadId": "547480",
+    "Html": "ok I got it<br />\n",
+    "PostedDate": "2014-06-10T19:42:03.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-06-10T19:42:12.02-07:00"
+  }
+]

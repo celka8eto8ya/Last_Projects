@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "236605",
+    "ThreadId": "69523",
+    "Html": "<p>I'm attempting to use NAudio to record microphone input (for voice comms in a game). Following your tutorial I have this (just in a quick test class to find out how this all works):</p>\r\n<p>&nbsp;</p>\r\n<p>static IWaveIn waveInStream;<br>static WaveFileWriter writer;<br>private static void Record()<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp; waveInStream = new WaveIn();<br>&nbsp;&nbsp;&nbsp;&nbsp; waveInStream.WaveFormat = new WaveFormat();<br><br>&nbsp;&nbsp;&nbsp;&nbsp; writer = new WaveFileWriter(&quot;Test.wav&quot;, waveInStream.WaveFormat);<br><br>&nbsp;&nbsp;&nbsp;&nbsp; waveInStream.DataAvailable += waveInStream_DataAvailable;<br>&nbsp;&nbsp;&nbsp;&nbsp; waveInStream.StartRecording();<br><br>&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(&quot;recording&quot;);<br><br>&nbsp;&nbsp;&nbsp;&nbsp; Console.ReadLine();<br><br>&nbsp;&nbsp;&nbsp;&nbsp; waveInStream.StopRecording();<br>&nbsp;&nbsp;&nbsp;&nbsp; waveInStream.Dispose();<br>&nbsp;&nbsp;&nbsp;&nbsp; waveInStream = null;<br>&nbsp;&nbsp;&nbsp;&nbsp; writer.Flush();<br>&nbsp;&nbsp;&nbsp;&nbsp; writer.Close();<br>&nbsp;&nbsp;&nbsp;&nbsp; writer = null;<br>}<br><br>private static void waveInStream_DataAvailable(object sender, WaveInEventArgs e)<br> {<br>&nbsp;&nbsp;&nbsp;&nbsp; writer.WriteData(e.Buffer, 0, e.BytesRecorded);<br> }</p>\r\n<p>&nbsp;</p>\r\n<p>Very simple, except this wave the &quot;waveInStream_DataAvailable&quot; method never gets called. If I change it to use a WasapiCapture instance, the DataAvailable method gets called, and it all seems to work, but nothing can play the file back!</p>\r\n<p>&nbsp;</p>\r\n<p>Am I doing something wrong? Or is this a bug in NAudio?</p>",
+    "PostedDate": "2009-09-20T09:04:43.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "236652",
+    "ThreadId": "69523",
+    "Html": "<p>Hi there,</p>\r\n<p>By default WaveIn uses a Window handle for callback. Since it looks like you are in a console application, nothing will process the message queue for the window it creates.</p>\r\n<p>If you have the very latest NAudio code, you can call <strong>new WaveIn(WaveCallbackInfo.FunctionCallback()) </strong>and it should work for you. (older versions had a boolean property UseWindowCallbacks or something similar but I am bringing it into line with the way WaveOut works). Let me know if you encounter any problems.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-09-20T13:17:22.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "236656",
+    "ThreadId": "69523",
+    "Html": "<p>It works, that's excellent, thankyou very much!</p>",
+    "PostedDate": "2009-09-20T13:32:02.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

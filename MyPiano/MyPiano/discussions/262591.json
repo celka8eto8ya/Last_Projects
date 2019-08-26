@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "632239",
+    "ThreadId": "262591",
+    "Html": "\r\n<p>I am using the&nbsp;<span style=\"font-family:Consolas,'Courier New',Courier,monospace; white-space:pre\">Mp3FileReader, via the\r\n</span><span style=\"font-family:Consolas,'Courier New',Courier,monospace; white-space:pre\">Mp3FileReader&nbsp;(&nbsp;<span>string</span>&nbsp;mp3FileName&nbsp;) constructor. There are a few places in there that can explode (Exception) and this is causing problems,\r\n mainly resources not being cleaned up. Since this is an error during a ctor, the object does not get initialized nor disposed. I think it should be refactored to use the static Create pattern, like\r\n</span><span style=\"font-family:Consolas,'Courier New',Courier,monospace; white-space:pre\">System<span>.</span>Net<span>.</span><span>HttpWebRequest</span> does. Thoughts?</span></p>\r\n",
+    "PostedDate": "2011-06-23T19:31:07.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636201",
+    "ThreadId": "262591",
+    "Html": "<p>I'm not likely to change the public interface as that would be a breaking change. Mp3FileReader will hopefully get some more refactoring attention in the future, so I'll bear this in mind.</p>",
+    "PostedDate": "2011-07-01T13:38:05.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

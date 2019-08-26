@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When playing back audio through WasapiOut using AudioClientShareMode.Exclusive and useEventSync = false, and then pausing the playback, the output keeps repeatedly playing whatever is in the buffer.  Pause under shared mode works fine, and pause under both WaveOut and AsioOut works fine as well. ",
+    "LastUpdatedDate": "2015-02-10T03:11:13.93-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-01-30T12:52:11.63-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NAudio WasapiOut in exclusive mode keeps repeating the buffer when paused.",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 2,
+    "Id": 16465
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

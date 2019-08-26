@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "987564",
+    "ThreadId": "429778",
+    "Html": "\r\n<p>I want to monitor the microphone input and listen for a square wave type input. This is actually Morse Code and I want to sense the &quot;dots&quot; and the &quot;dashes&quot;. Programmatically I will have to determine which is which as the length of each\r\n and time in-between can fluctuate. My question is, what would be the best way to parse the input stream to check for differences in amplitude. There is bound to be some background noise so the input would be a low value then go high possibly with a leading\r\n spike. this high level would be maintained and then drop to a low value again. Any pointers on what commands I could use to monitor the stream of values?</p>\r\n",
+    "PostedDate": "2013-01-16T05:44:38.35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989739",
+    "ThreadId": "429778",
+    "Html": "\r\n<p>you can examine the value of each sample, by handling the DataAvailable property of WaveIn. This comes as a byte array, so if it was 16 bit samples, you'd use BitConverter.ToInt16 on each pair to get the sample value. Then implement your own logic to determine\r\n whether you are currently in a low or high level.</p>\r\n",
+    "PostedDate": "2013-01-21T06:43:23.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989748",
+    "ThreadId": "429778",
+    "Html": "\r\n<p>Could you show some sudo code as I'm not sure about the bitconverter on each pair. Many thanks.</p>\r\n",
+    "PostedDate": "2013-01-21T06:51:41.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989751",
+    "ThreadId": "429778",
+    "Html": "\r\n<p>for 16 bit audio it would be something like this:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">void</span> waveIn_DataAvailable(<span style=\"color:blue\">object</span> sender, WaveInEventArgs e)\r\n{\r\n    <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> i = 0; i &lt; e.BytesRecorded; i += 2)\r\n    {\r\n        <span style=\"color:blue\">short</span> sampleValue = BitConverter.ToInt16(e.Buffer, i);\r\n    }\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2013-01-21T06:56:45.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

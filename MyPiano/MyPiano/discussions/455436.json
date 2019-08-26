@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1088052",
+    "ThreadId": "455436",
+    "Html": "Hello,<br />\n<br />\nI am trying to get the ASIO audio input so that I can stream via TCP.  I have it working well with the WaveIn, but I'm only receiving static on the TCP client when I try the same thing with ASIO.  \n<br />\n<pre><code> void asioOut_AudioAvailable(object sender, AsioAudioAvailableEventArgs e)\n        {\n            if (s == null)\n            {\n                s = myList.AcceptSocket();\n            }\n                \n                var samples = e.GetAsInterleavedSamples();\n\n//lame attempt to convert to byte array\n            var byteArray = new byte[samples.Length * 4];\n            Buffer.BlockCopy(samples, 0, byteArray, 0, byteArray.Length);\n//////\n\n            byte[] encoded = codec.Encode(byteArray, 0, byteArray.Length);\n            s.Send(encoded, SocketFlags.None);\n\n\n            writer.WriteSamples(samples, 0, samples.Length);\n        }</code></pre>\n\nI think my problem is 2 fold:<br />\n<ul>\n<li>the AsioSampleType is being set as int32LSB - I believe I need this as a 16 bit file.  Do I have to dither this on the fly before sending?</li>\n<li>\nAlso, the e.GetAsInterleavedSamples(); is returning as a float array.  How I convert to byte array?<br />\n</li>\n</ul>\nThe WriteSample is writing the recording to a .wav file, so I know I have my input working.<br />\n<br />\nThanks!  Having a lot of fun experimenting with this.<br />\n<br />\n-Mike<br />\n",
+    "PostedDate": "2013-09-03T22:14:55.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1088550",
+    "ThreadId": "455436",
+    "Html": "Did some more tests - I think something is slowing down the transmission of audio and causing the static sound.<br />\n<br />\nIf I comment out the section that transmits audio via TCP the recording sounds crystal clear.  If I add it back in, the recording is recorded with static and my voice sounds slowed down. <br />\n<pre><code> var byteArray = new byte[samples.Length * 4];\n            Buffer.BlockCopy(samples, 0, byteArray, 0, byteArray.Length);\n\n            byte[] encoded = codec.Encode(byteArray, 0, byteArray.Length);\n            s.Send(encoded, SocketFlags.None);</code></pre>\n\nI'm getting the audio on my remote computer but that is also slowed down quite a bit.  My voice gets more and mroe spaced out the longer I run the app.  Any recommendations for implementing this better?<br />\n",
+    "PostedDate": "2013-09-04T20:15:38.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1090194",
+    "ThreadId": "455436",
+    "Html": "Sounds like you need to convert from float to 16 bit samples. Convert each sample by multiplying by 32767 and casting to short. Having made a short array, you can use Buffer.BlockCopy to copy into a byte array for sending. Or you can use NAudio's WaveBuffer which uses a clever trick to let you write into a short array and then send it as a byte array (although take care not to overwrite the array)/<br />\n",
+    "PostedDate": "2013-09-09T07:06:20.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1090433",
+    "ThreadId": "455436",
+    "Html": "Thanks for your help Mark, I did manage to get this working by casting to short.  I'll keep plugging away.  I'm learning so much from this library - thanks!<br />\n",
+    "PostedDate": "2013-09-09T21:13:59.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

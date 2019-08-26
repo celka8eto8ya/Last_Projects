@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1202355",
+    "ThreadId": "528846",
+    "Html": "Hi Mark,\r<br />\n<br />\nAre you fine with adding an extra function to all the wave formats that shows detailed info?\r<br />\n<br />\nSomething like \r<br />\nToString(bool DetailedInfo) \r<br />\nor \r<br />\nList&lt;string&gt; GetDetailedInfo()\r<br />\n<br />\nI'd like to display detailed information in my app but at the moment the standard ToString() doesn't show much info, only the basics.<br />\n<pre><code>Format: AAC\nAudioProfileLevel: AAC_LC\nPayload: ADTS\nChannels: 2\nSampleRate: 44100\nBitsPerSample: 0\nAverageBytesPerSecond: 24698\nBlockAlign: 1\nExtraSize: 14\nExtra data: 01-00-FE-00-00-00-00-00-00-00-00-00-12-10\nSampleRateOutput: 44100\nChannelsOutput: 2\nFrameLength: 1024\nCoreCoderDependant: False\nExtensions: False</code></pre>\n\n",
+    "PostedDate": "2014-02-04T00:16:10.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215872",
+    "ThreadId": "528846",
+    "Html": "I usually do things like this as extension methods to start with in my own applications, and only move them into NAudio if I think it is going to be useful to a lot of people. The demo apps have a lot of code like this, waiting to be promoted into NAudio, so the ACM code enumeration page maybe could showcase this feature.\r<br />\n<br />\nBTW I did a trial of your MediaFoundationReader changes today. Unfortunately I was on a Windows 7 dev machine, so the playing from stream doesn't work. It's a shame it seems to be so hard, but I'd really like to have at least Win 7 support in there. I've got some attempts of my own creating a managed implementation of IMFByteStream, but it is currently going wrong with the IMFAsyncCallback implementation.\r<br />\n<br />\nI might just pull your ACM fixes in for now, and come up with a future plan of how we can get MF stream reading support (I do have another fallback option which I hope to blog about soon).<br />\n",
+    "PostedDate": "2014-02-27T14:33:39.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215918",
+    "ThreadId": "528846",
+    "Html": "thats odd, i thought the MF function used was valid in win7. i will do my own testing<br />\n",
+    "PostedDate": "2014-02-27T18:37:03.69-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215921",
+    "ThreadId": "528846",
+    "Html": "Found the problem.\r<br />\n<br />\nWe are using MFCreateMFByteStreamOnStreamEx\r<br />\n<a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/hh162754%28v=vs.85%29.aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-us/library/windows/desktop/hh162754%28v=vs.85%29.aspx</a> (Win8 up)\r<br />\n<br />\ninstead of MFCreateMFByteStreamOnStream\r<br />\n<a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/dd388095%28v=vs.85%29.aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-us/library/windows/desktop/dd388095%28v=vs.85%29.aspx</a> (Win7 up)<br />\n",
+    "PostedDate": "2014-02-27T18:53:04.517-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215969",
+    "ThreadId": "528846",
+    "Html": "yes, I tried to use MFCreateMFByteStreamOnStream instead, but that just crashed for me. <br />\n",
+    "PostedDate": "2014-02-27T23:52:36.237-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215999",
+    "ThreadId": "528846",
+    "Html": "DLL entry not found? Dont have access to a Win7 machine right now.\r<br />\n<br />\nI suppose if all else fails we could create our own MFCreateMFByteStreamOnStream function.<br />\n",
+    "PostedDate": "2014-02-28T01:03:50.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1216011",
+    "ThreadId": "528846",
+    "Html": "no the method was found. I think it was an access violation or similar. I'll test again and see if I can get further.\r<br />\nI'll also post up my current attempt at getting a managed MFByteStream<br />\n",
+    "PostedDate": "2014-02-28T01:48:12.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217512",
+    "ThreadId": "528846",
+    "Html": "is the bytestream i posted up causing the exception in win7? it works fine in win 8<br />\n",
+    "PostedDate": "2014-03-02T20:56:08.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217734",
+    "ThreadId": "528846",
+    "Html": "yes, I'll try it again if I get the chance. My home development PC is Win 8.1 but I have a Win 7 box at work so I'll try to test it on that again<br />\n",
+    "PostedDate": "2014-03-03T02:03:10.267-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

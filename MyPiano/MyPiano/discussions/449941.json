@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1068046",
+    "ThreadId": "449941",
+    "Html": "Hi, I'm trying to read samples from a sound file into an array of floats but it seems that the array gets filled with 0s each time, I have no clue what I'm doing wrong...<br />\n<pre><code>class Naudio{\npublic static void Main(String path){\n\n            var reader = new AudioFileReader(path);\n            var mysample = new MySampleProvider(reader);\n            sampleData = new float[100];\n            mysample.Read(sampleData, 0, 100);\n            for (int i = 0; i &lt; 100; i++)\n            {\n                System.Console.WriteLine(sampleData[0] + &quot;test&quot;);\n            }\n\n}\n}\n\nclass MySampleProvider : ISampleProvider\n{\n    private readonly ISampleProvider source;\n\n    public MySampleProvider(ISampleProvider source)\n    {\n        this.source = source;\n    }\n\n    public int Read(float[] buffer, int offset, int count)\n    {\n        int samplesRead = source.Read(buffer, offset, count);\n        // TODO: examine and optionally change the contents of buffer\n        return samplesRead;\n    }\n\n    public WaveFormat WaveFormat\n    {\n        get { return source.WaveFormat; }\n    }\n}</code></pre>\n\nI've been tearing my hair out for days, any help at all is appreciated.<br />\n",
+    "PostedDate": "2013-07-14T06:01:30.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1068389",
+    "ThreadId": "449941",
+    "Html": "it might be because you are trying to read such a low number of samples - only 100 which is just 2ms worth of sound. Try increasing the amount you read at once and see if that helps<br />\n",
+    "PostedDate": "2013-07-15T06:33:53.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1068410",
+    "ThreadId": "449941",
+    "Html": "No dice, it only seems to work if I put the mysample.Read(sampleData, 0, 1000); in a for loop that loops 1000 times. It's strange I have no clue why it works with the loop and not without it...<br />\n",
+    "PostedDate": "2013-07-15T07:09:01.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1068411",
+    "ThreadId": "449941",
+    "Html": "well the start of most files would likely be silence, so it would be quite normal for the first few hundred or thousand samples to be all zeros<br />\n",
+    "PostedDate": "2013-07-15T07:10:36.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1068416",
+    "ThreadId": "449941",
+    "Html": "Really? Even for a file that starts instantaneously? Sorry, I'm not exactly an expert with sound related programming or anything related to sound at all...<br />\n<br />\nEdit:<br />\n<pre><code> while(mysample.Read(sampleData, 0, 8) != 0){\n                    mysample.Read(sampleData, 0, 8);\n                }</code></pre>\n\nThis seems to solve the problem based on your earlier post, anyhow how would I find the first possible sample in an audio file? Would I do something like multiply the time (in seconds) * samples per second and divide that by a certain number which becomes our read method's sample count?<br />\n",
+    "PostedDate": "2013-07-15T07:20:03.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1068420",
+    "ThreadId": "449941",
+    "Html": "Well I haven't seen your audio file, so I'm only guessing. 100 samples is only 2ms though, so it wouldn't surprise me at all if you had an empty buffer in your first read. One thing you haven't said is what the return value of Read is in each case. Read tells you how many samples it wrote into the buffer. Just because you asked for 100, doesn't mean you got 100, although the intention is that it only returns less than the requested count if the end of the file has been reached.<br />\n",
+    "PostedDate": "2013-07-15T07:25:48.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1068431",
+    "ThreadId": "449941",
+    "Html": "Alright, System.Console.WriteLine(mysample.Read(sampleData, 0, 8)); returns 8 if called before the while statement but if called after it returns 0.<br />\n<br />\nEdit: I also tried putting System.Console.WriteLine(mysample.Read(sampleData, 0, 8)); in the while statement, but the console just flickers with 8s...<br />\n<br />\nEdit 2: I tried a number like 1024 samples and it also flickered but then it stopped with a 0. I also tried it with 1023 and did the sample thing, this isn't telling me much with regards to the number I should read however...<br />\n<br />\nEdit 3: taking forever, I tried to retrieve 1 sample until the thing stopped which had a lower value for the first array value then the latter two.<br />\n<br />\nEdit 4: Well I just figured I'm in a pickle, the number at which the audible samples start is prime so yea...<br />\n",
+    "PostedDate": "2013-07-15T07:34:03.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

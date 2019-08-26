@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "724648",
+    "ThreadId": "286031",
+    "Html": "\r\n<p style=\"margin:0px; padding:0px\">can i get continuos stream by internet and tell it by program (vb.net) that must record every 20 seconds for minute without stop record stream ?</p>\r\n",
+    "PostedDate": "2012-01-13T00:37:42.517-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724661",
+    "ThreadId": "286031",
+    "Html": "<p>I don't see why not. You need to know what compression type you are receiving, but just write 20 seconds worth to a file, and then throw away the next 20 seconds and so on.</p>",
+    "PostedDate": "2012-01-13T01:26:41.677-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724664",
+    "ThreadId": "286031",
+    "Html": "<p>When&nbsp;I capture where record stream go ? Inside memory ? like arraybyte ?</p>",
+    "PostedDate": "2012-01-13T01:34:42.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724667",
+    "ThreadId": "286031",
+    "Html": "<p>well NAudio doesn't do any receiving of audio from the internet - you need to write that bit yourself, so it depends on your program. If you are using a NetworkStream, you will get data into a byte array, and need to copy it out.</p>",
+    "PostedDate": "2012-01-13T01:37:36.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730873",
+    "ThreadId": "286031",
+    "Html": "<p>Then how would you pass the data if its a continuous stream? Obviously this would have to be in its own thread. It wouldn't&nbsp;necessarily&nbsp;need to do play back. Just need to figure out how to constantly be able to put the stream into the file is the big issue, meanwhile the 2nd issue would be able to figure out when the internet track changed. The stream does provide track name though so figuring that out is also something to be done.</p>",
+    "PostedDate": "2012-01-25T18:34:11.68-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730989",
+    "ThreadId": "286031",
+    "Html": "<p>What you would typically do is put the audio you have received over the network into a BufferedWaveProvider if you want to play it as it arrives, or just use a WaveFileWriter if you want to save it to disk.</p>",
+    "PostedDate": "2012-01-26T02:17:36.177-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732757",
+    "ThreadId": "286031",
+    "Html": "<p>I haven't need to play stream audio, i must only record 20 seconds every 1 minute.<br />But i must get stream audio from different web sites ﻿﻿simultaneausly</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-01-30T10:10:07.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732760",
+    "ThreadId": "286031",
+    "Html": "<p>well just discard packets for 40 seconds, and then for 20 seconds write them into a WAV file writer. If you need to mix together multiple streams, then your program is quite a bit more complicated, and you would need to use BufferedWaveProviders as an input to a mixer.</p>",
+    "PostedDate": "2012-01-30T10:18:14.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732845",
+    "ThreadId": "286031",
+    "Html": "<p>I must record separately</p>",
+    "PostedDate": "2012-01-30T13:18:47.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

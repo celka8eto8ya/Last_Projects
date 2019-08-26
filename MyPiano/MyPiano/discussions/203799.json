@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "414163",
+    "ThreadId": "203799",
+    "Html": "<p>I found an example on line of someone that had played an MP3 through his phone line.&nbsp; This was the first I had ever seen NAudio, and I had been looking for a library to help me do this for a week already.&nbsp;</p>\r\n<p>That example is here:</p>\r\n<p>http://stackoverflow.com/questions/184683/play-audio-from-a-stream-using-c</p>\r\n<p>I'm still trying to learn the NAudio structure, and am trying to figure out how I would go about doing something like this in a little more simple of a form.&nbsp; I just want to play one single audio .wav file through the modem.&nbsp; Which WaveOut type would be recommended for this, and does anyone have any sort of sample code that shows how to do this?</p>\r\n<p>Any help you can give would be greatly appreciated.&nbsp; I'm continuing to study the examples that came with the library, and any other examples I can get my hands on to try to find a good solution.</p>\r\n<p>Mike</p>",
+    "PostedDate": "2010-03-04T07:18:33.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "414238",
+    "ThreadId": "203799",
+    "Html": "<p>FYI for anyone reading this, I'm dumb.&nbsp; I read through that code example about 4am, and I don't know why, but I swear I thought it was sending the mp3 through the phone.&nbsp; Obviously, it's not.&nbsp; If anyone has any great advice on how to do this, please, PLEASE, send it my way, preferably with a good code example and the correct using statements and references needed.&nbsp; I really need to get this test program working last week, and I'm having a hell of a time.</p>\r\n<p>Mike</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-04T09:48:42.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "416959",
+    "ThreadId": "203799",
+    "Html": "<p>Hi Mike,</p>\r\n<p>I think this would only be possible if you have a WaveOut device that represents the modem. If you did have it, theoretically you could play anything to it.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-11T06:37:43.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

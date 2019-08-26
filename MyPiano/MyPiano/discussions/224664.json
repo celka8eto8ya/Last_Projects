@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "484217",
+    "ThreadId": "224664",
+    "Html": "<p>For time now i using the lib and now i tried to compress the wav to mp3.But o major problem came up.</p>\r\n<p>If i use that one</p>\r\n<p>Me.waveIn = New WaveIn<br>Me.waveIn.WaveFormat = New NAudio.Wave.WaveFormat(&amp;H1F40, 1)</p>\r\n<p>Everything works nice</p>\r\n<p>but if i try that</p>\r\n<p>&nbsp;Me.waveIn = New WasapiCapture(DirectCast(Me.comboDevices.SelectedItem, MMDevice))</p>\r\n<p>The Outcome wav it isnt work.(It is like damaged) the lame it doesn't convert to mp3,i think because the wav file missed something.</p>\r\n<p>Any help about that it will be helpful.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-08-24T09:07:20.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "489652",
+    "ThreadId": "224664",
+    "Html": "<p>how are you writing the WAV file? You are only showing how you are doing the capture</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-06T03:39:13.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1467409",
+    "ThreadId": "652725",
+    "Html": "I have previously used a circular capture buffer to sample audio using DirectSound. Is that functionality available in Naudio? Ideally I would like a 5 second circular buffer that I can &quot;dip&quot; into every 200mS. Occasionally the interval might be longer. Obviously I would need a pointer to the data that has arrived since the last time I checked it. In DirectSound I can use &quot;GetCurrentPosition&quot; of the capture buffer. Does Naudio support anything like that?\r<br />\n<br />\nMany thanks.\r<br />\n<br />\nPaul.<br />\n",
+    "PostedDate": "2016-03-20T06:55:06.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1467554",
+    "ThreadId": "652725",
+    "Html": "NAudio offers a &quot;BufferedWaveProvider&quot; for that task, which behind the scenes used a circular buffer.\r<br />\nThis class got improved some time ago and should be thread-safe now if I remember correctly.<br />\n",
+    "PostedDate": "2016-03-21T14:10:13.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1467677",
+    "ThreadId": "652725",
+    "Html": "Many thanks for that Freefall. I will look into the BufferedWaveProvider.<br />\n",
+    "PostedDate": "2016-03-22T12:02:10.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

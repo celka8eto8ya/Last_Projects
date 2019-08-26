@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "156736",
+    "ThreadId": "46859",
+    "Html": "On Vista, I am able to play a certain file through Media Player, however when I attempt to read it with the WaveFileReader I receive &quot;System.IO.EndOfStreamException:&nbsp;Unable&nbsp;to&nbsp;read&nbsp;beyond&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;stream&quot;. Other wav files are read successfully by WaveFileReader.<br>\r\n<br>\r\nI need to be able to handle or prevent this from occurring. Any suggestions?<br>\r\n<br>\r\nusing (WaveFileReader sourceStream = new WaveFileReader(location)){...}<br>\r\n<br>\r\n<div>at <span style=\"color:rgb(0, 139, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\">System</span>.IO</span>.__Error</span>.EndOfFile</span>()<br>\r\nat\r\n<span style=\"color:rgb(0, 139, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\">System</span>.IO</span>.BinaryReader</span>.FillBuffer</span>(<span style=\"color:rgb(0, 0, 139)\">Int32</span>&nbsp;<span style=\"color:rgb(0, 0, 0)\">numBytes</span>)<br>\r\nat <span style=\"color:rgb(0, 139, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\">System</span>.IO</span>.BinaryReader</span>.ReadInt32</span>()<br>\r\nat\r\n<span style=\"color:rgb(0, 139, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\">NAudio</span>.Wave</span>.WaveFileReader</span>.ReadWaveHeader</span>(<span style=\"color:rgb(0, 0, 139)\">Stream</span>&nbsp;<span style=\"color:rgb(0, 0, 0)\">stream</span>,&nbsp;<span style=\"color:rgb(0, 0, 255)\">ref&nbsp;</span><span style=\"color:rgb(0, 0, 139)\">WaveFormat</span>&nbsp;<span style=\"color:rgb(0, 0, 0)\">format</span>,&nbsp;<span style=\"color:rgb(0, 0, 255)\">ref&nbsp;</span><span style=\"color:rgb(0, 0, 139)\">Int64</span>&nbsp;<span style=\"color:rgb(0, 0, 0)\">dataChunkPosition</span>,&nbsp;<span style=\"color:rgb(0, 0, 255)\">ref&nbsp;</span><span style=\"color:rgb(0, 0, 139)\">Int32</span>&nbsp;<span style=\"color:rgb(0, 0, 0)\">dataChunkLength</span>,&nbsp;<span style=\"color:rgb(0, 0, 139)\">List`1</span>&nbsp;<span style=\"color:rgb(0, 0, 0)\">chunks</span>)<br>\r\nat <span style=\"color:rgb(0, 139, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\">NAudio</span>.Wave</span>.WaveFileReader</span>..ctor</span>(<span style=\"color:rgb(0, 0, 139)\">Stream</span>&nbsp;<span style=\"color:rgb(0, 0, 0)\">inputStream</span>)<br>\r\nat <span style=\"color:rgb(0, 139, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\"><span style=\"color:rgb(0, 0, 139)\">NAudio</span>.Wave</span>.WaveFileReader</span>..ctor</span>(<span style=\"color:rgb(0, 0, 139)\">String</span>&nbsp;<span style=\"color:rgb(0, 0, 0)\">waveFile</span>)<br>\r\n<a><br>\r\n</a>\r\n</div>\r\n",
+    "PostedDate": "2009-02-11T10:39:28.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "156771",
+    "ThreadId": "46859",
+    "Html": "Have you tried with the very latest code from the source code tab? I fixed a similar issue very recently. <br>\r\nIf that doesn't work, upload your wav file somewhere, and I will have a look to see what is causing the issue.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2009-02-11T12:26:03.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "157037",
+    "ThreadId": "46859",
+    "Html": "Mark, thanks for responding. I am using the latest: v2.0.50727. I sent you an email which you can respond to, so that I can send you the wav file. \r\n",
+    "PostedDate": "2009-02-12T06:41:14.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "990710",
+    "ThreadId": "430541",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>how can I increase Microphone boost and volume using NAudio library?</p>\r\n<p>Is it possible?</p>\r\n",
+    "PostedDate": "2013-01-22T23:05:31.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990820",
+    "ThreadId": "430541",
+    "Html": "\r\n<p>NAudio does contain wrappers for the Windows mixer... APIs, which in theory can be used for this. In practice, it turns out to be incredibly hard to work out exactly which control you need to adjust for your microphone. What I found was that code which worked\r\n on XP wouldn't work on Vista and above. More concerningly, the newer audio APIs (e.g. WASAPI) seem to offer less access to these type of parameters, with Microsoft preferring you to pop open the Windows sound control panel and let the user adjust the settings\r\n themselves.</p>\r\n<p>Have a look at my <a href=\"http://voicerecorder.codeplex.com/\">voice recorder</a> app which tries to set the microphone level.</p>\r\n",
+    "PostedDate": "2013-01-23T03:20:04.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990908",
+    "ThreadId": "430541",
+    "Html": "\r\n<p>Thank you!</p>\r\n",
+    "PostedDate": "2013-01-23T05:15:20.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994478",
+    "ThreadId": "430541",
+    "Html": "Interesting. Your voice recorder app only sets the windows volume control to it's max. How would you boost the audio signal, ie multiply it's amplitude with a given value and output it in realtime, so you can create virtually any volume you desire up to audio distortion?<br />\n",
+    "PostedDate": "2013-01-30T18:55:43.203-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994491",
+    "ThreadId": "430541",
+    "Html": "Don't bother I found it myself.\r<br />\n<br />\nAs <a href=\"http://stackoverflow.com/questions/5694326/record-input-from-naudio-wavein-and-output-to-naudio-waveout\" rel=\"nofollow\">http://stackoverflow.com/questions/5694326/record-input-from-naudio-wavein-and-output-to-naudio-waveout</a> helped me well for the recording part I decided to share the amplification part for those who need it.<br />\n<pre><code>        int Verstärkung = 30;\n        void wi_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            //bwp2.AddSamples(e.Buffer, 0, e.BytesRecorded);\n            var erg = new byte[e.BytesRecorded];\n\n            for (int i = 0; i &lt; e.BytesRecorded; i += 2)\n            {\n                var sample = (short)(e.Buffer[i] | (e.Buffer[i + 1] &lt;&lt; 8));\n                erg[i] = (byte)((sample * Verstärkung) &amp; 0xff);\n                erg[i + 1] = (byte)(((sample * Verstärkung) &gt;&gt; 8) &amp; 0xff);\n            }\n            bwp2.AddSamples(erg, 0, e.BytesRecorded);\n        }</code></pre>\n\nEnter your desired amplification value for Verstärkung(80 seems to distort everything, use a slider to get to the limit)\r<br />\n<br />\nOne last question though: how do I improve latency?<br />\n",
+    "PostedDate": "2013-01-30T20:10:51.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994523",
+    "ThreadId": "430541",
+    "Html": "You can set the buffer size on WaveIn before you start recording. WaveIn doesn't support really low latency though, but you might find you can get down to around 50ms.\r<br />\nYour method of amplifying the sound will only work up to a point. It risks overflow as you are staying in 16 bit mode. Normally I would convert the output of the buffered wave provider to float. Then you can freely amplify as much as you like. Then, before converting back down to 16 bit to play or write to a WAV file, you clip any samples that go outside the +/- 1.0 range.\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-01-30T22:32:33.027-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994526",
+    "ThreadId": "430541",
+    "Html": "What does that look like in code for my example?<br />\n<br />\nStarting with wi.BufferMilliseconds = 50; I guess<br />\n",
+    "PostedDate": "2013-01-30T22:35:44.203-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "994762",
+    "ThreadId": "430541",
+    "Html": "yes, that's right. You could use a Pcm16BitToSampleProvider to get to IEEE float, then use a VolumeSampleProvider to modify the volume, before finally using a SampleToWaveprovider16 to clip and go back to 16 bit\r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-01-31T08:37:59.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

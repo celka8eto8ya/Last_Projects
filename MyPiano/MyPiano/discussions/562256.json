@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1293965",
+    "ThreadId": "562256",
+    "Html": "Hi! It's the first time I'm using NAudio and C# so i figure out that this is a silly question, but I tried to look in the discussions and I haven't find anything. I tried to understand how MidiFileMapper uses the MidiFileReader class but it seems too complicated for me, and I think that maybe is a simple question.\r<br />\n<br />\nOnce I open the midi file, I just want to extract the absoluteTime and pitch information. So for example I open the midifile:\r<br />\n<br />\n MidiFile mf = new MidiFile(open.FileName, false); \r<br />\n             <br />\nBut the problem I find here, is ¿¿how can I extract the pitch information from mf.Events[0]??\r<br />\n<br />\nFor example:\r<br />\n<br />\n foreach (MidiEvent note in mf.Events[0])<br />\n<pre><code>            {\n                if (note.CommandCode == MidiCommandCode.NoteOn)\n                {\n                    AbsoluteTime[i] = note.AbsoluteTime;\n                    pitchNumber[i] = ????????\n                    bol[i]=true;\n                }\n                else\n                {\n                    bol[i] = false;\n                }\n                i = i + 1;\n\n            }</code></pre>\n\nI will be very grateful if someone can help me here.\r<br />\nThanks!\r<br />\n<br />\nÁngel<br />\n",
+    "PostedDate": "2014-08-27T08:32:06.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1298078",
+    "ThreadId": "562256",
+    "Html": "well MIDI doesn't include pitch information directly. Look at the NoteNumber property of the NoteEvent, and use that to calculate the pitch. This <a href=\"http://www.phys.unsw.edu.au/jw/notes.html\" rel=\"nofollow\">reference</a> may be useful.<br />\n",
+    "PostedDate": "2014-09-02T04:24:33.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1298115",
+    "ThreadId": "562256",
+    "Html": "Yes! That's exactly what I want! Just the NoteNumber, not the frequency. But as I have said I'm a really noob using NAudio and C#, and my problem is that I don't know how to extract the NoteEvent from the MidiFile. If I try to do foreach (NoteEvent note in mf.Events[0])  I get an Exception. How can I convert an object type NAudio.Midi.TimeSignatureEvent to NAudio.Midi.NoteEvent? \r<br />\n<br />\nThank you very much!\r<br />\n<br />\nÁngel<br />\n",
+    "PostedDate": "2014-09-02T05:47:50.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1298148",
+    "ThreadId": "562256",
+    "Html": "only note events can be cast to NoteEvent. So only cast if you get note.CommandCode == MidiCommandCode.NoteOn)<br />\n",
+    "PostedDate": "2014-09-02T07:11:53.173-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1298189",
+    "ThreadId": "562256",
+    "Html": "It works now! Thanks!<br />\n",
+    "PostedDate": "2014-09-02T08:20:59.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

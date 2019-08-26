@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1350120",
+    "ThreadId": "579758",
+    "Html": "Hi friends,\r<br />\n<br />\nMy Sound Device: Focusrite Scarlett 18i20 (18 inputs 20 outputs)\r<br />\nI have a socket connection. This connection send to voice data on Broadcast. <br />\n<h2>I use to NAudio.dll and ASIO Driver. I connect my device and recorded wav sound file(ASIO) but i can't send asio live sound(Sample) on Socket.</h2>\n//Declare \r<br />\nprivate Socket socket;\r<br />\nprivate IPEndPoint iep;\r<br />\n<br />\n//My Socket Connection Config\r<br />\nsocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);\r<br />\nsocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);\r<br />\niep = new IPEndPoint(IPAddress.Parse(host), port);\r<br />\n<br />\nMy Voice Stream Listener Program Decode(1 Channel(Mono) PCM 16Bit 8000 or 44100 SampleRate) c# and android platform code...<br />\n<h2>I need &quot;GetAsInterleavedSamples&quot; data convert to (PCM 16Bit 8000or41000 SampleRate Mono) data byte[] and send socket...</h2>\nprivate void AsioAudioAvailable(object sender, AsioAudioAvailableEventArgs e)\r<br />\n{<br />\n<pre><code>socket.sendTo(byte[] buffer, EndPoint remoteEP); </code></pre>\n\n}<br />\n",
+    "PostedDate": "2015-02-08T12:09:06.697-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1351949",
+    "ThreadId": "579758",
+    "Html": "Please check out <a href=\"http://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET\" rel=\"nofollow\">this article</a> to learn more about converting between different audio formats with NAudio.<br />\n",
+    "PostedDate": "2015-02-12T13:34:08.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

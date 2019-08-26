@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "506448",
+    "ThreadId": "230687",
+    "Html": "<p>Is there a way to process the buffer in WaveIn's DataAvailable event to return a value from 0-100 in terms of volume? &nbsp;</p>",
+    "PostedDate": "2010-10-13T00:31:05.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "506476",
+    "ThreadId": "230687",
+    "Html": "<p>have a look at the <a href=\"http://voicerecorder.codeplex.com\">voicerecorder</a> sample project for an example of how to show a volume meter from WaveIn</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-10-13T01:23:01.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

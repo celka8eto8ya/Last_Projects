@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "595090",
+    "ThreadId": "253353",
+    "Html": "\r\n<p>I've seems found you have a little patch before to let me select the device to play.</p>\r\n<p>But, How can I browse and let me know what devices i can use and get its IntPtr pointer?</p>\r\n",
+    "PostedDate": "2011-04-10T22:56:37.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "597246",
+    "ThreadId": "253353",
+    "Html": "<p>I've checked in a modification that allows easier selection of DirectSound output devices. Have a look at the latest NAudioDemo to see it in action</p>",
+    "PostedDate": "2011-04-14T07:52:27.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598425",
+    "ThreadId": "253353",
+    "Html": "<p>the where is the \"Default device\" in the DS and waveout API?</p>",
+    "PostedDate": "2011-04-16T09:38:54.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598472",
+    "ThreadId": "253353",
+    "Html": "<p>WaveOut default device is 0 (i.e. don't make any changes). For DirectSound default device, just call the default constructor without specifying a device.</p>",
+    "PostedDate": "2011-04-16T12:20:10.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598569",
+    "ThreadId": "253353",
+    "Html": "<p>But I've ever seen some api or softwares such like portaudio, winamp&nbsp;and foobar etc, have shown one&nbsp;item named seems like&nbsp;\"Main Audio Device Driver\" in waveout and DS, and this name would be auto&nbsp;shown in different languages in the OS of different languages. So this options should be loaded from the OS, and not from the API, components or softwares.</p>\r\n<p>Then how can I use it?</p>",
+    "PostedDate": "2011-04-16T21:49:11.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "599214",
+    "ThreadId": "253353",
+    "Html": "<p>I don't think they get the name \"default device\" from the OS. If they do, I don't know how it is done.</p>",
+    "PostedDate": "2011-04-18T09:28:41.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

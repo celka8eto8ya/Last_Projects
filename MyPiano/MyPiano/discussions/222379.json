@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "476184",
+    "ThreadId": "222379",
+    "Html": "<p>I'm not sure what the problem is but in a WPF application when I create a WaveOut object in a thread the Read method derived from&nbsp;WaveProvider32 doesn't get called. If I put the code in the main thread it works. As far as I know I'm not using Window callbacks and the thread is still alive. The problem occurs if the 'new WaveOut()' instruction is put in a thread. Maybe I've missed the part where it says WaveOut device must be created in the Main thread ?</p>\r\n<p>My code looks like this:</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>Thread audioThread = <span style=\"color:blue\">new</span> Thread(<span style=\"color:blue\">new</span> ThreadStart(StartAudioThread));\r\naudioThread.Start();\r\n\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> StartAudioThread()\r\n{\r\n    WaveStream ws = <span style=\"color:blue\">new</span> WaveStream();\r\n    IWavePlayer playbackDevice = <span style=\"color:blue\">new</span> WaveOut();\r\n    playbackDevice.Init(ws);\r\n    playbackDevice.Play();\r\n\r\n    <span style=\"color:green\">// WaveStream derived class Read method is called just 3 times before</span>\r\n    <span style=\"color:green\">// 'while (true)' line is hit in debugger, after Read method is never called again</span>\r\n    <span style=\"color:blue\">while</span> (<span style=\"color:blue\">true</span>)\r\n        Thread.Sleep(200);\r\n}</pre>\r\n<pre><br></pre>\r\n<pre><div style=\"color:black;background-color:white\"><pre><span style=\"color:green\">// Creating the device in the main UI Thread works</span>\r\nIWavePlayer playbackDevice = <span style=\"color:blue\">new</span> WaveOut();\r\n\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> StartAudioThread()\r\n{\r\n    WaveStream ws = <span style=\"color:blue\">new</span> WaveStream();\r\n    playbackDevice.Init(ws);\r\n    playbackDevice.Play();\r\n\r\n    <span style=\"color:blue\">while</span> (<span style=\"color:blue\">true</span>)\r\n        Thread.Sleep(200);\r\n}</pre>\r\n</div>\r\n</pre>\r\n</div>",
+    "PostedDate": "2010-08-03T16:33:08.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "478010",
+    "ThreadId": "222379",
+    "Html": "<p>when you create WaveOut you can call a constructor that specifies the callback mechanism. make sure you are using function callbacks</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-08-09T03:11:47.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "479422",
+    "ThreadId": "222379",
+    "Html": "<p>Thank you so much for your reply!</p>\r\n<p>I solved all my problems with Multithread UI freezing playback by changing the constructor call to:</p>\r\n<p>&nbsp;new WaveOut(WaveCallbackInfo.FunctionCallback());</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-08-11T16:48:14.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

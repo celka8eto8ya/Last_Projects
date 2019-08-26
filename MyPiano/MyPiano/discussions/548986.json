@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1257337",
+    "ThreadId": "548986",
+    "Html": "Hi,\r<br />\n<br />\nI'm trying to decode array of bytes from DSP TrueSpeech to PCM. When we convert this array as part of streaming (divide it to packets) we can hear some strange &quot;Beep&quot; tones after the decoding.\r<br />\n<br />\nWe tried to decode the entire WAV file in one piece and we didn't get those Beeps. Currently we are using Alvas.net for it, but we tried also with NAudio and got the same reaults?\r<br />\n<br />\nThis is basically how we're decoding the relevant  buffer<br />\n<pre><code>byte[] pcm;\n\n            TrueSpeechWaveFormat tspf = new TrueSpeechWaveFormat();\n            using (Stream org = new MemoryStream(buffer))\n            {\n                using (var a = new RawSourceWaveStream(org, tspf))\n                {\n                    using (var straem = WaveFormatConversionStream.CreatePcmStream(a))\n                    {\n                        pcm = new byte[straem.Length];\n                        straem.Position = 0;\n                        straem.Read(pcm, 0, (int)straem.Length);\n                    }\n                }\n            }\n            return pcm;</code></pre>\n\nMy questions: \r<br />\n1)Is anyone familiar with this kind of behavior? \r<br />\n2)Do you have an idea what can we do?\r<br />\n<br />\nThanks Ziv<br />\n",
+    "PostedDate": "2014-06-18T00:28:12.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260965",
+    "ThreadId": "548986",
+    "Html": "with codecs, they often retain state from call to call, so that may account for the tones. Just create a single AcmStream and use that to convert each buffer as it becomes available.<br />\n",
+    "PostedDate": "2014-06-29T15:33:11.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

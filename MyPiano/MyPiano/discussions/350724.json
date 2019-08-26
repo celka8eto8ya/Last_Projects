@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "818098",
+    "ThreadId": "350724",
+    "Html": "\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>I have a waveOut that plays inside a while loop which receives data from a udp socket.<br>But unfortunately it trows an error after around 30 secs saying &quot;MemoryAllocationError calling waveOutOpen&quot;<br>I use the below lines of code to achieve this.<br><br>            waveOutStream = <span style=\"color:blue\">new</span> WaveOut();\r\n\r\n            <span style=\"color:blue\">while</span> (IsAudioTransferActive)\r\n            {\r\n                receivedAudioData = audioUDPClient.Receive(<span style=\"color:blue\">ref</span> senderEP);\r\n                audioDataStream = <span style=\"color:blue\">new</span> MemoryStream(receivedAudioData);\r\n                receivedRawAudioData = <span style=\"color:blue\">new</span> RawSourceWaveStream(audioDataStream, audioFormat);\r\n                waveOutStream.Init(receivedRawAudioData);\r\n                waveOutStream.Play();\r\n            }\r\n</pre>\r\n</div>\r\nThanks in advance.\r\n<p></p>\r\n",
+    "PostedDate": "2012-03-31T03:21:26.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "818651",
+    "ThreadId": "350724",
+    "Html": "<p>you should be doing your waveOutStream Init and Play outside the loop, and use a BufferedWaveProvider to feed wave out. Inside the loop, you shuold put the data received into the BufferedWaveProvider.</p>\r\n<p>Also, from your code, it looks like you are on a background thread so I recommend using WaveOutEvent instead of WaveOut for playback.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-04-02T01:40:55.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

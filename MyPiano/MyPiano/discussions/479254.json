@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1144489",
+    "ThreadId": "479254",
+    "Html": "Hi,\r<br />\n<br />\nI need to retrieve the playback position of the audio every 25ms to render an audio position animation smoothly, but WaveStream.CurrentTime only updates every 100ms or so.\r<br />\n<br />\nIs there a way to improve the position latency?\r<br />\n<br />\n<br />\n// Slow\r<br />\ndPos = ((double)_waveStream.Position / (double)_waveStream.Length) * _waveStream.TotalTime.TotalSeconds;<br />\n\r<br />\n// Also slow\r<br />\ndPos = _waveStream.CurrentTime.TotalSeconds;<br />\n",
+    "PostedDate": "2014-01-01T19:39:54.343-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1145064",
+    "ThreadId": "479254",
+    "Html": "See if your output device has a GetPosition() method. This tells you how many bytes have been played, so you need to make sure you interpret it correctly if you have repositioned during playback.<br />\n",
+    "PostedDate": "2014-01-03T08:32:28.463-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1146827",
+    "ThreadId": "479254",
+    "Html": "Ok I'll give that a try. At the moment I'm using some StopWatch and Timer trickery to guess where the high resolution position would be which works quite well.<br />\n<br />\n<br />\nupdate:<br />\n<br />\nWaveOut.GetPosition seems to be missing in the current NuGet 1.7 package. <br />\n<br />\nNone of these objects has a .GetPosition()<br />\n<pre><code>    private IWavePlayer   _wavePlayer;   \n    private SampleChannel _waveChannel;\n    private WaveStream    _waveStream; \n\n            _wavePlayer = new WaveOut();\n        _waveStream = new AudioFileReader(sAudioFile);\n        _waveChannel =  new SampleChannel(_waveStream, true);\n        _wavePlayer.Init(_waveChannel);</code></pre>\n\n",
+    "PostedDate": "2014-01-03T20:12:03.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1146830",
+    "ThreadId": "479254",
+    "Html": "FYI I'm trying to compile the latest source from the Downloads page but it seems MixerSource.cs and/or MixerInterop.cs is outdated.<br />\n<br />\n'NAudio.Mixer.MixerInterop' does not contain a definition for 'MIXER_GETLINEINFOF_SOURCE' (CS0117) - NAudio\\Mixer\\MixerSource.cs:30,100<br />\nNo overload for method 'GetMixerControl' takes 4 arguments (CS1501) - NAudio\\Mixer\\MixerSource.cs:80,20<br />\n'NAudio.Mixer.MixerInterop' does not contain a definition for 'MIXERLINE_COMPONENTTYPE' (CS0117) - NAudio\\Mixer\\MixerSource.cs:103,39<br />\n'NAudio.Mixer.MixerInterop' does not contain a definition for 'MIXERLINE_COMPONENTTYPE' (CS0117) - NAudio\\Mixer\\MixerSource.cs:105,39<br />\n",
+    "PostedDate": "2014-01-03T20:58:03.747-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151758",
+    "ThreadId": "479254",
+    "Html": "are you sure you got the latest code? I have no problem building.<br />\n",
+    "PostedDate": "2014-01-10T05:54:42.317-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1151794",
+    "ThreadId": "479254",
+    "Html": "I tried the source from both the Downloads section and Source Code section and got the same error.  Perhaps it's my setup, I'm using SharpDevelop 4.3 in Win8.1 with .NET 4.0 (WPF C#).<br />\n<br />\nAnyway it is good now, I discovered the Latency variable which can only be accessed this way:<br />\n<pre><code>            _wavePlayer = new WaveOutEvent()\n            {\n                DesiredLatency = 100\n            };  \n</code></pre>\n\nWhy I cant access DesiredLatency via a direct _wavePlayer.DesiredLatency call is confusing but anyway changing it to 100ms improved accuracy. I still need to use a bit of DispatcherTimer+Stopwatch witchcraft to get it down to 25ms, but it's all good. UI and animation as now smooth.<br />\n",
+    "PostedDate": "2014-01-10T07:21:21.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

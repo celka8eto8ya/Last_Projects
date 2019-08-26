@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "557372",
+    "ThreadId": "243813",
+    "Html": "\r\n<p>Hello,<br>\r\n<br>\r\ni want to open mp3 files, change the sample rate and finally read all the (wave) sample data into a byte array.<br>\r\n<br>\r\nI tried the ResamplerDmoStream and the WaveFormatConversionStream.<br>\r\n<br>\r\nNone of them worked.</p>\r\n<p>&nbsp;</p>\r\n<p>First Attempt with a WaveFormatConversionStream; It just gives me zeros in the resulting byte array:<br>\r\n</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><br>WaveFormat outputFormat = <span style=\"color:blue\">new</span> WaveFormat(44100, 16, 2);\r\n\r\n<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> mp3 = <span style=\"color:blue\">new</span> Mp3FileReader(<span style=\"color:#a31515\">&quot;test.mp3&quot;</span>))\r\n<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> pcm = <span style=\"color:blue\">new</span> WaveFormatConversionStream(outputFormat, mp3))\r\n{\r\n                <span style=\"color:blue\">byte</span>[] bytes = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[pcm.Length];\r\n                pcm.Read(bytes, 0, (<span style=\"color:blue\">int</span>)pcm.Length);\r\n}\r\n<br><br><br>The second attempt gives me a StackOverflowException:<br><br><div style=\"color:black; background-color:white\"><pre>WaveFormat outputFormat = <span style=\"color:blue\">new</span> WaveFormat(44100, 16, 2);\r\n<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> mp3 = <span style=\"color:blue\">new</span> Mp3FileReader(<span style=\"color:#a31515\">&quot;test.mp3&quot;</span>))\r\n<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> pcm = WaveFormatConversionStream.CreatePcmStream(mp3))\r\n<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> resampler = <span style=\"color:blue\">new</span> ResamplerDmoStream(pcm, outputFormat))\r\n{\r\n                <span style=\"color:blue\">byte</span>[] bytes = <span style=\"color:blue\">new</span> <span style=\"color:blue\">byte</span>[resampler.Length];\r\n                resampler.Read(bytes, 0, (<span style=\"color:blue\">int</span>)resampler.Length);\r\n}\r\n</pre>\r\n</div>\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>How would you solve this?</p>\r\n<p>&nbsp;</p>\r\n<p>Regards</p>\r\n<p>Jochen</p>\r\n",
+    "PostedDate": "2011-01-29T11:43:47.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "558151",
+    "ThreadId": "243813",
+    "Html": "\r\n<p>Got it working with attempt number 1. I didn't change code, my test mp3 had a little too much silence in the beginning.</p>\r\n<p>&nbsp;</p>\r\n<p>What's the performance of the WaveFormatConversionStream, is it maybe slower than ResamplerDmoStream?</p>\r\n<p>&nbsp;</p>\r\n<p>Regards</p>\r\n",
+    "PostedDate": "2011-01-31T08:18:39.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "558547",
+    "ThreadId": "243813",
+    "Html": "\r\n<p>I don't know what the performance difference is. I would expect them to be roughly similar. WaveFormatConversionStream uses the ACM codec, and ResamplerDmoStream uses the DMO object.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-02-01T02:01:13.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

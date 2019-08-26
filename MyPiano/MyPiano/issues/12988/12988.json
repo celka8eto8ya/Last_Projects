@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "NAudioDemo",
+      "DisplayName": "NAudioDemo"
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:22:29.93-07:00",
+    "CommentCount": 3,
+    "Custom": null,
+    "Description": "On my laptop, both these apps work.\r\n\r\nBut, on all my colleagues laptops, they don't. We've checked and everyone has the same .NET framwork version(s) installed.\r\n\r\nSame goes for campus computers. Not a single one can it.\r\n\r\nThe Windows Forms demo always gets a \"BadImageFormatExecption\" and the WPF demo gets a \"XamlParseException\"(or something).\r\n\r\nThe BadImageFormatException always occurs right before the function \"LoadWasapiCombo\" is executed.\r\n\r\nOne difference is that I have ASIO4ALL installed, all the others do not. Wonder if that can be it.",
+    "LastUpdatedDate": "2012-10-27T00:22:29.93-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-05-11T06:04:16.63-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Problems running the Naudio Demo and WPF Demo",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12988
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "this is most likely due to running on a 64 bit OS. Simplest fix is to mark the WPFDemo project as x86 only. I think this has already been done in the latest code",
+      "PostedDate": "2010-05-12T00:27:50.08-07:00",
+      "Id": 41726
+    },
+    {
+      "Message": "This has not been fixed, not in a downloadable binary, nor if you grab the zip of the latest code and build it (without changing project configurations).  It's an easy fix, so it should be done, and you should probably redo the release.  More and more people will have x64 machines...",
+      "PostedDate": "2011-02-06T04:31:21.29-08:00",
+      "Id": 41727
+    },
+    {
+      "Message": "ok, looks like both NAudioDemo and NAudioWpfDemo got set back to any cpu after the last concerted effort to fix the interop signatures to work on both. will check a change back in at some point. One of these days I'll get myself an x64 dev PC and sort these issues out once and for all",
+      "PostedDate": "2011-02-07T06:09:45.733-08:00",
+      "Id": 41728
+    }
+  ]
+}

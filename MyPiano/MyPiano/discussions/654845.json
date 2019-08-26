@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1474035",
+    "ThreadId": "654845",
+    "Html": "So I got my mlayer to work ( code below|)\r<br />\nBut every time a play a file and stop it with\r<br />\n waveOut.Stop()\r<br />\nit appears to stay loaded in memory..\r<br />\nBecause when i do a runtime copy action of the file...i get an error saying the file is in use by another program...etc.  so somehow waveout.stop does not unload the file.\r<br />\nI could try waveout.dispose but that would prevent me from playing the file again afterwarts..since the waveout doesn't excist anymore.\r<br />\nso how to properly unload the mp3 files that where streaming?\r<br />\n<br />\n<br />\n<br />\n<br />\n'Declare on top:\r<br />\nImports NAudio.Wave\r<br />\nImports NAudio.Wave.SampleProviders\r<br />\n'Declare on top in class mainapp ( for my case)\r<br />\nPublic waveOut As WaveOut = New WaveOut\r<br />\nPublic WithEvents notify as NotifyingSampleProvider = Nothing\r<br />\nPublic mp3Reader As Mp3FileReader = Nothing\r<br />\nPublic conversionTick_ms As Decimal 'need this for slider\r<br />\n<br />\nPublic Sub Play_Sound(songname As String)<br />\n<pre><code>mp3Reader = New Mp3FileReader(songname)\nnotify = New NotifyingSampleProvider(mp3Reader.ToSampleProvider)\n\nIf waveOut.PlaybackState = PlaybackState.Playing Then\n    waveOut.Stop()\n    mp3Reader.Close()\nElse\n    waveOut.Init(Notify)\n    waveOut.Play()\n conversionTick_ms = (mp3Reader.Position / mp3Reader.CurrentTime.TotalMilliseconds) 'need this for slider\nEnd If\n</code></pre>\n\nEnd Sub\r<br />\n<br />\n'Use the notify event to update your playback position with each processed sample.\r<br />\n'This Event is the most accurate and fires at your Mp3FileReader´s samplerate (usually 44100 times per second).\r<br />\n'For performance reasons you should better count for some samples till update,\r<br />\n'or your Form will redraw the labels 44100 times per second (overkill cpu waste)\r<br />\n<br />\nPrivate SampleCounter as Integer = 0\r<br />\nPrivate Sub notify_Sample(ByVal sender As Object, ByVal e As NAudio.Wave.SampleEventArgs) handles notify.Sample\r<br />\n   SampleCounter += 1\r<br />\n <br />\n   'For example wait 1024 samples till updating again.\r<br />\n   if SampleCounter &gt;= 1024 then<br />\n<pre><code> SampleCounter = 0\n\n 'Current time:\n CurrentLenLabel.Text = New DateTime(mp3Reader.CurrentTime.Ticks).ToString(&quot;HH:mm:ss&quot;)\n\n 'Total time:\n TotalLenLabel.Text = New DateTime(mp3Reader.TotalTime.Ticks).ToString(&quot;HH:mm:ss&quot;) </code></pre>\n\n'trackposition is the name of the slider(trackbar)<br />\n<pre><code>        TrackPosition.Minimum = 0\n        TrackPosition.Maximum = mp3Reader.TotalTime.TotalMilliseconds\n        TrackPosition.Value = mp3Reader.CurrentTime.TotalMilliseconds\n</code></pre>\n\nEnd If\r<br />\nEnd Sub\r<br />\n<br />\n'Than i added an event that runs when the position of the slider is changed manualy:<br />\n<pre><code>Private Sub Button6_Click_1(sender As Object, e As EventArgs) Handles Button6.Click\n   'before changing the position of the mp3, convert milliseconds to ticks... 1ms is approx 176.4 ticks\n    mp3Reader.Position = TrackPosition.Value * conversionTick_ms \nEnd Sub</code></pre>\n\n",
+    "PostedDate": "2016-05-22T10:46:03.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1474303",
+    "ThreadId": "654845",
+    "Html": "it's the Mp3FileReader that needs disposing. WaveOut.Dispose will close the audio device.<br />\n",
+    "PostedDate": "2016-05-25T07:46:24.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1474413",
+    "ThreadId": "654845",
+    "Html": "Thanks waveout.dispose did the trick<br />\n",
+    "PostedDate": "2016-05-26T12:49:00.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

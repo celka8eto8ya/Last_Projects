@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1236745",
+    "ThreadId": "542977",
+    "Html": "Hi there.\r<br />\nIm converting an mp3 file to a wav file with WaveFileWriter.CreateWaveFile (see below)<br />\n<pre><code>        //-------------------------------------------------------------------------\n        // Convert MP3 to WAV for waveform drawing\n        //-------------------------------------------------------------------------\n        public static void Mp3ToWav(string mp3File, string outputFile)\n        {\n            using (Mp3FileReader reader = new Mp3FileReader(mp3File))\n            {\n                WaveFileWriter.CreateWaveFile(outputFile, reader);\n            }\n        }</code></pre>\n\nI do this so i can generate a waveform with NAudio's waveformpainter.\r<br />\n<br />\nNow my problem is I can't clear the tempfile (outputfile) when i close my application. I get the error message that it's still being used by my process. I call this function when my form closes:<br />\n<pre><code>        private void clearTemp()\n        {\n            System.IO.DirectoryInfo dir = new DirectoryInfo(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + &quot;\\\\_tempfiles\\\\&quot; );\n\n            foreach (FileInfo file in dir.GetFiles())\n            {\n                file.Delete();\n            }\n        }</code></pre>\n\nAnybody got a solution? I was thinking by closing the wavefilewriter process first but i dont know if that's possible. Thanks in advance!<br />\n",
+    "PostedDate": "2014-04-22T12:38:41.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239533",
+    "ThreadId": "542977",
+    "Html": "a bit strange. Are you disposing the WaveStream you pass to the waveviewer control?<br />\n",
+    "PostedDate": "2014-04-29T13:48:31.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1241216",
+    "ThreadId": "542977",
+    "Html": "Thanks for your reply! Hmm how should i do this?<br />\n<br />\nI currently have<br />\n<pre><code>                //----------------------------------------------\n                // Draw it\n                //----------------------------------------------\n                wavePainter.WaveStream = new NAudio.Wave.WaveFileReader(tempfile);</code></pre>\n\nwavePainter is the control (i customized yours a little bit for resizing and stuff)<br />\n<br />\nwavePainter.Dispose(); doesn't do the trick. Kind of makes sense because it's just the control.<br />\n",
+    "PostedDate": "2014-05-04T06:56:24.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242243",
+    "ThreadId": "542977",
+    "Html": "No, you'll need to keep hold of the WaveFileReader and Dispose it. \r<br />\nReally I want to completely retire the WavePainter from NAudio, it was never finished, and I intend to put a better example into the NAudio demo project<br />\n",
+    "PostedDate": "2014-05-06T12:47:19.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1243499",
+    "ThreadId": "542977",
+    "Html": "Hmm could you tell me a bit more please? How do I &quot;Keep hold of the wavefilereader and dispose it&quot; ?<br />\n",
+    "PostedDate": "2014-05-09T07:44:55.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

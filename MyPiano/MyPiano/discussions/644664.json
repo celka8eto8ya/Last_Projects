@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1443424",
+    "ThreadId": "644664",
+    "Html": "I am very new to NAudio. I have been playing with pulling data in from the microphone with some success. I now want to manipulate this data and generate musical sounds in response. I thought a good way to do this would be to use MidiOut and the Windows built-in Microsoft WaveSynth. \r<br />\n<br />\nHowever it appears this does not work correctly in NAudio. See for example: \r<br />\n<a href=\"https://naudio.codeplex.com/discussions/435145#\" rel=\"nofollow\">https://naudio.codeplex.com/discussions/435145#</a>\r<br />\n<br />\nI found an article which suggests that it did work in an earlier version of NAudio:\r<br />\n<a href=\"http://stackoverflow.com/questions/30349066/cannot-play-a-note-with-naudio-midi\" rel=\"nofollow\">http://stackoverflow.com/questions/30349066/cannot-play-a-note-with-naudio-midi</a>\r<br />\n<br />\nSo it appears that a bug has crept in somewhere. Is there any likelihood of this being fixed in the near future? Am I best off downloading the older version, or is there some other way that I could generate musical sounds using .NET?\r<br />\n<br />\nThanks\r<br />\nPhil.<br />\n",
+    "PostedDate": "2015-09-07T03:50:44.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443452",
+    "ThreadId": "644664",
+    "Html": "I can confirm that the old version 1.3.8 works and the latest version 1.7.3 does not produce any sound. I did have to change the target CPU from Any CPU to x86, or I get an error. I assume the older version didn't support x64?\r<br />\nUnfortunately most of the other code I have written relies on features in the new version. I have managed to get around this by rebuilding the old version from the source code and changing the namespace and assembly names so that I can use both versions side-by-side. Not an ideal solution, but seems to work.<br />\n",
+    "PostedDate": "2015-09-07T07:41:13.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443461",
+    "ThreadId": "644664",
+    "Html": "Update: OK. It seems that the latest version does work, but it doesn't support setting the channel number to zero, which the example code that I found uses.<br />\n",
+    "PostedDate": "2015-09-07T09:05:55.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-07T11:32:00.197-07:00"
+  },
+  {
+    "Id": "1443464",
+    "ThreadId": "644664",
+    "Html": "Ah, possibly it is a case of switching from 0 based channel numbers to 1 based at some point. Glad you've tracked down the cause<br />\n",
+    "PostedDate": "2015-09-07T09:10:12.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443478",
+    "ThreadId": "644664",
+    "Html": "Would be nice if it raised an ArgumentOutOfRangeException.<br />\n",
+    "PostedDate": "2015-09-07T11:20:48.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443482",
+    "ThreadId": "644664",
+    "Html": "It does if you create a <code>NoteOnEvent</code>. Those MidiMessage helpers are a bit outdated, but I've updated with some validation<br />\n",
+    "PostedDate": "2015-09-07T12:05:43.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

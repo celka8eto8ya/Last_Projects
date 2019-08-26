@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "450161",
+    "ThreadId": "214609",
+    "Html": "<p>Hi.</p>\r\n<p><br>Using NAudio for a hearing test. &nbsp;Set the amp, freq and play. (for WaveOut) Works fine on a windows form environment... however... called from my asp.net MVC app the sound only lasts as long as the&nbsp;DesiredLatency value. Can't maintain a tone. (just get beeps, essentially)</p>\r\n<p>&nbsp;</p>\r\n<p>Anybody run into this -- come up with any fixes? (I'm going to dig in more, thought it would be nice if there was already a fix out that someone knew of)</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-06-01T10:07:56.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "450439",
+    "ThreadId": "214609",
+    "Html": "<p>I'm not sure I understand how you're trying to use NAudio with MVC. Is the web server playing audio? What callback method are you using for WaveOut? It should be function callbacks.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-06-02T00:17:39.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "450659",
+    "ThreadId": "214609",
+    "Html": "<blockquote style=\"border:solid .1em #ccc;font-style:italic;margin:.25em 1em 0 1em;padding:0 .25em 0 .25em\"><strong>markheath wrote:</strong><br>\r\n<p>I'm not sure I understand how you're trying to use NAudio with MVC. Is the web server playing audio? What callback method are you using for WaveOut? It should be function callbacks.</p>\r\n<p>Mark</p>\r\n</blockquote>\r\n<p>&nbsp;Sorry for not being more specific. I run a local web server for the MVC app... this app is then launched inside a WebBrowser control on a windows form. It is from server side calls of&nbsp;waveout&nbsp;-- via ajax -- that I have issues.&nbsp; (for testing purposes, I tried playing it from the containing form and it worked as desired&nbsp;-- I need to be able to call it from the web app, though)</p>\r\n<p>Ahh, seem to be using window instead of function for callbacks. Thanks for that tipoff. Will try to make appropriate changes now.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-06-02T08:34:13.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

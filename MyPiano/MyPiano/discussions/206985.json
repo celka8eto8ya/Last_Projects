@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "422488",
+    "ThreadId": "206985",
+    "Html": "<p>can we modify it so that it can act as amplifier and we can do karaoke !!!</p>",
+    "PostedDate": "2010-03-23T04:19:02.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "423645",
+    "ThreadId": "206985",
+    "Html": "<p>what do you mean by amplifier? NAudio can mix audio streams together. However, you don't really need any software to do karaoke.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-25T09:02:32.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Hi,\r\n\r\nI developed a routine to produce sound with NAudio. When I stop the recording, I get the following error message:\r\n\r\nINVALIDHANDLE CALLING WAVEINSTOP\r\n\r\nAnyone know why?\r\n\r\nThx.\r\n\r\nHere is my code:\r\n\r\nFriend Sub StartCapture()\r\n        Try\r\n            _WaveInDevice = New WaveInEvent()\r\n            _WaveInDevice.DeviceNumber = 0\r\n            _WaveInDevice.WaveFormat = New WaveFormat(8000, 16, 1)\r\n            _WaveInDevice.NumberOfBuffers = 2\r\n            _WaveInDevice.BufferMilliseconds = 60\r\n            _WaveInDevice.StartRecording()\r\n            NbPaquetsAudioParPTT = 0\r\n            RaiseEvent OnDisplayMessage(\"Microphone opening...\")\r\n        Catch Ex As Exception\r\n            RaiseEvent OnError(\"NaudioMicro\", \"StartCapture\", Ex.Message, Ex.StackTrace)\r\n        End Try\r\n    End Sub\r\n    \r\n    Friend Sub StopCapture()\r\n        Try\r\n            If _WaveInDevice IsNot Nothing Then\r\n                _WaveInDevice.StopRecording()\r\n                _WaveInDevice.Dispose()\r\n                _WaveInDevice = Nothing\r\n            End If\r\n        Catch Ex As Exception\r\n            RaiseEvent OnError(\"NaudioMicro\", \"StopCapture\", Ex.Message, Ex.StackTrace)\r\n        End Try\r\n    End Sub\r\n \r\n    Private Sub _WaveInDevice_DataAvailable(ByVal sender As Object, ByVal e As NAudio.Wave.WaveInEventArgs) Handles _WaveInDevice.DataAvailable\r\n        NbPaquetsAudioParPTT += 1\r\n        RaiseEvent OnCaptured(e.Buffer, NbPaquetsAudioParPTT)\r\n    End Sub\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+    "LastUpdatedDate": "2016-03-22T14:17:24.213-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2016-03-02T09:47:20.48-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Error with Stoprecording",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16491
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "subscribe to RecordingStopped and dispose in there. StopRecording requests that recording stops, but it hasn't actually finished doing everything yet,",
+      "PostedDate": "2016-03-22T14:17:24.213-07:00",
+      "Id": 198111
+    }
+  ]
+}

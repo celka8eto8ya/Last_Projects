@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "901624",
+    "ThreadId": "392366",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm pretty sure this is a stupid question, but I can't seem to found out the answer anywhere on the forum.</p>\r\n<p>I've a network stream that I buffer with the BufferedWaveProvider.</p>\r\n<p>In another thread I fill the BufferedWaveProvider with <span style=\"font-family:Consolas; font-size:x-small\">\r\n<span style=\"font-family:Consolas; font-size:x-small\">AddSamples, but the Sample event is never called by my NotifyingSampleProvider.</span></span></p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">Here is the code I'm using.</span></span></p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>m_muLawChatCodec = <span style=\"color:blue\">new</span> MuLawChatCodec();\r\nm_waveOut = <span style=\"color:blue\">new</span> WaveOut();\r\n\r\nm_waveProvider = <span style=\"color:blue\">new</span> BufferedWaveProvider(m_muLawChatCodec.RecordFormat);\r\nm_waveOut.Init(m_waveProvider);\r\nm_waveOut.Play();\r\n\r\nm_sampleChannel = <span style=\"color:blue\">new</span> SampleChannel(m_waveProvider);\r\nm_notifyingSampleProvider = <span style=\"color:blue\">new</span> NotifyingSampleProvider(m_sampleChannel);\r\nm_notifyingSampleProvider.Sample &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;SampleEventArgs&gt;(sampleStream_Sample);\r\n\r\n\r\n<span style=\"color:green\">//In the thread:</span>\r\n<span style=\"color:blue\">byte</span>[] decoded = m_muLawChatCodec.Decode(frame, 0, frameLenght);\r\nm_waveProvider.AddSamples(decoded, 0, decoded.Length);\r\n</pre>\r\n</div>\r\n</span></span>\r\n<p></p>\r\n<p>What am I doing wrong?</p>\r\n<p>Thanks for your help.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-08-20T10:41:57.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "901664",
+    "ThreadId": "392366",
+    "Html": "<p>Hi,</p>\r\n<p>I've found the problem, everything should have been done prior to the m_waveOut.Init(m_waveProvider);</p>\r\n<p>Thanks for your help.</p>\r\n<p>Freedon</p>",
+    "PostedDate": "2012-08-20T12:48:12.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "904937",
+    "ThreadId": "392366",
+    "Html": "<p>hi, glad you got it working in the end</p>",
+    "PostedDate": "2012-08-27T23:19:05.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

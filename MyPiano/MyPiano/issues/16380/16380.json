@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "no plan to change this behaviour",
+    "ClosedDate": "2012-12-30T14:05:25.683-08:00",
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "This code is from SimpleCompressorStream there is the followig code\r\nleft = BitConverter.ToInt16(buffer, start) / 32768.0;\r\n\r\nthat is wrong because max short is 32767 while min short  is -32768\r\n\r\nthe resulting code will span ranges from[-1 to 0.99999999999999999]",
+    "LastUpdatedDate": "2012-12-30T14:05:25.683-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-12-21T09:58:23.527-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Conversion to Float is wrong",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16380
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Why do you think that is wrong? And what would you do instead? I don't want to divide by 32767 as then you have values that go over 1.0, which may get clipped unneccessarily depending on what goes on later in your pipeline. And I certainly don't want an input sample of 0 to convert to anything other than 0.0, or it will introduce some dc offset.",
+      "PostedDate": "2012-12-21T10:44:35.457-08:00",
+      "Id": 84791
+    },
+    {
+      "Message": "usually i would have done things like this\nvar sSample = BitConverter.ToInt16(buffer, i + off);\nvar sample = sampleCount == 0 ? 0.0 : sSample / ( sSample > 0 ? 32767.0 : 32768.0);\n\nI think that is wrong since you won't be able to cover[-1,1] interval with your conversion, you are introducing a kind of limiting with your code. What do you think?\n\nI sent you a little request for help last night, have you seen my code snippet??",
+      "PostedDate": "2012-12-21T12:21:14.673-08:00",
+      "Id": 84796
+    },
+    {
+      "Message": "I would not want to do that as you are distorting the signal by amplifying the positive half by a different amount to the bottom half, and therefore introducing some additional frequencies into the sound.",
+      "PostedDate": "2012-12-22T00:19:12.27-08:00",
+      "Id": 84822
+    },
+    {
+      "Message": "If you are interested in an explanation of why the range of values for floating point is -1 to 0.9999 then there is one in Will Pirkle's book \"Designing Audio Effect Plug-Ins in C++\"",
+      "PostedDate": "2012-12-30T14:04:54.51-08:00",
+      "Id": 85068
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1485435",
+    "ThreadId": "658522",
+    "Html": "Hi ,<br />\n<br />\nAm created simple music player using Naudio in C# winfrom application. In that i wave to display wave form with duration , plot wave from its working fine. but add timing also . So please help me to this.<br />\n <br />\n<br />\n<img src=\"http://www.bbc.co.uk/rd/sites/50335ff370b5c262af000004/assets/525c0d00acfbab0f4b24fe28/waveform_6mix.png\" alt=\"Image\" /><br />\nThanks in Advance.<br />\n",
+    "PostedDate": "2016-10-06T05:26:39.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485569",
+    "ThreadId": "658522",
+    "Html": "I'm afraid I don't have a sample of doing this that I can share, but essentially you're writing your own custom user control overriding paint and using the GDI wrappers in .NET to draw the time markers in the appropriate places. <br />\n",
+    "PostedDate": "2016-10-07T10:56:00.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

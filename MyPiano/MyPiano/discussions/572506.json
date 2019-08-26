@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1323779",
+    "ThreadId": "572506",
+    "Html": "I get this error with any wavefile with a  32 bit samplerate but not with any of my wave files with a  16 bit samplerate<br />\n<pre><code> using (MediaFoundationReader wfr = new MediaFoundationReader(fn))\n{\n    var newFormat = new WaveFormat(44100, wfr.WaveFormat.BitsPerSample, wfr.WaveFormat.Channels);\n    System.Threading.Thread.Sleep(100);\n    File.Delete(&quot;C:\\\\Users\\\\karls_000\\\\OneDrive\\\\Documents\\\\MidWay44khz.wav&quot;);\n    using (WaveFileWriter wfw = new WaveFileWriter(&quot;C:\\\\Users\\\\karls_000\\\\OneDrive\\\\Documents\\\\MidWay44khz.wav&quot;, newFormat))\n    {\n        using ( WaveFormatConversionStream conversionStream = new WaveFormatConversionStream(newFormat, wfr)) // this line gives the error\n        {\n            conversionStream.Position = 0;\n            byte[] buffer = new byte[1024];\n            while (conversionStream.Position &lt; conversionStream.Length)\n            {\n                 int bytesRead = conversionStream.Read(buffer, 0, 1024);\n                 if (bytesRead &gt; 0)\n                 {\n                      wfw.Write(buffer, 0, bytesRead);\n                 }\n                 else\n                {\n                      break;\n                }\n            }\n       }\n   }\n}</code></pre>\n\n",
+    "PostedDate": "2014-11-19T05:52:16.627-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327080",
+    "ThreadId": "572506",
+    "Html": "Not every conversion is possible. You can only do what the codecs allow. The ACM resampler codec won't allow you to go from 32 bit floating point to 16 bit AND resample in one go. You'd need to do it in two steps. The MediaFoundationResampler is actually more flexible and may be a better choice here.<br />\n",
+    "PostedDate": "2014-11-28T09:11:19.63-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-12-02T05:11:52.433-08:00"
+  }
+]

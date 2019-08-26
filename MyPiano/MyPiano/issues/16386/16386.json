@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "I have written an application that uses nAudio to play wav files when 'events' happen, and records audio from the microphone.\r\n\r\nI am occasionally getting a System.NullReferenceException from NAudio.Wave.WaveOutEvent.PlaybackThread()\r\n\r\nI am using nAudio 1.5.4. \r\n\r\nAny thoughts on what causes it, and how I can resolve it?\r\n\r\n",
+    "LastUpdatedDate": "2013-02-25T08:42:14.897-08:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-01-18T01:02:33.833-08:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "System.NullReferenceException in NAudio.Wave.WaveOutEvent.PlaybackThread()",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16386
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Haven't seen this in a long time. Are you disposing the player before playback has actually finished? Also, have you tried with a newer version of NAudio?",
+      "PostedDate": "2013-01-20T23:12:32.447-08:00",
+      "Id": 86708
+    },
+    {
+      "Message": "I am not disposing the player, but I am stopping playback using Stop() on WaveOutEvent. \nThe application plays wav files in response to events occuring - and if a 'higher priority' event occurs, the current playback is stopped, and the new wav file is played instead. It all happens very quickly, so I expect that the issue is related to load/speed.",
+      "PostedDate": "2013-01-21T00:50:05.25-08:00",
+      "Id": 86717
+    },
+    {
+      "Message": "are you calling Init twice on the same instance of WaveOutEvent?",
+      "PostedDate": "2013-01-21T01:42:01.26-08:00",
+      "Id": 86727
+    },
+    {
+      "Message": "I am not calling Init twice...\n\nI have moved to nAudio 1.6 and have not been able to recreate the issue since.\nI think the better handling of exceptions in the Playback thread has helped?",
+      "PostedDate": "2013-02-25T07:53:42.737-08:00",
+      "Id": 91427
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1492404",
+    "ThreadId": "661229",
+    "Html": "I am new to Naudio. What I want to achieve is fairly straightforward. I want to plot a waveform against time in seconds where each second is divided evenly by 30 along the x-axis. Any tutorials or examples are appreciated.\r<br />\n<br />\nOnce I get this far, I will likely need help figuring out my next step...<br />\n",
+    "PostedDate": "2017-02-08T12:59:37.703-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493589",
+    "ThreadId": "661229",
+    "Html": "Use NotifyingSampleProvider and plot the samples?<br />\n",
+    "PostedDate": "2017-03-04T08:48:19.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

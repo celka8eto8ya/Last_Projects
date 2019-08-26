@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "621843",
+    "ThreadId": "259898",
+    "Html": "\r\n<p>hi</p>\r\n<p>so Is this library able to crop an mp3 file for me?</p>\r\n<p>lets say I have a song file and I want to extract the sound from 1:00 to 2:00..</p>\r\n<p>is that achievable? if so how to do that?</p>\r\n<p>&nbsp;</p>\r\n<p>thanks in advanced..</p>\r\n",
+    "PostedDate": "2011-06-02T00:44:44.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621881",
+    "ThreadId": "259898",
+    "Html": "<p>yes, so long as you understand a bit about how MP3 files are structured. See <a href=\"http://stackoverflow.com/questions/6094287/naudio-to-split-mp3-file\">my answer</a> to this question on StackOverflow</p>",
+    "PostedDate": "2011-06-02T02:23:35.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "622177",
+    "ThreadId": "259898",
+    "Html": "<p>thank you for the answer.. but how many <code>MP3Frame(s) are required to produce lets say 1 second??</code></p>\n<p>or how can I calculate this? any specific method?</p>\n<p>or what's the length of every MP3Frames (in milliseconds)..</p>",
+    "PostedDate": "2011-06-02T13:34:21.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

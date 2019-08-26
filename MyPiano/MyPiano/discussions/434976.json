@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1008619",
+    "ThreadId": "434976",
+    "Html": "Hi,<br />\n<br />\nI have a wav file that was generated using the NAudio demo that records from an ASAPI input.<br />\n<br />\nThe file plays back fine in Windows Media Player but when I try to play the file using AudioFileReader I get a &quot;NoDriver calling acmFormatSuggest&quot; exception. The wav format is &quot;extensible&quot; if that is important.<br />\n<br />\nAny ideas.  I could send you the (short) wav file if you would like.<br />\n<br />\nThanks,<br />\nChris<br />\n",
+    "PostedDate": "2013-02-28T22:03:10.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008650",
+    "ThreadId": "434976",
+    "Html": "This is because WASAPI uses an annoying type of WaveFormat format called WaveFormatExtensible. But underneath it is PCM (or maybe IEEE float). So what I do is when I create a WaveFileWriter I just recreate a new WaveFormat object with the right parameters. <br />\n",
+    "PostedDate": "2013-03-01T00:10:06.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193524",
+    "ThreadId": "434976",
+    "Html": "Hi Mark, \r<br />\n<br />\nPlease could you provide some example code cause I can't work out how to get this to work and have a whole load of Extensible Files to play through. My code that fails is:<br />\n<pre><code>var reader = new WaveFileReader(VoiceFile);\nvar downsampledStream = new WaveFormatConversionStream(new WaveFormat(44100, 24, 1), reader);\ninputStream(2) = new WaveChannel32(downsampledStream);</code></pre>\n\nAny help or pointers you could give would be a life saver. \r<br />\n<br />\nThanks\r<br />\nBen<br />\n",
+    "PostedDate": "2014-01-23T12:38:42.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193533",
+    "ThreadId": "434976",
+    "Html": "What error are you getting? I suspect that you are getting an ACM error. It can't be used to convert to 24 bit.<br />\n",
+    "PostedDate": "2014-01-23T12:47:20.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193604",
+    "ThreadId": "434976",
+    "Html": "&quot;NoDriver calling acmFormatSuggest&quot; means the ACM codec for your file format is missing/incompatible. It's an MP3 file right? If so, either install an ACM mp3 codec or use MediaFoundationReader instead. <br />\n",
+    "PostedDate": "2014-01-23T13:55:23.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193653",
+    "ThreadId": "434976",
+    "Html": "Hi K24A3 - No it's a Wav file but with an Extensible header which seems to be mucking up how the file is recognised. \r<br />\n<br />\nMark - I'm getting the error &quot;AcmNotPossible calling acmStreamOpen&quot; when I try to run it through a new waveformat object and the standard &quot;NoDriver calling acmFormatSuggest&quot; when I just call it through the wavefilereader straight. \r<br />\n<br />\nThanks both for such quick responses - what parameters should I be using for the new file format? I tried changing to match the original wav file but still no dice. Mark from your above post it sounds like you have resolve this issue. Do you have a code snippet I could see please?<br />\n",
+    "PostedDate": "2014-01-23T14:54:23.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193693",
+    "ThreadId": "434976",
+    "Html": "MediaFoundationReader should be able to play it, have you tried that?<br />\n",
+    "PostedDate": "2014-01-23T15:40:57.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1193749",
+    "ThreadId": "434976",
+    "Html": "Hi K24A3 - yes that seems to have worked. Thank you both for you help<br />\n",
+    "PostedDate": "2014-01-23T17:01:25.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "926715",
+    "ThreadId": "399398",
+    "Html": "\r\n<p>This is my first project involved with NAudio... In the WaveFloatTo16Provider class, should the &quot;PCM&quot; in this &quot;Only PCM supported&quot; message be &quot;IeeeFloat&quot; instead?</p>\r\n",
+    "PostedDate": "2012-10-15T06:47:26.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "928009",
+    "ThreadId": "399398",
+    "Html": "<p>yes, you're right that's a bug. thanks for pointing it out.</p>",
+    "PostedDate": "2012-10-17T05:58:21.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

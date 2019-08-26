@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1013888",
+    "ThreadId": "436305",
+    "Html": "I've developed a recorder/player using NAudio, the problem that I'm having is that I can only record for 1 minute and about 43 seconds continuously. I would like to know how to remove this time limit or increase the recording time. I'll appreciate any help.<br />\n",
+    "PostedDate": "2013-03-12T06:45:55.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1013897",
+    "ThreadId": "436305",
+    "Html": "what happens after 1 minute and 43 seconds? There is no limit built into NAudio<br />\n",
+    "PostedDate": "2013-03-12T06:55:42.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1013908",
+    "ThreadId": "436305",
+    "Html": "Im getting an exception on the following method after a 1:43 recording.<br />\n<pre><code>    private void SourceStream_DataAvailable(object sender, WaveInEventArgs e)\n    {\n        try\n        {\n            if (WaveWriter != null)\n            {\n                WaveWriter.Write(e.Buffer, 0, e.BytesRecorded);\n                int secondsRecorded = (int)(WaveWriter.Length / WaveWriter.WaveFormat.AverageBytesPerSecond);\n                recordingProgressBar.Value = secondsRecorded;\n                WaveWriter.Flush();\n            }\n        }\n        catch (Exception ex)\n        {\n            MessageBox.Show(&quot;An error occurred.&quot; + ex.Message, &quot;Audio File Error&quot;, MessageBoxButtons.OK, MessageBoxIcon.Error);\n        }\n    }\n\n</code></pre>\n\n<strong>ArgumentOutOfRange Exception:<br />\n<br />\nValue of '101' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.<br />\nParameter name: Value</strong><br />\n",
+    "PostedDate": "2013-03-12T07:11:47.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1013923",
+    "ThreadId": "436305",
+    "Html": "that's your progress bar. Don't set it to a value greater than maximum. Or don't use a progress bar.<br />\n",
+    "PostedDate": "2013-03-12T07:24:32.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1013938",
+    "ThreadId": "436305",
+    "Html": "Im getting an exception on the following method <br />\n<pre><code>    private void SourceStream_DataAvailable(object sender, WaveInEventArgs e)\n    {\n        try\n        {\n            if (WaveWriter != null)\n            {\n                WaveWriter.Write(e.Buffer, 0, e.BytesRecorded);\n                int secondsRecorded = (int)(WaveWriter.Length / WaveWriter.WaveFormat.AverageBytesPerSecond);\n                recordingProgressBar.Value = secondsRecorded;\n                WaveWriter.Flush();\n            }\n        }\n        catch (Exception ex)\n        {\n            MessageBox.Show(&quot;An error occurred.&quot; + ex.Message, &quot;Audio File Error&quot;, MessageBoxButtons.OK, MessageBoxIcon.Error);\n        }\n    }\n\n</code></pre>\n\n<strong>ArgumentOutOfRange Exception:\r<br />\n<br />\nValue of '101' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.\r<br />\nParameter name: Value</strong><br />\n",
+    "PostedDate": "2013-03-12T07:32:17.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1013942",
+    "ThreadId": "436305",
+    "Html": "Man, I just found out. I was about to leave you a comment telling yo to forget about it...shame on me!!!! I've been trying to figure out since yesterday. I thought it was the library. Thank you anyways. Sometimes we have the problem in our face and we don't see it. Thank you so much for the help anyways.<br />\n",
+    "PostedDate": "2013-03-12T07:36:30.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

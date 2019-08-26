@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": null,
+    "Description": "Hi Mark, I am having a problem while converting ogg file to mp3 format. Reading ogg file is done successfully but while encoding it is throwing exception like,\"Exception from HRESULT: 0xC00D3E85\".\r\nPresently I am working on windows server 2012(64 bit).\r\n```\r\n public byte[] DecodeOGG(byte[] data,string trgtfilename,int bitrate)\r\n {      \r\n      byte[] dt = null;\r\n      NVorbis.NAudioSupport.VorbisWaveReader vr = null;\r\n      using(MemoryStream ms = new MemoryStream(data))\r\n      {\r\n          ms.Position = 0;\r\n          vr = new NVorbis.NAudioSupport.VorbisWaveReader(ms);\r\n       }                        \r\n       var samp = new SampleChannel(vr);\r\n       var ws = new SampleToWaveProvider16(samp);\r\n       MediaFoundationEncoder.EncodeToMp3(ws, trgtfilename, bitrate);\r\n  }\r\n```",
+    "LastUpdatedDate": "2013-11-26T05:54:48.173-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-11-23T00:45:16.99-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "ogg to mp3 using NAudio MFT",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16420
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "try calling MediaFoundationInterop.Startup() somewhere in your application. I should probably update MediaFoundationEncoder to call this automatically.",
+      "PostedDate": "2013-11-24T06:27:56.343-08:00",
+      "Id": 124059
+    },
+    {
+      "Message": "Hi Mark, thanks for quick replay.\nCan you explain, what is the role of  MediaFoundationInterop.Startup() ?",
+      "PostedDate": "2013-11-24T21:09:52.24-08:00",
+      "Id": 124092
+    },
+    {
+      "Message": "It calls this Windows API: http://msdn.microsoft.com/en-us/library/windows/desktop/ms702238(v=vs.85).aspx",
+      "PostedDate": "2013-11-25T03:36:45.273-08:00",
+      "Id": 124132
+    },
+    {
+      "Message": "Hi Mark, what is the version parameter is about in MediaFoundatin.MFStartup(int version)?\nI am in little bit confusion, what version I have to use here.\n",
+      "PostedDate": "2013-11-25T21:23:51.003-08:00",
+      "Id": 124268
+    },
+    {
+      "Message": "NAudio hides that detail from you. Just call Startup and it will be fine. It uses the MF_VERSION value from the Windows API",
+      "PostedDate": "2013-11-26T05:54:48.173-08:00",
+      "Id": 124297
+    }
+  ]
+}

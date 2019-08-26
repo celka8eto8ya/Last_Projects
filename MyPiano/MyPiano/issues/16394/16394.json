@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "recommendation is to extract URL from pls file",
+    "ClosedDate": "2013-05-01T07:39:54.983-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Can Naudio read this mp3 url?\r\nhttp://players.creacast.com/creacast/sudtirol1a/playlist.pls\r\n\r\n\r\n\r\nRegards\r\nAlex",
+    "LastUpdatedDate": "2013-05-01T07:39:55.14-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-04-07T06:22:48.527-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "read mp3 to URL",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16394
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "NAudio does not read PLS files. They are only text files, so you would have to see what is at the end of the URLs within the PLS file. If it is MP3, or something that MediaFoundationReader could read, then you might be able to play it.",
+      "PostedDate": "2013-04-08T08:07:51.3-07:00",
+      "Id": 96341
+    },
+    {
+      "Message": "Perfect !!!\nI have create a routine for extract url and it work fine.\n\n\n\nRegards\nAlex\n",
+      "PostedDate": "2013-04-08T15:25:17.113-07:00",
+      "Id": 96428
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1245424",
+    "ThreadId": "545348",
+    "Html": "I am trying to write a tone to a file\r<br />\nthis is my code\r<br />\n:<br />\n<pre><code>  SaveFileDialog save1 = new SaveFileDialog();\n                    save1.Filter = &quot;Wave file (*.wav)|*.wav;&quot;;\n                    if (save1.ShowDialog() != DialogResult.OK) return;\n                    WaveFileWriter wavefile = new WaveFileWriter(save1.FileName, sineWaveProvider.WaveFormat);\n                    int f2 = 0;\n                    if (flagtype == 0)\n                    {\n                        flagtype = 0;\n                        if (Beat == 0)\n                        {\n                            f2 = 0;\n                        }\n                        else\n                        {\n                            f2 = Convert.ToInt16(Frequencytxt.Text) - Convert.ToInt16(beattxt.Text);\n                        }\n                        for (double n = 0; n &lt; time; n++)\n                        {\n                            wavefile.WriteSample((float)(Amplitude * Math.Sin((2 * Math.PI * n * Frequency) / 44100)) + (float)(Amplitude * Math.Sin((2 * Math.PI * n * f2) / 44100)));  \n                        }\n                        wavefile.Flush();\n                        file.Add(save1.FileName);</code></pre>\n\nbut when I try and open the file, it will not play\r<br />\nwhy?<br />\n",
+    "PostedDate": "2014-05-14T11:41:36.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1245444",
+    "ThreadId": "545348",
+    "Html": "never mind I got it<br />\n",
+    "PostedDate": "2014-05-14T12:09:02.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-14T12:09:06.373-07:00"
+  }
+]

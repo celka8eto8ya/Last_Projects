@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1453099",
+    "ThreadId": "647819",
+    "Html": "Good day!\r<br />\nCan NAudio detect silence with some simple Api way?\r<br />\nOr, may be some peace of code.\r<br />\n<br />\nThank you!<br />\n",
+    "PostedDate": "2015-11-18T23:30:20.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453452",
+    "ThreadId": "647819",
+    "Html": "Easiest way is probably to check each sample processed for being 0 = silence.\r<br />\n<br />\nE.g. create a custom SampleProvider that raises an event each time a sample passed is zero.<br />\n",
+    "PostedDate": "2015-11-21T14:51:46.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1455296",
+    "ThreadId": "647819",
+    "Html": "I want to save the captured mic sound to different wave files by splitting the sound by silence<br />\n<ol>\n<li>Can I identify the silence immediately, once volume samples become 0 or do I need to check the 0 for some period of time (ex 2 sec silence time)?</li>\n<li>\nWhat is the best way to identify the silence, when there are background noise?<br />\n</li>\n</ol>\nThank you.<br />\n",
+    "PostedDate": "2015-12-09T08:46:00.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1455411",
+    "ThreadId": "647819",
+    "Html": "1) Yes, you should check for at least some ms of audio. Because from time to time audio contains some zero crossings that would lead to false detection.\r<br />\n2) Either filter out the noise (e. g. cut a specified peak amaount) or calculate it in. As (white) noise contains all frequencies, you can´t easily filter out out by an eq or sth.<br />\n",
+    "PostedDate": "2015-12-10T03:36:30.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1455803",
+    "ThreadId": "647819",
+    "Html": "Thank you for reply. \r<br />\nIs there any libraries for filter noise?<br />\n",
+    "PostedDate": "2015-12-13T21:27:31.817-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1455846",
+    "ThreadId": "647819",
+    "Html": "I don´t know any .NET based.\r<br />\n<br />\nBut perhaps you can achive better results when you reduce overall volume by ~10-20% (which would discard some audio information as well). Anyway not possible without certain quality loss.<br />\n",
+    "PostedDate": "2015-12-14T04:43:32.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

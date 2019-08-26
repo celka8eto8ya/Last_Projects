@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1462510",
+    "ThreadId": "651066",
+    "Html": "Here have a file is redundant or old version that make current version can not compile it:\r<br />\nNAudio/MixerSource.cs\r<br />\n<br />\nAlthough it has been removed from project, this file still in the project directory, and can not compile when you embed the NAudio source to your own project, it can makes many define not found errors.<br />\n",
+    "PostedDate": "2016-02-09T00:17:47.797-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464113",
+    "ThreadId": "651066",
+    "Html": "thanks, we will delete it in a future version of NAudio<br />\n",
+    "PostedDate": "2016-02-23T04:55:18.893-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

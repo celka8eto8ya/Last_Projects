@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "603945",
+    "ThreadId": "255511",
+    "Html": "\r\n<p>Having used NAudioDemo, I have written NAudioPlayer class which plays back audio file by passing NAudioPlayer::Play(string filename).&nbsp;</p>\r\n<p>Then I have written another class where I use NAudioPlayer instance and timer for checking if playing stopped and start new playing. So, I have sequentially playing.</p>\r\n<p>When I start application it playing good during some period of time and then hanging.</p>\r\n<p>I have found that it goes to WaveOutBuffer::WriteToWaveOut, but does not go through lock(waveOutLock).&nbsp;</p>\r\n<p>Could you help me?</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-04-27T23:16:49.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604077",
+    "ThreadId": "255511",
+    "Html": "<p>I fixed this problem by putting instead of lock operator Monitor.TryEnter</p>",
+    "PostedDate": "2011-04-28T04:57:00.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "604693",
+    "ThreadId": "255511",
+    "Html": "<p>when it hangs, what is happening on other threads? Are you using the latest NAudio code?</p>",
+    "PostedDate": "2011-04-29T01:36:42.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "611642",
+    "ThreadId": "255511",
+    "Html": "<p>I used rev. 72238.</p>\r\n<p>Other threads worked normally.</p>",
+    "PostedDate": "2011-05-12T06:20:56.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "611671",
+    "ThreadId": "255511",
+    "Html": "<p>what I mean is, in the Visual Studio debugger, you can look at the threads window. that will show you which other thread has taken the waveOutLock and you can see what waveOut API it is hanging on.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-05-12T07:04:09.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

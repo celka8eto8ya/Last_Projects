@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1018714",
+    "ThreadId": "437452",
+    "Html": "hi,<br />\n<br />\nI am capturing soung from the microphone and willing to have it sampled as IEEE float<br />\nI think the right way to do it is, isn't it ?<br />\n<pre><code>waveIn = new WaveIn();\nwaveIn.DataAvailable += waveIn_DataAvailable;\nint sampleRate = 44100; // 44,1 kHz\nint channels = 2; // stereo\nwaveIn.WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, channels);</code></pre>\n\nWhat makes me confused is that I was expecting to receive a float array in the callback<br />\n<pre><code>        void waveIn_DataAvailable(object sender, WaveInEventArgs e)\n        {\n            audioBuffer = e.Buffer; \n        }</code></pre>\n\nAnd I get a cast exception. It seems that e.Buffer is a Byte array... So how to move from this byte array to a float array ?<br />\n",
+    "PostedDate": "2013-03-21T01:11:43.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1018771",
+    "ThreadId": "437452",
+    "Html": "yes, this is a frustrating thing about designing APIs in C# as you can't just cast a byte array to a float array.\r<br />\nYou can either loop through using BitConverter.ToSingle on every four bytes, or you can use Buffer.BlockCopy to copy the entire e.Buffer into a float array. Finally if you are comfortable with unsafe code you can use pointers and loop through in C/C++ style.<br />\n",
+    "PostedDate": "2013-03-21T04:09:55.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

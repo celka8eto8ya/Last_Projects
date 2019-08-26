@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1094371",
+    "ThreadId": "457395",
+    "Html": "Hello <br />\n<br />\nI am creating application in which will play mp3 audio file (on web page)  to describe some process to user.<br />\n<br />\nI want capture / record that audio<br />\n<br />\nis it possible to capture / record audio using this open source library ??<br />\n<br />\nPlease let me know on this.<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-09-19T01:41:48.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094478",
+    "ThreadId": "457395",
+    "Html": "If you mean in the web browser, then no, NAudio is does not run in browser applications. It runs on the .NET platform<br />\n",
+    "PostedDate": "2013-09-19T07:18:19.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

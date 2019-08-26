@@ -1,0 +1,154 @@
+[
+  {
+    "Id": "681316",
+    "ThreadId": "275120",
+    "Html": "\r\n<p>Any one have idea on what is wrong?</p>\r\n<p>I'm trying to test out the samples on a x64 machine. after I unzip, running any demo app gives the following error.</p>\r\n<p>It also freezes visual studios 2010 when I try to compile the solution..</p>\r\n<p>System.BadImageFormatException: Could not load file or assembly 'NAudio, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. An attempt was made to load a program with an incorrect format.<br>\r\nFile name: 'NAudio, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null'<br>\r\n&nbsp;&nbsp; at NAudioDemo.AudioPlaybackForm.InitializeComponent()<br>\r\n&nbsp;&nbsp; at NAudioDemo.AudioPlaybackForm..ctor()<br>\r\n&nbsp;&nbsp; at NAudioDemo.MainForm.buttonWavPlayback_Click(Object sender, EventArgs e)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.OnClick(EventArgs e)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Button.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)</p>\r\n<p>WRN: Assembly binding logging is turned OFF.<br>\r\nTo enable assembly bind failure logging, set the registry value [HKLM\\Software\\Microsoft\\Fusion!EnableLog] (DWORD) to 1.<br>\r\nNote: There is some performance penalty associated with assembly bind failure logging.<br>\r\nTo turn this feature off, remove the registry value [HKLM\\Software\\Microsoft\\Fusion!EnableLog].</p>\r\n<p>&nbsp;</p>\r\n<p>************** Loaded Assemblies **************<br>\r\nmscorlib<br>\r\n&nbsp;&nbsp;&nbsp; Assembly Version: 2.0.0.0<br>\r\n&nbsp;&nbsp;&nbsp; Win32 Version: 2.0.50727.5446 (Win7SP1GDR.050727-5400)<br>\r\n&nbsp;&nbsp;&nbsp; CodeBase: <a href=\"file:///C:/Windows/Microsoft.NET/Framework64/v2.0.50727/mscorlib.dll\">\r\nfile:///C:/Windows/Microsoft.NET/Framework64/v2.0.50727/mscorlib.dll</a><br>\r\n----------------------------------------<br>\r\nNAudioDemo<br>\r\n&nbsp;&nbsp;&nbsp; Assembly Version: 1.0.0.0<br>\r\n&nbsp;&nbsp;&nbsp; Win32 Version: 1.0.0.0<br>\r\n&nbsp;&nbsp;&nbsp; CodeBase: <a href=\"file:///C:/Users/ninghu/Downloads/NAudio/NAudioDemo.exe\">\r\nfile:///C:/Users/ninghu/Downloads/NAudio/NAudioDemo.exe</a><br>\r\n----------------------------------------<br>\r\nSystem.Windows.Forms<br>\r\n&nbsp;&nbsp;&nbsp; Assembly Version: 2.0.0.0<br>\r\n&nbsp;&nbsp;&nbsp; Win32 Version: 2.0.50727.5446 (Win7SP1GDR.050727-5400)<br>\r\n&nbsp;&nbsp;&nbsp; CodeBase: <a href=\"file:///C:/Windows/assembly/GAC_MSIL/System.Windows.Forms/2.0.0.0__b77a5c561934e089/System.Windows.Forms.dll\">\r\nfile:///C:/Windows/assembly/GAC_MSIL/System.Windows.Forms/2.0.0.0__b77a5c561934e089/System.Windows.Forms.dll</a><br>\r\n----------------------------------------<br>\r\nSystem<br>\r\n&nbsp;&nbsp;&nbsp; Assembly Version: 2.0.0.0<br>\r\n&nbsp;&nbsp;&nbsp; Win32 Version: 2.0.50727.5447 (Win7SP1GDR.050727-5400)<br>\r\n&nbsp;&nbsp;&nbsp; CodeBase: <a href=\"file:///C:/Windows/assembly/GAC_MSIL/System/2.0.0.0__b77a5c561934e089/System.dll\">\r\nfile:///C:/Windows/assembly/GAC_MSIL/System/2.0.0.0__b77a5c561934e089/System.dll</a><br>\r\n----------------------------------------<br>\r\nSystem.Drawing<br>\r\n&nbsp;&nbsp;&nbsp; Assembly Version: 2.0.0.0<br>\r\n&nbsp;&nbsp;&nbsp; Win32 Version: 2.0.50727.5420 (Win7SP1.050727-5400)<br>\r\n&nbsp;&nbsp;&nbsp; CodeBase: <a href=\"file:///C:/Windows/assembly/GAC_MSIL/System.Drawing/2.0.0.0__b03f5f7f11d50a3a/System.Drawing.dll\">\r\nfile:///C:/Windows/assembly/GAC_MSIL/System.Drawing/2.0.0.0__b03f5f7f11d50a3a/System.Drawing.dll</a><br>\r\n----------------------------------------<br>\r\nAccessibility<br>\r\n&nbsp;&nbsp;&nbsp; Assembly Version: 2.0.0.0<br>\r\n&nbsp;&nbsp;&nbsp; Win32 Version: 2.0.50727.4927 (NetFXspW7.050727-4900)<br>\r\n&nbsp;&nbsp;&nbsp; CodeBase: <a href=\"file:///C:/Windows/assembly/GAC_MSIL/Accessibility/2.0.0.0__b03f5f7f11d50a3a/Accessibility.dll\">\r\nfile:///C:/Windows/assembly/GAC_MSIL/Accessibility/2.0.0.0__b03f5f7f11d50a3a/Accessibility.dll</a><br>\r\n----------------------------------------</p>\r\n",
+    "PostedDate": "2011-10-07T07:33:07.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683192",
+    "ThreadId": "275120",
+    "Html": "<p>I have the same problem =(</p>\r\n<p>&nbsp;</p>\r\n<p>Win 7 64bits</p>",
+    "PostedDate": "2011-10-12T08:27:48.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683195",
+    "ThreadId": "275120",
+    "Html": "<p>this should be fixed with the latest code.</p>",
+    "PostedDate": "2011-10-12T08:29:04.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683211",
+    "ThreadId": "275120",
+    "Html": "<p>I have the latest code. I download today the 1.4 version. I'm using VS2008.</p>",
+    "PostedDate": "2011-10-12T09:04:28.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683212",
+    "ThreadId": "275120",
+    "Html": "<p>Not 1.4, the latest code from the Source Code tab above</p>",
+    "PostedDate": "2011-10-12T09:05:40.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683217",
+    "ThreadId": "275120",
+    "Html": "<p>And then? I was using only the dll file and in the source code there is no NAudio.dll file =/</p>",
+    "PostedDate": "2011-10-12T09:11:30.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683219",
+    "ThreadId": "275120",
+    "Html": "<p>you have to rebuild the source to use the latest version</p>",
+    "PostedDate": "2011-10-12T09:14:16.343-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683223",
+    "ThreadId": "275120",
+    "Html": "<p>I only have VS2008 and project NAudio.sln was made in VS2010 (I think)...</p>\r\n<p>Any way to I have the compiled dll?</p>\r\n<p>Thank you for your fast replys and sorry for my english</p>",
+    "PostedDate": "2011-10-12T09:30:33.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683226",
+    "ThreadId": "275120",
+    "Html": "<p>I will try to make a newer build available (about to go out, so won't be done today I'm afraid). To do it yourself, you could try using Visual Studio Express 2010 which is a free product</p>",
+    "PostedDate": "2011-10-12T09:32:49.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683231",
+    "ThreadId": "275120",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>I will try to make a newer build available (about to go out, so won't be done today I'm afraid). To do it yourself, you could try using Visual Studio Express 2010 which is a free product</p>\r\n</blockquote>\r\n<p>It's my exact same idea ;) I'm installing Visual Studio Express 2010 right now =)</p>",
+    "PostedDate": "2011-10-12T09:39:47.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683573",
+    "ThreadId": "275120",
+    "Html": "<p>The problem persists =(</p>\n<p>I install VS 2010 Express, build the solution in Debug mode try <em>NAudio.dll</em> from <strong>\\NAudio\\bin\\Debug</strong> and same problem.</p>\n<p>After I try build the solution in Release mode use <em>NAudio.dll</em> from <strong>\\NAudio\\bin\\Release </strong>and nothing...<strong></strong> same thing =(</p>\n<p>Am I trying with the right file?</p>",
+    "PostedDate": "2011-10-13T02:37:33.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683577",
+    "ThreadId": "275120",
+    "Html": "<p>Go into the NAudio project properties and change the target platform to AnyCPU. I thought I had done so in the latest check-in, (it will be for NAudio 1.5), but maybe not. I only got an x64 dev machine myself recently, and I did a bunch of testing in x64 mode and all is looking good.</p>\r\n<p>The other alternative for you is to use the NAudio dll as is, but set the target platform of your host executable to x86, which is what you were supposed to do with NAudio 1.4 and below.</p>",
+    "PostedDate": "2011-10-13T02:42:01.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683588",
+    "ThreadId": "275120",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>Go into the NAudio project properties and change the target platform to AnyCPU. I thought I had done so in the latest check-in, (it will be for NAudio 1.5), but maybe not. I only got an x64 dev machine myself recently, and I did a bunch of testing in x64  mode and all is looking good.</p>\r\n</blockquote>\r\n<p>Everything is set to Any CPU.</p>\r\n<p>&nbsp;</p>\r\n<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong>\r\n<p>The other alternative for you is to use the NAudio dll as is, but set  the target platform of your host executable to x86, which is what you  were supposed to do with NAudio 1.4 and below.</p>\r\n</blockquote>\r\n<p>I don't thing if I follow you... My host was a x64 plataform and I try to buil as a x86 with dll 1.4 and now with this new dll =(</p>\r\n<p>I only want to convert a mp3 file to wav.... I try Lame.exe but with no success and I see your dll was a alternative, but I thing I not have any progresses.</p>\r\n<p>Thank you anyway for all your help attemps</p>\r\n<p>There is the error:</p>\r\n<p><span>\r\n<h2 style=\"font-family: Verdana; font-weight: normal; font-size: 14pt; color: maroon;\"><em>Could not load file or assembly 'NAudio' or one of its dependencies. An attempt was made to load a program with an incorrect format.</em></h2>\r\n</span><span style=\"font-family: Arial,Helvetica,Geneva,SunSans-Regular,sans-serif;\"><strong style=\"font-family: Verdana; font-weight: bold; color: black; margin-top: -5px;\">Description:<span class=\"Apple-converted-space\">&nbsp;</span></strong>An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.<span class=\"Apple-converted-space\">&nbsp;</span><br /><br /><strong style=\"font-family: Verdana; font-weight: bold; color: black; margin-top: -5px;\">Exception Details:<span class=\"Apple-converted-space\">&nbsp;</span></strong>System.BadImageFormatException: Could not load file or assembly 'NAudio' or one of its dependencies. An attempt was made to load a program with an incorrect format.<br /><br /><strong style=\"font-family: Verdana; font-weight: bold; color: black; margin-top: -5px;\">Source Error:</strong><span class=\"Apple-converted-space\">&nbsp;</span><br /><br /> </span></p>\r\n<table width=\"100%\" bgcolor=\"#ffffcc\">\r\n<tbody>\r\n<tr>\r\n<td><code>An unhandled exception was generated during the execution of the current web request. Information regarding the origin and location of the exception can be identified using the exception stack trace below.</code></td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p><span style=\"font-family: Arial,Helvetica,Geneva,SunSans-Regular,sans-serif;\"> <br /><strong style=\"font-family: Verdana; font-weight: bold; color: black; margin-top: -5px;\">Assembly Load Trace:</strong><span class=\"Apple-converted-space\">&nbsp;</span>The following information can be helpful to determine why the assembly 'NAudio' could not be loaded.<br /><br /> </span></p>\r\n<table width=\"100%\" bgcolor=\"#ffffcc\">\r\n<tbody>\r\n<tr>\r\n<td>\r\n<pre style=\"font-family: 'Lucida Console'; font-size: 0.9em;\">WRN: Assembly binding logging is turned OFF.\r\nTo enable assembly bind failure logging, set the registry value [HKLM\\Software\\Microsoft\\Fusion!EnableLog] (DWORD) to 1.\r\nNote: There is some performance penalty associated with assembly bind failure logging.\r\nTo turn this feature off, remove the registry value [HKLM\\Software\\Microsoft\\Fusion!EnableLog].\r\n</pre>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p><span style=\"font-family: Arial,Helvetica,Geneva,SunSans-Regular,sans-serif;\"> <br /><strong style=\"font-family: Verdana; font-weight: bold; color: black; margin-top: -5px;\">Stack Trace:</strong><span class=\"Apple-converted-space\">&nbsp;</span><br /><br /> </span></p>\r\n<table width=\"100%\" bgcolor=\"#ffffcc\">\r\n<tbody>\r\n<tr>\r\n<td>\r\n<pre style=\"font-family: 'Lucida Console'; font-size: 0.9em;\">[BadImageFormatException: Could not load file or assembly 'NAudio' or one of its dependencies. An attempt was made to load a program with an incorrect format.]\r\n   System.Reflection.Assembly._nLoad(AssemblyName fileName, String codeBase, Evidence assemblySecurity, Assembly locationHint, StackCrawlMark&amp; stackMark, Boolean throwOnFileNotFound, Boolean forIntrospection) +0\r\n   System.Reflection.Assembly.InternalLoad(AssemblyName assemblyRef, Evidence assemblySecurity, StackCrawlMark&amp; stackMark, Boolean forIntrospection) +416\r\n   System.Reflection.Assembly.InternalLoad(String assemblyString, Evidence assemblySecurity, StackCrawlMark&amp; stackMark, Boolean forIntrospection) +166\r\n   System.Reflection.Assembly.Load(String assemblyString) +35\r\n   System.Web.Configuration.CompilationSection.LoadAssemblyHelper(String assemblyName, Boolean starDirective) +190\r\n\r\n[ConfigurationErrorsException: Could not load file or assembly 'NAudio' or one of its dependencies. An attempt was made to load a program with an incorrect format.]\r\n   System.Web.Configuration.CompilationSection.LoadAssemblyHelper(String assemblyName, Boolean starDirective) +11224200\r\n   System.Web.Configuration.CompilationSection.LoadAllAssembliesFromAppDomainBinDirectory() +388\r\n   System.Web.Configuration.CompilationSection.LoadAssembly(AssemblyInfo ai) +232\r\n   System.Web.Configuration.AssemblyInfo.get_AssemblyInternal() +48\r\n   System.Web.Compilation.BuildManager.GetReferencedAssemblies(CompilationSection compConfig) +210\r\n   System.Web.Compilation.BuildProvidersCompiler..ctor(VirtualPath configPath, Boolean supportLocalization, String outputAssemblyName) +76\r\n   System.Web.Compilation.CodeDirectoryCompiler.GetCodeDirectoryAssembly(VirtualPath virtualDir, CodeDirectoryType dirType, String assemblyName, StringSet excludedSubdirectories, Boolean isDirectoryAllowed) +11213378\r\n   System.Web.Compilation.BuildManager.CompileCodeDirectory(VirtualPath virtualDir, CodeDirectoryType dirType, String assemblyName, StringSet excludedSubdirectories) +185\r\n   System.Web.Compilation.BuildManager.EnsureTopLevelFilesCompiled() +551\r\n\r\n[HttpException (0x80004005): Could not load file or assembly 'NAudio' or one of its dependencies. An attempt was made to load a program with an incorrect format.]\r\n   System.Web.Compilation.BuildManager.ReportTopLevelCompilationException() +76\r\n   System.Web.Compilation.BuildManager.EnsureTopLevelFilesCompiled() +1012\r\n   System.Web.Hosting.HostingEnvironment.Initialize(ApplicationManager appManager, IApplicationHost appHost, IConfigMapPathFactory configMapPathFactory, HostingEnvironmentParameters hostingParameters) +1025\r\n\r\n[HttpException (0x80004005): Could not load file or assembly 'NAudio' or one of its dependencies. An attempt was made to load a program with an incorrect format.]\r\n   System.Web.HttpRuntime.FirstRequestInit(HttpContext context) +11318198\r\n   System.Web.HttpRuntime.EnsureFirstRequestInit(HttpContext context) +88\r\n   System.Web.HttpRuntime.ProcessRequestNotificationPrivate(IIS7WorkerRequest wr, HttpContext context) +4348404</pre>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p><span style=\"font-family: Arial,Helvetica,Geneva,SunSans-Regular,sans-serif;\"> </span></p>",
+    "PostedDate": "2011-10-13T03:16:03.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683590",
+    "ThreadId": "275120",
+    "Html": "<p>This error means that you are running as an x64 process and you have a build of NAudio.dll that is set to target x86 only.</p>\r\n<p>You fix it by either running as x86 process (not sure how you do this with IIS), OR, rebuild NAudio.dll with the AnyCPU target set.</p>",
+    "PostedDate": "2011-10-13T03:20:19.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685272",
+    "ThreadId": "275120",
+    "Html": "<p>I force everything to go x64 (AnyCPU does not do the work correctly) and it works.</p>\r\n<p>Thank you</p>",
+    "PostedDate": "2011-10-17T10:10:13.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732224",
+    "ThreadId": "275120",
+    "Html": "<p>Reconfirming gelasio's finding with December's 1.5 release. AnyCPU throws the exception, x64/x86 does not.</p>",
+    "PostedDate": "2012-01-29T04:43:28.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732228",
+    "ThreadId": "275120",
+    "Html": "<p>@Artfunkel. That is very strange. Are you also using NAudio from IIS? What class within NAudio are you using when the crash occurs.</p>",
+    "PostedDate": "2012-01-29T05:03:26.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "754987",
+    "ThreadId": "275120",
+    "Html": "<p>I'm not using ISS, I'm using a regular DLL build of the library.</p>\r\n<p>I'm not using any particular class. The exception happens as soon as any function with NAudio objects is reached. Here's all the info:</p>\r\n<p>&nbsp;</p>\r\n<pre>System.BadImageFormatException was unhandled by user code\r\n  Message=Could not load file or assembly 'NAudio, Version=1.5.4.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. An attempt was made to load a program with an incorrect format.\r\n  Source=Ego Audio Tool\r\n  FileName=NAudio, Version=1.5.4.0, Culture=neutral, PublicKeyToken=null\r\n  FusionLog==== Pre-bind state information ===\r\nLOG: User = Tom-PC\\Tom\r\nLOG: DisplayName = NAudio, Version=1.5.4.0, Culture=neutral, PublicKeyToken=null\r\n (Fully-specified)\r\nLOG: Appbase = file:///C:/Users/Tom/Documents/Visual Studio 2010/Projects/EgoMusicEditor/EgoMusicEditor/bin/Release/\r\nLOG: Initial PrivatePath = NULL\r\nCalling assembly : Ego Audio Tool, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null.\r\n===\r\nLOG: This bind starts in default load context.\r\nLOG: Using application configuration file: C:\\Users\\Tom\\Documents\\Visual Studio 2010\\Projects\\EgoMusicEditor\\EgoMusicEditor\\bin\\Release\\Ego Audio Tool.vshost.exe.Config\r\nLOG: Using host configuration file:\r\nLOG: Using machine configuration file from C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\config\\machine.config.\r\nLOG: Policy not being applied to reference at this time (private, custom, partial, or location-based assembly bind).\r\nLOG: Attempting download of new URL file:///C:/Users/Tom/Documents/Visual Studio 2010/Projects/EgoMusicEditor/EgoMusicEditor/bin/Release/NAudio.DLL.\r\nERR: Failed to complete setup of assembly (hr = 0x8007000b). Probing terminated.\r\n\r\n  StackTrace:\r\n       at Ego.AudioTool.EgoAudioTool.StopSample()\r\n       at Ego.AudioTool.EgoAudioTool.LoadDictionaries() in C:\\Users\\Tom\\Documents\\Visual Studio 2010\\Projects\\EgoMusicEditor\\EgoMusicEditor\\App.xaml.cs:line 82\r\n       at Ego.AudioTool.EgoAudioTool.AppState.set_CurrentGame(Game value) in C:\\Users\\Tom\\Documents\\Visual Studio 2010\\Projects\\EgoMusicEditor\\EgoMusicEditor\\App.xaml.cs:line 230\r\n       at Ego.AudioTool.MainWindow.ChangeGame() in C:\\Users\\Tom\\Documents\\Visual Studio 2010\\Projects\\EgoMusicEditor\\EgoMusicEditor\\Windows\\MainWindow.xaml.cs:line 186\r\n  InnerException: </pre>\r\n<p>I'm using a .net 4 build, but changing to 2 or 3 doesn't help.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-02-10T16:20:03.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "756615",
+    "ThreadId": "275120",
+    "Html": "<p>Are you able to make a very simple application that has this problem and upload a copy for me to have a look at?</p>\r\n<p>thanks</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-02-10T23:48:25.68-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

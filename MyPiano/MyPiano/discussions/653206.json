@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1468909",
+    "ThreadId": "653206",
+    "Html": "HI, \r<br />\n<br />\nI would like to use naudio to add audio water mark on some mp3 files. Can you please help me with the approach i should take to achieve this. \r<br />\n<br />\nRegards<br />\n",
+    "PostedDate": "2016-04-04T06:06:50.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469111",
+    "ThreadId": "653206",
+    "Html": "NAudio does <strong>not</strong> support the <strong>modifying of mp3 files for metadata, watermarks, tags or frame</strong>.\r<br />\n<br />\nIt just uses external codecs to play the audio frames inside.<br />\n",
+    "PostedDate": "2016-04-05T15:08:46.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469168",
+    "ThreadId": "653206",
+    "Html": "Can you suggest any other library that do that, using .Net and C#. I would greatly appreciate your help. <br />\n<br />\nBtw what i am trying to achieve is, having two mp3 files. A is short file and B is long file. I want to merge them and save them as single mp3 file, So when it plays, you can hear both of them. Its like Narration with background music. <br />\n",
+    "PostedDate": "2016-04-06T05:02:45.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469237",
+    "ThreadId": "653206",
+    "Html": "The only way i know, is to mix two mp3 files with wav as step between:<br />\n<pre><code>Mp3Reader A -&gt;ToSampleProvider -|\n                                |-&gt;MixingSampleProvider -&gt; Wave Writer -&gt; Mp3 Encoder\nMp3Reader B -&gt;ToSampleProvider -|</code></pre>\n\nNAudio offers all that functionality, except the Mp3 Encoder.<br />\n",
+    "PostedDate": "2016-04-06T16:28:08.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1470270",
+    "ThreadId": "653206",
+    "Html": "Hey Free Fall, \r<br />\n<br />\nThanks for such input, can you please provide me with some code. I would be very thankful. <br />\n",
+    "PostedDate": "2016-04-15T04:22:35.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

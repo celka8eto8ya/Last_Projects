@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "950329",
+    "ThreadId": "405323",
+    "Html": "\r\n<p>Hi, this might be a newbie question but I am banging my head against the wall trying to figure this out..</p>\r\n<p>I have a trackbar and I am playing a song, now I would like to move the trackbar or click in a certain position and have the track play at exactly that point. &nbsp;I have looked around and apparently I use the Mouse_Down events on the trackbar but how do\r\n I use the class to play from that same position?</p>\r\n",
+    "PostedDate": "2012-12-02T22:15:12.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950341",
+    "ThreadId": "405323",
+    "Html": "\r\n<p>There is a Scroll event which you need to handle, not Mouse_Down. Then you can look at the trackbar value. This is what the NAudioDemo app does, so you can look at its source code.</p>\r\n",
+    "PostedDate": "2012-12-02T23:03:13.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "836123",
+    "ThreadId": "355712",
+    "Html": "<p>Hi!</p>\n<p>I'm currently working on a small project that operates on mp3 files at frame level, so i'm using Naudio, and i'm very happy with the results so far.</p>\n<p>Since I'm working with a List&lt;Mp3Frame&gt; for direct access over individual frames, I'm wondering if it is possible to create some Mp3 reader to read directly from memory so the method definition would be:</p>\n<p><span style=\"color: blue;\">public static void </span>Mp3ToWav(List&lt;Mp3Frame&gt; array, <span style=\"color: blue;\">string </span>outputFile)</p>\n<p>and instead of:<span style=\"color: blue;\"> using </span>(<span style=\"color: #2b91af;\">Mp3FileReader </span>reader = <span style=\"color: blue;\">new </span><span style=\"color: #2b91af;\">Mp3FileReader</span>(mp3File))</p>\n<p>,I would be using:&nbsp; <span style=\"color: blue;\">using </span>(<span style=\"color: #2b91af;\">Mp3Reader </span>reader = <span style=\"color: blue;\">new </span><span style=\"color: #2b91af;\">Mp3Reader</span>(array))</p>\n<p>&nbsp;If this is not possible, is there any workaround i could use?</p>\n<p>Thanks in advance,</p>",
+    "PostedDate": "2012-05-14T08:45:33.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840831",
+    "ThreadId": "355712",
+    "Html": "<p>if you look at the NAudioDemo source code, you will see that the network streaming code decompresses MP3 frames one by one. For your purposes, I would suggest taking the MP3FileReader code, and modifying it to work with your list of Mp3Frames</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-05-25T02:21:18.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "280726",
+    "ThreadId": "81743",
+    "Html": "<p>First thanks for such a useful and well organized project!&nbsp; I am working on C# project that needs the following functionality.&nbsp; Could you let me know if NAudio can handle these tasks or maybe point me in the right direction.</p>\r\n<p>1)&nbsp; Can NAudio listen on multiple microphone for a command phrase (ie. &quot;Hello&quot;).&nbsp; When the command is recognized I need to mute the audio from the other audio input sources.</p>\r\n<p>2)&nbsp; Take Audio input from a stereo (plugged into the PC line-in) and a microphone.&nbsp; Then somehow subtract off line-in audio stream from the microphone stream to get rid of the stereo music.</p>\r\n<p>3)&nbsp; On the output side I would like to be able dynamic send audio to different destinations.&nbsp; Based on user inputs the sound would go to 1 of four speakers in the room.</p>\r\n<p>4)&nbsp; Improve the quality of a microphone input for speech recognition to allow the user to be further from the microphone.&nbsp; Here again I am wondering if NAudio has some APIs that might facilitate this goal.</p>\r\n<p>Sorry for the flood of questions, hopefully others will benefit as well...</p>\r\n<p>Thanks Again,</p>\r\n<p>thebrandons</p>",
+    "PostedDate": "2010-01-22T12:52:22.05-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "282129",
+    "ThreadId": "81743",
+    "Html": "<p>Still struggling with these questions.&nbsp; If someone happens happens to have a lead on any of these issues it would be much appreciated.&nbsp; Is the right application for NAudio or is there a namespace in MSDN that is suited for my goals.&nbsp; I am beginning to feel that Audio is the weak link in the Windows environment.</p>\r\n<p>Thanks,</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-26T19:54:14.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "282754",
+    "ThreadId": "81743",
+    "Html": "<p>hi thebrandons</p>\r\n<p>1) Naudio cannot do speech recognition. You would have to use the speech API to do this</p>\r\n<p>2) This is easier said than done. Cancelling audio requires it to be perfectly in phase and the same volume. What exactly are you trying to acheieve</p>\r\n<p>3) This depends on your soundcard. If it presents its outputs as different devices then it is easy in NAudio, simply choose different WaveOut devices. If it presents itself as a single multi-channel device, that is much harder</p>\r\n<p>4) You could possibly write a high-pass filter to remove rumble (and maybe a low-pass filter too to remove hiss). NAudio doesn't have anything built in. The best approach is to use a decent microphone with a wind filter and go through a mixer with the appropriate EQ capabilities.</p>\r\n<p>So sorry, NAudio doesn't have any built-in solutions to your needs. And yes, Audio support on windows is still fairly rudimentary (or at least the APIs are not particularly user friendly).</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-01-28T07:09:55.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "283013",
+    "ThreadId": "81743",
+    "Html": "<p><span style=\"font-size:10pt\">Mark,</span></p>\r\n<p><span style=\"font-size:10pt\">Thanks for your response as it is hard to find expertise in this area.&nbsp; Allow me to rephrase some of my questions to clarify my problem.</span></p>\r\n<p><span style=\"font-size:10pt\">0)<span style=\"font-size:7pt;font-family:'Times New Roman';font-style:normal;font-variant:normal;font-weight:normal;line-height:normal\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=\"font-size:10pt\">Do you know the fundamental .NET Audio Namespaces/Classes available?&nbsp; Would you mind listing some basics as I assume NAudio is a complex wrapper to these APIs.&nbsp; I am also trying to figure out where the .NET APIs stop and NAudio functionality starts?</span></p>\r\n<p><span style=\"font-size:10pt\">1)<span style=\"font-size:7pt;font-family:'Times New Roman';font-style:normal;font-variant:normal;font-weight:normal;line-height:normal\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=\"font-size:10pt\">I need to be able to target a specific microphone. &nbsp;I can handle the speech recognition part of the problem.&nbsp; However I need each microphone to appear as a different source with each being analyzed by the speech recognition engine simultaneously/independently. &nbsp;I do not know if either of these objectives are possible?</span></p>\r\n<p><span style=\"font-size:10pt\">2)<span style=\"font-size:7pt;font-family:'Times New Roman';font-style:normal;font-variant:normal;font-weight:normal;line-height:normal\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=\"font-size:10pt\">Can I subtract noise from a PC line-in (Hook to office radio) from the microphone which is in the same room?&nbsp; Basically I need the microphone to pick out my voice, for speech recognition, despite the fact that the microphone will hear the radio.&nbsp; Perhaps I am shooting to high but I was hoping NAudio could help me give this a try.&nbsp; Can NAudio help with subtraction, phase, and volume issues?&nbsp; Again is there a .NET namespace that might be better suited?</span></p>\r\n<p><span style=\"font-size:10pt\">3)<span style=\"font-size:7pt;font-family:'Times New Roman';font-style:normal;font-variant:normal;font-weight:normal;line-height:normal\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=\"font-size:10pt\">I have a soundcard with multi-channel outputs. &nbsp;Does NAudio provide APIs to help target a particular channel? &nbsp;Otherwise do you know which MS namespace could do the job?</span></p>\r\n<p><span style=\"font-size:10pt\">4)<span style=\"font-size:7pt;font-family:'Times New Roman';font-style:normal;font-variant:normal;font-weight:normal;line-height:normal\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=\"font-size:10pt\">Improve microphone sound quality if user moves away from microphone. &nbsp;You mentioned filters but I can not find the MS namespace that helps in this area?</span></p>\r\n<p><span style=\"font-size:10pt\">Again that&rsquo;s for accepting my questions. &nbsp;I am finding audio programming to be very challenging, and understand why NAudio is needed.</span></p>\r\n<p><span style=\"font-size:10pt\">Thanks,</span></p>",
+    "PostedDate": "2010-01-28T15:19:43.993-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "287758",
+    "ThreadId": "81743",
+    "Html": "<p>Can anyone help me on this....</p>",
+    "PostedDate": "2010-02-09T11:14:31.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

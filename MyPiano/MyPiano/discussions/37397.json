@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "124086",
+    "ThreadId": "37397",
+    "Html": "I would like to play sounds on 32 channels independently in ASIO mode. Currently, only stereo output is supported on the first two ASIO channels. <br>\r\nAre there any plans to extend NAudio in this direction? <br>\r\n<br>\r\nThanks, Mathias Wellner<br>\r\n<br>\r\n<br>\r\nETH Zurich, SMS Lab<br>\r\nhttp://www.sms.mavt.ethz.ch<br>\r\n",
+    "PostedDate": "2008-10-09T09:03:04.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "126169",
+    "ThreadId": "37397",
+    "Html": "hi Mathias,<br>\r\nit would be great to get NAudio working with multi-channel ASIO. We have a way to go first though, and only a very limited amount of test equipment.<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-10-19T13:42:13.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "126494",
+    "ThreadId": "37397",
+    "Html": "Hi Mark,<br>\r\n<br>\r\nI could do some testing with our sound card (Hammerfall DSP MADI)<strong></strong>, if that is of any help. <br>\r\n<br>\r\nMathias<br>\r\n",
+    "PostedDate": "2008-10-21T04:36:57.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "126645",
+    "ThreadId": "37397",
+    "Html": "thanks Mathias, the current ASIO implementation in NAudio was put together by Alexandre Mutel. I am hoping he might have time to trouble-shoot it a bit later this year, although I will do some experimenting of my own if I get the chance. I have a couple of Line 6 TonePort interfaces that don't work with it, so I am hopeful I will at least be able to get that working.<br>\r\n<br>\r\nMark<br>\r\n",
+    "PostedDate": "2008-10-21T12:52:52.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

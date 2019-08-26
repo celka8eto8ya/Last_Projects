@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1458977",
+    "ThreadId": "649941",
+    "Html": "Hi. I'm trying to mixing an input guitar signal and mp3 file. I'm using AsioOut class. Guitar signal should being played at one channel, audio file should being played in both channels.<br />\n<br />\nI have not working code.<br />\n<pre><code>        private static AsioOut asioout;\n        private static AudioFileReader reader;\n        private static BufferedWaveProvider bufferedWaveProvider;\n        private static MixingSampleProvider mixer;\n\n        [STAThread]\n        static void Main(string[] args)\n        {\n            asioout = new AsioOut(1);\n            reader = new AudioFileReader(/*SomeMp3File*/);\n            bufferedWaveProvider = new BufferedWaveProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 2));\n            mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 2));\n            mixer.AddMixerInput(reader.ToSampleProvider());\n            mixer.AddMixerInput(bufferedWaveProvider);\n            asioout.AudioAvailable += AsioOutFtAudioAvailable;\n            asioout.InitRecordAndPlayback(new SampleToWaveProvider(mixer), 2, 0);\n            asioout.Play();\n            while (true)\n            {}\n        }\n\n        private static void AsioOutFtAudioAvailable(object sender, AsioAudioAvailableEventArgs e)\n        {\n            byte[] bytes = new byte[e.SamplesPerBuffer * 4];\n            Marshal.Copy(e.InputBuffers[1], bytes, 0, e.SamplesPerBuffer * 4);\n            Marshal.Copy(bytes, 0, e.OutputBuffers[1], e.SamplesPerBuffer * 4);\n            e.WrittenToOutputBuffers = true;\n        } </code></pre>\n\nWhen e.WrittenToOutputBuffers is true I hear the guitar signal, but audio file is not being played. When e.WrittenToOutputBuffers is false the only audio file is played.<br />\n<br />\nHow does make it work?<br />\n",
+    "PostedDate": "2016-01-12T11:40:33.837-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

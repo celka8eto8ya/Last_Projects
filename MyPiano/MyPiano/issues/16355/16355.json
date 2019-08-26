@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:01:21.527-07:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "The NotifyingSampleProvider  class notifies also on non read samples because it uses the \"sampleCount\" variable which is the size of the incoming buffer. However the amount of bytes read may be smaller than the destination buffer! So the samplesRead variable should be used.\r\n\r\nWrong code:\r\n\r\n public int Read(float[] buffer, int offset, int sampleCount)\r\n        {\r\n            int samplesRead = source.Read(buffer, offset, sampleCount);\r\n            if (Sample != null)\r\n            {\r\n                for (int n = 0; n < sampleCount; n += channels)\r\n                {\r\n                    sampleArgs.Left = buffer[offset + n];\r\n                    sampleArgs.Right = channels > 1 ? buffer[offset + n + 1] : sampleArgs.Left;\r\n                    Sample(this, sampleArgs);\r\n                }\r\n            }\r\n            return samplesRead;\r\n        }\r\n\r\nRight code:\r\n public int Read(float[] buffer, int offset, int sampleCount)\r\n        {\r\n            int samplesRead = source.Read(buffer, offset, sampleCount);\r\n            if (Sample != null)\r\n            {\r\n                for (int n = 0; n < samplesRead ; n += channels)\r\n                {\r\n                    sampleArgs.Left = buffer[offset + n];\r\n                    sampleArgs.Right = channels > 1 ? buffer[offset + n + 1] : sampleArgs.Left;\r\n                    Sample(this, sampleArgs);\r\n                }\r\n            }\r\n            return samplesRead;\r\n        }",
+    "LastUpdatedDate": "2012-10-27T00:01:21.527-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2012-06-06T08:30:08.367-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Bug in the NotifyingSampleProvider class",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16355
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "good spot, have checked in a fix",
+      "PostedDate": "2012-06-11T08:46:46.467-07:00",
+      "Id": 67732
+    }
+  ]
+}

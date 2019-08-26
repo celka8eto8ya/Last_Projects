@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1328640",
+    "ThreadId": "573972",
+    "Html": "I am using NAudio to convert an mp4 file to mp3 by using the Encoder. And then I am deleting the original mp4 file. <br />\n<br />\nThis is my code:<br />\n<pre><code>using NAudio.Wave;\n\nstatic void Main()\n{\n    using (MediaFoundationReader reader = new MediaFoundationReader(&quot;a.mp4&quot;))\n    {\n        MediaFoundationEncoder.EncodeToMp3(reader, &quot;a.mp3&quot;);\n    }\n    File.Delete(&quot;a.mp4&quot;);\n}</code></pre>\n\nThe problem is that the original file &quot;a.mp4&quot; doesn't delete. No exceptions are thrown. It finally deletes when I close the program / stop debugging in VS<br />\n<br />\nAny ideas what is going on?<br />\n",
+    "PostedDate": "2014-12-03T23:01:35.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1340550",
+    "ThreadId": "573972",
+    "Html": "Sorry, no ideas. But it's unlikely to be anything to do with NAudio if File.Delete is not throwing exceptions. Maybe ask this one on StackOverflow<br />\n",
+    "PostedDate": "2015-01-09T15:30:37.467-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

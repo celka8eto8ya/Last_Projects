@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "261815",
+    "ThreadId": "76559",
+    "Html": "<p>Hi Mark,</p>\r\n<p>Goodday/evening to you. It's me again (the one who's posting everywhere in your blog), i love this dll so much. Anyway my question is about&nbsp; WaveOut and READ procedure of WaveStream or any IWaveProvider derived classes. Does WaveOut use the Position And Length of WaveStream to stop the PLAY procedure (ex. when Position and Length comes equal then play stops)? if this is true then can i spoof the length and position of my WaveStream so that Play procedure of WAVEOUT will not end? and finally how do i send silent sound or pause sounds to the WAVEOUT (just to keep waveout busy playing nothing so it dont stop playing)?</p>\r\n<p>Or maybe my understanding is totally wrong?</p>",
+    "PostedDate": "2009-11-30T03:30:34.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "261841",
+    "ThreadId": "76559",
+    "Html": "<p>hey mark i saw one of your blog post related to my question...</p>\r\n<p>http://mark-dot-net.blogspot.com/2008/06/naudio-wavestream-in-depth.html</p>\r\n<p>you don't need to reply on this...</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-11-30T05:05:12.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

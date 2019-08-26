@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1360038",
+    "ThreadId": "584661",
+    "Html": "Hi all,\r<br />\nI'm looking for a list of supported formats by default by NAudio. In my computer I've tested it can play wav, mp3 and m4a (aac), but I don't know if this formats are supported by default or through codecs, and I don't know which others formats are supported by NAudio.\r<br />\nIf NAudio, besides the defaults formats, support others formats through codecs, how can I get programmatically (VB.NET or C#) a complete list of supported formats in the particular system that is running NAudio?\r<br />\n<br />\nThank you all :)<br />\n",
+    "PostedDate": "2015-03-05T03:43:20.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1360040",
+    "ThreadId": "584661",
+    "Html": "hi, NAudio can use MediaFoundation (Windows Vista and above) and ACM (all supported Windows versions) for codecs. However, ACM is just codecs, it doens't understand file formats, so the ACM codecs on your system will only allow you to play WAV files containing compressed audio (e.g. ADPCM, G.711 etc)\r<br />\n<br />\nMedia Foundation is a different matter. The Media Foundation reader can read various audio file types (including MP3, WMA, MP4/ AAC etc) and it can read the audio out of video files too. However, finding out exactly what formats are available might be a bit tricky. I recommend you look at the source code for the WPF NAudio Demo (part of the overall source code) and look in particular at the <a href=\"https://naudio.codeplex.com/SourceControl/latest#NAudioWpfDemo/EnumMediaFoundationTransforms/EnumMftViewModel.cs\" rel=\"nofollow\">enumerating Media Foundation transforms code</a>. This will help you discover what decoders are present on your system. I suspect that what is really needed is some kind of way to discover what <a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/dd374655%28v=vs.85%29.aspx\" rel=\"nofollow\">Media Foundation &quot;source readers&quot;</a> are supported. I'm afraid I don't know how that is done.<br />\n",
+    "PostedDate": "2015-03-05T03:53:28.697-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1360053",
+    "ThreadId": "584661",
+    "Html": "So it's more easy to program using Media Foundation and declare Vista as a minimum requirement, true?<br />\n",
+    "PostedDate": "2015-03-05T04:32:38.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1360078",
+    "ThreadId": "584661",
+    "Html": "This is the list of supported formats in Media Foundation: <a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/dd757927(v=vs.85).aspx\" rel=\"nofollow\">https://msdn.microsoft.com/en-us/library/windows/desktop/dd757927(v=vs.85).aspx</a>\r<br />\nSo, that is the list of supported formats even for NAudio when it use Media Foundation, true?<br />\n",
+    "PostedDate": "2015-03-05T06:00:26.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1360101",
+    "ThreadId": "584661",
+    "Html": "yeah that looks about right. Remember that MF stuff isn't installed by default on server editions of Windows though.<br />\n",
+    "PostedDate": "2015-03-05T06:59:42.607-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1360110",
+    "ThreadId": "584661",
+    "Html": "So I should verify that Media Foundation is installed... I look around about this.<br />\n",
+    "PostedDate": "2015-03-05T07:32:54.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1362340",
+    "ThreadId": "584661",
+    "Html": "I´d also recommend to use These well working Decoders with NAudio:\r<br />\n<br />\nOGG Decoder: <a href=\"https://nvorbis.codeplex.com/\" rel=\"nofollow\">https://nvorbis.codeplex.com/</a>\r<br />\nFLAC Decoder: <a href=\"http://code.google.com/p/naudio-flac/\" rel=\"nofollow\">http://code.google.com/p/naudio-flac/</a><br />\n",
+    "PostedDate": "2015-03-10T15:24:07.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

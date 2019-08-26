@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1142204",
+    "ThreadId": "477983",
+    "Html": "This question might have been asked but may not be exactly as I'm asking. What I want is frequency/amplitude of audio file to perform effects such as Doppler, transmission losses, etc. This is basically requirement of acoustic application. As time passes such effects will continuously be applied and both frequency/amplitude will change and spectrum too accordingly on the run-time but I cant find how to get frequency/amplitude.<br />\n",
+    "PostedDate": "2013-12-25T10:56:52.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1144279",
+    "ThreadId": "477983",
+    "Html": "normally to perform any DSP, you'll want to work individually on samples. To get frequencies at different amplitudes, the FFT is what you want to look into. Neither of these are beginner topics though, so you'll need to know a fair bit of DSP theory and understand audio sampling in order to do this successfully.<br />\n",
+    "PostedDate": "2013-12-31T10:52:43.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1145242",
+    "ThreadId": "477983",
+    "Html": "Thanks a lot for your reply. I'm aware that these tasks can be accomplished with FFT and related concepts of DSP. I have also read on many NAudio discussions that FFT is already computed. I just want to know how can I get all these values as these are already calculated. Can u please give some samples as how to get these values. I need to display freq/ampl when mouse is moved/hovered. <br />\n",
+    "PostedDate": "2014-01-03T10:57:13.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1145279",
+    "ThreadId": "477983",
+    "Html": "well even with an FFT, you need to understand how to interpret the results. They are complex numbers, contained in &quot;bins&quot;. The most in-depth explanation I've given of this is in this article: <a href=\"http://channel9.msdn.com/coding4fun/articles/AutotuneNET\" rel=\"nofollow\">http://channel9.msdn.com/coding4fun/articles/AutotuneNET</a><br />\n",
+    "PostedDate": "2014-01-03T11:13:04.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1145563",
+    "ThreadId": "477983",
+    "Html": "Ok thanks again. I'll study it n if again I have any issue I'll post here<br />\n",
+    "PostedDate": "2014-01-03T12:49:16.65-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

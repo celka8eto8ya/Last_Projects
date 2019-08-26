@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1131346",
+    "ThreadId": "471803",
+    "Html": "Hello and thank you for making such a great toolkit. But I am having some problem while installing it. I am using Windows 8 64 bit Professional version And .net 4.5 is installed on it. When I try to add the NAudio library from nuget, it shows me error. &quot; 'NAudio' could not be installed because it is not compatible with any project in the solution. The project targets the following frameworks:  .NETFramework,Version=v3.5<br />\nWindows,Version=v8.0 &quot;<br />\n<br />\nI have installed .NETFramework 3.5 manually later but still the problem exists. Can you give me any solution to this or can tell me what I am doing wrong please? I am making the App for Windows Phone 8 using XAML.<br />\n",
+    "PostedDate": "2013-12-03T11:28:17.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1131696",
+    "ThreadId": "471803",
+    "Html": "hi NAudio doesn't include Windows phone support at the moment I'm afraid<br />\n",
+    "PostedDate": "2013-12-04T06:55:51.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217444",
+    "ThreadId": "471803",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nhi NAudio doesn't include Windows phone support at the moment I'm afraid<br />\n</blockquote>\nAny plans to support it?<br />\n",
+    "PostedDate": "2014-03-02T18:40:30.113-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1217738",
+    "ThreadId": "471803",
+    "Html": "would love to, but NAudio is just a spare time project for me, so it must compete with a lot of other demands on my time. I'm hoping that as the Windows Phone and WinRT APIs gradually move closer together, this will become an easier task.<br />\n",
+    "PostedDate": "2014-03-03T02:06:51.177-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

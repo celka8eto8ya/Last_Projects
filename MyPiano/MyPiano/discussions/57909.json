@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "195777",
+    "ThreadId": "57909",
+    "Html": "<p>Hi,</p>\r\n<p>Are there currently any plans for including these higher bit rates?</p>\r\n<p>Thanks,</p>",
+    "PostedDate": "2009-05-29T11:10:42.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "198911",
+    "ThreadId": "57909",
+    "Html": "<p>NAudio already is capable of mixing audio at 32 bit. What I guess you are asking for is the ability to load in WAV files with 24 bit and 32 bit sample depth. This is certainly something I plan to add in the future, but have not got round to it yet</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-06-08T01:35:34.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

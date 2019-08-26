@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "918371",
+    "ThreadId": "397132",
+    "Html": "\r\n<p>Okay, I has a problem about getting wavestream status, whether it's position(current position in wavestream) and the total duration time. Any help would thanks!</p>\r\n",
+    "PostedDate": "2012-09-27T04:06:35.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919138",
+    "ThreadId": "397132",
+    "Html": "<p>There are a few different ways to return the position of your audio file. How are you using WaveStream? Post your code and I'll be happy to help point you in the right direction</p>",
+    "PostedDate": "2012-09-28T11:30:02.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919265",
+    "ThreadId": "397132",
+    "Html": "<p>This is the code snippet:</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">if</span> (<span style=\"color: green;\">/*What should I put inside*/</span>) <span style=\"color: green;\">/*In this condition, I want to test whether the mp3 files reach to the                \r\n        end or not. But I don't know how to perform it*/</span>\r\n{\r\n    <span style=\"color: blue;\">if</span> (localI &lt; localFileNames.Length) <span style=\"color: green;\">//If yes</span>\r\n        {\r\n            Clear();\r\n            localI++; <span style=\"color: green;\">//Play next track</span>\r\n            CreateInputStream(localFileNames, localI);\r\n            MP3Play();  \r\n                                   \r\n        }\r\n    <span style=\"color: blue;\">else</span> <span style=\"color: green;\">//If no</span>\r\n        {\r\n            Clear();\r\n            localI = 0; <span style=\"color: green;\">// Replay the track list</span>\r\n            CreateInputStream(localFileNames, localI);\r\n            MP3Play();\r\n        }\r\n}\r\n\r\nIWavePlayer playerDevice;\r\nWaveStream mainOutputStream; \r\nWaveChannel32 volumeStream;\r\n<span style=\"color: blue;\">string</span>[] localFileNames = <span style=\"color: blue;\">null</span>;\r\n<span style=\"color: blue;\">int</span> localI = 0;             \r\n\r\n    <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">static</span> WaveStream CreateInputStream(<span style=\"color: blue;\">string</span>[] fileNames, <span style=\"color: blue;\">int</span> i)\r\n        {\r\n            Array.Resize(<span style=\"color: blue;\">ref</span> localFileNames, fileNames.Length);\r\n            localI = i;\r\n\r\n             <span style=\"color: blue;\">for</span> (<span style=\"color: blue;\">int</span> i = 0; i &lt; fileNames.Length; i++)\r\n                {\r\n                    localFileNames[i] = fileNames[i];\r\n                }\r\n          \r\n            playerDevice = <span style=\"color: blue;\">new</span> WaveOut();\r\n            WaveChannel32 inputStream;\r\n\r\n            <span style=\"color: blue;\">if</span> (localFileNames[localI].EndsWith(<span style=\"color: #a31515;\">\".mp3\"</span>))\r\n            {\r\n                WaveStream mp3Reader = <span style=\"color: blue;\">new</span> Mp3FileReader(localFileNames[localI]);\r\n                inputStream = <span style=\"color: blue;\">new</span> WaveChannel32(mp3Reader);\r\n            }\r\n            <span style=\"color: blue;\">else</span>\r\n            {\r\n                <span style=\"color: blue;\">throw</span> <span style=\"color: blue;\">new</span> InvalidOperationException(<span style=\"color: #a31515;\">\"Unsupported extension\"</span>);\r\n            }\r\n            volumeStream = inputStream;\r\n\r\n            mainOutputStream = volumeStream;\r\n\r\n            <span style=\"color: blue;\">return</span> mainOutputStream;\r\n        }\r\n\r\n    <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">static</span> <span style=\"color: blue;\">void</span> MP3Play()\r\n        {            \r\n            playerDevice.Init(mainOutputStream);\r\n            playerDevice.Play();            \r\n        }\r\n    \r\n    <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">static</span> <span style=\"color: blue;\">void</span> Clear()\r\n        {\r\n            playerDevice.Stop();\r\n\r\n            volumeStream.Close();\r\n            volumeStream = <span style=\"color: blue;\">null</span>;\r\n\r\n            mainOutputStream.Close();\r\n            mainOutputStream = <span style=\"color: blue;\">null</span>;\r\n\r\n            playerDevice.Dispose();\r\n            playerDevice = <span style=\"color: blue;\">null</span>;\r\n        }\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2012-09-28T17:37:01.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919493",
+    "ThreadId": "397132",
+    "Html": "<p>subscribe to the PlaybackStopped event on playerDevice to detect when a file has ended. You will need to be using a relatively recent version of NAudio</p>\r\n<p>&nbsp;</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-09-29T15:04:34.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919528",
+    "ThreadId": "397132",
+    "Html": "<p>Thanks!</p>",
+    "PostedDate": "2012-09-29T19:39:52.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919532",
+    "ThreadId": "397132",
+    "Html": "<p>For additional, i found that send the Mp3Reader to IWaveProvider instead of WaveStream can know whether the file has ended, plus using a timer. :)&nbsp;</p>",
+    "PostedDate": "2012-09-29T20:44:13.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

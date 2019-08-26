@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "The description of WaveOut.PlaybackStopped:\r\n> Indicates that playback has gone into a stopped state due to __reaching the end of the input stream__ or an error has been encountered during playback\r\n\r\nHowever if I call WaveOut.Stop() the event will still be fired, and it will be fired when playback is stopped for any reason, even though there is no error and playback hasn't finished yet. (I'm using DirectSoundOut)",
+    "LastUpdatedDate": "2014-10-18T08:47:44.517-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2014-10-17T06:29:54.89-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveOut.PlaybackStopped is raised when calling WaveOut.Stop()",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16456
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Yes, that description should be updated. PlaybackStopped will always be raised when playback is stopped for any reason.",
+      "PostedDate": "2014-10-17T07:58:22.283-07:00",
+      "Id": 162529
+    }
+  ]
+}

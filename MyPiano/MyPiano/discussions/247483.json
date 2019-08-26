@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "571790",
+    "ThreadId": "247483",
+    "Html": "<p>Having been around the traps, and ventured down many blind alleys I&nbsp; ask this question before jumping into NAudio.</p>\n<p>My application is in VB .NET built on Visual Studio 2005.</p>\n<p>A bit of background - StarTraX (free download from http://www.gpsanimator.com) replays track files that you download from your GPS in Google Earth. It's used to replay activities such as gliding, paragliding and&nbsp; hanggliging as well as skiing, cycling driving  etc. Any activity where you might carry a GPS.,</p>\n<p>I would like to add a feature that replicates the audio output from a variometer (the vertical speed indicator used by the gliding fraternity to identify thermal lift). This sounds something like this http://www.gpsanimator.com/demo.wav . The tone rises and  falls with the value of the vertical speed (VS), and the frequency of the pulse changes with the rate of change of VS.</p>\n<p>The VS is calculated from the track file, which provides position data roughly every one to 10 seconds, depending on the GPS characteristics.&nbsp;</p>\n<p>Whilst I'm a moderate coder with a good understanding of the physics of sound, I have not previously worked with any audio applications. Over the past couple of days, using System.Media SoundPlayer I have successfully imported and replayed wave files into  my app - playing them asynchronously, but I'm using pre-recorded clips whcih have a pre-determined duration which I'm not able to clip to modify the pulse frequency. Also, I'll have to generate scores of samples to get a reasonable range of pitches.</p>\n<p>So... my question is - Is NAudio the way for me to go to achieve these objectives?</p>\n<p>And has anyone got some helpful suggestion?</p>\n<p>Cheers</p>",
+    "PostedDate": "2011-02-24T14:00:04.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572026",
+    "ThreadId": "247483",
+    "Html": "<p>yes, NAudio can do this. you create an IWaveProvider implementation (inherit from WaveProvider32) and provide the samples by your own algorithm</p>\r\n<p>see this tutorial for an example of creating a sine wave</p>\r\n<p>http://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-25T01:53:18.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572298",
+    "ThreadId": "247483",
+    "Html": "<div dir=\"ltr\"><span><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\">Hi Mark,</span></span></div>\n<div dir=\"ltr\"><span><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\">Thanks for the reply, and for the great work you've done.</span></span></div>\n<div dir=\"ltr\"><span><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\">(I totally emphathise with your blog heading! \"friends and family aren't interested\"!)</span></span></div>\n<div dir=\"ltr\"><span><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\">Sorry to be a pain, but I'm a VB coder, and whilst I have been able to succesfullt migrate your wav file split code, I'm having a challenge with playback-of-sine-wave.</span></span></div>\n<div dir=\"ltr\"><span><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\">I'm getting a compile error in :</span></span></div>\n<div dir=\"ltr\"><span><img src=\"cid:912595319@25022011-0A95\" alt=\"\" /></span></div>\n<p><span><span style=\"font-size: x-small;\"> </span>\n<p dir=\"ltr\"><span style=\"font-size: x-small;\">&nbsp;</span></p>\n</span><span><span><span style=\"font-size: x-small;\">of: </span></span><span><img src=\"cid:912595319@25022011-0A8E\" alt=\"\" /></span> </span></p>\n<div><span>&nbsp;</span><span style=\"font-size: x-small;\">and by C# just ain't up to it. Can you assist please?</span></div>\n<p><span style=\"font-size: x-small;\"><span>&nbsp;</span></span><span style=\"font-size: x-small;\">&nbsp;</span></p>\n<div><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\">&nbsp;</span><br /> <span><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\">I'm working on the a[pproach If I can get it to work in C#, then I can migrate to VB.</span></span></div>\n<div><span><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\">I'm working in VS2005, .NET 2.0</span></span></div>\n<div><span></span></div>\n<div><span><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\">Cheers,</span></span></div>\n<div><span><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\">Alan</span></span></div>\n<div><span></span></div>\n<p>&nbsp;</p>",
+    "PostedDate": "2011-02-25T12:03:29.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572337",
+    "ThreadId": "247483",
+    "Html": "<div dir=\"ltr\"><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\"><span>Hold your horses! I've got it running</span></span></div>\n<div dir=\"ltr\"><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\"><span>removed the get and set to</span></span></div>\n<div dir=\"ltr\"><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\"><span><span style=\"font-size: x-small;\"> </span>\n<p><span style=\"font-size: x-small;\">&nbsp;</span><span style=\"color: #0000ff; font-size: x-small;\"><span style=\"color: #0000ff; font-size: x-small;\">public</span></span><span style=\"font-size: x-small;\"> </span><span style=\"color: #0000ff; font-size: x-small;\"><span style=\"color: #0000ff; font-size: x-small;\">float</span></span><span style=\"font-size: x-small;\"> Frequency;</span></p>\n<p><span style=\"font-size: x-small;\">&nbsp;</span><span style=\"color: #0000ff; font-size: x-small;\"><span style=\"color: #0000ff; font-size: x-small;\">public</span></span><span style=\"font-size: x-small;\"> </span><span style=\"color: #0000ff; font-size: x-small;\"><span style=\"color: #0000ff; font-size: x-small;\">float</span></span><span style=\"font-size: x-small;\"> Amplitude ;</span></p>\n<span style=\"font-size: x-small;\">&nbsp;</span></span></span></div>\n<div dir=\"ltr\"><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\"><span>removed the WaveProvider2 class (as it's already in 1.3)</span></span></div>\n<div dir=\"ltr\"><span style=\"color: #0000ff; font-family: Calibri; font-size: small;\"><span>and changed </span></span><span style=\"font-size: small;\"><span><span style=\"font-family: Calibri;\"><span style=\"color: #0000ff;\"><span style=\"font-size: x-small;\"><span>var </span>sineWaveProvider = </span></span></span><span style=\"font-family: Calibri;\"><span style=\"color: #0000ff;\"><span style=\"font-size: x-small;\"><span style=\"font-size: x-small;\">new</span></span><span style=\"font-size: x-small;\"> </span><span style=\"font-size: x-small;\"><span style=\"font-size: x-small;\">SineWaveProvider32</span></span><span style=\"font-size: x-small;\">();</span></span></span></span></span></div>\n<div dir=\"ltr\"><span style=\"font-size: small;\"><span><span><span style=\"color: #0000ff;\"><span style=\"font-size: x-small;\">to </span></span></span></span></span></div>\n<p><span style=\"font-size: small;\"><span><span style=\"color: #0000ff;\"></span></span></span></p>\n<p><span style=\"font-size: x-small;\"><span style=\"color: #008080;\"><span style=\"color: #008080;\">SineWaveProvider32</span></span> sineWaveProvider = <span style=\"color: #0000ff;\"><span style=\"color: #0000ff;\">new</span></span> <span style=\"color: #008080;\"> <span style=\"color: #008080;\">SineWaveProvider32</span></span>();</span></p>\n<div><span style=\"font-size: x-small;\">Thanks, I'm now working on the VB version.<br /> </span><span style=\"font-family: Calibri;\"><span style=\"color: #0000ff;\"><span style=\"font-size: small;\">Cheers,</span></span></span></div>\n<div><span><span style=\"color: #0000ff;\"><span style=\"font-size: small;\"></span></span></span><span style=\"font-family: Calibri;\"><span style=\"color: #0000ff;\"><span style=\"font-size: small;\">A<span>lan</span></span></span></span></div>\n<div><span style=\"font-family: Calibri;\"><span style=\"color: #0000ff;\"><span style=\"font-size: small;\"></span></span></span></div>",
+    "PostedDate": "2011-02-25T13:09:39.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572665",
+    "ThreadId": "247483",
+    "Html": "<p>I am making progress, but have a couple of questions.</p>\r\n<p>1. When I run your example in C#, I get a beautiful continuous clear tone, but when I migrated the code to VB, I get the same continuous tone but it is overlayed with a ticking at around 150 ms frequency. Any Ideas?</p>\r\n<p>2. I want to generate tone pulses at around 100 ms followed by a similar length silence. I'm doing this in a loop, like</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while (true){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveOut.Play();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.Threading.Thread.Sleep(100);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; waveOut.Stop();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.Threading.Thread.Sleep(100);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>And am getting the required result except there is a click at the end of the pulse. Is there anything I can do to clean this up please?</p>\r\n<p>Cheers</p>",
+    "PostedDate": "2011-02-26T15:40:51.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574343",
+    "ThreadId": "247483",
+    "Html": "<p>I would avoid Play and Stop. Instead the WaveProvider you give to WaveOut.Init should provide tone for 100ms followed by silence for 100ms,</p>\r\n<p>To get rid of clicks you need to fade in and out (or at least ensure your tone generation code always stops on a zero output)</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-02T03:44:29.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "574634",
+    "ThreadId": "247483",
+    "Html": "<div>\n<p><span style=\"color: blue; font-family: Calibri; font-size: small;\"><span style=\"font-size: 12pt; font-family: Calibri; color: blue;\">Hi Mark,</span></span></p>\n<p><span style=\"color: blue; font-family: Calibri; font-size: small;\"><span style=\"font-size: 12pt; font-family: Calibri; color: blue;\">I understand what you are suggesting, but am struggling to work out how to implement your proposals. My VS2005 won&rsquo;t load your projects so I&rsquo;m working  a bit blind with the 1.3 NAudio.dll and my XP won&rsquo;t run your examples. I have upgrades on order. </span></span></p>\n<p><span style=\"color: blue; font-family: Calibri; font-size: small;\"><span style=\"font-size: 12pt; font-family: Calibri; color: blue;\">I can&rsquo;t see how to manage the WaveProvider&rsquo;s duration. Could you provide an example please? </span></span></p>\n<p><span style=\"color: blue; font-family: Calibri; font-size: small;\"><span style=\"font-size: 12pt; font-family: Calibri; color: blue;\">And again, could you provide an example of code that controls where the tone generation code stops please?</span></span></p>\n<p><span style=\"color: blue; font-family: Calibri; font-size: small;\"><span style=\"font-size: 12pt; font-family: Calibri; color: blue;\">Cheers,</span></span></p>\n</div>",
+    "PostedDate": "2011-03-02T13:38:28.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "579850",
+    "ThreadId": "247483",
+    "Html": "<p>Hi Mark,</p>\r\n<p>You encouraged me to use NAudio, and now I'm stuck and you've stopped talking to me. Any chance of a response to my last post? I really would appreciate it. Thanks.</p>",
+    "PostedDate": "2011-03-13T22:53:33.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "579948",
+    "ThreadId": "247483",
+    "Html": "<p>hi StarTraX</p>\r\n<p>I'm afraid I don't have the time to answer all the support requests that come in for NAudio, so can only occasionally come on here to provide pointers in the right direction.</p>\r\n<p>WaveProviders don't have a duration. To signal the end of the data, simply return 0 from the Read method. If you want a duration and to support repositioning you can use WaveStream as the base class.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-03-14T03:58:41.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

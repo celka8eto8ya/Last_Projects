@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1450570",
+    "ThreadId": "646857",
+    "Html": "Hi, I just want to get what my speakers is playing and record it. For example, i am playing music from browser. May anybody help me?<br />\n",
+    "PostedDate": "2015-10-31T10:04:16.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1450590",
+    "ThreadId": "646857",
+    "Html": "WasapiLoopbackCapture is what you are looking for. Available since win win xp/vista if i remember correctly.<br />\n",
+    "PostedDate": "2015-10-31T17:45:17.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459094",
+    "ThreadId": "646857",
+    "Html": "I've hooked into this, but the dataavailable event seems to fire constantly with a buffer full of zeros, and bytesRecorded = 19200. \r<br />\n<br />\nwhat's going on here?<br />\n",
+    "PostedDate": "2016-01-13T07:02:01.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459521",
+    "ThreadId": "646857",
+    "Html": "Ok, I just tried it with a sample application and recoginzed, that LoopbackCapture outputs always 32 bit float Samples. Also, with specifing the device in the class constructor it stopped working.\r<br />\n<br />\nAnyway, here´s my working winforms sample code. Just copy into a VB Winforms app, reference to NAudio and place a Waveformpainter on the Form.<br />\n<pre><code>    Dim WI As IWaveIn = Nothing\n    Private Sub FormMain_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load\n        WI = New WasapiLoopbackCapture()\n        AddHandler WI.DataAvailable, AddressOf DataArriving\n        WI.StartRecording()\n    End Sub\n\n    Private Sub FormMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing\n        If WI IsNot Nothing Then\n            WI.StopRecording()\n            WI.Dispose()\n        End If\n    End Sub\n\n    Private Sub DataArriving(ByVal sender As Object, ByVal e As WaveInEventArgs)\n        For index As Integer = 0 To e.BytesRecorded - 1 Step 8\n            Dim sampleleft As Single = BitConverter.ToSingle(e.Buffer, index)\n            Dim sampleright As Single = BitConverter.ToSingle(e.Buffer, index + 4)\n            WaveformPainter1.AddLeftRight(sampleleft, sampleright)\n        Next\n    End Sub</code></pre>\n\nThe code should display the audio waveform of your windows mixer.\r<br />\n<br />\nFF<br />\n",
+    "PostedDate": "2016-01-16T15:41:34.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

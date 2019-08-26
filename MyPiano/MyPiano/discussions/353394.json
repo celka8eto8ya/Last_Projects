@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "827971",
+    "ThreadId": "353394",
+    "Html": "\r\n<p>I am trying to use the WaveViewer control to visualize a raw stream with 8bit, 8k data. The issue I am having is that the WaveViewer displays a nearly all black waveform (appears like extreme clipping) that looks normal in Audacity. How do I control the\r\n appearance so that it looks as expected. I would also like to change the color of the graph if possible, but when I change the color property nothing happens.</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre style=\"color:black\"><span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> ShowActivePhrase(string path)</pre>\r\n<pre>{\r\n        FileStream file = <span style=\"color:blue\">new</span> FileStream(path, FileMode.Open, FileAccess.Read);\r\n        WaveFormat format = <span style=\"color:blue\">new</span> WaveFormat(8000, 8, 1);\r\n        WaveStream rawStream = <span style=\"color:blue\">new</span> RawSourceWaveStream(file, format);\r\n        waveViewer1.SamplesPerPixel = 24;\r\n        waveViewer1.WaveStream = rawStream;</pre>\r\n<pre style=\"color:black\">}</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-04-24T10:17:27.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828508",
+    "ThreadId": "353394",
+    "Html": "<p>I found the source code to the control and saw what my problem is. The control is expecting 16 bit data and I was feeding it 8 bit data. I used&nbsp;WaveFormatConversionStream plotStream = new WaveFormatConversionStream(new WaveFormat(8000, 16, 1), rawStream) to do the conversion and now it plots correctly. I also saw the control is hard coded to use a black pen so I will probably modify the control to use the forecolor.</p>\r\n<p>I am very pleased with NAudio, it does everything I need, just wish there was more documentation available for newbies like myself.</p>",
+    "PostedDate": "2012-04-25T10:00:53.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828973",
+    "ThreadId": "353394",
+    "Html": "<p>glad you got it working. Sorry about lack of documentation. NAudio is just a spare time hobby project for me and for the first 7 years I was the only person to use it, so there was no point writing reams of documentation. I try to regularly blog about NAudio, and the NAudioDemo project is the main place to go to see examples of the classes in real situations.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-04-26T09:00:54.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "829080",
+    "ThreadId": "353394",
+    "Html": "<p>I really appreciate your efforts to develop this and I think others who have a good handle on how to use the objects could help provide highly simplified code examples and class descriptions to distribute the documentation work. The&nbsp;YouTube&nbsp;videos by Giawa are a good example of this.</p>\r\n<p>Thanks!</p>",
+    "PostedDate": "2012-04-26T13:28:11.903-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

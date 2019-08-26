@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "278848",
+    "ThreadId": "81264",
+    "Html": "<p>&nbsp;&nbsp; I think IWaveIn should implement the interface IWaveProvider. so I can play sound&nbsp;at the same time of recording. If not, how can I do that?</p>",
+    "PostedDate": "2010-01-19T01:59:10.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "282399",
+    "ThreadId": "81264",
+    "Html": "<p>It would be nice for NAudio to provide an adapter from IWaveIn to IWaveProvider. It simply needs some kind of buffering, and possibly some thread safety. Maybe we'll have one in the next version. In the meantime, its not too hard to write yourself.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-27T09:04:18.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

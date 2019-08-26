@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1437249",
+    "ThreadId": "642330",
+    "Html": "Hi.\r<br />\n<br />\nI found that every time i call Stop() or Dispose() i can hear a noticeable click. As the glitch happens right there, i can't do a FadeIn or FadeOut to solve the little artifacts of the stop or play. I've tried with WaveOut, Wasapi, and DirectSound.\r<br />\n<br />\nA very simple player:<br />\n<pre><code>reader = new AudioFileReader(&quot;test.mp3);\n\nwaveOut = new WaveOut();\nwaveOut.DeviceNumber = 0;\nwaveOut.NumberOfBuffers = 2;\nwaveOut.DesiredLatency = 150;\nwaveOut.Init(reader)\nwaveOut.Play()</code></pre>\n\nLater, right when i call waveOut.Stop(), the click happens.\r<br />\n<br />\nI thought it was only my system, but the app on other computers does the same.\r<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2015-08-04T13:22:05.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437335",
+    "ThreadId": "642330",
+    "Html": "Yes, abruptly stopping audio will often cause a click. To get rid of this, begin a fade-out instead of stopping. Then, once the fadeout has completed, call stop.<br />\n",
+    "PostedDate": "2015-08-05T03:12:56.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

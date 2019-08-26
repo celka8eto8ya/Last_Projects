@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "See OpenSebJ's explanation as to why this is not a bug",
+    "ClosedDate": "2010-11-07T12:39:54.017-08:00",
+    "CommentCount": 2,
+    "Custom": "",
+    "Description": "If I do this:\n\nWaveFileReader reader = new WaveFileReader(\"test/Soundgarden - Rusty Cage.wav\");\nWaveChannel32 channelStream = new WaveChannel32(reader);\nint bitsPerSample = channelStream.WaveFormat.BitsPerSample;\n\nand then have a look at bitsPerSample, it's set to 32. But from inspecting my wav file in a binary editor, I can see that it should be 16.",
+    "LastUpdatedDate": "2010-11-07T12:39:54.017-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-04-11T07:34:17.667-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "WaveChannel32.WaveFormat.BitsPerSample does not reflect what's in my wav file.",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9732
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Hi eliotstock,\r\n\r\nThis is not a bug and it is expected behaviour; please refer to this article on Mark's blog:\r\nhttp://mark-dot-net.blogspot.com/2008/06/naudio-wave-stream-architecture.html\r\n\r\nA quick summary is that you are basically reading the properties of the WaveChannel32 stream, which is interoperating your 16bit stream and doing the conversion on the fly to represent it as a 32bit stereo stream. If you want to read the original format of the wave file you are using then you need to retrieve this value from the WaveFileReader class, or reader instance in this case.\r\n\r\nSo your code only need to be changed to be:\r\nint bitsPerSample = reader.WaveFormat.BitsPerSample;\r\n\r\nRegards,\r\nSebastian",
+      "PostedDate": "2009-04-11T17:13:07.193-07:00",
+      "Id": 41700
+    },
+    {
+      "Message": "Ok brilliant - thanks for your help. Didn't realise I could use the reader directly and don't even really need the stream in my case. Thanks again.",
+      "PostedDate": "2009-04-12T09:19:51.26-07:00",
+      "Id": 41701
+    }
+  ]
+}

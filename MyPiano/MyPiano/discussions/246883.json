@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "569505",
+    "ThreadId": "246883",
+    "Html": "\r\n<p>It's possible to record (or mix) MIC &#43; Speakers at same time using WASAPI ? Now i can record only speakers...</p>\r\n",
+    "PostedDate": "2011-02-21T02:14:34.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "569520",
+    "ThreadId": "246883",
+    "Html": "<p>I'm afraid I don't know the answer to this. It might even be to do with your soundcard drivers. Some have a \"what you hear\" mode that lets you do this.</p>\r\n<p>You could also look into loopback recording mode (http://msdn.microsoft.com/en-us/library/dd316551%28v=vs.85%29.aspx) to see if that does what you need.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2011-02-21T02:55:16.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

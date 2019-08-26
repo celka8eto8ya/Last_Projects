@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1013660",
+    "ThreadId": "436249",
+    "Html": "I don't figure out how to get a Stream from WaveIn.\r<br />\n<br />\nThis stream is needed for this method: System.Speech.SpeechRecognitionEngine.SetInputToWaveStream(Stream in)\r<br />\n<br />\nMsdn says\r<br />\n&quot;A valid Stream instance connected to an audio source in Wave format.\r<br />\nIf the recognizer reaches the end of the input stream during a recognition operation, the recognition operation finalizes with the available input.&quot;\r<br />\n<br />\nSo i'd like to prevent recoengine to reach the end of the stream.\r<br />\n<br />\nDo you think it is possible?\r<br />\nBut my main question still : how to get a Stream from waveIn, i didn't found sample or doc regarding this.<br />\n",
+    "PostedDate": "2013-03-11T21:27:30.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016253",
+    "ThreadId": "436249",
+    "Html": "Sorry to insist, but all WaveStream class that i've seen takes a WaveStream as argument in their constructor.\r<br />\n<br />\nIs it possible to get or build a WaveStream from WaveIn?\r<br />\n<br />\nPlease?<br />\n",
+    "PostedDate": "2013-03-16T00:00:30.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016343",
+    "ThreadId": "436249",
+    "Html": "You can use the BufferedWaveProvider to make an IWaveProvider. It doesn't implement WaveStream as it doesn't support repositioning, but you could make a custom class. But I'm pretty sure the &quot;WaveStream&quot; MSDN is talking about means a WAV file in a stream, which is not the same as an NAudio WaveStream<br />\n",
+    "PostedDate": "2013-03-16T08:50:09.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016468",
+    "ThreadId": "436249",
+    "Html": "Thank you for your reply.\r<br />\nUnfortunatly i still don't figure out how to get a WaveStream from something else than a file.\r<br />\nFor example, i don't see doc or sample to get a WaveStream from BufferedWaveProvider .<br />\n",
+    "PostedDate": "2013-03-16T17:38:36.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016965",
+    "ThreadId": "436249",
+    "Html": "I don't think a WaveStream will actually be any use to you beacuse the speech recognition wants a WAV file in a stream. But if you really want to turn a WaveProvider into a WaveStream, it is very easy to write a class to do so. Just pass Read and WaveFormat through to the WaveProvider, make Length return a suitably large number, Position set throws an exception and Position get returns the number of bytes read so far.<br />\n",
+    "PostedDate": "2013-03-18T04:18:13.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1236084",
+    "ThreadId": "436249",
+    "Html": "Hi,\r<br />\n<br />\nGot excatly the same question, did you find an answer ?\r<br />\n<br />\nI know work around to fill SetInputToWaveStream() but it would be so much easier to pipe an NAudio WaveIn to a Stream this would allow any kind of source, debugging, etc ...<br />\n",
+    "PostedDate": "2014-04-21T02:51:49.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239496",
+    "ThreadId": "436249",
+    "Html": "I suspect that the &quot;stream&quot; that the speech engine expects is basically a WAV file. That's not what a WaveStream in NAudio is. NAudio streams only contain audio data, not header data. And WAV headers include how long the file is. So the whole setup doesn't lend itself well to real-time speech recognition. But I've not tried it so can't say for sure.<br />\n",
+    "PostedDate": "2014-04-29T12:11:41.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

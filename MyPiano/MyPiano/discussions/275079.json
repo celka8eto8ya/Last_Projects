@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "681191",
+    "ThreadId": "275079",
+    "Html": "\r\n<p>Hi<br>\r\nI have been using the code in http://opensebj.blogspot.com/2009/04/naudio-tutorial-5-recording-audio.html to record audio. Basically this code:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><div style=\"color:black; background-color:white\"><pre>\tWaveIn waveInStream;\r\n\tWaveFileWriter writer;\r\n\twaveInStream = <span style=\"color:blue\">new</span> WaveIn(44100,2);\r\n\twriter = <span style=\"color:blue\">new</span> WaveFileWriter(outputFilename, waveInStream.WaveFormat);\r\n\twaveInStream.DataAvailable &#43;= <span style=\"color:blue\">new</span> EventHandler&lt;WaveInEventArgs&gt;(waveInStream_DataAvailable);\r\n\twaveInStream.StartRecording();\r\n\r\n</pre>\r\n</div>\r\n</pre>\r\n</div>\r\n<p>It works perfectly and record every sound on the system. The problem arises when I pluck in a headset (not usb, just directly into the headset jack on the built in soundcard on my laptop). This has the effect that any sound I can hear in the headset is not\r\n recorded. I think it has something to do with which device i am recording from, but I can't quite figure it out.</p>\r\n<p>I am trying to record a conversation, which means I would like to record the sound that comes from the mic and the sound I can hear in the headset at the same time.<br>\r\nCan someone point me in the right direction for this? Thanks.</p>\r\n<p>Btw, this is a cross post from stackoverflow (<a href=\"http://stackoverflow.com/questions/7670463/naudio-recording-from-headset\">http://stackoverflow.com/questions/7670463/naudio-recording-from-headset</a>)&nbsp;where no one seems able to answer...</p>\r\n",
+    "PostedDate": "2011-10-07T01:24:17.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683510",
+    "ThreadId": "275079",
+    "Html": "<p>I have the same problem. My code used to work fine even for conference calls and I was using it on the laptop with built-in mic and speakers. Now I switched to the desktop where I am using a&nbsp;headset. I record \"something\" but then unable to hear anything not only in my app but also using WMP.&nbsp;</p>\r\n<pre>                    waveInStream = new WaveIn();\r\n                    waveInStream.DeviceNumber = 0;\r\n                    waveInStream.NumberOfBuffers = 2;\r\n                    waveInStream.BufferMilliseconds = 100;\r\n\r\n                    writer = new WaveFileWriter(RecordedFileName, waveInStream.WaveFormat);\r\n\r\n                    waveInStream.DataAvailable += new EventHandler(waveInStream_DataAvailable);\r\n                    waveInStream.StartRecording();\r\n</pre>\r\n<p>May be it has to do with DeviceNumber = 0 ?? How would I know what DeviceNumber to use?</p>",
+    "PostedDate": "2011-10-12T22:25:21.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "685107",
+    "ThreadId": "275079",
+    "Html": "<p>DeviceNumber 0 means use the default recording device</p>",
+    "PostedDate": "2011-10-17T02:39:43.173-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1254944",
+    "ThreadId": "275079",
+    "Html": "Markheath@ I have the same problem. Please giving explanation shortly how to record sound from headset. Thanks.<br />\n",
+    "PostedDate": "2014-06-10T12:03:19.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1255538",
+    "ThreadId": "275079",
+    "Html": "Well you either assume that the headset is device 0, or else you have to iterate through the WaveIn devices and examine the name to see which one is your headset. Usually, if it is a USB headset, Windows will automatically make it the default device when you plug it in. <br />\n",
+    "PostedDate": "2014-06-12T04:38:36.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

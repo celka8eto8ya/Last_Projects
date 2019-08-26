@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1066746",
+    "ThreadId": "449614",
+    "Html": "So here is my situation.\r<br />\n<br />\nI have a 'bluetooth stethoscope' from 3M which comes with an SDK.  I use the following code to record packets coming from the stethoscope and then add a wave header and play them back.  That's easy enough, but I'm running into trouble when I want to hear the sound in 'realtime' as the stethoscope is being used.\r<br />\n<br />\nI'm pretty much new to audio programming and my basic idea was just to recording very small samples of a second or less and then play them back but I get tiny little pauses and that just doesn't work.  Can anyone steer me in the right direction?\r<br />\n<br />\nint numberOfAudioPacketsToReceive = 16;<br />\n<pre><code>        byte[] stethoscopeAudioData = new byte[512 * numberOfAudioPacketsToReceive];\n        byte[] packet = new byte[512];\n        int offSet = 0;\n        int receivedPackets = 0;\n\n        stethoscope.StartAudioInput();\n\n        while (receivedPackets &lt; numberOfAudioPacketsToReceive)\n        {\n            int bytesRead = stethoscope.AudioInputStream.Read(packet, 0, packet.Length);\n\n\n            if (bytesRead &gt; 0)\n            {\n                // Data was bytesRead from the stream. Add the received packet to the audio data.\n                Array.Copy(packet, 0, stethoscopeAudioData, offSet, bytesRead);\n\n                receivedPackets++;\n                offSet += bytesRead;\n            }\n        }</code></pre>\n\n",
+    "PostedDate": "2013-07-10T12:40:07.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1066748",
+    "ThreadId": "449614",
+    "Html": "try using the BufferedWaveProvider and putting audio into that as you receive it. Then just play from the BufferedWaveProvider.<br />\n",
+    "PostedDate": "2013-07-10T12:42:59.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1070867",
+    "ThreadId": "449614",
+    "Html": "Ok, I got it to work...kind off.  it streams for about 10 seconds, then it stops and starts up again when i'm done collecting data.  Help!<br />\n<pre><code>    static NAudio.Wave.WaveFormat frm = new NAudio.Wave.WaveFormat(4000, 16, 1);\n    static BufferedWaveProvider bwProvider;\n\n    public static void Stream()\n    {\n        byte[] packet = new byte[128];\n        int offSet = 0;\n        int receivedPackets = 0;\n\n        bwProvider = new BufferedWaveProvider(frm);\n        bwProvider.BufferLength = 160000;\n\n        byte[] stethoscopeAudioData = new byte[128 * 1000];\n\n        System.Threading.Thread newThread = new System.Threading.Thread(waveOutPlay);\n        newThread.Start();\n\n        stethoscope.StartAudioInput();\n\n        while (receivedPackets &lt; 1000)\n        {\n            int bytesRead = stethoscope.AudioInputStream.Read(packet, 0, packet.Length);\n\n            if (bytesRead &gt; 0)\n            {\n                // Data was bytesRead from the stream. Add the received packet to the audio data.\n                Array.Copy(packet, 0, stethoscopeAudioData, offSet, bytesRead);\n                bwProvider.AddSamples(stethoscopeAudioData, offSet, bytesRead);\n\n                receivedPackets++;\n                offSet += bytesRead;\n            }\n        }\n\n        stethoscope.StopAudioInput();\n        bwProvider = null;\n        newThread.Abort();\n\n    }\n\n    private static void waveOutPlay(object obj)\n    {\n        WaveOut waveOut = new WaveOut();\n\n        waveOut.Init(bwProvider);\n        waveOut.Play();\n\n    }</code></pre>\n\n",
+    "PostedDate": "2013-07-20T15:19:09.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071283",
+    "ThreadId": "449614",
+    "Html": "no need to create another thread. Just use WaveOutEvent and call init and play before going into your receive loop.  I'd also stick a few seconds of silence into the BufferedWaveProvider to start off, so you don't run into buffering problems. <br />\n",
+    "PostedDate": "2013-07-22T06:29:11.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071590",
+    "ThreadId": "449614",
+    "Html": "I tried doing it without a separate thread and it just waited until it reached the end of the function to actually start playing.  Is that a result of not have anything before I start receiving audio?  Not sure how exactly I would create 'silence'.<br />\n",
+    "PostedDate": "2013-07-22T21:16:30.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072102",
+    "ThreadId": "449614",
+    "Html": "I got it!  Still couldn't get it to work without threading, but it works like a charm like this.  Now, I have to get it to stream over the network good enough so that there won't be noticeable lag as far away as India...<br />\n<pre><code>    NAudio.Wave.WaveFormat frm = new NAudio.Wave.WaveFormat(2000, 16, 2);\n    BufferedWaveProvider bwProvider;\n    WaveOut waveOut;\n\n    public void Stream()\n    {\n        byte[] packet = new byte[128];\n        int offSet = 0;\n        int receivedPackets = 0;\n        byte[] stethoscopeAudioData = new byte[128 * 5000];\n\n        bwProvider = new BufferedWaveProvider(frm);\n        bwProvider.BufferLength = (128 * 5000);\n\n        new Thread(() =&gt;\n        {\n            waveOut = new WaveOut();\n            waveOut.Init(bwProvider);\n            waveOut.Play();\n\n\n        }).Start();\n\n        stethoscope.StartAudioInput();\n\n        while (receivedPackets &lt; 5000)\n        {\n            int bytesRead = stethoscope.AudioInputStream.Read(packet, 0, packet.Length);\n\n            if (bytesRead &gt; 0)\n            {\n                // Data was bytesRead from the stream. Add the received packet to the audio data.\n                Array.Copy(packet, 0, stethoscopeAudioData, offSet, bytesRead);\n                bwProvider.AddSamples(stethoscopeAudioData, offSet, bytesRead);\n\n                receivedPackets++;\n                offSet += bytesRead;\n            }\n        }\n\n        stethoscope.StopAudioInput();\n    }</code></pre>\n\n",
+    "PostedDate": "2013-07-23T22:50:06.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

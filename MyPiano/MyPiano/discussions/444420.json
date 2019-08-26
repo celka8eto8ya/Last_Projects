@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1046495",
+    "ThreadId": "444420",
+    "Html": "Hey all,<br />\n<br />\ni'm trying to write a simple stereo-mix substitute in c#, but can't seem to get it working even remotely.<br />\n<pre><code>public void StartRecording()\n        {\n            recthread = new Thread( () =&gt;\n                {\n                    \n                    var cap = new WasapiLoopbackCapture();\n                    startlabel:\n                        var title = _helper.TrackTitle;\n                        var artist = _helper.Artist;\n\n                    if (title == &quot;&quot; || artist == &quot;&quot; || _helper.isPlayingAds)\n                    {\n                        Thread.Sleep(10);\n                        goto startlabel;\n                    }\n                    \n                        var writer = new WaveFileWriter(artist + &quot; - &quot; + SanitizeFilename(title,'-') + &quot;.wav&quot;,\n                                                       cap.WaveFormat);\n                        cap.DataAvailable += (sender, args) =&gt;\n                            {\n                                writer.Write(args.Buffer, 0, args.BytesRecorded);\n                            };\n                    \n                        cap.StartRecording();\n                        uint currentpos = _helper.CurrentTime;\n                    while(_helper.Artist==artist &amp;&amp; _helper.TrackTitle == title){\n                        Thread.Sleep(5);\n                        while(currentpos == _helper.CurrentTime)\n                            Thread.Sleep(1);\n                    }\n                    cap.StopRecording();\n                    writer.Flush();\n                    writer.Close();\n                    goto startlabel;\n                    \n                });\n            recthread.Start();\n        }</code></pre>\n\nAs you can see,nothing special going on there, but still i can't manage to get out what i hear when i  captured the sound.<br />\n<br />\nAny idea?<br />\n<br />\nShouldn't matter at all, but just to mention it: i'm running it in parallels on a macbook (i7,good enough for this easy task normally)<br />\n<br />\nThanks already for your ideas and @mark for this awesome lib :)<br />\n<br />\nEDIT:<br />\n<br />\ni tried it with different WaveFormat options. If i use what i posted here, it basically works, but &quot;stutters&quot;.<br />\n",
+    "PostedDate": "2013-05-21T06:18:20.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1046540",
+    "ThreadId": "444420",
+    "Html": "You do need to get the right WaveFormat  - using the one from capture should be OK, although WASAPI annoyingly likes to use WAVEFORMATEXTENSIBLE, so often I turn that into the equivalent PCM or IEEE Float WAVEFORMAT.\r<br />\n<br />\nYou might simplify things by removing the creation of another thread. \r<br />\n<br />\nI'd also look at the WAV file you make in an editor like Audacity and see if there is anything visually obviously wrong with the waveform. That can often provide clues.<br />\n",
+    "PostedDate": "2013-05-21T07:34:53.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1046672",
+    "ThreadId": "444420",
+    "Html": "Hello Mark,<br />\n<br />\nthanks for your fast answer.<br />\nAs you suggested, i tried it with WaveFormatExtensible now, which works partially.<br />\n<br />\nPartially in the sense that it works sometimes perfectly, but sometimes i have the &quot;stutter&quot; effect again. I already increased all timers and the application itself isn't even using 1% cpu according to the taskmgr, so that shouldn't be the problem.<br />\n<br />\nThe WaveFileWriter writes directly to the hdd, so not buffered,right?<br />\nI have an ssd in the macbook, but could that be the problem? <br />\n<br />\nthanks again<br />\nstreppel<br />\n<br />\nEDIT:<br />\ni'm stupid...setting the same event multiple times isn't a good idea, that will trigger too often and the result will be wrong values<br />\ni think this fixed it :)<br />\n",
+    "PostedDate": "2013-05-21T11:59:30.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1049979",
+    "ThreadId": "444420",
+    "Html": "<strong>markheath wrote:</strong><br />\n<blockquote>\nYou do need to get the right WaveFormat  - using the one from capture should be OK, although WASAPI annoyingly likes to use WAVEFORMATEXTENSIBLE, so often I turn that into the equivalent PCM or IEEE Float WAVEFORMAT.<br />\n</blockquote>\nCan you give an example how did to achive this ?<br />\n",
+    "PostedDate": "2013-05-29T02:23:03.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1050113",
+    "ThreadId": "444420",
+    "Html": "well for example if the WAVEFORMATEXTENSIBLE contained stereo IEEE float at 44.1kHz, you'd do this to make an equivalent WAVEFORMAT:<br />\n<pre><code>WaveFormat.CreateIEEEFloat(44100, 2);</code></pre>\n\n",
+    "PostedDate": "2013-05-29T07:07:39.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

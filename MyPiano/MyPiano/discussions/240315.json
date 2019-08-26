@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "543354",
+    "ThreadId": "240315",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Does anyone have an idea why the PlaybackStopped event is not firing? &nbsp;I am executing the following code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">// Create input stream</span>\r\nWaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(item.FileName);\r\nWaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(mp3Reader);\r\nWaveStream blockedAlignedStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(pcmStream);\r\n_activeStream = <span style=\"color:blue\">new</span> WaveChannel32(blockedAlignedStream);\r\n_activeStream.PadWithZeroes = <span style=\"color:blue\">false</span>;\r\n\r\n_player = <span style=\"color:blue\">new</span> WaveOut();\r\n_player.PlaybackStopped &#43;= <span style=\"color:blue\">new</span> EventHandler(_player_PlaybackStopped);\r\n_player.Init(_activeStream);\r\n_player.Play();\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>It's been a few days I've been trying to figure this out. &nbsp;Please help!</p>\r\n<p>TIA,<br>\r\nMatt&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-03T12:48:37.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "543601",
+    "ThreadId": "240315",
+    "Html": "\r\n<p>PlaybackStopped will only fire if the Read method from your source stream returns 0. It is probably the BlockAlignReductionStream that is stopping this happening. It may be easier to detect once the position has gone past the length. Have a look at the NAudio\r\n demo project for an example</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-04T01:59:43.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "543699",
+    "ThreadId": "240315",
+    "Html": "\r\n<p>I looked in the demo projects but couldn't really find an example. &nbsp;Could you maybe point me to the right project?</p>\r\n<p>I went and added a timer with a 1 second interval. &nbsp;Every elapse, it checks the position of the stream and the length to determine if the position is &gt;= the length. &nbsp;I played a song, but when the song was over, my event never fired. &nbsp;Upon\r\n looking at the values for position and length, I found that position was almost half of the length and was not increasing no matter how many seconds I waited. &nbsp;Why is that happening?</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">#region</span> Play(AudioItem)\r\n<span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Play(AudioItem item)\r\n{\r\n    <span style=\"color:green\">// Create input stream</span>\r\n    WaveStream mp3Reader = <span style=\"color:blue\">new</span> Mp3FileReader(item.FileName);\r\n    WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(mp3Reader);\r\n    WaveStream blockedAlignedStream = <span style=\"color:blue\">new</span> BlockAlignReductionStream(pcmStream);\r\n    _activeStream = <span style=\"color:blue\">new</span> WaveChannel32(blockedAlignedStream);\r\n    _activeStream.PadWithZeroes = <span style=\"color:blue\">false</span>;\r\n\r\n    <span style=\"color:green\">// Set up timer</span>\r\n    _tmr = <span style=\"color:blue\">new</span> Timer();\r\n    _tmr.Interval = 1000;\r\n    _tmr.Elapsed &#43;= <span style=\"color:blue\">new</span> ElapsedEventHandler(_tmr_Elapsed);\r\n\r\n    _player = <span style=\"color:blue\">new</span> WaveOut();\r\n    _player.Init(_activeStream);\r\n    _player.Play();\r\n    _tmr.Start();\r\n}\r\n<span style=\"color:blue\">#endregion</span>\r\n\r\n<span style=\"color:blue\">#region</span> _tmr_Elapsed(object, ElapsedEventArgs)\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">void</span> _tmr_Elapsed(<span style=\"color:blue\">object</span> sender, ElapsedEventArgs e)\r\n{\r\n    <span style=\"color:blue\">if</span> (_activeStream.Position &gt;= _activeStream.Length)\r\n    {\r\n        _tmr.Stop();\r\n        OnPlaybackComplete();\r\n    }   <span style=\"color:green\">//if</span>\r\n}\r\n<span style=\"color:blue\">#endregion</span>\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2011-01-04T06:23:31.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "544205",
+    "ThreadId": "240315",
+    "Html": "\r\n<p>if you work with the latest code, the Mp3FileReader is much more accurate at reporting length, and offers the additional benefit of not requiring you to perform the format conversion (Read returns PCM). This will hopefully be released in the not too distant\r\n future as NAudio 1.4</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-05T02:33:47.403-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

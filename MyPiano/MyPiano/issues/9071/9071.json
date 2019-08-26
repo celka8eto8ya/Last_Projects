@@ -1,0 +1,76 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:30:02.73-07:00",
+    "CommentCount": 4,
+    "Custom": null,
+    "Description": "If the frame header don't starts imediatly after the the end of the ID3 Tag (or the begining of the file), it is not recognised as an mp3 file, however it is valid, according to http://www.datavoyage.com/mpgscript/mpeghdr.htm. I know, this is not the official source, but for me it worked. I had such a file, ad after changing the sourcecode, it worked fine.\r\n\r\nI attach the changed Mp3Frame.cs. But it is not the best/most efficient way. But this is from the 24556 build version.\r\n\r\nAnd sorry for my bad english :)",
+    "LastUpdatedDate": "2012-10-27T00:30:02.73-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2009-01-28T04:05:23.663-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Error if mp3 frame not at the begining",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 9071
+  },
+  "FileAttachments": [
+    {
+      "FileId": 266438,
+      "FileName": "Mp3Frame.cs",
+      "DownloadUrl": ".\\266438"
+    },
+    {
+      "FileId": 266439,
+      "FileName": "Mp3Frame.cs",
+      "DownloadUrl": ".\\266439"
+    },
+    {
+      "FileId": 266440,
+      "FileName": "Mp3Frame_3rd.cs",
+      "DownloadUrl": ".\\266440"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Sorry, wrong file attached. :)",
+      "PostedDate": "2009-01-28T04:15:41.75-08:00",
+      "Id": 41693
+    },
+    {
+      "Message": "I found an error in my code. So here comes the third version. Sorry, this is not my day...",
+      "PostedDate": "2009-01-28T04:37:46.86-08:00",
+      "Id": 41694
+    },
+    {
+      "Message": "thanks, I will try to have a look at your fix soon",
+      "PostedDate": "2009-01-28T08:22:13.84-08:00",
+      "Id": 41695
+    },
+    {
+      "Message": "this should be fixed by the recent changes to Mp3Frame",
+      "PostedDate": "2010-11-07T23:50:06.77-08:00",
+      "Id": 41696
+    }
+  ]
+}

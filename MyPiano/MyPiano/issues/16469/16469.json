@@ -1,0 +1,56 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "I have something along the lines of:\r\n\r\n```\r\nprivate void openFile_Click(object sender, RoutedEventArgs e)\r\n{\r\n  Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();\r\n  Nullable<bool> fileResult = dlg.ShowDialog();\r\n  if(fileResult.HasValue && fileResult.Value)\r\n  {\r\n    MidiFile midiFile = new MidiFile(dlg.FileName);\r\n    Debug.WriteLine(midiFile.Tracks); //Always 1\r\n  }\r\n}\r\n```\r\n\r\nI have checked the midi file in other programs and definitely contains more than one track.\r\n\r\nAttached is a midi that I can reproduce this issue with.",
+    "LastUpdatedDate": "2015-02-20T04:27:57.607-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2015-02-18T07:29:32.357-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "MidiFile.Tracks sometimes returns 1 when it contains more than 1 track.",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16469
+  },
+  "FileAttachments": [
+    {
+      "FileId": 1431398,
+      "FileName": "Disney_Themes_-_Pirates_Of_The_Caribbean.mid",
+      "DownloadUrl": ".\\1431398"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I'm afraid I can't that MIDI file, but I suspect it's just a Type 0 MIDI file. In MIDI, there is a difference between a \"track\" and a \"channel\". MIDI has 16 channels that you can use, and in a Type 0 MIDI file, all the events for all the channels are stored on a single channel, whilst in Type 1 files you can create as many tracks as you want. \n\n",
+      "PostedDate": "2015-02-20T03:09:53.687-08:00",
+      "Id": 174955
+    },
+    {
+      "Message": "Ah, that makes sense. Thanks for the explanation, I should do more research. :)",
+      "PostedDate": "2015-02-20T04:27:57.607-08:00",
+      "Id": 174959
+    }
+  ]
+}

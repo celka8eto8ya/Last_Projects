@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "931440",
+    "ThreadId": "400554",
+    "Html": "\r\n<p>Hi, Mark, thank you for sharing NAudio.</p>\r\n<p>I like NAudio. But we need more. For example, the wave audio we get is in the memory and we hope to convert the wave to a mp3 memorystream and play the mp3 directly from the memorystream, after that we want to save the mp3 and the wave to disk. We also hope\r\n to show the pitch curve of a piece of voice as well as the waveform in WPF, I checked codeplex.com and found WriteableBitmapEx, maybe its a better way to do this. Waiting for your new version with more functions.</p>\r\n<p>Jack Han</p>\r\n",
+    "PostedDate": "2012-10-23T21:32:29.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931971",
+    "ThreadId": "400554",
+    "Html": "<p>Hi Jack, I will continue to add new features to NAudio, and I welcome contributions from others too, so if you want to implement one of those ideas, feel free.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-10-24T13:15:03.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

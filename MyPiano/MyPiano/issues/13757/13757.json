@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:21:51.977-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "If you look at the header file for the CoreAudioAPI (specifically mmdeviceapi.h), and look at the well known property keys (around line 126 or so in the v7.1 file), you'll see the Guid definitions for properties like FormFactor, ControlPanelPageProvider, and PhysicalSpeakers).  But if you look closely at them, the 3 mentioned all share the same Guid and have a unique ID.  So having an indexer that takes a Guid can result in issues.  If anything, it should be removed and methods like Contains(Guid guid, int id); and Get(Guid guid, int id); should be added to the PropertyStore.",
+    "LastUpdatedDate": "2012-10-27T00:21:51.977-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2010-07-19T15:16:52.71-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "CoreAudioAPI PropertyStore Incorrectly Assuming Guid Only Used Once Per Property",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 13757
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

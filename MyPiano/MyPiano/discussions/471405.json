@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1129956",
+    "ThreadId": "471405",
+    "Html": "Hey guys\r<br />\n<br />\nWe are working on a project which involves using a neuroheadset transmitter to create sounds. We are writing it in C# and we have found the NAudio to seem suitable for this. For now, we just wanted to make the connection between the headset and the VST, so to see that data can actually be transferred and understood between the two.\r<br />\n<br />\nWe have been looking at the MidiVstTest sample and it seems to be just what we need right now - a way to show the data from the headset towards the VST. \r<br />\n<br />\nThe thing is that the headset is not a MIDI device. Actually, we don't even plan to use it as one. We have software for it, and what we have available is some processed data coming from the brain - this data we want to set as the &quot;input&quot; for the VST.\r<br />\n<br />\nIs there a way to do that? Maybe we should create a wrapper class to put the headset stuff into a MidiInput class or something like that? Any suggestions will be appreciated!\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2013-11-28T03:44:51.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1130858",
+    "ThreadId": "471405",
+    "Html": "hi, sounds an interesting project you have there. NAudio does not have any VST support - there is a VST .NET project you can use to do this. You could simply construct MIDI events from the headset and then pass them into a VST using VST.NET<br />\n",
+    "PostedDate": "2013-12-02T03:51:26.57-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

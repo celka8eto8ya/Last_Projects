@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "228702",
+    "ThreadId": "67283",
+    "Html": "<p>Hi!</p>\r\n<p>I have a question about NAudio.</p>\r\n<p>I'm trying to speed up a WAVE file while it is playing, but i dont know how...</p>\r\n<p>I want to have three buttons:</p>\r\n<p>Play (1x Speed)</p>\r\n<p>PlayFast (2x speed)</p>\r\n<p>PlayFaster (3x speed)</p>\r\n<p>Can anyone help me please?</p>",
+    "PostedDate": "2009-08-28T06:43:25.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "229445",
+    "ThreadId": "67283",
+    "Html": "<p>No ideas? Or is it to hard to explain?</p>\r\n<p>I tried to change the samplerate, but with no success... :(</p>",
+    "PostedDate": "2009-08-31T12:06:44.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "229633",
+    "ThreadId": "67283",
+    "Html": "<p>It's not that easy to do unfortunately. I have done it before with a codec (not open source). One issue you face is that speeding up audio also results in the &quot;chipmunk effect&quot;, so pitch shifting is also required. If you look at the <a href=\"http://www.codeplex.com/skypefx\">Skype Voice Changer</a> project, you will see how to do pitch shifting, but speed-up is not supported.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2009-09-01T03:04:21.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "230062",
+    "ThreadId": "67283",
+    "Html": "<p>Hmpf...</p>\r\n<p>At the moment, i am working with MCI command strings at the mpegvideo device. I can change the playback speed with one command. But i need a better sound API, because i have to reverse a wave file too. And MCI doesn't support this action.</p>\r\n<p>But it seems that NAudio is as hard as waveOut its self for such things... :(</p>\r\n<p>Any ideas for a better API choice? I need to speed up, reverse, play and record a wave file.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks so far,</p>\r\n<p>mdo</p>",
+    "PostedDate": "2009-09-02T00:58:52.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "232260",
+    "ThreadId": "67283",
+    "Html": "<p>check my answer on StackOverflow for a way to <a href=\"http://stackoverflow.com/questions/1221140/read-a-sound-backward-with-directsound/1221756#1221756\">reverse a (PCM) WAV file using NAudio</a></p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-09-08T08:46:30.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

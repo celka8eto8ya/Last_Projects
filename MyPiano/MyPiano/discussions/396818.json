@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "917200",
+    "ThreadId": "396818",
+    "Html": "\r\n<p>Hi, I has started a audio player project a few days ago. I created a string array which contains multiple mp3 files name to play it. But problem is the audio player will play the files simultaneously! How do I play the mp3 files in sequence order?&nbsp;</p>\r\n",
+    "PostedDate": "2012-09-25T05:49:41.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "918370",
+    "ThreadId": "396818",
+    "Html": "<p>Okay, I figured out about using the PlayBackStopped event can create a effect similar to the \"next forward\".</p>",
+    "PostedDate": "2012-09-27T04:01:37.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

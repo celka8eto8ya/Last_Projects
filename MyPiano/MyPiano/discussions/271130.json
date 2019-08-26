@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "666208",
+    "ThreadId": "271130",
+    "Html": "<p>Hello All,</p>\n<p>We are planning to develop an application for a store which has agents and a supervisor. All the agent and supervisors desktops has a microphone attached to it.</p>\n<p>We want to enable the supervisor to listen to the conversations that are happening near the agents desktop. The supervisor should have the capability to start the microphone on agent's desktop, listen to the conversation and then stop it.</p>\n<p>Also, we need to provide the capability to record the converstaion if required.</p>\n<p>I have looked into the network chat sample but it works on the same desktop even if I provide the remote IP address. Do we need to have 2 components, I mean one will be on agents desktop and on the the supervisor? Not really sure what will be client and what will be server in this case.</p>\n<p>Please provide the guidance on how can i utilize NAudio in this case.</p>\n<p>Thank you,</p>",
+    "PostedDate": "2011-09-01T04:37:28.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "675361",
+    "ThreadId": "271130",
+    "Html": "<p>NAudio provides help accessing the soundcard, but you would have to write all the networking code yourself. There are several options available for how you configure the networking, depending on whether you want the clients to connect to a central server permanently, or to run standalone and allow a remote supervisor to connect while running</p>",
+    "PostedDate": "2011-09-22T08:55:03.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

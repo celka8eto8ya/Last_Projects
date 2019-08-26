@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "499395",
+    "ThreadId": "228840",
+    "Html": "<p>Hi all,</p>\r\n<p>I am not expererienced with windows audio programming, but maybe some of you are able to give me some ideas. Basically what I want is high quality audio <br>from a HTPC running Mediaportal. &nbsp;I intend to build a high quality audio DAC which is connected via ethernet and runs some dedicated protocol over UDP.</p>\r\n<p>The main challenge for me is to find a way to obtain a `bit perfect` audiostream from the player.&nbsp;<br>In this case I need some windows playback device which can be selected by audio players. I have no intention to write a windows device driver <br>and prefer to use c# .net</p>\r\n<p>Any possibilities with naudio to capture a media player audio stream directly, or maybe any other suggestion ?</p>\r\n<p>Thx,<br>Marcel</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-09-28T03:30:32.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "499398",
+    "ThreadId": "228840",
+    "Html": "<p>NAudio does contain managed wrappers for much of the WASAPI API, but you will need to do your own research to find out how to capture a media player audio stream</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-09-28T03:34:48.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "527425",
+    "ThreadId": "236151",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>are you planning support for reading and writing RF64 headers?</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2010-11-26T08:37:30.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "527428",
+    "ThreadId": "236151",
+    "Html": "\r\n<p>no immediate plans I'm afraid. Maybe we could look into getting this in in a future version though, if there was enough demand for it.</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-26T08:42:01.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "532175",
+    "ThreadId": "236151",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I implemented it such that it suits my needs. It's tested, though it probably needs more testing in the library (had to change some data types from int to uint or long). Because I don't know the library as a whole it may seem a bit hackish.</p>\r\n<p>How could I send you the changes for review and integration? There are a couple of files involved.</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-12-07T01:53:37.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "544214",
+    "ThreadId": "236151",
+    "Html": "\r\n<p>thanks ujr,</p>\r\n<p>you can post your code in the forum, or submit it as a patch on the source code tab (although I can't guarantee when I would be able to get round to incorporating it).</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2011-01-05T02:54:30.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

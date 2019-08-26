@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1323153",
+    "ThreadId": "572356",
+    "Html": "Anyone have an idea on how I can just do some simple pitch shifting (basically just play back an audio file faster or slower..)?\r<br />\n<br />\nIn a wavestream read method, can I control how quickly things get &quot;read.&quot;?\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2014-11-17T15:02:19.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1323945",
+    "ThreadId": "572356",
+    "Html": "After a lot of research, I found that I need to implement some sort of sample interpolation to get this to work.  I tried creating a pitchshift class that inherits from a WaveProvider32.  Trying to send my floating point audio buffer into the Read method doesn't really seem to do anything.<br />\n<br />\nI want to implement something like this:<br />\n<br />\nreturn y[0] + x*(y[1]-y[0]);<br />\n<br />\nbut am totally lost on how to do it.  I am a new programmer and am entirely self taught, so sometimes I get stuck.<br />\n<br />\nAlso, I want the resulting WaveFormat to be 48000, 32, 1, but it seems that the WaveProvider32 wants to make everything 44100.<br />\n<br />\nIf anyone has any clue, how do I make this work?:<br />\n<br />\n<br />\npublic override int Read(float[] buffer, int offset, int sampleCount)<br />\n<pre><code>    {\n        // STUFF THAT DOES NOT WORK\n        // Basically just trying to double the length of the buffer and replace every second value with a zero which should theoretically half the pitch\n        /*\n        float[] downshifted = new float[sampleCount * 2];\n        for (int i = 0; i &lt; downshifted.Length; i += 2)\n        {\n            downshifted[i] = buffer[i];\n\n            downshifted[i + 1] = 0.0f;\n        }\n        buffer = new float[downshifted.Length];\n        buffer = downshifted;\n        */\n\n        return sampleCount;\n    }</code></pre>\n\n",
+    "PostedDate": "2014-11-19T12:29:56.493-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1323950",
+    "ThreadId": "572356",
+    "Html": "you need to write into the buffer passed into Read. Also, you need to read from your source provider to get the input data. It would also be easier to implement this as an ISampleProvider than a WaveProvider32<br />\n",
+    "PostedDate": "2014-11-19T12:39:45.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1323991",
+    "ThreadId": "572356",
+    "Html": "Why would it be easier with a ISampleProvider?<br />\n",
+    "PostedDate": "2014-11-19T14:34:53.8-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327079",
+    "ThreadId": "572356",
+    "Html": "ISampleProvider is designed for this type of situation, where you are performing your algorithms with floating point samples. <br />\n",
+    "PostedDate": "2014-11-28T09:09:30.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

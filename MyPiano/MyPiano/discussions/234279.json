@@ -1,0 +1,154 @@
+[
+  {
+    "Id": "520434",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>Hi All</p>\r\n<p>Please can someone help me i have a application i have written to grap a RTP stream and decode the voice data the data is sent in G711A format and i have it very nearly working</p>\r\n<p>My problem is i get garbled audio form my speakers but i can hear my voice in the audio stream as well i know my units are sending the data corretly as if i use a different decoder it all works perfectly</p>\r\n<p>i think my problem is that i can set my incoming waveformat to have 16 bits per sample as NAudio throws an execption &quot;AcmNotPossible calling acmFormatSuggest&quot; my code for my wave format is as follows</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">Public</span> <span style=\"color:blue\">Overrides</span> <span style=\"color:blue\">ReadOnly</span> <span style=\"color:blue\">Property</span> WaveFormat() <span style=\"color:blue\">As</span> NAudio.Wave.WaveFormat\r\n        <span style=\"color:blue\">Get</span>\r\n            <span style=\"color:blue\">Dim</span> a <span style=\"color:blue\">As</span> WaveFormat\r\n            <span style=\"color:green\">'a = WaveFormat.CreateALawFormat(8000, 1)</span>\r\n\r\n            a = WaveFormat.CreateCustomFormat(WaveFormatEncoding.ALaw, 8000, 1, 8000, 1, 16)\r\n\r\n\r\n            <span style=\"color:blue\">Return</span> a\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">Get</span>\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Property</span>\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Thanks in advance for any help</p>\r\n<p>&nbsp;</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2010-11-11T01:52:04.35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520437",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>a-law is almost certainly 8 bits per sample, not 16. Are you definitely only sending the raw a-law compressed data to the decoder?</p>\r\n",
+    "PostedDate": "2010-11-11T01:57:33.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520453",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>Yes only the Alaw data is being presented i have also used the StreamCoders libary with the same units and that works perfectly</p>\r\n<p>The noice is always there no matter if i am speaking into it or not</p>\r\n<p>Would a recording of the audio help???</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2010-11-11T02:30:28.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520458",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>how are you playing back the decoded audio?</p>\r\n",
+    "PostedDate": "2010-11-11T02:36:31.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520460",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>hi</p>\r\n<p>i am playing backing back the audio throught my speakers on my sound card my code is as follows</p>\r\n<p>ON RTP new packet</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">Dim</span> input <span style=\"color:blue\">As</span> <span style=\"color:blue\">New</span> G711_Wave_Stream(packet.DataPointer)\r\n\r\n<span style=\"color:blue\">Dim</span> a <span style=\"color:blue\">As</span> WaveStream = WaveFormatConversionStream.CreatePcmStream(input)\r\n\r\n<span style=\"color:blue\">Dim</span> output(a.Length) <span style=\"color:blue\">As</span> <span style=\"color:blue\">Byte</span>\r\n\r\na.Read(output, 0, output.Length - 1)\r\n\r\nNaudio_mainOutput.AddSamples(output, 0, output.Length)\r\n\r\na.Dispose()\r\n\r\ninput.Dispose()\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>Dims</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">Private</span> NAudio_WaveOut <span style=\"color:blue\">As</span> IWavePlayer\r\n<span style=\"color:blue\">Private</span> Naudio_mainOutput <span style=\"color:blue\">As</span> BufferedSampleStream\r\n\r\nNAudio_WaveOut = <span style=\"color:blue\">New</span> DirectSoundOut(300)\r\nNaudio_mainOutput = <span style=\"color:blue\">New</span> BufferedSampleStream\r\n\r\nNAudio_WaveOut.Init(Naudio_mainOutput)\r\nNAudio_WaveOut.Play()\r\n</pre>\r\n</div>\r\n<p>G711_Wave Stream is</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">Imports</span> NAudio.Wave\r\n\r\n<span style=\"color:blue\">Public</span> <span style=\"color:blue\">Class</span> G711_Wave_Stream\r\n    <span style=\"color:blue\">Inherits</span> WaveStream\r\n\r\n    <span style=\"color:blue\">Private</span> Data() <span style=\"color:blue\">As</span> <span style=\"color:blue\">Byte</span>\r\n    <span style=\"color:blue\">Private</span> Pos <span style=\"color:blue\">As</span> <span style=\"color:blue\">Long</span>\r\n\r\n    <span style=\"color:blue\">Public</span> <span style=\"color:blue\">Sub</span> <span style=\"color:blue\">New</span>(<span style=\"color:blue\">ByVal</span> Input() <span style=\"color:blue\">As</span> <span style=\"color:blue\">Byte</span>)\r\n        Data = Input\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Sub</span>\r\n\r\n    <span style=\"color:blue\">Public</span> <span style=\"color:blue\">Overrides</span> <span style=\"color:blue\">ReadOnly</span> <span style=\"color:blue\">Property</span> Length() <span style=\"color:blue\">As</span> <span style=\"color:blue\">Long</span>\r\n        <span style=\"color:blue\">Get</span>\r\n            <span style=\"color:blue\">Return</span> Data.Length\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">Get</span>\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Property</span>\r\n\r\n    <span style=\"color:blue\">Public</span> <span style=\"color:blue\">Overrides</span> <span style=\"color:blue\">Property</span> Position() <span style=\"color:blue\">As</span> <span style=\"color:blue\">Long</span>\r\n        <span style=\"color:blue\">Get</span>\r\n            <span style=\"color:blue\">Return</span> Pos\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">Get</span>\r\n        <span style=\"color:blue\">Set</span>(<span style=\"color:blue\">ByVal</span> value <span style=\"color:blue\">As</span> <span style=\"color:blue\">Long</span>)\r\n            Pos = value\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">Set</span>\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Property</span>\r\n\r\n    <span style=\"color:blue\">Public</span> <span style=\"color:blue\">Overrides</span> <span style=\"color:blue\">Function</span> Read(<span style=\"color:blue\">ByVal</span> buffer() <span style=\"color:blue\">As</span> <span style=\"color:blue\">Byte</span>, <span style=\"color:blue\">ByVal</span> offset <span style=\"color:blue\">As</span> <span style=\"color:blue\">Integer</span>, <span style=\"color:blue\">ByVal</span> <span style=\"color:blue\">count</span> <span style=\"color:blue\">As</span> <span style=\"color:blue\">Integer</span>) <span style=\"color:blue\">As</span> <span style=\"color:blue\">Integer</span>\r\n        Array.Copy(Data, 0, buffer, offset, Data.Length - 1)\r\n        <span style=\"color:blue\">Return</span> Data.Length\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Function</span>\r\n\r\n    <span style=\"color:blue\">Public</span> <span style=\"color:blue\">Overrides</span> <span style=\"color:blue\">ReadOnly</span> <span style=\"color:blue\">Property</span> WaveFormat() <span style=\"color:blue\">As</span> NAudio.Wave.WaveFormat\r\n        <span style=\"color:blue\">Get</span>\r\n            <span style=\"color:blue\">Dim</span> a <span style=\"color:blue\">As</span> WaveFormat\r\n            <span style=\"color:green\">'a = WaveFormat.CreateALawFormat(8000, 1)</span>\r\n\r\n            a = WaveFormat.CreateCustomFormat(WaveFormatEncoding.ALaw, 8000, 1, 8000, 1, 16)\r\n\r\n\r\n            <span style=\"color:blue\">Return</span> a\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">Get</span>\r\n    <span style=\"color:blue\">End</span> <span style=\"color:blue\">Property</span>\r\n<span style=\"color:blue\">End</span> <span style=\"color:blue\">Class</span>\r\n\r\n\r\n\r\nColin</pre>\r\n</div>\r\n",
+    "PostedDate": "2010-11-11T02:42:42.527-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520465",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>I'm not a VB expert, but I don't think you need those -1's. Also, what is the WaveFormat property of Naudio_mainOutput? It should be exactly the same as the WaveFormat of your &quot;a&quot; WaveStream</p>\r\n",
+    "PostedDate": "2010-11-11T02:48:41.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520473",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>Hi</p>\r\n<p>The format is:</p>\r\n<p><span style=\"font-size:x-small\"><span style=\"font-size:x-small\"></p>\r\n<pre>_waveformat = new WaveFormat(8000, 16, 1);</pre>\r\n<pre><span style=\"font-size:x-small\"><span style=\"font-size:x-small\">&nbsp;</span></span></pre>\r\n<pre><span style=\"font-size:x-small\"></span>Is this wrong? </pre>\r\n<pre><span style=\"font-size:x-small\"></span></pre>\r\n<pre><span style=\"font-size:x-small\"></span>Colin</pre>\r\n<p>&nbsp;</p>\r\n</span></span>\r\n<p></p>\r\n",
+    "PostedDate": "2010-11-11T03:14:12.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520496",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>no, that's correct. to debug further, make a WAV file with the ALaw header, and all the raw compressed data in it. See if Windows Media player can play it</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-11-11T04:21:31.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520504",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>Hi</p>\r\n<p>&nbsp;</p>\r\n<p>I will try that now</p>\r\n<p>Where can i find the details for the headder?</p>\r\n<p>Thanks and sorry for being a pain in the arse</p>\r\n<p>&nbsp;</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2010-11-11T04:28:34.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520513",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>just use WaveFileWriter and pass in<span style=\"color:green\"> WaveFormat.CreateALawFormat(8000, 1)\r\n<span style=\"color:#000000\">as the WaveFormat.</span><br>\r\n</span></p>\r\n",
+    "PostedDate": "2010-11-11T04:42:04.33-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520553",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I have done that no joy Windows Media wopnt play the file at all i know the RTp libary i am using is giving me the correct data as it will work with the other libary</p>\r\n<p>I have also converted a file using the demo app and that worked ok</p>\r\n<p>I am really lost now</p>\r\n<p>&nbsp;</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2010-11-11T06:24:10.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520556",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>the chances are the compression is not quite what you think it is then. Have a look at NAudio Demo app for examples of how to use the ACM codecs. I use the NAudio a-law conversion a lot so I know it does work.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-11-11T06:29:41.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520560",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>Do you have any source for RTP Alaw at all i dont mind if it is in C# i can convert it or do you know of any projects using Alaw ov RTP and Naudio</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2010-11-11T06:32:55.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520566",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>I have just read the document about the unit i am connecting to and it states that it is G.711 @ 64Kbps and 10MS periods</p>\r\n<p>Dont know if this helps</p>\r\n<p>&nbsp;</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2010-11-11T06:40:33.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520580",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>sounds like you are passing the RTP headers through the codec too. get rid of the RTP. you just want plain a-law</p>\r\n",
+    "PostedDate": "2010-11-11T06:57:42.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520633",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>Hi</p>\r\n<p>&nbsp;</p>\r\n<p>I have just taken the code form <a href=\"http://www.codeproject.com/KB/security/g711audio.aspx\">\r\nhttp://www.codeproject.com/KB/security/g711audio.aspx</a>&nbsp;to decode the G711 from the RTP Packet and it works perfectly</p>\r\n<p>There deffanitly seems to be a problem with the decode using your libary do you have any other pointers or ideas</p>\r\n<p>Maybe i can supply with with a small app with a sample of the G711 data i am getting?</p>\r\n<p>&nbsp;</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2010-11-11T08:16:44.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520639",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>sure, make it available to download somewhere and post a link. I can't guarantee I'll have time to look at it in detail though</p>\r\n<p>Mark</p>\r\n",
+    "PostedDate": "2010-11-11T08:27:25.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "520643",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>Ok thanks i will knock somwthing up in the morning for you</p>\r\n<p>I will include decode from naudio and also the codeproject code i found</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2010-11-11T08:41:17.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "521003",
+    "ThreadId": "234279",
+    "Html": "\r\n<p>Hi Mark</p>\r\n<p>Thanks for your time with this problem</p>\r\n<p>I will PM you a link for the demo</p>\r\n<p>Colin</p>\r\n",
+    "PostedDate": "2010-11-12T03:34:50.807-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

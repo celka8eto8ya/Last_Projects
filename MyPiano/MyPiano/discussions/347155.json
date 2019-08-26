@@ -1,0 +1,146 @@
+[
+  {
+    "Id": "804900",
+    "ThreadId": "347155",
+    "Html": "\r\n<p>Hi, have you ever thought about implementing encoding algorithm for mp3 in managed code? Maybe you already have it in your backlog?</p>\r\n<p>it can be useful in Silverlight 4/WP7 projects, which cannot use native live (like lame)</p>\r\n",
+    "PostedDate": "2012-03-03T07:47:59.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "804901",
+    "ThreadId": "347155",
+    "Html": "<p>I'd love to do this, but it would be a huge undertaking. Keep hoping someone else will do it one day. If there was even a Java version I could port it. I've done unmanaged decoding, but encoding is a much bigger task</p>",
+    "PostedDate": "2012-03-03T07:55:11.07-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805061",
+    "ThreadId": "347155",
+    "Html": "<p>What's the deal with patents on mp3? I know Fedora linux doesn't include mp3 encoding or even decoding because of patent encumbrances, although Fedora does appear to be extremely strict about what they include as a base package. Did you manage to get a license for the decoder that's already in NAudio, or are you just taking advantage of the fact the patent owners no longer pursue authors of free-beer mp3 decoders? I believe it's still the case that anyone distributing encoders in binary form, even if for free, should probably expect a cease &amp; desist order in their future. There's a reason lame can only be downloaded from sourceforge in source form.</p>\r\n<p>To support Silverlight / WP7, I would think the ability to make use of Microsoft's WMA Encoder would make more sense, since that can be used for free by anyone with a valid Windows license.</p>\r\n<p>Now Ogg support is a different matter...</p>",
+    "PostedDate": "2012-03-03T20:54:04.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "805077",
+    "ThreadId": "347155",
+    "Html": "<p>NAudio uses the MP3 decoder that comes with Windows, which MS has already paid the license fee for. WMA Encoding is possible (I've done it once for a commercial project), but the API is ridiculously overcoomplicated. Fully managed ogg encoding would be a nice idea.</p>",
+    "PostedDate": "2012-03-03T23:25:25.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "807101",
+    "ThreadId": "347155",
+    "Html": "<p>If I understand this discussion, Lame library is not free of use?<br />I thought Lame was free!<br />Please can somebody explain me clearly the around of Lame license.</p>",
+    "PostedDate": "2012-03-07T12:09:22.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "807105",
+    "ThreadId": "347155",
+    "Html": "<p>LAME is free, but it is not .NET, so can't be part of NAudio. You can easily call LAME.exe using .NET though to convert a WAV file to MP3.</p>",
+    "PostedDate": "2012-03-07T12:15:15.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "807148",
+    "ThreadId": "347155",
+    "Html": "<p>LAME is free, but numerous patent holders claim it infringes their intellectual property when compiled. The authors of LAME have claimed that it can be distributed in source form as the source is just an educational description of the technologies. That doesn't seem like a watertight argument to me, but the patent owners obviously aren't willing to risk that a court might be convinced by it as they have not initiated legal proceedings.</p>\r\n<p>The LAME team recommends that anyone compiling their software and distributing it in binary form as a part of another product first obtain licenses for the patents. The asking price for those licenses appear to be $2.50/unit, which is obviously a big problem for free software.</p>\r\n<p>And, since it's not .NET, including it in a .NET project would require distributing it in binary form.</p>",
+    "PostedDate": "2012-03-07T13:55:13.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "807149",
+    "ThreadId": "347155",
+    "Html": "<p>yes, LAME.exe will never be included with NAudio.</p>",
+    "PostedDate": "2012-03-07T13:56:14.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "807172",
+    "ThreadId": "347155",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>NAudio uses the MP3 decoder that comes with Windows, which MS has already paid the license fee for. WMA Encoding is possible (I've done it once for a commercial project), but the API is ridiculously overcoomplicated. Fully managed ogg encoding would be a  nice idea.</p>\r\n</blockquote>\r\n<p>Yeah, not just overcomplicated, but the programmer's guide seems deficient in the amount of useful guidance.</p>\r\n<p>Xiph's reference implementation of a Vorbis encoder is a little intimidating, but it's only a few thousand lines of C :P</p>",
+    "PostedDate": "2012-03-07T15:03:08.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "807674",
+    "ThreadId": "347155",
+    "Html": "<p>Thank you for your answers.<br />As proposed by Coordinator,&nbsp; If I call Lame.exe in my .Net application (to convert wav to mp3), am I exposed <span id=\"result_box\" class=\"short_text\" lang=\"en\"><span class=\"hps\">to</span> </span><span id=\"result_box\" class=\"short_text\" lang=\"en\"><span class=\"hps\">license</span></span><span id=\"result_box\" class=\"short_text\" lang=\"en\"> <span class=\"hps\">penalties</span>?<span class=\"hps\"></span></span></p>",
+    "PostedDate": "2012-03-08T12:31:56.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808247",
+    "ThreadId": "347155",
+    "Html": "<p>In Naudio solution, there is a folder called \"Compression''. <br />Could you tell me if it's possible to compress and decompress audio file with Naudio (without Lame or other additionnal software)?</p>",
+    "PostedDate": "2012-03-09T12:04:13.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808411",
+    "ThreadId": "347155",
+    "Html": "<p>NAudio has the WaveFormatConversionStream which uses whatever ACM codecs are on your computer. Windows ships with an MP3 decoder that NAudio uses, but no MP3 encoder. You can however encode to GSM, mu-law, a-law or ADPCM.</p>",
+    "PostedDate": "2012-03-10T01:36:58.783-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808472",
+    "ThreadId": "347155",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>markheath wrote:</strong><br />\r\n<p>NAudio has the WaveFormatConversionStream which uses whatever ACM codecs are on your computer. Windows ships with an MP3 decoder that NAudio uses, but no MP3 encoder. You can however encode to GSM, mu-law, a-law or ADPCM.</p>\r\n</blockquote>\r\n<p>Thank you for the answer.<br />I'm sorry, their compression ratios are not appropriate to my project.</p>",
+    "PostedDate": "2012-03-10T06:41:07.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "814159",
+    "ThreadId": "347155",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>loheslath wrote:</strong><br />\n<p>If I call Lame.exe in my .Net application (to convert wav to mp3), am I exposed <span id=\"result_box\" class=\"short_text\" lang=\"en\"><span class=\"hps\">to</span> </span> <span id=\"result_box\" class=\"short_text\" lang=\"en\"><span class=\"hps\">license</span></span><span id=\"result_box\" class=\"short_text\" lang=\"en\"> <span class=\"hps\">penalties</span>?</span></p>\n</blockquote>\n<p>Depends on your purpose. For personal use, this is not a problem (and even if it was, how would anyone know?) For commercial use of the output, probably technically a violation, but again, how would anyone know? For distributing a software package that includes  lame.exe, you're in trouble though, as it's both a violation and discoverable.</p>\n<p>On the LAME theme, apparently it's possible to compile an ACM codec from the LAME sources which would be cleaner than calling out to a standalone .exe</p>\n<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>loheslath wrote:</strong><br />\n<p>I'm sorry, their compression ratios are not appropriate to my project.</p>\n</blockquote>\n<p>There's a Vorbis ACM codec on free-codecs.com although it is ancient and has a 0.0.x version number which doesn't inspire a great deal of confidence.</p>\n<p>I am working on a pure-managed implementation of Vorbis based on Xiph's reference implementation, but it's slow going so far.</p>",
+    "PostedDate": "2012-03-22T10:04:30.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071085",
+    "ThreadId": "347155",
+    "Html": "Old conversation, but haven't Alvas.Audio already done that? (Pure, managed MP3 encoding/decoding.) That's what I've understood from the reversed DLL.<br />\n",
+    "PostedDate": "2013-07-21T22:15:53.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1071183",
+    "ThreadId": "347155",
+    "Html": "There are plenty of MP3 managed decoders (e.g. see NLayer) but I don't know of any encoders. I haven't used Alvas.Audio myself though, so I can't say/<br />\n",
+    "PostedDate": "2013-07-22T03:34:04.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1078921",
+    "ThreadId": "347155",
+    "Html": "I noticed that you have since added an encoding option using MediaFoundationEncoder (in the latest beta).\r<br />\nFrom what I see on <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/dd757927(v=vs.85).aspx\" rel=\"nofollow\">MSDN</a>, Windows 7 does seem to support this option, however, I get a null reference exception when I try to use it.\r<br />\nIs this only supported on Windows 8 for some reason?<br />\n",
+    "PostedDate": "2013-08-09T15:22:00.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1078965",
+    "ThreadId": "347155",
+    "Html": "Just to add to the conversion: I quickly checked the code, but I think speex port from java to C# has Ogg encoding functionality:\r<br />\n<a href=\"http://cspeex.codeplex.com/\" rel=\"nofollow\">http://cspeex.codeplex.com/</a>.<br />\n",
+    "PostedDate": "2013-08-09T20:34:08.543-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

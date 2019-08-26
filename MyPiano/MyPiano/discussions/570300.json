@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1315179",
+    "ThreadId": "570300",
+    "Html": "Hello,\r<br />\n<br />\nI'm on Windows 7, and would like to delay the audio output of a single program for a set amount of time.\r<br />\n<br />\nTo accomplish this, here is what I envisioned:\r<br />\nI would set up 2 output devices. Let's say device 1 is the speakers, and device 2 is not hooked up to anything. That means I would only hear whatever is output to device 1.\r<br />\n<br />\nI would set up that program to output to device 2, and everything else to device 1. I'd then capture all the output to device 2 into a BufferedWaveProvider, and then stream the output from that BufferedWaveProvider to device 1 after a delay.\r<br />\n<br />\nIs this possible? How would I achieve this? It seems everything I've found so far either captures from input devices or from Stereo Mix, but there's no &quot;device 2 only stereo mix&quot;.\r<br />\n<br />\nThanks,\r<br />\njonathanasdf<br />\n",
+    "PostedDate": "2014-10-20T20:41:29.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1315189",
+    "ThreadId": "570300",
+    "Html": "WasapiLoopbackCapture seems to work perfectly for this!\r<br />\n<br />\nThis is awesome.<br />\n",
+    "PostedDate": "2014-10-20T21:58:28.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1315261",
+    "ThreadId": "570300",
+    "Html": "great, glad you found a solution<br />\n",
+    "PostedDate": "2014-10-21T02:42:51.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "808513",
+    "ThreadId": "348110",
+    "Html": "I'm about to start doing some tests to see what latency I can get with naudio and how much I need to worry about the garbage collector. Microsoft seem to have made some massive improvements to the gc since .net 3.5. Has anybody else looked into this much\r\n yet?",
+    "PostedDate": "2012-03-10T09:41:37.45-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808517",
+    "ThreadId": "348110",
+    "Html": "<p>There are a few issues to consider with latency and NAudio.</p>\r\n<p>First is simply the performance of the NAudio code. I have tried to write it with performance in mind, but it has never been through a round of serious performance tuning (too many other priorities unfortunately), so there is undoubtedly scope for improvement. One big annoyance with .NET is that there is no way to cast from a byte[] to a float[] or short[] without using either unsafe code or doing a manual buffer copy. Obviously the latter is slower, but the former results in code that can't be run in a sandboxed environment. There is a mixture of techniques in the existing NAudio codebase.</p>\r\n<p>Second is the wide variety of different performance of the various audio APIs. With WaveOut you will be lucky to go below 50ms, but Wasapi and AsioOut can often go lower.</p>\r\n<p>Third is the way latency is measured. For the purposes of playback with two buffers (one being filled while the other is played), this is often reported as the size of one buffer. But there can be complications, such as WaveOut with more than two buffers, or DirectSoundOut which uses a circular buffer technique.</p>\r\n<p>Finally, there is garbage collection itself. The trouble with .NET garbage collection is that when it runs it stops everything, on every thread. The ideal scenario is for the garbage collector not to run while you are playing audio, and I have tried to write the code so as not to create any new objects during playback (buffers are reused etc). However, it is likely that if you have an application with a GUI, the garbage collector will be triggered. If it takes too long, you can be left without enough time to fill the next buffer, or even miss a buffer. Hopefully MS have improved the GC enough for it to not cause noticable glitches, but I suspect at the sort of low latencies required in applications like DAWs (lower than 20ms), you would get the occasional glitch.</p>\r\n<p>Anyway, will be interested to hear your findings.</p>",
+    "PostedDate": "2012-03-10T09:53:49.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "808822",
+    "ThreadId": "348110",
+    "Html": "<p>Mark,</p>\n<p><br /> <span>Thanks for the detailed reply. My requirement is to get an end to end latency of about 100ms using VoIP over a LAN. By my calculations that would be just about possible with a buffer size of 20ms, using asio (my initial testing in naudio would use wavein  so I expect higher latency).</span><br /> <span>Read buffer 20ms.</span><br /> <span>Network latency 1ms</span><br /> <span>Jitter buffer 20ms</span><br /> <span>Play buffer 20ms</span><br /> <br /> <span>I've been reading about garbage collection in .net 4 and they have implemented background garbage collection. I've never really thought about garbage collection much, but in my understanding a thread will only pause if it needs garbage collecting or more  memory while the GC is collecting generation 2 objects. With background garbage collection, the GC will&nbsp;yield&nbsp;very quickly so that the thread doesn't pause for long. I possibly haven't explained that particularly well but this page makes for interesting reading: <a href=\"http://msdn.microsoft.com/en-us/library/ee787088(v=vs.110).aspx\">http://msdn.microsoft.com/en-us/library/ee787088(v=vs.110).aspx</a>.</span></p>\n<p>In my app, the audio would run as a service, but I will have garbage collection overheads for rtp, sip and a wcf interface to the service. Will let you know how I get on; failure would mean writing a solution in unmanaged c++ or Delphi, neither of which  appeals to me!</p>\n<p><br /> <span>Dave</span></p>",
+    "PostedDate": "2012-03-11T15:10:22.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

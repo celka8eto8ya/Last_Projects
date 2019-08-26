@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "643909",
+    "ThreadId": "265613",
+    "Html": "\r\n<p>Hi Folks,</p>\r\n<p>This is a newbie question so if it should go somewhere else, just let me know.&nbsp; I'm not new to programming but I am new to C#.</p>\r\n<p>&nbsp;</p>\r\n<p>I'm hacking together a simple app to read a data stream from a .mp3/wav file and then feed that stream (chunk by chunk) into some kind of FFT thingy so I can display a frequency spectrum.</p>\r\n<p>I find myself looking at the examples and when putting the code into VC# 2010 Express, I'm getting errors that I can't figure out.&nbsp;</p>\r\n<p>I would be better off if I could find the source code for interface IWaveIn and class WaveIn.&nbsp; I've looked and looked and can't seem to find it.&nbsp; It seems the search mechanism doesn't help and it appears I can't download the source code so I'm\r\n restricted to the interface provided.</p>\r\n<p>&nbsp;</p>\r\n<p>Where do I find documentation on the classes and interfaces, organized by name?</p>\r\n<p>&nbsp;</p>\r\n<p>Any advise is appreciated!</p>\r\n<p>&nbsp;</p>\r\n<p>Bill</p>\r\n",
+    "PostedDate": "2011-07-18T12:53:34.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "644045",
+    "ThreadId": "265613",
+    "Html": "<p>&nbsp;</p>\r\n<p><span style=\"font-size: 10pt; color: black; font-family: 'Segoe UI','sans-serif';\">Hi Bill,</span></p>\r\n<p><span style=\"font-size: 10pt; color: black; font-family: 'Segoe UI','sans-serif';\">Have you looked at the documentation and the tutorials on the site? <a href=\"http://naudio.codeplex.com/documentation\">http://naudio.codeplex.com/documentation</a></span></p>\r\n<p><span style=\"font-size: 10pt; color: black; font-family: 'Segoe UI','sans-serif';\">Make sure that you have downloaded a source version, if you can compile from source then you should be able to find what you&rsquo;re looking for by using the search option and searching through the whole project rather than open files. </span></p>\r\n<p><span style=\"font-size: 10pt; color: black; font-family: 'Segoe UI','sans-serif';\">For this sort of question, which isn't specifically an NAudio question, it's better that you ask the question on StackOverflow.</span></p>\r\n<p><span style=\"font-size: 10pt; color: black; font-family: 'Segoe UI','sans-serif';\">Regards,<br />Sebastian</span></p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-07-18T17:47:30.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "644495",
+    "ThreadId": "265613",
+    "Html": "<p>Sebastian,</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks, this was the direction I needed.&nbsp; Pretty soon I'll know enough to ask a better question!!</p>\r\n<p>&nbsp;</p>\r\n<p>Bill</p>",
+    "PostedDate": "2011-07-19T10:04:37.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

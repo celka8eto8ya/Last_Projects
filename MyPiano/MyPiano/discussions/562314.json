@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1294191",
+    "ThreadId": "562314",
+    "Html": "I have been looking all over he internet to find a way to detect the volume and pitch when audio is playing in my program. my audio is coming from cd drives, not using NAudio but I was wondering if you can still use it to detect volume and pitch. i'm a beginner so please don't bombard me with too complicated code plz. i'm using c# too.<br />\n",
+    "PostedDate": "2014-08-28T01:49:20.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1298077",
+    "ThreadId": "562314",
+    "Html": "Well to get started, you can use WasapiCapture to record the audio. You'd need to turn the bytes into samples by using BitConverter.ToFloat (since they will be 32 bit floating point samples). That should get you started on detecting volume. Detecting pitch is a harder problem, and there are various different approaches<br />\n",
+    "PostedDate": "2014-09-02T04:22:33.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

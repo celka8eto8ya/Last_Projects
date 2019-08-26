@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1427056",
+    "ThreadId": "638577",
+    "Html": "Hi,<br />\n<br />\nI need to clone a WaveStream object. I'v read RawWaveSourceStream is the way to go, but i can't find the method inside the NAudio namespace nor any documentation about it online. <br />\n<br />\nUsing NAudio v.1.7. in combination with C# (Visual Studio 2013).<br />\n<br />\nThanks,<br />\n<br />\nBastiaan<br />\n",
+    "PostedDate": "2015-05-22T03:41:51.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1427093",
+    "ThreadId": "638577",
+    "Html": "Hello,\r<br />\n<br />\na Wavestream is a class object, that NAudio has inherited from stream, see:\r<br />\n<a href=\"http://mark-dot-net.blogspot.de/2008/06/naudio-wavestream-in-depth.html\" rel=\"nofollow\">http://mark-dot-net.blogspot.de/2008/06/naudio-wavestream-in-depth.html</a>\r<br />\n<br />\nIf you want to create a custom Wavestream then inherit from Wavestream and fill out the auto-generated methods that visual studio generates for you.\r<br />\n<br />\nA RawsourceWavestream (I think you wrote it false and couldn´t therefore find it) is just a StreamReader for files that only <strong>contain wave data</strong>. So you must tell the RawsourceWavestream which waveformat the data has, and it will read it for you.\r<br />\n<br />\nCheers.<br />\n",
+    "PostedDate": "2015-05-22T06:42:29.983-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

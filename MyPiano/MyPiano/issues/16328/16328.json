@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": "",
+    "Description": "So, i was streaming some Mp3's and noticed that some song were being play'd to fast and some to slow.\nAfter checking what bitrate the Mp3Frame were returning, i found that some songs got 128kbps when they in face were 222kbps, and other got 160kbps when they in face were 128kbps.\n\nAfter digging around in the code, i found that there are some problems reading the MPEG header, as it requires the header to be at the first bytes of the song.\nThat's not always the case. So i got to work and have made a solution, that streams around 1k at the time and scans is for the header.\nIt works wonderful and i'll try to replace the original method in the following days, if that's alright! =)\n\nSorry for any possible spelling or grammar issues =)",
+    "LastUpdatedDate": "2012-10-06T12:27:11.553-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-08-02T20:34:49.2-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Streaming MP3, wrong bitrate. creates incorrect sound",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 16328
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Unfortunately there is not enough information here for me to investigate this bug. Please attach an MP3 file that demonstrates the problem",
+      "PostedDate": "2012-10-06T12:27:11.553-07:00",
+      "Id": 78842
+    }
+  ]
+}

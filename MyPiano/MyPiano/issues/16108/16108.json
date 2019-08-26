@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2012-10-05T15:04:08.57-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "Close, this im talking about this original post in discusion.\nPlease apologize for multiple posts.",
+    "LastUpdatedDate": "2012-10-05T15:04:08.57-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-06-16T08:44:25.9-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Naudio  InnerException MIDI",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 16108
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1043048",
+    "ThreadId": "443526",
+    "Html": "I just wanted to use the DmoResamplerStream and I tested it in a Console application. So the default apartment mode is MTA. The result was that it does its job. \r<br />\nBut if I chance the main thread to an STA thread it throws exceptions in the read method.\r<br />\nI would guess that the problem is, that I create the com interfaces on a sta-thread and use it in a mta-thread(e.g. directsound calls read on a mta-thread).\r<br />\n<br />\nJust take a look at this code:<br />\n<pre><code>        [MTAThread]\n        static void Main(string[] args)\n        {\n            DirectSoundOut dsound = new DirectSoundOut();\n            Mp3FileReader reader = new Mp3FileReader(@&quot;C:\\Temp\\test.mp3&quot;);\n            dsound.Init(new ResamplerDmoStream(reader, new WaveFormat(48000, 16, 2)));\n            dsound.Play();\n\n            Console.ReadKey();\n        }</code></pre>\n\nNow if you change the MTAThreadAttribute to STAThreadAttribute what would equals to a gui-thread it throws an exception in the read-&quot;callback&quot;.<br />\n",
+    "PostedDate": "2013-05-13T13:22:09.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043055",
+    "ThreadId": "443526",
+    "Html": "You have to use the resampler on the thread that it is created in. This is a very annoying problem to work around but it is possible. However, why do you need resampling in this instance? DirectSound does it for you anyway.<br />\n",
+    "PostedDate": "2013-05-13T13:31:11.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043356",
+    "ThreadId": "443526",
+    "Html": "Its just a test so simulate multithreading for that interface. How would you work around it?<br />\nAnd is there the same problem with MFTs?<br />\n",
+    "PostedDate": "2013-05-14T06:26:22.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043361",
+    "ThreadId": "443526",
+    "Html": "the way I work around it with the MediaFoundationReader is to optionally recreate the MFT in the first call to Read if it comes in on another thread. With a Resampler you can just wait until the first call to Read to create it since all calls to Read come from the same thread with DirectSoundOut.<br />\n",
+    "PostedDate": "2013-05-14T06:31:13.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043392",
+    "ThreadId": "443526",
+    "Html": "Well thats a quite ugly solution :(\r<br />\nHave you ever thought about using the CallI IL-Instruction instead of the traditional way of implementing com-interfaces. That would solve all these problems. If I am right, I already told you about it some time ago :)\r<br />\nIt is quite anoying to create all these complicated work arounds.<br />\n",
+    "PostedDate": "2013-05-14T07:35:30.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043555",
+    "ThreadId": "443526",
+    "Html": "I don't know about the technique you mention. By all means see if you can prototype it and see if it does solve the problems. \r<br />\n<br />\nMark<br />\n",
+    "PostedDate": "2013-05-14T14:20:20.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043870",
+    "ThreadId": "443526",
+    "Html": "I am already writing my own little audio libary to learn more about that topic. I am currently using it for my directsound wrapper. It works perfectly but you need to write a little postcompiler using libaries like Mono.Cecil<br />\n",
+    "PostedDate": "2013-05-15T06:33:48.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1161171",
+    "ThreadId": "443526",
+    "Html": "hi filoe, I was interested in finding out how you have got on with this postcompiler approach, as it could be a good feature to get into NAudio 1.8. Does it affect anything other than COM calls (e.g. regular P/Invoke calls)? Also, have you tried this technique on Windows Store applications? Would calli IL instructions affect Windows store acceptance tests?<br />\n",
+    "PostedDate": "2014-01-13T06:10:07.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

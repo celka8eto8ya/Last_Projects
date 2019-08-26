@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1237359",
+    "ThreadId": "543150",
+    "Html": "Hi,can I know that does Naudio can calculate the pitch of a sound? I want to get the all pitch of the sound and plot a graph using the pitch that calculated. If possible tell me the code also so that I can have a better understanding. Thanks a lot.<br />\n",
+    "PostedDate": "2014-04-23T21:31:14.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237479",
+    "ThreadId": "543150",
+    "Html": "NAudio can't give you the pitch of the sound. You have to process that yourself<br />\n",
+    "PostedDate": "2014-04-24T04:03:16.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237668",
+    "ThreadId": "543150",
+    "Html": "I see. Can I obtain some information from wav file by using Naudio so that I can calculate it myself? Or do you know any other ways to get it? Mind to share? prefer c# code. Thanks a lot.<br />\n",
+    "PostedDate": "2014-04-24T10:35:34.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239491",
+    "ThreadId": "543150",
+    "Html": "You can have a look at the WPF Demo source code with NAudio and it shows how to draw a spectrum analyser using FFT. You will probably need to devote some time to learning about fast fourier transforms first though, as they are a fairly advanced mathematical/DSP technique, and it can take a while to fully understand them.<br />\n",
+    "PostedDate": "2014-04-29T12:01:51.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

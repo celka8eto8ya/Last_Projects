@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "439818",
+    "ThreadId": "211777",
+    "Html": "I try to find out how to record via ASIO driver but can't find it.\r\n\r\nanyone know please help.",
+    "PostedDate": "2010-05-06T05:46:51.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439819",
+    "ThreadId": "211777",
+    "Html": "<p>I'm afraid this support is not in NAudio at the moment.</p>\r\n<p>Mark</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-05-06T05:48:09.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439903",
+    "ThreadId": "211777",
+    "Html": "Is it possible to play MP4 file with NAudio ?\r\n\r\nEX:\r\n\r\nI use directx to play .mp4 file but don't want the sound play and use that sound to mix with wavein device and out put to AsioOut.\r\n\r\nthanks",
+    "PostedDate": "2010-05-06T08:20:22.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439906",
+    "ThreadId": "211777",
+    "Html": "<p>I'm afraid not. You might be able to find a tool that can extract the audio out from an MP4 file.</p>\r\n<p>Mark</p>",
+    "PostedDate": "2010-05-06T08:23:38.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

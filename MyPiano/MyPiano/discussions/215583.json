@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "453921",
+    "ThreadId": "215583",
+    "Html": "Has anyone tested how to invert audio waves in code?\r\nI'm doing some tests with noise cancellation, and as of now I'm mainly just searching for code to do the inversion of the audio.",
+    "PostedDate": "2010-06-10T04:47:23.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "454338",
+    "ThreadId": "215583",
+    "Html": "<p>you invert audio waves by just multiplying every sample by -1</p>\r\n<p>it will only succeed in cancelling noise if the inverted signal is <em>perfectly </em>in sync with the original. otherwise you will just make an echo.</p>",
+    "PostedDate": "2010-06-11T02:51:38.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1100246",
+    "ThreadId": "215583",
+    "Html": "Can you give a code example? This is what I've tried:<br />\n<pre><code>public static void InvertWaveFile(string inputFile, string outputFile)\n        {\n            using (WaveFileReader reader = new WaveFileReader(inputFile))\n            {\n                int blockAlign = reader.WaveFormat.BlockAlign;\n                using (WaveFileWriter writer = new WaveFileWriter(outputFile, reader.WaveFormat))\n                {\n                    sbyte[] buffer = new sbyte[blockAlign];\n                    long samples = reader.Length / blockAlign;\n                    for (long sample = 0; sample &lt;= reader.Length; sample++)\n                    {\n                        reader.Position = sample * blockAlign;\n                        reader.Read(buffer, 0, blockAlign);\n                        int byteCount = 0;\n                        for (byteCount = 0; byteCount &lt;= buffer.Length; byteCount++)\n                        {\n                            buffer[byteCount] = Convert.ToSByte(Convert.ToDouble(buffer[byteCount]) * -1);\n                        }\n                        \n                        writer.WriteData(buffer, 0, blockAlign);\n                    }\n                }\n            }\n        }</code></pre>\n\nThe code above doesn't work because this requires Signed double rather then a double. NAudio seems to expect a double though... What am I doing wrong??\r<br />\n<br />\nMany Thanks,<br />\n",
+    "PostedDate": "2013-09-27T11:53:36.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1100262",
+    "ThreadId": "215583",
+    "Html": "it depends what bit depth your WAV file is at. I'm guessing it is 16 bit, so use BitConverter.ToInt16 on every pair of bytes, then multiply the resulting short by -1, before using BitConverter.GetBytes on it again.<br />\n",
+    "PostedDate": "2013-09-27T12:41:57.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

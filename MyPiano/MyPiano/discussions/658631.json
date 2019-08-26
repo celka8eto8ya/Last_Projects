@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1485740",
+    "ThreadId": "658631",
+    "Html": "Can NAudio do quantization?\r<br />\n<br />\nBy quantization or audio sync I mean, that the audio waves will be &quot;remaped&quot; to match the time signature/tempo and not just to &quot;move&quot; the audio to start at another point in time.. the duration of the audio clip doesn't change, but its content does.\r<br />\n<br />\nQuantization like all the &quot;Digital Audio Workstation&quot; programs have..\r<br />\n<br />\nThanks in advance for your help :)<br />\n",
+    "PostedDate": "2016-10-10T12:53:16.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485741",
+    "ThreadId": "658631",
+    "Html": "No, that's quite a complex algorithm I'm afraid and you'd need to write it yourself.<br />\n",
+    "PostedDate": "2016-10-10T12:58:32.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485750",
+    "ThreadId": "658631",
+    "Html": "Thanks for the quick response, I've tried looking for straight forward information about this, but couldn't find any, would you have any leads for me? :)<br />\n",
+    "PostedDate": "2016-10-10T15:29:36.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485775",
+    "ThreadId": "658631",
+    "Html": "A lot of the DAWs license the technology from <a href=\"https://www.zplane.de/index.php?page=description-elastique\" rel=\"nofollow\">elastique</a> to do this. It's quite advanced DSP, so you'd need to be an expert to do this yourself<br />\n",
+    "PostedDate": "2016-10-11T01:45:17.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1486195",
+    "ThreadId": "658631",
+    "Html": "Very interesting, I didn't know that, Thanks for the info :)<br />\n",
+    "PostedDate": "2016-10-16T07:31:19.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

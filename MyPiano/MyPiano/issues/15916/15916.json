@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 5,
+    "Custom": "",
+    "Description": "First, and foremost, let me say I do not know if this is some design choice made on purpose. If it is so, please, forgive me.\n\nNow, with that being said, I've seen that if I'm playing some MP3 file through WaveOut, stop the playback, dispose the stream, create a new one, initialize it and try to play it, a NullReferenceException is thrown.\n\nIt seems to be some sort of problem with queued buffers. I have an (rather) old version lying around which works as expected, but latest version doesn't. Also, I haven't seen this problem when unit testing or running inside a console application, just inside a Windows Forms project.",
+    "LastUpdatedDate": "2011-07-29T00:51:45.58-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-05-25T09:00:14.18-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Single instance of WaveOut class cannot be used to play several streams",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 15916
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Yes, the Init method is only supposed to be called once on a give instance of WaveOut. I will either put some protection in to stop you calling Init twice, or if it is not too difficult will try to allow it to work again. When you say \"latest version\", do you mean 1.4RC or have you got latest from Source Control?",
+      "PostedDate": "2011-05-26T04:01:09.563-07:00",
+      "Id": 41771
+    },
+    {
+      "Message": "Both, 1.4RC and from source control.",
+      "PostedDate": "2011-05-26T04:37:01.693-07:00",
+      "Id": 41772
+    },
+    {
+      "Message": "Is it still forbidden to call Init() twice? It appears to work fine, but that may just be luck... ",
+      "PostedDate": "2011-07-28T13:28:54.927-07:00",
+      "Id": 41773
+    },
+    {
+      "Message": "May be dependent on what driver callback model you are using",
+      "PostedDate": "2011-07-28T14:29:46.46-07:00",
+      "Id": 41774
+    },
+    {
+      "Message": "Ok, so the safe way is not to call it twice.",
+      "PostedDate": "2011-07-29T00:51:45.58-07:00",
+      "Id": 41775
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1092921",
+    "ThreadId": "456983",
+    "Html": "I'm having an issue with stopping ASIO playback hanging on occasion.  It seems to happen about 50% and I cannot figure out what might be causing it.  The method that hangs is here:<br />\n<pre><code>public ASIOError stop()\n        {\n            return asioDriverVTable.stop(pASIOComObject);\n        }\n</code></pre>\n\nafter returning, my entire project will hang.  Like I said, half the time it works great.  Any ideas about what else I should be doing?  \n<br />\n",
+    "PostedDate": "2013-09-15T13:19:37.343-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1092961",
+    "ThreadId": "456983",
+    "Html": "<strong>livefromheaven wrote:</strong><br />\n<blockquote>\nI'm having an issue with stopping ASIO playback hanging on occasion.  It seems to happen about 50% and I cannot figure out what might be causing it.  The method that hangs is here:<br />\n<pre><code>public ASIOError stop()\n        {\n            return asioDriverVTable.stop(pASIOComObject);\n        }\n</code></pre>\n\nafter returning, my entire project will hang.  Like I said, half the time it works great.  Any ideas about what else I should be doing?<br />\n</blockquote>\nI think I figured this out - it had to do with my Asyncronous TCP sockets<br />\n",
+    "PostedDate": "2013-09-15T19:17:09.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

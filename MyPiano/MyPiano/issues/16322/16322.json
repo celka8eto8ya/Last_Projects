@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "released in NAudio 1.6",
+    "ClosedDate": "2012-10-27T00:13:21.457-07:00",
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "Hi!\r\n\r\nI'm trying to make a program that can stream audio from a server.\r\nI all works fine, until i get to the last frame, then i get the following error:\r\n\r\nObject reference not set to an instance of an object.\r\n\r\nThe code that returns the error is:\r\nArray.Copy(frame.RawData, conversionStream.SourceBuffer, frame.FrameLength);\r\n\r\nand is fund in \"AcmMp3FrameDecompressor.cs\" in \"DecompressFrame\"\r\n\r\nI know that is happen because i stream a bit ahead to i can listen to the song directly from the stream.\r\nBut i don't know what i can do about it.. \r\nHere is the code i'm using to get frame from stream and decompress the frame.\r\n\r\n  IMp3FrameDecompressor decompressor = null;\r\n            try\r\n            {\r\n\r\n                    var readFullyStream = new ReadFullyStream(responseStream);\r\n                    do\r\n                    {\r\n                        if (bufferedWaveProvider != null && bufferedWaveProvider.BufferLength - bufferedWaveProvider.BufferedBytes < bufferedWaveProvider.WaveFormat.AverageBytesPerSecond / 4)\r\n                        {\r\n                            Console.WriteLine(\"Buffer getting full, taking a break\");\r\n                            Thread.Sleep(500);\r\n                        }\r\n                        else\r\n                        {\r\n                            Mp3Frame frame = null;\r\n                            try\r\n                            {\r\n                                frame = Mp3Frame.LoadFromStream(readFullyStream);\r\n                            }\r\n                            catch (EndOfStreamException)\r\n                            {\r\n                                this.fullyDownloaded = true;\r\n                                // reached the end of the MP3 file / stream\r\n                                break;\r\n                            }\r\n                            catch (WebException)\r\n                            {\r\n                                // probably we have aborted download from the GUI thread\r\n                                break;\r\n                            }\r\n                            if (decompressor == null)\r\n                            {\r\n                                // don't think these details matter too much - just help ACM select the right codec\r\n                                // however, the buffered provider doesn't know what sample rate it is working at\r\n                                // until we have a frame\r\n                                WaveFormat waveFormat = new Mp3WaveFormat(frame.SampleRate, frame.ChannelMode == ChannelMode.Mono ? 1 : 2, frame.FrameLength, frame.BitRate);\r\n                                decompressor = new AcmMp3FrameDecompressor(waveFormat);\r\n                                this.bufferedWaveProvider = new BufferedWaveProvider(decompressor.OutputFormat);\r\n                                this.bufferedWaveProvider.BufferDuration = TimeSpan.FromSeconds(20); // allow us to get well ahead of ourselves\r\n                                //this.bufferedWaveProvider.BufferedDuration = 250;\r\n                            }\r\n                            int decompressed = decompressor.DecompressFrame(frame, buffer, 0);\r\n                            //Debug.WriteLine(String.Format(\"Decompressed a frame {0}\", decompressed));\r\n                            bufferedWaveProvider.AddSamples(buffer, 0, decompressed);\r\n                            \r\n                        }\r\n\r\n                    } while (playbackState != StreamingPlaybackState.Stopped);\r\n                    Console.WriteLine(\"Exiting\");\r\n                    // was doing this in a finally block, but for some reason\r\n                    // we are hanging on response stream .Dispose so never get there\r\n                    decompressor.Dispose();\r\n                }\r\n           \r\n            finally\r\n            {\r\n                if (decompressor != null)\r\n                {\r\n                    decompressor.Dispose();\r\n                }\r\n            }\r\n\r\nHope this information helps :)",
+    "LastUpdatedDate": "2012-10-27T00:13:21.457-07:00",
+    "PlannedForRelease": "NAudio 1.6",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2011-07-31T10:38:03.64-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Streaming MP3-files, error decompressing last frame",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 16322
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "this is because frame is null, which can happen. If you get a null frame, this means you have reached the end of your stream without finding another MP3 frame. Don't call DecompressFrame in this instance",
+      "PostedDate": "2012-10-06T12:31:16.783-07:00",
+      "Id": 78843
+    },
+    {
+      "Message": "I've improved the exception to make the cause of this more obvious",
+      "PostedDate": "2012-10-06T12:39:09.293-07:00",
+      "Id": 78844
+    }
+  ]
+}

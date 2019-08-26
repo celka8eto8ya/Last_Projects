@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "904118",
+    "ThreadId": "393104",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>i wanna know if is possible to understand if someone (human) is speaking in real time with NAudio?</p>\r\n<p>Is it possible using &quot;waveIn&quot; with NAudio 1.4?</p>\r\n<p>Thanks a lot,</p>\r\n<p>Enrico</p>\r\n",
+    "PostedDate": "2012-08-26T04:19:28.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "904758",
+    "ThreadId": "393104",
+    "Html": "<p>hi Enrico, I've answered your question over at stack overflow</p>\r\n<p><a href=\"http://stackoverflow.com/questions/12146371/analying-speech-from-mic-with-naudio-using-c-sharp/12149383#12149383\">http://stackoverflow.com/questions/12146371/analying-speech-from-mic-with-naudio-using-c-sharp/12149383#12149383</a></p>\r\n<p>Mark</p>",
+    "PostedDate": "2012-08-27T13:49:08.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "905191",
+    "ThreadId": "393104",
+    "Html": "<p>Hi Mark,<br />I read your stackoverflow's answer... Ok, i can't understand if the voice i'm analyzing is human or not but i know about the dB range of human voice and for now it's ok....<br />In my last test i wrote wrong code to calculate dBs... my mistake....<br />P.S.: Good job with NAudio because it's a very interesting and useful library!</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Enrico</p>",
+    "PostedDate": "2012-08-28T09:20:56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1495563",
+    "ThreadId": "662586",
+    "Html": "I have an extractor that I use to download videos from YouTube but I want to convert them into an MP3.  I have made the work around to download the audio as an ACC file but I am following all of the docs and I am just not able to encode to mp3 without some type of error.  The error usually has to do with unauthorized access but the code I created waits for the file to download, convert to a Wave File and then deleting the original ACC file.  I am wondering what I may be able to do to jump straight to encoding the downloaded ACC file to mp3.\r<br />\n<br />\nThanks guys and gals.<br />\n",
+    "PostedDate": "2017-04-17T20:13:07.343-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495693",
+    "ThreadId": "662586",
+    "Html": "NAudio doesnt include an MP3 Encoder directly.<br />\n<br />\nYour only option could be the &quot;MediaFoundationEncoder&quot; oder respectively ACM class, which use the mp3 codecs of your os for encoding when available.<br />\n",
+    "PostedDate": "2017-04-21T13:19:33.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

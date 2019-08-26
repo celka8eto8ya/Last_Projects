@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 2,
+    "Custom": null,
+    "Description": "The definition \r\n        [PreserveSig]\r\n        int Initialize(AudioClientShareMode shareMode,\r\n            AudioClientStreamFlags StreamFlags,\r\n            long hnsBufferDuration, // REFERENCE_TIME\r\n            long hnsPeriodicity, // REFERENCE_TIME\r\n            [In] WaveFormat pFormat,\r\n            [In] ref Guid AudioSessionGuid);\r\n\r\ndoesn't use WAVEFORMATEX, http://msdn.microsoft.com/en-us/library/windows/desktop/dd370875%28v=vs.85%29.aspx \r\nSo it can not initialize 24 bit waveformat.\r\n\r\nSolution:\r\n       [PreserveSig]\r\n        int Initialize(AudioClientShareMode shareMode,\r\n            AudioClientStreamFlags StreamFlags,\r\n            long hnsBufferDuration, // REFERENCE_TIME\r\n            long hnsPeriodicity, // REFERENCE_TIME\r\n            [In] WaveFormatExtensible pFormat,\r\n            [In] ref Guid AudioSessionGuid);\r\n\r\nand in AudioClient.Initialize\r\n            var wfex = new WaveFormatExtensible(waveFormat.SampleRate, waveFormat.BitsPerSample, waveFormat.Channels);\r\n            int hresult = audioClientInterface.Initialize(shareMode, streamFlags, bufferDuration, periodicity, wfex, ref audioSessionGuid);\r\n\r\n\r\n\r\n\r\n",
+    "LastUpdatedDate": "2013-10-04T07:01:40.237-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "naudio",
+    "ReportedDate": "2013-10-04T05:54:16.907-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "audioClient.Initialize: Problem with 24 bit",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 16409
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "that isn't a reliable way to convert from WaveFormat into WaveFormatExtensible since it is paying no attention to the encoding type. We could perhaps put some code inside AudioClient to turn PCM or IEEE float WaveFormats into the equivalent WaveFormatExtensible.",
+      "PostedDate": "2013-10-04T06:18:38.677-07:00",
+      "Id": 117469
+    },
+    {
+      "Message": "Yes, that was quick & dirty to get a sample working.  General change to WaveFormatExtensible is not possibley because the many dependencies.\n\nSome methods to convert between WaveFormat & WaveFormatExtensible  are usefull:\nWaveFormatExtensible .ToWaveFormat()\nWaveFormat.WaveFormatExtensible()",
+      "PostedDate": "2013-10-04T07:01:40.237-07:00",
+      "Id": 117472
+    }
+  ]
+}
