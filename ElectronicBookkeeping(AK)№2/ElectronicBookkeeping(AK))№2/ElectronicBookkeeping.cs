@@ -46,6 +46,8 @@ namespace ElectronicBookkeeping_AK___2
             accMass[12] = new Account("Purse");
             accMass[13] = new Account("Cache");
 
+            Account.WriteToFile(accMass);
+
             //Thing th1 = new Thing(comboBox6.Text, comboBox6.Text, Convert.ToDouble(comboBox6.Text));
         }
 
