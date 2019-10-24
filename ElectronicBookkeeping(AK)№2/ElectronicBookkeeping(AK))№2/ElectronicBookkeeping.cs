@@ -15,21 +15,13 @@ namespace ElectronicBookkeeping_AK___2
 {
     public partial class ElectronicBookkeeping : Form
     {
+        Account[] accMass = new Account[14];
+
         public ElectronicBookkeeping()
         {
             InitializeComponent();
-        }
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ElectronicBookkeeping_Load(object sender, EventArgs e)
-        {
-            timer1.Start();
-            Account[] accMass = new Account[14];
-
+            
+            
             accMass[0] = new Account("1-Envelope 09");
             accMass[1] = new Account("2-Envelope 10");
             accMass[2] = new Account("3-Envelope 11");
@@ -44,9 +36,22 @@ namespace ElectronicBookkeeping_AK___2
             accMass[10] = new Account("Bank Card");
             accMass[11] = new Account("11-Envelope");
             accMass[12] = new Account("Purse");
-            accMass[13] = new Account("Cache");
+            accMass[13] = new Account("Cache/Pillow");
+        }
 
-            Account.WriteToFile(accMass);
+        private void button15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ElectronicBookkeeping_Load(object sender, EventArgs e)
+        {
+            timer1.Start();
+           
+
+           
+
+            Account.CreateAndWriteFiles(accMass);
 
             //Thing th1 = new Thing(comboBox6.Text, comboBox6.Text, Convert.ToDouble(comboBox6.Text));
         }
@@ -56,6 +61,9 @@ namespace ElectronicBookkeeping_AK___2
 
         }
 
-        
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

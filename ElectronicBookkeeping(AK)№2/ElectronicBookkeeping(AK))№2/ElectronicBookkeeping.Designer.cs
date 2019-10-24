@@ -58,6 +58,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button17 = new System.Windows.Forms.Button();
@@ -68,7 +69,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -91,6 +92,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.button15);
             this.tabPage1.Controls.Add(this.button14);
             this.tabPage1.Controls.Add(this.button13);
@@ -111,6 +113,7 @@
             this.tabPage1.Size = new System.Drawing.Size(914, 424);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "MonetaryCondition";
+            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // button15
             // 
@@ -227,7 +230,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(111, 40);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Cache";
+            this.button2.Text = "Cache/Pillow";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -393,6 +396,14 @@
             this.tabPage3.Text = "Expenses";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(10, 19);
+            this.textBox5.Multiline = true;
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(122, 21);
+            this.textBox5.TabIndex = 24;
+            // 
             // comboBox7
             // 
             this.comboBox7.FormattingEnabled = true;
@@ -491,13 +502,14 @@
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // textBox5
+            // label7
             // 
-            this.textBox5.Location = new System.Drawing.Point(10, 19);
-            this.textBox5.Multiline = true;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(122, 21);
-            this.textBox5.TabIndex = 24;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(750, 17);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(129, 26);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Последнее обновление:\r\n24.10.2019 19:27";
             // 
             // ElectronicBookkeeping
             // 
@@ -511,6 +523,7 @@
             this.Load += new System.EventHandler(this.ElectronicBookkeeping_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -562,5 +575,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ComboBox comboBox7;
         private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Label label7;
     }
 }
