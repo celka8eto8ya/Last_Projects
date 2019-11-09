@@ -23,7 +23,7 @@ namespace ClassLibraryForEB
             {
                 if (SourceOfMoney == MASS[i].Name)
                 {
-                    MASS[i].Sum -= Cost;
+                    MASS[i].TakeMoney(Cost);
                 }
             }
 
