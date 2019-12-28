@@ -1,40 +1,36 @@
-﻿using System;
+﻿using System.Windows.Forms;
 
 namespace ClassLibraryForEB
 {
     public class Thing
     {
-        public string Name { get; set; }
-        public DateTime DtBuying { get; set; }
-        public double Cost { get; set; }
-        public string SourceOfMoney { get; set; }
+        public string Name { get; set; } // Imya veschi
+        public string SourceOfMoney { get; set; } // Istochnik oplati
+        public string DateBuying { get; set; } // Data pokupki
+        public double Cost { get; set; } // Stoimost` veschi
 
-        public Thing(string Name, string SourceOfMoney, double Cost)
+        public Thing(string Name, string SourceOfMoney, string DtBuying, double Cost)
         {
             this.Name = Name;
-            DtBuying = DateTime.Now;
-            this.Cost = Cost;
             this.SourceOfMoney = SourceOfMoney;
+            DateBuying = DtBuying;
+            this.Cost = Cost;
         }
 
-        public void Buy(ref Account[] MASS)
+        // pokupka veschi
+        public static void BuyThing(ref Account[] MassAcc, Thing thing1, TextBox textbox1) 
         {
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < MassAcc.Length; i++)
             {
-                if (SourceOfMoney == MASS[i].Name)
+                if ((thing1.SourceOfMoney).IndexOf(MassAcc[i].Name) == 0)
                 {
-                    MASS[i].TakeMoney(Cost);
+                    // snimat summu "th1.Cost" so scheta "MassAcc[i]" i zapisivaet dannie "thing1" v file
+                    Account.TakeMoney(thing1.Cost, MassAcc, MassAcc[i], thing1);
+                    // chitaet dannie iz file v textbox
+                    Account.ToReadFile(textbox1, "Expenses.txt");
                 }
             }
-
         }
 
-        //public void PutMoney(double sum)
-        //{ }
-
-        //public string InfoAboutThing()
-        //{
-        //    return $"Name: {Name} \r\nSum: {Sum}";
-        //}
     }
 }
