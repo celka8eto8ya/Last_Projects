@@ -1,0 +1,68 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Input_At_The_Program" Height="400" Width="450"  Background="Brown" >
+
+
+    <Window.Resources>
+        <!--<Button x:Key="resBtn2"   >
+            <TextBlock Text="AquamarineQurva" Background="Yellow" Foreground="Navy" FontSize="17"/>
+        </Button>
+        <SolidColorBrush x:Key="redStyle" Color="Aquamarine" />-->
+    </Window.Resources>
+    <DockPanel x:Name="DPanel1" >
+        <ToolBarTray DockPanel.Dock="Left" Orientation="Vertical" Width="33">
+            <ToolBar x:Name="TBar1" Width="33" >
+                <ToggleButton>
+                    A1
+                </ToggleButton>
+                <Separator>
+                </Separator>
+                <Button>
+                    B2
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <StackPanel x:Name="SPanel1" Width="200" Height="200" VerticalAlignment="Center" HorizontalAlignment="Center" >
+
+            <Label x:Name="Lb1" >Введите пароль:</Label>
+
+            <TextBox x:Name="tB1"  >****</TextBox>
+            <Separator ></Separator>
+            <Separator ></Separator>
+            <Separator ></Separator>
+
+            <Button x:Name="btn1" Width="100" Margin="6" DockPanel.Dock="Left" Height="35">_To_Enter_Pass</Button>
+            
+            <Button x:Name="btn2" Margin="6" Width="100" DockPanel.Dock="Right" Height="35">_To_Save_Pass</Button>
+            
+            <Button x:Name="btn2_Copy" Margin="0,21,0,0" Height="25" Content="_Go_To_The_Program" Click="Btn2_Copy_Click"/>
+
+
+        </StackPanel>
+        
+        <!--<TabControl x:Name="TControl1" Background="MistyRose" DockPanel.Dock="Left">
+
+            <TabItem x:Name="Name1" Header="Input_Acc"   >
+                
+                </StackPanel>
+            </TabItem>
+
+
+            <TabItem x:Name="Name2" Header="Create_Acc" >
+                <StackPanel x:Name="SPanel2" Background="Transparent" Width="200" Height="200" VerticalAlignment="Center" HorizontalAlignment="Center" >
+
+                    <Label x:Name="Lb2" >Введите пароль:</Label>
+
+                    <TextBox x:Name="tB12"  >****</TextBox>
+                    <Separator ></Separator>
+                    <Button x:Name="btn2" Width="80" >_To_Save_His</Button>
+                
+            </TabItem>-->
+        <!--</TabControl>-->
+
+    </DockPanel>
+</Window>
