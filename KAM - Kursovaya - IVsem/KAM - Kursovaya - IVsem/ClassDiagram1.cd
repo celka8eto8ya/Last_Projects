@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="KAM___Kursovaya___IVsem.Account">
+    <Position X="10" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CAAABCAAgAAIAAAICAgIAIAICAAAQAAAAAAAAEAIABI=</HashCode>
+      <FileName>Account.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KAM___Kursovaya___IVsem.Vessel">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAAAAAQ=</HashCode>
+      <FileName>Vessel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KAM___Kursovaya___IVsem.Storage">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAgAAAAEgCAAAQAEAABAA=</HashCode>
+      <FileName>Storage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KAM___Kursovaya___IVsem.TypeOfAccount">
+    <Position X="12" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAACAAIAAAAAAAQAAAAFAAAIAQAACACAAAA=</HashCode>
+      <FileName>TypeOfAccount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KAM___Kursovaya___IVsem.Security">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAgAAEAA=</HashCode>
+      <FileName>Security.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KAM___Kursovaya___IVsem.CurrencyOfAccount">
+    <Position X="12" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAJAAAAAAAQAAQAkAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>CurrencyOfAccount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KAM___Kursovaya___IVsem.Database">
+    <Position X="4.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAGCAAAJAAgACAAAAAGAAQCBAAAAAAAwEAAAEBDAA=</HashCode>
+      <FileName>Database.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KAM___Kursovaya___IVsem.Event">
+    <Position X="6" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAIBAABAAAAAAABAAAIQAAAAEAAAAADAAAEAAAAA=</HashCode>
+      <FileName>Event.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KAM___Kursovaya___IVsem.Bank">
+    <Position X="8" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAgAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Bank.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
