@@ -5,8 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+         Height="500" Width="400" Background="#FFF5B9F5">
+
+
+    <Window.Resources>
+        <!--
+        Кисти для цветов
+        размеры для эл упр
+        -->
+        
+    </Window.Resources>
+    
+    <Grid ShowGridLines="True" >
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="240"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="0" Width="160" >
+            <Label DockPanel.Dock="Top" Height="40"></Label>
+            <DockPanel DockPanel.Dock="Top" Background="Transparent"  Height="40">
+
+                <Button DockPanel.Dock="Left" Content="Icon" Width="40" VerticalAlignment="Stretch" />
+
+                <TextBlock DockPanel.Dock="Right" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  FontSize="27" FontWeight="Bold" FontFamily="Segoe UI Black" TextAlignment="Center" Foreground="#FF5EACAC"> E2Book</TextBlock>
+
+                <!--<Label DockPanel.Dock="Right" Width="30"></Label>
+                <Button Background="Transparent" DockPanel.Dock="Right" Width="50"></Button>-->
+            </DockPanel>
+            <Label DockPanel.Dock="Top" Height="25"></Label>
+            <TextBlock Foreground="#FF5EACAC" FontSize="21" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
+                <TextBlock.TextDecorations>
+                    <TextDecoration PenOffset="1"/>
+                </TextBlock.TextDecorations>Authorization</TextBlock>
+
+        </DockPanel>
+        
+        
+        <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" >
+
+            <Label DockPanel.Dock="Top" Height="23">Source OF Data</Label>
+            <DockPanel DockPanel.Dock="Top" Height="30">
+                <Button DockPanel.Dock="Left" Width="30" >Icon</Button>
+                <ComboBox>Password</ComboBox>
+            </DockPanel>
+
+            <Label DockPanel.Dock="Top" Height="15"></Label>
+            
+            <DockPanel DockPanel.Dock="Top" Height="30">
+                <Button DockPanel.Dock="Left" Width="30">Icon</Button>
+                <TextBox>Password</TextBox>
+            </DockPanel>
+            
+            <Label DockPanel.Dock="Top" Height="15"></Label>
+
+            <DockPanel DockPanel.Dock="Top" Height="30">
+                <Button DockPanel.Dock="Left" Width="30">Icon</Button>
+                <TextBox VerticalContentAlignment="Stretch"><!--TextBlock-->Confirm Password</TextBox>
+            </DockPanel>
+
+            <Label DockPanel.Dock="Top" Height="15"></Label>
+
+
+        </DockPanel>
+
         
     </Grid>
+
+
 </Window>
