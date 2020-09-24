@@ -25,6 +25,9 @@ namespace KAM_19_08_2020_E2Book
             InitializeComponent();
         }
 
-       
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(Tb1.Text,"Message",MessageBoxButton.OK,MessageBoxImage.Information);
+        }
     }
 }
