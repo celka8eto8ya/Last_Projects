@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\E2Book.BL\E2Book.BL.csproj">
+      <Project>{89d9fc99-7265-461a-a822-c33d5bf37ec5}</Project>
+      <Name>E2Book.BL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

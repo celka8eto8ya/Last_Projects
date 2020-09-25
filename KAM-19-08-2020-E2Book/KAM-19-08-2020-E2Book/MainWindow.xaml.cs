@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using E2Book.BL.A_Model;
 
 namespace KAM_19_08_2020_E2Book
 {
@@ -28,6 +29,7 @@ namespace KAM_19_08_2020_E2Book
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(Tb1.Text,"Message",MessageBoxButton.OK,MessageBoxImage.Information);
+            //Security security = new Security("123");
         }
     }
 }
