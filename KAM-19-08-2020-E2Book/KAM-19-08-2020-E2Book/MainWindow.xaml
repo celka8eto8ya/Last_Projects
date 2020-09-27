@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         mc:Ignorable="d"
-         Height="420" Width="410" Background="#FFF9ABF9" Icon="{Binding ElementName=Icon,Path=Source}">
+         Height="420" Width="410" Background="#FFF9ABF9" ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
     <!--Background="#FFF5B9F5"-->
 
     <Window.Resources>
@@ -35,7 +35,7 @@
             <DockPanel DockPanel.Dock="Top" Background="Transparent"  Height="40">
 
                 <Button DockPanel.Dock="Left"  Width="40" VerticalAlignment="Stretch" >
-                    <Image x:Name="Icon" Source="D:\\1.ico"></Image>  
+                    <Image x:Name="Icon" Source="Resources\Logo.ico"></Image>  
                 </Button>
                  
                     <Button DockPanel.Dock="Right" Background="Transparent" >
