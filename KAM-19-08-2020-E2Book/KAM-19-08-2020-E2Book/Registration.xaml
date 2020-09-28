@@ -6,132 +6,132 @@
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         mc:Ignorable="d"
        Height="510" Width="410" Background="#FFF9ABF9" ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
-    <!--Background="#FFF5B9F5"-->
+
+
+
 
     <Window.Resources>
-        <!--
-        Кисти для цветов
-        размеры для эл упр
-        -->
-        <DockPanel x:Key="DockP" x:Name="DockPanel" Height="23"></DockPanel>
+        
+        <Style x:Key="TextBoxInButton">
+            <Setter Property="TextBox.Background" Value="Transparent" />
+            <Setter Property="TextBox.FontSize" Value="13" />
+            <Setter Property="TextBox.Width" Value="236" />
+            <Setter Property="TextBox.Height" Value="23"/>
+            <Setter Property="TextBox.FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="TextBox.Foreground" Value="#FF0D1515"/>
+        </Style>
+
+
+        <DockPanel x:Key="DockP" x:Name="DockPanel" Height="23"/>
         <Button x:Key="ForIcon" Width="25" Height="25">Icon</Button>
-        <TextBlock x:Key="TextBox" Height="25"></TextBlock>
+        <TextBlock x:Key="TextBox" Height="25"/>
+
     </Window.Resources>
 
-    <Grid ShowGridLines="False" >
+    
+
+
+    <Grid  >
         <Grid.RowDefinitions>
             <RowDefinition Height="140"></RowDefinition>
             <RowDefinition Height="240"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition />
             <ColumnDefinition Width="240" ></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="0" Width="160" >
-            <Label DockPanel.Dock="Top" Height="36"></Label>
-            <DockPanel DockPanel.Dock="Top" Background="Transparent"  Height="40">
+            <Label DockPanel.Dock="Top" Height="36"/>
 
+            <DockPanel DockPanel.Dock="Top" Background="Transparent"  Height="40">
                 <Button DockPanel.Dock="Left"  Width="40" VerticalAlignment="Stretch" >
-                    <Image x:Name="Icon" Source="Resources\Logo.ico"></Image>
+                    <Image x:Name="Icon" Source="Resources\Logo.ico"/>
                 </Button>
 
                 <Button DockPanel.Dock="Right" Background="Transparent" >
-
                     <TextBlock  VerticalAlignment="Center"  FontSize="27" FontWeight="Bold" FontFamily="Segoe UI Black" TextAlignment="Center" Foreground="#FF0D1515" HorizontalAlignment="Center"> E2Book</TextBlock>
                 </Button>
-
-
-                <!--<Label DockPanel.Dock="Right" Width="30"></Label>
-                <Button Background="Transparent" DockPanel.Dock="Right" Width="50"></Button>-->
             </DockPanel>
-            <Label DockPanel.Dock="Top" Height="17"></Label>
+
+            <Label DockPanel.Dock="Top" Height="17"/>
+
             <TextBlock Foreground="#FF0D1515" FontSize="22" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
                 <TextBlock.TextDecorations>
                     <TextDecoration PenOffset="1"/>
                 </TextBlock.TextDecorations>Registration</TextBlock>
-
         </DockPanel >
 
 
         <DockPanel Background="Transparent"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" >
 
-            <Separator DockPanel.Dock="Top"></Separator>
+            <Separator DockPanel.Dock="Top"/>
 
-            <TextBlock DockPanel.Dock="Top"   ></TextBlock>
-
-            <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
-                <Button DockPanel.Dock="Left" Background="Transparent">
-                    <TextBox x:Name="Tb3" GotFocus="Tb3_GotFocus"  ToolTip="Нужно ввести расширение хранилища данных: (База данных[.db] / Текстовый файл[.txt])." Background="Transparent" FontSize="13"  Width="236" Height="{Binding ElementName=DockPanel,Path=Height}" FontFamily="Segoe UI Semibold" Foreground="#FF0D1515" >Source Of Data (.db/.txt)</TextBox>
-                </Button>
-            </DockPanel>
-
-            <TextBlock DockPanel.Dock="Top"  ></TextBlock>
-
+            <TextBlock DockPanel.Dock="Top"   />
 
             <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
-                <!--<Button DockPanel.Dock="Left" Width="{Binding ForIcon}">Icon</Button>-->
-                <Button DockPanel.Dock="Left" Background="Transparent">
-                    <TextBox x:Name="Tb1" ToolTip="Пароль создаваемого аккаунта." Background="Transparent" FontSize="13"  Width="236" Height="{Binding ElementName=DockPanel,Path=Height}" FontFamily="Segoe UI Semibold" Foreground="#FF0D1515" GotFocus="Tb1_GotFocus">Password</TextBox>
+                <Button  Background="Transparent">
+                    <TextBox x:Name="Tb3" Style="{StaticResource TextBoxInButton}" KeyDown="Tb3_KeyDown" KeyUp="Tb3_KeyUp" GotFocus="Tb3_GotFocus"  ToolTip="Введите расширение хранилища данных: (База данных[.db] / Текстовый файл[.txt])."   MaxLength="4" >Source Of Data (.db/.txt)</TextBox>
                 </Button>
-
             </DockPanel>
+            <TextBlock DockPanel.Dock="Top"  />
 
-            <TextBlock DockPanel.Dock="Top" ></TextBlock>
-
-            <!--<DockPanel DockPanel.Dock="Top"  Height="{Binding ElementName=DockPanel,Path=Height}">
-                <Button DockPanel.Dock="Left" Background="Transparent">
-                    <TextBox x:Name="Tb2" GotFocus="Tb2_GotFocus" ToolTip="Подтверждение пароля создаваемого аккаунта." Background="Transparent" FontSize="13"  Width="236" Height="{Binding ElementName=DockPanel,Path=Height}" Foreground="#FF0D1515" FontFamily="Segoe UI Semibold">Confirm Password</TextBox>
-                </Button>
-            </DockPanel>-->
-            <Separator DockPanel.Dock="Top"></Separator>
-            
-            <DockPanel DockPanel.Dock="Left">
-                <Button  Width="30">Create</Button>
-            </DockPanel>
-            
-            <DockPanel DockPanel.Dock="Right">
-            <TextBlock DockPanel.Dock="Top"   ></TextBlock>
 
             <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
-                <Button DockPanel.Dock="Left" Background="Transparent">
-                    <TextBox x:Name="Tb4" GotFocus="Tb3_GotFocus"  ToolTip="Нужно ввести расширение хранилища данных: (База данных[.db] / Текстовый файл[.txt])." Background="Transparent" FontSize="13"  Width="236" Height="{Binding ElementName=DockPanel,Path=Height}" FontFamily="Segoe UI Semibold" Foreground="#FF0D1515" >ServerName</TextBox>
+                <Button  Background="Transparent">
+                    <TextBox x:Name="Tb1" Style="{StaticResource TextBoxInButton}" ToolTip="Придумайте пароль вашему будущему аккаунту." GotFocus="Tb1_GotFocus" MaxLength="30">Password</TextBox>
                 </Button>
             </DockPanel>
 
-            <TextBlock DockPanel.Dock="Top"  ></TextBlock>
+            <TextBlock DockPanel.Dock="Top" />
 
-            <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
-                <Button DockPanel.Dock="Left" Background="Transparent">
-                    <TextBox x:Name="Tb5" GotFocus="Tb3_GotFocus"  ToolTip="Нужно ввести расширение хранилища данных: (База данных[.db] / Текстовый файл[.txt])." Background="Transparent" FontSize="13"  Width="236" Height="{Binding ElementName=DockPanel,Path=Height}" FontFamily="Segoe UI Semibold" Foreground="#FF0D1515" >UserName</TextBox>
-                </Button>
-            </DockPanel>
+            <Separator DockPanel.Dock="Top"/>
 
-            <TextBlock DockPanel.Dock="Top"  ></TextBlock>
-           
+            <DockPanel x:Name="DockP1" DockPanel.Dock="Right">
+                <TextBlock DockPanel.Dock="Top" />
 
-            <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
-                <Button DockPanel.Dock="Left" Background="Transparent">
-                    <TextBox x:Name="Tb6" GotFocus="Tb3_GotFocus"  ToolTip="Нужно ввести расширение хранилища данных: (База данных[.db] / Текстовый файл[.txt])." Background="Transparent" FontSize="13"  Width="236" Height="{Binding ElementName=DockPanel,Path=Height}" FontFamily="Segoe UI Semibold" Foreground="#FF0D1515" >Password Of Server</TextBox>
-                </Button>
-            </DockPanel>
+                <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
+                    <Button  Background="Transparent">
+                        <TextBox x:Name="Tb4" Style="{StaticResource TextBoxInButton}" GotFocus="Tb4_GotFocus" ToolTip="Введите имя (вашего) сервера."  MaxLength="50" IsEnabled="False" >Name Of Server</TextBox>
+                    </Button>
+                </DockPanel>
 
-            <TextBlock DockPanel.Dock="Top"  ></TextBlock>
+                <TextBlock DockPanel.Dock="Top" />
+
+                <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
+                    <Button  Background="Transparent">
+                        <TextBox x:Name="Tb5" Style="{StaticResource TextBoxInButton}" GotFocus="Tb5_GotFocus"  ToolTip="Введите имя пользователя (вашего) сервера." MaxLength="50" IsEnabled="False"  >User's Name</TextBox>
+                    </Button>
+                </DockPanel>
+
+                <TextBlock DockPanel.Dock="Top"  />
+
+                <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
+                    <Button Background="Transparent">
+                        <TextBox x:Name="Tb6" Style="{StaticResource TextBoxInButton}" GotFocus="Tb6_GotFocus"  ToolTip="Введите пароль от (вашего) сервера." MaxLength="50" IsEnabled="False" >Password Of Server</TextBox>
+                    </Button>
+                </DockPanel>
+
+                <TextBlock DockPanel.Dock="Top" />
             </DockPanel>
         </DockPanel>
 
         <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="2" Width="200" >
-            <Label DockPanel.Dock="Top"></Label>
+            <Label DockPanel.Dock="Top"/>
+            
             <DockPanel DockPanel.Dock="Top" Height="35">
                 <Button x:Name="btnSave" ToolTip="Создать аккаунт с введенными данными." Background="Transparent" HorizontalAlignment="Left" Width="85" Click="Button_Click" FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" >Save</Button>
                 <Button  x:Name="btnClose" ToolTip="Закрыть текущее окно." Background="Transparent" HorizontalAlignment="Right" Width="110" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" Click="BtnClose_Click" >Close Window</Button>
             </DockPanel>
-            <Label DockPanel.Dock="Top"></Label>
+            
+            <Label DockPanel.Dock="Top"/>
         </DockPanel>
 
     </Grid>
 
 
+    
+    
 </Window>
