@@ -23,5 +23,15 @@ namespace KAM_19_08_2020_E2Book
         {
             InitializeComponent();
         }
+
+        bool b = true;
+        private void Tb1_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (b)
+            {
+                Tb1.Text = "";
+                b = false;
+            }
+        }
     }
 }

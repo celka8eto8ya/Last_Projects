@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using E2Book.BL.C_Controller ;
+using E2Book.BL.A_Model ;
 
 namespace KAM_19_08_2020_E2Book
 {
@@ -18,24 +20,14 @@ namespace KAM_19_08_2020_E2Book
         {
             if (Tb3.Text == ".db" || Tb3.Text == ".txt")
             {
-
+                UserController.SaveInfoUser(Tb3,Tb1, Tb4,Tb5,Tb6);
             }
             else
             {
-                MessageBox.Show("Not correct data entered (1st field).", "Error!",MessageBoxButton.OK,MessageBoxImage.Warning);
+                MessageBox.Show("Not correct data entered (1st field).", "Warning!", MessageBoxButton.OK,MessageBoxImage.Warning);
             }
-            Authorization aut1 = new Authorization();
-            aut1.Show();
-            Tb3.Opacity = 1;
         }
-
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-
-
+        
         bool b1 = true;
         private void Tb3_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -45,6 +37,7 @@ namespace KAM_19_08_2020_E2Book
                 b1 = false;
             }
         }
+
         bool b2 = true;
         private void Tb1_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -58,13 +51,11 @@ namespace KAM_19_08_2020_E2Book
         bool b3 = true;
         private void Tb4_GotFocus(object sender, RoutedEventArgs e)
         {
-
             if (b3)
             {
                 Tb4.Text = "";
                 b3 = false;
             }
-
         }
 
         bool b4 = true;
@@ -76,6 +67,7 @@ namespace KAM_19_08_2020_E2Book
                 b4 = false;
             }
         }
+
         bool b5 = true;
         private void Tb6_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -85,7 +77,6 @@ namespace KAM_19_08_2020_E2Book
                 b5 = false;
             }
         }
-
       
         private void Tb3_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -117,6 +108,13 @@ namespace KAM_19_08_2020_E2Book
                 Tb5.IsEnabled = false;
                 Tb6.IsEnabled = false;
             }
+        }
+
+        private void BtnGoToAuthorization_Click(object sender, RoutedEventArgs e)
+        {
+            Authorization auth1 = new Authorization();
+            auth1.Show();
+            this.Close();
         }
     }
 }

@@ -19,7 +19,7 @@
             <Setter Property="TextBox.Background" Value="Transparent" />
             <Setter Property="TextBox.FontSize" Value="13" />
             <Setter Property="TextBox.Width" Value="236" />
-            <Setter Property="TextBox.Height" Value="23"/>
+            <Setter Property="TextBox.Height" Value="20"/>
             <Setter Property="TextBox.FontFamily" Value="Segoe UI Semibold"/>
             <Setter Property="TextBox.Foreground" Value="#FF0D1515"/>
         </Style>
@@ -37,7 +37,7 @@
     <Grid  >
         <Grid.RowDefinitions>
             <RowDefinition Height="140"></RowDefinition>
-            <RowDefinition Height="240"></RowDefinition>
+            <RowDefinition Height="260"></RowDefinition>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -59,7 +59,7 @@
                 </Button>
             </DockPanel>
 
-            <Label DockPanel.Dock="Top" Height="17"/>
+            <Label DockPanel.Dock="Top" Height="20"/>
 
             <TextBlock Foreground="#FF0D1515" FontSize="22" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
                 <TextBlock.TextDecorations>
@@ -117,16 +117,17 @@
                     </Button>
                 </DockPanel>
 
-                <TextBlock DockPanel.Dock="Top" />
+                <Separator DockPanel.Dock="Top"/>
+
             </DockPanel>
         </DockPanel>
 
-        <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="2" Width="200" >
-            <Label DockPanel.Dock="Top"/>
+        <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="2" >
+          
             
-            <DockPanel DockPanel.Dock="Top" Height="35">
-                <Button x:Name="btnSave" ToolTip="Создать аккаунт с введенными данными." Background="Transparent" HorizontalAlignment="Left" Width="85" Click="Button_Click" FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" >Save</Button>
-                <Button  x:Name="btnClose" ToolTip="Закрыть текущее окно." Background="Transparent" HorizontalAlignment="Right" Width="110" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" Click="BtnClose_Click" >Close Window</Button>
+            <DockPanel DockPanel.Dock="Top" Height="35" Width="225">
+                <Button x:Name="btnSave" ToolTip="Создать аккаунт с введенными данными." Background="Transparent" HorizontalAlignment="Left" Width="75" Click="Button_Click" FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" >Save</Button>
+                <Button  x:Name="btnGoToAuthorization" ToolTip="Перейти к авторизации." Background="Transparent" HorizontalAlignment="Right" Width="145" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" Click="BtnGoToAuthorization_Click" >"Authorization"</Button>
             </DockPanel>
             
             <Label DockPanel.Dock="Top"/>

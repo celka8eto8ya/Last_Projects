@@ -5,8 +5,96 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         mc:Ignorable="d"
-        Title="Authorization" Height="450" Width="800">
-    <Grid>
-        
+          Height="330" Width="410" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
+   
+
+
+    <Window.Resources>
+
+        <Style x:Key="TextBoxInButton">
+            <Setter Property="TextBox.Background" Value="Transparent" />
+            <Setter Property="TextBox.FontSize" Value="13" />
+            <Setter Property="TextBox.Width" Value="236" />
+            <Setter Property="TextBox.Height" Value="20"/>
+            <Setter Property="TextBox.FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="TextBox.Foreground" Value="#FF0D1515"/>
+        </Style>
+
+
+        <DockPanel x:Key="DockP" x:Name="DockPanel" Height="23"/>
+        <Button x:Key="ForIcon" Width="25" Height="25">Icon</Button>
+        <TextBlock x:Key="TextBox" Height="25"/>
+
+    </Window.Resources>
+
+
+
+
+    <Grid  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"></RowDefinition>
+            <RowDefinition Height="67"></RowDefinition>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="240" ></ColumnDefinition>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="0" Width="160" >
+            <Label DockPanel.Dock="Top" Height="36"/>
+
+            <DockPanel DockPanel.Dock="Top" Background="Transparent"  Height="40">
+                <Button DockPanel.Dock="Left"  Width="40" VerticalAlignment="Stretch" >
+                    <Image x:Name="Icon" Source="Resources\Logo.ico"/>
+                </Button>
+
+                <Button DockPanel.Dock="Right" Background="Transparent" >
+                    <TextBlock  VerticalAlignment="Center"  FontSize="27" FontWeight="Bold" FontFamily="Segoe UI Black" TextAlignment="Center" Foreground="#FF0D1515" HorizontalAlignment="Center"> E2Book</TextBlock>
+                </Button>
+            </DockPanel>
+
+            <Label DockPanel.Dock="Top" Height="20"/>
+
+            <TextBlock Foreground="#FF0D1515" FontSize="22" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
+                <TextBlock.TextDecorations>
+                    <TextDecoration PenOffset="1"/>
+                </TextBlock.TextDecorations>Authorization</TextBlock>
+        </DockPanel >
+
+        <DockPanel Background="Transparent"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" >
+
+            <Separator DockPanel.Dock="Top"/>
+
+            <TextBlock DockPanel.Dock="Top"   />
+
+            <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
+                <Button  Background="Transparent">
+                    <TextBox x:Name="Tb1" GotFocus="Tb1_GotFocus" Style="{StaticResource TextBoxInButton}" ToolTip="Введите пароль от вашего (зарегистрированного) аккаунта."  MaxLength="30">Password</TextBox>
+                </Button>
+            </DockPanel>
+
+            <TextBlock DockPanel.Dock="Top" Height="16"/>
+            <Separator DockPanel.Dock="Top" Height="3"/>
+
+        </DockPanel>
+
+        <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="2" >
+            <Label DockPanel.Dock="Top" Height="17"/>
+            
+            <DockPanel DockPanel.Dock="Top" Height="35" Width="225">
+                <Button x:Name="btnSave" ToolTip="Выполнение авторизации." Background="Transparent" HorizontalAlignment="Left" Width="75"  FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" >Enter</Button>
+                <Button  x:Name="btnGoToAuthorization" ToolTip="Перейти к регистрации." Background="Transparent" HorizontalAlignment="Right" Width="145" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515"  >"Registration"</Button>
+            </DockPanel>
+
+            <Label DockPanel.Dock="Top"/>
+        </DockPanel>
+
     </Grid>
+
+
+
+
 </Window>
+
