@@ -5,9 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         mc:Ignorable="d"
-       Height="510" Width="410" Background="#FFF9ABF9" ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
-
-
+       Height="510" Width="410" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
+    <!--<Window.Background>
+        <ImageBrush ImageSource="Resources\5.jpg" Opacity="0.9"/>
+        
+    </Window.Background>-->
+    <!--#FFF9ABF9-->
 
 
     <Window.Resources>
