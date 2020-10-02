@@ -5,101 +5,162 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         mc:Ignorable="d"
-         Height="420" Width="410" Background="#FFF9ABF9" ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
-    <!--Background="#FFF5B9F5"-->
-
-    <Window.Resources>
-        <!--
-        Кисти для цветов
-        размеры для эл упр
-        -->
-        <DockPanel x:Key="DockP" x:Name="DockPanel" Height="23"></DockPanel>
-        <Button x:Key="ForIcon" Width="25" Height="25">Icon</Button>
-        <TextBlock x:Key="TextBox" Height="25"></TextBlock>
-    </Window.Resources>
-
-    <Grid ShowGridLines="False" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="130"></RowDefinition>
-            <RowDefinition Height="145"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition ></ColumnDefinition>
-            <ColumnDefinition Width="240" ></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        
-        <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="0" Width="160" >
-            <Label DockPanel.Dock="Top" Height="36"></Label>
-            <DockPanel DockPanel.Dock="Top" Background="Transparent"  Height="40">
-
-                <Button DockPanel.Dock="Left"  Width="40" VerticalAlignment="Stretch" >
-                    <Image x:Name="Icon" Source="Resources\Logo.ico"></Image>  
-                </Button>
-                 
-                    <Button DockPanel.Dock="Right" Background="Transparent" >
-                    
-                    <TextBlock  VerticalAlignment="Center"  FontSize="27" FontWeight="Bold" FontFamily="Segoe UI Black" TextAlignment="Center" Foreground="#FF0D1515" HorizontalAlignment="Center"> E2Book</TextBlock>
-                </Button>
-                
-
-                <!--<Label DockPanel.Dock="Right" Width="30"></Label>
-                <Button Background="Transparent" DockPanel.Dock="Right" Width="50"></Button>-->
-            </DockPanel>
-            <Label DockPanel.Dock="Top" Height="17"></Label>
-            <TextBlock Foreground="#FF0D1515" FontSize="22" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
-                <TextBlock.TextDecorations>
-                    <TextDecoration PenOffset="1"/>
-                </TextBlock.TextDecorations>Registration</TextBlock>
-
-        </DockPanel>
+        Title="MainWindow" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen" Height="540" Width="950">
 
 
-        <DockPanel Background="Transparent"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" >
-          
-            <TextBlock DockPanel.Dock="Top"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,110,0" Width="99" Foreground="#FF772CD1" FontFamily="Segoe UI Semibold" Height="24" FontSize="13" ></TextBlock>
-            
-            <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
-                <Button DockPanel.Dock="Left" Background="Transparent">
-                    <TextBox x:Name="Tb3" ToolTip="Нужно ввести расширение хранилища данных: (База данных[.db] / Текстовый файл[.txt])." Background="Transparent" FontSize="13"  Width="236" Height="{Binding ElementName=DockPanel,Path=Height}" FontFamily="Segoe UI Semibold" Foreground="#FF0D1515">Source Of Data (.db/.txt)</TextBox>
-                </Button>
-            </DockPanel>
-
-            <TextBlock DockPanel.Dock="Top"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,110,0" Width="99" Foreground="#FF772CD1" FontFamily="Segoe UI Semibold" Height="16" FontSize="13" ></TextBlock>
 
 
-            <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
-                <!--<Button DockPanel.Dock="Left" Width="{Binding ForIcon}">Icon</Button>-->
-                <Button DockPanel.Dock="Left" Background="Transparent">
-                    <TextBox x:Name="Tb1" ToolTip="Пароль создаваемого аккаунта." Background="Transparent" FontSize="13"  Width="236" Height="{Binding ElementName=DockPanel,Path=Height}" FontFamily="Segoe UI Semibold" Foreground="#FF0D1515">Password</TextBox>
-                </Button>
-                
-            </DockPanel>
-
-            <TextBlock DockPanel.Dock="Top"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,110,0" Width="99" Foreground="#FF772CD1" FontFamily="Segoe UI Semibold" Height="16" FontSize="14" ></TextBlock>
-
-            <DockPanel DockPanel.Dock="Top"  Height="{Binding ElementName=DockPanel,Path=Height}">
-                <Button DockPanel.Dock="Left" Background="Transparent">
-                    <TextBox x:Name="Tb2" ToolTip="Подтверждение пароля создаваемого аккаунта." Background="Transparent" FontSize="13"  Width="236" Height="{Binding ElementName=DockPanel,Path=Height}" Foreground="#FF0D1515" FontFamily="Segoe UI Semibold">Confirm Password</TextBox>
-                </Button>
-            </DockPanel>
-
-            <Label DockPanel.Dock="Top" Height="16"></Label>
 
 
-        </DockPanel>
 
-        <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="2" Width="200" >
-            <Label DockPanel.Dock="Top"></Label>
-            <DockPanel DockPanel.Dock="Top" Height="35">
-                <Button x:Name="btnSave" ToolTip="Создать аккаунт с введенными данными." Background="Transparent" HorizontalAlignment="Left" Width="85" Click="Button_Click" FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" >Save</Button>
-                <Button  x:Name="btnClose" ToolTip="Закрыть текущее окно." Background="Transparent" HorizontalAlignment="Right" Width="110" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" >Close Window</Button>
-            </DockPanel>
-            <Label DockPanel.Dock="Top"></Label>
-        </DockPanel>
+    <DockPanel >
 
-    </Grid>
+        <TabControl Background="Transparent">
 
+
+
+            <TabItem Header="Notes/Deals">
+
+
+                <TabControl Background="Transparent"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TabStripPlacement="Right" >
+
+
+                    <TabItem Height="30" Header="Deals by days">
+                        <DockPanel>
+                            
+                        <DockPanel DockPanel.Dock="Left">
+                                <DockPanel DockPanel.Dock="Top">
+                                <Grid Width="490" Height="350" DockPanel.Dock="Top">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                    <Button Grid.Row="0" Grid.Column="0" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">MON</Button>
+                                        <Button Grid.Row="0" Grid.Column="1" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">TUE</Button>
+                                        <Button Grid.Row="0" Grid.Column="2" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">WEN</Button>
+                                        <Button Grid.Row="0" Grid.Column="3" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">THU</Button>
+                                        <Button Grid.Row="0" Grid.Column="4" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">FRY</Button>
+                                        <Button Grid.Row="0" Grid.Column="5" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">SAT</Button>
+                                        <Button Grid.Row="0" Grid.Column="6" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">SUN</Button>
+
+                                    <Button Grid.Row="1" Grid.Column="0" >1</Button>
+                                    <Button Grid.Row="1" Grid.Column="1" >2</Button>
+                                    <Button Grid.Row="1" Grid.Column="2" >3</Button>
+                                    <Button Grid.Row="1" Grid.Column="3" >4</Button>
+                                    <Button Grid.Row="1" Grid.Column="4" >5</Button>
+                                    <Button Grid.Row="1" Grid.Column="5" >6</Button>
+                                    <Button Grid.Row="1" Grid.Column="6" >7</Button>
+
+                                    <Button Grid.Row="2" Grid.Column="0" >1</Button>
+                                    <Button Grid.Row="2" Grid.Column="1" >2</Button>
+                                    <Button Grid.Row="2" Grid.Column="2" >3</Button>
+                                    <Button Grid.Row="2" Grid.Column="3" >4</Button>
+                                    <Button Grid.Row="2" Grid.Column="4" >5</Button>
+                                    <Button Grid.Row="2" Grid.Column="5" >6</Button>
+                                    <Button Grid.Row="2" Grid.Column="6" >7</Button>
+
+                                    <Button Grid.Row="3" Grid.Column="0" >1</Button>
+                                    <Button Grid.Row="3" Grid.Column="1" >2</Button>
+                                    <Button Grid.Row="3" Grid.Column="2" >3</Button>
+                                    <Button Grid.Row="3" Grid.Column="3" >4</Button>
+                                    <Button Grid.Row="3" Grid.Column="4" >5</Button>
+                                    <Button Grid.Row="3" Grid.Column="5" >6</Button>
+                                    <Button Grid.Row="3" Grid.Column="6" >7</Button>
+                            
+                                    <Button Grid.Row="4" Grid.Column="0" >1</Button>
+                                    <Button Grid.Row="4" Grid.Column="1" >2</Button>
+                                    <Button Grid.Row="4" Grid.Column="2" >3</Button>
+                                    <Button Grid.Row="4" Grid.Column="3" >4</Button>
+                                    <Button Grid.Row="4" Grid.Column="4" >5</Button>
+                                    <Button Grid.Row="4" Grid.Column="5" >6</Button>
+                                    <Button Grid.Row="4" Grid.Column="6" >7</Button>
+                            
+                                    <Button Grid.Row="5" Grid.Column="0" >1</Button>
+                                    <Button Grid.Row="5" Grid.Column="1" >2</Button>
+                                    <Button Grid.Row="5" Grid.Column="2" >3</Button>
+                                    <Button Grid.Row="5" Grid.Column="3" >4</Button>
+                                    <Button Grid.Row="5" Grid.Column="4" >5</Button>
+                                    <Button Grid.Row="5" Grid.Column="5" >6</Button>
+                                    <Button Grid.Row="5" Grid.Column="6" >7</Button>
+
+                                </Grid>
+                                    <Button DockPanel.Dock="Top" ></Button>
+                                    <Button  DockPanel.Dock="Bottom"></Button>
+                                </DockPanel>
+
+
+                            </DockPanel>
+
+                            <DockPanel>
+                                <Button DockPanel.Dock="Top" Height="58" FontSize="26" >12 Sep 2020</Button>
+                                <Button DockPanel.Dock="Top" Background="Transparent">1231231</Button>
+                            </DockPanel>
+
+
+                        </DockPanel>
+
+                    </TabItem>
+
+
+                    <TabItem Height="30" Header="Deals in general">
+                        <Button></Button>
+
+                    </TabItem>
+
+
+                    <TabItem Height="30" Header="CreateNewNote">
+                        <Button></Button>
+
+                    </TabItem>
+
+
+                </TabControl>
+            </TabItem>
+
+            <TabItem Header="FinancialBookkeeper">
+
+                <TabControl Background="Transparent"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TabStripPlacement="Right" >
+                    <TabItem Height="30" Header="Condition">
+                        <Button></Button>
+                    </TabItem>
+                    <TabItem Height="30" Header="Income">
+                        <Button></Button>
+                    </TabItem>
+                    <TabItem Height="30" Header="Expenses">
+                        <Button></Button>
+                    </TabItem>
+                    <TabItem Height="30" Header="CreateNewAccount">
+                        <Button></Button>
+                    </TabItem>
+                    <TabItem Height="30" Header="Expenses">
+                        <Button></Button>
+                    </TabItem>
+                    <TabItem Height="30" Header="Deals in general"></TabItem>
+                </TabControl>
+
+            </TabItem>
+
+
+
+        </TabControl>
+
+
+
+
+    </DockPanel>
 
 </Window>

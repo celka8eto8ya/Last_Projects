@@ -18,13 +18,13 @@ namespace KAM_19_08_2020_E2Book
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Tb3.Text == ".db" || Tb3.Text == ".txt")
+            if (Tb3.Text == ".db" || Tb3.Text == ".txt" && Tb1.Text.Length > 4)
             {
-                UserController.SaveInfoUser(Tb3,Tb1, Tb4,Tb5,Tb6);
+                UserController.SaveInfo(Tb3, Tb1, Tb4, Tb5, Tb6);
             }
             else
             {
-                MessageBox.Show("Not correct data entered (1st field).", "Warning!", MessageBoxButton.OK,MessageBoxImage.Warning);
+                MessageBox.Show("Not correct data entered (1st or/and 2nd field)!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         

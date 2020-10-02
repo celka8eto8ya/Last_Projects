@@ -84,7 +84,7 @@
 
             <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
                 <Button  Background="Transparent">
-                    <TextBox x:Name="Tb1" Style="{StaticResource TextBoxInButton}" ToolTip="Придумайте пароль вашему будущему аккаунту." GotFocus="Tb1_GotFocus" MaxLength="30">Password</TextBox>
+                    <TextBox x:Name="Tb1" Style="{StaticResource TextBoxInButton}" ToolTip="Придумайте пароль вашему будущему аккаунту (пароль должен содержать более 4 символов)." GotFocus="Tb1_GotFocus" MaxLength="30">Password</TextBox>
                 </Button>
             </DockPanel>
 

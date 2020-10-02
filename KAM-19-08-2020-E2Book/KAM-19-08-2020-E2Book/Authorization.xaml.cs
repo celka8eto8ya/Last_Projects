@@ -1,4 +1,6 @@
-﻿using System;
+﻿using E2Book.BL.A_Model;
+using E2Book.BL.C_Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +34,41 @@ namespace KAM_19_08_2020_E2Book
                 Tb1.Text = "";
                 b = false;
             }
+        }
+
+        private void BtnGoToAuthorization_Click(object sender, RoutedEventArgs e)
+        {
+            Registration regWindow = new Registration();
+            regWindow.Show();
+            this.Close();
+        }
+
+        private void BtnEnter_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tb1.Text.Length > 4)
+            {
+                bool bb = false;
+                User user1 = new User("");
+                UserController.Enter(Tb1.Text, ref user1, ref bb);
+
+                if (!bb)
+                {
+                    MessageBox.Show("Not exist password !", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MainWindow window1 = new MainWindow();
+                    window1.Show();
+
+                    this.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Not correct length of password !", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
+
         }
     }
 }

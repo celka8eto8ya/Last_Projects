@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Windows;
 
 namespace E2Book.BL.A_Model
 {
@@ -27,7 +27,7 @@ namespace E2Book.BL.A_Model
             }
             set
             {
-                if (value.Length > 0)
+                if (value.Length > 4)
                 {
                     password = value;
                 }
@@ -110,7 +110,6 @@ namespace E2Book.BL.A_Model
             Password = password1;
             TotalSum = 0;
             AmountOfAccount = 0;
-
         }
 
         public User(string password1, string nameOfServer1, string nameOfUser1, string passwordOfServer1)
