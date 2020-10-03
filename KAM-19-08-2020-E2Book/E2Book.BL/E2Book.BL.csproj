@@ -42,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="A_Model\Day.cs" />
+    <Compile Include="A_Model\Note.cs" />
     <Compile Include="A_Model\User.cs" />
+    <Compile Include="C_Controller\DayController.cs" />
     <Compile Include="C_Controller\UserController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -27,29 +27,29 @@
 
                     <TabItem Height="30" Header="Deals by days">
                         <DockPanel>
-                            
-                        <DockPanel DockPanel.Dock="Left">
-                                <DockPanel DockPanel.Dock="Top">
-                                <Grid Width="490" Height="350" DockPanel.Dock="Top">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
 
-                                    <Button Grid.Row="0" Grid.Column="0" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">MON</Button>
+                            <DockPanel DockPanel.Dock="Left">
+                                <DockPanel DockPanel.Dock="Top">
+                                    <Grid Width="490" Height="350" DockPanel.Dock="Top">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Grid.Row="0" Grid.Column="0" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">MON</Button>
                                         <Button Grid.Row="0" Grid.Column="1" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">TUE</Button>
                                         <Button Grid.Row="0" Grid.Column="2" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">WEN</Button>
                                         <Button Grid.Row="0" Grid.Column="3" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">THU</Button>
@@ -57,57 +57,131 @@
                                         <Button Grid.Row="0" Grid.Column="5" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">SAT</Button>
                                         <Button Grid.Row="0" Grid.Column="6" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">SUN</Button>
 
-                                    <Button Grid.Row="1" Grid.Column="0" >1</Button>
-                                    <Button Grid.Row="1" Grid.Column="1" >2</Button>
-                                    <Button Grid.Row="1" Grid.Column="2" >3</Button>
-                                    <Button Grid.Row="1" Grid.Column="3" >4</Button>
-                                    <Button Grid.Row="1" Grid.Column="4" >5</Button>
-                                    <Button Grid.Row="1" Grid.Column="5" >6</Button>
-                                    <Button Grid.Row="1" Grid.Column="6" >7</Button>
+                                        <Button x:Name="btnDay1" Grid.Row="1" Grid.Column="0" >1</Button>
+                                        <Button x:Name="btnDay2" Grid.Row="1" Grid.Column="1" >2</Button>
+                                        <Button x:Name="btnDay3" Grid.Row="1" Grid.Column="2" >3</Button>
+                                        <Button x:Name="btnDay4" Grid.Row="1" Grid.Column="3" >4</Button>
+                                        <Button x:Name="btnDay5" Grid.Row="1" Grid.Column="4" >5</Button>
+                                        <Button x:Name="btnDay6" Grid.Row="1" Grid.Column="5" >6</Button>
+                                        <Button x:Name="btnDay7" Grid.Row="1" Grid.Column="6" >7</Button>
 
-                                    <Button Grid.Row="2" Grid.Column="0" >1</Button>
-                                    <Button Grid.Row="2" Grid.Column="1" >2</Button>
-                                    <Button Grid.Row="2" Grid.Column="2" >3</Button>
-                                    <Button Grid.Row="2" Grid.Column="3" >4</Button>
-                                    <Button Grid.Row="2" Grid.Column="4" >5</Button>
-                                    <Button Grid.Row="2" Grid.Column="5" >6</Button>
-                                    <Button Grid.Row="2" Grid.Column="6" >7</Button>
+                                        <Button x:Name="btnDay8" Grid.Row="2" Grid.Column="0" >1</Button>
+                                        <Button x:Name="btnDay9" Grid.Row="2" Grid.Column="1" >2</Button>
+                                        <Button x:Name="btnDay10" Grid.Row="2" Grid.Column="2" >3</Button>
+                                        <Button x:Name="btnDay11" Grid.Row="2" Grid.Column="3" >4</Button>
+                                        <Button x:Name="btnDay12" Grid.Row="2" Grid.Column="4" >5</Button>
+                                        <Button x:Name="btnDay13" Grid.Row="2" Grid.Column="5" >6</Button>
+                                        <Button x:Name="btnDay14" Grid.Row="2" Grid.Column="6" >7</Button>
 
-                                    <Button Grid.Row="3" Grid.Column="0" >1</Button>
-                                    <Button Grid.Row="3" Grid.Column="1" >2</Button>
-                                    <Button Grid.Row="3" Grid.Column="2" >3</Button>
-                                    <Button Grid.Row="3" Grid.Column="3" >4</Button>
-                                    <Button Grid.Row="3" Grid.Column="4" >5</Button>
-                                    <Button Grid.Row="3" Grid.Column="5" >6</Button>
-                                    <Button Grid.Row="3" Grid.Column="6" >7</Button>
-                            
-                                    <Button Grid.Row="4" Grid.Column="0" >1</Button>
-                                    <Button Grid.Row="4" Grid.Column="1" >2</Button>
-                                    <Button Grid.Row="4" Grid.Column="2" >3</Button>
-                                    <Button Grid.Row="4" Grid.Column="3" >4</Button>
-                                    <Button Grid.Row="4" Grid.Column="4" >5</Button>
-                                    <Button Grid.Row="4" Grid.Column="5" >6</Button>
-                                    <Button Grid.Row="4" Grid.Column="6" >7</Button>
-                            
-                                    <Button Grid.Row="5" Grid.Column="0" >1</Button>
-                                    <Button Grid.Row="5" Grid.Column="1" >2</Button>
-                                    <Button Grid.Row="5" Grid.Column="2" >3</Button>
-                                    <Button Grid.Row="5" Grid.Column="3" >4</Button>
-                                    <Button Grid.Row="5" Grid.Column="4" >5</Button>
-                                    <Button Grid.Row="5" Grid.Column="5" >6</Button>
-                                    <Button Grid.Row="5" Grid.Column="6" >7</Button>
+                                        <Button x:Name="btnDay15" Grid.Row="3" Grid.Column="0" >1</Button>
+                                        <Button x:Name="btnDay16" Grid.Row="3" Grid.Column="1" >2</Button>
+                                        <Button x:Name="btnDay17" Grid.Row="3" Grid.Column="2" >3</Button>
+                                        <Button x:Name="btnDay18" Grid.Row="3" Grid.Column="3" >4</Button>
+                                        <Button x:Name="btnDay19" Grid.Row="3" Grid.Column="4" >5</Button>
+                                        <Button x:Name="btnDay20" Grid.Row="3" Grid.Column="5" >6</Button>
+                                        <Button x:Name="btnDay21" Grid.Row="3" Grid.Column="6" >7</Button>
 
-                                </Grid>
-                                    <Button DockPanel.Dock="Top" ></Button>
-                                    <Button  DockPanel.Dock="Bottom"></Button>
+                                        <Button x:Name="btnDay22" Grid.Row="4" Grid.Column="0" >1</Button>
+                                        <Button x:Name="btnDay23" Grid.Row="4" Grid.Column="1" >2</Button>
+                                        <Button x:Name="btnDay24" Grid.Row="4" Grid.Column="2" >3</Button>
+                                        <Button x:Name="btnDay25" Grid.Row="4" Grid.Column="3" >4</Button>
+                                        <Button x:Name="btnDay26" Grid.Row="4" Grid.Column="4" >5</Button>
+                                        <Button x:Name="btnDay27" Grid.Row="4" Grid.Column="5" >6</Button>
+                                        <Button x:Name="btnDay28" Grid.Row="4" Grid.Column="6" >7</Button>
+
+                                        <Button x:Name="btnDay29" Grid.Row="5" Grid.Column="0" >1</Button>
+                                        <Button x:Name="btnDay30" Grid.Row="5" Grid.Column="1" >2</Button>
+                                        <Button x:Name="btnDay31" Grid.Row="5" Grid.Column="2" >3</Button>
+                                        <Button x:Name="btnDay32" Grid.Row="5" Grid.Column="3" >4</Button>
+                                        <Button x:Name="btnDay33" Grid.Row="5" Grid.Column="4" >5</Button>
+                                        <Button x:Name="btnDay34" Grid.Row="5" Grid.Column="5" >6</Button>
+                                        <Button x:Name="btnDay35" Grid.Row="5" Grid.Column="6" >7</Button>
+
+                                    </Grid>
+                                    <Separator DockPanel.Dock="Top" ></Separator>
+                                    
+                                    <DockPanel DockPanel.Dock="Top" Height="40" Width="490">
+
+                                        <Button Background="Transparent" Width="120" Height="32" DockPanel.Dock="Left" HorizontalAlignment="Left">Previous</Button>
+                                        <Label Width="66"></Label>
+                                        <Button Background="Transparent" HorizontalAlignment="Center"  Width="120" Height="32" DockPanel.Dock="Left" VerticalAlignment="Center">Current Month</Button>
+                                        <Button  Background="Transparent" Width="120" Height="32" DockPanel.Dock="Right" HorizontalAlignment="Right">Next</Button>
+
+                                    </DockPanel>
+                                    
+                                    <Separator DockPanel.Dock="Top" ></Separator>
+
+                                    <Button  Background="Transparent" DockPanel.Dock="Bottom"></Button>
                                 </DockPanel>
 
 
                             </DockPanel>
 
                             <DockPanel>
-                                <Button DockPanel.Dock="Top" Height="58" FontSize="26" >12 Sep 2020</Button>
-                                <Button DockPanel.Dock="Top" Background="Transparent">1231231</Button>
+                                <Button DockPanel.Dock="Top" Height="58" FontSize="26" >12 Sep 2020 - Tasks:</Button>
+
+                                <ScrollViewer>
+                                   
+                                    <DockPanel DockPanel.Dock="Top" Background="Transparent" >
+
+
+
+
+                                       
+                                        <DockPanel DockPanel.Dock="Top" Height="40">
+                                       
+                                            <Button Background="Transparent">
+                                    
+                                            
+                                                <DockPanel  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50">
+                                       
+                                                <TextBlock Width="20" Height="20" FontSize="16" >11.</TextBlock>
+                                        
+                                                <Label Width="3" ></Label>
+                                        
+                                                <Button Background="White" Width="20" Height="20" ></Button>
+                                    
+                                            
+                                                </DockPanel>
+                                                
+                                        
+                                            </Button>
+                                       
+                                            <Button Background="Transparent" DockPanel.Dock="Right"></Button>
+                                    
+                                        </DockPanel>
+
+                                        <DockPanel DockPanel.Dock="Top" Height="40">
+                                        <Button Background="Transparent">
+                                            <DockPanel  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50">
+                                                <TextBlock Width="20" Height="20" FontSize="16" >11.</TextBlock>
+                                                <Label Width="3" ></Label>
+                                                <Button Background="White" Width="20" Height="20" ></Button>
+                                            </DockPanel>
+                                        </Button>
+                                        <Button Background="Transparent" DockPanel.Dock="Right"></Button>
+                                    </DockPanel>
+
+                                        <DockPanel DockPanel.Dock="Top" Height="40">
+                                        <Button Background="Transparent">
+                                            <DockPanel  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50">
+                                                <TextBlock Width="20" Height="20" FontSize="16" >11.</TextBlock>
+                                                <Label Width="3" ></Label>
+                                                <Button Background="White" Width="20" Height="20" ></Button>
+                                            </DockPanel>
+                                        </Button>
+                                        <Button Background="Transparent" DockPanel.Dock="Right"></Button>
+                                    </DockPanel>
+
+                                       
+                                            <Button DockPanel.Dock="Top" Height="40">ewfwfwef</Button>
+
+
+
+
+
+                                        </DockPanel>
+                                </ScrollViewer>
                             </DockPanel>
 
 
@@ -122,7 +196,7 @@
                     </TabItem>
 
 
-                    <TabItem Height="30" Header="CreateNewNote">
+                    <TabItem Height="30" Header="Other TabItem">
                         <Button></Button>
 
                     </TabItem>
