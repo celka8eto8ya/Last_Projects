@@ -63,23 +63,30 @@ namespace KAM___Kursovaya___IVsem
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // сверяем введенные данные с даннами текстбоксов и в случае совпадения присваиваем имя хранилища из текстбокса 
-            // статической переменной "Bank.StorageOfName"
-            if (Database.AccessInStorage(textBox2.Text, textBox5.Text, textBox12.Text))
+            try
             {
-                //
-                // по указанному имени хранилища записываю в переменную данные для последующего доступа к БД
-                //
-                Database.ReadDataFromFile(textBox12.Text);
+                // сверяем введенные данные с даннами текстбоксов и в случае совпадения присваиваем имя хранилища из текстбокса 
+                // статической переменной "Bank.StorageOfName"
+                if (Database.AccessInStorage(textBox2.Text, textBox5.Text, textBox12.Text))
+                {
+                    //
+                    // по указанному имени хранилища записываю в переменную данные для последующего доступа к БД
+                    //
+                    Database.ReadDataFromFile(textBox12.Text);
 
-                Database.CheckIdOfStorage();
+                    Database.CheckIdOfStorage();
 
-                //
-                // Внесение события в таблицу
-                Event ev1 = new Event(button2.Text, "Не финансовое", $"Вход в хранилище: \"{textBox12.Text}\"");
-                ev1.AddEventInDB();
+                    //
+                    // Внесение события в таблицу
+                    Event ev1 = new Event(button2.Text, "Не финансовое", $"Вход в хранилище: \"{textBox12.Text}\"");
+                    ev1.AddEventInDB();
 
-                this.Close();
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

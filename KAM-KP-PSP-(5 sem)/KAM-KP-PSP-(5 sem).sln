@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.960
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KAM-KP-PSP-Client", "KAM-KP-PSP-(5 sem)\KAM-KP-PSP-Client.csproj", "{49E25851-D71A-4E8B-B9A8-FD0764DB6CF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KAM-KP-PSP-(ClassLibrary)", "KAM-KP-PSP-(ClassLibrary)\KAM-KP-PSP-(ClassLibrary).csproj", "{D67E8E0F-2D25-4BC4-B956-4E6EC484F0BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KAM-KP-PSP-Server", "KAM-KP-PSP-Server\KAM-KP-PSP-Server.csproj", "{B52F0DDA-2FA5-47AC-9679-C14733DD0C05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49E25851-D71A-4E8B-B9A8-FD0764DB6CF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E25851-D71A-4E8B-B9A8-FD0764DB6CF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E25851-D71A-4E8B-B9A8-FD0764DB6CF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49E25851-D71A-4E8B-B9A8-FD0764DB6CF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D67E8E0F-2D25-4BC4-B956-4E6EC484F0BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D67E8E0F-2D25-4BC4-B956-4E6EC484F0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D67E8E0F-2D25-4BC4-B956-4E6EC484F0BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D67E8E0F-2D25-4BC4-B956-4E6EC484F0BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B52F0DDA-2FA5-47AC-9679-C14733DD0C05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B52F0DDA-2FA5-47AC-9679-C14733DD0C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B52F0DDA-2FA5-47AC-9679-C14733DD0C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B52F0DDA-2FA5-47AC-9679-C14733DD0C05}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02283FB8-273D-4114-B153-9AD3EDB2EAAC}
+	EndGlobalSection
+EndGlobal

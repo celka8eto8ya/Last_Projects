@@ -30,8 +30,9 @@
 
                             <DockPanel DockPanel.Dock="Left">
                                 <DockPanel DockPanel.Dock="Top">
-                                    <Grid Width="490" Height="350" DockPanel.Dock="Top">
+                                    <Grid x:Name="gridCalender" Width="490" Height="420" DockPanel.Dock="Top">
                                         <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
                                             <RowDefinition></RowDefinition>
                                             <RowDefinition></RowDefinition>
                                             <RowDefinition></RowDefinition>
@@ -57,8 +58,23 @@
                                         <Button Grid.Row="0" Grid.Column="5" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">SAT</Button>
                                         <Button Grid.Row="0" Grid.Column="6" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">SUN</Button>
 
-                                        <Button x:Name="btnDay1" Grid.Row="1" Grid.Column="0" >1</Button>
-                                        <Button x:Name="btnDay2" Grid.Row="1" Grid.Column="1" >2</Button>
+                                        <Button  Grid.Row="1" Grid.Column="0" >
+                                            <DockPanel Width="60">
+                                                <Label FontFamily="Segoe UI Black"  DockPanel.Dock="Top" HorizontalAlignment="Right">0/0</Label>
+                                                <Label   FontFamily="Segoe UI Black" FontSize="16">07.10</Label>
+
+                                            </DockPanel>
+                                            
+                                        </Button>
+
+                                        <Button x:Name="btnDay2" Grid.Row="1" Grid.Column="1" >
+                                            <DockPanel Width="60">
+                                                <Label FontFamily="Segoe UI Black"  DockPanel.Dock="Top" HorizontalAlignment="Right" >m/n</Label>
+                                                <Label   FontFamily="Segoe UI Black" FontSize="16">08.10</Label>
+                                            </DockPanel>
+
+                                        </Button>
+                                        <!--<Button x:Name="btnDay2" Grid.Row="1" Grid.Column="1" >2</Button>-->
                                         <Button x:Name="btnDay3" Grid.Row="1" Grid.Column="2" >3</Button>
                                         <Button x:Name="btnDay4" Grid.Row="1" Grid.Column="3" >4</Button>
                                         <Button x:Name="btnDay5" Grid.Row="1" Grid.Column="4" >5</Button>
@@ -104,14 +120,14 @@
 
                                         <Button Background="Transparent" Width="120" Height="32" DockPanel.Dock="Left" HorizontalAlignment="Left">Previous</Button>
                                         <Label Width="66"></Label>
-                                        <Button Background="Transparent" HorizontalAlignment="Center"  Width="120" Height="32" DockPanel.Dock="Left" VerticalAlignment="Center">Current Month</Button>
-                                        <Button  Background="Transparent" Width="120" Height="32" DockPanel.Dock="Right" HorizontalAlignment="Right">Next</Button>
+                                        <Button Background="Transparent" HorizontalAlignment="Center"  Width="120" Height="32" DockPanel.Dock="Left" VerticalAlignment="Center" Click="Button_Click">Current Month</Button>
+                                        <Button x:Name="btnNext" Background="Transparent" Width="120" Height="32" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="BtnNext_Click">Next</Button>
 
                                     </DockPanel>
                                     
                                     <Separator DockPanel.Dock="Top" ></Separator>
 
-                                    <Button  Background="Transparent" DockPanel.Dock="Bottom"></Button>
+                                    <Button  Background="Transparent" ></Button>
                                 </DockPanel>
 
 

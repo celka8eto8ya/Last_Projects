@@ -1,9 +1,13 @@
-﻿namespace E2Book.BL.A_Model
+﻿using System;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+
+namespace E2Book.BL.A_Model
 {
-    public class Day
+    public class Day : Button
     {
         // Date of the day
-        private string date;
+        private DateTime date;
         // Amount Completed Tasks in definite day
         private byte amountCompletedTasks;
         // Amount All Tasks in definite day
@@ -11,7 +15,7 @@
         // Color of the day
         private string colorName;
 
-        public string Date
+        public DateTime Date
         {
             get
             {
@@ -19,7 +23,7 @@
             }
             set
             {
-                if (value.Length > 0)
+                if (value.ToString().Length > 0)
                 {
                     date = value;
                 }
@@ -69,7 +73,7 @@
             }
         }
 
-        public Day(string date1)
+        public Day(DateTime date1)
         {
             Date = date1;
             AmountCompletedTasks = 0;
