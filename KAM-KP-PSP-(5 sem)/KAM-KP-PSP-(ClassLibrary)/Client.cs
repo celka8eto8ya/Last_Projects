@@ -11,7 +11,7 @@ namespace KAM_KP_PSP__ClassLibrary_
 {
     public class Client
     {
-        public static void SendMessage(string command, List<string> list)
+        public static void SendMessage(string command, List<string> list, ref bool b0, ref string ANSWER)
         {
             // адрес и порт сервера, к которому будем подключаться
             string address = Bank.ServerAdress;
@@ -46,11 +46,22 @@ namespace KAM_KP_PSP__ClassLibrary_
                 }
                 while (socket.Available > 0);
 
-                MessageBox.Show(builder.ToString());
+                if (builder.ToString().IndexOf("failed") > 0)
+                {
+                    b0 = false;
+                }
+                else
+                {
+                    b0 = true;
+                }
+
+                
 
                 // закрываем сокет
                 socket.Shutdown(SocketShutdown.Both);
                 socket.Close();
+
+                ANSWER = builder.ToString();
             }
             catch (Exception ex)
             {

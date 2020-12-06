@@ -48,7 +48,12 @@ namespace KAM_KP_PSP__ClassLibrary_
                     while (handler.Available > 0);
 
                     string [] getMessage = builder.ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    MessageBox.Show($"{getMessage[0]} {getMessage[1]} {getMessage[2]} {getMessage[3]}");
+                    //MessageBox.Show($"{getMessage[0]} {getMessage[1]} {getMessage[2]} {getMessage[3]}");
+
+
+
+
+
 
 
                     if (getMessage[0]== "EnterStorage")
@@ -57,12 +62,14 @@ namespace KAM_KP_PSP__ClassLibrary_
                         {
                             // сверяем введенные данные с даннами текстбоксов и в случае neсовпадения присваиваем имя хранилища из текстбокса 
                             // статической переменной "Bank.StorageOfName"
+                            string StringAccess = "";
                             if (Database.AccessInStorage(getMessage[1], getMessage[2], getMessage[3]))
                             {
                                 //
                                 // по указанному имени хранилища записываю в переменную данные для последующего доступа к БД
                                 //
-                                Database.ReadDataFromFile(getMessage[1]);
+                               
+                                Database.ReadDataFromFile(getMessage[1], ref StringAccess);
 
                                 Database.CheckIdOfStorage();
 
@@ -72,77 +79,138 @@ namespace KAM_KP_PSP__ClassLibrary_
                                 ev1.AddEventInDB();
                                 b1 = true;
                             }
+
+                            // Send Answer
+                            if (b1)
+                            {
+                                string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{StringAccess}";
+                                handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                               
+                            }
+                            else
+                            {
+                                handler.Send(Encoding.Unicode.GetBytes($"Operation \"{getMessage[0]}\" failed !"));
+                            }
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message);
                         }
-
-                       
                     }
-
-
 
                     if (getMessage[0] == "CreateStorage")
                     {
-                        //// 
-                        //// запись шапки таблицы "InfoAboutDBes"
-                        ////
-                        //Database.WriteShapkaInFile();
+                        // 
+                        // запись шапки таблицы "InfoAboutDBes"
+                        //
+                        Database.WriteShapkaInFile();
 
-                        //// 
-                        //// создание объекта "db1" для возможности подключения к БД
-                        ////
-                        //Database db1 = new Database(textBox11.Text, textBox10.Text, textBox9.Text, textBox8.Text);
+                        // 
+                        // создание объекта "db1" для возможности подключения к БД
+                        //
+                        Database db1 = new Database(getMessage[1], getMessage[2], getMessage[3], getMessage[4]);
 
-                        //// строка доступа к БД
-                        //Bank.AccessInDB = db1.StringOfAccess;
+                        // строка доступа к БД
+                        Bank.AccessInDB = db1.StringOfAccess;
 
-                        //// 
-                        //// проверка с помощью метода на уникальность введенных данных (о хранилище)
-                        ////
-                        //if (Database.CheckOnExclusive(textBox7.Text, textBox6.Text, textBox4.Text))
-                        //{
-                        //    // 
-                        //    // создание объекта "хранилище1" 
-                        //    //
-                        //    Storage storage1 = new Storage(textBox4.Text, textBox7.Text, textBox6.Text);
+                        // 
+                        // проверка с помощью метода на уникальность введенных данных (о хранилище)
+                        //
+                        if (Database.CheckOnExclusive(getMessage[5], getMessage[6], getMessage[7])) // textBox7.Text, textBox6.Text, textBox4.Text
+                        {
+                            // 
+                            // создание объекта "хранилище1" 
+                            //
+                            Storage storage1 = new Storage(getMessage[7], getMessage[5], getMessage[6]);
 
-                        //    // 
-                        //    // запись в файл данных для возможности подклчения к БД
-                        //    //
-                        //    db1.WriteDataInFile(storage1);
+                            // 
+                            // запись в файл данных для возможности подклчения к БД
+                            //
+                            db1.WriteDataInFile(storage1);
 
-                        //    // 
-                        //    // создание всех необходимых таблиц в указанной БД
-                        //    //
-                        //    db1.CreateDBSetOfTables();
+                            // 
+                            // создание всех необходимых таблиц в указанной БД
+                            //
+                            db1.CreateDBSetOfTables();
 
-                        //    // 
-                        //    // запись в созданные таблицы (БД) информации о хранилище
-                        //    //
-                        //    db1.AddStorageInDB(storage1);
+                            // 
+                            // запись в созданные таблицы (БД) информации о хранилище
+                            //
+                            db1.AddStorageInDB(storage1);
 
-                        //    //
-                        //    // Внесение события в таблицу
-                        //    Event ev1 = new Event(button1.Text, "Не финансовое", $"Создание хранилища: \"{textBox4.Text}\"");
-                        //    ev1.AddEventInDB();
-                        //}
-                        //else
-                        //{
-                        //    MessageBox.Show("Логин, пароль или имя харнилища уже успользуются!", "Ошибка!");
-                        //} 
+                            //
+                            // Внесение события в таблицу
+                            Event ev1 = new Event("CreateStorage", "Не финансовое", $"Создание хранилища: \"{getMessage[7]}\"");
+                            ev1.AddEventInDB();
+                            b1 = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Логин, пароль или имя харнилища уже успользуются!", "Ошибка!");
+                        }
+
+
+                        // Send Answer
+                        if (b1)
+                        {
+                            string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{Bank.AccessInDB}";
+                            handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                           
+                        }
+                        else
+                        {
+                            handler.Send(Encoding.Unicode.GetBytes($"Operation \"{getMessage[0]}\" failed !"));
+                        }
                     }
 
-                    // Send Answer
-                    if (b1)
+                    if (getMessage[0] == "DeleteStorage")
                     {
-                        handler.Send(Encoding.Unicode.GetBytes($"Operation \"{getMessage[0]}\" completed successfully !"));
+                        // удалить строку о хранилище из файла и БД, если данные текстбоксов совпадут
+                        Database.DeleteStorage(getMessage[1], getMessage[2], getMessage[3], ""/* getMessage[4]*/);
+
+                        //
+                        // Внесение события в таблицу
+                        Event ev1 = new Event("DeleteStorage", "Не финансовое", $"Удаление хранилища: \"{getMessage[3]}\"");
+                        ev1.AddEventInDB();
+                        b1 = true;
+
+                        // Send Answer
+                        if (b1)
+                        {
+                            handler.Send(Encoding.Unicode.GetBytes($"Operation \"{getMessage[0]}\" completed successfully !"));
+                        }
+                        else
+                        {
+                            handler.Send(Encoding.Unicode.GetBytes($"Operation \"{getMessage[0]}\" failed !"));
+                        }
                     }
-                    else
+
+                    if(getMessage[0] == "StorageInfo")
                     {
-                        handler.Send(Encoding.Unicode.GetBytes($"Operation \"{getMessage[0]}\" failed !"));
+                        // 
+                        // показать таблицу "Storage" БД
+                        //
+                        string PartOfAnser = "";
+                       
+                        Storage.Info(getMessage[1], ref PartOfAnser);
+                     
+                       
+                            string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{PartOfAnser}";
+                            handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                       
+
                     }
+
+
+                    //// Send Answer
+                    //if (b1)
+                    //{
+                    //    handler.Send(Encoding.Unicode.GetBytes($"Operation \"{getMessage[0]}\" completed successfully !"));
+                    //}
+                    //else
+                    //{
+                    //    handler.Send(Encoding.Unicode.GetBytes($"Operation \"{getMessage[0]}\" failed !"));
+                    //}
 
                     // закрываем сокет
                     handler.Shutdown(SocketShutdown.Both);

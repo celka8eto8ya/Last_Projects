@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KAM_KP_PSP__ClassLibrary_;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -38,10 +39,41 @@ namespace KAM_KP_PSP__5_sem_
 
         private void button6_Click(object sender, EventArgs e)
         {
-            //// 
-            //// показать таблицу "Storage" БД
-            ////
-            //Storage.Info(Bank.AccessInDB, dataGridView1);
+            try
+            {
+                bool success = false;
+               
+                List<string> list = new List<string>() { Bank.AccessInDB };
+                string ANSWER = "";
+                Client.SendMessage("StorageInfo", list, ref success, ref ANSWER);
+
+                string[] Mass0 = ANSWER.Split(new char[] { '#' });
+                MessageBox.Show(Mass0[0]);
+
+                string S = Mass0[1];
+
+                string[] Mass = S.Split(new char[] { '%' });
+
+
+                string[][] MASS = new string[Mass.Length][];
+
+                for (int i = 0; i < Mass.Length; i++)
+                {
+                    MASS[i] = Mass[i].Split(new char[] { '|' });
+                }
+
+                foreach (string[] s in MASS)
+                {
+                    dataGridView1.Rows.Add(s);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            
         }
 
         private void button7_Click(object sender, EventArgs e)

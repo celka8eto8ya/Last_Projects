@@ -13,17 +13,28 @@ namespace KAM_KP_PSP__5_sem_
 
         }
 
+        // CreateStorage
         private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
         {
             try
             {
-                List<string> list = new List<string>() { textBox12.Text, textBox2.Text, textBox5.Text };
-                Client.SendMessage("EnterStorage", list);
+                // 
+                // создание объекта "db1" для возможности подключения к БД
+                //
+                Database db1 = new Database(textBox11.Text, textBox10.Text, textBox9.Text, textBox8.Text);
+
+                // строка доступа к БД
+                Bank.AccessInDB = db1.StringOfAccess;
+
+                bool success = false;
+
+                List<string> list = new List<string>() { textBox11.Text, textBox10.Text, textBox9.Text, textBox8.Text, textBox7.Text, textBox6.Text, textBox4.Text };
+                string ANSWER = "";
+                Client.SendMessage("CreateStorage", list, ref success, ref ANSWER);
+
+
+                string[] Mass0 = ANSWER.Split(new char[] { '#' });
+                MessageBox.Show(Mass0[0]);
             }
             catch (Exception ex)
             {
@@ -31,16 +42,52 @@ namespace KAM_KP_PSP__5_sem_
             }
         }
 
+        // EnterStorage
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bool success = false;
+                List<string> list = new List<string>() { textBox12.Text, textBox2.Text, textBox5.Text };
+                string ANSWER = "";
+                Client.SendMessage("EnterStorage", list, ref success, ref ANSWER);
+                if (success)
+                {
+                    string[] Mass0 = ANSWER.Split(new char[] { '#' });
+                    MessageBox.Show(Mass0[0]);
 
+                    string[] Mass00 = Mass0[1].Split(new char[] { ' ' });
+
+                    Bank.NameOfStorage = Mass00[0];
+                    Bank.AccessInDB = Mass00[1];
+
+                    Bank.NameOfStorage = textBox12.Text;
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        // DeleteStorage
         private void button4_Click(object sender, EventArgs e)
         {
-            //// удалить строку о хранилище из файла и БД, если данные текстбоксов совпадут
-            //Database.DeleteStorage(textBox3.Text, textBox1.Text, textBox13.Text, Bank.AccessInDB);
+            try
+            {
+                bool success = false;
+                List<string> list = new List<string>() { textBox3.Text, textBox1.Text, textBox13.Text, Bank.AccessInDB };
+                string ANSWER = "";
+                Client.SendMessage("DeleteStorage", list, ref success, ref ANSWER);
 
-            ////
-            //// Внесение события в таблицу
-            //Event ev1 = new Event(button4.Text, "Не финансовое", $"Удаление хранилища: \"{textBox13.Text}\"");
-            //ev1.AddEventInDB();
+                string[] Mass0 = ANSWER.Split(new char[] { '#' });
+                MessageBox.Show(Mass0[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void tabPage1_Click(object sender, EventArgs e)

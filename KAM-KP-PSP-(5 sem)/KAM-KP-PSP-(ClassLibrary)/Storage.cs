@@ -115,11 +115,11 @@ namespace KAM_KP_PSP__ClassLibrary_
 
 
         // вывод информации о хранилищах
-        public static void Info(string AccessInDB, DataGridView dgv1)
+        public static void Info(string AccessInDB, ref string AnswerString)
         {
             try
             {
-                dgv1.Rows.Clear();
+               
                 MySqlConnection conn = new MySqlConnection(AccessInDB); // создается объект подключения (типо поток файловый)
                 conn.Open(); // открываем поток
 
@@ -129,23 +129,27 @@ namespace KAM_KP_PSP__ClassLibrary_
 
                 List<string[]> data = new List<string[]>();
 
+               string MESSAGE = "";
                 while (r1.Read())
                 {
                     data.Add(new string[5]);
-
+                    MESSAGE += $"{r1[0].ToString()}|" +
+                        $"{r1[1].ToString()}|" +
+                        $"{r1[2].ToString()}|" +
+                        $"{r1[3].ToString()}|" +
+                        $"{r1[4].ToString()}%";
                     data[data.Count - 1][0] = r1[0].ToString();
                     data[data.Count - 1][1] = r1[1].ToString();
                     data[data.Count - 1][2] = r1[2].ToString();
                     data[data.Count - 1][3] = r1[3].ToString();
                     data[data.Count - 1][4] = r1[4].ToString();
+
                 }
+                AnswerString = MESSAGE;
 
                 r1.Close();
 
-                foreach (string[] s in data)
-                {
-                    dgv1.Rows.Add(s);
-                }
+              
             }
             catch
             {

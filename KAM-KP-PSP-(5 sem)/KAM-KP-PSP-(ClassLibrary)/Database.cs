@@ -607,7 +607,7 @@ namespace KAM_KP_PSP__ClassLibrary_
         // "вытягивание данных для доступа к БД из файла и присвоение в случае совпадения
         // статической переменной для использования в любом месте программы
         //
-        public static void ReadDataFromFile(string name1)
+        public static void ReadDataFromFile(string name1, ref string StringAccess)
         {
             // чтение данных о учетн записях из файла
             int count = System.IO.File.ReadAllLines("InfoAboutDBes.txt").Length;
@@ -698,6 +698,7 @@ namespace KAM_KP_PSP__ClassLibrary_
 
                         Bank.NameOfStorage = name1;
                         Bank.AccessInDB = "server=" + serverName + ";user=" + userName + ";database=" + databaseName + ";password=" + passwordDatabase + ";";
+                        StringAccess= $"{Bank.NameOfStorage} {Bank.AccessInDB}";
                         break;
                     }
                 }
