@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KAM_KP_PSP__ClassLibrary_
 {
     public class Server
     {
+        /// <summary>
+        /// Method for sending messages from Client to Server
+        /// </summary>
         public static void GetMessage()
         {
             // порт для приема входящих запросов
@@ -47,7 +47,7 @@ namespace KAM_KP_PSP__ClassLibrary_
                     }
                     while (handler.Available > 0);
 
-                    string [] getMessage = builder.ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] getMessage = builder.ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     //MessageBox.Show($"{getMessage[0]} {getMessage[1]} {getMessage[2]} {getMessage[3]}");
 
 
@@ -56,7 +56,7 @@ namespace KAM_KP_PSP__ClassLibrary_
 
 
 
-                    if(getMessage[0]== "EnterStorage")
+                    if (getMessage[0] == "EnterStorage")
                     {
                         try
                         {
@@ -77,7 +77,7 @@ namespace KAM_KP_PSP__ClassLibrary_
                                 //
                                 // Внесение события в таблицу
                                 Event ev1 = new Event(getMessage[0], "Не финансовое", $"Вход в хранилище: \"{getMessage[1]}\"");
-                                ev1.AddEventInDB(Mass00[1]);
+                                ev1.AddEventInDB(Mass00[1], IdOfCurrentStorage);
                                 b1 = true;
                             }
 
@@ -87,7 +87,7 @@ namespace KAM_KP_PSP__ClassLibrary_
                                 string StringAccessAndIdStorage = $"{StringAccess} {IdOfCurrentStorage}";
                                 string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{StringAccessAndIdStorage}";
                                 handler.Send(Encoding.Unicode.GetBytes(ANSWER));
-                               
+
                             }
                             else
                             {
@@ -100,7 +100,7 @@ namespace KAM_KP_PSP__ClassLibrary_
                         }
                     }
 
-                    if(getMessage[0] == "CreateStorage")
+                    if (getMessage[0] == "CreateStorage")
                     {
                         // 
                         // запись шапки таблицы "InfoAboutDBes"
@@ -140,10 +140,6 @@ namespace KAM_KP_PSP__ClassLibrary_
                             //
                             db1.AddStorageInDB(storage1);
 
-                            //
-                            // Внесение события в таблицу
-                            Event ev1 = new Event("CreateStorage", "Не финансовое", $"Создание хранилища: \"{getMessage[7]}\"");
-                            ev1.AddEventInDB(db1.StringOfAccess);
                             b1 = true;
                         }
                         else
@@ -157,7 +153,7 @@ namespace KAM_KP_PSP__ClassLibrary_
                         {
                             string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{Bank.AccessInDB}";
                             handler.Send(Encoding.Unicode.GetBytes(ANSWER));
-                           
+
                         }
                         else
                         {
@@ -165,7 +161,7 @@ namespace KAM_KP_PSP__ClassLibrary_
                         }
                     }
 
-                    if(getMessage[0] == "DeleteStorage")
+                    if (getMessage[0] == "DeleteStorage")
                     {
                         string StringAccess = "";
                         //
@@ -179,11 +175,6 @@ namespace KAM_KP_PSP__ClassLibrary_
                             // удалить строку о хранилище из файла и БД, если данные текстбоксов совпадут
                             Database.DeleteStorage(getMessage[1], getMessage[2], getMessage[3], Mass00[1]);
 
-
-                            //
-                            // Внесение события в таблицу
-                            Event ev1 = new Event("DeleteStorage", "Не финансовое", $"Удаление хранилища: \"{getMessage[3]}\"");
-                            ev1.AddEventInDB(Mass00[1]);
                             b1 = true;
                         }
 
@@ -198,33 +189,34 @@ namespace KAM_KP_PSP__ClassLibrary_
                         }
                     }
 
-                    if(getMessage[0] == "StorageInfo")
+                    if (getMessage[0] == "StorageInfo")
                     {
                         // 
                         // показать таблицу "Storage" БД
                         //
                         string PartOfAnser = "";
-                       
                         Storage.Info(getMessage[1], ref PartOfAnser);
-                     
-                       
-                            string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{PartOfAnser}";
-                            handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+
+                        Storage.CalculateAmountOfAccount(getMessage[1], int.Parse(getMessage[2]));
+                        Storage.CalculateTotalSumAndAmount(getMessage[1], int.Parse(getMessage[2]));
+
+
+                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{PartOfAnser}";
+                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
                     }
 
-                    if(getMessage[0]== "AccountInfo")
+                    if (getMessage[0] == "AccountInfo")
                     {
                         string PartOfAnser = "";
                         // обновление данных таблиц
                         Account.Info(getMessage[1], int.Parse(getMessage[2]), ref PartOfAnser);
 
-                      
+
                         string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{PartOfAnser}";
                         handler.Send(Encoding.Unicode.GetBytes(ANSWER));
-                        
                     }
 
-                    if(getMessage[0] == "CreateAccount")
+                    if (getMessage[0] == "CreateAccount")
                     {
                         string s = "";
                         foreach (string ii in getMessage)
@@ -285,29 +277,128 @@ namespace KAM_KP_PSP__ClassLibrary_
                             //
                             // Внесение события в таблицу
                             Event ev1 = new Event(getMessage[0], "Не финансовое", $"Создание счёта: \"{getMessage[3]}\"");
-                            ev1.AddEventInDB(getMessage[1]);
+                            ev1.AddEventInDB(getMessage[1], int.Parse(getMessage[2]));
 
                             string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{""}";
                             handler.Send(Encoding.Unicode.GetBytes(ANSWER));
                         }
                     }
 
+                    if (getMessage[0] == "DeleteAccount")
+                    {
+                        // удаление строки о счёте и типе счёта из соответсвующих таблиц БД
+                        Account.DeleteAccountInDB(getMessage[3], int.Parse(getMessage[2]), getMessage[1]);
+
+                        //
+                        // Внесение события в таблицу
+                        Event ev1 = new Event("DeleteAccount", "Не финансовое", $"Удаление хранилища: \"{getMessage[3]}\"");
+                        ev1.AddEventInDB(getMessage[1], int.Parse(getMessage[2]));
+
+                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{""}";
+                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                    }
+
+                    if (getMessage[0] == "AddMoney")
+                    {
+                        // добавление суммы на счёт
+                        Account.AddGetMoney(getMessage[3], getMessage[4], "+", int.Parse(getMessage[2]), getMessage[1]);
+
+                        //
+                        // Внесение события в таблицу
+                        Event ev1 = new Event("AddMoney", "Финансовое", $"Пополнение счёта \"{getMessage[3]}\" на {getMessage[4]} единиц");
+                        ev1.AddEventInDB(getMessage[1], int.Parse(getMessage[2]));
+
+                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{""}";
+                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                    }
+
+                    if (getMessage[0] == "GetMoney")
+                    {
+                        // изъятие суммы со счёта
+                        Account.AddGetMoney(getMessage[3], getMessage[4], "-", int.Parse(getMessage[2]), getMessage[1]);
+
+                        //
+                        // Внесение события в таблицу
+                        Event ev1 = new Event("GetMoney", "Финансовое", $"Изъятие со счёта \"{getMessage[3]}\" на {getMessage[4]} единиц");
+                        ev1.AddEventInDB(getMessage[1], int.Parse(getMessage[2]));
+
+                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{""}";
+                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                    }
+
+                    if (getMessage[0] == "ConvertMoney")
+                    {
+                        // конвертирование денег счёта, если счет валютный
+                        Account.ChangeCurrency(getMessage[3], getMessage[4], getMessage[1], int.Parse(getMessage[2]));
+
+                        //
+                        // Внесение события в таблицу
+                        Event ev1 = new Event("ConvertMoney", "Не финансовое", $"Конвертация счёта \"{getMessage[3]}\" в валюту {getMessage[4]}");
+                        ev1.AddEventInDB(getMessage[1], int.Parse(getMessage[2]));
+
+                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{""}";
+                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                    }
+
+                    if (getMessage[0] == "ReplaceMoney")
+                    {
+                        string SS = "";
+                        foreach (string s in getMessage)
+                        {
+                            SS += s;
+                        }
+                        MessageBox.Show(SS);
+                        // Переместить сумму1 со счёта1 на счёт2
+                        Account.ReplaceMoney(getMessage[3], getMessage[4], getMessage[5], getMessage[1], int.Parse(getMessage[2]));
+
+                        //
+                        // Внесение события в таблицу
+                        Event ev1 = new Event("ReplaceMoney", "Финансовое", $"Перемещение со счёта \"{getMessage[3]}\" на счёт \"{getMessage[4]}\" {getMessage[5]} единиц");
+                        ev1.AddEventInDB(getMessage[1], int.Parse(getMessage[2]));
+
+                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{""}";
+                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                    }
+
+                    if (getMessage[0] == "ShowNotFinancialEvents")
+                    {
+                        string PartOfAnser = "";
+                        // Показываются события, которые не являются финансовыми
+                        Event.FinancialInfo("!=", "Финансовое", getMessage[1], int.Parse(getMessage[2]), ref PartOfAnser);
 
 
-                        //// Send Answer
-                        //if (b1)
-                        //{
-                        //    handler.Send(Encoding.Unicode.GetBytes($"Operation \"{getMessage[0]}\" completed successfully !"));
-                        //}
-                        //else
-                        //{
-                        //    handler.Send(Encoding.Unicode.GetBytes($"Operation \"{getMessage[0]}\" failed !"));
-                        //}
+                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{PartOfAnser}";
+                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                    }
 
-                        // закрываем сокет
-                        handler.Shutdown(SocketShutdown.Both);
+                    if (getMessage[0] == "ShowFinancialEvents")
+                    {
+                        string PartOfAnser = "";
+                        // Показываются события, которые не являются финансовыми
+                        Event.FinancialInfo("=", "Финансовое", getMessage[1], int.Parse(getMessage[2]), ref PartOfAnser);
+
+
+                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{PartOfAnser}";
+                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                    }
+
+                    if (getMessage[0] == "ShowAllEvents")
+                    {
+                        string PartOfAnser = "";
+                        // Показываются события всех типов 
+                        Event.Info(getMessage[1], int.Parse(getMessage[2]), ref PartOfAnser);
+
+                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{PartOfAnser}";
+                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                    }
+
+                   
+
+
+                    // закрываем сокет
+                    handler.Shutdown(SocketShutdown.Both);
                     handler.Close();
-         
+
                 }
             }
             catch (Exception ex)

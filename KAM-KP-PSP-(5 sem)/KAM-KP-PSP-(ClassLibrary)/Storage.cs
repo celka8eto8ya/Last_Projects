@@ -1,10 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KAM_KP_PSP__ClassLibrary_
@@ -16,6 +12,7 @@ namespace KAM_KP_PSP__ClassLibrary_
 
         // (логин и пароль хранилища)
         Security security;
+
 
 
         // количество счетов на хранилище
@@ -76,36 +73,44 @@ namespace KAM_KP_PSP__ClassLibrary_
 
 
 
-        // общая сумма денег текущего хранилища
-        public static void CalculateTotalSumAndAmount()
+
+        /// <summary>
+        /// Calculate total sum of Storage
+        /// </summary>
+        /// <param name="AccessString"></param>
+        /// <param name="IdOfCurrentStorage"></param>
+        public static void CalculateTotalSumAndAmount(string AccessString, int IdOfCurrentStorage)
         {
-            MySqlConnection conn = new MySqlConnection(Bank.AccessInDB); // создается объект подключения (типо поток файловый)
+            MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
             conn.Open(); // открываем поток
 
-            string query0 = $"select SUM(Sum) from AccountsOfStorage where (IdOfStorage={Bank.IdOfCurrentStorage}) ;";
+            string query0 = $"select SUM(Sum) from AccountsOfStorage where (IdOfStorage={IdOfCurrentStorage}) ;";
             MySqlCommand com0 = new MySqlCommand(query0, conn); // создаем объект, который выполняет наш запрос
             double TotalSum = Convert.ToInt32(com0.ExecuteScalar());
 
-            string query1 = $"UPDATE Storage SET TotalSumOfStorage='{TotalSum}'  where ( Id= '{Bank.IdOfCurrentStorage}');";
+            string query1 = $"UPDATE Storage SET TotalSumOfStorage='{TotalSum}'  where ( Id= '{IdOfCurrentStorage}');";
             MySqlCommand com1 = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
             com1.ExecuteScalar();
         }
 
 
-
-        // Количество счетов на текущем хранилище   
-        public static void CalculateAmountOfAccount()
+        /// <summary>
+        /// Amount of Account on this Storage
+        /// </summary>
+        /// <param name="AccessString"></param>
+        /// <param name="IdOfCurrentStorage"></param>
+        public static void CalculateAmountOfAccount(string AccessString, int IdOfCurrentStorage)
         {
-            MySqlConnection conn = new MySqlConnection(Bank.AccessInDB); // создается объект подключения (типо поток файловый)
+            MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
             conn.Open(); // открываем поток
 
-            string query = $"select Name from AccountsOfStorage  where ( Name!='' and  IdOfStorage= '{Bank.IdOfCurrentStorage}');";
+            string query = $"select Name from AccountsOfStorage  where ( Name!='' and  IdOfStorage= '{IdOfCurrentStorage}');";
             MySqlCommand com = new MySqlCommand(query, conn); // создаем объект, который выполняет наш запрос
             MySqlDataReader r1 = com.ExecuteReader(); // хранит все данные запроса (поток чтения)
             DataTable table1 = new DataTable();
             table1.Load(r1);
 
-            query = $"UPDATE Storage SET AmountOfAccount='{table1.Rows.Count}'  where ( Id= '{Bank.IdOfCurrentStorage}');";
+            query = $"UPDATE Storage SET AmountOfAccount='{table1.Rows.Count}'  where ( Id= '{IdOfCurrentStorage}');";
             com = new MySqlCommand(query, conn); // создаем объект, который выполняет наш запрос
             com.ExecuteScalar();
             r1.Close();
@@ -113,13 +118,15 @@ namespace KAM_KP_PSP__ClassLibrary_
         }
 
 
-
-        // вывод информации о хранилищах
+        /// <summary>
+        /// Output info about Storage
+        /// </summary>
+        /// <param name="AccessInDB"></param>
+        /// <param name="AnswerString"></param>
         public static void Info(string AccessInDB, ref string AnswerString)
         {
             try
             {
-               
                 MySqlConnection conn = new MySqlConnection(AccessInDB); // создается объект подключения (типо поток файловый)
                 conn.Open(); // открываем поток
 
@@ -127,29 +134,18 @@ namespace KAM_KP_PSP__ClassLibrary_
                 MySqlCommand com = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                 MySqlDataReader r1 = com.ExecuteReader(); // хранит все данные запроса (поток чтения)
 
-                List<string[]> data = new List<string[]>();
-
-               string MESSAGE = "";
+                string MESSAGE = "";
                 while (r1.Read())
                 {
-                    data.Add(new string[5]);
                     MESSAGE += $"{r1[0].ToString()}|" +
                         $"{r1[1].ToString()}|" +
                         $"{r1[2].ToString()}|" +
                         $"{r1[3].ToString()}|" +
                         $"{r1[4].ToString()}%";
-                    data[data.Count - 1][0] = r1[0].ToString();
-                    data[data.Count - 1][1] = r1[1].ToString();
-                    data[data.Count - 1][2] = r1[2].ToString();
-                    data[data.Count - 1][3] = r1[3].ToString();
-                    data[data.Count - 1][4] = r1[4].ToString();
-
                 }
                 AnswerString = MESSAGE;
 
                 r1.Close();
-
-              
             }
             catch
             {

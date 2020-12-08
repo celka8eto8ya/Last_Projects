@@ -124,38 +124,33 @@ namespace KAM_KP_PSP__ClassLibrary_
         /// Информация о всех событиях
         /// </summary>
         /// <param name="dgv1"></param>
-        public static void Info(DataGridView dgv1)
+        public static void Info(string AccessString, int IdOfCurrentStorage, ref string AnswerString)
         {
             try
             {
-                dgv1.Rows.Clear();
-                MySqlConnection conn = new MySqlConnection(Bank.AccessInDB); // создается объект подключения (типо поток файловый)
+              
+                MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
                 conn.Open(); // открываем поток
 
-                string query1 = $"select * from Events where (IdOfStorage='{Bank.IdOfCurrentStorage}');";
+                string query1 = $"select * from Events where (IdOfStorage='{IdOfCurrentStorage}');";
 
                 MySqlCommand com = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                 MySqlDataReader r1 = com.ExecuteReader(); // хранит все данные запроса (поток чтения)
 
                 List<string[]> data = new List<string[]>();
 
+                string MESSAGE = "";
                 while (r1.Read())
                 {
-                    data.Add(new string[5]);
-
-                    data[data.Count - 1][0] = r1[0].ToString();
-                    data[data.Count - 1][1] = r1[2].ToString();
-                    data[data.Count - 1][2] = r1[3].ToString();
-                    data[data.Count - 1][3] = r1[4].ToString();
-                    data[data.Count - 1][4] = r1[5].ToString();
+                    MESSAGE += $"{r1[0].ToString()}|" +
+                       $"{r1[2].ToString()}|" +
+                       $"{r1[3].ToString()}|" +
+                       $"{r1[4].ToString()}|" +
+                       $"{r1[5].ToString()}%";
                 }
+                AnswerString = MESSAGE;
 
                 r1.Close();
-
-                foreach (string[] s in data)
-                {
-                    dgv1.Rows.Add(s);
-                }
             }
             catch
             {
@@ -169,38 +164,30 @@ namespace KAM_KP_PSP__ClassLibrary_
         /// Информация о событиях "==" или "!=" финансовым
         /// </summary>
         /// <param name="dgv1"></param>
-        public static void FinancialInfo(DataGridView dgv1, string znak, string typeOfEvent1)
+        public static void FinancialInfo(string znak, string typeOfEvent1, string AccessString, int IdOfCurrentStorage, ref string AnswerString)
         {
             try
             {
-                dgv1.Rows.Clear();
-                MySqlConnection conn = new MySqlConnection(Bank.AccessInDB); // создается объект подключения (типо поток файловый)
+                MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
                 conn.Open(); // открываем поток
 
-                string query1 = $"select * from Events where (TypeOfEvent{znak}'{typeOfEvent1}' and IdOfStorage='{Bank.IdOfCurrentStorage}');";
+                string query1 = $"select * from Events where (TypeOfEvent{znak}'{typeOfEvent1}' and IdOfStorage='{IdOfCurrentStorage}');";
 
                 MySqlCommand com = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                 MySqlDataReader r1 = com.ExecuteReader(); // хранит все данные запроса (поток чтения)
 
-                List<string[]> data = new List<string[]>();
-
+                string MESSAGE = "";
                 while (r1.Read())
                 {
-                    data.Add(new string[5]);
-
-                    data[data.Count - 1][0] = r1[0].ToString();
-                    data[data.Count - 1][1] = r1[2].ToString();
-                    data[data.Count - 1][2] = r1[3].ToString();
-                    data[data.Count - 1][3] = r1[4].ToString();
-                    data[data.Count - 1][4] = r1[5].ToString();
+                    MESSAGE += $"{r1[0].ToString()}|" +
+                       $"{r1[2].ToString()}|" +
+                       $"{r1[3].ToString()}|" +
+                       $"{r1[4].ToString()}|" +
+                       $"{r1[5].ToString()}%";
                 }
+                AnswerString = MESSAGE;
 
                 r1.Close();
-
-                foreach (string[] s in data)
-                {
-                    dgv1.Rows.Add(s);
-                }
             }
             catch
             {
@@ -212,7 +199,7 @@ namespace KAM_KP_PSP__ClassLibrary_
         /// <summary>
         /// Добавление в базу данных события
         /// </summary>
-        public void AddEventInDB(string AccessString)
+        public void AddEventInDB(string AccessString, int IdOfCurrentStorage)
         {
             try
             {
@@ -221,7 +208,7 @@ namespace KAM_KP_PSP__ClassLibrary_
                 conn.Open(); // открываем поток
 
                 string query1 = $"INSERT Events (Name,IdOfStorage,TypeOfEvent, DateOfOperation, DescriptionOfEvent)" +
-                $"VALUES('{Name}','{Bank.IdOfCurrentStorage}','{TypeOfEvent}','{DateOfOperation.ToString($"yyyy-MM-dd HH:mm:ss")}','{DescriptionOfEvent}')";
+                $"VALUES('{Name}','{IdOfCurrentStorage}','{TypeOfEvent}','{DateOfOperation.ToString($"yyyy-MM-dd HH:mm:ss")}','{DescriptionOfEvent}')";
 
                 MySqlCommand com1 = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                 com1.ExecuteScalar();
