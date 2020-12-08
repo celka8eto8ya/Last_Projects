@@ -138,8 +138,7 @@ namespace KAM_KP_PSP__ClassLibrary_
 
             StringOfAccess = "server=" + ServerName + ";user=" + UserName + ";database=" + DatabaseName + ";password=" + PasswordDatabase + ";";
         }
-
-
+        
 
         // Form3 - btn("Создать") - 1
         // провекра "на уникальность" создаваемых данных (логина, пароля, имени хранилища)
@@ -224,8 +223,7 @@ namespace KAM_KP_PSP__ClassLibrary_
                 return true;
             }
         }
-
-
+        
 
         // Form3 - btn("Создать") - 3
         // создание в БД набора необходимых таблиц
@@ -297,6 +295,7 @@ namespace KAM_KP_PSP__ClassLibrary_
             }
         }
 
+
         // Form3 - btn("Создать") - 0
         // запись шапки таблицы в файл "InfoAboutDBes"
         //
@@ -359,7 +358,6 @@ namespace KAM_KP_PSP__ClassLibrary_
         }
 
 
-
         //  Form3 - btn("Создать") - 4
         // запись данных о хранилище в БД
         //
@@ -392,7 +390,6 @@ namespace KAM_KP_PSP__ClassLibrary_
 
             }
         }
-
 
 
         // Form3 - btn("Войти") - 0
@@ -471,7 +468,6 @@ namespace KAM_KP_PSP__ClassLibrary_
 
             if (k > 0)
             {
-                Bank.NameOfStorage = name1;
                 MessageBox.Show($"Вы успешно выполнили вход в хранилище \"{name1}\" !", "Успех!");
                 return true;
             }
@@ -481,7 +477,6 @@ namespace KAM_KP_PSP__ClassLibrary_
                 return false;
             }
         }
-
 
 
         // Form3 - btn("Удалить") - 0
@@ -602,7 +597,6 @@ namespace KAM_KP_PSP__ClassLibrary_
         }
 
 
-
         // Form3 - btn("Войти") - 
         // "вытягивание данных для доступа к БД из файла и присвоение в случае совпадения
         // статической переменной для использования в любом месте программы
@@ -696,9 +690,9 @@ namespace KAM_KP_PSP__ClassLibrary_
                             }
                         }
 
-                        Bank.NameOfStorage = name1;
-                        Bank.AccessInDB = "server=" + serverName + ";user=" + userName + ";database=" + databaseName + ";password=" + passwordDatabase + ";";
-                        StringAccess= $"{Bank.NameOfStorage} {Bank.AccessInDB}";
+                        string NameOfStorage = name1;
+                        string AccessInDB = "server=" + serverName + ";user=" + userName + ";database=" + databaseName + ";password=" + passwordDatabase + ";";
+                        StringAccess= $"{NameOfStorage} {AccessInDB}";
                         break;
                     }
                 }
@@ -708,23 +702,22 @@ namespace KAM_KP_PSP__ClassLibrary_
         }
 
 
-
         // Form3 - ("Войти")
         // индекс необходим для того чтоб знать к какому хранилищу счёт отноится 
         //
-        public static void CheckIdOfStorage()
+        public static void CheckIdOfStorage(string AccessString, string NameOfStorage, ref int IdOfCurrentStorage)
         {
             try
             {
-                MySqlConnection conn = new MySqlConnection(Bank.AccessInDB); // создается объект подключения (типо поток файловый)
+                MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
                 conn.Open(); // открываем поток
 
-                string query1 = $"Select Id FROM Storage where (Name='{Bank.NameOfStorage}');";
+                string query1 = $"Select Id FROM Storage where (Name='{NameOfStorage}');";
 
 
                 MySqlCommand com = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
 
-                Bank.IdOfCurrentStorage = Convert.ToInt32(com.ExecuteScalar());
+                IdOfCurrentStorage = Convert.ToInt32(com.ExecuteScalar());
 
                 conn.Close(); // закрываем поток 
             }

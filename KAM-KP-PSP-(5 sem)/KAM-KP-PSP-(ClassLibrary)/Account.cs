@@ -208,15 +208,17 @@ namespace KAM_KP_PSP__ClassLibrary_
 
 
 
-        //
-        // Выводит информацию о счетах
-        //
-        public static void Info(DataGridView dgv1)
+        /// <summary>
+        /// Output info about Accounts
+        /// </summary>
+        /// <param name="AccessString"></param>
+        /// <param name="IdOfCurrentStorage"></param>
+        /// <param name="AnswerString"></param>
+        public static void Info(string AccessString, int IdOfCurrentStorage, ref string AnswerString)
         {
             try
             {
-                dgv1.Rows.Clear();
-                MySqlConnection conn = new MySqlConnection(Bank.AccessInDB); // создается объект подключения (типо поток файловый)
+                MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
                 conn.Open(); // открываем поток
 
                 string query1 =
@@ -238,38 +240,29 @@ namespace KAM_KP_PSP__ClassLibrary_
 
                 "FROM AccountsOfStorage " +
                 "JOIN TypeOfAccount " +
-                $"ON AccountsOfStorage.Id = TypeOfAccount.IdOfAccount and AccountsOfStorage.IdOfStorage='{Bank.IdOfCurrentStorage}';";
+                $"ON AccountsOfStorage.Id = TypeOfAccount.IdOfAccount and AccountsOfStorage.IdOfStorage='{IdOfCurrentStorage}';";
 
                 MySqlCommand com = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                 MySqlDataReader r1 = com.ExecuteReader(); // хранит все данные запроса (поток чтения)
 
-                List<string[]> data = new List<string[]>();
-
+                string MESSAGE = "";
                 while (r1.Read())
                 {
-                    data.Add(new string[12]);
-
-                    data[data.Count - 1][0] = r1[0].ToString();
-                    data[data.Count - 1][1] = r1[1].ToString();
-                    data[data.Count - 1][2] = r1[2].ToString();
-                    data[data.Count - 1][3] = r1[3].ToString();
-                    data[data.Count - 1][4] = r1[4].ToString();
-                    data[data.Count - 1][5] = r1[5].ToString();
-                    data[data.Count - 1][6] = r1[6].ToString();
-                    data[data.Count - 1][7] = r1[7].ToString();
-                    data[data.Count - 1][8] = r1[8].ToString();
-                    data[data.Count - 1][9] = r1[9].ToString();
-                    data[data.Count - 1][10] = r1[10].ToString();
-                    data[data.Count - 1][11] = r1[11].ToString();
-
+                    MESSAGE += $"{r1[0].ToString()}|" +
+                       $"{r1[1].ToString()}|" +
+                       $"{r1[2].ToString()}|" +
+                       $"{r1[3].ToString()}|" +
+                       $"{r1[4].ToString()}|" +
+                       $"{r1[5].ToString()}|" +
+                       $"{r1[6].ToString()}|" +
+                       $"{r1[7].ToString()}|" +
+                       $"{r1[8].ToString()}|" +
+                       $"{r1[9].ToString()}|" +
+                       $"{r1[10].ToString()}|" +
+                       $"{r1[11].ToString()}%";
                 }
-
-                r1.Close();
-
-                foreach (string[] s in data)
-                {
-                    dgv1.Rows.Add(s);
-                }
+                AnswerString = MESSAGE;
+                r1.Close();       
             }
             catch (Exception ex)
             {
@@ -282,7 +275,7 @@ namespace KAM_KP_PSP__ClassLibrary_
         // Form2 - btn ("Создать счёт")
         // внесение данных о счёте в БД
         //
-        public void AddAccountInDB(string StringOfAccess)
+        public void AddAccountInDB(string StringOfAccess, int IdOfCurrentStorage)
         {
             try
             {
@@ -296,12 +289,12 @@ namespace KAM_KP_PSP__ClassLibrary_
                     if (Name.Length > 0 && Currency.Length > 0 && typeOfAcc.Percent.ToString().Length > 0 && typeOfAcc.FeedBack.Length > 0 && typeOfAcc.Duration.ToString().Length > 0)
                     {
                         query1 = $"INSERT AccountsOfStorage (IdOfStorage,Name, Sum, Currency, DateOfCreate,DateOfRefresh,Notation)" +
-                        $"VALUES('{Bank.IdOfCurrentStorage}','{Name}','{Sum}','{Currency}'," +
+                        $"VALUES('{IdOfCurrentStorage}','{Name}','{Sum}','{Currency}'," +
                         $"'{DateCreate.ToString($"yyyy-MM-dd HH:mm:ss")}','{DateOfRefresh.ToString("yyyy-MM-dd HH:mm:ss")}', '{Notation}' );";
                         MySqlCommand com1 = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                         com1.ExecuteScalar();
 
-                        query1 = $"SELECT Id from AccountsOfStorage where (Name='{Name}' and IdOfStorage='{Bank.IdOfCurrentStorage}') ";
+                        query1 = $"SELECT Id from AccountsOfStorage where (Name='{Name}' and IdOfStorage='{IdOfCurrentStorage}') ";
                         com1 = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                         int IdOfAccount = Convert.ToInt32(com1.ExecuteScalar());
 
@@ -320,17 +313,17 @@ namespace KAM_KP_PSP__ClassLibrary_
                     }
 
                 }
-                else if (typeOfAcc.Name == "Текущий(только в BYN)")
+                else if (typeOfAcc.Name == "Текущий(только_в_BYN)")
                 {
                     if (Name.Length > 0)
                     {
                         query1 = $"INSERT AccountsOfStorage (IdOfStorage,Name, Sum, Currency, DateOfCreate,DateOfRefresh,Notation)" +
-                        $"VALUES('{Bank.IdOfCurrentStorage}','{Name}','{Sum}','BYN'," +
+                        $"VALUES('{IdOfCurrentStorage}','{Name}','{Sum}','BYN'," +
                         $"'{DateCreate.ToString("yyyy-MM-dd  HH:mm:ss")}','{DateOfRefresh.ToString("yyyy-MM-dd HH:mm:ss")}', '{Notation}' );";
                         MySqlCommand com1 = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                         com1.ExecuteScalar();
 
-                        query1 = $"SELECT Id from AccountsOfStorage where (Name='{Name}' and IdOfStorage='{Bank.IdOfCurrentStorage}') ";
+                        query1 = $"SELECT Id from AccountsOfStorage where (Name='{Name}' and IdOfStorage='{IdOfCurrentStorage}') ";
                         com1 = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                         int IdOfAccount = Convert.ToInt32(com1.ExecuteScalar());
 
@@ -354,12 +347,12 @@ namespace KAM_KP_PSP__ClassLibrary_
                     if (Name.Length > 0 && Currency.Length > 0)
                     {
                         query1 = $"INSERT AccountsOfStorage (IdOfStorage,Name, Sum, Currency, DateOfCreate,DateOfRefresh,Notation)" +
-                        $"VALUES( '{Bank.IdOfCurrentStorage}','{Name}','{Sum}','{Currency}'," +
+                        $"VALUES( '{IdOfCurrentStorage}','{Name}','{Sum}','{Currency}'," +
                         $"'{DateCreate.ToString("yyyy-MM-dd HH:mm:ss")}','{DateOfRefresh.ToString("yyyy-MM-dd HH:mm:ss")}', '{Notation}' );";
                         MySqlCommand com1 = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                         com1.ExecuteScalar();
 
-                        query1 = $"SELECT Id from AccountsOfStorage where (Name='{Name}' and IdOfStorage='{Bank.IdOfCurrentStorage}') ";
+                        query1 = $"SELECT Id from AccountsOfStorage where (Name='{Name}' and IdOfStorage='{IdOfCurrentStorage}') ";
                         com1 = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
                         int IdOfAccount = Convert.ToInt32(com1.ExecuteScalar());
 
@@ -391,13 +384,13 @@ namespace KAM_KP_PSP__ClassLibrary_
         // Form2 - "Создать счёт"
         // проверка на уникальность имени аккаунта
         //
-        public bool CheckOnExclusiveAccountName(int storeId)
+        public bool CheckOnExclusiveAccountName(int storeId, string AccessString)
         {
             try
             {
                 if (Name != null)
                 {
-                    MySqlConnection conn = new MySqlConnection(Bank.AccessInDB); // создается объект подключения (типо поток файловый)
+                    MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
                     conn.Open(); // открываем поток
 
                     string query1 = $"Select Name FROM AccountsOfStorage where (Name='{Name}' and IdOfStorage='{ storeId}');";
@@ -659,11 +652,11 @@ namespace KAM_KP_PSP__ClassLibrary_
 
                         Account acc1 = new Account(DepName + i + "Money", "Валютный", new CurrencyOfAccount(CurrAcc), "");
 
-                        if (acc1.CheckOnExclusiveAccountName(IdStor))
+                        if (acc1.CheckOnExclusiveAccountName(IdStor, Bank.AccessInDB))
                         {
-                            acc1.AddAccountInDB(Bank.AccessInDB);
+                            acc1.AddAccountInDB(Bank.AccessInDB, Bank.IdOfCurrentStorage);
                         }
-
+                         
                         // добавление суммы на счёт
                         AddGetMoney(DepName + i + "Money", EndSum.ToString(), "+", IdStor);
 

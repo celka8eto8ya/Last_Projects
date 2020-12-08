@@ -212,12 +212,12 @@ namespace KAM_KP_PSP__ClassLibrary_
         /// <summary>
         /// Добавление в базу данных события
         /// </summary>
-        public void AddEventInDB()
+        public void AddEventInDB(string AccessString)
         {
             try
             {
                 // создается объект подключения (типо поток файловый)
-                MySqlConnection conn = new MySqlConnection(Bank.AccessInDB);
+                MySqlConnection conn = new MySqlConnection(AccessString);
                 conn.Open(); // открываем поток
 
                 string query1 = $"INSERT Events (Name,IdOfStorage,TypeOfEvent, DateOfOperation, DescriptionOfEvent)" +

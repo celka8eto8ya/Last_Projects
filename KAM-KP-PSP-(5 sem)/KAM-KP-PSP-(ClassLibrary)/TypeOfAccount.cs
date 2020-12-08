@@ -31,7 +31,7 @@ namespace KAM_KP_PSP__ClassLibrary_
         {
             set
             {
-                if (value == "Текущий(только в BYN)" || value == "Валютный" || value == "Депозит")
+                if (value == "Текущий(только_в_BYN)" || value == "Валютный" || value == "Депозит")
                 {
                     name = value;
                 }

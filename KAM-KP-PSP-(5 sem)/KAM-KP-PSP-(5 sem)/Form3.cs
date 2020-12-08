@@ -58,10 +58,17 @@ namespace KAM_KP_PSP__5_sem_
 
                     string[] Mass00 = Mass0[1].Split(new char[] { ' ' });
 
-                    Bank.NameOfStorage = Mass00[0];
+                   
                     Bank.AccessInDB = Mass00[1];
+                    Bank.IdOfCurrentStorage = int.Parse(Mass00[2]);
 
                     Bank.NameOfStorage = textBox12.Text;
+
+                    MessageBox.Show($"Bank.NameOfStorage={Bank.NameOfStorage}\r\n" +
+                        $"Bank.AccessInDB ={Bank.AccessInDB}\r\n"+
+                        $"Bank.IdOfCurrentStorage ={Bank.IdOfCurrentStorage}\r\n" +
+                        $" Bank.NameOfStorage ={Bank.NameOfStorage}\r\n");
+
                     this.Close();
                 }
             }
@@ -77,7 +84,7 @@ namespace KAM_KP_PSP__5_sem_
             try
             {
                 bool success = false;
-                List<string> list = new List<string>() { textBox3.Text, textBox1.Text, textBox13.Text, Bank.AccessInDB };
+                List<string> list = new List<string>() { textBox3.Text, textBox1.Text, textBox13.Text};
                 string ANSWER = "";
                 Client.SendMessage("DeleteStorage", list, ref success, ref ANSWER);
 

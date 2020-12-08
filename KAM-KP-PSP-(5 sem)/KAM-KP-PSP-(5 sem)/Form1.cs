@@ -37,10 +37,16 @@ namespace KAM_KP_PSP__5_sem_
             form2.Show();
         }
 
+        /// <summary>
+        /// Info about Storages
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button6_Click(object sender, EventArgs e)
         {
             try
             {
+                dataGridView1.Rows.Clear();
                 bool success = false;
                
                 List<string> list = new List<string>() { Bank.AccessInDB };
@@ -76,8 +82,47 @@ namespace KAM_KP_PSP__5_sem_
             
         }
 
+        /// <summary>
+        /// Info About Accounts
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button7_Click(object sender, EventArgs e)
         {
+            try
+            {
+                dataGridView2.Rows.Clear();
+                bool success = false;
+
+                List<string> list = new List<string>() { Bank.AccessInDB, Bank.IdOfCurrentStorage.ToString() };
+                string ANSWER = "";
+                Client.SendMessage("AccountInfo", list, ref success, ref ANSWER);
+
+                string[] Mass0 = ANSWER.Split(new char[] { '#' });
+                MessageBox.Show(Mass0[0]);
+
+                string S = Mass0[1];
+
+                string[] Mass = S.Split(new char[] { '%' });
+
+
+                string[][] MASS = new string[Mass.Length][];
+
+                for (int i = 0; i < Mass.Length; i++)
+                {
+                    MASS[i] = Mass[i].Split(new char[] { '|' });
+                }
+
+                foreach (string[] s in MASS)
+                {
+                    dataGridView2.Rows.Add(s);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             //// обновление данных таблиц
             //Account.Info(dataGridView2);
         }
