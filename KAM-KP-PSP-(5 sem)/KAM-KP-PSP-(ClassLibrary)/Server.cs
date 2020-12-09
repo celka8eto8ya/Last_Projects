@@ -48,13 +48,8 @@ namespace KAM_KP_PSP__ClassLibrary_
                     while (handler.Available > 0);
 
                     string[] getMessage = builder.ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    //MessageBox.Show($"{getMessage[0]} {getMessage[1]} {getMessage[2]} {getMessage[3]}");
-
-
-
-
-
-
+                   
+                    
 
                     if (getMessage[0] == "EnterStorage")
                     {
@@ -169,7 +164,7 @@ namespace KAM_KP_PSP__ClassLibrary_
                         //
                         Database.ReadDataFromFile(getMessage[3], ref StringAccess);
                         string[] Mass00 = StringAccess.Split(new char[] { ' ' });
-                        MessageBox.Show($"{Mass00[0]} || {Mass00[1]}");
+
                         if (Mass00[0].Length > 0 && Mass00[1].Length > 0)
                         {
                             // удалить строку о хранилище из файла и БД, если данные текстбоксов совпадут
@@ -218,12 +213,6 @@ namespace KAM_KP_PSP__ClassLibrary_
 
                     if (getMessage[0] == "CreateAccount")
                     {
-                        string s = "";
-                        foreach (string ii in getMessage)
-                        {
-                            s += $"{ii}\r\n";
-                        }
-                        MessageBox.Show(s);
                         Account acc1 = new Account();
                         int i = 0;
 
@@ -265,7 +254,7 @@ namespace KAM_KP_PSP__ClassLibrary_
 
                             }
                         }
-                        MessageBox.Show($"acc1.Name={acc1.Name} i={i}");
+
 
                         if (acc1.CheckOnExclusiveAccountName(int.Parse(getMessage[2]), getMessage[1]))
                         {
@@ -340,26 +329,6 @@ namespace KAM_KP_PSP__ClassLibrary_
                         handler.Send(Encoding.Unicode.GetBytes(ANSWER));
                     }
 
-                    if (getMessage[0] == "ReplaceMoney")
-                    {
-                        string SS = "";
-                        foreach (string s in getMessage)
-                        {
-                            SS += s;
-                        }
-                        MessageBox.Show(SS);
-                        // Переместить сумму1 со счёта1 на счёт2
-                        Account.ReplaceMoney(getMessage[3], getMessage[4], getMessage[5], getMessage[1], int.Parse(getMessage[2]));
-
-                        //
-                        // Внесение события в таблицу
-                        Event ev1 = new Event("ReplaceMoney", "Финансовое", $"Перемещение со счёта \"{getMessage[3]}\" на счёт \"{getMessage[4]}\" {getMessage[5]} единиц");
-                        ev1.AddEventInDB(getMessage[1], int.Parse(getMessage[2]));
-
-                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{""}";
-                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
-                    }
-
                     if (getMessage[0] == "ShowNotFinancialEvents")
                     {
                         string PartOfAnser = "";
@@ -392,13 +361,22 @@ namespace KAM_KP_PSP__ClassLibrary_
                         handler.Send(Encoding.Unicode.GetBytes(ANSWER));
                     }
 
-                   
+                    if (getMessage[0] == "CheckDeposit")
+                    {
+                        // Update days what left about deposit
+                        Account.CalcDaysLeftDeposit(getMessage[1]);
+                        // update info about deposits
+                        Account.CheckDeposit(getMessage[1], int.Parse(getMessage[2]));
+
+                        string ANSWER = $"Operation \"{getMessage[0]}\" completed successfully !#{""}";
+                        handler.Send(Encoding.Unicode.GetBytes(ANSWER));
+                    }
+
 
 
                     // закрываем сокет
                     handler.Shutdown(SocketShutdown.Both);
                     handler.Close();
-
                 }
             }
             catch (Exception ex)

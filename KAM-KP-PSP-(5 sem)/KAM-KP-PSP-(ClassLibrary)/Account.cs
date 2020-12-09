@@ -1,10 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KAM_KP_PSP__ClassLibrary_
@@ -275,7 +271,7 @@ namespace KAM_KP_PSP__ClassLibrary_
                        $"{r1[11].ToString()}%";
                 }
                 AnswerString = MESSAGE;
-                r1.Close();       
+                r1.Close();
             }
             catch (Exception ex)
             {
@@ -598,11 +594,11 @@ namespace KAM_KP_PSP__ClassLibrary_
 
         // Form1 - timer3
         // проверяет не закончился ли срок депозита
-        public static void CheckDeposit()
+        public static void CheckDeposit(string AccessString, int IdOfCurrentStorage)
         {
             try
             {
-                MySqlConnection conn = new MySqlConnection(Bank.AccessInDB); // создается объект подключения (типо поток файловый)
+                MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
                 conn.Open(); // открываем поток
 
                 string query0 = $"select MAX(Id) from AccountsOfStorage ;";
@@ -658,16 +654,16 @@ namespace KAM_KP_PSP__ClassLibrary_
 
                         Account acc1 = new Account(DepName + i + "Money", "Валютный", new CurrencyOfAccount(CurrAcc), "");
 
-                        if (acc1.CheckOnExclusiveAccountName(IdStor, Bank.AccessInDB))
+                        if (acc1.CheckOnExclusiveAccountName(IdStor, AccessString))
                         {
-                            acc1.AddAccountInDB(Bank.AccessInDB, Bank.IdOfCurrentStorage);
+                            acc1.AddAccountInDB(AccessString, IdOfCurrentStorage);
                         }
-                         
+
                         // добавление суммы на счёт
-                        AddGetMoney(DepName + i + "Money", EndSum.ToString(), "+", IdStor, Bank.AccessInDB);
+                        AddGetMoney(DepName + i + "Money", EndSum.ToString(), "+", IdStor, AccessString);
 
                         // удаление строки о счёте и типе счёта из соответсвующих таблиц БД
-                        DeleteAccountInDB(DepName, IdStor, Bank.AccessInDB);
+                        DeleteAccountInDB(DepName, IdStor, AccessString);
                     }
                 }
                 conn.Close();
@@ -681,9 +677,9 @@ namespace KAM_KP_PSP__ClassLibrary_
 
         // Form1 - timer3
         // производит подсчёт количества дней до завершения депозита
-        public static void CalcDaysLeftDeposit()
+        public static void CalcDaysLeftDeposit(string AccessString)
         {
-            MySqlConnection conn = new MySqlConnection(Bank.AccessInDB); // создается объект подключения (типо поток файловый)
+            MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
             conn.Open(); // открываем поток
 
             string query0 = $"select MAX(Id) from AccountsOfStorage ;";

@@ -51,12 +51,13 @@
             // 
             // button3
             // 
+            this.button3.BackColor = System.Drawing.Color.CornflowerBlue;
             this.button3.Location = new System.Drawing.Point(218, 287);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(181, 44);
             this.button3.TabIndex = 61;
             this.button3.Text = "Удалить счёт";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label2
@@ -78,12 +79,13 @@
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.CornflowerBlue;
             this.button2.Location = new System.Drawing.Point(15, 287);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(181, 44);
             this.button2.TabIndex = 58;
             this.button2.Text = "Создать счёт";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // comboBox1
@@ -226,7 +228,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Pink;
+            this.BackColor = System.Drawing.Color.Plum;
             this.ClientSize = new System.Drawing.Size(416, 351);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button3);

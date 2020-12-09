@@ -83,7 +83,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.Pink;
+            this.tabPage1.BackColor = System.Drawing.Color.Plum;
             this.tabPage1.Controls.Add(this.textBox12);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.button2);
@@ -97,7 +97,7 @@
             this.tabPage1.Size = new System.Drawing.Size(428, 356);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Войти в хранилище";
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+  
             // 
             // textBox12
             // 
@@ -118,12 +118,13 @@
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.CornflowerBlue;
             this.button2.Location = new System.Drawing.Point(124, 248);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(179, 49);
             this.button2.TabIndex = 49;
             this.button2.Text = "Войти в хранилище";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label2
@@ -162,7 +163,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.Pink;
+            this.tabPage2.BackColor = System.Drawing.Color.Plum;
             this.tabPage2.Controls.Add(this.label15);
             this.tabPage2.Controls.Add(this.label14);
             this.tabPage2.Controls.Add(this.label11);
@@ -286,12 +287,13 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.button1.Location = new System.Drawing.Point(18, 260);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(382, 46);
             this.button1.TabIndex = 57;
             this.button1.Text = "Создать хранилище";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label7
@@ -338,7 +340,7 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.Pink;
+            this.tabPage3.BackColor = System.Drawing.Color.Plum;
             this.tabPage3.Controls.Add(this.textBox13);
             this.tabPage3.Controls.Add(this.label1);
             this.tabPage3.Controls.Add(this.button4);
@@ -372,12 +374,13 @@
             // 
             // button4
             // 
+            this.button4.BackColor = System.Drawing.Color.CornflowerBlue;
             this.button4.Location = new System.Drawing.Point(124, 248);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(179, 49);
             this.button4.TabIndex = 56;
             this.button4.Text = "Удалить хранилище";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label4

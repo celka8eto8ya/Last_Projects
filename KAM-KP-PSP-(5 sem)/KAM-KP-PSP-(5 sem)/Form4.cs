@@ -1,12 +1,5 @@
 ﻿using KAM_KP_PSP__ClassLibrary_;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KAM_KP_PSP__5_sem_

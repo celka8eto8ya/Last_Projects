@@ -64,7 +64,6 @@ namespace KAM_KP_PSP__5_sem_
             else if (comboBox4.Text == "Валютный")
             {
                 comboBox1.Enabled = true;
-
                 comboBox2.Enabled = false;
                 comboBox3.Enabled = false;
                 textBox5.Enabled = false;

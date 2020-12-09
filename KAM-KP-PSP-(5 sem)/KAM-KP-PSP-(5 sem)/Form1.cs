@@ -180,26 +180,6 @@ namespace KAM_KP_PSP__5_sem_
             MessageBox.Show(Mass0[0]);
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-           
-  
-            bool success = false;
-            List<string> list = new List<string>() { Bank.AccessInDB, Bank.IdOfCurrentStorage.ToString(), textBox2.Text, textBox3.Text, textBox4.Text };
-            string SS = "";
-            foreach (string s in list)
-            {
-                SS += s;
-            }
-            MessageBox.Show(SS);
-            string ANSWER = "";
-            Client.SendMessage("GetMoney", list, ref success, ref ANSWER);
-
-
-
-            //string[] Mass0 = ANSWER.Split(new char[] { '#' });
-            //MessageBox.Show(Mass0[0]);
-        }
 
         /// <summary>
         /// Convert Money in definite Currency
@@ -218,22 +198,22 @@ namespace KAM_KP_PSP__5_sem_
             MessageBox.Show(Mass0[0]);
         }
 
-        private void timer3_Tick(object sender, EventArgs e)
-        {
-            //try
-            //{
 
-            //    Account.CalcDaysLeftDeposit();
-            //}
-            //catch
-            //{
-
-            //}
-        }
-
+        /// <summary>
+        /// Update info about deposit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button8_Click(object sender, EventArgs e)
         {
-            //Account.CheckDeposit();
+            bool success = false;
+            List<string> list = new List<string>() { Bank.AccessInDB, Bank.IdOfCurrentStorage.ToString()};
+
+            string ANSWER = "";
+            Client.SendMessage("CheckDeposit", list, ref success, ref ANSWER);
+
+            string[] Mass0 = ANSWER.Split(new char[] { '#' });
+            MessageBox.Show(Mass0[0]);
         }
 
         /// <summary>
@@ -344,10 +324,5 @@ namespace KAM_KP_PSP__5_sem_
             }
         }
 
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

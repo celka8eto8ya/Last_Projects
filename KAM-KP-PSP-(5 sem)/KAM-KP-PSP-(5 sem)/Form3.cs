@@ -58,17 +58,10 @@ namespace KAM_KP_PSP__5_sem_
 
                     string[] Mass00 = Mass0[1].Split(new char[] { ' ' });
 
-                   
                     Bank.AccessInDB = Mass00[1];
                     Bank.IdOfCurrentStorage = int.Parse(Mass00[2]);
 
                     Bank.NameOfStorage = textBox12.Text;
-
-                    MessageBox.Show($"Bank.NameOfStorage={Bank.NameOfStorage}\r\n" +
-                        $"Bank.AccessInDB ={Bank.AccessInDB}\r\n"+
-                        $"Bank.IdOfCurrentStorage ={Bank.IdOfCurrentStorage}\r\n" +
-                        $" Bank.NameOfStorage ={Bank.NameOfStorage}\r\n");
-
                     this.Close();
                 }
             }
@@ -95,11 +88,6 @@ namespace KAM_KP_PSP__5_sem_
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void Form3_Load(object sender, EventArgs e)

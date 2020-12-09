@@ -81,16 +81,22 @@ namespace KAM_KP_PSP__ClassLibrary_
         /// <param name="IdOfCurrentStorage"></param>
         public static void CalculateTotalSumAndAmount(string AccessString, int IdOfCurrentStorage)
         {
-            MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
-            conn.Open(); // открываем поток
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
+                conn.Open(); // открываем поток
 
-            string query0 = $"select SUM(Sum) from AccountsOfStorage where (IdOfStorage={IdOfCurrentStorage}) ;";
-            MySqlCommand com0 = new MySqlCommand(query0, conn); // создаем объект, который выполняет наш запрос
-            double TotalSum = Convert.ToInt32(com0.ExecuteScalar());
+                string query0 = $"select SUM(Sum) from AccountsOfStorage where (IdOfStorage={IdOfCurrentStorage}) ;";
+                MySqlCommand com0 = new MySqlCommand(query0, conn); // создаем объект, который выполняет наш запрос
+                double TotalSum = Convert.ToInt32(com0.ExecuteScalar());
 
-            string query1 = $"UPDATE Storage SET TotalSumOfStorage='{TotalSum}'  where ( Id= '{IdOfCurrentStorage}');";
-            MySqlCommand com1 = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
-            com1.ExecuteScalar();
+
+
+                string query1 = $"UPDATE Storage SET TotalSumOfStorage='{TotalSum}'  where ( Id= '{IdOfCurrentStorage}');";
+                MySqlCommand com1 = new MySqlCommand(query1, conn); // создаем объект, который выполняет наш запрос
+                com1.ExecuteScalar();
+            }
+            catch { }
         }
 
 
@@ -101,20 +107,24 @@ namespace KAM_KP_PSP__ClassLibrary_
         /// <param name="IdOfCurrentStorage"></param>
         public static void CalculateAmountOfAccount(string AccessString, int IdOfCurrentStorage)
         {
-            MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
-            conn.Open(); // открываем поток
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
+                conn.Open(); // открываем поток
 
-            string query = $"select Name from AccountsOfStorage  where ( Name!='' and  IdOfStorage= '{IdOfCurrentStorage}');";
-            MySqlCommand com = new MySqlCommand(query, conn); // создаем объект, который выполняет наш запрос
-            MySqlDataReader r1 = com.ExecuteReader(); // хранит все данные запроса (поток чтения)
-            DataTable table1 = new DataTable();
-            table1.Load(r1);
+                string query = $"select Name from AccountsOfStorage  where ( Name!='' and  IdOfStorage= '{IdOfCurrentStorage}');";
+                MySqlCommand com = new MySqlCommand(query, conn); // создаем объект, который выполняет наш запрос
+                MySqlDataReader r1 = com.ExecuteReader(); // хранит все данные запроса (поток чтения)
+                DataTable table1 = new DataTable();
+                table1.Load(r1);
 
-            query = $"UPDATE Storage SET AmountOfAccount='{table1.Rows.Count}'  where ( Id= '{IdOfCurrentStorage}');";
-            com = new MySqlCommand(query, conn); // создаем объект, который выполняет наш запрос
-            com.ExecuteScalar();
-            r1.Close();
-            conn.Close();
+                query = $"UPDATE Storage SET AmountOfAccount='{table1.Rows.Count}'  where ( Id= '{IdOfCurrentStorage}');";
+                com = new MySqlCommand(query, conn); // создаем объект, который выполняет наш запрос
+                com.ExecuteScalar();
+                r1.Close();
+                conn.Close();
+            }
+            catch { }
         }
 
 

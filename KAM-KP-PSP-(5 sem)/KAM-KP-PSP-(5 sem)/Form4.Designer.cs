@@ -73,19 +73,21 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(45, 152);
+            this.button3.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.button3.Location = new System.Drawing.Point(44, 154);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(132, 23);
+            this.button3.Size = new System.Drawing.Size(138, 28);
             this.button3.TabIndex = 4;
             this.button3.Text = "Save data and continue";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(234, 187);
+            this.BackColor = System.Drawing.Color.Plum;
+            this.ClientSize = new System.Drawing.Size(234, 192);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);

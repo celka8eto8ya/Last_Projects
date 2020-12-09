@@ -1,9 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KAM_KP_PSP__ClassLibrary_
@@ -22,9 +19,7 @@ namespace KAM_KP_PSP__ClassLibrary_
         // описание события
         private string descriptionOfEvent;
 
-        /// <summary>
-        /// 
-        /// </summary>
+
 
         // название события (если оно в пределах (0,60) символов)
         public string Name
@@ -106,9 +101,6 @@ namespace KAM_KP_PSP__ClassLibrary_
             }
         }
 
-        /// <summary>
-        /// Дальше идут методы
-        /// </summary>
 
 
         // конструктор класса
@@ -128,7 +120,7 @@ namespace KAM_KP_PSP__ClassLibrary_
         {
             try
             {
-              
+
                 MySqlConnection conn = new MySqlConnection(AccessString); // создается объект подключения (типо поток файловый)
                 conn.Open(); // открываем поток
 
@@ -157,7 +149,6 @@ namespace KAM_KP_PSP__ClassLibrary_
 
             }
         }
-
 
 
         /// <summary>
