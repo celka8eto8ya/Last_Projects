@@ -48,8 +48,10 @@ namespace KAM_19_08_2020_E2Book
             if (Tb1.Text.Length > 4)
             {
                 bool bb = false;
-                User user1 = new User("");
+                User user1 = new User("", "");
                 UserController.Enter(Tb1.Text, ref user1, ref bb);
+                MessageBox.Show(user1.TypeOfData+" "+user1.Password);
+                Bank.TypeOfDataUser = user1.TypeOfData;
 
                 if (!bb)
                 {

@@ -8,10 +8,12 @@ namespace E2Book.BL.A_Model
     {
         // Password for enter in App
         private string password;
+        // Type of saved Data  
+        private string typeOfData;
         // Total amount money on Account
         private double totalSum;
         // Total amount of Accounts
-        private readonly byte amountOfAccount;
+        private byte amountOfAccount;
         // Name of Server for create DB
         private string nameOfServer;
         // User's name of Server for create DB
@@ -30,6 +32,20 @@ namespace E2Book.BL.A_Model
                 if (value.Length > 4)
                 {
                     password = value;
+                }
+            }
+        }
+        public string TypeOfData
+        {
+            get
+            {
+                return typeOfData;
+            }
+            set
+            {
+                if (value.Length > 0 && value.Length < 4)
+                {
+                    typeOfData = value;
                 }
             }
         }
@@ -105,16 +121,18 @@ namespace E2Book.BL.A_Model
         }
 
 
-        public User(string password1)
+        public User(string password1, string typeOfData1)
         {
             Password = password1;
+            TypeOfData = typeOfData1;
             TotalSum = 0;
             AmountOfAccount = 0;
         }
 
-        public User(string password1, string nameOfServer1, string nameOfUser1, string passwordOfServer1)
+        public User(string password1, string typeOfData1, string nameOfServer1, string nameOfUser1, string passwordOfServer1)
         {
             Password = password1;
+            TypeOfData = typeOfData1;
             TotalSum = 0;
             AmountOfAccount = 0;
 

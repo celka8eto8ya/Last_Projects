@@ -1,5 +1,4 @@
 ﻿using E2Book.BL.A_Model;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -13,7 +12,7 @@ namespace E2Book.BL.C_Controller
     public class UserController
     {
         /// <summary>
-        /// 
+        /// Save data about User
         /// </summary>
         /// <param name="sourceData"></param>
         /// <param name="password"></param>
@@ -29,7 +28,8 @@ namespace E2Book.BL.C_Controller
 
                 if (b)
                 {
-                    User user1 = new User(password.Text);
+                    User user1 = new User(password.Text, typeOfFile.Text);
+                    MessageBox.Show(typeOfFile.Text);
 
                     List<User> usersTxt = new List<User>();
                     ReadInfoUser("dataTxt.dat", ref usersTxt);
@@ -56,7 +56,7 @@ namespace E2Book.BL.C_Controller
 
                 if (b)
                 {
-                    User user1 = new User(password.Text, serverName.Text, userName.Text, serverPassword.Text);
+                    User user1 = new User(password.Text, typeOfFile.Text, serverName.Text, userName.Text, serverPassword.Text);
 
                     List<User> usersDB = new List<User>();
                     ReadInfoUser("dataDB.dat", ref usersDB);
@@ -78,8 +78,11 @@ namespace E2Book.BL.C_Controller
             }
         }
 
-
-
+        /// <summary>
+        /// Check unique password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="b"></param>
         static void CheckUniquePassword(string password, ref bool b)
         {
             List<User> usersTxt1 = new List<User>();
@@ -99,9 +102,9 @@ namespace E2Book.BL.C_Controller
                     {
                         b1 = false;
                     }
-                }    
+                }
             }
-           
+
             if (System.IO.File.Exists("dataDB.dat"))
             {
                 ReadInfoUser("dataDB.dat", ref usersTxt2);
@@ -125,8 +128,11 @@ namespace E2Book.BL.C_Controller
             }
         }
 
-
-
+        /// <summary>
+        /// Read data about User (Deserialize)
+        /// </summary>
+        /// <param name="pathFile"></param>
+        /// <param name="usersInfo"></param>
         static void ReadInfoUser(string pathFile, ref List<User> usersInfo)
         {
             if (System.IO.File.Exists(pathFile))
@@ -141,7 +147,12 @@ namespace E2Book.BL.C_Controller
         }
 
 
-
+        /// <summary>
+        /// Aouthorization of User
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="user1"></param>
+        /// <param name="bb"></param>
         public static void Enter(string password, ref User user1, ref bool bb)
         {
             bool b = false;
@@ -162,7 +173,7 @@ namespace E2Book.BL.C_Controller
                         {
                             bb = true;
                             user1 = user;
-                            MessageBox.Show("Authorization completed successfully.", "Information", MessageBoxButton.OK,MessageBoxImage.Information);
+                            MessageBox.Show("Authorization completed successfully.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
@@ -183,6 +194,8 @@ namespace E2Book.BL.C_Controller
                 }
             }
         }
+
+
 
     }
 }

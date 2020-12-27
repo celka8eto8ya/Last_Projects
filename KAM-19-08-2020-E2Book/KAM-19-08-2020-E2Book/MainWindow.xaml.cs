@@ -26,6 +26,13 @@ namespace KAM_19_08_2020_E2Book
         public MainWindow()
         {
             InitializeComponent();
+           
+            ///
+            /// Deserialization of NotesList
+            /// 
+            /// 
+            /// 
+            /// 
 
             CurrentDate = DateTime.Now;
             DayController.CreateCalender(ref gridCalender, ref Days);
@@ -59,6 +66,63 @@ namespace KAM_19_08_2020_E2Book
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(Bank.TypeOfDataUser);
+        }
+
+        private void Tb10_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+        bool b11 = true;
+        private void Tb11_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bool b11 = true;
+
+            if (b11)
+            {
+                Tb11.Text = "";
+               
+            }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        bool b10 = true;
+        private void Tb10_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bool b10 = true;
+           
+                if (b10)
+                {
+                    Tb10.Text = "";
+                   
+                }
+        }
+        List<Note> NoteList = new List<Note>();
+        private void Btn12_Click(object sender, RoutedEventArgs e)
+        {
+            dataGrid1.Items.Clear();
+            // тут добавить метод для вычисления ИД заметки
+            Note note1 = new Note(NoteList.Count+1, Tb10.Text, Tb11.Text, "current", DatePicker1.Text);
+            textBox1.Text = note1.ToString();
+            //            List<Phone> phonesList = new List<Phone>
+            //{
+            //    new Phone { Title="iPhone 6S", Company="Apple", Price=54990 },
+            //    new Phone {Title="Lumia 950", Company="Microsoft", Price=39990 },
+            //    new Phone {Title="Nexus 5X", Company="Google", Price=29990 }
+            //};
+            //            phonesGrid.ItemsSource = phonesList;
+            NoteList.Add(note1);
+            dataGrid1.ItemsSource = NoteList;
+        
+            //NoteController.
         }
     }
 }
