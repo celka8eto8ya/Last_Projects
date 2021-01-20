@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         mc:Ignorable="d"
-          Height="330" Width="410" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
-   
+          Height="380" Width="380" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
+
 
 
     <Window.Resources>
@@ -33,7 +33,7 @@
     <Grid  >
         <Grid.RowDefinitions>
             <RowDefinition Height="140"></RowDefinition>
-            <RowDefinition Height="67"></RowDefinition>
+            <RowDefinition Height="105"></RowDefinition>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -68,7 +68,13 @@
             <Separator DockPanel.Dock="Top"/>
 
             <TextBlock DockPanel.Dock="Top"   />
+            <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
+                <Button  Background="Transparent">
+                    <TextBox x:Name="Tb2" GotFocus="Tb2_GotFocus" Style="{StaticResource TextBoxInButton}" ToolTip="Введите логин от вашего (зарегистрированного) аккаунта."  MaxLength="30">Login</TextBox>
+                </Button>
+            </DockPanel>
 
+            <TextBlock DockPanel.Dock="Top" Height="16"/>
             <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
                 <Button  Background="Transparent">
                     <TextBox x:Name="Tb1" GotFocus="Tb1_GotFocus" Style="{StaticResource TextBoxInButton}" ToolTip="Введите пароль от вашего (зарегистрированного) аккаунта."  MaxLength="30">Password</TextBox>
@@ -82,7 +88,7 @@
 
         <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="2" >
             <Label DockPanel.Dock="Top" Height="17"/>
-            
+
             <DockPanel DockPanel.Dock="Top" Height="35" Width="225">
                 <Button x:Name="btnEnter" ToolTip="Выполнение авторизации." Background="Transparent" HorizontalAlignment="Left" Width="75"  FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" Click="BtnEnter_Click" >Enter</Button>
                 <Button  x:Name="btnGoToAuthorization" ToolTip="Перейти к регистрации." Background="Transparent" HorizontalAlignment="Right" Width="145" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" Click="BtnGoToAuthorization_Click"  >"Registration"</Button>

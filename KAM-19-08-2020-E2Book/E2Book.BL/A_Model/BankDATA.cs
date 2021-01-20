@@ -12,5 +12,20 @@ namespace E2Book.BL.A_Model
         public static string TypeOfDataUser;
         // Id of Last task 
         public static int IdOfLastTask;
+
+
+        //// Date of creating Account for Naming file (Serialization)
+        //public static string UserLogin;
+
+        // Path of user data about Tasks\Notes
+        public static string UserPath;
+
+        // Size of DataGrid (Tasks\Notes)
+        public static int SizeId = 40;
+        public static int SizeShortTitle = 90;
+        public static int SizeText = 260;
+        public static int SizeCondition = 70;
+        public static int SizeDate = 90;
+
     }
 }

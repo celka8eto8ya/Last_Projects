@@ -1,10 +1,11 @@
-﻿<Window x:Class="KAM_19_08_2020_E2Book.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
-        mc:Ignorable="d" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen" Height="545" Width="957" Title="E2Book">
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="KAM_19_08_2020_E2Book.MainWindow"
+        mc:Ignorable="d" Background="#FFF9ABF9" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen" Height="560" Width="938" Title="E2Book" WindowStyle="ToolWindow" IsTabStop="True" ResizeMode="NoResize">
 
 
 
@@ -13,20 +14,25 @@
     <Window.Resources>
 
         <Style x:Key="TextBoxInButton1">
-            <Setter Property="TextBox.Background" Value="Transparent" />
-            <Setter Property="TextBox.FontSize" Value="13" />
- 
-         
-            <Setter Property="TextBox.FontFamily" Value="Segoe UI Semibold"/>
-            <Setter Property="TextBox.Foreground" Value="#FF0D1515"/>
+            <Setter Property="Control.Background" Value="Transparent" />
+            <Setter Property="Control.FontSize" Value="13" />
+
+
+            <Setter Property="Control.FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="Control.Foreground" Value="#FF0D1515"/>
         </Style>
 
 
         <DockPanel x:Key="DockP" x:Name="DockPanel" Height="23"/>
-        <Button x:Key="ForIcon" Width="25" Height="25">Icon</Button>
+        <Button x:Key="ForIcon" Width="25" Height="25" Content="Icon"/>
         <TextBlock x:Key="TextBox" Height="25"/>
 
     </Window.Resources>
+
+
+
+
+
 
     <DockPanel >
 
@@ -34,101 +40,47 @@
 
 
 
-            <TabItem Header="Notes/Deals" Height="22" VerticalAlignment="Top">
+            <TabItem Header="Tasks/Notes" Height="22" VerticalAlignment="Top">
+
+                <TabControl Background="Transparent"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TabStripPlacement="Right" >
+                    <TabItem Height="30" Header="Tasks by day">
+                        <DockPanel >
+
+                            <DockPanel DockPanel.Dock="Left">
+                                <DockPanel DockPanel.Dock="Top"  Width="240">
+
+                                    <DockPanel DockPanel.Dock="Top">
+
+                                        <TextBlock DockPanel.Dock="Top" Height="16"/>
+                                        <DockPanel DockPanel.Dock="Top">
+                                            <TextBlock DockPanel.Dock="Top" Foreground="#FF0D1515" FontSize="16" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
+                                                <TextBlock.TextDecorations>
+                                                    <TextDecoration PenOffset="1"/>
+                                                </TextBlock.TextDecorations>SORTING:</TextBlock>
+                                        </DockPanel>
+                                        <TextBlock DockPanel.Dock="Top" Height="16"/>
+                                        <Separator DockPanel.Dock="Top" />
+                                        <Calendar x:Name="calendar1" SelectedDatesChanged="Calendar1_SelectedDatesChanged" ToolTip="Choose needed date." SelectionMode="MultipleRange" Background="Transparent" DockPanel.Dock="Top" HorizontalAlignment="Center"  />
+
+                                        <TextBlock DockPanel.Dock="Top" Height="16"/>
+                                        <ComboBox DockPanel.Dock="Top">
+                                            <ComboBoxItem Content="All"/>
+                                            <ComboBoxItem Content="All current"/>
+                                            <ComboBoxItem Content="All done"/>
+                                        </ComboBox>
+                                    </DockPanel>
 
 
-                <DockPanel>
 
-                    <DockPanel DockPanel.Dock="Left" Width="351">
-                        <DockPanel DockPanel.Dock="Top">
 
-                            <Grid x:Name="gridCalender"  Width="350" Height="300" DockPanel.Dock="Top">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition ></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
 
-                                <Button Grid.Row="0" Grid.Column="0" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">MON</Button>
-                                <Button Grid.Row="0" Grid.Column="1" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">TUE</Button>
-                                <Button Grid.Row="0" Grid.Column="2" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">WEN</Button>
-                                <Button Grid.Row="0" Grid.Column="3" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">THU</Button>
-                                <Button Grid.Row="0" Grid.Column="4" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">FRY</Button>
-                                <Button Grid.Row="0" Grid.Column="5" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">SAT</Button>
-                                <Button Grid.Row="0" Grid.Column="6" BorderBrush="Black" Background="Transparent" FontFamily="Segoe UI Black">SUN</Button>
 
-                                <Button  Grid.Row="1" Grid.Column="0" >1</Button>
 
-                                <Button x:Name="btnDay2" Grid.Row="1" Grid.Column="1"  >2</Button>
 
-                                <!--<Button x:Name="btnDay2" Grid.Row="1" Grid.Column="1" >2</Button>-->
-                                <Button x:Name="btnDay3" Grid.Row="1" Grid.Column="2" >3</Button>
-                                <Button x:Name="btnDay4" Grid.Row="1" Grid.Column="3" >4</Button>
-                                <Button x:Name="btnDay5" Grid.Row="1" Grid.Column="4" >5</Button>
-                                <Button x:Name="btnDay6" Grid.Row="1" Grid.Column="5" >6</Button>
-                                <Button x:Name="btnDay7" Grid.Row="1" Grid.Column="6" >7</Button>
 
-                                <Button x:Name="btnDay8" Grid.Row="2" Grid.Column="0" >1</Button>
-                                <Button x:Name="btnDay9" Grid.Row="2" Grid.Column="1" >2</Button>
-                                <Button x:Name="btnDay10" Grid.Row="2" Grid.Column="2" >3</Button>
-                                <Button x:Name="btnDay11" Grid.Row="2" Grid.Column="3" >4</Button>
-                                <Button x:Name="btnDay12" Grid.Row="2" Grid.Column="4" >5</Button>
-                                <Button x:Name="btnDay13" Grid.Row="2" Grid.Column="5" >6</Button>
-                                <Button x:Name="btnDay14" Grid.Row="2" Grid.Column="6" >7</Button>
 
-                                <Button x:Name="btnDay15" Grid.Row="3" Grid.Column="0" >1</Button>
-                                <Button x:Name="btnDay16" Grid.Row="3" Grid.Column="1" >2</Button>
-                                <Button x:Name="btnDay17" Grid.Row="3" Grid.Column="2" >3</Button>
-                                <Button x:Name="btnDay18" Grid.Row="3" Grid.Column="3" >4</Button>
-                                <Button x:Name="btnDay19" Grid.Row="3" Grid.Column="4" >5</Button>
-                                <Button x:Name="btnDay20" Grid.Row="3" Grid.Column="5" >6</Button>
-                                <Button x:Name="btnDay21" Grid.Row="3" Grid.Column="6" >7</Button>
 
-                                <Button x:Name="btnDay22" Grid.Row="4" Grid.Column="0" >1</Button>
-                                <Button x:Name="btnDay23" Grid.Row="4" Grid.Column="1" >2</Button>
-                                <Button x:Name="btnDay24" Grid.Row="4" Grid.Column="2" >3</Button>
-                                <Button x:Name="btnDay25" Grid.Row="4" Grid.Column="3" >4</Button>
-                                <Button x:Name="btnDay26" Grid.Row="4" Grid.Column="4" >5</Button>
-                                <Button x:Name="btnDay27" Grid.Row="4" Grid.Column="5" >6</Button>
-                                <Button x:Name="btnDay28" Grid.Row="4" Grid.Column="6" >7</Button>
-
-                                <Button x:Name="btnDay29" Grid.Row="5" Grid.Column="0" >1</Button>
-                                <Button x:Name="btnDay30" Grid.Row="5" Grid.Column="1" >2</Button>
-                                <Button x:Name="btnDay31" Grid.Row="5" Grid.Column="2" >3</Button>
-                                <Button x:Name="btnDay32" Grid.Row="5" Grid.Column="3" >4</Button>
-                                <Button x:Name="btnDay33" Grid.Row="5" Grid.Column="4" >5</Button>
-                                <Button x:Name="btnDay34" Grid.Row="5" Grid.Column="5" >6</Button>
-                                <Button x:Name="btnDay35" Grid.Row="5" Grid.Column="6" >7</Button>
-
-                            </Grid>
-
-                            <Separator DockPanel.Dock="Top" ></Separator>
-
-                            <DockPanel DockPanel.Dock="Top" Height="40" >
-
-                                <Button Background="Transparent" Width="120" Height="32" DockPanel.Dock="Left" HorizontalAlignment="Left">&lt; Previous</Button>
-
-                                <Button Background="Transparent" HorizontalAlignment="Center"  Width="120" Height="32" DockPanel.Dock="Left" VerticalAlignment="Center" Click="Button_Click" IsHitTestVisible="False">Current Month</Button>
-                                <Button Background="Transparent" x:Name="btnNext"  Height="32" DockPanel.Dock="Left" HorizontalAlignment="Stretch" Click="BtnNext_Click">Next &gt;</Button>
-
-                            </DockPanel>
-
-                            <Separator DockPanel.Dock="Top" ></Separator>
-
-                            <TextBlock DockPanel.Dock="Top" Foreground="#FF0D1515" FontSize="16" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
+                                    <!--<TextBlock DockPanel.Dock="Top" Foreground="#FF0D1515" FontSize="16" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
                                 <TextBlock.TextDecorations>
                                     <TextDecoration PenOffset="1"/>
                                 </TextBlock.TextDecorations>INFORMATION ABOUT CHOSEN DAY:</TextBlock>
@@ -148,91 +100,173 @@
                             <DockPanel DockPanel.Dock="Top"  Height="26">
                                 <Button Width="120" Background="Transparent" DockPanel.Dock="Left" FontSize="14" >Complited Deals:</Button>
                                 <Button  Background="AntiqueWhite" HorizontalContentAlignment="Left"  FontSize="14" >60 %</Button>
+                            </DockPanel>-->
+
+
+
+
+
+                                    <Separator DockPanel.Dock="Top" />
+                                    <DockPanel DockPanel.Dock="Top" >
+
+                                        <TextBlock DockPanel.Dock="Top" Height="16"/>
+
+                                        <DockPanel DockPanel.Dock="Top">
+                                            <TextBlock DockPanel.Dock="Top" Foreground="#FF0D1515" FontSize="16" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
+                                                <TextBlock.TextDecorations>
+                                                    <TextDecoration PenOffset="1"/>
+                                                </TextBlock.TextDecorations>CREATING:</TextBlock>
+                                        </DockPanel>
+                                        <TextBlock DockPanel.Dock="Top" Height="16"/>
+                                        <Separator DockPanel.Dock="Top" />
+                                        <TextBlock DockPanel.Dock="Top" Height="6"/>
+                                        <DockPanel DockPanel.Dock="Top" Height="25">
+                                            <Button  Background="Transparent" Height="25">
+                                                <TextBox x:Name="Tb10"  Width="237" Height="25"  Style="{StaticResource TextBoxInButton1}"  GotFocus="Tb10_GotFocus"  ToolTip="Введите короткое название записи/задачи."   MaxLength="30"  Text="Short title"  />
+                                            </Button>
+                                        </DockPanel>
+                                        <TextBlock DockPanel.Dock="Top" Height="16"/>
+                                        <DockPanel DockPanel.Dock="Top" Height="50">
+                                            <Button  Background="Transparent" Height="50">
+                                                <TextBox x:Name="Tb11" Width="237"  Height="47" Style="{StaticResource TextBoxInButton1}" ToolTip="Введите полное описание записи/задачи." GotFocus="Tb11_GotFocus" MaxLength="300" TextWrapping="Wrap" Text="Text"/>
+                                            </Button>
+
+                                        </DockPanel>
+                                        <TextBlock DockPanel.Dock="Top" Height="16"/>
+
+                                        <DatePicker  x:Name="DatePicker1"  Background="Transparent" DockPanel.Dock="Top" Height="25" Margin="1,0,0,0" />
+                                        <TextBlock DockPanel.Dock="Top" Height="2"/>
+                                        <Separator DockPanel.Dock="Top" />
+                                    </DockPanel>
+
+                                </DockPanel>
+
+                                <TextBlock DockPanel.Dock="Top" Height="16"/>
                             </DockPanel>
-                            <Button Background="Transparent"></Button>
-                        </DockPanel>
+
+                            <TextBlock/>
+                            <TextBlock Width="1"/>
+                            <TextBlock Background="Transparent"  Width="4"/>
+                            <TextBlock Width="2"/>
 
 
-                    </DockPanel>
-                    <TextBlock Width="1"></TextBlock>
-                    <TextBlock Background="Transparent"  Width="4"/>
-                    <TextBlock Width="2"></TextBlock>
+                            <DockPanel>
+
+                                <DockPanel DockPanel.Dock="Top" Background="Transparent" >
 
 
-                    <DockPanel>
 
-                        <DockPanel DockPanel.Dock="Top" Background="Transparent" >
-
-
-                            <DataGrid x:Name="dataGrid1" Width="358" Background="AntiqueWhite" DockPanel.Dock="Top" Height="345"   ColumnHeaderHeight="25"  >
-                                <DataGrid.Columns>
-                                    <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Width="20"/>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Id" Width="30"/>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Width="70" Header="ShortTitle"/>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Width="100" Header="Text"/>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Width="65" Header="Condition"/>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Width="65" Header="Date"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                            <Separator DockPanel.Dock="Top" ></Separator>
-                            <TextBlock DockPanel.Dock="Top" Foreground="#FF0D1515" FontSize="16" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
-                                <TextBlock.TextDecorations>
-                                    <TextDecoration PenOffset="1"/>
-                                </TextBlock.TextDecorations>FULL TEXT OF (CHOSEN) NOTE:</TextBlock>
-                            <TextBox x:Name="textBox1" Width="355" DockPanel.Dock="Top" MaxLength="300" TextWrapping="Wrap"></TextBox>
+                                    <DataGrid x:Name="dataGrid2" Width="560"   Height="422" Background="AntiqueWhite" DockPanel.Dock="Top" HorizontalAlignment="Left" />
+                                    <TextBlock/>
+                                    <Separator DockPanel.Dock="Top" />
 
 
-                        </DockPanel>
+                                    <DockPanel DockPanel.Dock="Top" Height="40"  >
+
+                                        <Button x:Name="Btn12" Background="Transparent"  DockPanel.Dock="Left" Height="32" Width="165"  FontSize="14" Click="Btn12_Click" ToolTip="Fill int the fields &quot;Needed info&quot; and press." Content="Create note" />
+                                        <TextBlock DockPanel.Dock="Left" Width="32"/>
+                                        <Button x:Name="Btn14" Background="Transparent" DockPanel.Dock="Left" Height="32" Width="165"  FontSize="14" Click="Btn14_Click" ToolTip="Choose needed field and press." Content="Checked note" />
+                                        <TextBlock DockPanel.Dock="Left" Width="32"/>
+                                        <Button x:Name="Btn13" Background="Transparent" DockPanel.Dock="Left"  Width="165" Height="32" FontSize="14" Click="Btn13_Click" ToolTip="Choose needed field and press." Content="Delete note" />
+                                        <TextBlock />
+                                    </DockPanel>
+
+                                    <Separator DockPanel.Dock="Top" />
+
+                                    <TextBlock/>
 
 
-                    </DockPanel>
-
-                    <TextBlock Width="1"></TextBlock>
-                    <TextBlock Background="Transparent"  Width="4"/>
-                    <TextBlock Width="2"></TextBlock>
-
-                        <DockPanel Width="210" >
-                        <TextBlock DockPanel.Dock="Top" Height="16"></TextBlock>
-                        <TextBlock DockPanel.Dock="Top" Foreground="#FF0D1515" FontSize="16" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
-                            <TextBlock.TextDecorations>
-                                <TextDecoration PenOffset="1"/>
-                            </TextBlock.TextDecorations>NEEDED INFO:</TextBlock>
-                        <TextBlock DockPanel.Dock="Top" Height="16"></TextBlock>
-                        <Separator DockPanel.Dock="Top"  />
-                        <TextBlock DockPanel.Dock="Top" Height="16"></TextBlock>
 
 
-                        <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
-                            <Button  Background="Transparent">
-                                <TextBox x:Name="Tb10"  Width="206" Height="20" Style="{StaticResource TextBoxInButton1}"  GotFocus="Tb10_GotFocus"  ToolTip="Введите короткое название записи/задачи."   MaxLength="30"  >Short title</TextBox>
-                            </Button>
-                        </DockPanel>
-                        <TextBlock DockPanel.Dock="Top"  />
 
+                                    <!--<DockPanel DockPanel.Dock="Top" Height="25">
 
-                        <DockPanel DockPanel.Dock="Top" Height="76">
-                            <Button  Background="Transparent" Height="76">
-                                <TextBox x:Name="Tb11" Width="206"  Height="76" Style="{StaticResource TextBoxInButton1}" ToolTip="Введите полное описание записи/задачи." GotFocus="Tb11_GotFocus" MaxLength="300" TextWrapping="Wrap">Text</TextBox>
-                            </Button>
-                        </DockPanel>
-                        <TextBlock DockPanel.Dock="Top" Height="16"></TextBlock>
-                        <DatePicker x:Name="DatePicker1"  DockPanel.Dock="Top" >
+                                <DockPanel DockPanel.Dock="Left" Height="25">
+                                    <Button  Background="Transparent" Height="25">
+                                        <TextBox x:Name="Tb10"  Width="140" Height="25"  Style="{StaticResource TextBoxInButton1}"  GotFocus="Tb10_GotFocus"  ToolTip="Введите короткое название записи/задачи."   MaxLength="30"  >Short title</TextBox>
+                                    </Button>
+                                </DockPanel>
+
+                                <DockPanel DockPanel.Dock="Left" Height="25">
+                                    <Button  Background="Transparent" Height="25">
+                                        <TextBox x:Name="Tb11" Width="300"  Height="25" Style="{StaticResource TextBoxInButton1}" ToolTip="Введите полное описание записи/задачи." GotFocus="Tb11_GotFocus" MaxLength="300" TextWrapping="Wrap">Text</TextBox>
+                                    </Button>
+                                  
+                                </DockPanel>
+                                <TextBlock DockPanel.Dock="Bottom"></TextBlock>
+
                            
-                        </DatePicker>
-                        <Separator DockPanel.Dock="Top"  />
-                        <TextBlock DockPanel.Dock="Top" Height="16"></TextBlock>
-                        <Button x:Name="Btn12" Background="Transparent" DockPanel.Dock="Top" Height="34"  FontSize="14" Click="Btn12_Click" >Create new note:</Button>
-                        <Button Background="Transparent" DockPanel.Dock="Top" Height="34" FontSize="14" >Delete (chosen) note:</Button>
-                        <Button Background="Transparent" DockPanel.Dock="Top" Height="34" FontSize="14" >Update all notes:</Button>
-                        <TextBlock DockPanel.Dock="Top" Height="16"></TextBlock>
-                        <Separator DockPanel.Dock="Top"  />
-                        <TextBlock Background="Transparent"></TextBlock>
-                    </DockPanel>
-                    <TextBlock Width="1"></TextBlock>
-                    <TextBlock Background="Transparent"  Width="6"/>
-                    <TextBlock Width="2"></TextBlock>
+                            </DockPanel>-->
 
-                </DockPanel>
+
+
+
+
+
+
+
+
+                                </DockPanel>
+
+                                <!--<Button DockPanel.Dock="Left" Background="Transparent" >
+                            <DockPanel >
+
+                                <DatePicker x:Name="DatePicker1" DockPanel.Dock="Top" Height="25" Width="140" />
+                                <TextBlock  Height="72"></TextBlock>
+
+                            </DockPanel>
+                        </Button>
+
+
+                        <Button Background="Transparent">
+                            <DockPanel DockPanel.Dock="Left">
+                                <TextBlock DockPanel.Dock="Top" Foreground="#FF0D1515" FontSize="16" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
+                                    <TextBlock.TextDecorations>
+                                        <TextDecoration PenOffset="1"/>
+                                    </TextBlock.TextDecorations>FULL TEXT OF (CHOSEN) NOTE:</TextBlock>
+                                <TextBox x:Name="textBox1" Width="300" Height="80" DockPanel.Dock="Top" MaxLength="300" TextWrapping="Wrap"></TextBox>
+
+                            </DockPanel>
+
+                        </Button>-->
+
+
+
+                            </DockPanel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Height="30" Header="Notes and Stuffs">
+                        <Button/>
+                    </TabItem>
+
+
+
+                </TabControl>
 
             </TabItem>
 
@@ -245,21 +279,21 @@
 
                 <TabControl Background="Transparent"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TabStripPlacement="Right" >
                     <TabItem Height="30" Header="Condition">
-                        <Button></Button>
+                        <Button/>
                     </TabItem>
                     <TabItem Height="30" Header="Income">
-                        <Button></Button>
+                        <Button/>
                     </TabItem>
                     <TabItem Height="30" Header="Expenses">
-                        <Button></Button>
+                        <Button/>
                     </TabItem>
                     <TabItem Height="30" Header="CreateNewAccount">
-                        <Button></Button>
+                        <Button/>
                     </TabItem>
                     <TabItem Height="30" Header="Expenses">
-                        <Button></Button>
+                        <Button/>
                     </TabItem>
-                    <TabItem Height="30" Header="Deals in general"></TabItem>
+                    <TabItem Height="30" Header="Deals in general"/>
                 </TabControl>
 
             </TabItem>

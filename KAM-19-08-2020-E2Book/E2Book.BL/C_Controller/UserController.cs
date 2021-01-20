@@ -1,4 +1,5 @@
 ﻿using E2Book.BL.A_Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -19,114 +20,131 @@ namespace E2Book.BL.C_Controller
         /// <param name="serverName"></param>
         /// <param name="userName"></param>
         /// <param name="serverPassword"></param>
-        public static void SaveInfo(TextBox typeOfFile, TextBox password, TextBox serverName, TextBox userName, TextBox serverPassword)
+        public static void SaveInfo(TextBox typeOfFile, TextBox password, TextBox login, TextBox serverName, TextBox userName, TextBox serverPassword)
         {
-            if (typeOfFile.Text == ".txt")
+            try
             {
-                bool b = false;
-                CheckUniquePassword(password.Text, ref b);
 
-                if (b)
+                if (typeOfFile.Text == ".txt")
                 {
-                    User user1 = new User(password.Text, typeOfFile.Text);
-                    MessageBox.Show(typeOfFile.Text);
+                    bool b = false;
+                    CheckUniquePassword(password.Text, login.Text, ref b);
 
-                    List<User> usersTxt = new List<User>();
-                    ReadInfoUser("dataTxt.dat", ref usersTxt);
-                    usersTxt.Add(user1);
-
-                    BinaryFormatter formatter = new BinaryFormatter();
-
-                    using (FileStream fs = new FileStream("dataTxt.dat", FileMode.OpenOrCreate))
+                    if (b)
                     {
-                        formatter.Serialize(fs, usersTxt);
+                        User user1 = new User(login.Text, password.Text, typeOfFile.Text);
+                        List<User> usersTxt = new List<User>();
+                        ReadInfoUser("dataTxt.dat", ref usersTxt);
+                        usersTxt.Add(user1);
 
-                        MessageBox.Show("Data (about User) have saved.", "Information.", MessageBoxButton.OK, MessageBoxImage.Information);
+                        BinaryFormatter formatter = new BinaryFormatter();
+
+                        using (FileStream fs = new FileStream("dataTxt.dat", FileMode.OpenOrCreate))
+                        {
+                            formatter.Serialize(fs, usersTxt);
+
+                            MessageBox.Show($"Data (about User: {login.Text}) have saved.", "Information.", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Password or login isn't unique!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show($"Password \"{password.Text}\" isn't unique!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            else
-            {
-                bool b = false;
-                CheckUniquePassword(password.Text, ref b);
+                    bool b = false;
+                    CheckUniquePassword(password.Text, login.Text, ref b);
 
-                if (b)
-                {
-                    User user1 = new User(password.Text, typeOfFile.Text, serverName.Text, userName.Text, serverPassword.Text);
-
-                    List<User> usersDB = new List<User>();
-                    ReadInfoUser("dataDB.dat", ref usersDB);
-                    usersDB.Add(user1);
-
-                    BinaryFormatter formatter = new BinaryFormatter();
-
-                    using (FileStream fs = new FileStream("dataDB.dat", FileMode.OpenOrCreate))
+                    if (b)
                     {
-                        formatter.Serialize(fs, usersDB);
+                        User user1 = new User(login.Text, password.Text, typeOfFile.Text, serverName.Text, userName.Text, serverPassword.Text);
 
-                        MessageBox.Show("Data (about User) have saved.", "Information.", MessageBoxButton.OK, MessageBoxImage.Information);
+                        List<User> usersDB = new List<User>();
+                        ReadInfoUser("dataDB.dat", ref usersDB);
+                        usersDB.Add(user1);
+
+                        BinaryFormatter formatter = new BinaryFormatter();
+
+                        using (FileStream fs = new FileStream("dataDB.dat", FileMode.OpenOrCreate))
+                        {
+                            formatter.Serialize(fs, usersDB);
+
+                            MessageBox.Show("Data (about User: {login.Text}) have saved.", "Information.", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Password or login isn't unique!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                else
-                {
-                    MessageBox.Show($"Password \"{password.Text}\" isn't unique!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
+
         /// <summary>
-        /// Check unique password
+        /// Check unique password and login
         /// </summary>
         /// <param name="password"></param>
         /// <param name="b"></param>
-        static void CheckUniquePassword(string password, ref bool b)
+        static void CheckUniquePassword(string password, string login, ref bool b)
         {
-            List<User> usersTxt1 = new List<User>();
-            List<User> usersTxt2 = new List<User>();
-            b = false;
-
-            bool b1 = true;
-            bool b2 = true;
-
-            if (System.IO.File.Exists("dataTxt.dat"))
+            try
             {
-                ReadInfoUser("dataTxt.dat", ref usersTxt1);
-
-                foreach (User user in usersTxt1)
-                {
-                    if (user.Password == password)
-                    {
-                        b1 = false;
-                    }
-                }
-            }
-
-            if (System.IO.File.Exists("dataDB.dat"))
-            {
-                ReadInfoUser("dataDB.dat", ref usersTxt2);
-
-                foreach (User user in usersTxt2)
-                {
-                    if (user.Password == password)
-                    {
-                        b2 = false;
-                    }
-                }
-            }
-
-            if (b1 && b2)
-            {
-                b = true;
-            }
-            else
-            {
+                List<User> usersTxt1 = new List<User>();
+                List<User> usersTxt2 = new List<User>();
                 b = false;
+
+                bool b1 = true;
+                bool b2 = true;
+
+                if (System.IO.File.Exists("dataTxt.dat"))
+                {
+                    ReadInfoUser("dataTxt.dat", ref usersTxt1);
+
+                    foreach (User user in usersTxt1)
+                    {
+                        if (user.Password == password && user.Login == login)
+                        {
+                            b1 = false;
+                        }
+                    }
+                }
+
+                if (System.IO.File.Exists("dataDB.dat"))
+                {
+                    ReadInfoUser("dataDB.dat", ref usersTxt2);
+
+                    foreach (User user in usersTxt2)
+                    {
+                        if (user.Password == password && user.Login == login)
+                        {
+                            b2 = false;
+                        }
+                    }
+                }
+
+                if (b1 && b2)
+                {
+                    b = true;
+                }
+                else
+                {
+                    b = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
+
 
         /// <summary>
         /// Read data about User (Deserialize)
@@ -135,14 +153,25 @@ namespace E2Book.BL.C_Controller
         /// <param name="usersInfo"></param>
         static void ReadInfoUser(string pathFile, ref List<User> usersInfo)
         {
-            if (System.IO.File.Exists(pathFile))
+            try
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-
-                using (FileStream fs = new FileStream(pathFile, FileMode.OpenOrCreate))
+                if (System.IO.File.Exists(pathFile))
                 {
-                    usersInfo = (List<User>)formatter.Deserialize(fs);
+                    if (System.IO.File.ReadAllLines(@pathFile).Length > 0)
+                    {
+                        BinaryFormatter formatter = new BinaryFormatter();
+
+                        using (FileStream fs = new FileStream(pathFile, FileMode.OpenOrCreate))
+                        {
+                            usersInfo = (List<User>)formatter.Deserialize(fs);
+                        }
+                    }
+
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -153,48 +182,59 @@ namespace E2Book.BL.C_Controller
         /// <param name="password"></param>
         /// <param name="user1"></param>
         /// <param name="bb"></param>
-        public static void Enter(string password, ref User user1, ref bool bb)
+        public static void Enter(string password, string login, ref User user1, ref bool bb)
         {
-            bool b = false;
-            CheckUniquePassword(password, ref b);
-
-            List<User> usersTxt1 = new List<User>();
-            List<User> usersTxt2 = new List<User>();
-
-            if (!b)
+            try
             {
-                if (System.IO.File.Exists("dataTxt.dat"))
-                {
-                    ReadInfoUser("dataTxt.dat", ref usersTxt1);
+                bool b = false;
+                CheckUniquePassword(password, login, ref b);
 
-                    foreach (User user in usersTxt1)
+                List<User> usersTxt1 = new List<User>();
+                List<User> usersTxt2 = new List<User>();
+
+                if (!b)
+                {
+                    if (System.IO.File.Exists("dataTxt.dat"))
                     {
-                        if (user.Password == password)
+                        ReadInfoUser("dataTxt.dat", ref usersTxt1);
+
+                        foreach (User user in usersTxt1)
                         {
-                            bb = true;
-                            user1 = user;
-                            MessageBox.Show("Authorization completed successfully.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            if (user.Password == password && user.Login == login)
+                            {
+                                bb = true;
+                                user1 = user;
+
+                                MessageBox.Show($"Authorization completed successfully.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
                         }
                     }
-                }
 
-                if (System.IO.File.Exists("dataDB.dat"))
-                {
-                    ReadInfoUser("dataDB.dat", ref usersTxt1);
-
-                    foreach (User user in usersTxt2)
+                    if (System.IO.File.Exists("dataDB.dat"))
                     {
-                        if (user.Password == password)
+                        ReadInfoUser("dataDB.dat", ref usersTxt1);
+
+                        foreach (User user in usersTxt2)
                         {
-                            bb = true;
-                            user1 = user;
-                            MessageBox.Show("Authorization completed successfully.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            if (user.Password == password && user.Login == login)
+                            {
+                                bb = true;
+                                user1 = user;
+                                MessageBox.Show("Authorization completed successfully.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
                         }
                     }
+
+
                 }
             }
-        }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
+
+        }
 
 
     }

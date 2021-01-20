@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         mc:Ignorable="d"
-       Height="510" Width="410" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
+       Height="550" Width="420" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
  
 
     <Window.Resources>
@@ -32,7 +32,7 @@
     <Grid  >
         <Grid.RowDefinitions>
             <RowDefinition Height="140"></RowDefinition>
-            <RowDefinition Height="260"></RowDefinition>
+            <RowDefinition Height="300"></RowDefinition>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -79,6 +79,14 @@
 
             <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
                 <Button  Background="Transparent">
+                    <TextBox x:Name="Tb2" Style="{StaticResource TextBoxInButton}" ToolTip="Придумайте логин вашему будущему аккаунту." GotFocus="Tb2_GotFocus" MaxLength="30">Login</TextBox>
+                </Button>
+            </DockPanel>
+            <TextBlock DockPanel.Dock="Top"  />
+
+
+            <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
+                <Button  Background="Transparent">
                     <TextBox x:Name="Tb1" Style="{StaticResource TextBoxInButton}" ToolTip="Придумайте пароль вашему будущему аккаунту (пароль должен содержать более 4 символов)." GotFocus="Tb1_GotFocus" MaxLength="30">Password</TextBox>
                 </Button>
             </DockPanel>
@@ -111,9 +119,9 @@
                         <TextBox x:Name="Tb6" Style="{StaticResource TextBoxInButton}" GotFocus="Tb6_GotFocus"  ToolTip="Введите пароль от (вашего) сервера." MaxLength="50" IsEnabled="False" >Password Of Server</TextBox>
                     </Button>
                 </DockPanel>
-
+                <TextBlock DockPanel.Dock="Top"  />
                 <Separator DockPanel.Dock="Top"/>
-
+                <TextBlock DockPanel.Dock="Top"  />
             </DockPanel>
         </DockPanel>
 
@@ -121,7 +129,7 @@
           
             
             <DockPanel DockPanel.Dock="Top" Height="35" Width="225">
-                <Button x:Name="btnSave" ToolTip="Создать аккаунт с введенными данными." Background="Transparent" HorizontalAlignment="Left" Width="75" Click="Button_Click" FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" >Save</Button>
+                <Button x:Name="btnSave" ToolTip="Создать аккаунт с введенными данными." Background="Transparent" HorizontalAlignment="Left" Width="75" Click="BtnSave_Click" FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" Height="35" VerticalAlignment="Bottom" >Save</Button>
                 <Button  x:Name="btnGoToAuthorization" ToolTip="Перейти к авторизации." Background="Transparent" HorizontalAlignment="Right" Width="145" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" Click="BtnGoToAuthorization_Click" >"Authorization"</Button>
             </DockPanel>
             

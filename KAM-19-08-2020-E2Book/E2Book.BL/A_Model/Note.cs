@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace E2Book.BL.A_Model
 {
+    [Serializable]
     public class Note
     {
         // Unique number of task

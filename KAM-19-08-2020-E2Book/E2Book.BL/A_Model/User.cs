@@ -6,6 +6,8 @@ namespace E2Book.BL.A_Model
     [Serializable]
     public class User
     {
+        // Login for enter in App
+        private string login;
         // Password for enter in App
         private string password;
         // Type of saved Data  
@@ -21,6 +23,20 @@ namespace E2Book.BL.A_Model
         // password of Server for create DB
         private string passwordOfServer;
 
+        public string Login
+        {
+            get
+            {
+                return login;
+            }
+            set
+            {
+                if (value.Length > 0)
+                {
+                    login = value;
+                }
+            }
+        }
         public string Password
         {
             get
@@ -43,7 +59,7 @@ namespace E2Book.BL.A_Model
             }
             set
             {
-                if (value.Length > 0 && value.Length < 4)
+                if (value.Length > 0 && value.Length < 5)
                 {
                     typeOfData = value;
                 }
@@ -121,16 +137,18 @@ namespace E2Book.BL.A_Model
         }
 
 
-        public User(string password1, string typeOfData1)
+        public User(string login1, string password1, string typeOfData1)
         {
+            Login = login1;
             Password = password1;
             TypeOfData = typeOfData1;
             TotalSum = 0;
             AmountOfAccount = 0;
         }
 
-        public User(string password1, string typeOfData1, string nameOfServer1, string nameOfUser1, string passwordOfServer1)
+        public User(string login1, string password1, string typeOfData1, string nameOfServer1, string nameOfUser1, string passwordOfServer1)
         {
+            Login = login1;
             Password = password1;
             TypeOfData = typeOfData1;
             TotalSum = 0;
@@ -141,7 +159,11 @@ namespace E2Book.BL.A_Model
             PasswordOfServer = passwordOfServer1;
         }
 
+        public override string ToString()
+        {
 
+            return $"{Login} {Password} {TypeOfData} ";
+        }
 
     }
 }
