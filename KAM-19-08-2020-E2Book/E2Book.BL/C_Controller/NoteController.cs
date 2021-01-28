@@ -27,31 +27,10 @@ namespace E2Book.BL.C_Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Method <ResizeDataGrid> - {ex.Message} \r\n -- {ex.ToString()}");
             }
         }
 
-        public static void Show(ref DataGrid dgv2)
-        {
-            try
-            {
-                List<Note> list1 = new List<Note>();
-
-                Deserialize(ref list1);
-
-
-                dgv2.ItemsSource = list1;
-                ResizeDataGrid(ref dgv2);
-
-                dgv2.Items.SortDescriptions.Add(new SortDescription("Condition", ListSortDirection.Ascending));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            // получает дату и по ней заполняет лист из 
-            // вытянутого чрез сериализацию листа
-        }
 
         /// <summary>
         /// Show Tasks or Notes of Date
@@ -66,7 +45,10 @@ namespace E2Book.BL.C_Controller
                 List<Note> listNotes = new List<Note>();
                 Deserialize(ref list1);
 
-                datePar = datePar.Remove(10, 8);
+                if (datePar.Length > 10)
+                {
+                    datePar = datePar.Remove(10, 8);
+                }
                 for (int i = 0; i < list1.Count; i++)
                 {
                     if (list1[i].Date == datePar)
@@ -82,44 +64,155 @@ namespace E2Book.BL.C_Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Method <Show> - {ex.Message} \r\n -- {ex.ToString()}");
             }
         }
 
-        public static void Add(Note notePar, ref List<Note> listNotesPar, ref DataGrid dgv2)
+
+        /// <summary>
+        /// Paint days wich have a Task
+        /// </summary>
+        /// <param name="calendarPar"></param>
+        public static void UpdateCalendar(ref Calendar calendarPar)
         {
             try
             {
-                listNotesPar.Add(notePar);
-                Serialize(listNotesPar);
-
-                dgv2.ItemsSource = listNotesPar;
-                ResizeDataGrid(ref dgv2);
-                dgv2.Items.Refresh();
-                dgv2.Items.SortDescriptions.Add(new SortDescription("Condition", ListSortDirection.Ascending));
+                List<Note> listDG = new List<Note>();
+                Deserialize(ref listDG);
+                for (int i = 0; i < listDG.Count; i++)
+                {
+                    if (listDG[i].Condition == "current")
+                    {
+                        calendarPar.SelectedDates.Add(Convert.ToDateTime(listDG[i].Date));
+                    }
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Method <UpdateCalendar> - {ex.Message} \r\n -- {ex.ToString()}");
             }
-            // сначала добавляется объект в лист
-            // добавить логику из кнопки соответств
-            // закрашивается день в календаре
         }
 
-        public static void Checked(Note notePar, ref List<Note> listNotesPar)
+
+        /// <summary>
+        /// Add new note
+        /// </summary>
+        /// <param name="notePar"></param>
+        /// <param name="listNotesPar"></param>
+        /// <param name="calendarPar"></param>
+        public static void Add(string shortTitlePar, string textPar, DatePicker datePickerPar, ref Calendar calendarPar, ref DataGrid dataGridPar)
+        { 
+            try
+            {
+                List<Note> listDG = new List<Note>();
+                Deserialize(ref listDG);
+
+                Note note1;
+                if (listDG.Count > 0)
+                {
+                    note1 = new Note(listDG[listDG.Count - 1].Id + 1, shortTitlePar, textPar, "current", datePickerPar.Text);
+                }
+                else
+                {
+                    note1 = new Note(1, shortTitlePar, textPar, "current", datePickerPar.Text);
+                }
+
+                listDG.Add(note1);
+                Serialize(listDG);
+              
+                UpdateCalendar(ref calendarPar);
+
+                Show(datePickerPar.Text, ref dataGridPar);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Method <Add> - {ex.Message} \r\n -- {ex.ToString()}");
+            }
+        }
+
+        /// <summary>
+        /// To do needed task "done"
+        /// </summary>
+        /// <param name="dataGridPar"></param>
+        /// <param name="calendarPar"></param>
+        public static void Checked(ref DataGrid dataGridPar, ref Calendar calendarPar)
         {
+            try
+            {
+                List<Note> listDG = new List<Note>();
+                Deserialize(ref listDG);
+                Note customer = (Note)dataGridPar.SelectedItem;
+
+                for (int i = 0; i < listDG.Count; i++)
+                {
+                    if (listDG[i].Id == customer.Id)
+                    {
+
+                        listDG[i].Condition = "done";
+                    }
+                }
+                Serialize(listDG);
+
+                Show(calendarPar.SelectedDate.ToString(), ref dataGridPar);
+
+                UpdateCalendar(ref calendarPar);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Method <Checked> - {ex.Message} \r\n -- {ex.ToString()}");
+            }
+
+
 
             // сначала изменяется объект в лист
             // добавить логику из кнопки соответств
         }
 
-        public static void Delete(Note notePar, ref List<Note> listNotesPar)
+
+        /// <summary>
+        /// Dalete chosen task
+        /// </summary>
+        /// <param name="notePar"></param>
+        /// <param name="listNotesPar"></param>
+        /// <param name="dataGridPar"></param>
+        /// <param name="calendarPar"></param>
+        public static void Delete(ref DataGrid dataGridPar, ref Calendar calendarPar)
         {
-            // сначала удаляется объект из лист
-            // добавить логику из кнопки соответств
-            // день в календаре делается прозрачным
+            try
+            {
+                if ((Note)dataGridPar.SelectedItem != null)
+                {
+                    List<Note> listDG = new List<Note>();
+                    Deserialize(ref listDG);
+
+                    Note customer = (Note)dataGridPar.SelectedItem;
+
+                    for (int i = 0; i < listDG.Count; i++)
+                    {
+                        if (listDG[i].Id == customer.Id)
+                        {
+                            listDG.RemoveAt(i);
+                        }
+                    }
+                    Serialize(listDG);
+
+                    Show(calendarPar.SelectedDate.ToString(), ref dataGridPar);
+
+                    UpdateCalendar(ref calendarPar);
+                }
+                else
+                {
+                    MessageBox.Show($"You don't have chosen the element for Deleting.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Method <Delete> - {ex.Message} \r\n -- {ex.ToString()}");
+            }
+
         }
+
 
         /// <summary>
         /// Serialize data into file with path "Bank.UserPath"
@@ -141,9 +234,10 @@ namespace E2Book.BL.C_Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Method <Serialize> - {ex.Message} \r\n -- {ex.ToString()}");
             }
         }
+
 
         /// <summary>
         /// Deserialize data from file with path "Bank.UserPath"
@@ -172,10 +266,64 @@ namespace E2Book.BL.C_Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Method <Deserialize> - {ex.Message} \r\n -- {ex.ToString()}");
             }
         }
 
+
+        /// <summary>
+        /// Show task with chosed filter category
+        /// </summary>
+        /// <param name="filterNamePar"></param>
+        /// <param name="dataGridPar"></param>
+        public static void Filter(string filterNamePar, ref DataGrid dataGridPar)
+        {
+            try
+            {
+                List<Note> list1 = new List<Note>();
+                List<Note> listNotes = new List<Note>();
+
+                Deserialize(ref list1);
+
+                if (filterNamePar == "All")
+                {
+                    dataGridPar.ItemsSource = list1;
+                }
+
+                if (filterNamePar == "All current")
+                {
+                    for (int i = 0; i < list1.Count; i++)
+                    {
+                        if (list1[i].Condition == "current")
+                        {
+                            listNotes.Add(list1[i]);
+                        }
+                    }
+
+                    dataGridPar.ItemsSource = listNotes;
+                }
+
+                if (filterNamePar == "All done")
+                {
+                    for (int i = 0; i < list1.Count; i++)
+                    {
+                        if (list1[i].Condition == "done")
+                        {
+                            listNotes.Add(list1[i]);
+                        }
+                    }
+
+                    dataGridPar.ItemsSource = listNotes;
+                }
+
+                ResizeDataGrid(ref dataGridPar);
+                //dataGridPar.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Method <Filter> - {ex.Message} \r\n -- {ex.ToString()}");
+            }
+        }
 
     }
 }

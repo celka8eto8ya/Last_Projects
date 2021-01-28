@@ -82,7 +82,7 @@ namespace E2Book.BL.C_Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Method <SaveInfo> - {ex.Message} \r\n -- {ex.ToString()}");
             }
 
         }
@@ -141,7 +141,7 @@ namespace E2Book.BL.C_Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Method <CheckUniquePassword> - {ex.Message} \r\n -- {ex.ToString()}");
             }
         }
 
@@ -171,7 +171,7 @@ namespace E2Book.BL.C_Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show($"Method <ReadInfoUser> - {ex.ToString()}");
             }
         }
 
@@ -230,7 +230,7 @@ namespace E2Book.BL.C_Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Method <Enter> - {ex.Message} \r\n -- {ex.ToString()}");
             }
 
 

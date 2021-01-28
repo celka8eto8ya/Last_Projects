@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="KAM_19_08_2020_E2Book.MainWindow"
-        mc:Ignorable="d" Background="#FFF9ABF9" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen" Height="560" Width="938" Title="E2Book" WindowStyle="ToolWindow" IsTabStop="True" ResizeMode="NoResize">
+        mc:Ignorable="d" Background="#FFF9ABF9" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen" Height="560" Width="938" Title="E2Book" WindowStyle="ToolWindow" IsTabStop="True" ResizeMode="NoResize" Loaded="Window_Loaded">
 
 
 
@@ -16,8 +16,6 @@
         <Style x:Key="TextBoxInButton1">
             <Setter Property="Control.Background" Value="Transparent" />
             <Setter Property="Control.FontSize" Value="13" />
-
-
             <Setter Property="Control.FontFamily" Value="Segoe UI Semibold"/>
             <Setter Property="Control.Foreground" Value="#FF0D1515"/>
         </Style>
@@ -37,9 +35,6 @@
     <DockPanel >
 
         <TabControl Background="Transparent">
-
-
-
             <TabItem Header="Tasks/Notes" Height="22" VerticalAlignment="Top">
 
                 <TabControl Background="Transparent"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TabStripPlacement="Right" >
@@ -63,47 +58,12 @@
                                         <Calendar x:Name="calendar1" SelectedDatesChanged="Calendar1_SelectedDatesChanged" ToolTip="Choose needed date." SelectionMode="MultipleRange" Background="Transparent" DockPanel.Dock="Top" HorizontalAlignment="Center"  />
 
                                         <TextBlock DockPanel.Dock="Top" Height="16"/>
-                                        <ComboBox DockPanel.Dock="Top">
+                                        <ComboBox x:Name="comboBox1" DockPanel.Dock="Top" SelectionChanged="ComboBox1_SelectionChanged">
                                             <ComboBoxItem Content="All"/>
                                             <ComboBoxItem Content="All current"/>
                                             <ComboBoxItem Content="All done"/>
                                         </ComboBox>
                                     </DockPanel>
-
-
-
-
-
-
-
-
-
-
-
-                                    <!--<TextBlock DockPanel.Dock="Top" Foreground="#FF0D1515" FontSize="16" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
-                                <TextBlock.TextDecorations>
-                                    <TextDecoration PenOffset="1"/>
-                                </TextBlock.TextDecorations>INFORMATION ABOUT CHOSEN DAY:</TextBlock>
-
-                            <DockPanel DockPanel.Dock="Top"  Height="26">
-                                <Button Width="120" Background="Transparent" DockPanel.Dock="Left" FontSize="14" >Date:</Button>
-                                <Button  Background="AntiqueWhite" HorizontalContentAlignment="Left"  FontSize="14" >12 Sep 2020</Button>
-                            </DockPanel>
-                            <DockPanel DockPanel.Dock="Top"  Height="26">
-                                <Button Width="120" Background="Transparent" DockPanel.Dock="Left" FontSize="14" >Done Notes\Deals:</Button>
-                                <Button Background="AntiqueWhite" HorizontalContentAlignment="Left"  FontSize="14" >6</Button>
-                            </DockPanel>
-                            <DockPanel DockPanel.Dock="Top"  Height="26">
-                                <Button Width="120" Background="Transparent" DockPanel.Dock="Left" FontSize="14" >All Notes\Deals:</Button>
-                                <Button Background="AntiqueWhite" HorizontalContentAlignment="Left"  FontSize="14" >10</Button>
-                            </DockPanel>
-                            <DockPanel DockPanel.Dock="Top"  Height="26">
-                                <Button Width="120" Background="Transparent" DockPanel.Dock="Left" FontSize="14" >Complited Deals:</Button>
-                                <Button  Background="AntiqueWhite" HorizontalContentAlignment="Left"  FontSize="14" >60 %</Button>
-                            </DockPanel>-->
-
-
-
 
 
                                     <Separator DockPanel.Dock="Top" />
@@ -151,123 +111,42 @@
 
 
                             <DockPanel>
-
                                 <DockPanel DockPanel.Dock="Top" Background="Transparent" >
-
-
 
                                     <DataGrid x:Name="dataGrid2" Width="560"   Height="422" Background="AntiqueWhite" DockPanel.Dock="Top" HorizontalAlignment="Left" />
                                     <TextBlock/>
                                     <Separator DockPanel.Dock="Top" />
 
-
                                     <DockPanel DockPanel.Dock="Top" Height="40"  >
-
+                                        
                                         <Button x:Name="Btn12" Background="Transparent"  DockPanel.Dock="Left" Height="32" Width="165"  FontSize="14" Click="Btn12_Click" ToolTip="Fill int the fields &quot;Needed info&quot; and press." Content="Create note" />
                                         <TextBlock DockPanel.Dock="Left" Width="32"/>
                                         <Button x:Name="Btn14" Background="Transparent" DockPanel.Dock="Left" Height="32" Width="165"  FontSize="14" Click="Btn14_Click" ToolTip="Choose needed field and press." Content="Checked note" />
                                         <TextBlock DockPanel.Dock="Left" Width="32"/>
                                         <Button x:Name="Btn13" Background="Transparent" DockPanel.Dock="Left"  Width="165" Height="32" FontSize="14" Click="Btn13_Click" ToolTip="Choose needed field and press." Content="Delete note" />
                                         <TextBlock />
+                                   
                                     </DockPanel>
 
                                     <Separator DockPanel.Dock="Top" />
-
                                     <TextBlock/>
 
-
-
-
-
-                                    <!--<DockPanel DockPanel.Dock="Top" Height="25">
-
-                                <DockPanel DockPanel.Dock="Left" Height="25">
-                                    <Button  Background="Transparent" Height="25">
-                                        <TextBox x:Name="Tb10"  Width="140" Height="25"  Style="{StaticResource TextBoxInButton1}"  GotFocus="Tb10_GotFocus"  ToolTip="Введите короткое название записи/задачи."   MaxLength="30"  >Short title</TextBox>
-                                    </Button>
                                 </DockPanel>
-
-                                <DockPanel DockPanel.Dock="Left" Height="25">
-                                    <Button  Background="Transparent" Height="25">
-                                        <TextBox x:Name="Tb11" Width="300"  Height="25" Style="{StaticResource TextBoxInButton1}" ToolTip="Введите полное описание записи/задачи." GotFocus="Tb11_GotFocus" MaxLength="300" TextWrapping="Wrap">Text</TextBox>
-                                    </Button>
-                                  
-                                </DockPanel>
-                                <TextBlock DockPanel.Dock="Bottom"></TextBlock>
-
-                           
-                            </DockPanel>-->
-
-
-
-
-
-
-
-
-
-                                </DockPanel>
-
-                                <!--<Button DockPanel.Dock="Left" Background="Transparent" >
-                            <DockPanel >
-
-                                <DatePicker x:Name="DatePicker1" DockPanel.Dock="Top" Height="25" Width="140" />
-                                <TextBlock  Height="72"></TextBlock>
-
                             </DockPanel>
-                        </Button>
-
-
-                        <Button Background="Transparent">
-                            <DockPanel DockPanel.Dock="Left">
-                                <TextBlock DockPanel.Dock="Top" Foreground="#FF0D1515" FontSize="16" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
-                                    <TextBlock.TextDecorations>
-                                        <TextDecoration PenOffset="1"/>
-                                    </TextBlock.TextDecorations>FULL TEXT OF (CHOSEN) NOTE:</TextBlock>
-                                <TextBox x:Name="textBox1" Width="300" Height="80" DockPanel.Dock="Top" MaxLength="300" TextWrapping="Wrap"></TextBox>
-
-                            </DockPanel>
-
-                        </Button>-->
-
-
-
-                            </DockPanel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                         </DockPanel>
                     </TabItem>
+                    
+                    
+                    
+                    
+                    
                     <TabItem Height="30" Header="Notes and Stuffs">
                         <Button/>
                     </TabItem>
 
-
-
+                    
                 </TabControl>
-
             </TabItem>
 
 
@@ -301,10 +180,7 @@
 
 
         </TabControl>
-
-
-
-
     </DockPanel>
-
+    
+    
 </Window>
