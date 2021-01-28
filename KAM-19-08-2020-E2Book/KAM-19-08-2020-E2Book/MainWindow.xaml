@@ -20,6 +20,7 @@
             <Setter Property="Control.Foreground" Value="#FF0D1515"/>
         </Style>
 
+        
 
         <DockPanel x:Key="DockP" x:Name="DockPanel" Height="23"/>
         <Button x:Key="ForIcon" Width="25" Height="25" Content="Icon"/>
