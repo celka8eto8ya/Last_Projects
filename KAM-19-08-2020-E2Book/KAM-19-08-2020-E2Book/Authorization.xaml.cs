@@ -76,6 +76,8 @@ namespace KAM_19_08_2020_E2Book
                 {
                     Bank.TypeOfDataUser = user1.TypeOfData;
                     Bank.UserPath = $"dataAboutUser{user1.Login}.dat";
+                    Bank.UserPathAccount = $"dataAboutAccounts{user1.Login}.dat";
+                    
                     MainWindow window1 = new MainWindow();
                     window1.Show();
 

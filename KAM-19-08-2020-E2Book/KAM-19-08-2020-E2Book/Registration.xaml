@@ -71,7 +71,7 @@
 
             <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
                 <Button  Background="Transparent">
-                    <TextBox x:Name="Tb3" Style="{StaticResource TextBoxInButton}" KeyDown="Tb3_KeyDown" KeyUp="Tb3_KeyUp" GotFocus="Tb3_GotFocus"  ToolTip="Введите расширение хранилища данных: (База данных[.db] / Текстовый файл[.txt])."   MaxLength="4" >Source Of Data (.db/.txt)</TextBox>
+                    <TextBox x:Name="Tb3" Style="{StaticResource TextBoxInButton}" KeyDown="Tb3_KeyDown" KeyUp="Tb3_KeyUp" GotFocus="Tb3_GotFocus"  ToolTip="Введите расширение хранилища данных: (База данных[.db] / Текстовый файл[.txt])."   MaxLength="4"  >Source Of Data (.db/.txt)</TextBox>
                 </Button>
             </DockPanel>
             <TextBlock DockPanel.Dock="Top"  />
@@ -129,8 +129,8 @@
           
             
             <DockPanel DockPanel.Dock="Top" Height="35" Width="225">
-                <Button x:Name="btnSave" ToolTip="Создать аккаунт с введенными данными." Background="Transparent" HorizontalAlignment="Left" Width="75" Click="BtnSave_Click" FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" Height="35" VerticalAlignment="Bottom" >Save</Button>
-                <Button  x:Name="btnGoToAuthorization" ToolTip="Перейти к авторизации." Background="Transparent" HorizontalAlignment="Right" Width="145" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" Click="BtnGoToAuthorization_Click" >"Authorization"</Button>
+                <Button x:Name="btnSave" ToolTip="Создать аккаунт с введенными данными." Background="Transparent" HorizontalAlignment="Left" Width="75" Click="BtnSave_Click" FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" Height="35" VerticalAlignment="Bottom" >SAVE</Button>
+                <Button  x:Name="btnGoToAuthorization" ToolTip="Перейти к авторизации." Background="Transparent" HorizontalAlignment="Right" Width="145" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" Click="BtnGoToAuthorization_Click" >AUTHORIZATION</Button>
             </DockPanel>
             
             <Label DockPanel.Dock="Top"/>

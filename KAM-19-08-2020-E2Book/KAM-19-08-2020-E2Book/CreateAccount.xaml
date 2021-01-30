@@ -1,0 +1,120 @@
+﻿<Window x:Class="KAM_19_08_2020_E2Book.CreateAccount"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
+        mc:Ignorable="d"
+        Title="CreateAccount" Height="400" Width="400" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
+
+
+    <Window.Resources>
+
+        <Style x:Key="TextBoxInButton">
+            <Setter Property="TextBox.Background" Value="Transparent" />
+            <Setter Property="TextBox.FontSize" Value="13" />
+            <Setter Property="TextBox.Width" Value="236" />
+            <Setter Property="TextBox.Height" Value="20"/>
+            <Setter Property="TextBox.FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="TextBox.Foreground" Value="#FF0D1515"/>
+        </Style>
+
+
+        <DockPanel x:Key="DockP" x:Name="DockPanel" Height="23"/>
+        <Button x:Key="ForIcon" Width="25" Height="25">Icon</Button>
+        <TextBlock x:Key="TextBox" Height="25"/>
+
+    </Window.Resources>
+
+
+
+
+
+
+    <Grid>
+        <Grid  >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="140"></RowDefinition>
+                <RowDefinition Height="160"></RowDefinition>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="240" ></ColumnDefinition>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="0" Width="200" >
+                <Label DockPanel.Dock="Top" Height="36"/>
+
+                <DockPanel DockPanel.Dock="Top" Background="Transparent"  Height="40">
+                    <Button DockPanel.Dock="Left"  Width="40" VerticalAlignment="Stretch" >
+                        <Image x:Name="Icon" Source="Resources\Logo.ico"/>
+                    </Button>
+
+                    <Button DockPanel.Dock="Right" Background="Transparent" >
+                        <TextBlock  VerticalAlignment="Center"  FontSize="27" FontWeight="Bold" FontFamily="Segoe UI Black" TextAlignment="Center" Foreground="#FF0D1515" HorizontalAlignment="Center"> E2Book</TextBlock>
+                    </Button>
+                </DockPanel>
+
+                <Label DockPanel.Dock="Top" Height="20"/>
+
+                <TextBlock Foreground="#FF0D1515" FontSize="22" FontStretch="UltraExpanded" TextAlignment="Center" FontWeight="Black">
+                    <TextBlock.TextDecorations>
+                        <TextDecoration PenOffset="1"/>
+                    </TextBlock.TextDecorations>Creating Account</TextBlock>
+            </DockPanel >
+
+
+            <DockPanel Background="Transparent"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" >
+
+                <Separator DockPanel.Dock="Top"/>
+
+                <TextBlock DockPanel.Dock="Top"   />
+
+                <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
+                    <Button  Background="Transparent">
+                        <TextBox x:Name="Tb3" Style="{StaticResource TextBoxInButton}"  GotFocus="Tb3_GotFocus_1"  ToolTip="Введите название для создаваемого счета."   MaxLength="4" >Name</TextBox>
+                    </Button>
+                </DockPanel>
+                <TextBlock DockPanel.Dock="Top"  />
+
+
+                <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
+                    <Button  Background="Transparent">
+                        <TextBox x:Name="Tb2" Style="{StaticResource TextBoxInButton}" ToolTip="Введите валюту для создаваемого счета." GotFocus="Tb2_GotFocus_1" MaxLength="30">Currency</TextBox>
+                    </Button>
+                </DockPanel>
+                <TextBlock DockPanel.Dock="Top"  />
+
+
+                <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
+                    <Button  Background="Transparent">
+                        <TextBox x:Name="Tb1" Style="{StaticResource TextBoxInButton}" ToolTip="Введите местоположение для создаваемого счета." GotFocus="Tb1_GotFocus_1" MaxLength="30">Location</TextBox>
+                    </Button>
+                </DockPanel>
+
+                <TextBlock DockPanel.Dock="Top" />
+                <Separator DockPanel.Dock="Top"/>
+
+                <TextBlock DockPanel.Dock="Top"   />
+
+
+
+
+            </DockPanel>
+
+            <DockPanel Background="Transparent" Grid.Column="1" Grid.Row="2" >
+
+
+                <DockPanel DockPanel.Dock="Top" Height="35" Width="225">
+                    <Button x:Name="btnCreate" ToolTip="Нажмите для создания счёта." Background="Transparent" HorizontalAlignment="Left" Width="110" Click="BtnCreate_Click" FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" Height="35" VerticalAlignment="Bottom" >CREATE</Button>
+                    <Button  x:Name="btnCloseWindow" ToolTip="Нажмите для закрытия данного окна." Background="Transparent" HorizontalAlignment="Right" Width="110" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" Click="BtnCloseWindow_Click" >CLOSE</Button>
+                </DockPanel>
+
+                <Label DockPanel.Dock="Top"/>
+            </DockPanel>
+
+        </Grid>
+    </Grid>
+</Window>

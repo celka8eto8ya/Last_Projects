@@ -138,5 +138,7 @@ namespace KAM_19_08_2020_E2Book
                 MessageBox.Show("Not correct data entered (first-third fields)!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+       
     }
 }

@@ -19,6 +19,13 @@ namespace E2Book.BL.A_Model
 
         // Path of user data about Tasks\Notes
         public static string UserPath;
+        // Path of user data about Account
+        public static string UserPathAccount;
+        //// Path of user data about Operations
+        //public static string UserPathOperations;
+        //// Path of user data about Note
+        //public static string UserPathNotes;
+
 
         // Size of DataGrid (Tasks\Notes)
         public static int SizeId = 40;

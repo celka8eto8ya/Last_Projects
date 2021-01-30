@@ -12,16 +12,14 @@ namespace E2Book.BL.A_Model
         private string password;
         // Type of saved Data  
         private string typeOfData;
-        // Total amount money on Account
-        private double totalSum;
-        // Total amount of Accounts
-        private byte amountOfAccount;
         // Name of Server for create DB
         private string nameOfServer;
         // User's name of Server for create DB
         private string nameOfUser;
         // password of Server for create DB
         private string passwordOfServer;
+
+
 
         public string Login
         {
@@ -62,34 +60,6 @@ namespace E2Book.BL.A_Model
                 if (value.Length > 0 && value.Length < 5)
                 {
                     typeOfData = value;
-                }
-            }
-        }
-        public double TotalSum
-        {
-            get
-            {
-                return totalSum;
-            }
-            set
-            {
-                if (value >= 0)
-                {
-                    totalSum = value;
-                }
-            }
-        }
-        public byte AmountOfAccount
-        {
-            get
-            {
-                return amountOfAccount;
-            }
-            set
-            {
-                if (value >= 0 && value < 250)
-                {
-                    totalSum = value;
                 }
             }
         }
@@ -137,13 +107,12 @@ namespace E2Book.BL.A_Model
         }
 
 
+
         public User(string login1, string password1, string typeOfData1)
         {
             Login = login1;
             Password = password1;
             TypeOfData = typeOfData1;
-            TotalSum = 0;
-            AmountOfAccount = 0;
         }
 
         public User(string login1, string password1, string typeOfData1, string nameOfServer1, string nameOfUser1, string passwordOfServer1)
@@ -151,8 +120,6 @@ namespace E2Book.BL.A_Model
             Login = login1;
             Password = password1;
             TypeOfData = typeOfData1;
-            TotalSum = 0;
-            AmountOfAccount = 0;
 
             NameOfServer = nameOfServer1;
             NameOfUser = nameOfUser1;
@@ -161,7 +128,6 @@ namespace E2Book.BL.A_Model
 
         public override string ToString()
         {
-
             return $"{Login} {Password} {TypeOfData} ";
         }
 

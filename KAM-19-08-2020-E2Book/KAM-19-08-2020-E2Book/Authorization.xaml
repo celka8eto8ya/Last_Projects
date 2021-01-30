@@ -33,7 +33,7 @@
     <Grid  >
         <Grid.RowDefinitions>
             <RowDefinition Height="140"></RowDefinition>
-            <RowDefinition Height="105"></RowDefinition>
+            <RowDefinition Height="106"></RowDefinition>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -82,7 +82,7 @@
             </DockPanel>
 
             <TextBlock DockPanel.Dock="Top" Height="16"/>
-            <Separator DockPanel.Dock="Top" Height="3"/>
+            <Separator DockPanel.Dock="Top" />
 
         </DockPanel>
 
@@ -90,8 +90,8 @@
             <Label DockPanel.Dock="Top" Height="17"/>
 
             <DockPanel DockPanel.Dock="Top" Height="35" Width="225">
-                <Button x:Name="btnEnter" ToolTip="Выполнение авторизации." Background="Transparent" HorizontalAlignment="Left" Width="75"  FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" Click="BtnEnter_Click" >Enter</Button>
-                <Button  x:Name="btnGoToAuthorization" ToolTip="Перейти к регистрации." Background="Transparent" HorizontalAlignment="Right" Width="145" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" Click="BtnGoToAuthorization_Click"  >"Registration"</Button>
+                <Button x:Name="btnEnter" ToolTip="Выполнение авторизации." Background="Transparent" HorizontalAlignment="Left" Width="75"  FontSize="14" Foreground="#FF0D1515" FontFamily="Segoe UI Black" Click="BtnEnter_Click" >ENTER</Button>
+                <Button  x:Name="btnGoToAuthorization" ToolTip="Перейти к регистрации." Background="Transparent" HorizontalAlignment="Right" Width="145" FontSize="14" FontFamily="Segoe UI Black" Foreground="#FF0D1515" Click="BtnGoToAuthorization_Click"  >REGISTRATION</Button>
             </DockPanel>
 
             <Label DockPanel.Dock="Top"/>

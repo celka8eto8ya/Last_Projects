@@ -119,6 +119,9 @@ namespace KAM_19_08_2020_E2Book
             try
             {
                 NoteController.Filter("All current", ref dataGrid2);
+                //
+                dataGrid3.ItemsSource = dataGrid2.ItemsSource;
+                //
                 comboBox1.Text = "All current";
                 DatePicker1.Text = DateTime.Now.ToShortDateString();
                 NoteController.UpdateCalendar(ref calendar1);
@@ -143,6 +146,15 @@ namespace KAM_19_08_2020_E2Book
             NoteController.Filter(selectedItem.Content.ToString(), ref dataGrid2);
         }
 
-
+        /// <summary>
+        /// Event: (Open window for creating new account)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCreateNewAcc_Click(object sender, RoutedEventArgs e)
+        {
+            CreateAccount createAccount = new CreateAccount();
+            createAccount.Show();
+        }
     }
 }

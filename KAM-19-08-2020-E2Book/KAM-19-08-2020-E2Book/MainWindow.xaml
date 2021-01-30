@@ -20,7 +20,7 @@
             <Setter Property="Control.Foreground" Value="#FF0D1515"/>
         </Style>
 
-        
+
 
         <DockPanel x:Key="DockP" x:Name="DockPanel" Height="23"/>
         <Button x:Key="ForIcon" Width="25" Height="25" Content="Icon"/>
@@ -36,10 +36,10 @@
     <DockPanel >
 
         <TabControl Background="Transparent">
-            <TabItem Header="Tasks/Notes" Height="22" VerticalAlignment="Top">
+            <TabItem Header="Tasks/Notes" Margin="-2,-2,-2,2">
 
                 <TabControl Background="Transparent"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TabStripPlacement="Right" >
-                    <TabItem Height="30" Header="Tasks by day">
+                    <TabItem Height="30" Header="TASKS">
                         <DockPanel >
 
                             <DockPanel DockPanel.Dock="Left">
@@ -119,14 +119,14 @@
                                     <Separator DockPanel.Dock="Top" />
 
                                     <DockPanel DockPanel.Dock="Top" Height="40"  >
-                                        
+
                                         <Button x:Name="Btn12" Background="Transparent"  DockPanel.Dock="Left" Height="32" Width="165"  FontSize="14" Click="Btn12_Click" ToolTip="Fill int the fields &quot;Needed info&quot; and press." Content="Create note" />
                                         <TextBlock DockPanel.Dock="Left" Width="32"/>
                                         <Button x:Name="Btn14" Background="Transparent" DockPanel.Dock="Left" Height="32" Width="165"  FontSize="14" Click="Btn14_Click" ToolTip="Choose needed field and press." Content="Checked note" />
                                         <TextBlock DockPanel.Dock="Left" Width="32"/>
                                         <Button x:Name="Btn13" Background="Transparent" DockPanel.Dock="Left"  Width="165" Height="32" FontSize="14" Click="Btn13_Click" ToolTip="Choose needed field and press." Content="Delete note" />
                                         <TextBlock />
-                                   
+
                                     </DockPanel>
 
                                     <Separator DockPanel.Dock="Top" />
@@ -137,16 +137,16 @@
 
                         </DockPanel>
                     </TabItem>
-                    
-                    
-                    
-                    
-                    
-                    <TabItem Height="30" Header="Notes and Stuffs">
+
+
+
+
+
+                    <TabItem Height="30" Header="NOTES \ STUFFS">
                         <Button/>
                     </TabItem>
 
-                    
+
                 </TabControl>
             </TabItem>
 
@@ -158,22 +158,79 @@
             <TabItem Height="22" VerticalAlignment="Top" Header="FinancialBookkeeper">
 
                 <TabControl Background="Transparent"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TabStripPlacement="Right" >
-                    <TabItem Height="30" Header="Condition">
+                    <TabItem Height="30" Header="CONDITION">
+                        <DockPanel >
+                            <DockPanel DockPanel.Dock="Left" Width="650">
+                                <DataGrid x:Name="dataGrid3"></DataGrid>
+
+                            </DockPanel>
+                            <DockPanel DockPanel.Dock="Right" >
+                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >Last updating :</Button>
+                                <Button x:Name="btnCreateNewAcc" Height="32" Background="Transparent" DockPanel.Dock="Top" Click="BtnCreateNewAcc_Click" >Create new Account</Button>
+                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >Delete chosed Account</Button>
+                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >Update</Button>
+                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >Help</Button>
+                                <Button Background="Transparent" DockPanel.Dock="Left" >www</Button>
+                            </DockPanel>
+
+                        </DockPanel>
+
+                    </TabItem>
+                    <TabItem Height="30" Header="OPERATIONS">
                         <Button/>
                     </TabItem>
-                    <TabItem Height="30" Header="Income">
-                        <Button/>
+                    <TabItem Height="30" Header="Incomes">
+                        <DockPanel >
+                            <DockPanel DockPanel.Dock="Left" Width="600">
+                                <DockPanel DockPanel.Dock="Top" Height="32">
+                                    <Button Height="32" Background="Transparent" DockPanel.Dock="Left" Width=" 300">DELETE LAST ROW</Button>
+                                    <Button Height="32" Background="Transparent" DockPanel.Dock="Left" >TO WRITE OPERATION</Button>
+
+                                </DockPanel>
+                                <DockPanel DockPanel.Dock="Top" Height="32">
+                                    <Button DockPanel.Dock="Left" Width="100"></Button>
+
+                                </DockPanel>
+                                <DockPanel DockPanel.Dock="Left">
+                                    <DataGrid></DataGrid>
+
+                                </DockPanel>
+                            </DockPanel>
+                            <DockPanel DockPanel.Dock="Right" >
+                                <TextBlock Height="32" DockPanel.Dock="Top"></TextBlock>
+                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >SORTING </Button>
+                                
+                                <TextBlock Height="22" DockPanel.Dock="Top">Type of Operation</TextBlock>
+                                <ComboBox Height="32" Background="Transparent" DockPanel.Dock="Top" ></ComboBox>
+                                <TextBlock Height="22" DockPanel.Dock="Top">Item</TextBlock>
+                                <ComboBox Height="32" Background="Transparent" DockPanel.Dock="Top" ></ComboBox>
+                                <Button DockPanel.Dock="Left" >123123</Button>
+                            </DockPanel>
+
+                        </DockPanel>
                     </TabItem>
+                    
                     <TabItem Height="30" Header="Expenses">
+                        <DockPanel >
+                            <DockPanel DockPanel.Dock="Left" Width="550">
+                                <DataGrid></DataGrid>
+
+                            </DockPanel>
+                            <DockPanel DockPanel.Dock="Right" >
+                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >Create new Account</Button>
+                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >Delete chosed Account</Button>
+                                <Button DockPanel.Dock="Left" >123123</Button>
+                            </DockPanel>
+
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Height="30" Header="New Account">
                         <Button/>
                     </TabItem>
-                    <TabItem Height="30" Header="CreateNewAccount">
+                    <TabItem Height="30" Header="Statistic">
                         <Button/>
                     </TabItem>
-                    <TabItem Height="30" Header="Expenses">
-                        <Button/>
-                    </TabItem>
-                    <TabItem Height="30" Header="Deals in general"/>
+
                 </TabControl>
 
             </TabItem>
@@ -182,6 +239,6 @@
 
         </TabControl>
     </DockPanel>
-    
-    
+
+
 </Window>
