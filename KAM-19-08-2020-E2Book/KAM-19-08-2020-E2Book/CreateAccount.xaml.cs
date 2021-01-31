@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using E2Book.BL.C_Controller;
+using System.Windows;
 
 namespace KAM_19_08_2020_E2Book
 {
@@ -14,9 +15,7 @@ namespace KAM_19_08_2020_E2Book
 
 
         bool b1 = true;
-        bool b2 = true;
         bool b3 = true;
-
 
         private void Tb1_GotFocus_1(object sender, RoutedEventArgs e)
         {
@@ -26,16 +25,6 @@ namespace KAM_19_08_2020_E2Book
                 b1 = false;
             }
         }
-
-        private void Tb2_GotFocus_1(object sender, RoutedEventArgs e)
-        {
-            if (b2)
-            {
-                Tb2.Text = "";
-                b2 = false;
-            }
-        }
-
         private void Tb3_GotFocus_1(object sender, RoutedEventArgs e)
         {
             if (b3)
@@ -53,7 +42,22 @@ namespace KAM_19_08_2020_E2Book
         /// <param name="e"></param>
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                bool b = true;
+                AccountController.CheckUniqueName(Tb3.Text, ref b);
+                if (Tb3.Text.Length > 4 && comboBox1.Text.Length == 3 && Tb1.Text.Length > 0 && b)
+                {
+                    AccountController.Add(Tb3.Text, comboBox1.Text, Tb1.Text);
+                    MessageBox.Show("Account created success.", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                }
+                else
+                {
+                    MessageBox.Show("Not all fields have corect data or not unique name of account.", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch { }
         }
 
 

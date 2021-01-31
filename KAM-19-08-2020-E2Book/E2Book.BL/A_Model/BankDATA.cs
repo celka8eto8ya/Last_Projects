@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace E2Book.BL.A_Model
 {
@@ -25,6 +26,7 @@ namespace E2Book.BL.A_Model
         //public static string UserPathOperations;
         //// Path of user data about Note
         //public static string UserPathNotes;
+        public static DataGrid dataGrid;
 
 
         // Size of DataGrid (Tasks\Notes)
@@ -34,5 +36,14 @@ namespace E2Book.BL.A_Model
         public static int SizeCondition = 70;
         public static int SizeDate = 90;
 
+      
+        // Size of DataGrid (Tasks\Notes)
+        public static int A = 40;
+        public static int B = 100;
+        public static int C = 70;
+        public static int D = 70;
+        public static int E = 85;
+        public static int F = 90;
+        public static int G = 100;
     }
 }

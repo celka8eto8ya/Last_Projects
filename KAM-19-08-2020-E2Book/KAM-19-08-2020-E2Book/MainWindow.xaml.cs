@@ -1,5 +1,7 @@
-﻿using E2Book.BL.C_Controller;
+﻿using E2Book.BL.A_Model;
+using E2Book.BL.C_Controller;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -119,12 +121,11 @@ namespace KAM_19_08_2020_E2Book
             try
             {
                 NoteController.Filter("All current", ref dataGrid2);
-                //
-                dataGrid3.ItemsSource = dataGrid2.ItemsSource;
-                //
                 comboBox1.Text = "All current";
                 DatePicker1.Text = DateTime.Now.ToShortDateString();
                 NoteController.UpdateCalendar(ref calendar1);
+
+                //AccountController.Show(ref dataGrid3);
             }
             catch (Exception ex)
             {
@@ -155,6 +156,29 @@ namespace KAM_19_08_2020_E2Book
         {
             CreateAccount createAccount = new CreateAccount();
             createAccount.Show();
+        }
+
+      
+        /// <summary>
+        /// Show info about accounts
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            AccountController.Show(ref dataGrid3);
+            AccountController.GetNameAccounts(ref comboBox2);
+        }
+
+        /// <summary>
+        /// Delete chosed account
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnDeleteAccount_Click(object sender, RoutedEventArgs e)
+        {
+            AccountController.Delete(ref dataGrid3);
+            AccountController.GetNameAccounts(ref comboBox2);
         }
     }
 }

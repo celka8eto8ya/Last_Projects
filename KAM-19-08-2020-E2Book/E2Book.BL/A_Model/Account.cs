@@ -9,7 +9,6 @@ namespace E2Book.BL.A_Model
     [Serializable]
     public class Account
     {
-
         // Number of Account (definite user)
         private byte id;
         // Name of account
@@ -19,9 +18,9 @@ namespace E2Book.BL.A_Model
         // Currency of account
         private string currency;
         // Date when account was created
-        private DateTime dateOfCreate;
+        private string dateOfCreate;
         // Date when account was change
-        private DateTime dateOfChange;
+        private string dateOfChange;
         // Place where is the money
         private string location;
 
@@ -83,7 +82,7 @@ namespace E2Book.BL.A_Model
                 }
             }
         }
-        public DateTime DateOfCreate
+        public string DateOfCreate
         {
             get
             {
@@ -91,13 +90,13 @@ namespace E2Book.BL.A_Model
             }
             set
             {
-                if (value >= DateTime.Now)
+                if (value.Length > 0)
                 {
                     dateOfCreate = value;
                 }
             }
         }
-        public DateTime DateOfChange
+        public string DateOfChange
         {
             get
             {
@@ -105,7 +104,7 @@ namespace E2Book.BL.A_Model
             }
             set
             {
-                if (value <= DateTime.Now)
+                if (value.Length > 0)
                 {
                     dateOfChange = value;
                 }
@@ -128,10 +127,14 @@ namespace E2Book.BL.A_Model
       
 
 
-        public Account(string name1, string currency1, string location1)
+        public Account(byte id1, string name1, string currency1, string location1)
         {
+            Id = id1;
             Name = name1;
+            Sum = 0;
             Currency = currency1;
+            DateOfCreate = DateTime.Now.ToShortDateString();
+            DateOfChange = DateTime.Now.ToShortDateString();
             Location = location1;
         }
 

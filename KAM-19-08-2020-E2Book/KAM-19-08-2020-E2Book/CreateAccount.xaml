@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         mc:Ignorable="d"
-        Title="CreateAccount" Height="400" Width="400" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
+        Height="400" Width="400" Background="#FFF9ABF9"  ResizeMode="NoResize" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen">
 
 
     <Window.Resources>
@@ -74,7 +74,7 @@
 
                 <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
                     <Button  Background="Transparent">
-                        <TextBox x:Name="Tb3" Style="{StaticResource TextBoxInButton}"  GotFocus="Tb3_GotFocus_1"  ToolTip="Введите название для создаваемого счета."   MaxLength="4" >Name</TextBox>
+                        <TextBox x:Name="Tb3" Style="{StaticResource TextBoxInButton}"  GotFocus="Tb3_GotFocus_1"  ToolTip="Введите название для создаваемого счета."    >Name</TextBox>
                     </Button>
                 </DockPanel>
                 <TextBlock DockPanel.Dock="Top"  />
@@ -82,7 +82,13 @@
 
                 <DockPanel DockPanel.Dock="Top" Height="{Binding ElementName=DockPanel,Path=Height}">
                     <Button  Background="Transparent">
-                        <TextBox x:Name="Tb2" Style="{StaticResource TextBoxInButton}" ToolTip="Введите валюту для создаваемого счета." GotFocus="Tb2_GotFocus_1" MaxLength="30">Currency</TextBox>
+                        <ComboBox Background="Transparent" x:Name="comboBox1" Style="{StaticResource TextBoxInButton}" ToolTip="Введите валюту для создаваемого счета." >
+                            <ComboBoxItem  Content="BYN"/>
+                            <ComboBoxItem Content="RUB"/>
+                            <ComboBoxItem Content="UAH"/>
+                            <ComboBoxItem Content="USD"/>
+                            <ComboBoxItem Content="EUR"/>
+                        </ComboBox>
                     </Button>
                 </DockPanel>
                 <TextBlock DockPanel.Dock="Top"  />

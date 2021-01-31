@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace E2Book.BL.A_Model
@@ -36,7 +32,7 @@ namespace E2Book.BL.A_Model
                 }
                 else
                 {
-                    MessageBox.Show($"Not correct filed \"Id\" (Unique number of task)!","Error!",MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Not correct filed \"Id\" (Unique number of task)!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -115,7 +111,7 @@ namespace E2Book.BL.A_Model
 
         public Note(int IdOfLastTask, string shortTitles1, string text1, string condition1, string date1)
         {
-            if (date1.Length==10 && (date1[5]=='.') && (date1[5]== '.'))
+            if (date1.Length == 10 && (date1[5] == '.') && (date1[5] == '.'))
             {
                 Id = IdOfLastTask;
                 ShortTitle = shortTitles1;
@@ -132,7 +128,6 @@ namespace E2Book.BL.A_Model
 
         public override string ToString()
         {
-
             return $"{Id} {ShortTitle} {Text} {Condition} {Date}";
         }
     }

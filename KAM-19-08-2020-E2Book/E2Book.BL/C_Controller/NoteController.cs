@@ -130,6 +130,7 @@ namespace E2Book.BL.C_Controller
             }
         }
 
+
         /// <summary>
         /// To do needed task "done"
         /// </summary>
@@ -317,7 +318,6 @@ namespace E2Book.BL.C_Controller
                 }
 
                 ResizeDataGrid(ref dataGridPar);
-                //dataGridPar.Items.Refresh();
             }
             catch (Exception ex)
             {

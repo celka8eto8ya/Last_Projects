@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KAM_19_08_2020_E2Book"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="KAM_19_08_2020_E2Book.MainWindow"
-        mc:Ignorable="d" Background="#FFF9ABF9" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen" Height="560" Width="938" Title="E2Book" WindowStyle="ToolWindow" IsTabStop="True" ResizeMode="NoResize" Loaded="Window_Loaded">
+        mc:Ignorable="d" Background="#FFF9ABF9" Icon="Resources\Logo.ico" WindowStartupLocation="CenterScreen" Height="560" Width="938" Title="E2Book" IsTabStop="True" ResizeMode="NoResize" Loaded="Window_Loaded">
 
 
 
@@ -114,7 +114,7 @@
                             <DockPanel>
                                 <DockPanel DockPanel.Dock="Top" Background="Transparent" >
 
-                                    <DataGrid x:Name="dataGrid2" Width="560"   Height="422" Background="AntiqueWhite" DockPanel.Dock="Top" HorizontalAlignment="Left" />
+                                    <DataGrid x:Name="dataGrid2" Width="560"   Height="422" Background="BlanchedAlmond" DockPanel.Dock="Top" HorizontalAlignment="Left" />
                                     <TextBlock/>
                                     <Separator DockPanel.Dock="Top" />
 
@@ -160,16 +160,30 @@
                 <TabControl Background="Transparent"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TabStripPlacement="Right" >
                     <TabItem Height="30" Header="CONDITION">
                         <DockPanel >
-                            <DockPanel DockPanel.Dock="Left" Width="650">
-                                <DataGrid x:Name="dataGrid3"></DataGrid>
+                            <DockPanel DockPanel.Dock="Left" Width="565">
+                                <DataGrid Background="#FFA8D8D1" x:Name="dataGrid3"></DataGrid>
 
                             </DockPanel>
                             <DockPanel DockPanel.Dock="Right" >
-                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >Last updating :</Button>
-                                <Button x:Name="btnCreateNewAcc" Height="32" Background="Transparent" DockPanel.Dock="Top" Click="BtnCreateNewAcc_Click" >Create new Account</Button>
-                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >Delete chosed Account</Button>
-                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >Update</Button>
-                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >Help</Button>
+                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >LAST UPDATING :</Button>
+                                <Button x:Name="btnCreateNewAcc" Height="32" Background="Transparent" DockPanel.Dock="Top" Click="BtnCreateNewAcc_Click" >CREATE NEW ACCOUNT</Button>
+                                <Button x:Name="btnDeleteAccount" Height="32" Background="Transparent" DockPanel.Dock="Top" Click="BtnDeleteAccount_Click" >DELETE CHOSED ACCOUNT</Button>
+                                <Button x:Name="btnUpdate" Height="32" Background="Transparent" DockPanel.Dock="Top" Click="BtnUpdate_Click" >SHOW \ UPDATE</Button>
+                                <Button Height="32" Background="Transparent" DockPanel.Dock="Top" >HELP</Button>
+                                <TextBlock DockPanel.Dock="Top" Height="20"></TextBlock>
+                                <Separator DockPanel.Dock="Top"></Separator>
+                                <TextBlock DockPanel.Dock="Top" Height="20">Choose Account:</TextBlock>
+                                <ComboBox x:Name="comboBox2" DockPanel.Dock="Top" Height="26"></ComboBox>
+                                <TextBlock DockPanel.Dock="Top" Height="20">Choose type of operation:</TextBlock>
+                                <ComboBox DockPanel.Dock="Top" Height="26"></ComboBox>
+                                <TextBlock DockPanel.Dock="Top" Height="20">Sum:</TextBlock>
+                                <TextBox DockPanel.Dock="Top" Height="26"></TextBox>
+                                <TextBlock DockPanel.Dock="Top" Height="20">Choose Source:</TextBlock>
+                                <ComboBox DockPanel.Dock="Top" Height="26"></ComboBox>
+                                <TextBlock DockPanel.Dock="Top" Height="20">Choose Target:</TextBlock>
+                                <ComboBox DockPanel.Dock="Top" Height="26"></ComboBox>
+                                <TextBlock DockPanel.Dock="Top" Height="20"></TextBlock>
+                                <Button DockPanel.Dock="Top" Height="32" Background="Transparent"  >TO MAKE OPERATION</Button>
                                 <Button Background="Transparent" DockPanel.Dock="Left" >www</Button>
                             </DockPanel>
 
